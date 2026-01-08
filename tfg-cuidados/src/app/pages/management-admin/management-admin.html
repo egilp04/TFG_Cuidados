@@ -1,0 +1,37 @@
+<div class="w-full mb-4">
+  <app-buttonback></app-buttonback>
+</div>
+
+@if (this.messageService.messageData(); as data) {
+<div
+  [ngClass]="{
+    'text-red-500': data.tipo === 'error',
+    'text-primary': data.tipo === 'exito'
+  }"
+  class="text-label ml-2 transition-all duration-300"
+>
+  {{ data.mensaje }}
+</div>
+}
+
+<div class="flex flex-col mt-20 w-full max-h-screen bg-surface">
+  <div class="flex flex-col gap-20">
+    <div class="flex justify-center">
+      <app-button
+        [label]="
+          (isUser ? 'ADMIN_MANAGEMENT.NEW_CLIENT' : 'ADMIN_MANAGEMENT.NEW_COMPANY') | translate
+        "
+        variant="primary"
+        (click)="onNuevoUsuario()"
+      >
+      </app-button>
+    </div>
+
+    <app-table-crud-admin
+      [modo]="isUser ? 'cliente' : 'empresa'"
+      [datos]="(usuarios$ | async) || []"
+      (eliminar)="onEliminarUsuario($event)"
+      (modificar)="onEditar($event)"
+    ></app-table-crud-admin>
+  </div>
+</div>
