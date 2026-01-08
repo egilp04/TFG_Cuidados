@@ -1,0 +1,17 @@
+<div class="w-full mb-4">
+  <app-buttonback></app-buttonback>
+</div>
+<div class="p-20 relative">
+  @if (this.messageService.messageData(); as data) {
+  <div
+    [ngClass]="{
+      'text-red-500': data.tipo === 'error',
+      'text-primary': data.tipo === 'exito'
+    }"
+    class="text-label ml-2 transition-all duration-300"
+  >
+    {{ data.mensaje }}
+  </div>
+  }
+  <app-registerform [isUser]="isUser" (formSubmitted)="onRegister($event)"> </app-registerform>
+</div>
