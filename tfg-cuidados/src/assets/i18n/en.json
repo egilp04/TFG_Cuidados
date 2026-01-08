@@ -1,0 +1,728 @@
+{
+  "APP": {
+    "NAME": "TFG App"
+  },
+  "NAVBAR": {
+    "HOME": "Home",
+    "ACTIVITIES": "Activities",
+    "SERVICES": "Services",
+    "PROFILE": "Profile",
+    "LOGIN": "Log In",
+    "LOGOUT": "Log Out",
+    "REGISTER": "Register"
+  },
+  "HOME": {
+    "WELCOME": "Welcome",
+    "ROLE": "Your current role is",
+    "ADMIN_PANEL": "Admin Panel",
+    "HERO": {
+      "TITLE": "We take care of you,",
+      "SUBTITLE": "because caring is a matter of two"
+    }
+  },
+  "CALENDAR": {
+    "TITLE": "Activities Calendar",
+    "HEADER": {
+      "COMPANY": "Company",
+      "CLIENT": "Client",
+      "USER": "User"
+    },
+    "TABLE": {
+      "USER": "User",
+      "SERVICE": "Service",
+      "DAY": "Day",
+      "HOUR": "Time",
+      "PLACE": "Location",
+      "ACTIONS": "Actions",
+      "CANCEL": "Cancel",
+      "EMPTY": "No activities for this month."
+    },
+    "DAYS": {
+      "DO": "Su",
+      "LU": "Mo",
+      "MA": "Tu",
+      "MI": "We",
+      "JU": "Th",
+      "VI": "Fr",
+      "SA": "Sa"
+    }
+  },
+  "MODALS": {
+    "CANCEL_CONTRACT": {
+      "TITLE": "Cancel Contract",
+      "MESSAGE": "Are you sure you want to cancel this service? This action cannot be undone.",
+      "CONFIRM": "Yes, cancel",
+      "CLOSE": "No, close"
+    }
+  },
+  "BUTTONS": {
+    "BACK": "Back",
+    "SAVE": "Save",
+    "Edit": "Edit",
+    "DELETE": "Delete",
+    "ACCEPT": "Accept",
+    "CANCEL": "Cancel"
+  },
+  "ABOUT": {
+    "TITLE": "About Us",
+    "DESCRIPTION": "CuidaDos is a platform aiming to be a safe and efficient intermediary for hiring care services for the elderly or those needing daily assistance.",
+    "SCOPE": {
+      "TITLE": "Social and Commercial Scope",
+      "DESC": "The project has a dual focus:",
+      "SOCIAL": "Social",
+      "SOCIAL_DESC": "Facilitates the search and request for home help.",
+      "COMMERCIAL": "Commercial",
+      "COMMERCIAL_DESC": "Involves hiring professional services, generating economic opportunities for companies and caregivers in the sector."
+    },
+    "VALUE": {
+      "TITLE": "Added Value",
+      "DESC": "The platform stands out by allowing users to choose the company that best suits their needs with \"a single click\", based on user reviews and offering conflict resolution services."
+    },
+    "ASSISTANCE": {
+      "TITLE": "User Assistance",
+      "DESC": "Assistance is offered through guided videos, chat, and calls for people who need help managing the application."
+    },
+    "TEAM": {
+      "TITLE": "Team Members",
+      "MEMBER1": {
+        "ROLE": "CEO & Founder",
+        "DESC": "Strategist with over 10 years of experience in the socio-sanitary field and team management."
+      },
+      "MEMBER2": {
+        "ROLE": "CTO & Co-Founder",
+        "DESC": "Responsible for technological development and ensuring a secure and accessible platform."
+      },
+      "MEMBER3": {
+        "ROLE": "COO / Operations Director",
+        "DESC": "Specialist in coordinating the caregiver network and ensuring quality in every contracted service."
+      },
+      "MEMBER4": {
+        "ROLE": "Customer Support",
+        "DESC": "Dedicated to offering human support and resolving doubts for an excellent experience."
+      }
+    }
+  },
+  "ACTIVITIES": {
+    "TITLE": "Activities",
+    "DAYS": {
+      "SU": "Sun",
+      "MO": "Mon",
+      "TU": "Tue",
+      "WE": "Wed",
+      "TH": "Thu",
+      "FR": "Fri",
+      "SA": "Sat"
+    },
+    "TABLE": {
+      "HEADER_COMPANY": "Company",
+      "HEADER_CLIENT": "Client",
+      "HEADER_USER": "User",
+      "NAME": "Name",
+      "DAY": "Day",
+      "TIME": "Time",
+      "LOCATION": "Location"
+    },
+    "BTN_CANCEL": "Cancel"
+  },
+  "CONTACT": {
+    "TITLE": "Contact Us",
+    "FORM": {
+      "NAME": "Name",
+      "EMAIL": "Email",
+      "SUBJECT": "Subject",
+      "MESSAGE": "Message",
+      "SEND": "Contact Us"
+    },
+    "ERRORS": {
+      "NAME": "Name must be at least 3 characters long.",
+      "EMAIL": "Please enter a valid email address.",
+      "SUBJECT": "Subject is required (min. 6 characters).",
+      "MESSAGE": "Message needs to be longer."
+    }
+  },
+  "CONTRACTS": {
+    "TITLE": "Contracts",
+    "TABLE": {
+      "ID": "Contract ID",
+      "DATE": "Date"
+    },
+    "ACTIONS": {
+      "CANCEL": "Cancel",
+      "DETAILS": "View details"
+    }
+  },
+  "DASHBOARD": {
+    "TITLE_CONTRACTS": "Contracts",
+    "TOTAL_CONTRACTS": "Total Contracts:",
+    "TOTAL_USERS": "Current Total Users:",
+    "LOGIN": {
+      "TITLE": "LOGIN",
+      "SUBTITLE": "Users using the app weekly"
+    },
+    "CHART": {
+      "ACTIVE": "Active",
+      "CANCELED": "Canceled",
+      "DAYS": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    }
+  },
+  "MAIN_MENU": {
+    "TITLE": "Main Menu",
+    "CLIENT": {
+      "SEARCH_COMPANIES": "Search Companies",
+      "MY_SERVICES": "Contracted Services"
+    },
+    "COMPANY": {
+      "MANAGE_SERVICES": "Manage Services",
+      "ALL_CONTRACTS": "View All Contracts"
+    },
+    "ADMIN": {
+      "DASHBOARD": "View Dashboard",
+      "MANAGE_USERS": "Manage Users",
+      "MANAGE_COMPANIES": "Manage Companies",
+      "MANAGE_SERVICES": "Manage Services",
+      "MANAGE_SCHEDULES": "Manage Schedules"
+    },
+    "COMMON": {
+      "ACTIVITIES": "Scheduled Activities"
+    }
+  },
+  "LANDING": {
+    "HERO": {
+      "ALT": "Hands caring for each other",
+      "TITLE": "We take care of you,",
+      "SUBTITLE": "because caring is a matter of two"
+    },
+    "SERVICES": "Services",
+    "REGISTER": "Sign Up",
+    "CARDS": {
+      "CONTRATACION": {
+        "TITLE": "Easily Hire Services",
+        "DESC": "Find and hire services from professional companies dedicated to personal care, companionship, and wellness."
+      },
+      "GESTION": {
+        "TITLE": "Management in One Place",
+        "DESC": "Manage your contracts, receive reminders and track contracted services easily."
+      },
+      "RESOLUCION": {
+        "TITLE": "Problem Resolution",
+        "DESC": "Our team supports you every step of the way to find fast, reliable solutions tailored to your needs."
+      }
+    }
+  },
+  "ADMIN_MANAGEMENT": {
+    "NEW_CLIENT": "New Client",
+    "NEW_COMPANY": "New Company"
+  },
+  "MESSAGES": {
+    "SUCCESS": {
+      "CANCELCONTRACT": "The contract has been successfully cancelled.",
+      "SAVE": "Data saved successfully.",
+      "CONTACT": "Email sent successfully!",
+      "DELETE_USER": "Record deleted successfully."
+    },
+    "ERROR": {
+      "GENERIC": "An error occurred. Please try again later.",
+      "CANCELCONTRACT": "Error cancelling the contract.",
+      "CONTACT": "Email could not be sent, try it later.",
+      "DELETE_USER": "Error deleting record."
+    }
+  },
+  "MANAGEMENT_SERVICES": {
+    "TITLE": "SERVICE",
+    "FORM": {
+      "NAME": "Name",
+      "TYPE": "Type",
+      "ADD": "Add Service",
+      "SAVE": "Save Changes",
+      "CANCEL": "Cancel"
+    },
+    "LIST": {
+      "TITLE": "Services List",
+      "SEARCH": "Search by name",
+      "EMPTY": "No services found."
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "TYPE": "Type",
+      "ACTIONS": "Actions",
+      "EDIT": "Edit",
+      "DELETE": "Delete"
+    },
+    "MESSAGES": {
+      "CONFIRM_DELETE": "Do you want to delete this service?",
+      "SUCCESS_CREATE": "Service created successfully",
+      "SUCCESS_UPDATE": "Service updated successfully",
+      "SUCCESS_DELETE": "Service deleted",
+      "ERROR_DUPLICATE": "That service name already exists",
+      "ERROR_GENERIC": "Error processing request",
+      "ERROR_DELETE": "Error deleting"
+    }
+  },
+  "MANAGEMENT_SCHEDULES": {
+    "TITLE": "SCHEDULE",
+    "FORM": {
+      "START_TIME": "Start Time",
+      "DAY_LABEL": "Day of the week",
+      "SELECT_DAY": "Select a day",
+      "ADD": "Add Schedule",
+      "SAVE": "Save Changes",
+      "CANCEL": "Cancel"
+    },
+    "DAYS": {
+      "MONDAY": "Monday",
+      "TUESDAY": "Tuesday",
+      "WEDNESDAY": "Wednesday",
+      "THURSDAY": "Thursday",
+      "FRIDAY": "Friday",
+      "SATURDAY": "Saturday",
+      "SUNDAY": "Sunday"
+    },
+    "TABLE": {
+      "TIME": "Time",
+      "DAY": "Day of the week",
+      "ACTIONS": "Actions",
+      "EDIT": "Edit",
+      "DELETE": "Delete"
+    },
+    "MESSAGES": {
+      "FILL_FIELDS": "Please fill in all fields correctly.",
+      "INVALID_DAY": "The selected day is invalid.",
+      "INVALID_TIME_RANGE": "The hour must be between 00 and 23.",
+      "INVALID_MINUTES": "Minutes must be :00 or :30.",
+      "CONFIRM_DELETE": "Do you want to delete this schedule? Associated services might be affected.",
+      "SUCCESS_CREATE": "Schedule created successfully",
+      "SUCCESS_UPDATE": "Schedule updated successfully",
+      "SUCCESS_DELETE": "Schedule deleted",
+      "ERROR_DUPLICATE": "A schedule already exists for {{dia}} at {{hora}}",
+      "ERROR_GENERIC": "Error processing the request"
+    },
+    "LIST": {
+      "TITLE": "Time list"
+    }
+  },
+  "MANUALS": {
+    "TITLE": "Manuals",
+    "DOWNLOAD_BTN": "Download PDF",
+    "ITEMS": {
+      "START": {
+        "TITLE": "Quick Start Guide",
+        "DESC": "Learn how to hire your first service in less than 5 minutes."
+      },
+      "PROTOCOL": {
+        "TITLE": "Professional Protocol",
+        "DESC": "Best practices manual for caregivers and health companies."
+      }
+    }
+  },
+  "MESSAGES_PAGE": {
+    "TITLE": "Messages",
+    "NEW_MSG": "New Message",
+    "SORT_LABEL": "Sort by...",
+    "SORT_OPTIONS": {
+      "DATE": "Date",
+      "SUBJECT_AZ": "Subject (A-Z)",
+      "SUBJECT_ZA": "Subject (Z-A)"
+    },
+    "TABLE": {
+      "SENDER": "Sender",
+      "RECEIVER": "Receiver",
+      "SUBJECT": "Subject",
+      "DATE": "Received Date",
+      "ACTIONS": "Actions",
+      "BTN_DELETE": "Delete",
+      "BTN_VIEW": "View"
+    },
+    "ALERTS": {
+      "CONFIRM_DELETE": "Are you sure you want to delete this message?",
+      "DELETE_SUCCESS": "The message has been deleted.",
+      "DELETE_ERROR": "Could not delete the message.",
+      "VIEW_ERROR": "Cannot view this message at this time"
+    }
+  },
+  "MODIFY_PROFILE": {
+    "DESCRIPTION_MODIFY": "Modify descripcion",
+    "TITLE": "Modify Profile",
+    "MESSAGES": {
+      "EMAIL_USED": "Email already in use",
+      "UPDATE_SUCCESS": "Profile updated successfully!",
+      "UPDATE_ERROR": "Error updating data.",
+      "DELETE_SUCCESS": "User deleted successfully."
+    },
+    "LABELS": {
+      "USERNAME": "Username",
+      "SURNAME1": "First Surname",
+      "SURNAME2": "Second Surname",
+      "COMPANY_NAME": "Company Name",
+      "PHONE": "Phone",
+      "EMAIL": "Email",
+      "ADDRESS": "Address",
+      "CITY": "City",
+      "ZIP": "Zip Code",
+      "REGION": "Region/State",
+      "DESCRIPTION": "Description"
+    },
+    "BTN": {
+      "CANCEL": "Cancel modification",
+      "MODIFY": "Modify",
+      "UNSUBSCRIBE": "Unsubscribe"
+    },
+    "ERRORS": {
+      "REQUIRED": "This field is compulsory",
+      "EMAIL": "Email fomat not valid",
+      "MIN_LENGTH": "Min {{value}} characters",
+      "MISMATCH": "Paswords mismatch",
+      "TERMS_REQUIRED": "Acept terms and conditions, please",
+      "INVALID": "Invalid field",
+      "PATTERN": {
+        "PHONE": "It do must hace 9 characters (ej: 600123456)",
+        "ZIP": "CP not valid (5 dígitos)",
+        "PASSWORD": "It do must hace letters, numbers and special characters (min. 6)",
+        "NOT_ADULT": "You must hace more than 18 years old, sorry",
+        "DNI_FORMAT": "DNI must have 8 digits and 1 letter",
+        "DNI_LETTER": "Invalid DNI letter",
+        "FECHNACINVALID": "Invalid birthdate"
+      }
+    }
+  },
+  "NOTIFICATIONS": {
+    "TITLE": "Notifications",
+    "TABLE": {
+      "NAME": "Name",
+      "CONTENT": "Notification",
+      "DATE": "Date"
+    },
+    "MESSAGES": {
+      "CONNECTION_ERROR": "Error in live notifications connection"
+    }
+  },
+  "RECOVER_PASSWORD": {
+    "TITLE": "Reset Password",
+    "DESCRIPTION": "Enter your new password to recover access.",
+    "LABEL_NEW_PASS": "New Password",
+    "BTN_SUBMIT": "Submit",
+    "ERRORS": {
+      "REQUIRED": "Password is required.",
+      "MIN_LENGTH": "Minimum 6 characters required.",
+      "PATTERN": "Must contain letters, numbers, and special characters.",
+      "INVALID": "Invalid field"
+    },
+    "TOAST": {
+      "SUCCESS": "Password updated! Welcome back.",
+      "ERROR": "The link has expired or an error occurred."
+    }
+  },
+
+  "SEARCH_BUSINESS": {
+    "MESSAGES": {
+      "CONNECTION_ERROR": "Connection error.",
+      "LOGIN_REQUIRED": "You must log in to contract services.",
+      "LOGIN_MSG_REQUIRED": "Log in to send messages.",
+      "SELECT_SERVICE": "Please select a service and schedule.",
+      "CONFIRM_CONTRACT": "Do you wish to contract {{servicio}} for {{precio}}€?",
+      "CONTRACT_SUCCESS": "Contract successfully created!",
+      "CONTRACT_ERROR": "Error processing the contract."
+    },
+    "CARD": {
+      "DESCRIPTION": "Description:",
+      "SELECT_SERVICE": "Select a service:",
+      "CHOOSE_OPTION": "-- Choose a service --"
+    },
+    "BTN_MESSAGE": "Message",
+    "BTN_CONTRACT": "Contract",
+    "LIST": {
+      "EMPTY": "No companies found matching your search criteria."
+    }
+  },
+  "SERVICES_BUSINESS": {
+    "BTN_NEW": "New service",
+    "BTN_DELETE": "Delete",
+    "BTN_MODIFY": "Modify",
+    "TABLE": {
+      "NAME": "Name",
+      "PRICE": "Price/h",
+      "TYPE": "Type",
+      "TIME": "Time",
+      "DAY": "Day"
+    },
+    "MESSAGES": {
+      "DELETE_SUCCESS": "Service successfully deleted.",
+      "DELETE_ERROR": "Error deleting. Please try again later."
+    }
+  },
+  "CANCEL_MODAL": {
+    "BTN": {
+      "KEEP_ACCOUNT": "Keep account",
+      "UNSUBSCRIBE": "Unsubscribe",
+      "KEEP_CONTRACT": "Keep contract",
+      "CANCEL_CONTRACT": "Cancel contract",
+      "CANCEL_ACTION": "Cancel action",
+      "DELETE": "Delete"
+    },
+    "BAJA": {
+      "TITLE": "Are you sure you want to unsubscribe?",
+      "DESC_1": "You will lose access to all app features. This action cannot be undone.",
+      "DESC_2": "By continuing, your account will be deactivated and you will not be able to access this profile again.",
+      "CONFIRM": "Do you want to continue?"
+    },
+    "CONTRACT": {
+      "TITLE": "Contract Cancellation Confirmation",
+      "DESC_1": "Attention! You are about to cancel a service contract. Upon confirmation, the contract will be voided in CuidaDos. What happens now?",
+      "LIST": {
+        "RECORD": "<strong>Change Record:</strong> The cancellation will be registered immediately and your calendar updated.",
+        "COMM": "<strong>Communication:</strong> You will receive a confirmation notification via email or in-app.",
+        "NOTIFY": "<strong>Notification to the Other Party.</strong>"
+      },
+      "NOTE": "If you have questions or a conflict arises, remember that CuidaDos acts as an intermediary.",
+      "CONFIRM": "Do you want to proceed with the cancellation?"
+    },
+    "SERVICE": {
+      "TITLE": "Warning: Deletion of Offered Service",
+      "DESC_1": "You are about to remove a service from your catalog. If confirmed, the service will be permanently deleted.",
+      "SUBTITLE": "Consequences of Deletion:",
+      "LIST": {
+        "CESSATION": "<strong>Offer Cessation:</strong> Users will no longer be able to search for or hire this service.",
+        "VISIBILITY": "<strong>Loss of Visibility:</strong> The service and its details will be removed from search results."
+      },
+      "IMPORTANT_TITLE": "Important regarding Active Contracts:",
+      "IMPORTANT_DESC": "If this service has already been hired, we strongly recommend managing those active contracts to avoid issues.",
+      "CONFIRM": "Do you want to continue?"
+    },
+    "GENERIC": {
+      "TITLE": "Deletion Confirmation",
+      "SUBTITLE": "Deleting data entails:",
+      "LIST": {
+        "PROFILE": "The client or company profile and associated data will be deleted.",
+        "CONTRACTS": "All active or future service contracts are immediately voided."
+      },
+      "NOTE": "The platform will notify the other party regarding the forced service cancellation.",
+      "CONFIRM": "Do you want to continue?"
+    }
+  },
+  "BUTTONBACK": {
+    "BTN_BACK": "Back"
+  },
+  "SELECT": {
+    "SELECT": "Seleccionar"
+  },
+  "INFO_CONTRACT": {
+    "TITLE_DETAILS": "Contract Details",
+    "TITLE_ACTIVITY": "Activity Details",
+    "ID": "Contract ID",
+    "DATE_CREATION": "Creation Date",
+    "DATE_START": "Start Date",
+    "DATE_END": "End Date",
+    "NOT_FINALIZED": "Not finalized",
+    "STATUS": "Status",
+    "TIME": "Contracted Time",
+    "DAY": "Contracted Day",
+    "SERVICE": "Service Name",
+    "CLIENT": "Client Name",
+    "COMPANY": "Company Name",
+    "BTN_CANCEL": "Cancel"
+  },
+  "ADMIN_TABLE": {
+    "SEARCH_LABEL": "Search by name or email",
+    "HEADER": {
+      "NAME": "Name",
+      "SURNAME": "Surnames"
+    },
+    "BTN": {
+      "DELETE": "Delete",
+      "MODIFY": "Modify"
+    },
+    "NO_DATA": "No records found.",
+    "PAGINATOR_LABEL": "Select user page"
+  },
+  "SEARCH_PLACEHOLDER": "Search...",
+  "REGISTER": {
+    "PLACEHOLDER": {
+      "SELECTREGION": "Select a region"
+    },
+    "MESSAGES": {
+      "SUCCESS": "Registration successful! Please check your email.",
+      "ERROR_EMAIL": "This email is already registered.",
+      "ERROR_GENERIC": "Error connecting to the server."
+    },
+    "LABELS": {
+      "USERNAME": "Username",
+      "SURNAME1": "First Surname",
+      "SURNAME2": "Second Surname",
+      "BIRTHDATE": "Birthdate",
+      "DNI": "ID Card / DNI",
+      "COMPANY_NAME": "Company Name",
+      "CIF": "Tax ID / CIF",
+      "PHONE": "Phone",
+      "EMAIL": "Email",
+      "ADDRESS": "Address",
+      "CITY": "City",
+      "ZIP": "Zip Code",
+      "REGION": "Region / State",
+      "PASSWORD": "Password",
+      "REPASSWORD": "Repeat Password",
+      "DESCRIPTION": "Description"
+    },
+    "TERMS": {
+      "PART_1": "I have read and accept the",
+      "LINK": "Terms and Conditions",
+      "PART_2": "and the Privacy Policy, and I authorize the processing of my personal data.",
+      "ERROR": "You must accept the terms to continue"
+    },
+    "BTN": "Register",
+    "ERRORS": {
+      "REQUIRED": "This field is required",
+      "EMAIL": "Invalid email format",
+      "MIN_LENGTH": "Minimum {{value}} characters",
+      "MISMATCH": "Passwords do not match",
+      "TERMS_REQUIRED": "You must accept the terms and conditions",
+      "INVALID": "Invalid field",
+      "PATTERN": {
+        "PHONE": "Must have 9 digits",
+        "ZIP": "Invalid Zip Code (5 digits)",
+        "PASSWORD": "Must contain letters, numbers and special chars (min. 6)"
+      }
+    },
+    "NOT_ADULT": "You must be at least 18 years old",
+    "DNI_FORMAT": "The DNI must have 8 digits and 1 letter",
+    "DNI_LETTER": "The DNI letter is incorrect",
+    "FECHNACINVALID": "Invalid date of birth",
+    "CIF_FORMAT": "Invalid CIF format (Ex: B12345678)",
+    "CIF_INVALID": "The CIF is invalid (incorrect control digit)",
+    "EMAIL_TAKEN": "This email is already in use"
+  },
+  "SERVICE_TIME_MODAL": {
+    "LABELS": {
+      "DESCRIPTION": "Offer Description",
+      "GLOBAL_SERVICE": "Global Service",
+      "PRICE": "Price/h(€)",
+      "AVAILABLE_SCHEDULE": "Available Schedule"
+    },
+    "PLACEHOLDERS": {
+      "DESCRIPTION": "Ex: Deep window cleaning",
+      "SELECT_SERVICE": "Choose a service...",
+      "LOADING_SERVICES": "Loading services...",
+      "SELECT_TIME": "Choose a day and time...",
+      "LOADING_TIMES": "Loading schedules..."
+    },
+    "BTN": {
+      "UPDATE": "Update Changes",
+      "CREATE": "Create Offer"
+    },
+    "ERRORS": {
+      "REQUIRED": "This field is required",
+      "MIN_VALUE": "The minimum value is {{value}}",
+      "INVALID_PRICE": "Invalid price format (ex: 10 or 10.50)",
+      "INVALID_FORMAT": "Invalid format",
+      "INVALID_FIELD": "Invalid field"
+    }
+  },
+  "MESSAGES_MODAL": {
+    "LABELS": {
+      "TO": "To:",
+      "SUBJECT": "Subject:",
+      "SENDER": "Sender:",
+      "RECEIVER": "Receiver:",
+      "MESSAGE_CONTENT": "MESSAGE"
+    },
+    "PLACEHOLDERS": {
+      "WRITE_HERE": "Write your message here..."
+    },
+    "BTN": {
+      "SEND": "Send"
+    },
+    "FEEDBACK": {
+      "ERROR_SENDER": "Error: Sender not detected.",
+      "USER_NOT_FOUND": "The email does not belong to any registered user",
+      "SEND_ERROR": "Error sending message",
+      "SEND_SUCCESS": "Message sent successfully"
+    }
+  },
+  "LOGIN_MODAL": {
+    "TITLES": {
+      "LOGIN": "Login",
+      "REGISTER": "Register",
+      "RECOVER": "Recover Password"
+    },
+    "LABELS": {
+      "EMAIL": "Email",
+      "PASSWORD": "Your password"
+    },
+    "HINTS": {
+      "PASS_PATTERN": "Password must be at least 6 chars, letters and numbers.",
+      "RECOVER_DESC": "Enter your email and we will send you a link to reset your password."
+    },
+    "BTN": {
+      "ENTER": "Login",
+      "FORGOT": "I forgot my password",
+      "REGISTER": "Register",
+      "REG_USER": "Register as User",
+      "REG_COMPANY": "Register as Company",
+      "HAVE_ACCOUNT": "I have an account",
+      "SEND_LINK": "Send link",
+      "BACK_LOGIN": "Back to login"
+    },
+    "FEEDBACK": {
+      "LOGIN_ERROR": "Incorrect username or password",
+      "FILL_FIELDS": "Please fill in the fields correctly",
+      "INVALID_EMAIL": "Enter a valid email to recover",
+      "LINK_SENT": "Link sent. Check your email.",
+      "CONN_ERROR": "Connection error"
+    }
+  },
+  "FOOTER": {
+    "HOME": "Home",
+    "ABOUT": "About us",
+    "CONTACT": "Contact",
+    "MANUALS": "Manuals"
+  },
+  "TERMS_PAGE": {
+    "TITLE": "Terms and Conditions and Privacy Policy",
+    "LAST_UPDATE": "Last updated",
+    "SECTION_1": {
+      "TITLE": "1. Terms and Conditions of Use",
+      "SUB_1": {
+        "TITLE": "1.1. Introduction",
+        "TEXT": "Welcome to <strong>{{appName}}</strong>. This application acts as a technological intermediary platform that facilitates contact and service management between users demanding care or services ('Clients') and professionals or entities offering them ('Companies')."
+      },
+      "SUB_2": {
+        "TITLE": "1.2. Registration and Security",
+        "TEXT": "To use the service, the user must register providing truthful data. The password is personal and non-transferable. The user is responsible for all actions taken from their account. We reserve the right to suspend accounts that provide false information or misuse the platform."
+      },
+      "SUB_3": {
+        "TITLE": "1.3. How Contracts Work",
+        "TEXT": "By clicking the 'Hire' button, a digital link is generated between the Client and the Company. <strong>{{appName}}</strong> is not a party to this final service contract, acting exclusively as a management and communication tool. Responsibility for the quality, schedule, and execution of the service rests exclusively with the providing Company."
+      },
+      "SUB_4": {
+        "TITLE": "1.4. Conduct Rules and Messaging",
+        "TEXT": "The internal messaging system must be used exclusively for the coordination of contracted services. Sending spam, offensive, discriminatory, or illegal content is prohibited. Failure to comply with this rule will result in immediate expulsion from the platform."
+      }
+    },
+    "SECTION_2": {
+      "TITLE": "2. Privacy Policy and Legal Framework",
+      "INTRO_BOX": "This Privacy Policy is governed by current regulations in Spain and Europe, specifically: the GDPR (Regulation EU 2016/679), the LOPD-GDD (Organic Law 3/2018), and the LSSI-CE (Law 34/2002).",
+      "SUB_1": {
+        "TITLE": "2.1. Data Controller",
+        "TEXT": "The data will be processed by the application owner, based in Spain. For any management related to privacy and data protection, you can contact: <strong>{{email}}</strong>."
+      },
+      "SUB_2": {
+        "TITLE": "2.2. Data We Collect and Necessity",
+        "LIST_1": "<strong>Identification Data (ID, Name, Date of Birth):</strong> Strictly necessary to verify legal age and legal capacity to formalize contracts.",
+        "LIST_2": "<strong>Contact and Location Data:</strong> Necessary for the physical execution of the service at the client's location.",
+        "LIST_3": "<strong>Activity Data:</strong> Security logs and contracts to comply with LSSI and service traceability."
+      },
+      "SUB_3": {
+        "TITLE": "2.3. Purpose and Legitimacy",
+        "TEXT": "The legal basis for processing is the <strong>execution of the contract</strong> (Art. 6.1.b GDPR) and compliance with legal obligations. Your data will not be used for purposes other than platform management without your explicit consent."
+      },
+      "SUB_4": {
+        "TITLE": "2.4. Data Transfer",
+        "TEXT": "Your data will not be transferred to third parties unless there is a legal obligation or contractual necessity:",
+        "LIST_1": "To the service counterparty (Company/Client) exclusively for the provision of the contracted service.",
+        "LIST_2": "To technology providers (Data Processors) such as Supabase, which guarantee security according to European standards."
+      },
+      "SUB_5": {
+        "TITLE": "2.5. User Rights",
+        "TEXT": "In accordance with regulations, you may exercise your rights of Access, Rectification, Deletion, Opposition, Limitation, and Portability by sending an email to the indicated address."
+      }
+    }
+  }
+}
