@@ -1,1 +1,203 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  /* Definiendo colores */
+  --color-primary: #344f51;
+  --color-secondary: #51786e;
+  --color-surface: #fafafa;
+  --color-accent: #93d14b;
+  --color-disabled: #afaeab;
+  --color-red: #ff383c;
+  --color-nav-border: #e4e4e4;
+
+  /* Definiendo fuentes */
+  /* Familias */
+  --font-fraunces: 'Fraunces', serif;
+  --font-poppins: 'Poppins', sans-serif;
+  /* Peso */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-smibold: 600;
+  --font-weight-bold: 700;
+
+  /* --- TIPOGRAFÍA RESPONSIVA --- */
+  --text-h1: 1.25rem;
+  --text-h1--line-height: 1.2;
+  --text-h1--font-family: var(--font-fraunces);
+  --text-h1--font-weight: var(--font-weight-regular);
+
+  --text-h2: 1rem;
+  --text-h2--line-height: 1.2;
+  --text-h2--font-family: var(--font-fraunces);
+  --text-h2--font-weight: var(--font-weight-regular);
+
+  --text-p: 0.875rem;
+  --text-p--line-height: 1.2;
+  --text-p--font-family: var(--font-poppins);
+  --text-p--font-weight: var(--font-weight-medium);
+
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.2;
+  --text-label--font-family: var(--font-poppins);
+  --text-label--font-weight: var(--font-weight-regular);
+
+  --text-button: 0.75rem;
+  --text-button--font-family: var(--font-poppins);
+  --text-button--font-weight: var(--font-weight-semibold);
+
+  --spacing-400: 25rem;
+  --spacing-300: 18.75rem;
+  --spacing-150: 9.375rem;
+  --spacing-120: 7.5rem;
+  --spacing-80: 5rem;
+  --spacing-60: 3.75rem;
+  --spacing-20: 1.25rem;
+  --spacing-16: 1rem;
+  --spacing-15: 0.938rem;
+  --spacing-10: 0.625rem;
+  --spacing-12: 0.75rem;
+  --spacing-8: 0.5rem;
+  --spacing-6: 0.375rem;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-12: 0.75rem;
+  --radius-full: 9999px;
+
+  --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+@media (width >= 48rem) {
+  /* md */
+  :root {
+    --text-h1: 1.5rem;
+    --text-h2: 1.25rem;
+    --text-p: 1rem;
+    --text-label: 0.875rem;
+    --text-button: 0.875rem;
+  }
+}
+
+@media (width >= 64rem) {
+  /* lg */
+  :root {
+    --text-h1: 2rem;
+    --text-h2: 1.5rem;
+    --text-p: 1rem;
+    --text-label: 1rem;
+    --text-button: 1rem;
+  }
+}
+
+/* xl (Pantallas grandes - 1280px) */
+@media (width >= 80rem) {
+  :root {
+    --text-h1: 2.5rem;
+    --text-h2: 1.75rem;
+    --text-p: 1.125rem;
+    --text-label: 1.125rem;
+    --text-button: 1.125rem;
+  }
+}
+
+/* 2xl (Pantallas ultra anchas - 1536px) */
+@media (width >= 96rem) {
+  :root {
+    --text-h1: 3rem;
+    --text-h2: 2.5rem;
+    --text-p: 1.5rem;
+    --text-label: 1.75rem;
+    --text-button: 1.5rem;
+  }
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+  }
+  h1,
+  h2,
+  p,
+  label {
+    margin: 0;
+    padding: 0;
+  }
+  .mat-mdc-paginator-outer-container {
+    @apply !bg-surface;
+  }
+
+  .mat-mdc-paginator {
+    @apply !bg-surface !text-primary;
+  }
+
+  .mat-mdc-paginator .mat-mdc-icon-button {
+    @apply !text-primary;
+  }
+
+  .mat-mdc-select-value,
+  .mat-mdc-select-arrow {
+    @apply !text-primary;
+  }
+}
+
+@layer components {
+  .btn-disabled-primary {
+    @apply disabled:bg-disabled disabled:text-surface disabled:cursor-not-allowed;
+  }
+  .btn-disabled-secondary {
+    @apply disabled:text-disabled underline disabled:cursor-not-allowed;
+  }
+  .animate-tooltip {
+    animation: tooltip-entry 0.25s ease-out forwards;
+  }
+  .animate-text {
+    animation: text-entry 2s ease-out forwards;
+  }
+  .animate-cards {
+    animation: cards-entry 1.5s ease-out forwards;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+@keyframes tooltip-entry {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes text-entry {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cards-entry {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
