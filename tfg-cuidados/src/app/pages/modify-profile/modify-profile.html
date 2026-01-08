@@ -1,0 +1,30 @@
+<div class="w-full mb-4">
+  <app-buttonback></app-buttonback>
+</div>
+
+<div class="bg-surface p-6 w-full h-full">
+  <h1 class="text-2xl font-bold text-center mt-10">
+    {{ 'MODIFY_PROFILE.TITLE' | translate }}
+  </h1>
+
+  @if (this.messageService.messageData(); as data) {
+  <div
+    [ngClass]="{
+      'text-red-500': data.tipo === 'error',
+      'text-primary': data.tipo === 'exito'
+    }"
+    class="text-label ml-2 transition-all duration-300"
+  >
+    {{ data.mensaje }}
+  </div>
+  }
+
+  <app-modifyprofileform
+    [userRole]="userRole()"
+    [userData]="usuarioAEditar()"
+    (formSubmitted)="ejecutarActualizacion($event)"
+    (deleteRequested)="ejecutarBaja()"
+    (cancelRequested)="volverAHome()"
+  >
+  </app-modifyprofileform>
+</div>

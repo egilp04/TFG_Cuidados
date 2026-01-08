@@ -1,0 +1,111 @@
+<div class="w-full mb-4 px-6 pt-6">
+  <app-buttonback></app-buttonback>
+</div>
+
+<div class="flex flex-col items-center justify-center w-full px-6 pb-20">
+  <div class="max-w-4xl w-full text-center mb-10">
+    <h1 class="text-h1 text-primary font-poppins mb-4">
+      {{ 'TERMS_PAGE.TITLE' | translate }}
+    </h1>
+    <p class="text-label text-gray-500">
+      {{ 'TERMS_PAGE.LAST_UPDATE' | translate }}: {{ currentDate | date : 'dd/MM/yyyy' }}
+    </p>
+  </div>
+
+  <div
+    class="max-w-4xl w-full bg-surface border border-primary/10 rounded-2xl p-8 md:p-12 shadow-sm text-secondary"
+  >
+    <section class="mb-12">
+      <h2 class="text-h2 text-primary mb-6 border-b border-primary/20 pb-2">
+        {{ 'TERMS_PAGE.SECTION_1.TITLE' | translate }}
+      </h2>
+
+      <div class="space-y-6 text-p leading-relaxed">
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'TERMS_PAGE.SECTION_1.SUB_1.TITLE' | translate }}
+          </h3>
+          <p [innerHTML]="'TERMS_PAGE.SECTION_1.SUB_1.TEXT' | translate : params"></p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'TERMS_PAGE.SECTION_1.SUB_2.TITLE' | translate }}
+          </h3>
+          <p>{{ 'TERMS_PAGE.SECTION_1.SUB_2.TEXT' | translate }}</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'TERMS_PAGE.SECTION_1.SUB_3.TITLE' | translate }}
+          </h3>
+          <p [innerHTML]="'TERMS_PAGE.SECTION_1.SUB_3.TEXT' | translate : params"></p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'TERMS_PAGE.SECTION_1.SUB_4.TITLE' | translate }}
+          </h3>
+          <p>{{ 'TERMS_PAGE.SECTION_1.SUB_4.TEXT' | translate }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-h2 text-primary mb-6 border-b border-primary/20 pb-2">
+        {{ 'TERMS_PAGE.SECTION_2.TITLE' | translate }}
+      </h2>
+
+      <div class="space-y-6 text-p leading-relaxed">
+        <div class="p-4 bg-primary/5 rounded-lg border border-primary/10">
+          <p class="text-sm font-bold text-primary">
+            {{ 'TERMS_PAGE.SECTION_2.INTRO_BOX' | translate }}
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'TERMS_PAGE.SECTION_2.SUB_1.TITLE' | translate }}
+          </h3>
+          <p [innerHTML]="'TERMS_PAGE.SECTION_2.SUB_1.TEXT' | translate : params"></p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'TERMS_PAGE.SECTION_2.SUB_2.TITLE' | translate }}
+          </h3>
+          <ul class="list-disc pl-5 space-y-1 mt-2">
+            <li [innerHTML]="'TERMS_PAGE.SECTION_2.SUB_2.LIST_1' | translate"></li>
+            <li [innerHTML]="'TERMS_PAGE.SECTION_2.SUB_2.LIST_2' | translate"></li>
+            <li [innerHTML]="'TERMS_PAGE.SECTION_2.SUB_2.LIST_3' | translate"></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'TERMS_PAGE.SECTION_2.SUB_3.TITLE' | translate }}
+          </h3>
+          <p [innerHTML]="'TERMS_PAGE.SECTION_2.SUB_3.TEXT' | translate"></p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'TERMS_PAGE.SECTION_2.SUB_4.TITLE' | translate }}
+          </h3>
+          <p>{{ 'TERMS_PAGE.SECTION_2.SUB_4.TEXT' | translate }}</p>
+          <ul class="list-disc pl-5 space-y-1 mt-2">
+            <li>{{ 'TERMS_PAGE.SECTION_2.SUB_4.LIST_1' | translate }}</li>
+            <li>{{ 'TERMS_PAGE.SECTION_2.SUB_4.LIST_2' | translate }}</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'TERMS_PAGE.SECTION_2.SUB_5.TITLE' | translate }}
+          </h3>
+          <p>{{ 'TERMS_PAGE.SECTION_2.SUB_5.TEXT' | translate }}</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
