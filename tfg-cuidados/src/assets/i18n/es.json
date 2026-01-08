@@ -1,0 +1,719 @@
+{
+  "APP": {
+    "NAME": "TFG App"
+  },
+  "NAVBAR": {
+    "HOME": "Inicio",
+    "ACTIVITIES": "Actividades",
+    "SERVICES": "Servicios",
+    "PROFILE": "Perfil",
+    "LOGIN": "Iniciar Sesión",
+    "LOGOUT": "Cerrar Sesión",
+    "REGISTER": "Registrarse"
+  },
+  "HOME": {
+    "WELCOME": "Bienvenido",
+    "ROLE": "Tu rol actual es",
+    "ADMIN_PANEL": "Panel de Administración",
+    "HERO": {
+      "TITLE": "Cuidamos de ti,",
+      "SUBTITLE": "porque cuidar es cosa de dos"
+    }
+  },
+  "CALENDAR": {
+    "TITLE": "Calendario de Actividades",
+    "HEADER": {
+      "COMPANY": "Empresa",
+      "CLIENT": "Cliente",
+      "USER": "Usuario"
+    },
+    "TABLE": {
+      "USER": "Usuario",
+      "SERVICE": "Servicio",
+      "DAY": "Día",
+      "HOUR": "Hora",
+      "PLACE": "Lugar",
+      "ACTIONS": "Acciones",
+      "CANCEL": "Cancelar",
+      "EMPTY": "No hay actividades para este mes."
+    },
+    "DAYS": {
+      "DO": "Do",
+      "LU": "Lu",
+      "MA": "Ma",
+      "MI": "Mi",
+      "JU": "Ju",
+      "VI": "Vi",
+      "SA": "Sá"
+    }
+  },
+  "MODALS": {
+    "CANCEL_CONTRACT": {
+      "TITLE": "Cancelar Contrato",
+      "MESSAGE": "¿Estás seguro de que deseas cancelar este servicio? Esta acción no se puede deshacer.",
+      "CONFIRM": "Sí, cancelar",
+      "CLOSE": "No, cerrar"
+    }
+  },
+  "BUTTONS": {
+    "BACK": "Volver",
+    "SAVE": "Guardar",
+    "Edit": "Editar",
+    "DELETE": "Eliminar",
+    "ACCEPT": "Aceptar",
+    "CANCEL": "Cancelar"
+  },
+
+  "ABOUT": {
+    "TITLE": "Sobre Nosotros",
+    "DESCRIPTION": "CuidaDos es una plataforma que busca ser un intermediario seguro y eficiente para la contratación de servicios de cuidado y atención a personas mayores o que necesiten ayuda en su vida diaria.",
+    "SCOPE": {
+      "TITLE": "Ámbito Social y Comercial",
+      "DESC": "El proyecto tiene un doble enfoque:",
+      "SOCIAL": "Social",
+      "SOCIAL_DESC": "Facilita la búsqueda y solicitud de ayuda a domicilio.",
+      "COMMERCIAL": "Comercial",
+      "COMMERCIAL_DESC": "Implica la contratación de servicios profesionales, generando oportunidades económicas para empresas y cuidadores del sector."
+    },
+    "VALUE": {
+      "TITLE": "Valor Añadido",
+      "DESC": "La plataforma se distingue por permitir a los usuarios escoger la empresa que mejor se adapte a sus necesidades \"con un solo click\", basándose en valoraciones de otros usuarios y ofreciendo un servicio de resolución de conflictos."
+    },
+    "ASSISTANCE": {
+      "TITLE": "Asistencia al Usuario",
+      "DESC": "Se ofrece asistencia a través de vídeos guiados, chat y llamada para las personas que necesiten ayuda para manejar la aplicación."
+    },
+    "TEAM": {
+      "TITLE": "Miembros del equipo",
+      "MEMBER1": {
+        "ROLE": "CEO & Fundadora",
+        "DESC": "Estratega con más de 10 años de experiencia en el ámbito sociosanitario y gestión de equipos."
+      },
+      "MEMBER2": {
+        "ROLE": "CTO & Co-Fundador",
+        "DESC": "Responsable del desarrollo tecnológico y de garantizar una plataforma segura y accesible."
+      },
+      "MEMBER3": {
+        "ROLE": "Directora de Operaciones",
+        "DESC": "Especialista en coordinar la red de cuidadores y asegurar la calidad en cada servicio contratado."
+      },
+      "MEMBER4": {
+        "ROLE": "Atención al Cliente",
+        "DESC": "Dedicada a ofrecer soporte humano y resolver dudas para una experiencia excelente."
+      }
+    }
+  },
+  "ACTIVITIES": {
+    "TITLE": "Actividades",
+    "DAYS": {
+      "SU": "Do",
+      "MO": "Lu",
+      "TU": "Ma",
+      "WE": "Mi",
+      "TH": "Ju",
+      "FR": "Vi",
+      "SA": "Sá"
+    },
+    "TABLE": {
+      "HEADER_COMPANY": "Empresa",
+      "HEADER_CLIENT": "Cliente",
+      "HEADER_USER": "Usuario",
+      "NAME": "Nombre",
+      "DAY": "Día",
+      "TIME": "Hora",
+      "LOCATION": "Lugar"
+    },
+    "BTN_CANCEL": "Cancelar"
+  },
+  "CONTACT": {
+    "TITLE": "Contactar",
+    "FORM": {
+      "NAME": "Nombre",
+      "EMAIL": "Email",
+      "SUBJECT": "Motivo",
+      "MESSAGE": "Mensaje",
+      "SEND": "Contactar"
+    },
+    "ERRORS": {
+      "NAME": "El nombre debe tener al menos 3 caracteres.",
+      "EMAIL": "Introduce un correo electrónico válido.",
+      "SUBJECT": "El motivo es obligatorio (mín. 6 caracteres).",
+      "MESSAGE": "El mensaje debe ser más extenso."
+    }
+  },
+  "CONTRACTS": {
+    "TITLE": "Contratos",
+    "TABLE": {
+      "ID": "ID del Contrato",
+      "DATE": "Fecha"
+    },
+    "ACTIONS": {
+      "CANCEL": "Cancelar",
+      "DETAILS": "Ver detalles"
+    }
+  },
+  "DASHBOARD": {
+    "TITLE_CONTRACTS": "Contratos",
+    "TOTAL_CONTRACTS": "Contratos totales:",
+    "TOTAL_USERS": "Usuarios totales actuales:",
+    "LOGIN": {
+      "TITLE": "LOGIN",
+      "SUBTITLE": "Usuarios que usan la aplicación a la semana"
+    },
+    "CHART": {
+      "ACTIVE": "Activos",
+      "CANCELED": "Cancelados",
+      "DAYS": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"]
+    }
+  },
+  "MAIN_MENU": {
+    "TITLE": "Menú Principal",
+    "CLIENT": {
+      "SEARCH_COMPANIES": "Buscar Empresas",
+      "MY_SERVICES": "Servicios Contratados"
+    },
+    "COMPANY": {
+      "MANAGE_SERVICES": "Gestionar servicios",
+      "ALL_CONTRACTS": "Ver todos los contratos"
+    },
+    "ADMIN": {
+      "DASHBOARD": "Ver dashboard",
+      "MANAGE_USERS": "Gestionar usuarios",
+      "MANAGE_COMPANIES": "Gestionar Empresas",
+      "MANAGE_SERVICES": "Gestionar servicios",
+      "MANAGE_SCHEDULES": "Gestionar horarios"
+    },
+    "COMMON": {
+      "ACTIVITIES": "Actividades programadas"
+    }
+  },
+  "LANDING": {
+    "HERO": {
+      "ALT": "Manos cuidándose",
+      "TITLE": "Cuidamos de ti,",
+      "SUBTITLE": "porque cuidar es cosa de dos"
+    },
+    "SERVICES": "Servicios",
+    "REGISTER": "Registrarse",
+    "CARDS": {
+      "CONTRATACION": {
+        "TITLE": "Contrata servicios fácilmente",
+        "DESC": "Encuentra y contrata servicios  de empresas profesionales  dedicadas al cuidado personal, acompañamiento y bienestar."
+      },
+      "GESTION": {
+        "TITLE": "Gestión en un solo lugar",
+        "DESC": "Administra tus contratos, recibe recordatorios y haz seguimiento de los servicios contratados, fácilmente."
+      },
+      "RESOLUCION": {
+        "TITLE": "Resolución de problemas",
+        "DESC": "Nuestro equipo te acompaña en cada paso para que encuentres soluciones rápidas, confiables y adaptadas a lo que necesitas."
+      }
+    }
+  },
+  "ADMIN_MANAGEMENT": {
+    "NEW_CLIENT": "Nuevo Cliente",
+    "NEW_COMPANY": "Nueva Empresa"
+  },
+  "MESSAGES": {
+    "SUCCESS": {
+      "CANCELCONTRACT": "El contrato ha sido cancelado con éxito.",
+      "SAVE": "Datos guardados correctamente.",
+      "CONTACT": "El mensaje ha sido enviado con éxito.",
+      "DELETE_USER": "Registro eliminado correctamente."
+    },
+    "ERROR": {
+      "GENERIC": "Ha ocurrido un error. Inténtelo más tarde.",
+      "CANCELCONTRACT": "Error al cancelar el contrato.",
+      "CONTACT": "El mensjae no ha sido enviado, inténtelo más tarde.",
+      "DELETE_USER": "Error al eliminar el registro."
+    }
+  },
+  "MANAGEMENT_SERVICES": {
+    "TITLE": "SERVICIO",
+    "FORM": {
+      "NAME": "Nombre",
+      "TYPE": "Tipo",
+      "ADD": "Añadir servicio",
+      "SAVE": "Guardar Cambios",
+      "CANCEL": "Cancelar"
+    },
+    "LIST": {
+      "TITLE": "Listado de Servicios",
+      "SEARCH": "Buscar por nombre",
+      "EMPTY": "No se han encontrado servicios."
+    },
+    "TABLE": {
+      "NAME": "Nombre",
+      "TYPE": "Tipo",
+      "ACTIONS": "Acciones",
+      "EDIT": "Editar",
+      "DELETE": "Eliminar"
+    },
+    "MESSAGES": {
+      "CONFIRM_DELETE": "¿Deseas eliminar este servicio?",
+      "SUCCESS_CREATE": "Servicio creado con éxito",
+      "SUCCESS_UPDATE": "Servicio actualizado con éxito",
+      "SUCCESS_DELETE": "Servicio eliminado",
+      "ERROR_DUPLICATE": "Ese nombre de servicio ya existe",
+      "ERROR_GENERIC": "Error al procesar la solicitud",
+      "ERROR_DELETE": "Error al eliminar"
+    }
+  },
+  "MANAGEMENT_SCHEDULES": {
+    "TITLE": "HORARIO",
+    "FORM": {
+      "START_TIME": "Hora de Inicio",
+      "DAY_LABEL": "Día de la semana",
+      "SELECT_DAY": "Selecciona un día",
+      "ADD": "Añadir horario",
+      "SAVE": "Guardar Cambios",
+      "CANCEL": "Cancelar"
+    },
+    "DAYS": {
+      "MONDAY": "Lunes",
+      "TUESDAY": "Martes",
+      "WEDNESDAY": "Miércoles",
+      "THURSDAY": "Jueves",
+      "FRIDAY": "Viernes",
+      "SATURDAY": "Sábado",
+      "SUNDAY": "Domingo"
+    },
+    "TABLE": {
+      "TIME": "Hora",
+      "DAY": "Día de la semana",
+      "ACTIONS": "Acciones",
+      "EDIT": "Editar",
+      "DELETE": "Eliminar"
+    },
+    "LIST": {
+      "TITLE": "Lista de horarios"
+    },
+    "MESSAGES": {
+      "FILL_FIELDS": "Rellene todos los campos correctamente.",
+      "INVALID_DAY": "El día seleccionado no es válido.",
+      "INVALID_TIME_RANGE": "La hora debe estar entre las 00 y las 23.",
+      "INVALID_MINUTES": "Los minutos deben ser :00 o :30.",
+      "CONFIRM_DELETE": "¿Deseas eliminar este horario? Los servicios asociados podrían verse afectados.",
+      "SUCCESS_CREATE": "Horario creado correctamente",
+      "SUCCESS_UPDATE": "Horario actualizado correctamente",
+      "SUCCESS_DELETE": "Horario eliminado",
+      "ERROR_DUPLICATE": "Ya existe un horario para {{dia}} a las {{hora}}",
+      "ERROR_GENERIC": "Error al procesar la solicitud"
+    }
+  },
+  "MANUALS": {
+    "TITLE": "Manuales",
+    "DOWNLOAD_BTN": "Descargar PDF",
+    "ITEMS": {
+      "START": {
+        "TITLE": "Guía de Inicio",
+        "DESC": "Aprende a contratar tu primer servicio en menos de 5 minutos."
+      },
+      "PROTOCOL": {
+        "TITLE": "Protocolo Profesional",
+        "DESC": "Manual de buenas prácticas para cuidadores y empresas de salud."
+      }
+    }
+  },
+  "MESSAGES_PAGE": {
+    "TITLE": "Mensajes",
+    "NEW_MSG": "Nuevo Mensaje",
+    "SORT_LABEL": "Ordenar por...",
+    "SORT_OPTIONS": {
+      "DATE": "Fecha",
+      "SUBJECT_AZ": "Asunto (A-Z)",
+      "SUBJECT_ZA": "Asunto (Z-A)"
+    },
+    "TABLE": {
+      "SENDER": "Emisor",
+      "RECEIVER": "Receptor",
+      "SUBJECT": "Asunto",
+      "DATE": "Fecha Recepción",
+      "ACTIONS": "Acciones",
+      "BTN_DELETE": "Borrar",
+      "BTN_VIEW": "Ver"
+    },
+    "ALERTS": {
+      "CONFIRM_DELETE": "¿Seguro que quieres eliminar este mensaje?",
+      "DELETE_SUCCESS": "El mensaje ha sido eliminado.",
+      "DELETE_ERROR": "No se pudo eliminar el mensaje.",
+      "VIEW_ERROR": "No se puede ver este mensaje en este momento"
+    }
+  },
+
+  "NOTIFICATIONS": {
+    "TITLE": "Notificaciones",
+    "TABLE": {
+      "NAME": "Nombre",
+      "CONTENT": "Notificación",
+      "DATE": "Fecha"
+    },
+    "MESSAGES": {
+      "CONNECTION_ERROR": "Error en la conexión de avisos en vivo"
+    }
+  },
+  "RECOVER_PASSWORD": {
+    "TITLE": "Restablecer Contraseña",
+    "DESCRIPTION": "Introduce tu nueva contraseña para recuperar el acceso.",
+    "LABEL_NEW_PASS": "Nueva Contraseña",
+    "BTN_SUBMIT": "Enviar",
+    "ERRORS": {
+      "REQUIRED": "La contraseña es obligatoria.",
+      "MIN_LENGTH": "Mínimo 6 caracteres.",
+      "PATTERN": "Debe contener letras, números y carácteres especiales.",
+      "INVALID": "Campo inválido"
+    },
+    "TOAST": {
+      "SUCCESS": "¡Contraseña actualizada! Bienvenido de nuevo.",
+      "ERROR": "El enlace ha expirado o hubo un error."
+    }
+  },
+  "SEARCH_BUSINESS": {
+    "MESSAGES": {
+      "CONNECTION_ERROR": "Error de conexión.",
+      "LOGIN_REQUIRED": "Debes iniciar sesión para contratar.",
+      "LOGIN_MSG_REQUIRED": "Inicia sesión para enviar mensajes.",
+      "SELECT_SERVICE": "Por favor, selecciona un servicio y horario.",
+      "CONFIRM_CONTRACT": "¿Deseas contratar {{servicio}} por {{precio}}€?",
+      "CONTRACT_SUCCESS": "¡Contrato realizado con éxito!",
+      "CONTRACT_ERROR": "Error al procesar la contratación."
+    },
+    "CARD": {
+      "DESCRIPTION": "Descripción:",
+      "SELECT_SERVICE": "Selecciona un servicio:",
+      "CHOOSE_OPTION": "-- Elige un servicio --"
+    },
+    "BTN_MESSAGE": "Mensaje",
+    "BTN_CONTRACT": "Contratar",
+    "LIST": {
+      "EMPTY": "No se encontraron empresas con los criterios de búsqueda."
+    }
+  },
+  "SERVICES_BUSINESS": {
+    "BTN_NEW": "Nuevo servicio",
+    "BTN_DELETE": "Eliminar",
+    "BTN_MODIFY": "Modificar",
+    "TABLE": {
+      "NAME": "Nombre",
+      "PRICE": "Precio/h",
+      "TYPE": "Tipo",
+      "TIME": "Hora",
+      "DAY": "Día"
+    },
+    "MESSAGES": {
+      "DELETE_SUCCESS": "El servicio ha sido eliminado con éxito.",
+      "DELETE_ERROR": "Error al eliminar. Inténtelo más tarde."
+    }
+  },
+  "CANCEL_MODAL": {
+    "BTN": {
+      "KEEP_ACCOUNT": "Continuar registrado",
+      "UNSUBSCRIBE": "Cancelar registro",
+      "KEEP_CONTRACT": "Continuar con el contrato",
+      "CANCEL_CONTRACT": "Cancelar contrato",
+      "CANCEL_ACTION": "Cancelar acción",
+      "DELETE": "Eliminar"
+    },
+    "BAJA": {
+      "TITLE": "¿Seguro que quieres darte de baja?",
+      "DESC_1": "Perderás el acceso a todas las funcionalidades de la app. Esta acción no se puede deshacer.",
+      "DESC_2": "Al continuar, tu cuenta será desactivada y no podrás acceder nuevamente con este perfil.",
+      "CONFIRM": "¿Desea continuar?"
+    },
+    "CONTRACT": {
+      "TITLE": "Confirmación de Cancelación de Contrato",
+      "DESC_1": "¡Atención! Está a punto de cancelar un contrato de servicio. Al confirmar, el contrato seleccionado será anulado en la plataforma CuidaDos. ¿Qué sucederá ahora?",
+      "LIST": {
+        "RECORD": "<strong>Registro del Cambio:</strong> La cancelación se registrará inmediatamente en el sistema y se actualizará su calendario.",
+        "COMM": "<strong>Comunicación:</strong> Recibirá una notificación de confirmación por correo o dentro de la aplicación.",
+        "NOTIFY": "<strong>Notificación a la Otra Parte.</strong>"
+      },
+      "NOTE": "Si tiene alguna pregunta o surge un conflicto, recuerde que CuidaDos actúa como intermediario.",
+      "CONFIRM": "¿Desea continuar con la cancelación?"
+    },
+    "SERVICE": {
+      "TITLE": "Advertencia: Eliminación de Servicio Ofertado",
+      "DESC_1": "Está a punto de eliminar un servicio de su catálogo. Si confirma esta acción, el servicio será eliminado permanentemente.",
+      "SUBTITLE": "Consecuencias de la Eliminación:",
+      "LIST": {
+        "CESSATION": "<strong>Cese de Oferta:</strong> Los usuarios ya no podrán buscar ni contratar este servicio.",
+        "VISIBILITY": "<strong>Pérdida de Visibilidad:</strong> El servicio y sus detalles serán retirados de los resultados de búsqueda."
+      },
+      "IMPORTANT_TITLE": "Importante sobre Contratos Activos:",
+      "IMPORTANT_DESC": "Si este servicio ya ha sido contratado, le recomendamos gestionar esos contratos para evitar incidencias.",
+      "CONFIRM": "¿Desea continuar?"
+    },
+    "GENERIC": {
+      "TITLE": "Confirmación de eliminación",
+      "SUBTITLE": "Eliminar los datos conlleva:",
+      "LIST": {
+        "PROFILE": "El perfil de cliente o empresa y sus datos asociados serán eliminados.",
+        "CONTRACTS": "Todos los contratos de servicios activos o futuros quedan anulados inmediatamente."
+      },
+      "NOTE": "La plataforma notificará a la otra parte sobre la anulación forzosa del servicio.",
+      "CONFIRM": "¿Deseas continuar?"
+    }
+  },
+  "BUTTONBACK": {
+    "BTN_BACK": "Volver"
+  },
+  "SELECT": {
+    "SELECT": "Select"
+  },
+  "INFO_CONTRACT": {
+    "TITLE_DETAILS": "Detalles del contrato",
+    "TITLE_ACTIVITY": "Detalles de la actividad",
+    "ID": "ID del contrato",
+    "DATE_CREATION": "Fecha de creación",
+    "DATE_START": "Fecha de Inicio",
+    "DATE_END": "Fecha de fin",
+    "NOT_FINALIZED": "Sin finalizar",
+    "STATUS": "Estado",
+    "TIME": "Hora contratada",
+    "DAY": "Día de la semana contratado",
+    "SERVICE": "Nombre del servicio",
+    "CLIENT": "Nombre del contratante (Cliente)",
+    "COMPANY": "Nombre del contratado (Empresa)",
+    "BTN_CANCEL": "Cancelar"
+  },
+  "ADMIN_TABLE": {
+    "SEARCH_LABEL": "Buscar por nombre o email",
+    "HEADER": {
+      "NAME": "Nombre",
+      "SURNAME": "Apellidos"
+    },
+    "BTN": {
+      "DELETE": "Eliminar",
+      "MODIFY": "Modificar"
+    },
+    "NO_DATA": "No se han encontrado registros.",
+    "PAGINATOR_LABEL": "Seleccionar página de usuarios"
+  },
+  "SEARCH_PLACEHOLDER": "Buscar...",
+  "REGISTER": {
+    "MESSAGES": {
+      "SUCCESS": "¡Registro realizado con éxito! Revisa tu email.",
+      "ERROR_EMAIL": "El correo electrónico ya está registrado.",
+      "ERROR_GENERIC": "Error al conectar con el servidor."
+    },
+    "PLACEHOLDER": {
+      "SELECTREGION": "Seleccione una comunidad"
+    },
+    "LABELS": {
+      "USERNAME": "Nombre de usuario",
+      "SURNAME1": "Primer Apellido",
+      "SURNAME2": "Segundo Apellido",
+      "BIRTHDATE": "Fecha de nacimiento",
+      "DNI": "DNI",
+      "COMPANY_NAME": "Nombre de la empresa",
+      "CIF": "CIF",
+      "PHONE": "Teléfono",
+      "EMAIL": "Email",
+      "ADDRESS": "Dirección",
+      "CITY": "Localidad",
+      "ZIP": "CP",
+      "REGION": "Comunidad Autónoma",
+      "PASSWORD": "Contraseña",
+      "REPASSWORD": "Repetir contraseña",
+      "DESCRIPTION": "Descripción"
+    },
+    "TERMS": {
+      "PART_1": "He leído y acepto los",
+      "LINK": "Términos y Condiciones",
+      "PART_2": "y la Política de Privacidad, y autorizo el tratamiento de mis datos personales.",
+      "ERROR": "Debes aceptar los términos para continuar"
+    },
+    "BTN": "Registrarse",
+    "ERRORS": {
+      "REQUIRED": "Este campo es obligatorio",
+      "EMAIL": "Formato de correo inválido",
+      "MIN_LENGTH": "Mínimo {{value}} caracteres",
+      "MISMATCH": "Las contraseñas no coinciden",
+      "TERMS_REQUIRED": "Debes aceptar los términos y condiciones",
+      "INVALID": "Campo inválido",
+      "PATTERN": {
+        "PHONE": "Debe tener 9 dígitos (ej: 600123456)",
+        "ZIP": "CP no válido (5 dígitos)",
+        "PASSWORD": "Debe contener letras, números y caracteres especiales (mín. 6)"
+      },
+      "NOT_ADULT": "Debes ser mayor de 18 años",
+      "DNI_FORMAT": "El DNI debe tener 8 números y 1 letra",
+      "DNI_LETTER": "La letra del DNI no es correcta",
+      "FECHNACINVALID": "Fecha de nacimiento inválida",
+      "CIF_FORMAT": "El formato del CIF es incorrecto (Ej: B12345678)",
+      "CIF_INVALID": "El CIF no es válido (dígito de control incorrecto)",
+      "EMAIL_TAKEN": "Este correo electrónico ya está en uso"
+    }
+  },
+  "SERVICE_TIME_MODAL": {
+    "LABELS": {
+      "DESCRIPTION": "Descripción de la oferta",
+      "GLOBAL_SERVICE": "Servicio Global",
+      "PRICE": "Precio/h(€)",
+      "AVAILABLE_SCHEDULE": "Horario Disponible"
+    },
+    "PLACEHOLDERS": {
+      "DESCRIPTION": "Ej: Limpieza profunda de cristales",
+      "SELECT_SERVICE": "Escoge un servicio...",
+      "LOADING_SERVICES": "Cargando servicios...",
+      "SELECT_TIME": "Escoge un día y hora...",
+      "LOADING_TIMES": "Cargando horarios..."
+    },
+    "BTN": {
+      "UPDATE": "Actualizar Cambios",
+      "CREATE": "Crear Oferta"
+    },
+    "ERRORS": {
+      "REQUIRED": "Este campo es obligatorio",
+      "MIN_VALUE": "El valor mínimo es {{value}}",
+      "INVALID_PRICE": "Formato de precio inválido (ej: 10 o 10.50)",
+      "INVALID_FORMAT": "Formato no válido",
+      "INVALID_FIELD": "Campo inválido"
+    }
+  },
+  "MODIFY_PROFILE": {
+    "DESCRIPTION_MODIFY": "Modify descripcion",
+    "TITLE": "Modificar Perfil",
+    "MESSAGES": {
+      "EMAIL_USED": "Email ya en uso",
+      "UPDATE_SUCCESS": "¡Perfil actualizado con éxito!",
+      "UPDATE_ERROR": "Error al actualizar los datos.",
+      "DELETE_SUCCESS": "Usuario eliminado correctamente."
+    },
+    "LABELS": {
+      "USERNAME": "Nombre de usuario",
+      "SURNAME1": "Primer Apellido",
+      "SURNAME2": "Segundo Apellido",
+      "COMPANY_NAME": "Nombre de la empresa",
+      "PHONE": "Teléfono",
+      "EMAIL": "Email",
+      "ADDRESS": "Dirección",
+      "CITY": "Localidad",
+      "ZIP": "CP",
+      "REGION": "C.C.A.A.",
+      "DESCRIPTION": "Descripción"
+    },
+    "BTN": {
+      "CANCEL": "Cancelar modificación",
+      "MODIFY": "Modificar",
+      "UNSUBSCRIBE": "Darse de baja"
+    },
+    "ERRORS": {
+      "REQUIRED": "Este campo es obligatorio",
+      "EMAIL": "Formato de correo inválido",
+      "MIN_LENGTH": "Mínimo {{value}} caracteres",
+      "PATTERN": "El formato no es válido",
+      "INVALID": "Campo inválido"
+    }
+  },
+  "MESSAGES_MODAL": {
+    "LABELS": {
+      "TO": "Para:",
+      "SUBJECT": "Asunto:",
+      "SENDER": "Emisor:",
+      "RECEIVER": "Receptor:",
+      "MESSAGE_CONTENT": "MENSAJE"
+    },
+    "PLACEHOLDERS": {
+      "WRITE_HERE": "Escribe aquí el mensaje..."
+    },
+    "BTN": {
+      "SEND": "Enviar"
+    },
+    "FEEDBACK": {
+      "ERROR_SENDER": "Error: No se ha detectado el emisor.",
+      "USER_NOT_FOUND": "El correo no pertenece a ningún usuario registrado",
+      "SEND_ERROR": "Error al enviar el mensaje",
+      "SEND_SUCCESS": "Mensaje enviado con éxito"
+    }
+  },
+  "LOGIN_MODAL": {
+    "TITLES": {
+      "LOGIN": "Iniciar Sesión",
+      "REGISTER": "Registrarse",
+      "RECOVER": "Recuperar Contraseña"
+    },
+    "LABELS": {
+      "EMAIL": "Email",
+      "PASSWORD": "Tu contraseña"
+    },
+    "HINTS": {
+      "PASS_PATTERN": "La contraseña debe tener al menos 6 caracteres, letras y números.",
+      "RECOVER_DESC": "Introduce tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña."
+    },
+    "BTN": {
+      "ENTER": "Entrar",
+      "FORGOT": "He olvidado mi contraseña",
+      "REGISTER": "Registrarse",
+      "REG_USER": "Registrarse como usuario",
+      "REG_COMPANY": "Registrarse como empresa",
+      "HAVE_ACCOUNT": "Ya tengo cuenta",
+      "SEND_LINK": "Enviar enlace",
+      "BACK_LOGIN": "Volver al inicio de sesión"
+    },
+    "FEEDBACK": {
+      "LOGIN_ERROR": "Usuario o contraseña incorrectos",
+      "FILL_FIELDS": "Por favor, rellene los campos correctamente",
+      "INVALID_EMAIL": "Introduce un email válido para recuperar",
+      "LINK_SENT": "Enlace enviado. Revisa tu correo.",
+      "CONN_ERROR": "Error de conexión"
+    }
+  },
+  "FOOTER": {
+    "HOME": "Inicio",
+    "ABOUT": "Sobre Nosotros",
+    "CONTACT": "Contacto",
+    "MANUALS": "Manuales"
+  },
+  "TERMS_PAGE": {
+    "TITLE": "Términos y Condiciones y Política de Privacidad",
+    "LAST_UPDATE": "Última actualización",
+    "SECTION_1": {
+      "TITLE": "1. Términos y Condiciones de Uso",
+      "SUB_1": {
+        "TITLE": "1.1. Introducción",
+        "TEXT": "Bienvenido a <strong>{{appName}}</strong>. Esta aplicación actúa como una plataforma intermediaria tecnológica que facilita el contacto y la gestión de servicios entre usuarios que demandan cuidados o servicios ('Clientes') y profesionales o entidades que los ofrecen ('Empresas')."
+      },
+      "SUB_2": {
+        "TITLE": "1.2. Registro y Seguridad",
+        "TEXT": "Para utilizar el servicio, el usuario debe registrarse proporcionando datos veraces. La contraseña es personal e intransferible. El usuario es responsable de todas las acciones realizadas desde su cuenta. Nos reservamos el derecho de suspender cuentas que proporcionen información falsa o hagan un uso indebido de la plataforma."
+      },
+      "SUB_3": {
+        "TITLE": "1.3. Funcionamiento de los Contratos",
+        "TEXT": "Al pulsar el botón 'Contratar', se genera un vínculo digital entre el Cliente y la Empresa. <strong>{{appName}}</strong> no es parte de este contrato de servicio final, actuando exclusivamente como herramienta de gestión y comunicación. La responsabilidad sobre la calidad, horarios y ejecución del servicio recae exclusivamente en la Empresa proveedora."
+      },
+      "SUB_4": {
+        "TITLE": "1.4. Normas de Conducta y Mensajería",
+        "TEXT": "El sistema de mensajería interno debe usarse exclusivamente para la coordinación de los servicios contratados. Queda prohibido el envío de spam, contenido ofensivo, discriminatorio o ilegal. El incumplimiento de esta norma conllevará la expulsión inmediata de la plataforma."
+      }
+    },
+    "SECTION_2": {
+      "TITLE": "2. Política de Privacidad y Marco Legal",
+      "INTRO_BOX": "Esta Política de Privacidad se rige por el cumplimiento de la legislación vigente en España y Europa, concretamente: el RGPD (Reglamento UE 2016/679), la LOPD-GDD (Ley Orgánica 3/2018) y la LSSI-CE (Ley 34/2002).",
+      "SUB_1": {
+        "TITLE": "2.1. Responsable del Tratamiento",
+        "TEXT": "Los datos serán tratados por el titular de la aplicación [TU RAZÓN SOCIAL O NOMBRE], con domicilio en España. Para cualquier gestión relacionada con la privacidad y protección de datos, puede contactar en: <strong>{{email}}</strong>."
+      },
+      "SUB_2": {
+        "TITLE": "2.2. Datos que recopilamos y su necesidad",
+        "LIST_1": "<strong>Datos Identificativos (DNI, Nombre, Fecha Nacimiento):</strong> Estrictamente necesarios para verificar la mayoría de edad y la capacidad legal para formalizar contratos.",
+        "LIST_2": "<strong>Datos de Contacto y Ubicación:</strong> Necesarios para la ejecución material del servicio en el domicilio del cliente.",
+        "LIST_3": "<strong>Datos de Actividad:</strong> Logs de seguridad y contratos para cumplir con la LSSI y trazabilidad del servicio."
+      },
+      "SUB_3": {
+        "TITLE": "2.3. Finalidad y Legitimación",
+        "TEXT": "La base legal para el tratamiento es la <strong>ejecución del contrato</strong> (art. 6.1.b RGPD) y el cumplimiento de obligaciones legales. Sus datos no se usarán para fines distintos a la gestión de la plataforma sin su consentimiento explícito."
+      },
+      "SUB_4": {
+        "TITLE": "2.4. Cesión de Datos",
+        "TEXT": "Sus datos no se cederán a terceros salvo obligación legal o necesidad contractual:",
+        "LIST_1": "A la contraparte del servicio (Empresa/Cliente) exclusivamente para la prestación del servicio contratado.",
+        "LIST_2": "A proveedores tecnológicos (Encargados del Tratamiento) como Supabase, que garantizan la seguridad según estándares europeos."
+      },
+      "SUB_5": {
+        "TITLE": "2.5. Derechos ARCO",
+        "TEXT": "Conforme a la normativa, puede ejercer sus derechos de Acceso, Rectificación, Supresión, Oposición, Limitación y Portabilidad enviando un correo a la dirección indicada."
+      }
+    }
+  }
+}

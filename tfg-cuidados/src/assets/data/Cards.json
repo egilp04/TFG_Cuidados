@@ -1,0 +1,17 @@
+[
+  {
+    "titulo": "LANDING.CARDS.CONTRATACION.TITLE",
+    "descripcion": "LANDING.CARDS.CONTRATACION.DESC",
+    "imagen": "assets/img/landing/contratacion.webp"
+  },
+  {
+    "titulo": "LANDING.CARDS.GESTION.TITLE",
+    "descripcion": "LANDING.CARDS.GESTION.DESC",
+    "imagen": "assets/img/landing/gestion.webp"
+  },
+  {
+    "titulo": "LANDING.CARDS.RESOLUCION.TITLE",
+    "descripcion": "LANDING.CARDS.RESOLUCION.DESC",
+    "imagen": "assets/img/landing/resolucion.webp"
+  }
+]

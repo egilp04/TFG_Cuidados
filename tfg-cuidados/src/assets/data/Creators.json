@@ -1,0 +1,26 @@
+[
+  {
+    "titulo": "Eve Gil",
+    "cargo": "ABOUT.TEAM.MEMBER1.ROLE",
+    "descripcion": "ABOUT.TEAM.MEMBER1.DESC",
+    "imagen": "assets/img/members/team1.webp"
+  },
+  {
+    "titulo": "JJ Espinosa",
+    "cargo": "ABOUT.TEAM.MEMBER2.ROLE",
+    "descripcion": "ABOUT.TEAM.MEMBER2.DESC",
+    "imagen": "assets/img/members/team2.webp"
+  },
+  {
+    "titulo": "BoliT E.G.",
+    "cargo": "ABOUT.TEAM.MEMBER3.ROLE",
+    "descripcion": "ABOUT.TEAM.MEMBER3.DESC",
+    "imagen": "assets/img/members/team3.webp"
+  },
+  {
+    "titulo": "Gemma I.",
+    "cargo": "ABOUT.TEAM.MEMBER4.ROLE",
+    "descripcion": "ABOUT.TEAM.MEMBER4.DESC",
+    "imagen": "assets/img/members/team4.webp"
+  }
+]
