@@ -1,0 +1,59 @@
+<div class="w-full mb-4">
+  <app-buttonback></app-buttonback>
+</div>
+
+<div class="flex flex-col justify-center items-center bg-surface p-20 md:px-20 xl:px-24">
+  <h1 class="text-h1 text-primary mt-10 mb-20 text-center">
+    {{ 'ABOUT.TITLE' | translate }}
+  </h1>
+
+  <p class="text-p text-secondary mb-20 md:mt-20 md:mb-20">
+    {{ 'ABOUT.DESCRIPTION' | translate }}
+  </p>
+
+  <ul class="list-disc list-outside px-10 space-y-4 text-secondary text-p">
+    <li>
+      <span class="font-bold text-primary">{{ 'ABOUT.SCOPE.TITLE' | translate }}:</span>
+      {{ 'ABOUT.SCOPE.DESC' | translate }}
+      <ul class="list-none ml-4 mt-2 space-y-2">
+        <li>
+          • <span class="font-semibold text-primary">{{ 'ABOUT.SCOPE.SOCIAL' | translate }}:</span>
+          {{ 'ABOUT.SCOPE.SOCIAL_DESC' | translate }}
+        </li>
+        <li>
+          •
+          <span class="font-semibold text-primary"
+            >{{ 'ABOUT.SCOPE.COMMERCIAL' | translate }}:</span
+          >
+          {{ 'ABOUT.SCOPE.COMMERCIAL_DESC' | translate }}
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <span class="font-bold text-primary">{{ 'ABOUT.VALUE.TITLE' | translate }}:</span>
+      {{ 'ABOUT.VALUE.DESC' | translate }}
+    </li>
+
+    <li>
+      <span class="font-bold text-primary">{{ 'ABOUT.ASSISTANCE.TITLE' | translate }}:</span>
+      {{ 'ABOUT.ASSISTANCE.DESC' | translate }}
+    </li>
+  </ul>
+
+  <h2 class="text-h2 text-primary m-20 text-center">
+    {{ 'ABOUT.TEAM.TITLE' | translate }}
+  </h2>
+
+  <div class="h-full px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mt-20 w-full">
+    @for (item of cardsdata; track item.titulo; let i = $index) {
+    <app-cards-landing
+      [titulo]="item.titulo"
+      [cargo]="item.cargo "
+      [descripcion]="item.descripcion "
+      [imagen]="item.imagen"
+    >
+    </app-cards-landing>
+    }
+  </div>
+</div>

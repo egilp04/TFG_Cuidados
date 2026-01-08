@@ -1,0 +1,40 @@
+<div class="flex flex-col items-start text-left w-full gap-2">
+  <label class="text-primary text-label font-poppins ml-1" [for]="label()"> {{ label() }} </label>
+  <div class="relative w-full">
+    <input
+      [id]="label()"
+      class="w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent"
+      [placeholder]="label()"
+      [formControl]="control()"
+      [type]="inputType()"
+      [class.border-primary]="!errorMessage()"
+      [class.border-red]="errorMessage()"
+      [attr.aria-invalid]="errorMessage() ? true : null"
+      [attr.aria-describedby]="errorMessage() ? label() + '-error' : null"
+    />
+
+    @if (type() === 'password') {
+    <button
+      type="button"
+      (click)="togglePasswordVisibility()"
+      class="absolute right-4 top-1/2 -translate-y-1/2 text-primary hover:text-accent focus:outline-none cursor-pointer flex items-center justify-center p-1"
+      tabindex="-1"
+    >
+      @if (isPasswordVisible()) {
+      <lucide-icon name="eye-off" class="w-5 h-5"></lucide-icon>
+      } @else {
+      <lucide-icon name="eye" class="w-5 h-5"></lucide-icon>
+      }
+    </button>
+    }
+  </div>
+  @if (errorMessage()) {
+  <span
+    [id]="label() + '-error'"
+    class="text-red text-label ml-2 animate-fade-in"
+    aria-live="polite"
+  >
+    {{ errorMessage() }}
+  </span>
+  }
+</div>

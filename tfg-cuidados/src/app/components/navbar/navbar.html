@@ -1,0 +1,66 @@
+<nav class="flex justify-between items-center p-10 bg-surface border-b border-nav-border min-h-20">
+  <div class="flex items-center">
+    <a (click)="backHome()" class="cursor-pointer">
+      <picture>
+        <source srcset="assets/img/logo/logo.webp" media="(min-width: 1024px)" />
+        <source srcset="assets/img/logo/logo.webp" media="(min-width: 768px)" />
+        <img src="assets/img/logo/logo_peque.webp" alt="CuidaDos" class="h-22" />
+      </picture>
+    </a>
+  </div>
+  <div class="flex items-center gap-10">
+    @if (authService.isAuthenticated()) {
+    <div class="flex items-center gap-10 md:gap-10">
+      <div class="flex flex-col gap-1">
+        <lucide-icon
+          [name]="'mail'"
+          class="text-h2 text-primary cursor-pointer"
+          (click)="verComunicaciones('mensajes')"
+        ></lucide-icon>
+        @if(countMensajes$ | async; as countMensajes){
+        <span class="absolute bg-red-600 text-white text-xs rounded-full p-0.5">
+          {{ countMensajes }}
+        </span>
+        }
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <lucide-icon
+          [name]="'bell'"
+          class="text-h2 text-primary cursor-pointer relative"
+          (click)="verComunicaciones('notificaciones')"
+        ></lucide-icon>
+        @if (countNotificaciones$ | async; as countNotis) {
+        <span class="absolute bg-red-600 text-white text-xs rounded-full p-0.5">
+          {{ countNotis }}
+        </span>
+        }
+      </div>
+
+      <lucide-icon
+        [name]="'user'"
+        class="text-h2 text-primary cursor-pointer"
+        (click)="modificarPerfil()"
+      ></lucide-icon>
+
+      <app-button
+        [label]="'NAVBAR.LOGOUT' | translate"
+        variant="primary"
+        size="lg"
+        (onClick)="logout()"
+      >
+      </app-button>
+    </div>
+    } @else {
+    <app-button
+      [label]="'NAVBAR.REGISTER' | translate"
+      variant="secondary"
+      (onClick)="registrarse()"
+    >
+    </app-button>
+
+    <app-button [label]="'NAVBAR.LOGIN' | translate" variant="primary" (onClick)="iniciarSesion()">
+    </app-button>
+    }
+  </div>
+</nav>

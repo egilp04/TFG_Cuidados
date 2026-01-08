@@ -1,0 +1,8 @@
+<button
+  [class]="buttonClass()"
+  [disabled]="disabled()"
+  (click)="onClick.emit($event)"
+  [type]="type()"
+>
+  {{ label() | translate }}
+</button>
