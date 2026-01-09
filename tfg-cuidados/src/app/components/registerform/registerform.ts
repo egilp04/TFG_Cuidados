@@ -54,16 +54,16 @@ export class Registerform implements OnInit {
 
   registerForm: FormGroup = this.fb.group(
     {
-      usuario: ['', [Validators.minLength(3)]],
+      nombre: ['', [Validators.minLength(3)]],
       termsCondition: [false, Validators.requiredTrue],
-      primerApe: [''],
-      segundoApe: [''],
+      ape1: [''],
+      ape2: [''],
       fechnac: [''],
       dni: [''],
       nombreEmpresa: [''],
       cif: [''],
       descripcion: [''],
-      telefono: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
+      telef: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
       email: ['', [Validators.required, Validators.email]],
       direccion: ['', Validators.required],
       localidad: ['', Validators.required],
@@ -106,17 +106,18 @@ export class Registerform implements OnInit {
       if (this.isUser) {
         datosParaEnviar = {
           password: formValue.password.trim(),
-          nombre: formValue.usuario.trim(),
+          nombre: formValue.nombre.trim(),
           email: formValue.email.trim(),
-          telef: formValue.telefono.trim(),
-          ape1: formValue.primerApe.trim(),
-          ape2: formValue.segundoApe.trim(),
+          telef: formValue.telef.trim(),
+          ape1: formValue.ape1.trim(),
+          ape2: formValue.ape2.trim(),
           dni: formValue.dni.trim(),
           fechnac: formValue.fechnac.trim(),
           direccion: formValue.direccion.trim(),
           localidad: formValue.localidad.trim(),
           codpostal: formValue.codpostal.trim(),
           comunidad: formValue.comunidad,
+          rol: 'cliente',
         };
       } else {
         datosParaEnviar = {
@@ -124,12 +125,13 @@ export class Registerform implements OnInit {
           nombre: formValue.nombreEmpresa.trim(),
           cif: formValue.cif.trim(),
           email: formValue.email.trim(),
-          telef: formValue.telefono.trim(),
+          telef: formValue.telef.trim(),
           direccion: formValue.direccion.trim(),
           localidad: formValue.localidad.trim(),
           codpostal: formValue.codpostal.trim(),
           comunidad: formValue.comunidad,
           descripcion: formValue.descripcion ? formValue.descripcion.trim() : '',
+          rol: 'empresa',
         };
       }
       this.authService
@@ -195,7 +197,7 @@ export class Registerform implements OnInit {
 
   private getPatternMessage(controlName: string): string {
     const patterns: { [key: string]: string } = {
-      telefono: 'REGISTER.ERRORS.PATTERN.PHONE',
+      telef: 'REGISTER.ERRORS.PATTERN.PHONE',
       codpostal: 'REGISTER.ERRORS.PATTERN.ZIP',
       password: 'REGISTER.ERRORS.PATTERN.PASSWORD',
     };
@@ -204,7 +206,7 @@ export class Registerform implements OnInit {
   }
 
   private configurarValidadores() {
-    const camposUser = ['primerApe', 'segundoApe', 'fechnac', 'dni', 'usuario'];
+    const camposUser = ['ape1', 'ape2', 'fechnac', 'dni', 'nombre'];
     const camposEmpresa = ['nombreEmpresa', 'cif', 'descripcion'];
     if (this.isUser) {
       this.setValidators(camposUser);
@@ -222,7 +224,7 @@ export class Registerform implements OnInit {
         c?.setValidators([Validators.required, this.isAdult.bind(this)]);
       } else if (f === 'dni') {
         c?.setValidators([Validators.required, this.dniValidator]);
-      } else if (f === 'usuario') {
+      } else if (f === 'nombre') {
         c?.setValidators([Validators.required, Validators.minLength(3)]);
       } else if (f === 'cif') {
         c?.setValidators([Validators.required, this.cifValidator]);

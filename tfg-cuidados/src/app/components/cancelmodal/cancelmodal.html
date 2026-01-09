@@ -1,0 +1,90 @@
+<div
+  class="flex flex-col justify-center items-center p-6 gap-2 w-full max-w-md mx-auto relative md:py-20"
+>
+  <div class="w-full flex justify-end p-10">
+    <img
+      mat-dialog-close
+      class="cursor-pointer h-10 w-10 md:h-16 md:w-16 lg:h-20 lg:w-20"
+      src="assets/icons/cerrar.webp"
+    />
+  </div>
+  <div class="h-full p-10">
+    <h1 class="text-primary text-h1 text-center">
+      @if(data.modo === 'baja'){
+      {{ 'CANCEL_MODAL.BAJA.TITLE' | translate }}
+      } @else if (data.modo === 'cancelarContrato') {
+      {{ 'CANCEL_MODAL.CONTRACT.TITLE' | translate }}
+      } @else if (data.modo === 'eliminarServicio') {
+      {{ 'CANCEL_MODAL.SERVICE.TITLE' | translate }}
+      } @else {
+      {{ 'CANCEL_MODAL.GENERIC.TITLE' | translate }}
+      }
+    </h1>
+  </div>
+
+  <mat-dialog-content class="p-0! m-0! w-full">
+    <div class="py-8 px-4 text-secondary leading-relaxed">
+      @if(data.modo === 'baja'){
+      <div class="text-center space-y-4">
+        <p class="text-p">{{ 'CANCEL_MODAL.BAJA.DESC_1' | translate }}</p>
+        <p class="text-p">{{ 'CANCEL_MODAL.BAJA.DESC_2' | translate }}</p>
+        <p class="text-p">{{ 'CANCEL_MODAL.BAJA.CONFIRM' | translate }}</p>
+      </div>
+
+      } @else if (data.modo === 'cancelarContrato') {
+      <div class="space-y-4">
+        <p class="text-p">{{ 'CANCEL_MODAL.CONTRACT.DESC_1' | translate }}</p>
+        <ul class="list-disc pl-5 space-y-3">
+          <li [innerHTML]="'CANCEL_MODAL.CONTRACT.LIST.RECORD' | translate"></li>
+          <li [innerHTML]="'CANCEL_MODAL.CONTRACT.LIST.COMM' | translate"></li>
+          <li [innerHTML]="'CANCEL_MODAL.CONTRACT.LIST.NOTIFY' | translate"></li>
+        </ul>
+        <p class="text-p">{{ 'CANCEL_MODAL.CONTRACT.NOTE' | translate }}</p>
+        <p class="text-p text-center font-medium mt-4">
+          {{ 'CANCEL_MODAL.CONTRACT.CONFIRM' | translate }}
+        </p>
+      </div>
+
+      } @else if (data.modo === 'eliminarServicio') {
+      <div class="space-y-4">
+        <p class="text-p">{{ 'CANCEL_MODAL.SERVICE.DESC_1' | translate }}</p>
+        <p class="text-p">{{ 'CANCEL_MODAL.SERVICE.SUBTITLE' | translate }}</p>
+        <ol class="list-decimal pl-5 space-y-3 text-label">
+          <li [innerHTML]="'CANCEL_MODAL.SERVICE.LIST.CESSATION' | translate"></li>
+          <li [innerHTML]="'CANCEL_MODAL.SERVICE.LIST.VISIBILITY' | translate"></li>
+        </ol>
+        <p class="font-bold text-p mt-4">
+          {{ 'CANCEL_MODAL.SERVICE.IMPORTANT_TITLE' | translate }}
+        </p>
+        <p>{{ 'CANCEL_MODAL.SERVICE.IMPORTANT_DESC' | translate }}</p>
+        <p class="text-center mt-4 text-p">{{ 'CANCEL_MODAL.SERVICE.CONFIRM' | translate }}</p>
+      </div>
+
+      } @else {
+      <div class="space-y-4">
+        <p class="font-bold text-p">{{ 'CANCEL_MODAL.GENERIC.SUBTITLE' | translate }}</p>
+        <ol class="list-decimal pl-5 space-y-4 text-label">
+          <li>{{ 'CANCEL_MODAL.GENERIC.LIST.PROFILE' | translate }}</li>
+          <li>{{ 'CANCEL_MODAL.GENERIC.LIST.CONTRACTS' | translate }}</li>
+        </ol>
+        <p class="text-p">{{ 'CANCEL_MODAL.GENERIC.NOTE' | translate }}</p>
+        <p class="text-center font-medium mt-4 text-p">
+          {{ 'CANCEL_MODAL.GENERIC.CONFIRM' | translate }}
+        </p>
+      </div>
+      }
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="flex flex-col! items-center gap-6 w-full m-0! p-0!">
+    <app-button mat-dialog-close [label]="getPrimaryLabel() | translate" variant="secondary">
+    </app-button>
+    <app-button
+      (click)="cancelar()"
+      [label]="getSecondaryLabel() | translate"
+      variant="danger"
+      class="mb-10"
+    >
+    </app-button>
+  </mat-dialog-actions>
+</div>

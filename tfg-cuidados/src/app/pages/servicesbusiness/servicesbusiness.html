@@ -1,0 +1,99 @@
+<div class="flex flex-col p-6 gap-6 bg-surface">
+  <div class="w-full flex items-center justify-between mb-4 gap-10">
+    <app-buttonback></app-buttonback>
+  </div>
+
+  @if (this.messageService.messageData(); as data) {
+  <div
+    [ngClass]="{
+      'text-red-500': data.tipo === 'error',
+      'text-primary': data.tipo === 'exito'
+    }"
+    class="text-label ml-2 transition-all duration-300"
+  >
+    {{ data.mensaje }}
+  </div>
+  }
+
+  <div class="flex flex-col mt-20 w-full bg-surface">
+    <div class="flex flex-col gap-20 mb-20">
+      <div class="flex justify-center">
+        <app-button
+          [label]="'SERVICES_BUSINESS.BTN_NEW' | translate"
+          variant="primary"
+          (click)="openModal()"
+        ></app-button>
+      </div>
+    </div>
+  </div>
+  <div class="overflow-x-auto bg-surface">
+    <table mat-table [dataSource]="dataSource" class="w-full">
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
+          {{ 'SERVICES_BUSINESS.TABLE.NAME' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="p-4 text-body">
+          {{ element.Servicio?.nombre }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
+          {{ 'SERVICES_BUSINESS.TABLE.PRICE' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="p-4 text-body font-medium">
+          {{ element.precio }}€
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tipo">
+        <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
+          {{ 'SERVICES_BUSINESS.TABLE.TYPE' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="p-4 text-label text-primary">
+          {{ element.Servicio?.tipo_servicio }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="hora">
+        <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
+          {{ 'SERVICES_BUSINESS.TABLE.TIME' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="p-4 text-label text-primary">
+          {{ element.Horario?.hora }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dia">
+        <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
+          {{ 'SERVICES_BUSINESS.TABLE.DAY' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="p-4 text-primary">
+          {{ element.Horario?.dia_semana }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef class="p-4 text-surface text-label"></th>
+        <td mat-cell *matCellDef="let element" class="p-4 text-primary">
+          <div class="flex justify-center items-center gap-6">
+            <button
+              (click)="onDelete(element.id_servicio_horario)"
+              class="text-secondary font-bold hover:underline"
+            >
+              {{ 'SERVICES_BUSINESS.BTN_DELETE' | translate }}
+            </button>
+            <app-button
+              [label]="'SERVICES_BUSINESS.BTN_MODIFY' | translate"
+              variant="primary"
+              (click)="openModal(element)"
+            ></app-button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

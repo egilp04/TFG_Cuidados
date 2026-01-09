@@ -4,24 +4,24 @@
     <app-inputs
       name="nombre"
       [label]="'REGISTER.LABELS.USERNAME' | translate"
-      [control]="getCtrl('usuario')"
-      [errorMessage]="getErrorMessage('usuario')"
+      [control]="getCtrl('nombre')"
+      [errorMessage]="getErrorMessage('nombre')"
     ></app-inputs>
     <div class="flex flex-col gap-6">
       <div class="flex flex-row gap-6">
         <app-inputs
-          name="primerApe"
+          name="ape1"
           [label]="'REGISTER.LABELS.SURNAME1' | translate"
-          [control]="getCtrl('primerApe')"
-          [errorMessage]="getErrorMessage('primerApe')"
+          [control]="getCtrl('ape1')"
+          [errorMessage]="getErrorMessage('ape1')"
           class="flex-1"
         ></app-inputs>
 
         <app-inputs
-          name="segundoApe"
+          name="ape2"
           [label]="'REGISTER.LABELS.SURNAME2' | translate"
-          [control]="getCtrl('segundoApe')"
-          [errorMessage]="getErrorMessage('segundoApe')"
+          [control]="getCtrl('ape2')"
+          [errorMessage]="getErrorMessage('ape2')"
           class="flex-1"
         ></app-inputs>
       </div>
@@ -68,10 +68,10 @@
     }
 
     <app-inputs
-      name="telefono"
+      name="telef"
       [label]="'REGISTER.LABELS.PHONE' | translate"
-      [control]="getCtrl('telefono')"
-      [errorMessage]="getErrorMessage('telefono')"
+      [control]="getCtrl('telef')"
+      [errorMessage]="getErrorMessage('telef')"
     ></app-inputs>
 
     <app-inputs

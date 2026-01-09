@@ -1,0 +1,76 @@
+<div class="p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface">
+  <div class="w-full flex justify-end p-10">
+    <img
+      mat-dialog-close
+      class="cursor-pointer h-10 w-10 md:h-16 md:w-16 lg:h-20 lg:w-20"
+      src="assets/icons/cerrar.webp"
+    />
+  </div>
+
+  <h2 mat-dialog-title class="text-secondary text-h2">
+    {{ 'INFO_CONTRACT.TITLE_DETAILS' | translate }}:
+  </h2>
+
+  <div class="flex justify-center items-center flex-col w-full">
+    <mat-dialog-content class="p-0! flex! flex-col! gap-4 w-full text-left max-w-lg">
+      <p>
+        <strong>{{ 'INFO_CONTRACT.ID' | translate }}:</strong>
+        {{ data.contrato.id_contrato }}
+      </p>
+      <p>
+        <strong>{{ 'INFO_CONTRACT.DATE_CREATION' | translate }}:</strong>
+        {{ data.contrato.fecha_creacion }}
+      </p>
+      <p>
+        <strong>{{ 'INFO_CONTRACT.DATE_START' | translate }}:</strong>
+        {{ data.contrato.fecha_inicio }}
+      </p>
+      <p>
+        <strong>{{ 'INFO_CONTRACT.DATE_END' | translate }}:</strong>
+        {{ data.contrato.fecha_fin || ('INFO_CONTRACT.NOT_FINALIZED' | translate) }}
+      </p>
+      <p>
+        <strong>{{ 'INFO_CONTRACT.STATUS' | translate }}:</strong>
+        {{ data.contrato.estado }}
+      </p>
+    </mat-dialog-content>
+  </div>
+
+  <h2 mat-dialog-title class="text-secondary text-h2">
+    {{ 'INFO_CONTRACT.TITLE_ACTIVITY' | translate }}:
+  </h2>
+
+  <div class="flex justify-center items-center flex-col w-full">
+    <mat-dialog-content class="p-0! flex! flex-col! gap-4 w-full text-left max-w-lg">
+      <p>
+        <strong>{{ 'INFO_CONTRACT.TIME' | translate }}:</strong>
+        {{ data.contrato.hora_contratada }}
+      </p>
+      <p>
+        <strong>{{ 'INFO_CONTRACT.DAY' | translate }}:</strong>
+        {{ data.contrato.dia_semana_contratado }}
+      </p>
+      <p>
+        <strong>{{ 'INFO_CONTRACT.SERVICE' | translate }}:</strong>
+        {{ data.contrato.id_servicio_horario?.Servicio?.nombre || 'Sin servicio' }}
+      </p>
+      <p>
+        <strong>{{ 'INFO_CONTRACT.CLIENT' | translate }}:</strong>
+        {{ data.contrato.Cliente?.nombreDelCliente }}
+      </p>
+      <p>
+        <strong>{{ 'INFO_CONTRACT.COMPANY' | translate }}:</strong>
+        {{ data.contrato.Empresa?.nombreDeLaEmpresa }}
+      </p>
+    </mat-dialog-content>
+  </div>
+
+  <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
+    <app-button
+      (click)="onCancelar()"
+      [label]="'INFO_CONTRACT.BTN_CANCEL' | translate"
+      variant="danger"
+    >
+    </app-button>
+  </mat-dialog-actions>
+</div>
