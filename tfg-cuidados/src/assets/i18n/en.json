@@ -420,7 +420,8 @@
       "SELECT_SERVICE": "Please select a service and schedule.",
       "CONFIRM_CONTRACT": "Do you wish to contract {{servicio}} for {{precio}}€?",
       "CONTRACT_SUCCESS": "Contract successfully created!",
-      "CONTRACT_ERROR": "Error processing the contract."
+      "CONTRACT_ERROR": "Error processing the contract.",
+      "ALREADY_CONTRACTED": "Already contracted"
     },
     "CARD": {
       "DESCRIPTION": "Description:",
