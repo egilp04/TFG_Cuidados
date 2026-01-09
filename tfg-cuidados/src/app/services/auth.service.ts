@@ -127,10 +127,8 @@ export class AuthService {
       })
     );
   }
-
   registerByAdmin(datos: any, esCliente: boolean): Observable<any> {
     const { emailLimpio, passwordLimpia, metaData } = this.prepararDatosRegistro(datos, esCliente);
-
     const tempSupabase = createClient(environment.supabaseUrl, environment.supabaseKey, {
       auth: {
         persistSession: false,
@@ -158,7 +156,6 @@ export class AuthService {
       map((res) => this.validarRespuestaRegistro(res))
     );
   }
-
   private prepararDatosRegistro(datos: any, esCliente: boolean) {
     const emailLimpio = String(datos.email).trim().toLowerCase().replace(/\s/g, '');
     const passwordLimpia = String(datos.password).trim();
@@ -180,7 +177,6 @@ export class AuthService {
     };
     return { emailLimpio, passwordLimpia, metaData };
   }
-
   private validarRespuestaRegistro(res: any) {
     if (res.error) throw res.error;
     if (res.data.user && res.data.user.identities && res.data.user.identities.length === 0) {
@@ -188,11 +184,9 @@ export class AuthService {
     }
     return res;
   }
-
   updateUserSignal(newUserData: any) {
     this.currentUser.set(newUserData);
   }
-
   updateAuthCredentiales(nuevoEmail?: string): Observable<any> {
     const updateData: any = {};
     if (nuevoEmail) updateData.email = nuevoEmail;
@@ -208,7 +202,6 @@ export class AuthService {
       })
     );
   }
-
   recoverPassword(email: string): Observable<any> {
     return from(
       this.supabase.auth.resetPasswordForEmail(email, {
@@ -222,7 +215,6 @@ export class AuthService {
       catchError((err) => throwError(() => err))
     );
   }
-
   updatePass(newPassword: string): Observable<any> {
     return from(
       this.supabase.auth.updateUser({
