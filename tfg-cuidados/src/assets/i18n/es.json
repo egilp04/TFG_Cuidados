@@ -376,7 +376,8 @@
       "SELECT_SERVICE": "Por favor, selecciona un servicio y horario.",
       "CONFIRM_CONTRACT": "¿Deseas contratar {{servicio}} por {{precio}}€?",
       "CONTRACT_SUCCESS": "¡Contrato realizado con éxito!",
-      "CONTRACT_ERROR": "Error al procesar la contratación."
+      "CONTRACT_ERROR": "Error al procesar la contratación.",
+      "ALREADY_CONTRACTED": "Ya contratado"
     },
     "CARD": {
       "DESCRIPTION": "Descripción:",
