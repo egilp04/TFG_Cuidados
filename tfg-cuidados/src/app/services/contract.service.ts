@@ -17,7 +17,8 @@ export class ContractService {
   private readonly CONTRATO_SELECT = `
     *,
     id_servicio_horario (
-      Servicio ( nombre )
+     id_servicio_horario,
+     Servicio ( nombre )
     ),
     Cliente:Cliente!fk_contrato_cliente (
       direccion, localidad, codpostal,
@@ -61,27 +62,21 @@ export class ContractService {
 
     if (!error && data) {
       const mappedData = data.map((contrato: any) => {
-        const datosCliente = contrato.Cliente?.Usuario;
-        const datosEmpresa = contrato.Empresa?.Usuario;
-        let nombreMostrado = '';
-        if (user.id_usuario === contrato.id_cliente) {
-          nombreMostrado = datosEmpresa?.nombre || 'Empresa no asignada';
-        } else {
-          nombreMostrado = datosCliente?.nombre || 'Cliente desconocido';
-        }
-
-        const lugarCompleto =
-          [contrato.Cliente?.direccion, contrato.Cliente?.localidad, contrato.Cliente?.codpostal]
-            .filter(Boolean)
-            .join(', ') || 'Sin dirección';
-
         return {
           ...contrato,
+          id_sh_plano:
+            contrato.id_servicio_horario?.id_servicio_horario || contrato.id_servicio_horario,
+          Cliente: {
+            ...contrato.Cliente,
+            nombreDelCliente:
+              contrato.Cliente?.nombre || contrato.Cliente?.Usuario?.nombre || 'Desconocido',
+          },
+          Empresa: {
+            ...contrato.Empresa,
+            nombreDeLaEmpresa:
+              contrato.Empresa?.nombre || contrato.Empresa?.Usuario?.nombre || 'Desconocida',
+          },
           nombreServicio: contrato.id_servicio_horario?.Servicio?.nombre,
-          lugar: lugarCompleto,
-          cliente: datosCliente?.nombre,
-          empresa: datosEmpresa?.nombre,
-          nombreAMostrar: nombreMostrado,
         };
       });
       this.contractsList$.next(mappedData);
