@@ -14,7 +14,7 @@ export class CardsLanding {
   imagen = input.required<string>();
   cargo = input<string>();
   public cardClasses = computed(() => {
-    const base = 'p-20 shadow-soft flex flex-col flex flex-col h-40';
+    const base = 'p-20 shadow-soft flex flex-col flex flex-col h-48';
     const cargo = this.cargo() ? 'lg:h-64' : 'xl:h-48';
     return `${base} ${cargo}`;
   });
