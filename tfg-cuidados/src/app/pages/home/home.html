@@ -1,9 +1,9 @@
-<div class="flex flex-col p-20 w-full justify-start items-center h-full">
+<div class="flex flex-col p-20 w-full justify-start items-center h-full mb-20">
   <h1 class="text-h1 text-primary w-full text-center mt-10 mb-10">
     {{ 'MAIN_MENU.TITLE' | translate }}
   </h1>
 
-  <div class="flex flex-col justify-around items-center w-full pt-20 h-full gap-10">
+  <div class="flex flex-col justify-around items-center w-full pt-20 h-full gap-10 overflow-auto">
     @if (rol === 'cliente') {
     <app-button
       [label]="'MAIN_MENU.CLIENT.SEARCH_COMPANIES' | translate"
