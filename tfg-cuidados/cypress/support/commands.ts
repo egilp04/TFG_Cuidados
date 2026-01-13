@@ -41,3 +41,29 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add('login', (email, password) => {
+  cy.visit('/');
+  cy.intercept('POST', '**/auth/v1/token*').as('authSession');
+  cy.get('app-button')
+    .contains(/Registrarse|Entrar/i)
+    .click({ force: true });
+  cy.get('app-button')
+    .contains(/Tengo una cuenta|Iniciar Sesión/i)
+    .click({ force: true });
+  cy.get('app-inputs[name="email"] input').type(email, { force: true });
+  cy.get('app-inputs[name="password"] input').type(password, { force: true });
+  cy.get('app-button')
+    .contains(/Entrar/i)
+    .click({ force: true });
+  cy.wait('@authSession').its('response.statusCode').should('eq', 200);
+  cy.url().should('include', '/home');
+});
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(email: string, password: string): Chainable<void>;
+    }
+  }
+}
+export {};
