@@ -4,6 +4,7 @@ import { Footer } from './components/footer/footer';
 import { Navbar } from './components/navbar/navbar';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class App {
   protected readonly title = signal('tfg_app');
   public router = inject(Router);
+  public authservice = inject(AuthService);
   private translate = inject(TranslateService);
   private platformId = inject(PLATFORM_ID);
 
