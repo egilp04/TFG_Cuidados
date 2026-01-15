@@ -54,7 +54,7 @@ export class ContractService {
       .from('Contrato')
       .select(this.CONTRATO_SELECT)
       .neq('estado', 'no activo');
-    if (user.id_usuario && !user.esAdmin) {
+    if (user.id_usuario && user.rol !== 'administrador') {
       query = query.or(`id_cliente.eq.${user.id_usuario},id_empresa.eq.${user.id_usuario}`);
     }
 

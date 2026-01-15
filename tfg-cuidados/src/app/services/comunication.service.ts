@@ -219,11 +219,18 @@ export class ComunicationService {
   }
 
   notifyAdmins(asunto: string, contenido: string): Observable<void> {
-    return from(this.supabase.from('Administrador').select('id_administrador')).pipe(
+    return from(
+      this.supabase
+        .from('Usuario')
+        .select('id_usuario')
+        .eq('rol', 'administrador')
+        .eq('estado', true)
+    ).pipe(
       switchMap(({ data }) => {
         if (!data || data.length === 0) return of(void 0);
+
         const notificaciones = data.map((admin: any) =>
-          this.sendNotification(admin.id_administrador, asunto, contenido)
+          this.sendNotification(admin.id_usuario, asunto, contenido)
         );
 
         return forkJoin(notificaciones).pipe(map(() => void 0));

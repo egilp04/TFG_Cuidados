@@ -55,10 +55,13 @@ export class AuthService {
   }
 
   getProfile(userId: string): Observable<any> {
+    // 1. Pedimos el usuario base (que ya trae 'rol' y 'estado')
     return from(this.supabase.from('Usuario').select('*').eq('id_usuario', userId).single()).pipe(
       switchMap(async ({ data: user, error: userErr }) => {
         if (userErr) throw userErr;
 
+        // 2. Buscamos datos extra en las 3 tablas posibles
+        // Usamos Promise.all para que sea rápido (en paralelo)
         const [cli, emp, adm] = await Promise.all([
           this.supabase.from('Cliente').select('*').eq('id_cliente', userId).maybeSingle(),
           this.supabase.from('Empresa').select('*').eq('id_empresa', userId).maybeSingle(),
@@ -69,22 +72,23 @@ export class AuthService {
             .maybeSingle(),
         ]);
 
-        let rol: 'cliente' | 'empresa' | 'admin' = 'cliente';
         let datosExtra = {};
-        if (adm.data) {
-          rol = 'admin';
+
+        // 3. Asignamos datos extra según lo que encontremos
+        if (user.rol === 'administrador' && adm.data) {
           datosExtra = adm.data;
-        } else if (emp.data) {
-          rol = 'empresa';
+        } else if (user.rol === 'empresa' && emp.data) {
           datosExtra = emp.data;
-        } else if (cli.data) {
-          rol = 'cliente';
+        } else if (user.rol === 'cliente' && cli.data) {
           datosExtra = cli.data;
         }
-        return { ...user, ...datosExtra, rol };
+
+        // 4. Retornamos la fusión (El rol manda desde la tabla Usuario)
+        return { ...user, ...datosExtra };
       })
     );
   }
+
 
   signOut(): Observable<any> {
     return from(this.supabase.auth.signOut()).pipe(

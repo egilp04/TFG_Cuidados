@@ -29,9 +29,12 @@ export class BusinessService {
   }
 
   private async refreshBusinesses() {
-    const { data, error } = await this.supabase.from('Empresa').select(`
+    const { data, error } = await this.supabase
+      .from('Empresa')
+      .select(
+        `
       *,
-      Usuario (nombre, email),
+      Usuario!inner (nombre, email, estado),
       Servicio_Horario!inner (
         id_servicio_horario,
         precio,
@@ -39,7 +42,9 @@ export class BusinessService {
         Servicio ( nombre, tipo_servicio ),
         Horario ( dia_semana, hora )
       )
-    `);
+    `
+      )
+      .eq('Usuario.estado', true);
     if (error) {
       console.error('❌ Error cargando empresas:', error.message);
       return;
