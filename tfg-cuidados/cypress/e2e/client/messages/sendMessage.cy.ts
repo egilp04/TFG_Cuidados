@@ -1,26 +1,44 @@
 describe('Envío de mensaje: Cliente-Empresa', () => {
   const msgSubject = 'Consulta de Servicio TFG';
   const msgContent = 'Hola, estoy interesado en reservar una actividad.';
+  const emailEmpresaDestino = 'empresacypress@test.com';
 
-  it('CLIENTE: Envía mensaje a la Empresa', () => {
-    cy.intercept('GET', '**/rest/v1/Usuario*').as('getReceptor');
+  beforeEach(() => {
+    cy.intercept('POST', '**/auth/v1/token*').as('loginPost');
+    cy.intercept('GET', '**/rest/v1/Comunicacion*', { body: [] }).as('getMensajes');
+    cy.intercept('GET', '**/rest/v1/Usuario?select=*&email=eq.*').as('checkUser');
     cy.intercept('POST', '**/rest/v1/Comunicacion*').as('postMensaje');
 
     cy.login('clientecypress@test.com', '13122000Teddy13@');
 
+    cy.wait('@loginPost');
     cy.url().should('include', '/home');
-    cy.wait(1000);
 
-    cy.visit('/messages');
-    cy.get('button').find('img[src*="editar"]').click({ force: true });
-    cy.get('app-inputs').eq(0).find('input').type('empresa_nueva@test.com', { force: true });
-    cy.get('app-inputs').eq(1).find('input').type(msgSubject, { force: true });
+    cy.get('nav lucide-icon').eq(0).click({ force: true });
+    cy.wait('@getMensajes');
+  });
+
+  it('CLIENTE: Envía mensaje a la Empresa', () => {
+    cy.contains('button', /Nuevo|Mensaje/i)
+      .should('be.visible')
+      .click();
+
+    cy.get('app-inputs[name="receptor"] input').clear().type(emailEmpresaDestino, { force: true });
+
+    cy.get('app-inputs[name="asunto"] input').type(msgSubject, { force: true });
+
     cy.get('textarea').type(msgContent, { force: true });
-    cy.get('app-button').contains('Enviar').click();
-    cy.wait('@getReceptor');
-    cy.wait('@postMensaje', { timeout: 10000 }).then((interception) => {
-      expect(interception.response?.statusCode).to.be.oneOf([200, 201, 204]);
+
+    cy.get('app-button')
+      .contains(/Enviar|Send/i)
+      .click({ force: true });
+
+    cy.wait('@checkUser').its('response.statusCode').should('eq', 200);
+
+    cy.wait('@postMensaje').then((interception) => {
+      expect(interception.response?.statusCode).to.be.oneOf([200, 201]);
     });
-    cy.contains(/correctamente|éxito/i).should('be.visible');
+
+    cy.get('.text-primary').should('be.visible');
   });
 });

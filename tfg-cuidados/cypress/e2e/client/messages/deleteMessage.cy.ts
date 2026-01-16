@@ -1,37 +1,26 @@
-describe('Borrado de mensaje: Cliente-Empresa', () => {
-  const msgSubject = 'Consulta de Servicio TFG';
-  const nombreEmpresa = 'Empresa Prueba Autoregistro';
+it('Cliente: Borra el PRIMER mensaje de la Bandeja de Entrada', () => {
+  cy.intercept('PATCH', '**/rest/v1/Comunicacion*').as('borradoLogico');
+  cy.intercept('GET', '**/rest/v1/Comunicacion*').as('getMensajes');
+  cy.intercept('POST', '**/auth/v1/token*').as('loginPost');
 
-  it('CLIENTE: Borra un mensaje (Borrado Lógico)', () => {
-    cy.intercept('PATCH', '**/rest/v1/Comunicacion*').as('borradoLogico');
-    cy.intercept('GET', '**/rest/v1/Comunicacion*').as('getMensajes');
-
-    cy.login('clientecypress@test.com', '1234TeddY24.');
-
-    cy.url().should('include', '/home');
-    cy.wait(1000);
-
-    cy.visit('/messages');
-
-    cy.wait('@getMensajes');
-    cy.on('window:confirm', () => true);
-
-    const regexEmpresa = new RegExp(nombreEmpresa.trim(), 'i');
-
-    cy.get('tr, mat-row').each(($el) => {
-      const emisorText = $el.find('.mat-column-Emisor').text().trim();
-      const asuntoText = $el.find('.mat-column-Asunto').text().trim();
-
-      if (emisorText.includes(nombreEmpresa) && asuntoText.includes(msgSubject)) {
-        cy.wrap($el).within(() => {
-          cy.get('app-button')
-            .contains(/Borrar/i)
-            .click({ force: true });
-        });
-      }
+  cy.login('clienteCypress@test.com', '13122000Teddy13@');
+  cy.wait('@loginPost');
+  cy.url().should('include', '/home');
+  cy.get('nav lucide-icon').eq(0).click({ force: true });
+  cy.wait('@getMensajes');
+  cy.on('window:confirm', () => true);
+  cy.get('mat-row, tr[mat-row]')
+    .should('have.length.at.least', 1)
+    .first()
+    .within(() => {
+      cy.get('app-button')
+        .contains(/Borrar|Eliminar/i)
+        .click({ force: true });
     });
-    cy.wait('@borradoLogico').then((interception) => {
-      expect(interception.response?.statusCode).to.be.oneOf([200, 204]);
-    });
+  cy.wait('@borradoLogico').then((interception) => {
+    const body = interception.request.body;
+    const isDeleted = body.eliminado_por_receptor === true || body.eliminado_por_emisor === true;
+    expect(isDeleted, 'Debe contener un campo de borrado lógico en true').to.be.true;
+    expect(interception.response?.statusCode).to.be.oneOf([200, 204]);
   });
 });

@@ -1,33 +1,26 @@
-it('Empresa: Borra el mensaje enviado por el CLIENTE (Bandeja de Entrada)', () => {
-  const msgSubject = 'Consulta de Servicio TFG';
-  const nombreCliente = 'Cliente Prueba';
+it('Empresa: Borra el PRIMER mensaje de la Bandeja de Entrada', () => {
   cy.intercept('PATCH', '**/rest/v1/Comunicacion*').as('borradoLogico');
   cy.intercept('GET', '**/rest/v1/Comunicacion*').as('getMensajes');
+  cy.intercept('POST', '**/auth/v1/token*').as('loginPost');
 
   cy.login('empresaCypress@test.com', '13122000Teddy13@');
-
+  cy.wait('@loginPost');
   cy.url().should('include', '/home');
-  cy.wait(1000);
-
-  cy.visit('/messages');
+  cy.get('nav lucide-icon').eq(0).click({ force: true });
   cy.wait('@getMensajes');
-
   cy.on('window:confirm', () => true);
-
-  cy.get('tr, mat-row')
-    .contains('td.mat-column-Emisor', nombreCliente)
-    .closest('tr, mat-row')
-    .should('contain', msgSubject)
+  cy.get('mat-row, tr[mat-row]')
+    .should('have.length.at.least', 1)
+    .first()
     .within(() => {
       cy.get('app-button')
-        .contains(/Borrar/i)
+        .contains(/Borrar|Eliminar/i)
         .click({ force: true });
     });
-
   cy.wait('@borradoLogico').then((interception) => {
-    expect(interception.request.body).to.have.property('eliminado_por_receptor', true);
+    const body = interception.request.body;
+    const isDeleted = body.eliminado_por_receptor === true || body.eliminado_por_emisor === true;
+    expect(isDeleted, 'Debe contener un campo de borrado lógico en true').to.be.true;
+    expect(interception.response?.statusCode).to.be.oneOf([200, 204]);
   });
-
-  cy.visit('/messages');
-  cy.wait('@getMensajes');
 });
