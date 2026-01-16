@@ -12,7 +12,7 @@ describe('Flujo de Recuperación de Contraseña - TFG', () => {
         statusCode: 200,
         body: {},
       }).as('recoverPost');
-      cy.get('app-inputs input').last().type('cliente_nuevo@test.com', { force: true });
+      cy.get('app-inputs input').last().type('clienteCypress@test.com', { force: true });
       cy.get('app-button').contains('Enviar enlace').click({ force: true });
       cy.wait('@recoverPost');
       cy.contains('Enlace enviado. Revisa tu correo.').should('be.visible');

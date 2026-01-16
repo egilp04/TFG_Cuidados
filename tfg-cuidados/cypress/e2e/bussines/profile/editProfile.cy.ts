@@ -1,7 +1,7 @@
 describe('Perfil - Empresa', () => {
   beforeEach(() => {
     cy.intercept('POST', '**/rest/v1/rpc/update_profile_complete').as('updateProfile');
-    cy.login('empresa_nueva@test.com', '13122000Teddy13@');
+    cy.login('empresaCypress@test.com', '13122000Teddy13@');
     cy.visit('/modify-profile');
   });
 

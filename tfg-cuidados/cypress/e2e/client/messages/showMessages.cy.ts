@@ -5,7 +5,7 @@ describe('Ver mensaje: Cliente', () => {
   const msgContent = 'Hola, tengo un duda sobre su direccion.';
   it('CLIENTE: Recibe y visualiza el mensaje de la empresa', () => {
     cy.intercept('GET', '**/rest/v1/Comunicacion*').as('cargarMensajes');
-    cy.login('cliente_nuevo@test.com', '13122000Teddy13@');
+    cy.login('clientecypress@test.com', '13122000Teddy13@');
     cy.visit('/messages');
 
     cy.wait('@cargarMensajes');

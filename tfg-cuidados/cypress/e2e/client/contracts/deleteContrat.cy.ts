@@ -3,7 +3,7 @@ describe('Contratos - Cancelación de Servicio', () => {
     cy.intercept('GET', '**/Contrato?*').as('getContratos');
     cy.intercept('PATCH', '**/Contrato?*').as('patchContrato');
 
-    cy.login('cliente_nuevo@test.com', '13122000Teddy13@');
+    cy.login('clientecypress@test.com', '13122000Teddy13@');
     cy.visit('/home');
   });
 

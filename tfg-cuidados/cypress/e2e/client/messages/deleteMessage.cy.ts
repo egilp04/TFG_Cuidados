@@ -6,18 +6,15 @@ describe('Borrado de mensaje: Cliente-Empresa', () => {
     cy.intercept('PATCH', '**/rest/v1/Comunicacion*').as('borradoLogico');
     cy.intercept('GET', '**/rest/v1/Comunicacion*').as('getMensajes');
 
-    cy.login('cliente_nuevo@test.com', '1234TeddY24.');
+    cy.login('clientecypress@test.com', '1234TeddY24.');
     cy.visit('/messages');
 
     cy.wait('@getMensajes');
     cy.on('window:confirm', () => true);
 
-    // 1. Buscamos la fila de forma más flexible
-    // Usamos una Regex para ignorar los espacios &nbsp; que genera Angular Material
     const regexEmpresa = new RegExp(nombreEmpresa.trim(), 'i');
 
     cy.get('tr, mat-row').each(($el) => {
-      // Buscamos dentro de la fila la columna Emisor
       const emisorText = $el.find('.mat-column-Emisor').text().trim();
       const asuntoText = $el.find('.mat-column-Asunto').text().trim();
 

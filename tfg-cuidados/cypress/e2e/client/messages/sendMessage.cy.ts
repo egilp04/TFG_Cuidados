@@ -5,7 +5,7 @@ describe('Envío de mensaje: Cliente-Empresa', () => {
   it('CLIENTE: Envía mensaje a la Empresa', () => {
     cy.intercept('GET', '**/rest/v1/Usuario*').as('getReceptor');
     cy.intercept('POST', '**/rest/v1/Comunicacion*').as('postMensaje');
-    cy.login('cliente_nuevo@test.com', '13122000Teddy13@');
+    cy.login('clientecypress@test.com', '13122000Teddy13@');
     cy.visit('/messages');
     cy.get('button').find('img[src*="editar"]').click({ force: true });
     cy.get('app-inputs').eq(0).find('input').type('empresa_nueva@test.com', { force: true });

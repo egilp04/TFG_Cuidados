@@ -1,7 +1,7 @@
 describe('Contratos - Flujo de Cliente', () => {
   beforeEach(() => {
     cy.intercept('GET', '**/Contrato?*').as('fetchContratos');
-    cy.login('cliente_nuevo@test.com', '13122000Teddy13@');
+    cy.login('clientecypress@test.com', '13122000Teddy13@');
 
     cy.visit('/home');
     cy.url().should('include', '/home');

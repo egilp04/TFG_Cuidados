@@ -4,7 +4,7 @@ it('Empresa: Borra el mensaje enviado por el CLIENTE (Bandeja de Entrada)', () =
   cy.intercept('PATCH', '**/rest/v1/Comunicacion*').as('borradoLogico');
   cy.intercept('GET', '**/rest/v1/Comunicacion*').as('getMensajes');
 
-  cy.login('empresa_nueva@test.com', '13122000Teddy13@');
+  cy.login('empresaCypress@test.com', '13122000Teddy13@');
   cy.visit('/messages');
   cy.wait('@getMensajes');
 

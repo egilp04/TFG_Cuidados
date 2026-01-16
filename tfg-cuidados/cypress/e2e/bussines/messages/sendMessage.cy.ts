@@ -8,7 +8,7 @@ describe('Flujo de Mensajería - Bandeja de Entrada', () => {
     cy.intercept('PATCH', '**/rest/v1/Comunicacion*').as('borradoLogico');
 
     // Login como Empresa (Receptor)
-    cy.login('empresa_nueva@test.com', '13122000Teddy13@');
+    cy.login('empresaCypress@test.com', '13122000Teddy13@');
     cy.visit('/messages');
     cy.wait('@getMensajes');
   });
@@ -19,10 +19,8 @@ describe('Flujo de Mensajería - Bandeja de Entrada', () => {
   });
 
   it('debe borrar (borrado lógico) un mensaje del cliente', () => {
-    // Aceptar confirmación nativa de JavaScript
     cy.on('window:confirm', () => true);
 
-    // Buscar la fila del mensaje por el nombre del emisor
     cy.contains('td.mat-column-Emisor', nombreCliente)
       .closest('tr')
       .should('contain', msgSubject)
@@ -32,13 +30,11 @@ describe('Flujo de Mensajería - Bandeja de Entrada', () => {
           .click({ force: true });
       });
 
-    // Validar que la petición PATCH envía el flag correcto a Supabase
     cy.wait('@borradoLogico').then((interception) => {
       expect(interception.request.body).to.have.property('eliminado_por_receptor', true);
       expect(interception.response?.statusCode).to.be.oneOf([200, 204]);
     });
 
-    // Verificar que el mensaje desaparece de la vista
     cy.get('table').should('not.contain', msgSubject);
   });
 });

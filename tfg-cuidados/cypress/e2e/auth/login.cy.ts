@@ -24,7 +24,7 @@ describe('Flujo de Inicio de Sesión (Modal) - TFG', () => {
 
   it('Debe iniciar sesión correctamente como CLIENTE', () => {
     cy.intercept('POST', '**/auth/v1/token*').as('loginPost');
-    cy.get('app-inputs[name="email"] input').type('cliente_nuevo@test.com', { force: true });
+    cy.get('app-inputs[name="email"] input').type('clienteCypress@test.com', { force: true });
     cy.get('app-inputs[name="password"] input').type('13122000Teddy13@', { force: true });
     cy.get('app-button')
       .contains(/Entrar/i)
