@@ -38,7 +38,10 @@ export class UserService {
   private async refreshUsers() {
     const tableRel = this.currentType === 'cliente' ? 'Cliente' : 'Empresa';
     console.log(`Intentando cargar: ${tableRel}...`);
-    const { data, error } = await this.supabase.from('Usuario').select(`*, "${tableRel}"!inner(*)`);
+    const { data, error } = await this.supabase
+      .from('Usuario')
+      .select(`*, "${tableRel}"!inner(*)`)
+      .eq('estado', true);
     if (error) {
       console.error(`ERROR cargando ${tableRel}:`, error);
       return;
