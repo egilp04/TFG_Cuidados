@@ -36,7 +36,9 @@ export class RecoverPasswordPage {
       [
         Validators.required,
         Validators.minLength(6),
-        Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/),
+        Validators.pattern(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/
+        ),
       ],
     ],
   });

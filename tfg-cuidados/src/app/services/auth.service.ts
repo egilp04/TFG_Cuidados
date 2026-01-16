@@ -89,7 +89,6 @@ export class AuthService {
     );
   }
 
-
   signOut(): Observable<any> {
     return from(this.supabase.auth.signOut()).pipe(
       tap(() => {
@@ -160,6 +159,7 @@ export class AuthService {
       map((res) => this.validarRespuestaRegistro(res))
     );
   }
+
   private prepararDatosRegistro(datos: any, esCliente: boolean) {
     const emailLimpio = String(datos.email).trim().toLowerCase().replace(/\s/g, '');
     const passwordLimpia = String(datos.password).trim();
@@ -177,7 +177,7 @@ export class AuthService {
       codpostal: datos.codpostal || '',
       comunidad: datos.comunidad || '',
       cif: datos.cif ? datos.cif.toUpperCase() : null,
-      descripcion: '',
+      descripcion: datos.descripcion,
     };
     return { emailLimpio, passwordLimpia, metaData };
   }

@@ -12,10 +12,10 @@
     <h2 class="font-fraunces text-h2 text-primary mb-10">{{ titulo() | translate }}</h2>
 
     @if (cargo()) {
-    <label class="text-secondary font-semibold uppercase text-label m-6">
+    <label class="text-secondary font-semibold uppercase text-label">
       {{ cargo() | translate }}
     </label>
     }
-    <p class="text-p text-secondary 2xl:mb-10">{{ descripcion() | translate }}</p>
+    <p class="text-p text-secondary overflow-auto">{{ descripcion() | translate }}</p>
   </div>
 </div>

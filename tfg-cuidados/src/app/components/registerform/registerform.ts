@@ -22,10 +22,9 @@ import { Inputs } from '../inputs/inputs';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 import { comunidades } from '../../core/constants/locations';
+
 @Component({
   selector: 'app-registerform',
   standalone: true,
@@ -44,9 +43,7 @@ import { comunidades } from '../../core/constants/locations';
 export class Registerform implements OnInit {
   private fb = inject(FormBuilder);
   private translate = inject(TranslateService);
-  private authService = inject(AuthService);
-  private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
+
   @Input() isUser: boolean = true;
   @Output() formSubmitted = new EventEmitter<{ datos: any; esCliente: boolean }>();
 
@@ -74,14 +71,18 @@ export class Registerform implements OnInit {
         [
           Validators.required,
           Validators.minLength(6),
-          Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/),
+          Validators.pattern(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/
+          ),
         ],
       ],
       repassword: [
         '',
         [
           Validators.required,
-          Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/),
+          Validators.pattern(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/
+          ),
         ],
       ],
     },
@@ -103,59 +104,41 @@ export class Registerform implements OnInit {
     if (this.registerForm.valid) {
       const formValue = this.registerForm.getRawValue();
       let datosParaEnviar = {};
+
       if (this.isUser) {
         datosParaEnviar = {
+          rol: 'cliente',
+          email: formValue.email.trim(),
           password: formValue.password.trim(),
           nombre: formValue.nombre.trim(),
-          email: formValue.email.trim(),
-          telef: formValue.telef.trim(),
           ape1: formValue.ape1.trim(),
-          ape2: formValue.ape2.trim(),
+          ape2: formValue.ape2 ? formValue.ape2.trim() : '',
           dni: formValue.dni.trim(),
-          fechnac: formValue.fechnac.trim(),
+          fechnac: formValue.fechnac,
+          telef: formValue.telef.trim(),
           direccion: formValue.direccion.trim(),
           localidad: formValue.localidad.trim(),
           codpostal: formValue.codpostal.trim(),
           comunidad: formValue.comunidad,
-          rol: 'cliente',
         };
       } else {
         datosParaEnviar = {
+          rol: 'empresa',
+          email: formValue.email.trim(),
           password: formValue.password.trim(),
           nombre: formValue.nombreEmpresa.trim(),
           cif: formValue.cif.trim(),
-          email: formValue.email.trim(),
+          descripcion: formValue.descripcion ? formValue.descripcion.trim() : '',
           telef: formValue.telef.trim(),
           direccion: formValue.direccion.trim(),
           localidad: formValue.localidad.trim(),
           codpostal: formValue.codpostal.trim(),
           comunidad: formValue.comunidad,
-          descripcion: formValue.descripcion ? formValue.descripcion.trim() : '',
-          rol: 'empresa',
         };
       }
-      this.authService
-        .register(datosParaEnviar, this.isUser)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: () => {
-            console.log('Registro exitoso');
-            this.formSubmitted.emit({ datos: datosParaEnviar, esCliente: this.isUser });
-            this.router.navigate(['/login']);
-          },
-          error: (err) => {
-            console.error('Error en registro:', err);
-            if (
-              err.message &&
-              (err.message.includes('registrado') || err.message.includes('registered'))
-            ) {
-              this.registerForm.get('email')?.setErrors({ emailTaken: true });
-              this.registerForm.get('email')?.markAsTouched();
-            } else {
-              alert('Error en el registro: ' + err.message);
-            }
-          },
-        });
+
+      console.log('📤 Formulario válido, enviando datos al padre:', datosParaEnviar);
+      this.formSubmitted.emit({ datos: datosParaEnviar, esCliente: this.isUser });
     } else {
       this.registerForm.markAllAsTouched();
     }
@@ -228,6 +211,8 @@ export class Registerform implements OnInit {
         c?.setValidators([Validators.required, Validators.minLength(3)]);
       } else if (f === 'cif') {
         c?.setValidators([Validators.required, this.cifValidator]);
+      } else if (f === 'descripcion') {
+        c?.clearValidators();
       } else {
         c?.setValidators([Validators.required]);
       }
@@ -266,7 +251,6 @@ export class Registerform implements OnInit {
       age--;
     }
     if (birthDate > today) return { invalidDate: true };
-    console.log('Edad calculada:', age);
     return age >= 18 ? null : { notAdult: true };
   }
 

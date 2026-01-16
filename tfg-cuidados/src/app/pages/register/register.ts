@@ -19,7 +19,7 @@ import { EMPTY } from 'rxjs';
 })
 export class Register implements OnInit {
   private router = inject(Router);
-  private authService = inject(AuthService);
+  public authService = inject(AuthService);
   private cd = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
   public messageService = inject(MessageService);
@@ -27,11 +27,13 @@ export class Register implements OnInit {
   private location = inject(Location);
 
   isUser: boolean = true;
-  isAdmin: boolean = false;
+
+  get esAdminReal(): boolean {
+    const user = this.authService.currentUser();
+    return user?.rol === 'administrador';
+  }
 
   ngOnInit(): void {
-    const user = this.authService.currentUser();
-    this.isAdmin = user?.rol === 'admin';
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -52,7 +54,19 @@ export class Register implements OnInit {
   }
 
   onRegister(event: { datos: any; esCliente: boolean }) {
-    const registro$ = this.isAdmin
+    const user = this.authService.currentUser();
+    const soyAdmin = user?.rol === 'administrador';
+
+    if (user && !soyAdmin) {
+      console.error('🛑 INTENTO DE REGISTRO PÚBLICO MIENTRAS ESTÁS LOGUEADO');
+      this.messageService.showMessage(
+        'Error: Cierra sesión antes de registrar una cuenta nueva.',
+        'error'
+      );
+      return;
+    }
+
+    const registro$ = soyAdmin
       ? this.authService.registerByAdmin(event.datos, event.esCliente)
       : this.authService.register(event.datos, event.esCliente);
 
@@ -60,20 +74,26 @@ export class Register implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap(() => this.translate.get('REGISTER.MESSAGES.SUCCESS')),
+
         tap((msg) => {
           this.messageService.showMessage(msg, 'exito');
           this.cd.detectChanges();
         }),
+
         delay(2000),
+
         tap(() => {
-          if (this.isAdmin) {
-            this.location.back();
+          if (soyAdmin) {
+            const tipoPestana = event.esCliente ? 'cliente' : 'empresa';
+            this.router.navigate(['/admin-gestion'], { queryParams: { tipo: tipoPestana } });
           } else {
             this.router.navigate(['/login']);
           }
         }),
+
         catchError((err) => {
-          console.error(err);
+          console.error('Error en registro:', err);
+
           const key =
             err.message === 'EMAIL_EXISTS' || err.message?.includes('registered')
               ? 'REGISTER.MESSAGES.ERROR_EMAIL'
