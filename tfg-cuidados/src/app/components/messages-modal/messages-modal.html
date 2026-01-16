@@ -25,12 +25,14 @@
   <div class="w-full flex flex-col gap-4">
     @if(data.modo == "escribir") {
     <app-inputs
+      name="receptor"
       [label]="'MESSAGES_MODAL.LABELS.TO' | translate"
       [control]="getCtrl('receptor')"
       type="text"
     >
     </app-inputs>
     <app-inputs
+      name="asunto"
       [label]="'MESSAGES_MODAL.LABELS.SUBJECT' | translate"
       [control]="getCtrl('asunto')"
       type="text"
@@ -38,18 +40,21 @@
     </app-inputs>
     } @else {
     <app-inputs
+      name="emisor"
       [label]="'MESSAGES_MODAL.LABELS.SENDER' | translate"
       [control]="getCtrl('emisor')"
       type="text"
     >
     </app-inputs>
     <app-inputs
+      name="receptor"
       [label]="'MESSAGES_MODAL.LABELS.RECEIVER' | translate"
       [control]="getCtrl('receptor')"
       type="text"
     >
     </app-inputs>
     <app-inputs
+      name="asunto"
       [label]="'MESSAGES_MODAL.LABELS.SUBJECT' | translate"
       [control]="getCtrl('asunto')"
       type="text"

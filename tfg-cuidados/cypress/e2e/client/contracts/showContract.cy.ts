@@ -3,8 +3,8 @@ describe('Contratos - Flujo de Cliente', () => {
     cy.intercept('GET', '**/Contrato?*').as('fetchContratos');
     cy.login('clientecypress@test.com', '13122000Teddy13@');
 
-    cy.visit('/home');
     cy.url().should('include', '/home');
+    cy.wait(1000);
   });
 
   it('debe navegar a mis contratos y abrir el primero', () => {

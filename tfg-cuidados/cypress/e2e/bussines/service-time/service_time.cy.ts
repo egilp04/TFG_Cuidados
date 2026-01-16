@@ -6,6 +6,10 @@ describe('Gestión de Servicios y Horarios - Empresa', () => {
     cy.intercept('DELETE', '**/rest/v1/Servicio_Horario*').as('deleteServicio');
 
     cy.login('empresaCypress@test.com', '13122000Teddy13@');
+
+    cy.url().should('include', '/home');
+    cy.wait(1000);
+
     cy.visit('/admin-services');
     cy.wait('@fetchServicios', { timeout: 10000 });
   });

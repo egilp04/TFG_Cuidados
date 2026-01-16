@@ -7,6 +7,7 @@
 </div>
 <form [formGroup]="form" class="flex flex-col justify-center gap-8 p-10 bg-surface">
   <app-inputs
+    name="descripcion"
     [label]="'SERVICE_TIME_MODAL.LABELS.DESCRIPTION' | translate"
     [control]="getCtrl('descripcion')"
     [errorMessage]="getErrorMessage('descripcion')"
@@ -37,6 +38,7 @@
   </div>
 
   <app-inputs
+    name="precio"
     [label]="'SERVICE_TIME_MODAL.LABELS.PRICE' | translate"
     [control]="getCtrl('precio')"
     placeholder="0.00"

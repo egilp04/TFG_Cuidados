@@ -3,12 +3,14 @@ describe('Flujo de Mensajería - Bandeja de Entrada', () => {
   const nombreCliente = 'Cliente Prueba';
 
   beforeEach(() => {
-    // Interceptores específicos de comunicación
     cy.intercept('GET', '**/rest/v1/Comunicacion*').as('getMensajes');
     cy.intercept('PATCH', '**/rest/v1/Comunicacion*').as('borradoLogico');
 
-    // Login como Empresa (Receptor)
     cy.login('empresaCypress@test.com', '13122000Teddy13@');
+
+    cy.url().should('include', '/home');
+    cy.wait(1000);
+
     cy.visit('/messages');
     cy.wait('@getMensajes');
   });

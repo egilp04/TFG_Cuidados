@@ -2,6 +2,10 @@ describe('Perfil - Cliente', () => {
   beforeEach(() => {
     cy.intercept('POST', '**/rest/v1/rpc/update_profile_complete').as('updateProfile');
     cy.login('clientecypress@test.com', '13122000Teddy13@');
+
+    cy.url().should('include', '/home');
+    cy.wait(1000);
+
     cy.visit('/modify-profile');
   });
 

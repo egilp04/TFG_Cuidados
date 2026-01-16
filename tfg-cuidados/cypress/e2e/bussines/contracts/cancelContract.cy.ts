@@ -4,7 +4,9 @@ describe('Contratos - Cancelación de Servicio', () => {
     cy.intercept('PATCH', '**/Contrato?*').as('patchContrato');
 
     cy.login('empresaCypress@test.com', '13122000Teddy13@');
-    cy.visit('/home');
+
+    cy.url().should('include', '/home');
+    cy.wait(1000);
   });
 
   it('debe navegar y cancelar el contrato desde Servicios Contratados', () => {

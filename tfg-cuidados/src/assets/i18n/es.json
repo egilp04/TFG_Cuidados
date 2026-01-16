@@ -407,6 +407,7 @@
     }
   },
   "CANCEL_MODAL": {
+    "ADMIN_GLOBAL_DELETE": "¿Desea borrar?",
     "BTN": {
       "KEEP_ACCOUNT": "Continuar registrado",
       "UNSUBSCRIBE": "Cancelar registro",
@@ -448,7 +449,7 @@
       "TITLE": "Confirmación de eliminación",
       "SUBTITLE": "Eliminar los datos conlleva:",
       "LIST": {
-        "PROFILE": "El perfil de cliente o empresa y sus datos asociados serán eliminados.",
+        "PROFILE": "El perfil de cliente o empresa y sus datos asociados serán anulados.",
         "CONTRACTS": "Todos los contratos de servicios activos o futuros quedan anulados inmediatamente."
       },
       "NOTE": "La plataforma notificará a la otra parte sobre la anulación forzosa del servicio.",
@@ -716,5 +717,8 @@
         "TEXT": "Conforme a la normativa, puede ejercer sus derechos de Acceso, Rectificación, Supresión, Oposición, Limitación y Portabilidad enviando un correo a la dirección indicada."
       }
     }
+  },
+  "MANAGEMENT_GLOBAL": {
+    "DELETE": "Borrado con éxito"
   }
 }

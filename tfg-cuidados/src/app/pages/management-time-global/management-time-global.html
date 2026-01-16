@@ -23,6 +23,7 @@
 
   <div class="flex flex-col gap-20 px-10">
     <app-inputs
+      name="time"
       [label]="'MANAGEMENT_SCHEDULES.FORM.START_TIME' | translate"
       type="time"
       [control]="getCtrl('hora')"
@@ -36,6 +37,7 @@
       </label>
       <div class="relative w-full">
         <select
+          name="dia"
           [formControl]="getCtrl('dia')"
           class="text-label w-full p-4 rounded-12 border-2 border-primary bg-transparent text-primary outline-none focus:border-accent cursor-pointer transition-colors"
         >

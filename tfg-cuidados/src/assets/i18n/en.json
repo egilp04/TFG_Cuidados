@@ -294,7 +294,8 @@
       "SUCCESS_UPDATE": "Schedule updated successfully",
       "SUCCESS_DELETE": "Schedule deleted",
       "ERROR_DUPLICATE": "A schedule already exists for {{dia}} at {{hora}}",
-      "ERROR_GENERIC": "Error processing the request"
+      "ERROR_GENERIC": "Error processing the request",
+      "ERROR_DELETE": "Error con el borrado"
     },
     "LIST": {
       "TITLE": "Time list"
@@ -451,6 +452,7 @@
     }
   },
   "CANCEL_MODAL": {
+    "ADMIN_GLOBAL_DELETE": "Are you sure?",
     "BTN": {
       "KEEP_ACCOUNT": "Keep account",
       "UNSUBSCRIBE": "Unsubscribe",
@@ -725,5 +727,8 @@
         "TEXT": "In accordance with regulations, you may exercise your rights of Access, Rectification, Deletion, Opposition, Limitation, and Portability by sending an email to the indicated address."
       }
     }
+  },
+  "MANAGEMENT_GLOBAL": {
+    "DELETE": "It has been deleted"
   }
 }

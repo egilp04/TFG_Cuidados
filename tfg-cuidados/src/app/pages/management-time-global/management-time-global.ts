@@ -16,7 +16,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { switchMap, throwError, map, catchError, of } from 'rxjs';
+import { switchMap, throwError, map, catchError, of, filter } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { Inputs } from '../../components/inputs/inputs';
@@ -26,6 +26,8 @@ import { TimeService } from '../../services/time.service';
 import { MessageService } from '../../services/message-service';
 import { HorarioModel } from '../../models/Horario';
 import { AuthService } from '../../services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 @Component({
   selector: 'app-management-time-global',
   standalone: true,
@@ -50,6 +52,7 @@ export class ManagementTimeGlobal implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
   private authService = inject(AuthService);
+  private dialog = inject(MatDialog);
 
   isEditing: boolean = false;
   currentTimeId: string | null = null;
@@ -158,27 +161,37 @@ export class ManagementTimeGlobal implements OnInit {
   }
 
   onDelete(id: string) {
-    const confirmMsg = this.translate.instant('MANAGEMENT_SCHEDULES.MESSAGES.CONFIRM_DELETE');
+    const dialogRef = this.dialog.open(Cancelmodal, {
+      data: { modo: 'eliminarAdminGlobal' },
+      width: '100%',
+      maxWidth: '450px',
+    });
 
-    if (confirm(confirmMsg)) {
-      this.timeService
-        .deleteTime(id)
-        .pipe(
-          switchMap(() =>
-            this.translate
-              .get('MANAGEMENT_SCHEDULES.MESSAGES.SUCCESS_DELETE')
-              .pipe(map((text) => ({ type: 'exito' as const, text })))
-          ),
-          catchError((err) =>
-            this.translate
-              .get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DELETE')
-              .pipe(map((text) => ({ type: 'error' as const, text })))
+    dialogRef
+      .afterClosed()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        filter((result) => result === true),
+        switchMap(() =>
+          this.timeService.deleteTime(id).pipe(
+            switchMap(() =>
+              this.translate
+                .get('MANAGEMENT_GLOBAL.DELETE')
+                .pipe(map((text) => ({ type: 'exito' as const, text })))
+            ),
+            catchError(() =>
+              this.translate
+                .get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DELETE')
+                .pipe(map((text) => ({ type: 'error' as const, text })))
+            )
           )
         )
-        .subscribe((resultado) => {
+      )
+      .subscribe({
+        next: (resultado) => {
           this.messageService.showMessage(resultado.text, resultado.type);
-        });
-    }
+        },
+      });
   }
 
   resetForm() {

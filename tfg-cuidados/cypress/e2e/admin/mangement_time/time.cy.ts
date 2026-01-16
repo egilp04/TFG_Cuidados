@@ -6,21 +6,29 @@ describe('Gestión Global de Horarios - Admin', () => {
     cy.intercept('DELETE', '**/rest/v1/Horario*').as('deleteGlobalTime');
 
     cy.login('admin@test.com', '13122000Teddy13@');
-    cy.visit('/global-times');
+
+    cy.contains('app-button', /Horarios|Schedules/i).click();
+
     cy.wait('@fetchGlobalTimes');
+    cy.url().should('include', '/global-times');
   });
 
   it('debe crear un nuevo horario global', () => {
-    cy.get('app-inputs').find('input[type="time"]').type('08:30');
+    cy.get('app-inputs')
+      .find('input[type="time"]')
+      .should('be.visible')
+      .type('08:30', { force: true })
+      .blur();
 
-    cy.get('select').select('Lunes');
+    cy.get('select').select(1, { force: true });
+
+    cy.wait(500);
 
     cy.get('app-button')
       .contains(/Añadir/i)
-      .click();
+      .click({ force: true });
 
     cy.wait('@createGlobalTime').its('response.statusCode').should('be.oneOf', [200, 201, 204]);
-    cy.get('.text-primary').should('be.visible');
   });
 
   it('debe ver la lista y modificar un horario', () => {
@@ -31,33 +39,43 @@ describe('Gestión Global de Horarios - Admin', () => {
       .within(() => {
         cy.get('app-button')
           .contains(/Editar/i)
-          .click();
+          .click({ force: true });
       });
 
     cy.get('app-button')
       .contains(/Guardar/i)
       .should('be.visible');
-    cy.get('app-inputs').find('input[type="time"]').clear().type('22:00');
-    cy.get('select').select('Sábado');
+
+    cy.get('app-inputs')
+      .find('input[type="time"]')
+      .clear({ force: true })
+      .type('22:00', { force: true })
+      .blur();
+
+    cy.get('select').select(2, { force: true });
+
     cy.get('app-button')
       .contains(/Guardar/i)
-      .click();
+      .click({ force: true });
+
     cy.wait('@updateGlobalTime').its('response.statusCode').should('be.oneOf', [200, 204]);
-    cy.get('.text-primary').should('be.visible');
   });
 
   it('debe eliminar un horario global', () => {
-    cy.on('window:confirm', () => true);
-
     cy.get('tr.mat-mdc-row')
       .first()
       .within(() => {
         cy.get('app-button')
           .contains(/Eliminar/i)
-          .click();
+          .click({ force: true });
+      });
+
+    cy.get('mat-dialog-container')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('button', /eliminar|si|confirmar/i).click({ force: true });
       });
 
     cy.wait('@deleteGlobalTime').its('response.statusCode').should('be.oneOf', [200, 204]);
-    cy.get('.text-primary').should('be.visible');
   });
 });

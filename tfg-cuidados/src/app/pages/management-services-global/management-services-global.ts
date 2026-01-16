@@ -16,7 +16,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { switchMap, throwError, map, catchError, of } from 'rxjs';
+import { switchMap, throwError, map, catchError, of, filter } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
@@ -26,6 +26,8 @@ import { MessageService } from '../../services/message-service';
 import { ServicioModel } from '../../models/Servicio';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { AuthService } from '../../services/auth.service';
+import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-management-services-global',
@@ -52,6 +54,7 @@ export class ManagementServicesGlobal implements OnInit {
   public messageService = inject(MessageService);
   private authService = inject(AuthService);
   private translate = inject(TranslateService);
+  private dialog = inject(MatDialog);
 
   isEditing: boolean = false;
   currentServiceId: string | null = null;
@@ -143,27 +146,37 @@ export class ManagementServicesGlobal implements OnInit {
   }
 
   onDelete(id: string) {
-    const confirmMsg = this.translate.instant('MANAGEMENT_SERVICES.MESSAGES.CONFIRM_DELETE');
+    const dialogRef = this.dialog.open(Cancelmodal, {
+      data: { modo: 'eliminarAdminGlobal' },
+      width: '100%',
+      maxWidth: '450px',
+    });
 
-    if (confirm(confirmMsg)) {
-      this.serviceService
-        .deleteService(id)
-        .pipe(
-          switchMap(() =>
-            this.translate
-              .get('MANAGEMENT_SERVICES.MESSAGES.SUCCESS_DELETE')
-              .pipe(map((text) => ({ type: 'exito' as const, text })))
-          ),
-          catchError(() =>
-            this.translate
-              .get('MANAGEMENT_SERVICES.MESSAGES.ERROR_DELETE')
-              .pipe(map((text) => ({ type: 'error' as const, text })))
+    dialogRef
+      .afterClosed()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        filter((result) => result === true),
+        switchMap(() =>
+          this.serviceService.deleteService(id).pipe(
+            switchMap(() =>
+              this.translate
+                .get('MANAGEMENT_SERVICES.MESSAGES.SUCCESS_DELETE')
+                .pipe(map((text) => ({ type: 'exito' as const, text })))
+            ),
+            catchError(() =>
+              this.translate
+                .get('MANAGEMENT_SERVICES.MESSAGES.ERROR_DELETE')
+                .pipe(map((text) => ({ type: 'error' as const, text })))
+            )
           )
         )
-        .subscribe((resultado) => {
+      )
+      .subscribe({
+        next: (resultado) => {
           this.messageService.showMessage(resultado.text, resultado.type);
-        });
-    }
+        },
+      });
   }
 
   resetForm() {

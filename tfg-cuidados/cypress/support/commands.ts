@@ -41,21 +41,45 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
 Cypress.Commands.add('login', (email, password) => {
-  cy.visit('/');
   cy.intercept('POST', '**/auth/v1/token*').as('authSession');
+
+  cy.visit('/');
+
   cy.get('app-button')
     .contains(/Registrarse|Entrar/i)
+    .should('be.visible')
     .click({ force: true });
+
   cy.get('app-button')
     .contains(/Tengo una cuenta|Iniciar Sesión/i)
+    .should('be.visible')
     .click({ force: true });
-  cy.get('app-inputs[name="email"] input').type(email, { force: true });
-  cy.get('app-inputs[name="password"] input').type(password, { force: true });
+
+  cy.get('app-inputs[name="email"] input')
+    .should('be.visible')
+    .clear()
+    .type(email, { force: true });
+
+  cy.get('app-inputs[name="password"] input')
+    .should('be.visible')
+    .clear()
+    .type(password, { force: true });
+
   cy.get('app-button')
     .contains(/Entrar/i)
     .click({ force: true });
-  cy.wait('@authSession').its('response.statusCode').should('eq', 200);
+
+  cy.wait('@authSession').then((interception) => {
+    expect(interception.response?.statusCode).to.eq(200);
+    if (interception.response?.body) {
+      cy.log('Datos recibidos del login:', JSON.stringify(interception.response.body));
+    }
+  });
+
+  cy.wait(500);
+
   cy.url().should('include', '/home');
 });
 

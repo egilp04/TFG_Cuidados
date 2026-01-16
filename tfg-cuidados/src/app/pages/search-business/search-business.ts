@@ -140,12 +140,6 @@ export class SearchBusiness implements OnInit {
           return;
         }
 
-        const confirmMsg = this.translate.instant('SEARCH_BUSINESS.MESSAGES.CONFIRM_CONTRACT', {
-          servicio: seleccion.Servicio.nombre,
-          precio: seleccion.precio,
-        });
-
-        if (!confirm(confirmMsg)) return;
         const nuevoContrato: ContratoModel = {
           estado: 'activo',
           fecha_inicio: new Date().toISOString().split('T')[0],

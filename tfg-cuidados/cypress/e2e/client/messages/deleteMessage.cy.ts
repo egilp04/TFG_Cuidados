@@ -7,6 +7,10 @@ describe('Borrado de mensaje: Cliente-Empresa', () => {
     cy.intercept('GET', '**/rest/v1/Comunicacion*').as('getMensajes');
 
     cy.login('clientecypress@test.com', '1234TeddY24.');
+
+    cy.url().should('include', '/home');
+    cy.wait(1000);
+
     cy.visit('/messages');
 
     cy.wait('@getMensajes');

@@ -22,9 +22,17 @@
   </h1>
 
   <div class="w-full h-full md:px-40 gap-20 flex flex-col">
-    <app-inputs [label]="'MANAGEMENT_SERVICES.FORM.NAME' | translate" [control]="getCtrl('nombre')">
+    <app-inputs
+      name="nombre"
+      [label]="'MANAGEMENT_SERVICES.FORM.NAME' | translate"
+      [control]="getCtrl('nombre')"
+    >
     </app-inputs>
-    <app-inputs [label]="'MANAGEMENT_SERVICES.FORM.TYPE' | translate" [control]="getCtrl('tipo')">
+    <app-inputs
+      name="tipo"
+      [label]="'MANAGEMENT_SERVICES.FORM.TYPE' | translate"
+      [control]="getCtrl('tipo')"
+    >
     </app-inputs>
   </div>
 
