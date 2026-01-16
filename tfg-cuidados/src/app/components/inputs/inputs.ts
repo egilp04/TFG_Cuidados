@@ -11,7 +11,7 @@ import { LucideAngularModule } from 'lucide-angular';
 export class Inputs {
   label = input.required<string>();
   type = input<'text' | 'email' | 'password' | 'date' | 'time' | 'textarea'>('text');
-
+  name = input.required<string>();
   control = input.required<FormControl>();
   errorMessage = input<string>('');
   isPasswordVisible = signal(false);

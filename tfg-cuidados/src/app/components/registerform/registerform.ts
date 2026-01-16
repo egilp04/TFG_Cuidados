@@ -104,40 +104,39 @@ export class Registerform implements OnInit {
     if (this.registerForm.valid) {
       const formValue = this.registerForm.getRawValue();
       let datosParaEnviar = {};
-
       if (this.isUser) {
         datosParaEnviar = {
           rol: 'cliente',
-          email: formValue.email.trim(),
-          password: formValue.password.trim(),
-          nombre: formValue.nombre.trim(),
-          ape1: formValue.ape1.trim(),
-          ape2: formValue.ape2 ? formValue.ape2.trim() : '',
-          dni: formValue.dni.trim(),
+          email: (formValue.email || '').trim(),
+          password: (formValue.password || '').trim(),
+          nombre: (formValue.nombre || '').trim(),
+          ape1: (formValue.ape1 || '').trim(),
+          ape2: (formValue.ape2 || '').trim(),
+          dni: (formValue.dni || '').trim(),
           fechnac: formValue.fechnac,
-          telef: formValue.telef.trim(),
-          direccion: formValue.direccion.trim(),
-          localidad: formValue.localidad.trim(),
-          codpostal: formValue.codpostal.trim(),
+          telef: (formValue.telef || '').trim(),
+          direccion: (formValue.direccion || '').trim(),
+          localidad: (formValue.localidad || '').trim(),
+          codpostal: (formValue.codpostal || '').trim(),
           comunidad: formValue.comunidad,
         };
       } else {
         datosParaEnviar = {
           rol: 'empresa',
-          email: formValue.email.trim(),
-          password: formValue.password.trim(),
-          nombre: formValue.nombreEmpresa.trim(),
-          cif: formValue.cif.trim(),
-          descripcion: formValue.descripcion ? formValue.descripcion.trim() : '',
-          telef: formValue.telef.trim(),
-          direccion: formValue.direccion.trim(),
-          localidad: formValue.localidad.trim(),
-          codpostal: formValue.codpostal.trim(),
+          email: (formValue.email || '').trim(),
+          password: (formValue.password || '').trim(),
+          nombre: (formValue.nombreEmpresa || '').trim(),
+          cif: (formValue.cif || '').trim(),
+          descripcion: (formValue.descripcion || '').trim(),
+          telef: (formValue.telef || '').trim(),
+          direccion: (formValue.direccion || '').trim(),
+          localidad: (formValue.localidad || '').trim(),
+          codpostal: (formValue.codpostal || '').trim(),
           comunidad: formValue.comunidad,
         };
       }
 
-      console.log('📤 Formulario válido, enviando datos al padre:', datosParaEnviar);
+      console.log('📤 Formulario válido, enviando datos:', datosParaEnviar);
       this.formSubmitted.emit({ datos: datosParaEnviar, esCliente: this.isUser });
     } else {
       this.registerForm.markAllAsTouched();

@@ -1,5 +1,5 @@
 describe('Actividades Empresa - Borrado Lógico', () => {
-  const emailEmpresa = 'empresaCypress@test.com';
+  const emailEmpresa = 'empresacypress@test.com';
   const passwordEmpresa = '13122000Teddy13@';
 
   beforeEach(() => {

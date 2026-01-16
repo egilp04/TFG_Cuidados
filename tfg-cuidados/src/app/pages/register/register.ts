@@ -1,10 +1,17 @@
-import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Registerform } from '../../components/registerform/registerform';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule, Location, isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { filter, switchMap, tap, delay, catchError } from 'rxjs/operators';
@@ -25,6 +32,7 @@ export class Register implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
   private location = inject(Location);
+  private platformId = inject(PLATFORM_ID);
 
   isUser: boolean = true;
 
@@ -46,10 +54,12 @@ export class Register implements OnInit {
   }
 
   private detectarTipo(): void {
-    const state = history.state as { tipo?: string };
-    if (state && state.tipo) {
-      this.isUser = state.tipo !== 'empresa';
-      this.cd.detectChanges();
+    if (isPlatformBrowser(this.platformId)) {
+      const state = history.state as { tipo?: string };
+      if (state && state.tipo) {
+        this.isUser = state.tipo !== 'empresa';
+        this.cd.detectChanges();
+      }
     }
   }
 
@@ -58,7 +68,6 @@ export class Register implements OnInit {
     const soyAdmin = user?.rol === 'administrador';
 
     if (user && !soyAdmin) {
-      console.error('🛑 INTENTO DE REGISTRO PÚBLICO MIENTRAS ESTÁS LOGUEADO');
       this.messageService.showMessage(
         'Error: Cierra sesión antes de registrar una cuenta nueva.',
         'error'
@@ -74,14 +83,11 @@ export class Register implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap(() => this.translate.get('REGISTER.MESSAGES.SUCCESS')),
-
         tap((msg) => {
           this.messageService.showMessage(msg, 'exito');
           this.cd.detectChanges();
         }),
-
         delay(2000),
-
         tap(() => {
           if (soyAdmin) {
             const tipoPestana = event.esCliente ? 'cliente' : 'empresa';
@@ -90,10 +96,8 @@ export class Register implements OnInit {
             this.router.navigate(['/login']);
           }
         }),
-
         catchError((err) => {
-          console.error('Error en registro:', err);
-
+          console.error(err);
           const key =
             err.message === 'EMAIL_EXISTS' || err.message?.includes('registered')
               ? 'REGISTER.MESSAGES.ERROR_EMAIL'
