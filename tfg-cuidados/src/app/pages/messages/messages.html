@@ -2,17 +2,19 @@
   <app-buttonback></app-buttonback>
 </div>
 
-@if (this.messageService.messageData(); as data) {
-<div
-  [ngClass]="{
-    'text-red-500': data.tipo === 'error',
-    'text-primary': data.tipo === 'exito'
-  }"
-  class="mb-4 p-4 rounded-8 border border-primary/20 bg-primary-light text-label font-bold transition-all duration-300"
->
-  {{ data.mensaje }}
+<div class="flex flex-col items-center p-6 bg-surface">
+  @if (this.messageService.messageData(); as data) {
+  <div
+    [ngClass]="{
+      'text-red-500': data.tipo === 'error',
+      'text-primary': data.tipo === 'exito'
+    }"
+    class="text-label ml-2 transition-all duration-300"
+  >
+    {{ data.mensaje }}
+  </div>
+  }
 </div>
-}
 
 <div class="flex flex-col items-center p-6 bg-surface">
   <h1 class="w-full text-h1 text-primary font-serif mb-6 text-center">
