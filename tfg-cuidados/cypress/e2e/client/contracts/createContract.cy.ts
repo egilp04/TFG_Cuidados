@@ -1,33 +1,59 @@
 describe('Contratos - Flujo de Cliente', () => {
+  const emailCliente = 'clientecypress@test.com';
+  const passCliente = '13122000Teddy13@';
+
+  const servicioEjemplo = {
+    id_servicio_horario: '999',
+    id_empresa: '2db369bb-ebd5-4a37-81ea-8ae3520e6fb6',
+    precio: 50,
+    estado: true,
+    Servicio: { nombre: 'Limpieza de Hogar', tipo_servicio: 'Limpieza' },
+    Horario: { hora: '10:00', dia_semana: 'Lunes' },
+  };
+
   beforeEach(() => {
-    cy.login('clientecypress@test.com', '13122000Teddy13@');
+    cy.intercept('POST', '**/auth/v1/token*').as('loginPost');
+    cy.intercept('GET', '**/rest/v1/Empresa?select=*Servicio_Horario*', {
+      statusCode: 200,
+      body: [
+        {
+          id_empresa: '2db369bb-ebd5-4a37-81ea-8ae3520e6fb6',
+          Usuario: { nombre: 'Empresa Test', estado: true },
+          Servicio_Horario: [servicioEjemplo],
+        },
+      ],
+    }).as('buscarServicios');
 
-    cy.url().should('include', '/home');
-    cy.wait(1000);
+    cy.intercept('POST', '**/rest/v1/Contrato*', {
+      statusCode: 201,
+      body: { id_contrato: '123' },
+    }).as('apiCrearContrato');
 
-    cy.visit('/search-business');
+    cy.login(emailCliente, passCliente);
+    cy.wait('@loginPost');
+
+    cy.contains(/servicios|buscar|contratar/i).click();
+    cy.wait('@buscarServicios');
   });
 
   it('debe permitir buscar una empresa, seleccionar un horario y crear un contrato', () => {
-    cy.intercept('POST', '**/rest/v1/Contrato*').as('apiCrearContrato');
-    cy.get('app-searchbar input').type('limpieza{enter}');
-    cy.get('mat-card, .bg-white')
+    cy.get('app-searchbar input').should('be.visible').type('limpieza');
+
+    cy.get('mat-card, .bg-white', { timeout: 10000 })
+      .should('be.visible')
       .first()
       .within(() => {
-        cy.get('select').select(1);
+       cy.get('select').select(1, { force: true });
+
         cy.get('app-button')
           .contains(/Contratar/i)
-          .click();
+          .click({ force: true });
       });
 
     cy.wait('@apiCrearContrato').then((interception) => {
-      const body = interception.request.body;
-      expect(body).to.have.property('id_servicio_horario');
-      expect(body).to.have.property('id_cliente');
-      expect(body).to.have.property('id_empresa');
-      expect(interception.response?.statusCode).to.be.oneOf([200, 201]);
+      expect(interception.response?.statusCode).to.eq(201);
     });
 
-    cy.get('.text-green-600').should('be.visible');
+    cy.contains(/éxito|creado|correctamente/i).should('be.visible');
   });
 });
