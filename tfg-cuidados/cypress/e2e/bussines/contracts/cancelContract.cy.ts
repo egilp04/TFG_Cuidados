@@ -1,6 +1,6 @@
 describe('Contratos - Verificación de Estados Activos', () => {
-  const emailCliente = 'empresacypress@test.com';
-  const passCliente = '13122000Teddy13@';
+  const emailEmpresa = 'empresacypress@test.com';
+  const passEmpresa = '13122000Teddy13@';
 
   const contratoActivo = {
     id_contrato: 'activo-123',
@@ -27,13 +27,13 @@ describe('Contratos - Verificación de Estados Activos', () => {
       body: {},
     }).as('patchContrato');
 
-    cy.login(emailCliente, passCliente);
+    cy.login(emailEmpresa, passEmpresa);
     cy.wait('@loginPost');
     cy.url().should('include', '/home');
   });
 
   it('debe desaparecer de la tabla al ser cancelado', () => {
-    cy.contains('app-button', /Servicios Contratados/i).click();
+    cy.contains('app-button', /Ver todos los contratos/i).click();
     cy.wait('@getContratos');
 
     cy.get('mat-row, tr[mat-row]').should('have.length', 1);
@@ -58,7 +58,7 @@ describe('Contratos - Verificación de Estados Activos', () => {
     });
     cy.wait('@patchContrato');
     cy.visit('/home');
-    cy.contains('app-button', /Servicios Contratados/i).click();
+    cy.contains('app-button', /Ver todos los contratos/i).click();
     cy.wait('@getContratosVacios');
 
     cy.get('mat-row, tr[mat-row]').should('not.exist');
