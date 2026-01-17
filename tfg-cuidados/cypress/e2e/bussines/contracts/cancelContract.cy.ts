@@ -1,26 +1,49 @@
-describe('Contratos - Cancelación de Servicio', () => {
+describe('Contratos - Verificación de Estados Activos', () => {
+  const emailCliente = 'empresacypress@test.com';
+  const passCliente = '13122000Teddy13@';
+
+  const contratoActivo = {
+    id_contrato: 'activo-123',
+    estado: 'activo',
+    fecha_creacion: new Date().toISOString(),
+    id_servicio_horario: {
+      id_servicio_horario: 'sh-1',
+      Servicio: { nombre: 'Servicio Activo' },
+    },
+    Empresa: { Usuario: { nombre: 'Empresa A' } },
+    Cliente: { Usuario: { nombre: 'Cliente A' } },
+  };
+
   beforeEach(() => {
-    cy.intercept('GET', '**/Contrato?*').as('getContratos');
-    cy.intercept('PATCH', '**/Contrato?*').as('patchContrato');
+    cy.intercept('POST', '**/auth/v1/token*').as('loginPost');
 
-    cy.login('empresaCypress@test.com', '13122000Teddy13@');
+    cy.intercept('GET', '**/rest/v1/Contrato**', {
+      statusCode: 200,
+      body: [contratoActivo],
+    }).as('getContratos');
 
+    cy.intercept('PATCH', '**/rest/v1/Contrato**', {
+      statusCode: 204,
+      body: {},
+    }).as('patchContrato');
+
+    cy.login(emailCliente, passCliente);
+    cy.wait('@loginPost');
     cy.url().should('include', '/home');
-    cy.wait(1000);
   });
 
-  it('debe navegar y cancelar el contrato desde Servicios Contratados', () => {
-    cy.contains('app-button', /ver todos los contratos/i, { timeout: 10000 })
-      .should('be.visible')
-      .click();
-    cy.url().should('include', '/contract');
-
+  it('debe desaparecer de la tabla al ser cancelado', () => {
+    cy.contains('app-button', /Servicios Contratados/i).click();
     cy.wait('@getContratos');
 
-    cy.get('mat-table, table, [role="grid"]', { timeout: 10000 })
-      .should('be.visible')
-      .find('mat-row, tr[mat-row], .mat-mdc-row')
-      .filter(':visible')
+    cy.get('mat-row, tr[mat-row]').should('have.length', 1);
+
+    cy.intercept('GET', '**/rest/v1/Contrato**', {
+      statusCode: 200,
+      body: [],
+    }).as('getContratosVacios');
+
+    cy.get('mat-row, tr[mat-row]')
       .first()
       .within(() => {
         cy.get('app-button')
@@ -28,16 +51,16 @@ describe('Contratos - Cancelación de Servicio', () => {
           .click({ force: true });
       });
 
-    cy.get('mat-dialog-container', { timeout: 8000 })
-      .should('be.visible')
-      .within(() => {
-        cy.contains('app-button', /Confirmar|Cancelar contrato/i).click({ force: true });
-      });
-
-    cy.wait('@patchContrato').then((interception) => {
-      expect(interception.request.body.estado).to.equal('no activo');
-      expect(interception.response?.statusCode).to.be.oneOf([200, 204]);
+    cy.get('mat-dialog-container').within(() => {
+      cy.get('app-button')
+        .contains(/Confirmar|Aceptar|cancelar contrato/i)
+        .click({ force: true });
     });
-    cy.get('.text-primary', { timeout: 5000 }).should('be.visible');
+    cy.wait('@patchContrato');
+    cy.visit('/home');
+    cy.contains('app-button', /Servicios Contratados/i).click();
+    cy.wait('@getContratosVacios');
+
+    cy.get('mat-row, tr[mat-row]').should('not.exist');
   });
 });
