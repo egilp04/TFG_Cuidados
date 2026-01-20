@@ -11,30 +11,31 @@
       [class.border-red]="errorMessage()"
       [attr.aria-invalid]="errorMessage() ? true : null"
       [attr.aria-describedby]="errorMessage() ? label() + '-error' : null"
+      autocomplete=""
     />
 
     @if (type() === 'password') {
-    <button
-      type="button"
-      (click)="togglePasswordVisibility()"
-      class="absolute right-4 top-1/2 -translate-y-1/2 text-primary hover:text-accent focus:outline-none cursor-pointer flex items-center justify-center p-1"
-      tabindex="-1"
-    >
-      @if (isPasswordVisible()) {
-      <lucide-icon name="eye-off" class="w-5 h-5"></lucide-icon>
-      } @else {
-      <lucide-icon name="eye" class="w-5 h-5"></lucide-icon>
-      }
-    </button>
+      <button
+        type="button"
+        (click)="togglePasswordVisibility()"
+        class="absolute right-4 top-1/2 -translate-y-1/2 text-primary hover:text-accent focus:outline-none cursor-pointer flex items-center justify-center p-1"
+        tabindex="-1"
+      >
+        @if (isPasswordVisible()) {
+          <lucide-icon name="eye-off" class="w-5 h-5"></lucide-icon>
+        } @else {
+          <lucide-icon name="eye" class="w-5 h-5"></lucide-icon>
+        }
+      </button>
     }
   </div>
   @if (errorMessage()) {
-  <span
-    [id]="name() + '-error'"
-    class="text-red text-label ml-2 animate-fade-in"
-    aria-live="polite"
-  >
-    {{ errorMessage() }}
-  </span>
+    <span
+      [id]="name() + '-error'"
+      class="text-red text-label ml-2 animate-fade-in"
+      aria-live="polite"
+    >
+      {{ errorMessage() }}
+    </span>
   }
 </div>

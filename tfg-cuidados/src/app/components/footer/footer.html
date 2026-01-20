@@ -23,24 +23,6 @@
   >
     {{ 'FOOTER.MANUALS' | translate }}
   </a>
-
-  <div class="flex flex-row gap-4">
-    <button
-      (click)="cambiarIdioma('es')"
-      class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-    >
-      ES
-    </button>
-    <span class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-      >|</span
-    >
-    <button
-      (click)="cambiarIdioma('en')"
-      class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-    >
-      EN
-    </button>
-  </div>
   <a
     routerLink="/"
     class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
@@ -59,4 +41,21 @@
   >
     {{ 'FOOTER.COOKIES_POLICIES' | translate }}
   </a>
+  <div class="flex flex-row gap-4">
+    <button
+      (click)="cambiarIdioma('es')"
+      class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+    >
+      ES
+    </button>
+    <span class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+      >|</span
+    >
+    <button
+      (click)="cambiarIdioma('en')"
+      class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+    >
+      EN
+    </button>
+  </div>
 </div>
