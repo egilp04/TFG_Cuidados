@@ -6,6 +6,10 @@ import { from, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ComunicationService } from './comunication.service';
 
+/**
+ * @description Orquestador del ciclo de vida de los servicios contratados.
+ * Maneja la lógica condicional basada en roles (Cliente/Empresa/Admin).
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -14,6 +18,10 @@ export class ContractService {
   private authService = inject(AuthService);
   private contractsList$ = new BehaviorSubject<any[]>([]);
   private comunicationService = inject(ComunicationService);
+  /**
+   * Consulta compleja con JOINs (relaciones) para recuperar datos del Servicio,
+   * Horario y metadatos de Usuario en una sola petición.
+   */
   private readonly CONTRATO_SELECT = `
     *,
     id_servicio_horario (
@@ -91,7 +99,7 @@ export class ContractService {
         if (error) throw error;
         return true;
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
 
@@ -101,16 +109,20 @@ export class ContractService {
         .from('Contrato')
         .select(this.CONTRATO_SELECT)
         .eq('id_contrato', id)
-        .maybeSingle()
+        .maybeSingle(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data;
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
-
+  /**
+   * Realiza una cancelación de contrato (borrado lógico).
+   * @post Calcula dinámicamente el mensaje de notificación basándose en quién
+   * canceló (cliente o empresa) para informar a la contraparte.
+   */
   deleteContract(id: string): Observable<any> {
     const fechaHoy = new Date().toISOString();
     return from(
@@ -122,7 +134,7 @@ export class ContractService {
         })
         .eq('id_contrato', id)
         .select(this.CONTRATO_SELECT)
-        .single()
+        .single(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
@@ -160,7 +172,7 @@ export class ContractService {
           })
           .subscribe();
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
 }

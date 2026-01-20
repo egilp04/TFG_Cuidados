@@ -4,6 +4,10 @@ import { BehaviorSubject, from, Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HorarioModel } from '../models/Horario';
 
+/**
+ * @description Servicio maestro de gestión de tiempos y horarios.
+ * Implementa validaciones de integridad para evitar colisiones horarias.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -30,6 +34,11 @@ export class TimeService {
       .subscribe();
   }
 
+  /**
+   * Implementa ordenación multicriterio en servidor.
+   * Recupera los horarios organizados primero por día de la semana y
+   * posteriormente por hora, optimizando la visualización en el frontend.
+   */
   private async refreshTimes() {
     const { data, error } = await this.clientSupaBase
       .from('Horario')
@@ -47,7 +56,7 @@ export class TimeService {
       map(({ error }) => {
         if (error) throw error;
       }),
-      catchError((err) => throwError(() => new Error(err.message || 'Error al insertar')))
+      catchError((err) => throwError(() => new Error(err.message || 'Error al insertar'))),
     );
   }
 
@@ -56,7 +65,7 @@ export class TimeService {
       map(({ error }) => {
         if (error) throw error;
       }),
-      catchError((err) => throwError(() => new Error(err.message || 'Error al eliminar')))
+      catchError((err) => throwError(() => new Error(err.message || 'Error al eliminar'))),
     );
   }
 
@@ -65,10 +74,15 @@ export class TimeService {
       map(({ error }) => {
         if (error) throw error;
       }),
-      catchError((err) => throwError(() => new Error(err.message || 'Error al actualizar')))
+      catchError((err) => throwError(() => new Error(err.message || 'Error al actualizar'))),
     );
   }
 
+  /**
+   * Validación de unicidad lógica (existsTime).
+   * Realiza una comprobación en la base de datos para evitar la duplicidad de
+   * franjas (mismo día y misma hora), protegiendo la consistencia del catálogo.
+   */
   existsTime(dia: string, hora: string, idAExcluir?: string): Observable<boolean> {
     let query = this.clientSupaBase
       .from('Horario')
@@ -83,7 +97,7 @@ export class TimeService {
         if (error) throw error;
         return data && data.length > 0;
       }),
-      catchError(() => of(false))
+      catchError(() => of(false)),
     );
   }
 }

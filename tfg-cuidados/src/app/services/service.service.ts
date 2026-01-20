@@ -4,6 +4,10 @@ import { BehaviorSubject, from, Observable, throwError, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators'; // Importar TAP
 import { ServicioModel } from '../models/Servicio';
 
+/**
+ * @description Gestiona el catálogo maestro de servicios disponibles en la plataforma.
+ * Proporciona métodos CRUD y validaciones de integridad de datos.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -44,11 +48,11 @@ export class ServiceService {
 
   insertService(newServicio: ServicioModel): Observable<void> {
     return from(this.clientSupaBase.from('Servicio').insert(newServicio)).pipe(
-      tap(() => this.refreshServices()), 
+      tap(() => this.refreshServices()),
       map(({ error }) => {
         if (error) throw error;
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
 
@@ -58,7 +62,7 @@ export class ServiceService {
       map(({ error }) => {
         if (error) throw error;
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
 
@@ -68,22 +72,27 @@ export class ServiceService {
       map(({ error }) => {
         if (error) throw error;
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
 
   getServiceById(id: string): Observable<ServicioModel> {
     return from(
-      this.clientSupaBase.from('Servicio').select('*').eq('id_servicio', id).single()
+      this.clientSupaBase.from('Servicio').select('*').eq('id_servicio', id).single(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data as ServicioModel;
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
 
+  /**
+   * Validación de duplicidad lógica.
+   * Utiliza el operador 'ilike' para asegurar que no se registren servicios con
+   * nombres similares, ignorando mayúsculas y minúsculas (Case Insensitive).
+   */
   existsService(nombre: string, idExclude?: string): Observable<boolean> {
     let query = this.clientSupaBase.from('Servicio').select('id_servicio').ilike('nombre', nombre);
     if (idExclude) {
@@ -92,7 +101,7 @@ export class ServiceService {
 
     return from(query).pipe(
       map(({ data }) => (data && data.length > 0 ? true : false)),
-      catchError(() => of(false))
+      catchError(() => of(false)),
     );
   }
 }

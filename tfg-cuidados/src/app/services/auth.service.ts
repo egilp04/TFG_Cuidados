@@ -7,6 +7,11 @@ import { createClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment.development';
 import { ComunicationService } from './comunication.service';
 
+/**
+ * @description Servicio de autenticación y gestión de sesiones.
+ * Implementa el patrón de persistencia de perfiles extendidos para manejar
+ * roles polimórficos (Cliente, Empresa, Administrador).
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private supabase = inject(SupabaseService).getClient();
@@ -14,6 +19,11 @@ export class AuthService {
   private injector = inject(Injector);
 
   isLoading = signal<boolean>(true);
+  /**
+   * Uso de Angular Signals para un estado de usuario reactivo y eficiente.
+   * 'currentUser' permite que toda la aplicación reaccione a cambios en la sesión
+   * sin necesidad de suscripciones manuales costosas.
+   */
   currentUser = signal<any | null>(null);
   isAuthenticated = computed(() => !!this.currentUser());
   userRol = computed(() => this.currentUser()?.rol || null);
@@ -39,7 +49,7 @@ export class AuthService {
           this.isLoading.set(false);
           this.currentUser.set(null);
           return of(null);
-        })
+        }),
       )
       .subscribe();
   }
@@ -50,18 +60,23 @@ export class AuthService {
         if (res.error) throw res.error;
         return this.getProfile(res.data.user.id);
       }),
-      tap((user) => this.currentUser.set(user))
+      tap((user) => this.currentUser.set(user)),
     );
   }
 
+  /**
+   * Recuperación de perfil compuesto.
+   * Realiza una agregación de datos consultando en paralelo las tablas de especialización.
+   * Garantiza que el objeto de usuario contenga toda la información necesaria
+   * según su rol detectado en el login.
+   */
   getProfile(userId: string): Observable<any> {
     // 1. Pedimos el usuario base (que ya trae 'rol' y 'estado')
     return from(this.supabase.from('Usuario').select('*').eq('id_usuario', userId).single()).pipe(
       switchMap(async ({ data: user, error: userErr }) => {
         if (userErr) throw userErr;
 
-        // 2. Buscamos datos extra en las 3 tablas posibles
-        // Usamos Promise.all para que sea rápido (en paralelo)
+        // Se usa Promise.all para que sea rápido (en paralelo)
         const [cli, emp, adm] = await Promise.all([
           this.supabase.from('Cliente').select('*').eq('id_cliente', userId).maybeSingle(),
           this.supabase.from('Empresa').select('*').eq('id_empresa', userId).maybeSingle(),
@@ -73,8 +88,6 @@ export class AuthService {
         ]);
 
         let datosExtra = {};
-
-        // 3. Asignamos datos extra según lo que encontremos
         if (user.rol === 'administrador' && adm.data) {
           datosExtra = adm.data;
         } else if (user.rol === 'empresa' && emp.data) {
@@ -82,10 +95,8 @@ export class AuthService {
         } else if (user.rol === 'cliente' && cli.data) {
           datosExtra = cli.data;
         }
-
-        // 4. Retornamos la fusión (El rol manda desde la tabla Usuario)
         return { ...user, ...datosExtra };
-      })
+      }),
     );
   }
 
@@ -93,10 +104,15 @@ export class AuthService {
     return from(this.supabase.auth.signOut()).pipe(
       tap(() => {
         this.currentUser.set(null);
-      })
+      }),
     );
   }
 
+  /**
+   * Registro con notificación proactiva.
+   * Tras un alta exitosa, el sistema invoca al ComunicationService para alertar
+   * a los administradores, integrando dos servicios de forma desacoplada.
+   */
   register(datos: any, esCliente: boolean): Observable<any> {
     const { emailLimpio, passwordLimpia, metaData } = this.prepararDatosRegistro(datos, esCliente);
     return from(this.supabase.rpc('email_exists', { email_check: emailLimpio })).pipe(
@@ -112,7 +128,7 @@ export class AuthService {
               data: metaData,
               emailRedirectTo: 'http://localhost:4200/home',
             },
-          })
+          }),
         );
       }),
       map((res) => this.validarRespuestaRegistro(res)),
@@ -123,11 +139,11 @@ export class AuthService {
           comunicationService
             .notifyAdmins(
               'Nuevo Registro',
-              `El usuario ${emailLimpio} se ha registrado como ${rolTexto}.`
+              `El usuario ${emailLimpio} se ha registrado como ${rolTexto}.`,
             )
             .subscribe();
         }
-      })
+      }),
     );
   }
   registerByAdmin(datos: any, esCliente: boolean): Observable<any> {
@@ -153,10 +169,10 @@ export class AuthService {
               data: { ...metaData, created_by_admin: true },
               emailRedirectTo: 'http://localhost:4200/login',
             },
-          })
+          }),
         );
       }),
-      map((res) => this.validarRespuestaRegistro(res))
+      map((res) => this.validarRespuestaRegistro(res)),
     );
   }
 
@@ -203,33 +219,33 @@ export class AuthService {
       catchError((err) => {
         console.error('Error actualizando credenciales:', err);
         return throwError(() => err);
-      })
+      }),
     );
   }
   recoverPassword(email: string): Observable<any> {
     return from(
       this.supabase.auth.resetPasswordForEmail(email, {
         redirectTo: 'http://localhost:4200/recover-password',
-      })
+      }),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data;
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
   updatePass(newPassword: string): Observable<any> {
     return from(
       this.supabase.auth.updateUser({
         password: newPassword,
-      })
+      }),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data;
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
 }

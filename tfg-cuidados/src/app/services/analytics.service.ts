@@ -2,6 +2,10 @@ import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+/**
+ * @description Servicio de métricas y análisis de datos para el dashboard administrativo.
+ * Centraliza la lógica de agregación temporal y estadística.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -86,6 +90,12 @@ export class AnalyticsService {
     }
   }
 
+  /**
+   * Monitorización IRL (In Real Time).
+   * Configura canales de escucha duales (Usuario y Contrato). Ante cualquier
+   * cambio en la plataforma, las métricas del dashboard se recalculan
+   * automáticamente sin intervención del administrador.
+   */
   private listenToChangesIRL() {
     this.supabase
       .channel('admin-metrics-internal')
@@ -99,6 +109,12 @@ export class AnalyticsService {
       .subscribe();
   }
 
+  /**
+   * Agregación temporal de registros.
+   * Implementa una lógica de 'Bucket Sort' (groupByDay) para distribuir
+   * las fechas de registro en un array de 7 días, facilitando su
+   * representación en gráficos lineales.
+   */
   private groupByDay(registros: any[], fechaInicio: Date): number[] {
     const dias = new Array(7).fill(0);
     registros.forEach((reg) => {

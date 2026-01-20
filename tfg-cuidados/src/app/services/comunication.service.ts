@@ -5,10 +5,18 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 import { ComunicacionModel } from '../models/Comunicacion';
 import { AuthService } from './auth.service';
 
+/**
+ * @description Servicio central de comunicaciones. Gestiona el flujo bidireccional
+ * de mensajes y notificaciones del sistema utilizando programación reactiva (RxJS).
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class ComunicationService {
+  /**
+   * BehaviorSubjects que actúan como "Single Source of Truth" para la interfaz.
+   * Permiten que múltiples componentes consuman los mismos datos en tiempo real.
+   */
   private supabase = inject(SupabaseService).getClient();
   private authService = inject(AuthService);
   private readonly tiposValidos = ['mensaje', 'notificacion'] as const;
@@ -35,7 +43,7 @@ export class ComunicationService {
         const user = this.authService.currentUser();
         if (!user) return 0;
         return mensajes.filter((m) => !m.leido && m.id_receptor === user.id_usuario).length;
-      })
+      }),
     );
   }
 
@@ -43,7 +51,7 @@ export class ComunicationService {
     return this.notificacionesList$.asObservable().pipe(
       map((notificaciones) => {
         return notificaciones.filter((n) => !n.leido).length;
-      })
+      }),
     );
   }
 
@@ -70,7 +78,7 @@ export class ComunicationService {
         *,
         Emisor:Usuario!fk_comunicacion_emisor ( nombre ),
         Receptor:Usuario!fk_comunicacion_receptor ( nombre )
-      `
+      `,
       )
       .eq('tipo_comunicacion', 'mensaje')
       .or(`id_receptor.eq.${user.id_usuario},id_emisor.eq.${user.id_usuario}`)
@@ -100,7 +108,11 @@ export class ComunicationService {
       this.notificacionesList$.next(data || []);
     }
   }
-
+  /**
+   * Lógica de interceptación: Tras insertar un registro de tipo 'mensaje',
+   * el sistema dispara una llamada interna para generar una notificación persistente
+   * al usuario receptor.
+   */
   insertComunicacion(comunicacion: ComunicacionModel): Observable<void> {
     if (!this.tiposValidos.includes(comunicacion.tipo_comunicacion)) {
       return throwError(() => new Error('tipo_comunicacion inválido.'));
@@ -117,7 +129,7 @@ export class ComunicationService {
         }
         return of(void 0);
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
 
@@ -142,17 +154,22 @@ export class ComunicationService {
           throw error;
         }
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
 
+  /**
+   * Implementa un borrado lógico de comunicaciones.
+   * Dependiendo de quién ejecute la acción, marca el flag 'eliminado_por_emisor'
+   * o 'eliminado_por_receptor' para mantener la integridad de la bandeja del otro usuario.
+   */
   deleteComunicacion(mensaje: ComunicacionModel): Observable<void> {
     const user = this.authService.currentUser();
     if (!user || !mensaje.id_comunicacion) return of(undefined);
     if (mensaje.tipo_comunicacion === 'mensaje') {
       const currentMensajes = this.mensajesList$.getValue();
       const newMensajes = currentMensajes.filter(
-        (m) => m.id_comunicacion !== mensaje.id_comunicacion
+        (m) => m.id_comunicacion !== mensaje.id_comunicacion,
       );
       if (currentMensajes.length !== newMensajes.length) {
         this.mensajesList$.next(newMensajes);
@@ -177,31 +194,31 @@ export class ComunicationService {
       this.supabase
         .from('Comunicacion')
         .update(updates)
-        .eq('id_comunicacion', mensaje.id_comunicacion)
+        .eq('id_comunicacion', mensaje.id_comunicacion),
     ).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
 
   getMensajeId(idMensaje: string): Observable<ComunicacionModel> {
     return from(
-      this.supabase.from('Comunicacion').select('*').eq('id_comunicacion', idMensaje).single()
+      this.supabase.from('Comunicacion').select('*').eq('id_comunicacion', idMensaje).single(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data as ComunicacionModel;
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
 
   private sendNotification(
     idReceptor: string,
     asunto: string,
-    contenido: string
+    contenido: string,
   ): Observable<void> {
     const notificacion: ComunicacionModel = {
       tipo_comunicacion: 'notificacion',
@@ -224,13 +241,13 @@ export class ComunicationService {
         .from('Usuario')
         .select('id_usuario')
         .eq('rol', 'administrador')
-        .eq('estado', true)
+        .eq('estado', true),
     ).pipe(
       switchMap(({ data }) => {
         if (!data || data.length === 0) return of(void 0);
 
         const notificaciones = data.map((admin: any) =>
-          this.sendNotification(admin.id_usuario, asunto, contenido)
+          this.sendNotification(admin.id_usuario, asunto, contenido),
         );
 
         return forkJoin(notificaciones).pipe(map(() => void 0));
@@ -238,7 +255,7 @@ export class ComunicationService {
       catchError((err) => {
         console.error('Error notificando admins', err);
         return of(void 0);
-      })
+      }),
     );
   }
 
