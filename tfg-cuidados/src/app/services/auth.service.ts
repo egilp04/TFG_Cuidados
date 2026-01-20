@@ -39,7 +39,7 @@ export class AuthService {
           this.isLoading.set(false);
           this.currentUser.set(null);
           return of(null);
-        })
+        }),
       )
       .subscribe();
   }
@@ -50,7 +50,7 @@ export class AuthService {
         if (res.error) throw res.error;
         return this.getProfile(res.data.user.id);
       }),
-      tap((user) => this.currentUser.set(user))
+      tap((user) => this.currentUser.set(user)),
     );
   }
 
@@ -82,7 +82,7 @@ export class AuthService {
           datosExtra = cli.data;
         }
         return { ...user, ...datosExtra, rol };
-      })
+      }),
     );
   }
 
@@ -90,7 +90,7 @@ export class AuthService {
     return from(this.supabase.auth.signOut()).pipe(
       tap(() => {
         this.currentUser.set(null);
-      })
+      }),
     );
   }
 
@@ -109,7 +109,7 @@ export class AuthService {
               data: metaData,
               emailRedirectTo: 'http://localhost:4200/home',
             },
-          })
+          }),
         );
       }),
       map((res) => this.validarRespuestaRegistro(res)),
@@ -120,11 +120,11 @@ export class AuthService {
           comunicationService
             .notifyAdmins(
               'Nuevo Registro',
-              `El usuario ${emailLimpio} se ha registrado como ${rolTexto}.`
+              `El usuario ${emailLimpio} se ha registrado como ${rolTexto}.`,
             )
             .subscribe();
         }
-      })
+      }),
     );
   }
   registerByAdmin(datos: any, esCliente: boolean): Observable<any> {
@@ -150,10 +150,10 @@ export class AuthService {
               data: { ...metaData, created_by_admin: true },
               emailRedirectTo: 'http://localhost:4200/login',
             },
-          })
+          }),
         );
       }),
-      map((res) => this.validarRespuestaRegistro(res))
+      map((res) => this.validarRespuestaRegistro(res)),
     );
   }
   private prepararDatosRegistro(datos: any, esCliente: boolean) {
@@ -199,33 +199,44 @@ export class AuthService {
       catchError((err) => {
         console.error('Error actualizando credenciales:', err);
         return throwError(() => err);
-      })
+      }),
     );
   }
   recoverPassword(email: string): Observable<any> {
     return from(
       this.supabase.auth.resetPasswordForEmail(email, {
         redirectTo: 'http://localhost:4200/recover-password',
-      })
+      }),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data;
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
   }
   updatePass(newPassword: string): Observable<any> {
     return from(
       this.supabase.auth.updateUser({
         password: newPassword,
-      })
+      }),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data;
       }),
-      catchError((err) => throwError(() => err))
+      catchError((err) => throwError(() => err)),
     );
+  }
+
+  async resendVerificationEmail(email: string) {
+    // type: 'signup' es para reenviar el correo de bienvenida/activación
+    return this.supabase.auth.resend({
+      type: 'signup',
+      email: email,
+      options: {
+        emailRedirectTo: 'http://localhost:4200/',
+      },
+    });
   }
 }
