@@ -248,4 +248,14 @@ export class AuthService {
       catchError((err) => throwError(() => err)),
     );
   }
+  async resendVerificationEmail(email: string) {
+    // type: 'signup' es para reenviar el correo de bienvenida/activación
+    return this.supabase.auth.resend({
+      type: 'signup',
+      email: email,
+      options: {
+        emailRedirectTo: 'http://localhost:4200/',
+      },
+    });
+  }
 }
