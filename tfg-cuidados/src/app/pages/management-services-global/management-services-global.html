@@ -4,15 +4,15 @@
 
 <div class="flex flex-col items-center p-6 bg-surface">
   @if (this.messageService.messageData(); as data) {
-  <div
-    [ngClass]="{
-      'text-red-500': data.tipo === 'error',
-      'text-primary': data.tipo === 'exito'
-    }"
-    class="text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm"
-  >
-    {{ data.mensaje }}
-  </div>
+    <div
+      [ngClass]="{
+        'text-red-500': data.tipo === 'error',
+        'text-primary': data.tipo === 'exito',
+      }"
+      class="text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm"
+    >
+      {{ data.mensaje }}
+    </div>
   }
 </div>
 
@@ -47,12 +47,12 @@
     </app-button>
 
     @if (isEditing) {
-    <app-button
-      [label]="'MANAGEMENT_SERVICES.FORM.CANCEL' | translate"
-      variant="secondary"
-      (click)="resetForm()"
-    >
-    </app-button>
+      <app-button
+        [label]="'MANAGEMENT_SERVICES.FORM.CANCEL' | translate"
+        variant="secondary"
+        (click)="resetForm()"
+      >
+      </app-button>
     }
   </div>
 </div>
@@ -76,7 +76,7 @@
       <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
         {{ 'MANAGEMENT_SERVICES.TABLE.NAME' | translate }}
       </th>
-      <td mat-cell *matCellDef="let serv" class="p-4">
+      <td mat-cell *matCellDef="let serv" class="p-4 text-label">
         {{ serv.nombre }}
       </td>
     </ng-container>
@@ -85,15 +85,13 @@
       <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
         {{ 'MANAGEMENT_SERVICES.TABLE.TYPE' | translate }}
       </th>
-      <td mat-cell *matCellDef="let serv" class="p-4">
+      <td mat-cell *matCellDef="let serv" class="p-4 text-label">
         {{ serv.tipo_servicio }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary text-center">
-        {{ 'MANAGEMENT_SERVICES.TABLE.ACTIONS' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary text-center"></th>
       <td mat-cell *matCellDef="let serv" class="p-4">
         <div class="flex justify-center items-center gap-2 p-10">
           <app-button
