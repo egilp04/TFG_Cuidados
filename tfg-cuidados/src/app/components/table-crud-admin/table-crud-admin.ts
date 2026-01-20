@@ -9,7 +9,7 @@ import {
   AfterViewInit,
   inject,
   DestroyRef,
-  OnInit, // <--- No olvides añadir OnInit si lo usas
+  OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../button/button';

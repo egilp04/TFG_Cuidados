@@ -92,10 +92,19 @@ export class Loginmodal {
             this.router.navigate(['/home']);
           },
           error: (err) => {
-            this.messageService.showMessage(
-              this.translate.instant('LOGIN_MODAL.FEEDBACK.LOGIN_ERROR'),
-              'error'
-            );
+            console.log('Error login:', err);
+
+            if (err.message && err.message.includes('Email not confirmed')) {
+              this.messageService.showMessage(
+                this.translate.instant('LOGIN_MODAL.FEEDBACK.EMAIL_NOT_CONFIRMED'),
+                'error',
+              );
+            } else {
+              this.messageService.showMessage(
+                this.translate.instant('LOGIN_MODAL.FEEDBACK.LOGIN_ERROR'),
+                'error',
+              );
+            }
             this.cd.markForCheck();
           },
         });
@@ -103,7 +112,7 @@ export class Loginmodal {
       this.loginForm.markAllAsTouched();
       this.messageService.showMessage(
         this.translate.instant('LOGIN_MODAL.FEEDBACK.FILL_FIELDS'),
-        'error'
+        'error',
       );
       this.cd.markForCheck();
     }
@@ -113,7 +122,7 @@ export class Loginmodal {
     if (this.emailCtrl.invalid) {
       this.messageService.showMessage(
         this.translate.instant('LOGIN_MODAL.FEEDBACK.INVALID_EMAIL'),
-        'error'
+        'error',
       );
       this.emailCtrl.markAsTouched();
       this.cd.markForCheck();
@@ -131,7 +140,7 @@ export class Loginmodal {
             } else {
               this.messageService.showMessage(
                 this.translate.instant('LOGIN_MODAL.FEEDBACK.LINK_SENT'),
-                'exito'
+                'exito',
               );
               setTimeout(() => {
                 this.dialogRef.close();
@@ -144,7 +153,7 @@ export class Loginmodal {
             console.error(err);
             this.messageService.showMessage(
               this.translate.instant('LOGIN_MODAL.FEEDBACK.CONN_ERROR'),
-              'error'
+              'error',
             );
             this.cd.markForCheck();
           },

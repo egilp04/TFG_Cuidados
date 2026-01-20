@@ -668,7 +668,8 @@
       "FILL_FIELDS": "Please fill in the fields correctly",
       "INVALID_EMAIL": "Enter a valid email to recover",
       "LINK_SENT": "Link sent. Check your email.",
-      "CONN_ERROR": "Connection error"
+      "CONN_ERROR": "Connection error",
+      "EMAIL_NOT_CONFIRMED": "Please, check your email and confirm before sign in"
     }
   },
   "FOOTER": {

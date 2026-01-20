@@ -38,7 +38,6 @@ export class ManagementAdmin implements OnInit {
     });
   }
   private cargarDatos(tipo: 'cliente' | 'empresa'): void {
-    console.log('Cambiando vista a:', tipo);
     this.isUser = tipo === 'cliente';
     this.usuarios$ = this.userService.getUsersObservable(tipo);
     this.cd.detectChanges();
@@ -84,7 +83,7 @@ export class ManagementAdmin implements OnInit {
         },
       });
   }
-  
+
   onEditar(item: any) {
     const usuarioConRol = {
       ...item,

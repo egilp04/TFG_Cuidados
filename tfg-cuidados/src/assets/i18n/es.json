@@ -658,7 +658,8 @@
       "FILL_FIELDS": "Por favor, rellene los campos correctamente",
       "INVALID_EMAIL": "Introduce un email válido para recuperar",
       "LINK_SENT": "Enlace enviado. Revisa tu correo.",
-      "CONN_ERROR": "Error de conexión"
+      "CONN_ERROR": "Error de conexión",
+      "EMAIL_NOT_CONFIRMED": "Por favor, revisa tu bandeja de entrada y confirma tu email antes de entrar."
     }
   },
   "FOOTER": {
