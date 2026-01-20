@@ -664,7 +664,10 @@
     "HOME": "Inicio",
     "ABOUT": "Sobre Nosotros",
     "CONTACT": "Contacto",
-    "MANUALS": "Manuales"
+    "MANUALS": "Manuales",
+    "LEGAL_ASPECTS": "Aspectos legales",
+    "PRIVACY_POLICTICS": "Política de privacidad",
+    "COOKIES_POLICIES": "Política de cookies"
   },
   "TERMS_PAGE": {
     "TITLE": "Términos y Condiciones y Política de Privacidad",

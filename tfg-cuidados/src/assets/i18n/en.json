@@ -673,7 +673,10 @@
     "HOME": "Home",
     "ABOUT": "About us",
     "CONTACT": "Contact",
-    "MANUALS": "Manuals"
+    "MANUALS": "Manuals",
+    "LEGAL_ASPECTS": "Legal data",
+    "PRIVACY_POLICTICS": "Privacy polity",
+    "COOKIES_POLICIES": "Cookie policy"
   },
   "TERMS_PAGE": {
     "TITLE": "Terms and Conditions and Privacy Policy",
