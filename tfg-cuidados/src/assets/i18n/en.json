@@ -643,11 +643,14 @@
     "TITLES": {
       "LOGIN": "Login",
       "REGISTER": "Register",
-      "RECOVER": "Recover Password"
+      "RECOVER": "Recover Password",
+      "RESEND": "Resend register email",
+      "NOTITLE": "Not available"
     },
     "LABELS": {
       "EMAIL": "Email",
-      "PASSWORD": "Your password"
+      "PASSWORD": "Your password",
+      "RESEND": "Resend register email"
     },
     "HINTS": {
       "PASS_PATTERN": "Password must be at least 6 chars, letters and numbers.",
@@ -661,7 +664,8 @@
       "REG_COMPANY": "Register as Company",
       "HAVE_ACCOUNT": "I have an account",
       "SEND_LINK": "Send link",
-      "BACK_LOGIN": "Back to login"
+      "BACK_LOGIN": "Back to login",
+      "RESEND": "Resend register email"
     },
     "FEEDBACK": {
       "LOGIN_ERROR": "Incorrect username or password",
@@ -669,7 +673,10 @@
       "INVALID_EMAIL": "Enter a valid email to recover",
       "LINK_SENT": "Link sent. Check your email.",
       "CONN_ERROR": "Connection error",
-      "EMAIL_NOT_CONFIRMED": "Please, check your email and confirm before sign in"
+      "EMAIL_NOT_CONFIRMED": "Please, check your email and confirm before sign in",
+      "NO_ERROR": "Check your email again",
+      "WITH_ERROR": "An error has been ocurred, contact with administrator",
+      "EMAIL_NOT_FOUND": "Email not found"
     }
   },
   "FOOTER": {

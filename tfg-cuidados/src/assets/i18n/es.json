@@ -633,11 +633,14 @@
     "TITLES": {
       "LOGIN": "Iniciar Sesión",
       "REGISTER": "Registrarse",
-      "RECOVER": "Recuperar Contraseña"
+      "RECOVER": "Recuperar Contraseña",
+      "RESEND": "Reenviar email de registro",
+      "NOTITLE": "No disponible"
     },
     "LABELS": {
       "EMAIL": "Email",
-      "PASSWORD": "Tu contraseña"
+      "PASSWORD": "Tu contraseña",
+      "RESEND": "Reenviar el email de registro"
     },
     "HINTS": {
       "PASS_PATTERN": "La contraseña debe tener al menos 6 caracteres, letras y números.",
@@ -651,7 +654,8 @@
       "REG_COMPANY": "Registrarse como empresa",
       "HAVE_ACCOUNT": "Ya tengo cuenta",
       "SEND_LINK": "Enviar enlace",
-      "BACK_LOGIN": "Volver al inicio de sesión"
+      "BACK_LOGIN": "Volver al inicio de sesión",
+      "RESEND": "Reenviar el email de registro"
     },
     "FEEDBACK": {
       "LOGIN_ERROR": "Usuario o contraseña incorrectos",
@@ -659,7 +663,10 @@
       "INVALID_EMAIL": "Introduce un email válido para recuperar",
       "LINK_SENT": "Enlace enviado. Revisa tu correo.",
       "CONN_ERROR": "Error de conexión",
-      "EMAIL_NOT_CONFIRMED": "Por favor, revisa tu bandeja de entrada y confirma tu email antes de entrar."
+      "EMAIL_NOT_CONFIRMED": "Por favor, revisa tu bandeja de entrada y confirma tu email antes de entrar.",
+      "NO_ERROR": "Revise su bandeja de correos",
+      "WITH_ERROR": "Ha ocurrido un error, contacte con el administrador",
+      "EMAIL_NOT_FOUND": "Email no encontrado"
     }
   },
   "FOOTER": {

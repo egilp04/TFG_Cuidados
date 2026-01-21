@@ -52,7 +52,7 @@ export class Loginmodal {
   private router = inject(Router);
   private translate = inject(TranslateService);
 
-  modoActual: 'login' | 'registro' | 'recuperar' = 'login';
+  modoActual: 'login' | 'registro' | 'recuperar' | 'reenviar' = 'login';
 
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -119,12 +119,12 @@ export class Loginmodal {
   }
 
   onRecuperar() {
-    if (this.emailCtrl.invalid) {
+    if (this.loginForm.invalid) {
       this.messageService.showMessage(
         this.translate.instant('LOGIN_MODAL.FEEDBACK.INVALID_EMAIL'),
         'error',
       );
-      this.emailCtrl.markAsTouched();
+      this.loginForm.markAsTouched();
       this.cd.markForCheck();
       return;
     }
@@ -159,5 +159,59 @@ export class Loginmodal {
           },
         });
     }
+  }
+
+  onReenviarCorreo() {
+    if (this.emailCtrl.invalid) {
+      this.messageService.showMessage(
+        this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'),
+        'error',
+      );
+      return;
+    }
+    const email = this.emailCtrl.value || '';
+    if (!email) return;
+    this.authService.checkEmailExists(email).subscribe({
+      next: (existe) => {
+        if (!existe) {
+          this.messageService.showMessage(
+            this.translate.instant('LOGIN_MODAL.FEEDBACK.EMAIL_NOT_FOUND'),
+            'error',
+          );
+          return;
+        }
+        this.enviarPeticionReenvio(email);
+      },
+      error: (err) => {
+        console.error(err);
+        this.messageService.showMessage('LOGIN_MODAL.FEEDBACK.WITH_ERROR', 'error');
+      },
+    });
+  }
+
+  // Función auxiliar para mantener el código limpio
+  private enviarPeticionReenvio(email: string) {
+    this.authService.resendVerificationEmail(email).subscribe({
+      next: ({ error }) => {
+        if (error) {
+          this.messageService.showMessage(
+            this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'),
+            'error',
+          );
+        } else {
+          this.messageService.showMessage(
+            this.translate.instant('LOGIN_MODAL.FEEDBACK.NO_ERROR'),
+            'exito',
+          );
+          setTimeout(() => {
+            this.messageService.clear();
+            this.modoActual = 'login';
+            this.cd.detectChanges();
+          }, 2000);
+        }
+        this.cd.markForCheck();
+      },
+      error: (err) => console.error(err),
+    });
   }
 }

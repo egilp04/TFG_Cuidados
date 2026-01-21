@@ -9,128 +9,167 @@
 
   <h2 class="text-primary text-h2 text-center mb-10">
     @if (modoActual === 'login') {
-    {{ 'LOGIN_MODAL.TITLES.LOGIN' | translate }}
+      {{ 'LOGIN_MODAL.TITLES.LOGIN' | translate }}
     } @else if (modoActual === 'registro') {
-    {{ 'LOGIN_MODAL.TITLES.REGISTER' | translate }}
+      {{ 'LOGIN_MODAL.TITLES.REGISTER' | translate }}
+    } @else if (modoActual === 'recuperar') {
+      {{ 'LOGIN_MODAL.TITLES.RECOVER' | translate }}
+    } @else if (modoActual === 'reenviar') {
+      {{ 'LOGIN_MODAL.TITLES.RESEND' | translate }}
     } @else {
-    {{ 'LOGIN_MODAL.TITLES.RECOVER' | translate }}
+      {{ 'LOGIN_MODAL.TITLES.NOTITLE' | translate }}
     }
   </h2>
 
   @if (modoActual === 'login') {
-  <form [formGroup]="loginForm" class="w-full flex flex-col items-center">
-    <div class="flex justify-center items-center flex-col w-full">
-      <mat-dialog-content class="p-0! flex! flex-col! gap-10 w-full justify-center items-center">
-        <app-inputs
-          name="email"
-          [label]="'LOGIN_MODAL.LABELS.EMAIL' | translate"
-          [control]="getCtrl('email')"
-        >
-        </app-inputs>
+    <form [formGroup]="loginForm" class="w-full flex flex-col items-center">
+      <div class="flex justify-center items-center flex-col w-full">
+        <mat-dialog-content class="p-0! flex! flex-col! gap-10 w-full justify-center items-center">
+          <app-inputs
+            name="email"
+            [label]="'LOGIN_MODAL.LABELS.EMAIL' | translate"
+            [control]="getCtrl('email')"
+          >
+          </app-inputs>
 
-        <app-inputs
-          name="password"
-          [label]="'LOGIN_MODAL.LABELS.PASSWORD' | translate"
-          type="password"
-          [control]="getCtrl('password')"
-        ></app-inputs>
+          <app-inputs
+            name="password"
+            [label]="'LOGIN_MODAL.LABELS.PASSWORD' | translate"
+            type="password"
+            [control]="getCtrl('password')"
+          ></app-inputs>
 
-        @if (getCtrl('password').touched && getCtrl('password').hasError('pattern')) {
-        <small class="label-text text-red">
-          {{ 'LOGIN_MODAL.HINTS.PASS_PATTERN' | translate }}
-        </small>
-        }
-      </mat-dialog-content>
+          @if (getCtrl('password').touched && getCtrl('password').hasError('pattern')) {
+            <small class="label-text text-red">
+              {{ 'LOGIN_MODAL.HINTS.PASS_PATTERN' | translate }}
+            </small>
+          }
+        </mat-dialog-content>
+      </div>
+
+      <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
+        <app-button
+          [label]="'LOGIN_MODAL.BTN.ENTER' | translate"
+          variant="primary"
+          type="submit"
+          (click)="onEntrar()"
+          [disabled]="loginForm.invalid"
+        ></app-button>
+        <app-button
+          [label]="'LOGIN_MODAL.BTN.FORGOT' | translate"
+          variant="secondary"
+          type="button"
+          (click)="modoActual = 'recuperar'"
+        ></app-button>
+        <app-button
+          [label]="'LOGIN_MODAL.BTN.RESEND' | translate"
+          variant="secondary"
+          type="button"
+          (click)="modoActual = 'reenviar'"
+        ></app-button>
+        <app-button
+          [label]="'LOGIN_MODAL.BTN.REGISTER' | translate"
+          variant="primary"
+          type="button"
+          (click)="modoActual = 'registro'"
+        ></app-button>
+      </mat-dialog-actions>
+    </form>
+  }
+  @if (modoActual === 'recuperar') {
+    <div class="w-full flex flex-col items-center">
+      <div class="flex justify-center items-center flex-col w-full mb-6">
+        <p class="text-p text-secondary mb-20 text-center px-4">
+          {{ 'LOGIN_MODAL.HINTS.RECOVER_DESC' | translate }}
+        </p>
+        <mat-dialog-content class="p-0! flex! flex-col! w-full justify-center items-center">
+          <app-inputs
+            name="emailRecuperacion"
+            [label]="'LOGIN_MODAL.LABELS.EMAIL' | translate"
+            [control]="emailCtrl"
+          >
+          </app-inputs>
+        </mat-dialog-content>
+      </div>
+
+      <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
+        <app-button
+          [label]="'LOGIN_MODAL.BTN.SEND_LINK' | translate"
+          variant="primary"
+          type="button"
+          (click)="onRecuperar()"
+        ></app-button>
+
+        <app-button
+          [label]="'LOGIN_MODAL.BTN.BACK_LOGIN' | translate"
+          variant="secondary"
+          type="button"
+          (click)="modoActual = 'login'"
+        ></app-button>
+      </mat-dialog-actions>
     </div>
+  }
+  @if (modoActual === 'registro') {
+    <div class="w-full flex flex-col items-center">
+      <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
+        <app-button
+          [label]="'LOGIN_MODAL.BTN.REG_USER' | translate"
+          variant="primary"
+          [routerLink]="['/register']"
+          [state]="{ tipo: 'usuario' }"
+          mat-dialog-close
+        ></app-button>
 
-    <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
-      <app-button
-        [label]="'LOGIN_MODAL.BTN.ENTER' | translate"
-        variant="primary"
-        type="submit"
-        (click)="onEntrar()"
-        [disabled]="loginForm.invalid"
-      ></app-button>
+        <app-button
+          [label]="'LOGIN_MODAL.BTN.REG_COMPANY' | translate"
+          variant="primary"
+          [routerLink]="['/register']"
+          [state]="{ tipo: 'empresa' }"
+          mat-dialog-close
+        ></app-button>
 
-      <app-button
-        [label]="'LOGIN_MODAL.BTN.FORGOT' | translate"
-        variant="secondary"
-        type="button"
-        (click)="modoActual = 'recuperar'"
-      ></app-button>
-
-      <app-button
-        [label]="'LOGIN_MODAL.BTN.REGISTER' | translate"
-        variant="primary"
-        type="button"
-        (click)="modoActual = 'registro'"
-      ></app-button>
-    </mat-dialog-actions>
-  </form>
-  } @if (modoActual === 'recuperar') {
-  <div class="w-full flex flex-col items-center">
-    <div class="flex justify-center items-center flex-col w-full mb-6">
-      <p class="text-p text-secondary mb-20 text-center px-4">
-        {{ 'LOGIN_MODAL.HINTS.RECOVER_DESC' | translate }}
-      </p>
-      <mat-dialog-content class="p-0! flex! flex-col! w-full justify-center items-center">
-        <app-inputs
-          name="emailRecuperacion"
-          [label]="'LOGIN_MODAL.LABELS.EMAIL' | translate"
-          [control]="emailCtrl"
-        >
-        </app-inputs>
-      </mat-dialog-content>
+        <app-button
+          [label]="'LOGIN_MODAL.BTN.HAVE_ACCOUNT' | translate"
+          variant="secondary"
+          (click)="modoActual = 'login'"
+        ></app-button>
+      </mat-dialog-actions>
     </div>
+  }
 
-    <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
-      <app-button
-        [label]="'LOGIN_MODAL.BTN.SEND_LINK' | translate"
-        variant="primary"
-        type="button"
-        (click)="onRecuperar()"
-      ></app-button>
+  @if (modoActual === 'reenviar') {
+    <div class="w-full flex flex-col items-center">
+      <div class="flex justify-center items-center flex-col w-full mb-6">
+        <p class="text-p text-secondary mb-20 text-center px-4">
+          {{ 'LOGIN_MODAL.LABELS.RESEND' | translate }}
+        </p>
+        <mat-dialog-content class="p-0! flex! flex-col! w-full justify-center items-center">
+          <app-inputs
+            name="emailresend"
+            [label]="'LOGIN_MODAL.LABELS.EMAIL' | translate"
+            [control]="emailCtrl"
+          >
+          </app-inputs>
+        </mat-dialog-content>
+      </div>
 
-      <app-button
-        [label]="'LOGIN_MODAL.BTN.BACK_LOGIN' | translate"
-        variant="secondary"
-        type="button"
-        (click)="modoActual = 'login'"
-      ></app-button>
-    </mat-dialog-actions>
-  </div>
-  } @if (modoActual === 'registro') {
-  <div class="w-full flex flex-col items-center">
-    <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
-      <app-button
-        [label]="'LOGIN_MODAL.BTN.REG_USER' | translate"
-        variant="primary"
-        [routerLink]="['/register']"
-        [state]="{ tipo: 'usuario' }"
-        mat-dialog-close
-      ></app-button>
+      <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
+        <app-button
+          (click)="onReenviarCorreo()"
+          [label]="'LOGIN_MODAL.BTN.SEND_LINK' | translate"
+          type="button"
+          variant="primary"
+        ></app-button>
+      </mat-dialog-actions>
+    </div>
+  }
 
-      <app-button
-        [label]="'LOGIN_MODAL.BTN.REG_COMPANY' | translate"
-        variant="primary"
-        [routerLink]="['/register']"
-        [state]="{ tipo: 'empresa' }"
-        mat-dialog-close
-      ></app-button>
-
-      <app-button
-        [label]="'LOGIN_MODAL.BTN.HAVE_ACCOUNT' | translate"
-        variant="secondary"
-        (click)="modoActual = 'login'"
-      ></app-button>
-    </mat-dialog-actions>
-  </div>
-  } @if (messageService.messageData(); as data) {
-  <div
-    [ngClass]="{ 'text-red-500': data.tipo === 'error', 'text-green-600': data.tipo === 'exito' }"
-    class="text-label ml-2 transition-all duration-300 mb-4 text-center"
-  >
-    {{ data.mensaje }}
-  </div>
+  @if (messageService.messageData(); as data) {
+    <div
+      [ngClass]="{ 'text-red-500': data.tipo === 'error', 'text-green-600': data.tipo === 'exito' }"
+      class="text-label ml-2 transition-all duration-300 mb-4 text-center"
+    >
+      {{ data.mensaje }}
+    </div>
   }
 </div>

@@ -248,14 +248,29 @@ export class AuthService {
       catchError((err) => throwError(() => err)),
     );
   }
-  async resendVerificationEmail(email: string) {
-    // type: 'signup' es para reenviar el correo de bienvenida/activación
-    return this.supabase.auth.resend({
+  resendVerificationEmail(email: string): Observable<any> {
+    const promise = this.supabase.auth.resend({
       type: 'signup',
       email: email,
       options: {
         emailRedirectTo: 'http://localhost:4200/',
       },
     });
+
+    return from(promise);
+  }
+
+  checkEmailExists(email: string): Observable<boolean> {
+    const promise = this.supabase.rpc('check_user_exists', { email_busqueda: email });
+    return from(promise).pipe(
+      map(({ data, error }) => {
+        if (error) {
+          console.error('Error verificando email:', error);
+          return false;
+        }
+        return data as boolean;
+      }),
+      catchError(() => of(false)),
+    );
   }
 }

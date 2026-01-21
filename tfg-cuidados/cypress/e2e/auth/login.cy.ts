@@ -22,9 +22,9 @@ describe('Flujo de Inicio de Sesión (Modal) - TFG', () => {
     cy.get('.text-red-500').should('be.visible');
   });
 
-  it('Debe iniciar sesión correctamente como CLIENTE', () => {
+  it('Debe iniciar sesión correctamente como ADMINISTRADOR', () => {
     cy.intercept('POST', '**/auth/v1/token*').as('loginPost');
-    cy.get('app-inputs[name="email"] input').type('clienteCypress@test.com', { force: true });
+    cy.get('app-inputs[name="email"] input').type('admin@test.com', { force: true });
     cy.get('app-inputs[name="password"] input').type('13122000Teddy13@', { force: true });
     cy.get('app-button')
       .contains(/Entrar/i)
