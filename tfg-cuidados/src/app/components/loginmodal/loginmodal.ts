@@ -119,46 +119,69 @@ export class Loginmodal {
   }
 
   onRecuperar() {
-    if (this.loginForm.invalid) {
+    if (this.emailCtrl.invalid) {
       this.messageService.showMessage(
         this.translate.instant('LOGIN_MODAL.FEEDBACK.INVALID_EMAIL'),
         'error',
       );
-      this.loginForm.markAsTouched();
+      this.emailCtrl.markAsTouched();
       this.cd.markForCheck();
       return;
     }
-    const email = this.emailCtrl.value;
-    if (email) {
-      this.authService
-        .recoverPassword(email)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: ({ error }) => {
-            if (error) {
-              this.messageService.showMessage(error.message, 'error');
-            } else {
-              this.messageService.showMessage(
-                this.translate.instant('LOGIN_MODAL.FEEDBACK.LINK_SENT'),
-                'exito',
-              );
-              setTimeout(() => {
-                this.dialogRef.close();
-                this.router.navigate(['/']);
-              }, 2000);
-            }
-            this.cd.markForCheck();
-          },
-          error: (err) => {
-            console.error(err);
+    const email = this.emailCtrl.value || '';
+    if (!email) return;
+    this.authService.checkEmailExists(email).subscribe({
+      next: (existe) => {
+        if (!existe) {
+          this.messageService.showMessage(
+            this.translate.instant('LOGIN_MODAL.FEEDBACK.EMAIL_NOT_FOUND'),
+            'error',
+          );
+          return;
+        }
+        this.enviarPeticionRecuperacion(email);
+      },
+      error: (err) => {
+        console.error(err);
+        this.messageService.showMessage(
+          this.translate.instant('LOGIN_MODAL.FEEDBACK.CONN_ERROR'),
+          'error',
+        );
+      },
+    });
+  }
+
+  // Función auxiliar privada para enviar el correo
+  private enviarPeticionRecuperacion(email: string) {
+    this.authService
+      .recoverPassword(email)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: ({ error }) => {
+          if (error) {
+            this.messageService.showMessage(error.message, 'error');
+          } else {
             this.messageService.showMessage(
-              this.translate.instant('LOGIN_MODAL.FEEDBACK.CONN_ERROR'),
-              'error',
+              this.translate.instant('LOGIN_MODAL.FEEDBACK.LINK_SENT'),
+              'exito',
             );
-            this.cd.markForCheck();
-          },
-        });
-    }
+            setTimeout(() => {
+              this.messageService.clear();
+              this.modoActual = 'login';
+              this.cd.detectChanges();
+            }, 3000);
+          }
+          this.cd.markForCheck();
+        },
+        error: (err) => {
+          console.error(err);
+          this.messageService.showMessage(
+            this.translate.instant('LOGIN_MODAL.FEEDBACK.CONN_ERROR'),
+            'error',
+          );
+          this.cd.markForCheck();
+        },
+      });
   }
 
   onReenviarCorreo() {
