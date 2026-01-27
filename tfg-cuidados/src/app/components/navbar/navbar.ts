@@ -23,13 +23,24 @@ export class Navbar implements OnInit {
   private destroyRef = inject(DestroyRef);
   private comunicationService = inject(ComunicationService);
 
+  public isMenuOpen = false;
+
   ngOnInit() {
     if (this.authService.currentUser()) {
       this.comunicationService.refreshUsersData();
     }
   }
 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
+  }
+
   backHome() {
+    this.closeMenu();
     const user = this.authService.currentUser();
     if (user) {
       this.router.navigate(['/home']);
@@ -43,6 +54,7 @@ export class Navbar implements OnInit {
   private cd = inject(ChangeDetectorRef);
 
   logout() {
+    this.closeMenu();
     this.authService
       .signOut()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -52,6 +64,7 @@ export class Navbar implements OnInit {
   }
 
   iniciarSesion() {
+    this.closeMenu();
     const dialogRef = this.dialog.open(Loginmodal, {
       data: { modo: 'login' },
       width: '500px',
@@ -66,13 +79,19 @@ export class Navbar implements OnInit {
         }
       });
   }
+
   registrarse() {
+    this.closeMenu();
     this.dialog.open(Loginmodal, { data: { modo: 'registro' }, width: '500px' });
   }
+
   modificarPerfil() {
+    this.closeMenu();
     this.router.navigate(['/modify-profile']);
   }
+
   verComunicaciones(tipo: string) {
+    this.closeMenu();
     switch (tipo) {
       case 'mensajes':
         this.router.navigate(['/messages']);
