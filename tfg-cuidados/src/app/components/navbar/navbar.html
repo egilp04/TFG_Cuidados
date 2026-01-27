@@ -1,66 +1,138 @@
-<nav class="flex justify-between items-center p-10 bg-surface border-b border-nav-border min-h-20">
+<nav
+  class="relative flex justify-between items-center p-6 lg:p-10 bg-surface border-b border-nav-border min-h-20 z-50"
+>
   <div class="flex items-center">
     <a (click)="backHome()" class="cursor-pointer">
       <picture>
         <source srcset="assets/img/logo/logo.webp" media="(min-width: 1024px)" />
         <source srcset="assets/img/logo/logo.webp" media="(min-width: 768px)" />
-        <img src="assets/img/logo/logo_peque.webp" alt="CuidaDos" class="h-22" />
+        <img src="assets/img/logo/logo_peque.webp" alt="CuidaDos" class="h-16 lg:h-22" />
       </picture>
     </a>
   </div>
-  <div class="flex items-center gap-10">
+
+  <div class="lg:hidden">
+    <button (click)="toggleMenu()" class="text-primary focus:outline-none">
+      <lucide-icon [name]="isMenuOpen ? 'x' : 'menu'" class="w-8 h-8"></lucide-icon>
+    </button>
+  </div>
+
+  <div class="hidden lg:flex items-center gap-10">
     @if (authService.isAuthenticated()) {
-    <div class="flex items-center gap-10 md:gap-10">
-      <div class="flex flex-col gap-1">
+      <div class="flex items-center gap-10">
+        <div class="flex flex-col gap-1 relative">
+          <lucide-icon
+            [name]="'mail'"
+            class="text-h2 text-primary cursor-pointer"
+            (click)="verComunicaciones('mensajes')"
+          ></lucide-icon>
+          @if (countMensajes$ | async; as countMensajes) {
+            <span
+              class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5"
+              >{{ countMensajes }}</span
+            >
+          }
+        </div>
+
+        <div class="flex flex-col gap-1 relative">
+          <lucide-icon
+            [name]="'bell'"
+            class="text-h2 text-primary cursor-pointer"
+            (click)="verComunicaciones('notificaciones')"
+          ></lucide-icon>
+          @if (countNotificaciones$ | async; as countNotis) {
+            <span
+              class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5"
+              >{{ countNotis }}</span
+            >
+          }
+        </div>
+
         <lucide-icon
-          [name]="'mail'"
+          [name]="'user'"
           class="text-h2 text-primary cursor-pointer"
-          (click)="verComunicaciones('mensajes')"
+          (click)="modificarPerfil()"
         ></lucide-icon>
-        @if(countMensajes$ | async; as countMensajes){
-        <span class="absolute bg-red-600 text-white text-xs rounded-full p-0.5">
-          {{ countMensajes }}
-        </span>
-        }
+
+        <app-button
+          [label]="'NAVBAR.LOGOUT' | translate"
+          variant="primary"
+          size="lg"
+          (onClick)="logout()"
+        ></app-button>
       </div>
-
-      <div class="flex flex-col gap-1">
-        <lucide-icon
-          [name]="'bell'"
-          class="text-h2 text-primary cursor-pointer relative"
-          (click)="verComunicaciones('notificaciones')"
-        ></lucide-icon>
-        @if (countNotificaciones$ | async; as countNotis) {
-        <span class="absolute bg-red-600 text-white text-xs rounded-full p-0.5">
-          {{ countNotis }}
-        </span>
-        }
-      </div>
-
-      <lucide-icon
-        [name]="'user'"
-        class="text-h2 text-primary cursor-pointer"
-        (click)="modificarPerfil()"
-      ></lucide-icon>
-
-      <app-button
-        [label]="'NAVBAR.LOGOUT' | translate"
-        variant="primary"
-        size="lg"
-        (onClick)="logout()"
-      >
-      </app-button>
-    </div>
     } @else {
-    <app-button
-      [label]="'NAVBAR.REGISTER' | translate"
-      variant="secondary"
-      (onClick)="registrarse()"
-    >
-    </app-button>
-
-    <app-button [label]="'NAVBAR.LOGIN' | translate" variant="primary" (onClick)="iniciarSesion()">
-    </app-button>
+      <app-button
+        [label]="'NAVBAR.REGISTER' | translate"
+        variant="secondary"
+        (onClick)="registrarse()"
+      ></app-button>
+      <app-button
+        [label]="'NAVBAR.LOGIN' | translate"
+        variant="primary"
+        (onClick)="iniciarSesion()"
+      ></app-button>
     }
   </div>
+
+  @if (isMenuOpen) {
+    <div
+      class="absolute top-full left-0 w-full bg-surface border-b border-nav-border shadow-lg flex flex-col p-6 gap-6 lg:hidden animate-fade-in-down"
+    >
+      @if (authService.isAuthenticated()) {
+        <div class="flex flex-col gap-6 items-center w-full">
+          <div class="flex justify-around w-full border-b pb-4 border-gray-200">
+            <div class="relative" (click)="verComunicaciones('mensajes')">
+              <lucide-icon [name]="'mail'" class="text-primary w-8 h-8"></lucide-icon>
+              @if (countMensajes$ | async; as countMensajes) {
+                <span
+                  class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] rounded-full px-1.5"
+                  >{{ countMensajes }}</span
+                >
+              }
+              <span class="sr-only">Mensajes</span>
+            </div>
+
+            <div class="relative" (click)="verComunicaciones('notificaciones')">
+              <lucide-icon [name]="'bell'" class="text-primary w-8 h-8"></lucide-icon>
+              @if (countNotificaciones$ | async; as countNotis) {
+                <span
+                  class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] rounded-full px-1.5"
+                  >{{ countNotis }}</span
+                >
+              }
+              <span class="sr-only">Notificaciones</span>
+            </div>
+
+            <div (click)="modificarPerfil()">
+              <lucide-icon [name]="'user'" class="text-primary w-8 h-8"></lucide-icon>
+            </div>
+          </div>
+
+          <app-button
+            [label]="'NAVBAR.LOGOUT' | translate"
+            variant="primary"
+            size="lg"
+            class="w-full"
+            (onClick)="logout()"
+          ></app-button>
+        </div>
+      } @else {
+        <div class="flex flex-col gap-4 w-full">
+          <app-button
+            [label]="'NAVBAR.REGISTER' | translate"
+            variant="secondary"
+            class="w-full"
+            (onClick)="registrarse()"
+          ></app-button>
+          <app-button
+            [label]="'NAVBAR.LOGIN' | translate"
+            variant="primary"
+            class="w-full"
+            (onClick)="iniciarSesion()"
+          ></app-button>
+        </div>
+      }
+    </div>
+  }
 </nav>
