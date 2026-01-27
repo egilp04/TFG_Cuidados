@@ -1,19 +1,19 @@
 <nav
-  class="relative flex justify-between items-center p-6 lg:p-10 bg-surface border-b border-nav-border min-h-20 z-50"
+  class="relative flex justify-between items-center p-2 lg:p-10 bg-surface border-b border-nav-border min-h-20 z-50"
 >
   <div class="flex items-center">
     <a (click)="backHome()" class="cursor-pointer">
       <picture>
         <source srcset="assets/img/logo/logo.webp" media="(min-width: 1024px)" />
         <source srcset="assets/img/logo/logo.webp" media="(min-width: 768px)" />
-        <img src="assets/img/logo/logo_peque.webp" alt="CuidaDos" class="h-16 lg:h-22" />
+        <img src="assets/img/logo/logo_peque.webp" alt="CuidaDos" class="h-20 lg:h-22" />
       </picture>
     </a>
   </div>
 
-  <div class="md:hidden">
+  <div class="flex md:hidden">
     <button (click)="toggleMenu()" class="text-primary focus:outline-none">
-      <lucide-icon [name]="isMenuOpen ? 'x' : 'menu'" class="w-10 h-10"></lucide-icon>
+      <lucide-icon name="menu" class="w-22 h-20"></lucide-icon>
     </button>
   </div>
 
@@ -77,13 +77,15 @@
 
   @if (isMenuOpen) {
     <div
-      class="absolute top-full left-0 w-full bg-surface border-b border-nav-border shadow-lg flex flex-col p-6 gap-6 lg:hidden animate-fade-in-down"
+      class="absolute top-full right-0 w-auto bg-surface border-b border-nav-border shadow-lg flex flex-col p-6 gap-6 lg:hidden"
     >
       @if (authService.isAuthenticated()) {
-        <div class="flex flex-col gap-6 items-center w-full">
-          <div class="flex justify-around w-full border-b pb-4 border-gray-200">
+        <div class="flex flex-col gap-10 items-end w-auto">
+          <div
+            class="flex flex-col justify-around w-auto border-b p-4 pr-8.5 border-gray-200 gap-4"
+          >
             <div class="relative" (click)="verComunicaciones('mensajes')">
-              <lucide-icon [name]="'mail'" class="text-primary w-8 h-8"></lucide-icon>
+              <lucide-icon [name]="'mail'" class="text-primary w-20 h-20"></lucide-icon>
               @if (countMensajes$ | async; as countMensajes) {
                 <span
                   class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] rounded-full px-1.5"
@@ -94,7 +96,7 @@
             </div>
 
             <div class="relative" (click)="verComunicaciones('notificaciones')">
-              <lucide-icon [name]="'bell'" class="text-primary w-8 h-8"></lucide-icon>
+              <lucide-icon [name]="'bell'" class="text-primary w-20 h-20"></lucide-icon>
               @if (countNotificaciones$ | async; as countNotis) {
                 <span
                   class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] rounded-full px-1.5"
@@ -105,7 +107,7 @@
             </div>
 
             <div (click)="modificarPerfil()">
-              <lucide-icon [name]="'user'" class="text-primary w-8 h-8"></lucide-icon>
+              <lucide-icon [name]="'user'" class="text-primary w-20 h-20"></lucide-icon>
             </div>
           </div>
 

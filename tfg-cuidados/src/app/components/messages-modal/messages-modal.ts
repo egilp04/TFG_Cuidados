@@ -17,7 +17,7 @@ import { MessageService } from '../../services/message-service';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
-import { TranslateModule, TranslateService } from '@ngx-translate/core'; // <--- 1. IMPORTAR
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-messages-modal',

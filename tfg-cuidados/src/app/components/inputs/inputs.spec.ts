@@ -11,15 +11,35 @@ describe('Inputs', () => {
     await TestBed.configureTestingModule({
       imports: [Inputs, ReactiveFormsModule, LucideAngularModule.pick({ Eye, EyeOff })],
     }).compileComponents();
+
     fixture = TestBed.createComponent(Inputs);
     component = fixture.componentInstance;
-    fixture.componentRef.setInput('label', 'Test Label');
-    fixture.componentRef.setInput('name', 'test-input-name');
+
+    fixture.componentRef.setInput('label', 'Password');
+    fixture.componentRef.setInput('name', 'password');
+    fixture.componentRef.setInput('type', 'password');
     fixture.componentRef.setInput('control', new FormControl(''));
+
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should toggle password visibility', () => {
+    expect(component.inputType()).toBe('password');
+    // CAMBIO AQUÍ: .toBe(false)
+    expect(component.isPasswordVisible()).toBe(false);
+
+    component.togglePasswordVisibility();
+
+    expect(component.inputType()).toBe('text');
+    // CAMBIO AQUÍ: .toBe(true)
+    expect(component.isPasswordVisible()).toBe(true);
+
+    component.togglePasswordVisibility();
+
+    expect(component.inputType()).toBe('password');
   });
 });

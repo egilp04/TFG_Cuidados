@@ -4,6 +4,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule, FormControl, FormsModule } from '@angular/forms';
 import { LucideAngularModule, Search } from 'lucide-angular';
 
+declare var spyOn: any;
+
 describe('Searchbar', () => {
   let component: Searchbar;
   let fixture: ComponentFixture<Searchbar>;
@@ -15,7 +17,7 @@ describe('Searchbar', () => {
         TranslateModule.forRoot(),
         ReactiveFormsModule,
         FormsModule,
-        LucideAngularModule.pick({ Search }), 
+        LucideAngularModule.pick({ Search }),
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(Searchbar);
@@ -26,5 +28,13 @@ describe('Searchbar', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit value on input', () => {
+    spyOn(component.searchEvent, 'emit');
+    const inputElement = fixture.nativeElement.querySelector('input');
+    inputElement.value = 'test';
+    inputElement.dispatchEvent(new Event('input'));
+    expect(component.searchEvent.emit).toHaveBeenCalledWith('test');
   });
 });
