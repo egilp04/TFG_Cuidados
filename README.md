@@ -39,6 +39,7 @@ cuidaDos/
 ├── angular.json         # Configuración del CLI de Angular
 ├── package.json         # Dependencias
 └── README.md            # Documentación del proyecto
+```
 
 ⚙️ Instalación y ejecución local
 Para ejecutar el proyecto en tu máquina local:Clonar el repositorio:
