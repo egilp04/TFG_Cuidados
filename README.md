@@ -59,31 +59,44 @@ La aplicación estará disponible en http://localhost:4200/.
 🗄️ Base de datos (Supabase)
 El sistema utiliza PostgreSQL gestionado a través de Supabase.
 Las tablas principales incluyen:Usuarios / Empresas: Gestión de perfiles y roles.
-Servicios: Catálogo de servicios ofrecidos por las empresas.Contratos: Relación entre usuarios y servicios contratados.
-Horarios: Gestión de disponibilidad (Lunes a Domingo).Comunicaciones: Sistema de mensajería interna.
+Servicios: Catálogo de servicios ofrecidos por las empresas.
+Contratos: Relación entre usuarios y servicios contratados.
+Horarios: Gestión de disponibilidad (Lunes a Domingo).
+Comunicaciones: Sistema de mensajería interna.
 
 👤 Roles y Funcionalidades
-Rol
-Funcionalidades PrincipalesUsuarioRegistro, búsqueda de empresas, contratación de servicios, mensajería, calendario personal.EmpresaGestión de perfil, publicación de servicios/horarios, gestión de contratos, mensajería.AdminDashboard de métricas, gestión (CRUD) de usuarios y empresas, moderación de contenidos.🧠 Tecnologías utilizadasAngular: Framework principal para el desarrollo SPA.TypeScript: Lenguaje base para lógica robusta.Tailwind CSS: Diseño moderno y responsive.Supabase: Backend as a Service (Auth, DB, Storage).FullCalendar: Gestión visual de horarios y citas.SendGrid: (Opcional/Integrado) Para notificaciones por correo.
+
+| Rol | Funcionalidades Principales |
+| :--- | :--- |
+| **Usuario** | Registro, inicio de sesión, búsqueda de empresas, contratación de servicios, mensajería, notificaciones, calendario personal, cancelación/visualización de contratos, gestión de perfil. |
+| **Empresa** | Registro, inicio de sesión, gestión de perfil, publicación/eliminación de servicios/horarios, gestión de contratos, mensajería, notifiaciones. |
+| **Admin** | Dashboard de métricas, gestión (CRUD) de usuarios y empresas, mensajes, notificaciones, gestión (CRUD) de servicios y horarios. |
 
 🧑‍🏫 Seguimiento y Tutorías
 El desarrollo del proyecto ha seguido una planificación estructurada bajo la supervisión del tutor académico.
 A continuación, se detallan los hitos alcanzados durante el proceso:
-Presentación de Asignatura y Proyecto: Definición inicial y alcance.
-Creación de Imagen Corporativa de la Empresa: Diseño de logos, paleta de colores y branding de "cuidaDos".
-Elaboración de Contrato de Prestación de Servicios con la Empresa y Recogida de Necesidades del Proyecto: Formalización de requisitos.
-Definición de Requisitos Funcionales y No Funcionales del Aplicativo y Presentación a la Empresa: Análisis detallado del sistema.
-Desarrollo de las Interfaces Gráficas: Diseño y maquetación de las pantallas del aplicativo.
-Desarrollo de la Estructura de la Base de Datos: Diseño del esquema en Supabase.
-Definición de Modelo Relacional de la Base de Datos: Establecimiento de relaciones entre entidades (Usuarios, Contratos, Servicios).
-Presentación a la Empresa de las Interfaces y la Base de Datos: Validación de prototipos y modelo de datos.
-Elección de Tecnologías a Utilizar: Selección del stack MEAN/Angular + Supabase.Estructuración Inicial de Documentación: Planteamiento de la memoria técnica.
-Definición de Puntos de los Manuales de Usuario y Técnico: Esquema de contenidos para la entrega final.
-Desarrollo Inicial de Manuales de Usuario y Técnico: Redacción de la documentación.
-Opciones de Despliegue de Aplicativos: Análisis de proveedores de hosting.Pruebas de Despliegue en Entorno Local: Configuración y tests iniciales.
-Pruebas de Despliegue en Vercel: Puesta en producción definitiva.
+
+|Fecha | Hito / Actividad | Descripción |
+| :--- | :--- |
+| 16.09.25| **Presentación de Asignatura y Proyecto** | Definición inicial y alcance del proyecto. |
+| **Creación de Imagen Corporativa** | Diseño de logos, paleta de colores y branding de "cuidaDos".  ![Logo de cuidaDos](assets/logo.png)|
+| **Elaboración de Contrato** | Formalización de requisitos y recogida de necesidades con la empresa. |
+| **Definición de Requisitos** | Análisis detallado del sistema (funcionales y no funcionales) y presentación. |
+| **Desarrollo de Interfaces Gráficas** | Diseño y maquetación de las pantallas del aplicativo. |
+| **Desarrollo Estructura BDD** | Diseño del esquema de la base de datos en Supabase. |
+| **Definición Modelo Relacional** | Establecimiento de relaciones entre entidades (Usuarios, Contratos, Servicios). |
+| **Presentación a la Empresa** | Validación de prototipos de interfaces y modelo de datos. |
+| **Elección de Tecnologías** | Selección del stack MEAN/Angular + Supabase. |
+| **Estructuración Documentación** | Planteamiento inicial de la memoria técnica. |
+| **Esquema de Manuales** | Definición de puntos para los manuales de Usuario y Técnico. |
+| **Desarrollo de Manuales** | Redacción inicial de la documentación de usuario y técnica. |
+| **Opciones de Despliegue** | Análisis de proveedores de hosting para el aplicativo. |
+| **Pruebas en Entorno Local** | Configuración del servidor y tests iniciales. |
+| **Pruebas de Despliegue en Vercel** | Puesta en producción definitiva. |
 
 👩‍💻 AutoríaEvelia Gil Paredes
 CFGS en Desarrollo de Aplicaciones Web (DAW)
 📍 IES Albarregas – Mérida (España)
-📘 Proyecto TFG: cuidaDos (2025/2026)Distribuido bajo licencia MIT.
+📘 Proyecto TFG: cuidaDos (2025/2026)
+
+Distribuido bajo licencia MIT.
