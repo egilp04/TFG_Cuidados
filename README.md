@@ -1,6 +1,7 @@
 # 💚 cuidaDos
 
-**cuidaDos** es una aplicación web desarrollada como Trabajo de Fin de Grado (TFG) para el ciclo de Desarrollo de Aplicaciones Web. Su objetivo es facilitar la contratación de servicios de cuidado y ayuda a domicilio, conectando a usuarios que necesitan asistencia con empresas especializadas del sector.
+**cuidaDos** es una aplicación web desarrollada como Trabajo de Fin de Grado (TFG) para el ciclo de Desarrollo de Aplicaciones Web. 
+Su objetivo es facilitar la contratación de servicios de cuidado y ayuda a domicilio, conectando a usuarios que necesitan asistencia con empresas especializadas del sector.
 
 ## 🌍 Descripción general
 
@@ -38,18 +39,27 @@ cuidaDos/
 ├── angular.json         # Configuración del CLI de Angular
 ├── package.json         # Dependencias
 └── README.md            # Documentación del proyecto
-⚙️ Instalación y ejecución localPara ejecutar el proyecto en tu máquina local:Clonar el repositorio:Bashgit clone [https://github.com/tu-usuario/cuidaDos.git](https://github.com/tu-usuario/cuidaDos.git)
+
+⚙️ Instalación y ejecución local
+Para ejecutar el proyecto en tu máquina local:Clonar el repositorio:
+git clone [https://github.com/tu-usuario/cuidaDos.git](https://github.com/tu-usuario/cuidaDos.git)
 cd cuidaDos
+
 Instalar dependencias:
 npm install
 Configurar variables de entorno:
-rea un archivo o configura tus environments con las credenciales de Supabase.Ejecutar el servidor de desarrollo:
+rea un archivo o configura tus environments con las credenciales de Supabase.
+
+Ejecutar el servidor de desarrollo:
 ng serve
 
 La aplicación estará disponible en http://localhost:4200/.
 
 🗄️ Base de datos (Supabase)
-El sistema utiliza PostgreSQL gestionado a través de Supabase. Las tablas principales incluyen:Usuarios / Empresas: Gestión de perfiles y roles.Servicios: Catálogo de servicios ofrecidos por las empresas.Contratos: Relación entre usuarios y servicios contratados.Horarios: Gestión de disponibilidad (Lunes a Domingo).Comunicaciones: Sistema de mensajería interna.
+El sistema utiliza PostgreSQL gestionado a través de Supabase.
+Las tablas principales incluyen:Usuarios / Empresas: Gestión de perfiles y roles.
+Servicios: Catálogo de servicios ofrecidos por las empresas.Contratos: Relación entre usuarios y servicios contratados.
+Horarios: Gestión de disponibilidad (Lunes a Domingo).Comunicaciones: Sistema de mensajería interna.
 
 👤 Roles y Funcionalidades
 Rol
