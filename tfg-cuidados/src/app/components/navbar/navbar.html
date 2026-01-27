@@ -11,13 +11,13 @@
     </a>
   </div>
 
-  <div class="lg:hidden">
+  <div class="md:hidden">
     <button (click)="toggleMenu()" class="text-primary focus:outline-none">
-      <lucide-icon [name]="isMenuOpen ? 'x' : 'menu'" class="w-8 h-8"></lucide-icon>
+      <lucide-icon [name]="isMenuOpen ? 'x' : 'menu'" class="w-10 h-10"></lucide-icon>
     </button>
   </div>
 
-  <div class="hidden lg:flex items-center gap-10">
+  <div class="hidden md:flex items-center gap-10">
     @if (authService.isAuthenticated()) {
       <div class="flex items-center gap-10">
         <div class="flex flex-col gap-1 relative">

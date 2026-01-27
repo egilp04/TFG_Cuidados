@@ -14,6 +14,7 @@ import {
   ChevronDown,
   Eye,
   EyeOff,
+  Menu,
 } from 'lucide-angular';
 import { LOCALE_ID } from '@angular/core';
 import localeEs from '@angular/common/locales/es';
@@ -48,10 +49,10 @@ export const appConfig: ApplicationConfig = {
       }),
       withRouterConfig({
         onSameUrlNavigation: 'reload',
-      })
+      }),
     ),
     importProvidersFrom(
-      LucideAngularModule.pick({ Mail, Bell, User, Search, ChevronDown, Eye, EyeOff })
+      LucideAngularModule.pick({ Mail, Bell, User, Search, ChevronDown, Eye, EyeOff, Menu }),
     ),
     importProvidersFrom(
       TranslateModule.forRoot({
@@ -60,7 +61,7 @@ export const appConfig: ApplicationConfig = {
           useFactory: createTranslateLoader,
           deps: [HttpClient],
         },
-      })
+      }),
     ),
   ],
 };
