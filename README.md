@@ -187,7 +187,10 @@ El aplicativo utiliza un **sistema de enrutamiento dinámico protegido por Guard
 
 ## 🖼️ Imágenes del Proyecto
 ### 🔹 Logo e Identidad Visual
+![Logo pequeño de cuidaDos](./carpeta_imgs/logo.png)
+
 ![Logo de cuidaDos](./carpeta_imgs/logo2.png)
+
 *Logo principal de la marca cuidaDos, usado en la cabecera y branding.*
 
 ## 💻 Comandos útiles
