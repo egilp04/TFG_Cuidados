@@ -85,11 +85,13 @@ Comunicaciones: Sistema de mensajería interna.
 ## 🎨 Identidad Visual
 
 | Elemento | Color Hex | Uso Principal |
-| :--- | :--- | :--- | :--- |
-| **Fondo** | `#EEEAE9` | Superficies y fondos de página | 
-| **Primario** | `#344F51` | Navegación, títulos y botones principales | 
+| :--- | :--- | :--- |
+| **Fondo** | `#EEEAE9` | Superficies y fondos de página |
+| **Primario** | `#344F51` | Navegación, títulos y botones principales |
 | **Secundario** | `#51786E` | Estados secundarios y elementos de apoyo |
-| **Acento** | `#93D14B` | CTAs, éxitos, iconos destacados y bordes activos | 
+| **Acento** | `#93D14B` | CTAs, éxitos, iconos destacados y bordes activos |
+| **Error** | `#EF4444` | Mensajes de error, alertas críticas y validaciones fallidas |
+| **Texto Principal** | `#1F2937` | Colores de textos y títulos principales |
 
 
 ## 🛠️ Tecnologías Principales
@@ -185,7 +187,7 @@ El aplicativo utiliza un **sistema de enrutamiento dinámico protegido por Guard
 
 ## 🖼️ Imágenes del Proyecto
 ### 🔹 Logo e Identidad Visual
-![Logo de cuidaDos](./carpeta_imgs/imagenes/logo.png)
+![Logo de cuidaDos](./carpeta_imgs/logo2.png)
 *Logo principal de la marca cuidaDos, usado en la cabecera y branding.*
 
 ## 💻 Comandos útiles
