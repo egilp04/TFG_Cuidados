@@ -86,10 +86,11 @@ Comunicaciones: Sistema de mensajería interna.
 
 | Elemento | Color Hex | Uso Principal | Visualización |
 | :--- | :--- | :--- | :--- |
-| **Fondo** | `#EEEAE9` | Superficies y fondos de página | ![](https://geps.dev/v1/badge?text=%20%20%20%20%20&fill=EEEAE9) |
-| **Primario** | `#344F51` | Navegación, títulos y botones principales | ![](https://geps.dev/v1/badge?text=%20%20%20%20%20&fill=344F51) |
-| **Secundario** | `#51786E` | Estados secundarios y elementos de apoyo | ![](https://geps.dev/v1/badge?text=%20%20%20%20%20&fill=51786E) |
-| **Acento** | `#93D14B` | CTAs, éxitos, iconos destacados y bordes activos | ![](https://geps.dev/v1/badge?text=%20%20%20%20%20&fill=93D14B) |
+| **Fondo** | `#EEEAE9` | Superficies y fondos de página | <span style="display:inline-block;width:40px;height:20px;background-color:#EEEAE9;"></span> |
+| **Primario** | `#344F51` | Navegación, títulos y botones principales | <span style="display:inline-block;width:40px;height:20px;background-color:#344F51;"></span> |
+| **Secundario** | `#51786E` | Estados secundarios y elementos de apoyo | <span style="display:inline-block;width:40px;height:20px;background-color:#51786E;"></span> |
+| **Acento** | `#93D14B` | CTAs, éxitos, iconos destacados y bordes activos | <span style="display:inline-block;width:40px;height:20px;background-color:#93D14B;"></span> |
+
 
 ## 🛠️ Tecnologías Principales
 
@@ -181,6 +182,11 @@ El aplicativo utiliza un **sistema de enrutamiento dinámico protegido por Guard
 | **Servicios Globales** | Control del catálogo maestro de tipos de servicios de cuidados. |
 | **Horarios Globales** | Configuración centralizada de las franjas horarias del sistema. |
 
+
+## 🖼️ Imágenes del Proyecto
+### 🔹 Logo e Identidad Visual
+![Logo de cuidaDos](./imagenes/logo.png)
+*Logo principal de la marca cuidaDos, usado en la cabecera y branding.*
 
 ## 💻 Comandos útiles
 
