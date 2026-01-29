@@ -574,6 +574,7 @@
     }
   },
   "MODIFY_PROFILE": {
+    "PLACEHOLDER": { "DESCRIPTION": "Descripción" },
     "DESCRIPTION_MODIFY": "Modify descripcion",
     "TITLE": "Modificar Perfil",
     "MESSAGES": {

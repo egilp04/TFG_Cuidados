@@ -341,7 +341,7 @@
     }
   },
   "MODIFY_PROFILE": {
-    "DESCRIPTION_MODIFY": "Modify descripcion",
+    "PLACEHOLDER": { "DESCRIPTION": "Modify descripcion" },
     "TITLE": "Modify Profile",
     "MESSAGES": {
       "EMAIL_USED": "Email already in use",
