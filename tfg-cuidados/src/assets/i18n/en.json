@@ -254,7 +254,7 @@
       "SUCCESS_UPDATE": "Service updated successfully",
       "SUCCESS_DELETE": "Service deleted",
       "ERROR_DUPLICATE": "That service name already exists",
-      "ERROR_GENERIC": "Error processing request",
+      "ERROR_GENERIC": "Error processing request, try it again!",
       "ERROR_DELETE": "Error deleting"
     }
   },

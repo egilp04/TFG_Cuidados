@@ -496,7 +496,7 @@
     "MESSAGES": {
       "SUCCESS": "¡Registro realizado con éxito! Revisa tu email.",
       "ERROR_EMAIL": "El correo electrónico ya está registrado.",
-      "ERROR_GENERIC": "Error al conectar con el servidor."
+      "ERROR_GENERIC": "Error, inténtalo de nuevo."
     },
     "PLACEHOLDER": {
       "SELECTREGION": "Seleccione una comunidad"
