@@ -265,9 +265,13 @@ Cada sesión siguió la estructura: resumen de avances, demo funcional, bloqueo/
 
 
 👩‍💻 Autoría
-Evelia Gil Paredes
+
+**Evelia Gil Paredes**
+
 CFGS en Desarrollo de Aplicaciones Web (DAW)
+
 📍 IES Albarregas – Mérida (España)
+
 📘 Proyecto TFG: cuidaDos (2025/2026)
 
 Distribuido bajo licencia MIT.
