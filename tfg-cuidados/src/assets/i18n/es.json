@@ -365,7 +365,7 @@
     },
     "TOAST": {
       "SUCCESS": "¡Contraseña actualizada! Bienvenido de nuevo.",
-      "ERROR": "El enlace ha expirado o hubo un error."
+      "ERROR": "El enlace ha expirado o hubo un error, inténtalo más tarde o prueba con otra contraseña, recuerde que la contraseña anterior debe ser distinta a la nueva."
     }
   },
   "SEARCH_BUSINESS": {
