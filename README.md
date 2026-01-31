@@ -21,7 +21,12 @@ El proyecto ofrece una solución integral para la gestión de servicios de cuida
 
 La aplicación se encuentra desplegada en **Vercel**.
 
-🔗 **Accede a la versión en producción:** [Inserta aquí tu enlace de Vercel]
+🔗 **Accede a la versión en producción:**
+[![Desplegado en Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://tfg-cuidados-evelia.vercel.app/)
+> Sitio web intermodular para la contratación y gestión de servicios de cuidados especializados.
+
+![Landing page de cuidaDos](./carpeta_imgs/landing.png)
+
 
 ## 🧱 Estructura del proyecto
 
@@ -55,13 +60,38 @@ cd cuidaDos
 Instalar dependencias:
 npm install
 
-Configurar variables de entorno:
-rea un archivo o configura tus environments con las credenciales de Supabase.
 
 Ejecutar el servidor de desarrollo:
-ng serve
+ng serve (--watch)
 
 La aplicación estará disponible en http://localhost:4200/.
+
+🧪 Testing y Calidad de Software
+La plataforma cuidaDos ha sido sometida a un ciclo de pruebas automatizadas para garantizar la integridad de los flujos de trabajo críticos (registro, contratación y gestión de perfiles).
+
+1. Pruebas Unitarias (Karma & Jasmine)
+Se han desarrollado pruebas unitarias para validar la lógica de los servicios y componentes de forma aislada.
+
+Herramientas: Karma como test runner y Jasmine como framework de pruebas.
+
+Ejecución:
+
+ng test
+
+Este comando abrirá una instancia del navegador Chrome para ejecutar la suite de pruebas y reportar los resultados en tiempo real.
+
+2. Pruebas End-to-End (E2E)
+
+Las pruebas E2E simulan el comportamiento real del usuario desde el inicio de sesión hasta la contratación de un servicio, verificando la integración total entre el Frontend (Angular) y el Backend (Supabase).
+
+Ejecución:
+
+ng e2e
+
+📩 Pruebas de API y Contratos de Datos (Postman)
+
+Antes de la integración en Angular, se validaron todos los endpoints y la lógica de la base de datos mediante Postman. Esto garantizó que las respuestas JSON coincidieran con las interfaces de TypeScript definidas en el proyecto.
+
 
 🗄️ Base de datos (Supabase)
 El sistema utiliza PostgreSQL gestionado a través de Supabase.
