@@ -62,17 +62,18 @@ export class Servicesbusiness implements OnInit {
     }
   }
 
+  isMobile = window.innerWidth < 768;
   openModal(element?: any) {
     const dialogRef = this.dialog.open(ServiceTimeModal, {
       width: '100%',
-      maxWidth: '600px',
+      maxWidth: this.isMobile ? '95vw' : '600px',
       data: element || null,
     });
     dialogRef
       .afterClosed()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        filter((result) => result === true)
+        filter((result) => result === true),
       )
       .subscribe(() => {
         this.cargarServicios();
@@ -82,7 +83,7 @@ export class Servicesbusiness implements OnInit {
   onDelete(id: string) {
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
-      maxWidth: '500px',
+      maxWidth: this.isMobile ? '95vw' : '600px',
       data: { modo: 'eliminarServicio' },
     });
 
@@ -95,14 +96,14 @@ export class Servicesbusiness implements OnInit {
         switchMap(() =>
           this.translate
             .get('SERVICES_BUSINESS.MESSAGES.DELETE_SUCCESS')
-            .pipe(map((text) => ({ type: 'exito' as const, text })))
+            .pipe(map((text) => ({ type: 'exito' as const, text }))),
         ),
         catchError((err) => {
           console.error('Error al cancelar:', err);
           return this.translate
             .get('SERVICES_BUSINESS.MESSAGES.DELETE_ERROR')
             .pipe(map((text) => ({ type: 'error' as const, text })));
-        })
+        }),
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);

@@ -63,7 +63,7 @@ export class AnalyticsService {
       if (contratos) {
         const stats = {
           activos: contratos.filter((c) => c.estado === 'activo').length,
-          cancelados: contratos.filter((c) => c.estado === 'cancelado').length,
+          cancelados: contratos.filter((c) => c.estado === 'no activo').length,
         };
         this._contratosStats$.next(stats);
       }

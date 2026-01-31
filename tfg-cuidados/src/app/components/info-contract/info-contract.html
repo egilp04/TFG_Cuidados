@@ -1,4 +1,4 @@
-<div class="p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface">
+<div class="p-10 flex flex-col w-full justify-center gap-6 bg-surface">
   <div class="w-full flex justify-end p-10">
     <img
       mat-dialog-close
@@ -7,11 +7,9 @@
     />
   </div>
 
-  <h2 mat-dialog-title class="text-secondary text-h2">
-    {{ 'INFO_CONTRACT.TITLE_DETAILS' | translate }}:
-  </h2>
+  <h2 class="text-secondary text-h2 p-6 mb-2">{{ 'INFO_CONTRACT.TITLE_DETAILS' | translate }}:</h2>
 
-  <div class="flex justify-center items-center flex-col w-full">
+  <div class="flex justify-center items-center flex-col w-full px-4">
     <mat-dialog-content class="p-0! flex! flex-col! gap-4 w-full text-left max-w-lg">
       <p>
         <strong>{{ 'INFO_CONTRACT.ID' | translate }}:</strong>
@@ -36,11 +34,9 @@
     </mat-dialog-content>
   </div>
 
-  <h2 mat-dialog-title class="text-secondary text-h2">
-    {{ 'INFO_CONTRACT.TITLE_ACTIVITY' | translate }}:
-  </h2>
+  <h2 class="text-secondary text-h2 p-6 mb-2">{{ 'INFO_CONTRACT.TITLE_ACTIVITY' | translate }}:</h2>
 
-  <div class="flex justify-center items-center flex-col w-full">
+  <div class="flex justify-center items-center flex-col w-full px-4">
     <mat-dialog-content class="p-0! flex! flex-col! gap-4 w-full text-left max-w-lg">
       <p>
         <strong>{{ 'INFO_CONTRACT.TIME' | translate }}:</strong>
@@ -64,13 +60,4 @@
       </p>
     </mat-dialog-content>
   </div>
-
-  <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
-    <app-button
-      (click)="onCancelar()"
-      [label]="'INFO_CONTRACT.BTN_CANCEL' | translate"
-      variant="danger"
-    >
-    </app-button>
-  </mat-dialog-actions>
 </div>

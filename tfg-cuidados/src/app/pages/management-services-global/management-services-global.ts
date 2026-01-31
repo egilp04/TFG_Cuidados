@@ -125,7 +125,7 @@ export class ManagementServicesGlobal implements OnInit {
             msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_DUPLICATE';
           }
           return this.translate.get(msgKey).pipe(map((text) => ({ type: 'error' as const, text })));
-        })
+        }),
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
@@ -145,11 +145,12 @@ export class ManagementServicesGlobal implements OnInit {
     });
   }
 
+  isMobile = window.innerWidth < 768;
   onDelete(id: string) {
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { modo: 'eliminarAdminGlobal' },
       width: '100%',
-      maxWidth: '450px',
+      maxWidth: this.isMobile ? '95vw' : '500px',
     });
 
     dialogRef
@@ -162,15 +163,15 @@ export class ManagementServicesGlobal implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MANAGEMENT_SERVICES.MESSAGES.SUCCESS_DELETE')
-                .pipe(map((text) => ({ type: 'exito' as const, text })))
+                .pipe(map((text) => ({ type: 'exito' as const, text }))),
             ),
             catchError(() =>
               this.translate
                 .get('MANAGEMENT_SERVICES.MESSAGES.ERROR_DELETE')
-                .pipe(map((text) => ({ type: 'error' as const, text })))
-            )
-          )
-        )
+                .pipe(map((text) => ({ type: 'error' as const, text }))),
+            ),
+          ),
+        ),
       )
       .subscribe({
         next: (resultado) => {

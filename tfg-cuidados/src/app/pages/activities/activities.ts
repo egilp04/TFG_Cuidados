@@ -44,11 +44,12 @@ export class Activities {
       });
   }
 
+  isMobile = window.innerWidth < 768;
   cancelarContrato(id: string) {
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { modo: 'cancelarContrato' },
       width: '100%',
-      maxWidth: '450px',
+      maxWidth: this.isMobile ? '95vw' : '650px',
     });
 
     dialogRef
@@ -62,13 +63,13 @@ export class Activities {
               switchMap(() =>
                 this.translate
                   .get('MESSAGES.SUCCESS.CANCELCONTRACT')
-                  .pipe(map((msg) => ({ texto: msg, tipo: 'exito' as const })))
+                  .pipe(map((msg) => ({ texto: msg, tipo: 'exito' as const }))),
               ),
               catchError(() =>
                 this.translate
                   .get('MESSAGES.ERROR.CANCELCONTRACT')
-                  .pipe(map((msg) => ({ texto: msg, tipo: 'error' as const })))
-              )
+                  .pipe(map((msg) => ({ texto: msg, tipo: 'error' as const }))),
+              ),
             )
             .subscribe({
               next: (resultado) => {

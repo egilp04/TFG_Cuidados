@@ -51,9 +51,11 @@ export class ManagementAdmin implements OnInit {
     });
   }
 
+  isMobile = window.innerWidth < 768;
   onEliminarUsuario(item: any) {
     const dialogRef = this.dialog.open(Cancelmodal, {
-      width: '500px',
+      width: '100%',
+      maxWidth: this.isMobile ? '95vw' : '500px',
       data: { modo: 'eliminar' },
     });
     dialogRef
@@ -66,15 +68,15 @@ export class ManagementAdmin implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MESSAGES.SUCCESS.DELETE_USER')
-                .pipe(map((msg) => ({ text: msg, type: 'exito' as const })))
+                .pipe(map((msg) => ({ text: msg, type: 'exito' as const }))),
             ),
             catchError(() =>
               this.translate
                 .get('MESSAGES.ERROR.DELETE_USER')
-                .pipe(map((msg) => ({ text: msg, type: 'error' as const })))
-            )
-          )
-        )
+                .pipe(map((msg) => ({ text: msg, type: 'error' as const }))),
+            ),
+          ),
+        ),
       )
       .subscribe({
         next: (res) => {

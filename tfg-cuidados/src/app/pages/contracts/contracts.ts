@@ -42,6 +42,8 @@ export class Contracts implements OnInit {
   displayedColumns: string[] = ['ID', 'fecha', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
 
+  isMobile = window.innerWidth < 768;
+
   ngOnInit() {
     this.suscribirAContratos();
   }
@@ -66,7 +68,8 @@ export class Contracts implements OnInit {
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { modo: 'cancelarContrato' },
       width: '100%',
-      maxWidth: '450px',
+      maxWidth: this.isMobile ? '95vw' : '650px',
+      panelClass: 'custom-modal-padding',
     });
 
     dialogRef
@@ -79,16 +82,16 @@ export class Contracts implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MESSAGES.SUCCESS.CANCELCONTRACT')
-                .pipe(map((msg) => ({ text: msg, type: 'exito' as const })))
+                .pipe(map((msg) => ({ text: msg, type: 'exito' as const }))),
             ),
             catchError((err) => {
               console.error('Error al cancelar:', err);
               return this.translate
                 .get('MESSAGES.ERROR.CANCELCONTRACT')
                 .pipe(map((msg) => ({ text: msg, type: 'error' as const })));
-            })
-          )
-        )
+            }),
+          ),
+        ),
       )
       .subscribe({
         next: (result) => {
@@ -102,7 +105,7 @@ export class Contracts implements OnInit {
     if (contratoYaMapeado) {
       this.dialog.open(InfoContract, {
         width: '100%',
-        maxWidth: '450px',
+        maxWidth: this.isMobile ? '95vw' : '500px',
         data: { contrato: contratoYaMapeado },
       });
     } else {

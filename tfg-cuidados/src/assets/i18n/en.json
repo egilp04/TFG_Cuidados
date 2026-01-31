@@ -117,7 +117,7 @@
       "HEADER_COMPANY": "Company",
       "HEADER_CLIENT": "Client",
       "HEADER_USER": "User",
-      "NAME": "Name",
+      "NAME": "Service Name",
       "DAY": "Day",
       "TIME": "Time",
       "LOCATION": "Location"
@@ -153,7 +153,11 @@
   },
   "DASHBOARD": {
     "TITLE_CONTRACTS": "Contracts",
-    "TOTAL_CONTRACTS": "Total Contracts:",
+    "TOTAL_CONTRACTS": {
+      "TOTAL": "Total contract: ",
+      "ACTIVE": "Total contracts active: ",
+      "NO_ACTIVE": "Total contracts no active: "
+    },
     "TOTAL_USERS": "Current Total Users:",
     "LOGIN": {
       "TITLE": "LOGIN",

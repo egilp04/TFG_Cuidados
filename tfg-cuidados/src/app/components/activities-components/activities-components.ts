@@ -38,10 +38,11 @@ export class ActivitiesComponents implements OnInit {
 
   displayedColumns: string[] = ['usuario', 'nombre', 'dia', 'hora', 'lugar', 'acciones'];
   dataSourceTable = new MatTableDataSource<any>([]);
+  rol = this.authService.userRol();
+
   public headerContrato = computed(() => {
-    const rol = this.authService.userRol();
-    if (rol === 'cliente') return 'ACTIVITIES.TABLE.HEADER_COMPANY';
-    if (rol === 'empresa') return 'ACTIVITIES.TABLE.HEADER_CLIENT';
+    if (this.rol === 'cliente') return 'ACTIVITIES.TABLE.HEADER_COMPANY';
+    if (this.rol === 'empresa') return 'ACTIVITIES.TABLE.HEADER_CLIENT';
     return 'ACTIVITIES.TABLE.HEADER_USER';
   });
   public weekDays = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
@@ -73,7 +74,23 @@ export class ActivitiesComponents implements OnInit {
   }
 
   private updateTable() {
-    this.dataSourceTable.data = this.dataSource || [];
+    if (!this.dataSource || this.dataSource.length === 0) {
+      this.dataSourceTable.data = [];
+      return;
+    }
+
+    const dataMapeada = this.dataSource.map((contrato) => {
+      let nombreAMostrar;
+      if (this.rol == 'cliente') nombreAMostrar = contrato.Empresa?.nombreDeLaEmpresa;
+      if (this.rol == 'empresa') nombreAMostrar = contrato.Cliente?.nombreDelCliente;
+      const lugar = `${contrato.Cliente?.direccion}, ${contrato.Cliente?.localidad}, ${contrato.Cliente?.codpostal}`;
+      return {
+        ...contrato,
+        nombreAMostrar: nombreAMostrar || 'N/A',
+        lugar: lugar,
+      };
+    });
+    this.dataSourceTable.data = dataMapeada;
   }
 
   private precalcularEventosDelMes() {
@@ -125,7 +142,7 @@ export class ActivitiesComponents implements OnInit {
     this.displayDate = new Date(
       this.displayDate.getFullYear(),
       this.displayDate.getMonth() + delta,
-      1
+      1,
     );
     this.generateCalendar();
     this.precalcularEventosDelMes();
@@ -145,8 +162,7 @@ export class ActivitiesComponents implements OnInit {
     if (eventos.length === 0) return;
     if (this.selectedDia === dia) {
       this.selectedDia = null;
-    }
-    else {
+    } else {
       this.selectedDia = dia;
     }
   }

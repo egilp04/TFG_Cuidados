@@ -140,7 +140,7 @@ export class ManagementTimeGlobal implements OnInit {
           return this.translate
             .get(msgKey, params)
             .pipe(map((text) => ({ type: 'error' as const, text })));
-        })
+        }),
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
@@ -160,11 +160,12 @@ export class ManagementTimeGlobal implements OnInit {
     });
   }
 
+  isMobile = window.innerWidth < 768;
   onDelete(id: string) {
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { modo: 'eliminarAdminGlobal' },
       width: '100%',
-      maxWidth: '450px',
+      maxWidth: this.isMobile ? '95vw' : '500px',
     });
 
     dialogRef
@@ -177,15 +178,15 @@ export class ManagementTimeGlobal implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MANAGEMENT_GLOBAL.DELETE')
-                .pipe(map((text) => ({ type: 'exito' as const, text })))
+                .pipe(map((text) => ({ type: 'exito' as const, text }))),
             ),
             catchError(() =>
               this.translate
                 .get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DELETE')
-                .pipe(map((text) => ({ type: 'error' as const, text })))
-            )
-          )
-        )
+                .pipe(map((text) => ({ type: 'error' as const, text }))),
+            ),
+          ),
+        ),
       )
       .subscribe({
         next: (resultado) => {

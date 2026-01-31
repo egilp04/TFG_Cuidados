@@ -41,8 +41,8 @@ export class Dashboard implements OnInit {
     datasets: [
       {
         data: [0, 0],
-        backgroundColor: ['#60A5FA', '#A7F3D0'],
-        hoverBackgroundColor: ['#3B82F6', '#6EE7B7'],
+        backgroundColor: ['#60A5FA', '#ca165b'],
+        hoverBackgroundColor: ['#6EE7B7', '#6EE7B7'],
         borderWidth: 0,
       },
     ],
@@ -60,7 +60,7 @@ export class Dashboard implements OnInit {
     datasets: [
       {
         data: [],
-        borderColor: '#BEF264',
+        borderColor: '#17c448',
         tension: 0.4,
         fill: false,
         pointRadius: 0,
@@ -102,7 +102,6 @@ export class Dashboard implements OnInit {
   }
 
   private suscribirADatos() {
-    // 1. Usuarios
     this.analyticsService
       .getUsuariosCount()
       .pipe(takeUntilDestroyed(this.destroyRef))

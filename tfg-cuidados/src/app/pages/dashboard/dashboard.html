@@ -3,21 +3,34 @@
 </div>
 
 <div class="bg-surface p-10 flex flex-col items-center">
-  <h2 class="text-h2 text-primar mb-20 xl:mb-24 mt-20">
-    {{ 'DASHBOARD.TITLE_CONTRACTS' | translate }}
-  </h2>
+  <div class="flex flex-col gap-22 w-full items-center">
+    <h2 class="text-h2 text-primar">
+      {{ 'DASHBOARD.TITLE_CONTRACTS' | translate }}
+    </h2>
 
-  <div class="w-full h-48 md:h-52 lg:h-64 mb-28 justify-center items-center flex flex-col gap-20">
-    <canvas
-      baseChart
-      [data]="doughnutChartData"
-      [options]="doughnutChartOptions"
-      [type]="'doughnut'"
-    >
-    </canvas>
-    <span class="text-label text-secondary">
-      {{ 'DASHBOARD.TOTAL_CONTRACTS' | translate }} {{ contratosActivos + contratosCancelados }}
-    </span>
+    <div class="w-full h-48 md:h-52 lg:h-64 mb-28 justify-center items-center flex flex-col gap-12">
+      <canvas
+        baseChart
+        [data]="doughnutChartData"
+        [options]="doughnutChartOptions"
+        [type]="'doughnut'"
+      >
+      </canvas>
+      <div class="flex flex-row gap-10">
+        <span class="text-label text-secondary">
+          {{ 'DASHBOARD.TOTAL_CONTRACTS.TOTAL' | translate }}
+          {{ contratosActivos + contratosCancelados }}
+        </span>
+        <span class="text-label text-[#3B82F6]">
+          {{ 'DASHBOARD.TOTAL_CONTRACTS.ACTIVE' | translate }}
+          {{ contratosActivos }}
+        </span>
+        <span class="text-label text-[#ca165b]">
+          {{ 'DASHBOARD.TOTAL_CONTRACTS.NO_ACTIVE' | translate }}
+          {{ contratosActivos }}
+        </span>
+      </div>
+    </div>
   </div>
 
   <div
