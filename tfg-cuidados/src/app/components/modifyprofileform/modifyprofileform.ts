@@ -46,13 +46,13 @@ export class Modifyprofileform implements OnInit, OnChanges {
 
   public comunidades: string[] = comunidades;
   @Input() userData: any = null;
-  @Input() userRole: 'cliente' | 'empresa' | 'admin' = 'cliente';
+  @Input() userRole: 'cliente' | 'empresa' | 'administrador' = 'cliente';
   @Output() formSubmitted = new EventEmitter<{ datos: any; rol: string }>();
   @Output() deleteRequested = new EventEmitter<void>();
   @Output() cancelRequested = new EventEmitter<void>();
 
   private targetUser: any = null;
-  public isAdminViewer: boolean = false; 
+  public isAdminViewer: boolean = false;
 
   profileForm: FormGroup = this.fb.group({
     usuario: ['', [Validators.required, Validators.minLength(3)]],
@@ -78,7 +78,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.isAdminViewer = this.authService.userRol() === 'admin';
+    this.isAdminViewer = this.authService.userRol() === 'administrador';
     if (!this.userData) {
       this.cargarDatosFormulario();
     }
@@ -96,7 +96,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
       } else {
         this.profileForm.patchValue({ usuario: this.targetUser.nombre });
       }
-      if (this.userRole !== 'admin') {
+      if (this.userRole !== 'administrador') {
         this.profileForm.patchValue({
           direccion: this.targetUser.direccion,
           localidad: this.targetUser.localidad,
@@ -128,7 +128,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
     } else {
       this.setValidators(['usuario']);
     }
-    if (this.userRole !== 'admin') {
+    if (this.userRole !== 'administrador') {
       this.setValidators(['direccion', 'localidad', 'codpostal', 'comunidad']);
       if (this.userRole === 'cliente') {
         this.setValidators(['primerApe', 'segundoApe']);
@@ -178,7 +178,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
         telef: formValue.telefono,
         nombre: this.userRole === 'empresa' ? formValue.nombreEmpresa : formValue.usuario,
       };
-      if (this.userRole !== 'admin') {
+      if (this.userRole !== 'administrador') {
         datosParaBBDD.direccion = formValue.direccion;
         datosParaBBDD.localidad = formValue.localidad;
         datosParaBBDD.codpostal = formValue.codpostal;

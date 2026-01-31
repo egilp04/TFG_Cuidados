@@ -30,7 +30,7 @@ export class ModifyProfilePage implements OnInit {
   private translate = inject(TranslateService);
   private location = inject(Location);
 
-  userRole = signal<'cliente' | 'empresa' | 'admin'>('cliente');
+  userRole = signal<'cliente' | 'empresa' | 'administrador'>('cliente');
   usuarioAEditar = signal<any>(null);
 
   ngOnInit() {
@@ -84,7 +84,7 @@ export class ModifyProfilePage implements OnInit {
           console.error('Error actualizando perfil:', err);
           this.messageService.showMessage('Error al guardar los cambios', 'error');
           return of(null);
-        })
+        }),
       )
       .subscribe();
   }
@@ -115,7 +115,7 @@ export class ModifyProfilePage implements OnInit {
         }),
         tap(() => {
           this.messageService.showMessage('Usuario eliminado correctamente', 'exito');
-        })
+        }),
       )
       .subscribe();
   }
