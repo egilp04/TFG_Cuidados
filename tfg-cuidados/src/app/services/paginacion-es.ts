@@ -5,7 +5,6 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
   providedIn: 'root',
 })
 export class PaginacionEs extends MatPaginatorIntl {
-  // Etiquetas simples
   override itemsPerPageLabel = 'Elementos por página:';
   override nextPageLabel = 'Siguiente página';
   override previousPageLabel = 'Página anterior';
