@@ -66,7 +66,7 @@ describe('Modifyprofileform', () => {
   });
 
   it('should init correctly', () => {
-    authServiceSpy.userRol.and.returnValue('admin');
+    authServiceSpy.userRol.and.returnValue('administrador');
     component.ngOnInit();
     expect(component.isAdminViewer).toBe(true);
   });
@@ -97,8 +97,8 @@ describe('Modifyprofileform', () => {
     expect(component.profileForm.get('descripcion')?.value).toBe('Desc');
   });
 
-  it('should load form for admin', () => {
-    component.userRole = 'admin';
+  it('should load form for administrador', () => {
+    component.userRole = 'administrador';
     component.userData = mockUser;
     component.ngOnChanges({ userData: new SimpleChange(null, mockUser, true) });
 

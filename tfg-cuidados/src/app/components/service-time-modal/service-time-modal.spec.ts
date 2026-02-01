@@ -156,7 +156,7 @@ describe('ServiceTimeModal', () => {
       precio: '20',
       descripcion: 'Update',
     });
-
+    serviceTimeServiceSpy.insertServiceTime.and.returnValue(of({ success: true }));
     component.save();
 
     expect(serviceTimeServiceSpy.updateServiceTime).toHaveBeenCalledWith(99, jasmine.any(Object));
