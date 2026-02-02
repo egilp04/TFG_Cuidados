@@ -67,6 +67,8 @@
   "ABOUT": {
     "TITLE": "Sobre Nosotros",
     "DESCRIPTION": "CuidaDos es una plataforma que busca ser un intermediario seguro y eficiente para la contratación de servicios de cuidado y atención a personas mayores o que necesiten ayuda en su vida diaria. Somos una plataforma digital de cuidados creada con el objetivo de mejorar la calidad de vida de las personas que necesitan apoyo en su día a día. Nuestro equipo está formado por profesionales del ámbito tecnológico y social que comparten una misma visión: facilitar el acceso a servicios de atención y cuidado de forma sencilla, segura y transparente. Creemos firmemente que el cuidado de las personas debe estar basado en la confianza, la profesionalidad y la cercanía, y por ello trabajamos para conectar a usuarios con empresas especializadas en el sector. El proyecto nace en el contexto del desarrollo del Proyecto Final del Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Web, durante el curso académico 2025-2026. A partir del análisis del sector y de la experiencia cercana con este ámbito, se identificaron carencias que podían resolverse mediante una solución tecnológica moderna, accesible y escalable. Nuestro compromiso es crear un entorno digital inclusivo, intuitivo y fiable, que contribuya a dignificar el sector de los cuidados y a facilitar la vida de las personas que más lo necesitan.",
+    "TEAMDESCRIPTION": "Nuestro equipo está formado por profesionales del ámbito tecnológico y social que comparten una misma visión: facilitar el acceso a servicios de atención y cuidado de forma sencilla, segura y transparente. Creemos firmemente que el cuidado de las personas debe estar basado en la confianza, la profesionalidad y la cercanía, y por ello trabajamos para conectar a usuarios con empresas especializadas en el sector. El proyecto nace en el contexto del desarrollo del Proyecto Final del Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Web, durante el curso académico 2025-2026. A partir del análisis del sector y de la experiencia cercana con este ámbito, se identificaron carencias que podían resolverse mediante una solución tecnológica moderna, accesible y escalable. Nuestro compromiso es crear un entorno digital inclusivo, intuitivo y fiable, que contribuya a dignificar el sector de los cuidados y a facilitar la vida de las personas que más lo necesitan.",
+    "PROJECTDESCRIPTION": "El proyecto nace en el contexto del desarrollo del Proyecto Final del Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Web, durante el curso académico 2025-2026. A partir del análisis del sector y de la experiencia cercana con este ámbito, se identificaron carencias que podían resolverse mediante una solución tecnológica moderna, accesible y escalable. Nuestro compromiso es crear un entorno digital inclusivo, intuitivo y fiable, que contribuya a dignificar el sector de los cuidados y a facilitar la vida de las personas que más lo necesitan.",
     "SCOPE": {
       "TITLE": "Ámbito Social y Comercial",
       "DESC": "El proyecto tiene un doble enfoque:",
@@ -99,7 +101,7 @@
       },
       "MEMBER4": {
         "ROLE": "Atención al Cliente",
-        "DESC": "Dedicada a ofrecer soporte humano y resolver dudas para una experiencia excelente."
+        "DESC": "Dedicado a ofrecer soporte humano y resolver dudas para una experiencia excelente."
       }
     }
   },
