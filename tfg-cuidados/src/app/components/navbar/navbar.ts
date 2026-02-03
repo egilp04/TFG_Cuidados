@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
 import { ButtonComponent } from '../button/button';
 import { LucideAngularModule } from 'lucide-angular';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,12 +25,16 @@ export class Navbar implements OnInit {
 
   public isMenuOpen = false;
 
-  ngOnInit() {
-    if (this.authService.currentUser()) {
-      this.comunicationService.refreshUsersData();
-    }
+  constructor() {
+    effect(() => {
+      const user = this.authService.currentUser();
+      if (user) {
+        this.comunicationService.refreshUsersData();
+      }
+    });
   }
 
+  ngOnInit() {}
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
