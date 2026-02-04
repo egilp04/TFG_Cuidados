@@ -1,0 +1,30 @@
+<div class="w-full mb-4">
+  <app-buttonback></app-buttonback>
+</div>
+
+<div class="flex flex-col items-center p-6 bg-surface">
+  @if (this.messageService.messageData(); as data) {
+  <div
+    [ngClass]="{
+      'text-red-500': data.tipo === 'error',
+      'text-primary': data.tipo === 'exito'
+    }"
+    class="text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm"
+  >
+    {{ data.mensaje }}
+  </div>
+  }
+</div>
+
+<div class="flex flex-col bg-surface w-full px-20">
+  <h1 class="text-h1 text-primary text-center mb-20">
+    {{ 'ACTIVITIES.TITLE' | translate }}
+  </h1>
+
+  <div class="mb-20">
+    <app-activities-components
+      [dataSource]="dataSource.data"
+      (onCancelContract)="cancelarContrato($event)"
+    ></app-activities-components>
+  </div>
+</div>

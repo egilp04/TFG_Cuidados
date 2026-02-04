@@ -1,0 +1,32 @@
+<div class="w-full mb-4">
+  <app-buttonback></app-buttonback>
+</div>
+<div class="flex flex-col justify-center items-center bg-surface p-20 md:px-24">
+  <h1 class="text-h1 text-primary mt-10 mb-20 text-center">Manuales</h1>
+
+  <div
+    class="h-full px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-20 mt-20 w-full items-stretch"
+  >
+    @for (item of cardsdata; track item.titulo; let i = $index) {
+      <div class="flex flex-col gap-20 justify-between items-center flex-1 h-full">
+        <app-cards-landing
+          class="w-full h-full"
+          [titulo]="item.titulo"
+          [cargo]="item.cargo"
+          [descripcion]="item.descripcion"
+          [imagen]="item.imagen"
+        >
+        </app-cards-landing>
+
+        <a
+          [href]="item.archivo"
+          [download]="item.archivo"
+          target="_blank"
+          class="md:w-48 md:h-11 xl:h-[4rem] 2xl:h-80 2xl:w-1/3"
+        >
+          <app-button label="Descargar PDF" variant="primary" class=""></app-button>
+        </a>
+      </div>
+    }
+  </div>
+</div>

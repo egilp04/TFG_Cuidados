@@ -1,0 +1,61 @@
+<div class="flex flex-col items-center justify-between md:flex-row py-20 px-4 bg-primary">
+  <a
+    [routerLink]="homeLink()"
+    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+  >
+    {{ 'FOOTER.HOME' | translate }}
+  </a>
+  <a
+    routerLink="/contact"
+    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+  >
+    {{ 'FOOTER.CONTACT' | translate }}
+  </a>
+  <a
+    routerLink="/about-us"
+    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+  >
+    {{ 'FOOTER.ABOUT' | translate }}
+  </a>
+  <a
+    routerLink="/manuals"
+    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+  >
+    {{ 'FOOTER.MANUALS' | translate }}
+  </a>
+  <a
+    routerLink="/"
+    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+  >
+    {{ 'FOOTER.LEGAL_ASPECTS' | translate }}
+  </a>
+  <a
+    routerLink="/"
+    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+  >
+    {{ 'FOOTER.PRIVACY_POLICTICS' | translate }}
+  </a>
+  <a
+    routerLink="/"
+    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+  >
+    {{ 'FOOTER.COOKIES_POLICIES' | translate }}
+  </a>
+  <div class="flex flex-row gap-4">
+    <button
+      (click)="cambiarIdioma('es')"
+      class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+    >
+      ES
+    </button>
+    <span class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+      >|</span
+    >
+    <button
+      (click)="cambiarIdioma('en')"
+      class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
+    >
+      EN
+    </button>
+  </div>
+</div>

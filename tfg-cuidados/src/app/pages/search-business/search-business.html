@@ -1,0 +1,101 @@
+<div class="w-full mb-4">
+  <app-buttonback></app-buttonback>
+</div>
+<div class="flex flex-col items-center p-6 bg-surface mt-20">
+  <app-searchbar
+    [control]="filtroControl"
+    (searchEvent)="applyFilter($event)"
+    class="w-full max-w-4xl mb-10"
+  >
+  </app-searchbar>
+
+  @if (messageService.messageData(); as data) {
+  <div
+    [ngClass]="{
+      'text-red-500': data.tipo === 'error',
+      'text-green-600': data.tipo === 'exito'
+    }"
+    class="text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm"
+  >
+    {{ data.mensaje }}
+  </div>
+  }
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
+    @for (empresa of empresasFiltradas(); track empresa.id_empresa) {
+    <div
+      class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 flex flex-col justify-around hover:shadow-lg transition-shadow"
+    >
+      <div class="space-y-4">
+        <div>
+          <h2 class="text-xl font-bold text-primary">{{ empresa.nombre }}</h2>
+          <p class="text-sm text-gray-500 mt-1 flex items-center gap-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            {{ empresa.direccion }}
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-semibold text-primary text-sm">
+            {{ 'SEARCH_BUSINESS.CARD.DESCRIPTION' | translate }}
+          </h3>
+          <p class="text-sm text-gray-600 line-clamp-3 mt-1">{{ empresa.descripcion }}</p>
+        </div>
+
+        <div class="mt-4 pt-4 border-t border-gray-100">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {{ 'SEARCH_BUSINESS.CARD.SELECT_SERVICE' | translate }}
+          </label>
+          <select
+            [(ngModel)]="empresa.seleccion"
+            class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm transition-all cursor-pointer"
+          >
+            <option [ngValue]="undefined" disabled selected>
+              {{ 'SEARCH_BUSINESS.CARD.CHOOSE_OPTION' | translate }}
+            </option>
+
+            @for (sh of empresa.Servicio_Horario; track sh.id_servicio_horario) {
+            <option [ngValue]="sh">
+              {{ sh.Servicio?.nombre }} — {{ sh.Horario?.dia_semana | titlecase }}
+              {{ sh.Horario?.hora }}
+              ({{ sh.precio | currency : 'EUR' }})
+            </option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="flex justify-around items-center mt-8 gap-3">
+        <app-button
+          [label]="'SEARCH_BUSINESS.BTN_MESSAGE' | translate"
+          variant="secondary"
+          class="flex-1"
+          (click)="enviarMensaje(empresa)"
+        ></app-button>
+
+        <app-button
+          [label]="'SEARCH_BUSINESS.BTN_CONTRACT' | translate"
+          variant="primary"
+          class="flex-1"
+          (click)="contratar(empresa)"
+          [disabled]="!empresa.seleccion"
+        ></app-button>
+      </div>
+    </div>
+    } @empty {
+    <div class="col-span-full text-center py-10 text-gray-500">
+      {{ 'SEARCH_BUSINESS.LIST.EMPTY' | translate }}
+    </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="w-full mb-4">
+  <app-buttonback></app-buttonback>
+</div>
+
+<div class="flex flex-col items-center p-6 bg-surface">
+  <h1 class="text-h1 text-primary text-center mb-10">
+    {{ 'CONTRACTS.TITLE' | translate }}
+  </h1>
+
+  @if (this.messageService.messageData(); as data) {
+  <div
+    [ngClass]="{
+      'text-red-500': data.tipo === 'error',
+      'text-primary': data.tipo === 'exito'
+    }"
+    class="text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm"
+  >
+    {{ data.mensaje }}
+  </div>
+  }
+
+  <div class="flex flex-col p-10 w-full">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full">
+      <ng-container matColumnDef="ID">
+        <th mat-header-cell *matHeaderCellDef class="text-label">
+          {{ 'CONTRACTS.TABLE.ID' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let contrato" class="text-label">{{ contrato.id_contrato }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef class="text-label">
+          {{ 'CONTRACTS.TABLE.DATE' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let contrato" class="text-label">
+          {{ contrato.fecha_creacion | date : 'dd/MM/yyyy' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef class="text-center"></th>
+        <td mat-cell *matCellDef="let contrato" class="text-center">
+          <app-button
+            [label]="'CONTRACTS.ACTIONS.CANCEL' | translate"
+            variant="secondary"
+            (click)="cancelarContrato(contrato.id_contrato)"
+          ></app-button>
+
+          <app-button
+            [label]="'CONTRACTS.ACTIONS.DETAILS' | translate"
+            variant="primary"
+            (click)="verDetalles(contrato.id_contrato)"
+          ></app-button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      class="mt-20"
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>

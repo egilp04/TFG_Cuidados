@@ -1,12 +1,67 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+} from '@angular/core';
+import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
+import {
+  LucideAngularModule,
+  Mail,
+  Bell,
+  User,
+  Search,
+  ChevronDown,
+  Eye,
+  EyeOff,
+  Menu,
+} from 'lucide-angular';
+import { LOCALE_ID } from '@angular/core';
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
 import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import {
+  HttpClient,
+  provideHttpClient,
+  withInterceptorsFromDi,
+  withFetch,
+} from '@angular/common/http';
+import { CustomTranslateLoader } from './core/i18n/customTranslaterLoader';
+
+registerLocaleData(localeEs);
+
+export function createTranslateLoader(http: HttpClient) {
+  return new CustomTranslateLoader(http);
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes), provideClientHydration(withEventReplay())
-  ]
+    { provide: LOCALE_ID, useValue: 'es-ES' },
+    provideZonelessChangeDetection(),
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled',
+      }),
+      withRouterConfig({
+        onSameUrlNavigation: 'reload',
+      }),
+    ),
+    importProvidersFrom(
+      LucideAngularModule.pick({ Mail, Bell, User, Search, ChevronDown, Eye, EyeOff, Menu }),
+    ),
+    importProvidersFrom(
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: createTranslateLoader,
+          deps: [HttpClient],
+        },
+      }),
+    ),
+  ],
 };

@@ -1,0 +1,151 @@
+<div class="flex flex-col justify-center items-center w-full p-20">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-8 w-full">
+    @if (userRole != 'empresa') {
+      <app-inputs
+        name="usuario"
+        [label]="'MODIFY_PROFILE.LABELS.USERNAME' | translate"
+        [control]="getCtrl('usuario')"
+        [errorMessage]="getErrorMessage('usuario')"
+      ></app-inputs>
+    }
+    @if (userRole === 'cliente') {
+      <div class="flex flex-col gap-6">
+        <div class="flex flex-row gap-6">
+          <app-inputs
+            name="primerApe"
+            [label]="'MODIFY_PROFILE.LABELS.SURNAME1' | translate"
+            [control]="getCtrl('primerApe')"
+            [errorMessage]="getErrorMessage('primerApe')"
+            class="flex-1"
+          ></app-inputs>
+
+          <app-inputs
+            name="segundoApe"
+            [label]="'MODIFY_PROFILE.LABELS.SURNAME2' | translate"
+            [control]="getCtrl('segundoApe')"
+            [errorMessage]="getErrorMessage('segundoApe')"
+            class="flex-1"
+          ></app-inputs>
+        </div>
+      </div>
+    } @else if (userRole === 'empresa') {
+      <div class="flex flex-col gap-6">
+        <app-inputs
+          name="nombreEmpresa"
+          [label]="'MODIFY_PROFILE.LABELS.COMPANY_NAME' | translate"
+          [control]="getCtrl('nombreEmpresa')"
+          [errorMessage]="getErrorMessage('nombreEmpresa')"
+        ></app-inputs>
+        <div class="flex flex-col gap-2 w-full">
+          <label for="descripcion" class="text-label text-primary font-medium">
+            {{ 'MODIFY_PROFILE.LABELS.DESCRIPTION' | translate }}
+          </label>
+          <textarea
+            id="descripcion"
+            formControlName="descripcion"
+            rows="4"
+            class="bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary border-2 rounded-12 font-poppins text-label outline-none focus:border-accent transition-all resize-none"
+            [placeholder]="'MODIFY_PROFILE.PLACEHOLDER.DESCRIPTION' | translate"
+          ></textarea>
+        </div>
+      </div>
+    }
+
+    <app-inputs
+      name="telefono"
+      [label]="'MODIFY_PROFILE.LABELS.PHONE' | translate"
+      [control]="getCtrl('telefono')"
+      [errorMessage]="getErrorMessage('telefono')"
+    ></app-inputs>
+
+    <app-inputs
+      name="email"
+      [label]="'MODIFY_PROFILE.LABELS.EMAIL' | translate"
+      type="email"
+      [control]="getCtrl('email')"
+      [errorMessage]="getErrorMessage('email')"
+    ></app-inputs>
+
+    @if (userRole != 'administrador') {
+      <app-inputs
+        name="direccion"
+        [label]="'MODIFY_PROFILE.LABELS.ADDRESS' | translate"
+        [control]="getCtrl('direccion')"
+        [errorMessage]="getErrorMessage('direccion')"
+      ></app-inputs>
+
+      <app-inputs
+        name="localidad"
+        [label]="'MODIFY_PROFILE.LABELS.CITY' | translate"
+        [control]="getCtrl('localidad')"
+        [errorMessage]="getErrorMessage('localidad')"
+      ></app-inputs>
+
+      <div class="flex flex-row gap-6">
+        <app-inputs
+          name="codpostal"
+          [label]="'MODIFY_PROFILE.LABELS.ZIP' | translate"
+          [control]="getCtrl('codpostal')"
+          [errorMessage]="getErrorMessage('codpostal')"
+          class="flex-1"
+        ></app-inputs>
+        <div class="flex flex-col gap-2 w-full flex-1">
+          <label for="comunidad" class="text-label text-primary font-medium">
+            {{ 'REGISTER.LABELS.REGION' | translate }}
+          </label>
+
+          <div class="relative w-full">
+            <select
+              id="comunidad"
+              formControlName="comunidad"
+              class="appearance-none bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer"
+            >
+              <option [ngValue]="null" disabled selected class="text-gray-400">
+                {{ 'REGISTER.PLACEHOLDER.SELECTREGION' | translate }}
+              </option>
+
+              @for (comunidad of comunidades; track $index) {
+                <option [value]="comunidad">{{ comunidad }}</option>
+              }
+            </select>
+            <div
+              class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary flex items-center"
+            >
+              <lucide-icon name="chevron-down" class="w-5 h-5"></lucide-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+    <div class="flex flex-col gap-4 mt-10 w-full items-center">
+      <div class="flex flex-row gap-4 w-full justify-center">
+        <app-button
+          [label]="'MODIFY_PROFILE.BTN.CANCEL' | translate"
+          variant="secondary"
+          type="button"
+          (click)="onCancel()"
+        >
+        </app-button>
+
+        <app-button
+          [label]="'MODIFY_PROFILE.BTN.MODIFY' | translate"
+          variant="primary"
+          type="submit"
+          [disabled]="profileForm.invalid"
+        >
+        </app-button>
+      </div>
+
+      @if (!isAdminViewer) {
+        <div class="mt-8 pt-8 border-t border-gray-200 w-full flex justify-center">
+          <app-button
+            [label]="'MODIFY_PROFILE.BTN.UNSUBSCRIBE' | translate"
+            variant="secondary"
+            (click)="$event.preventDefault(); onDeleteAccount()"
+          >
+          </app-button>
+        </div>
+      }
+    </div>
+  </form>
+</div>

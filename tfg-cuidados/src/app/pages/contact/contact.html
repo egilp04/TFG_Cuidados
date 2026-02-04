@@ -1,0 +1,98 @@
+<div class="w-full mb-4">
+  <app-buttonback></app-buttonback>
+</div>
+
+<div class="flex flex-col items-center p-6 bg-surface">
+  @if (this.messageService.messageData(); as data) {
+  <div
+    [ngClass]="{
+      'text-red-500': data.tipo === 'error',
+      'text-primary': data.tipo === 'exito'
+    }"
+    class="text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm"
+  >
+    {{ data.mensaje }}
+  </div>
+  }
+</div>
+
+<div
+  class="flex flex-col w-full justify-center items-center mt-20 xl:gap-20 xl:mb-[3rem] xl:px-[2rem] lg:mb-[4rem] 2xl:mb-14"
+>
+  <h1 class="text-h1 text-primary m-20 2xl:mt-120">
+    {{ 'CONTACT.TITLE' | translate }}
+  </h1>
+
+  <form
+    [formGroup]="contactForm"
+    (ngSubmit)="onContactar()"
+    class="w-full flex flex-col items-center gap-20 px-80 lg:gap-[3rem]"
+  >
+    <div class="w-full flex flex-col">
+      <app-inputs
+        name="username"
+        [label]="'CONTACT.FORM.NAME' | translate"
+        [control]="getCtrl('username')"
+        class="w-full"
+      ></app-inputs>
+
+      @if (getCtrl('username').invalid && getCtrl('username').touched) {
+      <span class="text-label text-red-500 ml-2">
+        {{ 'CONTACT.ERRORS.NAME' | translate }}
+      </span>
+      }
+    </div>
+
+    <div class="w-full flex flex-col gap-1">
+      <app-inputs
+        name="email"
+        [label]="'CONTACT.FORM.EMAIL' | translate"
+        [control]="getCtrl('email')"
+        class="w-full"
+      ></app-inputs>
+
+      @if (getCtrl('email').invalid && getCtrl('email').touched) {
+      <span class="text-label text-red-500 ml-2">
+        {{ 'CONTACT.ERRORS.EMAIL' | translate }}
+      </span>
+      }
+    </div>
+
+    <div class="w-full flex flex-col gap-1">
+      <app-inputs
+        name="subject"
+        [label]="'CONTACT.FORM.SUBJECT' | translate"
+        [control]="getCtrl('subject')"
+        class="w-full"
+      ></app-inputs>
+
+      @if (getCtrl('subject').invalid && getCtrl('subject').touched) {
+      <span class="text-label text-red-500 ml-2">
+        {{ 'CONTACT.ERRORS.SUBJECT' | translate }}
+      </span>
+      }
+    </div>
+
+    <div class="w-full flex flex-col gap-1">
+      <app-inputs
+        name="message"
+        [label]="'CONTACT.FORM.MESSAGE' | translate"
+        [control]="getCtrl('message')"
+        class="w-full"
+      ></app-inputs>
+
+      @if (getCtrl('message').invalid && getCtrl('message').touched) {
+      <span class="text-label text-red-500 ml-2">
+        {{ 'CONTACT.ERRORS.MESSAGE' | translate }}
+      </span>
+      }
+    </div>
+
+    <app-button
+      [label]="'CONTACT.FORM.SEND' | translate"
+      variant="primary"
+      type="submit"
+      class="mt-6 w-22 h-[2.5rem] md:w-48 md:h-11 lg:w-52 lg:h-[3rem] xl:w-2xl xl:h-[4rem] 2xl:h-80"
+    ></app-button>
+  </form>
+</div>

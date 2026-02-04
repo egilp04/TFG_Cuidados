@@ -1,0 +1,136 @@
+<div class="flex flex-col gap-8 p-6 bg-surface w-full">
+  <div class="bg-surface rounded-12 p-8 border border-nav-border 2xl:h-400">
+    <div class="flex justify-between items-center mb-8 p-10">
+      <h2 class="text-h2 text-primary capitalize">
+        {{ displayDate | date: 'MMMM yyyy' }}
+      </h2>
+      <div class="flex gap-2">
+        <div class="flex gap-2">
+          <button
+            (click)="cambiarMes(-1)"
+            class="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 text-label"
+          >
+            ‹
+          </button>
+          <button
+            (click)="cambiarMes(1)"
+            class="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 text-label"
+          >
+            ›
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-7 mb-4">
+      @for (wd of weekDays; track wd) {
+        <span class="text-center text-label font-semibold text-gray-400 uppercase tracking-widest">
+          {{ 'ACTIVITIES.DAYS.' + wd | translate }}
+        </span>
+      }
+    </div>
+
+    <div class="grid grid-cols-7">
+      @for (dia of monthDays; track $index) {
+        <div class="relative group flex justify-center items-center w-full h-full">
+          @if (dia) {
+            @let eventos = getEventosDia(dia);
+            <span
+              (click)="manejarClickDia(dia, eventos)"
+              [ngClass]="{
+                'bg-primary text-surface cursor-pointer': eventos.length > 0,
+                'text-primary bg-surface ': eventos.length === 0,
+              }"
+              class="w-20 h-20 2xl:w-[3rem] 2xl:h-[3rem] text-label flex items-center justify-center text-sm font-bold transition-all duration-300"
+            >
+              {{ dia }}
+            </span>
+
+            @if (eventos.length > 0 && selectedDia === dia) {
+              <div
+                class="absolute overflow-y-auto max-h-32 bottom-full z-50 w-56 bg-secondary text-white text-[11px] p-3 shadow-2xl animate-tooltip"
+              >
+                @for (ev of eventos; track ev.id_contrato) {
+                  <div class="py-1 flex flex-col gap-0.5">
+                    <span class="text-surface">{{ ev.nombreServicio }}</span>
+                    <span class="text-surface"
+                      >{{ ev.hora_contratada }} - {{ ev.dia_semana_contratado }}</span
+                    >
+                    <span class="text-white">📍{{ ev.lugar }}</span>
+                  </div>
+                }
+                <div
+                  class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-primary"
+                ></div>
+              </div>
+            }
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="bg-surfaceshadow-soft overflow-auto mt-10">
+    <table mat-table [dataSource]="dataSourceTable" class="w-full">
+      <ng-container matColumnDef="usuario">
+        <th mat-header-cell *matHeaderCellDef class="text-primary text-label">
+          {{ headerContrato() | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="text-secondary text-label">
+          {{ element.nombreAMostrar }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef class="text-primary text-label">
+          {{ 'ACTIVITIES.TABLE.NAME' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="text-secondary text-label">
+          {{ element.nombreServicio }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dia">
+        <th mat-header-cell *matHeaderCellDef class="text-primary text-label">
+          {{ 'ACTIVITIES.TABLE.DAY' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="text-secondary text-label">
+          {{ element.dia_semana_contratado }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="hora">
+        <th mat-header-cell *matHeaderCellDef class="text-primary text-label">
+          {{ 'ACTIVITIES.TABLE.TIME' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="text-secondary text-label">
+          {{ element.hora_contratada }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lugar">
+        <th mat-header-cell *matHeaderCellDef class="text-primary text-label">
+          {{ 'ACTIVITIES.TABLE.LOCATION' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="text-secondary text-label">
+          {{ element.lugar }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <app-button
+            [label]="'ACTIVITIES.BTN_CANCEL' | translate"
+            variant="secondary"
+            (onClick)="onCancel(element.id_contrato)"
+          ></app-button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons class="mt-20"></mat-paginator>
+</div>

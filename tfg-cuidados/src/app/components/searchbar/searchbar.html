@@ -1,0 +1,17 @@
+<div
+  class="relative w-full group border-2 border-primary disabled:border-disabled hover:border-accent focus:border-accent rounded-12"
+>
+  <div class="absolute inset-y-0 right-0 flex items-center pl-4 pointer-events-none px-10">
+    <lucide-icon
+      [name]="'search'"
+      class="text-h2 text-primary disabled:text-disabled hover:text-accent focus:text-accent cursor-pointer"
+    ></lucide-icon>
+  </div>
+  <input
+    type="text"
+    [formControl]="control"
+    (input)="onInput($event)"
+    placeholder="{{ 'SEARCH_PLACEHOLDER' | translate }}"
+    class="flex p-8 md:p-10 lg:p-15 outline-none transition-all w-[90%] bg-transparent text-label"
+  />
+</div>

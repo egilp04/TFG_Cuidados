@@ -1,0 +1,185 @@
+<div class="flex flex-col justify-center items-center w-full p-20">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-8 w-full">
+    @if (isUser) {
+    <app-inputs
+      name="nombre"
+      [label]="'REGISTER.LABELS.USERNAME' | translate"
+      [control]="getCtrl('nombre')"
+      [errorMessage]="getErrorMessage('nombre')"
+    ></app-inputs>
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-row gap-6">
+        <app-inputs
+          name="ape1"
+          [label]="'REGISTER.LABELS.SURNAME1' | translate"
+          [control]="getCtrl('ape1')"
+          [errorMessage]="getErrorMessage('ape1')"
+          class="flex-1"
+        ></app-inputs>
+
+        <app-inputs
+          name="ape2"
+          [label]="'REGISTER.LABELS.SURNAME2' | translate"
+          [control]="getCtrl('ape2')"
+          [errorMessage]="getErrorMessage('ape2')"
+          class="flex-1"
+        ></app-inputs>
+      </div>
+      <div class="flex flex-row gap-6">
+        <app-inputs
+          name="fechnac"
+          [label]="'REGISTER.LABELS.BIRTHDATE' | translate"
+          type="date"
+          [control]="getCtrl('fechnac')"
+          [errorMessage]="getErrorMessage('fechnac')"
+          class="flex-1"
+        ></app-inputs>
+        <app-inputs
+          name="dni"
+          [label]="'REGISTER.LABELS.DNI' | translate"
+          [control]="getCtrl('dni')"
+          [errorMessage]="getErrorMessage('dni')"
+          class="flex-1"
+        ></app-inputs>
+      </div>
+    </div>
+    } @else {
+    <div class="flex flex-col gap-6">
+      <app-inputs
+        name="nombreEmpresa"
+        [label]="'REGISTER.LABELS.COMPANY_NAME' | translate"
+        [control]="getCtrl('nombreEmpresa')"
+        [errorMessage]="getErrorMessage('nombreEmpresa')"
+      ></app-inputs>
+      <app-inputs
+        name="cif"
+        [label]="'REGISTER.LABELS.CIF' | translate"
+        [control]="getCtrl('cif')"
+        [errorMessage]="getErrorMessage('cif')"
+      ></app-inputs>
+      <app-inputs
+        name="descripcion"
+        [label]="'REGISTER.LABELS.DESCRIPTION' | translate"
+        type="textarea"
+        [control]="getCtrl('descripcion')"
+        [errorMessage]="getErrorMessage('descripcion')"
+      ></app-inputs>
+    </div>
+    }
+
+    <app-inputs
+      name="telef"
+      [label]="'REGISTER.LABELS.PHONE' | translate"
+      [control]="getCtrl('telef')"
+      [errorMessage]="getErrorMessage('telef')"
+    ></app-inputs>
+
+    <app-inputs
+      name="email"
+      [label]="'REGISTER.LABELS.EMAIL' | translate"
+      type="email"
+      [control]="getCtrl('email')"
+      [errorMessage]="getErrorMessage('email')"
+    ></app-inputs>
+    <app-inputs
+      name="direccion"
+      [label]="'REGISTER.LABELS.ADDRESS' | translate"
+      [control]="getCtrl('direccion')"
+      [errorMessage]="getErrorMessage('direccion')"
+    ></app-inputs>
+
+    <app-inputs
+      name="localidad"
+      [label]="'REGISTER.LABELS.CITY' | translate"
+      [control]="getCtrl('localidad')"
+      [errorMessage]="getErrorMessage('localidad')"
+    ></app-inputs>
+
+    <div class="flex flex-row gap-6">
+      <app-inputs
+        name="codpostal"
+        [label]="'REGISTER.LABELS.ZIP' | translate"
+        [control]="getCtrl('codpostal')"
+        [errorMessage]="getErrorMessage('codpostal')"
+        class="flex-1"
+      ></app-inputs>
+
+      <div class="flex flex-col gap-2 w-full flex-1">
+        <label for="comunidad" class="text-label text-primary font-medium">
+          {{ 'REGISTER.LABELS.REGION' | translate }}
+        </label>
+
+        <div class="relative w-full">
+          <select
+            id="comunidad"
+            formControlName="comunidad"
+            class="appearance-none bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer"
+          >
+            <option [ngValue]="null" disabled selected class="text-gray-400">
+              {{ 'REGISTER.PLACEHOLDER.SELECTREGION' | translate }}
+            </option>
+
+            @for (comunidad of comunidades; track $index) {
+            <option [value]="comunidad">{{ comunidad }}</option>
+            }
+          </select>
+          <div
+            class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary flex items-center"
+          >
+            <lucide-icon name="chevron-down" class="w-5 h-5"></lucide-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-row gap-6">
+      <app-inputs
+        name="password"
+        [label]="'REGISTER.LABELS.PASSWORD' | translate"
+        type="password"
+        [control]="getCtrl('password')"
+        [errorMessage]="getErrorMessage('password')"
+        class="flex-1"
+      ></app-inputs>
+
+      <app-inputs
+        name="repassword"
+        [label]="'REGISTER.LABELS.REPASSWORD' | translate"
+        type="password"
+        [control]="getCtrl('repassword')"
+        [errorMessage]="getErrorMessage('repassword')"
+        class="flex-1"
+      ></app-inputs>
+    </div>
+
+    <div class="flex gap-10 p-6">
+      <input
+        type="checkbox"
+        name="termsCondition"
+        formControlName="termsCondition"
+        class="w-5 h-5 cursor-pointer"
+        id="terms"
+      />
+      <label for="termsCondition" class="text-primary text-label">
+        {{ 'REGISTER.TERMS.PART_1' | translate }}
+        <a
+          routerLink="/terms"
+          target="_blank"
+          class="text-accent text-label cursor-pointer hover:underline"
+        >
+          {{ 'REGISTER.TERMS.LINK' | translate }}
+        </a>
+        {{ 'REGISTER.TERMS.PART_2' | translate }}
+      </label>
+    </div>
+
+    @if (getErrorMessage('termsCondition')) {
+    <p class="text-red-500 text-xs mt-1">
+      {{ 'REGISTER.TERMS.ERROR' | translate }}
+    </p>
+    }
+    <div class="flex w-full justify-center items-center m-20">
+      <app-button [label]="'REGISTER.BTN' | translate" variant="primary" type="submit"></app-button>
+    </div>
+  </form>
+</div>

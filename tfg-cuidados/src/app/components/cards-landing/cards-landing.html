@@ -1,0 +1,21 @@
+<div
+  class="animate-cards h-auto bg-surface border border-nav-border flex flex-col items-center text-center hover:shadow-soft transition-all duration-300"
+>
+  <div class="w-full shrink-0 overflow-hidden">
+    <img
+      [src]="imagen()"
+      [alt]="titulo() | translate"
+      class="w-full h-full aspect-video object-cover"
+    />
+  </div>
+  <div [class]="cardClasses()">
+    <h2 class="font-fraunces text-h2 text-primary mb-10">{{ titulo() | translate }}</h2>
+
+    @if (cargo()) {
+    <label class="text-secondary font-semibold uppercase text-label">
+      {{ cargo() | translate }}
+    </label>
+    }
+    <p class="text-p text-secondary overflow-auto">{{ descripcion() | translate }}</p>
+  </div>
+</div>

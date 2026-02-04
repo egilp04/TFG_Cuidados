@@ -1,0 +1,90 @@
+<div
+  class="p-6 md:p-12 xl:p-[14px] flex flex-col w-full justify-center items-center gap-6 bg-white rounded-2xl"
+>
+  <div class="w-full flex justify-end px-4 py-10 s">
+    <img
+      mat-dialog-close
+      class="cursor-pointer h-8 w-8 md:h-10 md:w-10 lg:h-[12px] lg:w-[12px] xl:h-[14px] xl:w-[14px]"
+      src="assets/icons/cerrar.webp"
+      alt="Cerrar"
+    />
+  </div>
+
+  @if (this.messageService.messageData(); as data) {
+  <div
+    [ngClass]="{
+      'text-red-500': data.tipo === 'error',
+      'text-primary': data.tipo === 'exito'
+    }"
+    class="text-label ml-2 transition-all duration-300"
+  >
+    {{ data.mensaje }}
+  </div>
+  }
+
+  <div class="w-full flex flex-col gap-4">
+    @if(data.modo == "escribir") {
+    <app-inputs
+      name="receptor"
+      [label]="'MESSAGES_MODAL.LABELS.TO' | translate"
+      [control]="getCtrl('receptor')"
+      type="text"
+    >
+    </app-inputs>
+    <app-inputs
+      name="asunto"
+      [label]="'MESSAGES_MODAL.LABELS.SUBJECT' | translate"
+      [control]="getCtrl('asunto')"
+      type="text"
+    >
+    </app-inputs>
+    } @else {
+    <app-inputs
+      name="emisor"
+      [label]="'MESSAGES_MODAL.LABELS.SENDER' | translate"
+      [control]="getCtrl('emisor')"
+      type="text"
+    >
+    </app-inputs>
+    <app-inputs
+      name="receptor"
+      [label]="'MESSAGES_MODAL.LABELS.RECEIVER' | translate"
+      [control]="getCtrl('receptor')"
+      type="text"
+    >
+    </app-inputs>
+    <app-inputs
+      name="asunto"
+      [label]="'MESSAGES_MODAL.LABELS.SUBJECT' | translate"
+      [control]="getCtrl('asunto')"
+      type="text"
+    >
+    </app-inputs>
+    }
+
+    <div class="flex flex-col border-2 border-accent rounded-2xl p-4">
+      <label class="text-center text-primary font-bold mb-2 uppercase text-sm">
+        {{ 'MESSAGES_MODAL.LABELS.MESSAGE_CONTENT' | translate }}
+      </label>
+      <textarea
+        [formControl]="getCtrl('contenido')"
+        class="w-full min-h-120 outline-none resize-none text-primary"
+        [placeholder]="'MESSAGES_MODAL.PLACEHOLDERS.WRITE_HERE' | translate"
+      >
+      </textarea>
+    </div>
+
+    @if(data.modo == "escribir") {
+    <div class="flex justify-center mt-4">
+      <app-button
+        [label]="'MESSAGES_MODAL.BTN.SEND' | translate"
+        variant="primary"
+        size="lg"
+        [disabled]="this.mensajeForm.invalid"
+        (onClick)="enviarMensaje()"
+      >
+      </app-button>
+    </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="flex flex-col justify-center items-center w-full">
+  <section
+    class="relative w-full h-300 md:h-[50svh] 2xl:h-[600px] overflow-hidden flex items-end justify-center pb-12 md:pb-20"
+  >
+    <picture>
+      <source srcset="assets/img/hero/hero-2xl-laptop.webp" media="(min-width: 2561px)" />
+      <source srcset="assets/img/hero/hero-xl-laptop.webp" media="(min-width: 1921px)" />
+      <source srcset="assets/img/hero/hero-laptop.webp" media="(min-width: 1025px)" />
+      <source srcset="assets/img/hero/hero-tablet.webp" media="(min-width: 641px)" />
+      <img
+        src="assets/img/hero/hero-mobile.webp"
+        [alt]="'LANDING.HERO.ALT' | translate"
+        class="absolute inset-0 w-full h-full object-cover -z-10"
+      />
+    </picture>
+    <div class="text-center animate-text">
+      <h2 class="text-h2 text-primary">
+        {{ 'LANDING.HERO.TITLE' | translate }}<br />
+        <span class="italic">{{ 'LANDING.HERO.SUBTITLE' | translate }}</span>
+      </h2>
+    </div>
+  </section>
+
+  <section class="w-full overflow-hidden flex flex-col items-center justify-center bg-surface">
+    <h2 class="text-center text-h1 text-primary m-20 lg:m-[2rem] 2xl:m-[2.5rem] uppercase">
+      {{ 'LANDING.SERVICES' | translate }}
+    </h2>
+
+    <div
+      class="h-full px-4 grid grid-cols-1 grid-rows-3 gap-10 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col lg:grid-cols-3 lg:grid-rows-1"
+    >
+      @for (item of cardsdata; track item.titulo; let i = $index) {
+        <app-cards-landing
+          [titulo]="item.titulo"
+          [descripcion]="item.descripcion"
+          [imagen]="item.imagen"
+          [class]="i === 2 ? 'md:row-span-2 md:self-center lg:row-span-1 lg:self-auto' : ''"
+        >
+        </app-cards-landing>
+      }
+    </div>
+
+    <div class="flex justify-center m-20 2xl:m-80">
+      <app-button
+        [label]="'LANDING.REGISTER' | translate"
+        variant="primary"
+        (onClick)="abrirModal()"
+        class="w-40 h-[3rem] 2xl:w-2xl 2xl:h-40 lg:w-52 lg:h-80"
+      ></app-button>
+    </div>
+  </section>
+</div>
