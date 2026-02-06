@@ -1,18 +1,31 @@
 <div class="flex flex-col items-start text-left w-full gap-2">
   <label class="text-primary text-label font-poppins ml-1" [for]="name()"> {{ label() }} </label>
   <div class="relative w-full">
-    <input
-      [id]="name()"
-      class="w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent"
-      [placeholder]="label()"
-      [formControl]="control()"
-      [type]="inputType()"
-      [class.border-primary]="!errorMessage()"
-      [class.border-red]="errorMessage()"
-      [attr.aria-invalid]="errorMessage() ? true : null"
-      [attr.aria-describedby]="errorMessage() ? label() + '-error' : null"
-      autocomplete=""
-    />
+    @if (type() === 'textarea') {
+      <textarea
+        [id]="name()"
+        class="w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent h-120 xl:h-150 resize-none"
+        [placeholder]="label()"
+        [formControl]="control()"
+        [class.border-primary]="!errorMessage()"
+        [class.border-red]="errorMessage()"
+        [attr.aria-invalid]="errorMessage() ? true : null"
+        [attr.aria-describedby]="errorMessage() ? label() + '-error' : null"
+      ></textarea>
+    } @else {
+      <input
+        [id]="name()"
+        class="w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent"
+        [placeholder]="label()"
+        [formControl]="control()"
+        [type]="inputType()"
+        [class.border-primary]="!errorMessage()"
+        [class.border-red]="errorMessage()"
+        [attr.aria-invalid]="errorMessage() ? true : null"
+        [attr.aria-describedby]="errorMessage() ? label() + '-error' : null"
+        autocomplete=""
+      />
+    }
 
     @if (type() === 'password') {
       <button
