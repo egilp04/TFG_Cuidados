@@ -24,6 +24,7 @@ La aplicación se encuentra desplegada en **Vercel**.
 🔗 **Accede a la versión en producción:**
 [![Desplegado en Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://tfg-cuidados.vercel.app/)
 > Sitio web intermodular para la contratación y gestión de servicios de cuidados especializados.
+**IMPORTANTE**: tener el navegador al 100% y la configuración de la pantalla al **100%**, suelen venir al **125%**.
 
 ![Landing page de cuidaDos](./carpeta_imgs/landing.png)
 
