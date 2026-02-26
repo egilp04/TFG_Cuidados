@@ -38,7 +38,6 @@ export const routes: Routes = [
   { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
   { path: 'admin-services', component: Servicesbusiness, canActivate: [authGuard] },
   { path: 'terms', component: Terms },
-
   {
     path: 'recover-password',
     loadComponent: () =>
