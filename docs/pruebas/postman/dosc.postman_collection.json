@@ -1,0 +1,3770 @@
+{
+	"info": {
+		"_postman_id": "98c7ffdf-8830-4efc-9942-6f2b1b336698",
+		"name": "TFG CuidaDos - Validación de Roles",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46126713",
+		"_collection_link": "https://eve-5102376.postman.co/workspace/Eve's-Workspace~b967f067-b908-4a29-840a-be5cb23ee35a/collection/46126713-98c7ffdf-8830-4efc-9942-6f2b1b336698?action=share&source=collection_link&creator=46126713"
+	},
+	"item": [
+		{
+			"name": "Administrador",
+			"item": [
+				{
+					"name": "gestion servicios",
+					"item": [
+						{
+							"name": "crear servicio",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Servicio creado correctamente (201)\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"var data = pm.response.json();\r",
+											"if (data.length > 0 && data[0].id_servicio) {\r",
+											"    pm.environment.set(\"temp_id_servicio\", data[0].id_servicio); \r",
+											"    console.log(\"ID guardado para borrar luego: \" + data[0].id_servicio);\r",
+											"} else {\r",
+											"    console.error(\"No se ha devuelto el ID. Revisa el header Prefer: return=representation\");\r",
+											"}\r",
+											"pm.test(\"El servicio pertenece a este Admin\", function () {\r",
+											"    pm.expect(data[0].id_admin).to.eql(pm.environment.get(\"my_id\"));\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									},
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Enfermería Nocturna\",\r\n  \"tipo_servicio\": \"Salud\",\r\n  \"id_admin\": \"{{my_id}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Servicio",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Servicio"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "actualizar servicio",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Actualización correcta (200)\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var data = pm.response.json();\r",
+											"pm.test(\"El nombre ha cambiado\", function () {\r",
+											"    pm.expect(data[0].nombre).to.eql(\"Servicio EDITADO por Test\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Servicio EDITADO por Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Servicio?id_servicio=eq.{{temp_id_servicio}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Servicio"
+									],
+									"query": [
+										{
+											"key": "id_servicio",
+											"value": "eq.{{temp_id_servicio}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "leer servicio",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Lectura correcta (200)\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Servicio?select=*",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Servicio"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "*"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "borrar servicio",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Borrado correcto (204 o 200)\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([204, 200]);\r",
+											"});\r",
+											"pm.environment.unset(\"temp_id_servicio\");"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Servicio?id_servicio=eq.{{temp_id_servicio}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Servicio"
+									],
+									"query": [
+										{
+											"key": "id_servicio",
+											"value": "eq.{{temp_id_servicio}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "gestion horarios",
+					"item": [
+						{
+							"name": "crear horario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Horario creado (201 Created)\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"var data = pm.response.json();\r",
+											"if (data.length > 0 && data[0].id_horario) {\r",
+											"    pm.environment.set(\"temp_id_horario\", data[0].id_horario);\r",
+											"    console.log(\"✅ ID Horario guardado: \" + data[0].id_horario);\r",
+											"} else {\r",
+											"    console.error(\"❌ No se recibió ID. Revisa el header 'Prefer: return=representation'\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"dia_semana\": \"Lunes\",\r\n  \"hora\": \"09:00:00\",\r\n  \"id_admin\": \"{{my_id}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Horario",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Horario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "actualizar horario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Actualización correcta (200 OK)\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var data = pm.response.json();\r",
+											"pm.test(\"La hora se ha actualizado\", function () {\r",
+											"    if(data.length > 0) {\r",
+											"         pm.expect(data[0].hora).to.contain(\"10:30\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"hora\": \"10:30:00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Horario?id_horario=eq.{{temp_id_horario}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Horario"
+									],
+									"query": [
+										{
+											"key": "id_horario",
+											"value": "eq.{{temp_id_horario}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "leer horario",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "borrar horario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Borrado correcto (204 o 200)\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([204, 200]);\r",
+											"});\r",
+											"pm.environment.unset(\"temp_id_horario\");\r",
+											"console.log(\"🧹 Variable temporal eliminada\");"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Horario?id_horario=eq.{{temp_id_horario}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Horario"
+									],
+									"query": [
+										{
+											"key": "id_horario",
+											"value": "eq.{{temp_id_horario}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "gestion clientes",
+					"item": [
+						{
+							"name": "crear cliente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Usuario creado por Admin (200 OK)\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var data = pm.response.json();\r",
+											"var userId = data.id || (data.user && data.user.id);\r",
+											"if (userId) {\r",
+											"    console.log(\"Cliente Creado ID: \" + userId);\r",
+											"        pm.environment.set(\"temp_id_cliente\", userId); \r",
+											"    \r",
+											"    console.log(\" Guardado en variable: temp_id_cliente\");\r",
+											"} else {\r",
+											"    console.error(\"No se encontró el ID en la respuesta\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{SERVICE_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{SERVICE_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"cliente@test.com\",\r\n  \"password\": \"1234TeddY24.\",\r\n  \"email_confirm\": true,\r\n  \"user_metadata\": {\r\n    \"nombre\": \"Carlos\",\r\n    \"telef\": \"600999888\",\r\n    \"ape1\": \"Sánchez\",\r\n    \"ape2\": \"López\",\r\n    \"dni\": \"87654321X\",\r\n    \"fechnac\": \"1985-10-10\",\r\n    \"direccion\": \"Avenida Admin 45\",\r\n    \"localidad\": \"Valencia\",\r\n    \"codpostal\": \"46001\",\r\n    \"comunidad\": \"Comunidad Valenciana\",\r\n    \"rol\": \"cliente\"\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/auth/v1/admin/users",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"auth",
+										"v1",
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "actualizar cliente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Cliente actualizado (200 OK)\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var data = pm.response.json();\r",
+											"pm.test(\"La dirección ha cambiado\", function () {\r",
+											"    if(data.length > 0) {\r",
+											"        pm.expect(data[0].direccion).to.contain(\"Prueba Postman\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"direccion\": \"Calle de Prueba Postman 123\",\r\n  \"localidad\": \"Madrid\",\r\n  \"codpostal\": \"28001\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Cliente?id_cliente=eq.{{temp_id_cliente}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Cliente"
+									],
+									"query": [
+										{
+											"key": "id_cliente",
+											"value": "eq.{{temp_id_cliente}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "leer cliente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Lectura de Clientes OK (200)\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var data = pm.response.json();\r",
+											"if (data.length > 0) {\r",
+											"    console.log(\"Hay clientes\");\r",
+											"    pm.collectionVariables.set(\"id_a_borrar\", data[0].id_cliente);\r",
+											"} else {\r",
+											"    console.warn(\"No hay clientes en la base de datos para probar.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Cliente?select=*,Usuario(*)",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Cliente"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "*,Usuario(*)"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "borrar cliente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: El Admin ha ejecutado el borrado total\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Integridad: Sin errores de PostgreSQL\", function () {\r",
+											"    if (pm.response.text()) {\r",
+											"        try {\r",
+											"            const response = pm.response.json();\r",
+											"            pm.expect(response).to.not.have.property('code');\r",
+											"        } catch (e) {\r",
+											"            pm.expect(pm.response.code).to.equal(204);\r",
+											"        }\r",
+											"    }\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Limpieza: Variable de usuario borrado eliminada\", function () {\r",
+											"    pm.environment.unset(\"id_a_borrar\");\r",
+											"    pm.collectionVariables.unset(\"id_a_borrar\");\r",
+											"    console.log(\"🧹 Variable 'id_a_borrar' limpiada correctamente.\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{SERVICE_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{SERVICE_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_a_borrar\": \"{{id_a_borrar}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/rpc/eliminar_usuario_total",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"rpc",
+										"eliminar_usuario_total"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "gestion empresa",
+					"item": [
+						{
+							"name": "crear empresa",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Usuario creado por Admin (200 OK)\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var data = pm.response.json();\r",
+											"var userId = data.id || (data.user && data.user.id);\r",
+											"if (userId) {\r",
+											"    console.log(\"✅ Cliente Creado ID: \" + userId);\r",
+											"        pm.environment.set(\"temp_id_empresa\", userId); \r",
+											"    \r",
+											"    console.log(\" Guardado en variable: temp_id_cliente\");\r",
+											"} else {\r",
+											"    console.error(\"❌ No se encontró el ID en la respuesta\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{SERVICE_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{SERVICE_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"empresa.por.admin@test.com\",\r\n  \"password\": \"1234TeddY24.\",\r\n  \"email_confirm\": true,\r\n  \"user_metadata\": {\r\n    \"nombre\": \"Reformas Admin S.L.\",\r\n    \"cif\": \"B88888888\",\r\n    \"telef\": \"960000000\",\r\n    \"direccion\": \"Polígono Sur\",\r\n    \"localidad\": \"Sevilla\",\r\n    \"codpostal\": \"41001\",\r\n    \"comunidad\": \"Andalucía\",\r\n    \"descripcion\": \"Alta realizada por administración\",\r\n    \"rol\": \"empresa\"\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/auth/v1/admin/users",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"auth",
+										"v1",
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "actualizar empresa",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Empresa actualizada correctamente (200 OK)\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var data = pm.response.json();\r",
+											"pm.test(\"La descripción se ha actualizado\", function () {\r",
+											"    if (data.length > 0) {\r",
+											"        pm.expect(data[0].descripcion).to.contain(\"verificada\");\r",
+											"        pm.expect(data[0].localidad).to.eql(\"Barcelona\");\r",
+											"    } else {\r",
+											"        pm.expect.fail(\"No se devolvieron datos. Revisa el header 'Prefer: return=representation'\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"descripcion\": \"Empresa verificada y actualizada por Admin\",\r\n  \"direccion\": \"Nueva Dirección Corporativa 55\",\r\n  \"localidad\": \"Barcelona\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Empresa?id_empresa=eq.{{temp_id_empresa}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Empresa"
+									],
+									"query": [
+										{
+											"key": "id_empresa",
+											"value": "eq.{{temp_id_empresa}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "leer empresa",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Lectura de Clientes OK (200)\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var data = pm.response.json();\r",
+											"if (data.length > 0) {\r",
+											"    console.log(\"Hay empresas\");\r",
+											"    pm.collectionVariables.set(\"id_a_borrar\", data[0].id_cliente);\r",
+											"} else {\r",
+											"    console.warn(\"No hay empresas en la base de datos para probar.\");\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Empresa?select=*,Usuario(*)",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Empresa"
+									],
+									"query": [
+										{
+											"key": "select",
+											"value": "*,Usuario(*)"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "borrar empresa",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: El Admin ha ejecutado el borrado total\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Integridad: Sin errores de PostgreSQL\", function () {\r",
+											"    if (pm.response.text()) {\r",
+											"        try {\r",
+											"            const response = pm.response.json();\r",
+											"            pm.expect(response).to.not.have.property('code');\r",
+											"        } catch (e) {\r",
+											"            pm.expect(pm.response.code).to.equal(204);\r",
+											"        }\r",
+											"    }\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Limpieza: Variable de usuario borrado eliminada\", function () {\r",
+											"    pm.environment.unset(\"id_a_borrar\");\r",
+											"    pm.collectionVariables.unset(\"id_a_borrar\");\r",
+											"    console.log(\"🧹 Variable 'id_a_borrar' limpiada correctamente.\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{SERVICE_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{SERVICE_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_a_borrar\": \"{{id_a_borrar}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/rpc/eliminar_usuario_total",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"rpc",
+										"eliminar_usuario_total"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "gestionar mensajes",
+					"item": [
+						{
+							"name": "ver mis mensajes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Mensajes recibidos por Admin recuperados\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Seguridad: El id_receptor coincide con my_id\", function () {\r",
+											"    const adminId = pm.environment.get(\"my_id\");\r",
+											"    data.forEach(msg => {\r",
+											"        pm.expect(msg.id_receptor).to.eql(adminId);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Captura: ID guardado para marcar como leído\", function () {\r",
+											"    if (data.length > 0) {\r",
+											"        var idCapturado = data[0].id_comunicacion;\r",
+											"        pm.environment.set(\"id_mensaje_admin_receptor\", idCapturado);\r",
+											"        console.log(\"📌 ID capturado para el Admin: \" + idCapturado);\r",
+											"    } else {\r",
+											"        console.warn(\"🔔 No hay mensajes de chat recibidos para este Admin.\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion?id_receptor=eq.{{my_id}}&tipo_comunicacion=eq.mensaje&order=fecha_envio.desc",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id_receptor",
+											"value": "eq.{{my_id}}"
+										},
+										{
+											"key": "tipo_comunicacion",
+											"value": "eq.mensaje"
+										},
+										{
+											"key": "order",
+											"value": "fecha_envio.desc"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "crear mensaje",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Mensaje del Admin creado (201)\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 200]);\r",
+											"});\r",
+											"\r",
+											"var data = pm.response.json();\r",
+											"var mensaje = Array.isArray(data) ? data[0] : data;\r",
+											"\r",
+											"pm.test(\"Integridad: Emisor y Tipo correctos\", function () {\r",
+											"    pm.expect(mensaje.id_emisor).to.eql(pm.environment.get(\"my_id\"));\r",
+											"    pm.expect(mensaje.tipo_comunicacion).to.eql(\"chat\");\r",
+											"});\r",
+											"pm.test(\"Captura de ID: Mensaje registrado\", function () {\r",
+											"    pm.environment.set(\"id_mensaje_creado_admin\", mensaje.id_comunicacion);\r",
+											"    console.log(\"📌 Nuevo mensaje del Admin con ID: \" + mensaje.id_comunicacion);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_emisor\": \"{{my_id}}\",\r\n    \"id_receptor\": \"{{my_id}}\",\r\n    \"asunto\": \"Aviso del Administrador\",\r\n    \"contenido\": \"Hola, necesitamos que actualices la documentación de tu empresa.\",\r\n    \"tipo_comunicacion\": \"mensaje\",\r\n    \"leido\": false,\r\n    \"fecha_envio\": \"{{$isoTimestamp}}\", \r\n    \"eliminado_por_emisor\": false, \r\n    \"eliminado_por_receptor\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "eliminar mensaje",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Mensaje del Admin actualizado a 'leído'\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Limpieza: Variable de mensaje procesado eliminada\", function () {\r",
+											"    pm.environment.unset(\"id_mensaje_admin_receptor\");\r",
+											"    pm.expect(pm.environment.get(\"id_mensaje_admin_receptor\")).to.be.undefined;\r",
+											"    console.log(\"🧹 Variable id_mensaje_admin_receptor limpiada con éxito.\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Rendimiento: Respuesta en menos de 500ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"leido\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion?id_comunicacion=eq.{{id_mensaje_admin_receptor}}&id_receptor=eq.{{my_id}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id_comunicacion",
+											"value": "eq.{{id_mensaje_admin_receptor}}"
+										},
+										{
+											"key": "id_receptor",
+											"value": "eq.{{my_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "gestionar notificaciones",
+					"item": [
+						{
+							"name": "ver mis notificaciones",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Admin: Notificaciones recuperadas\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var data = pm.response.json();\r",
+											"pm.test(\"Captura de ID para el Admin\", function () {\r",
+											"    if (data.length > 0) {\r",
+											"        var idCapturado = data[0].id_comunicacion;\r",
+											"        pm.environment.set(\"id_notificacion_admin\", idCapturado);\r",
+											"        console.log(\"ID de Alerta Admin capturado: \" + idCapturado);\r",
+											"    } else {\r",
+											"        console.log(\"No hay alertas pendientes para el Administrador.\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion?id_receptor=eq.{{my_id}}&tipo_comunicacion=eq.notificacion&select=*",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id_receptor",
+											"value": "eq.{{my_id}}"
+										},
+										{
+											"key": "tipo_comunicacion",
+											"value": "eq.notificacion"
+										},
+										{
+											"key": "select",
+											"value": "*"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "actualizar a leido notifcaciones",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Admin: Alerta marcada como leída\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"    pm.environment.unset(\"id_notificacion_admin\");\r",
+											"    console.log(\"🧹 Variable id_notificacion_admin eliminada.\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_admin}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"leido\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion?id_comunicacion=eq.{{id_notificacion_admin}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id_comunicacion",
+											"value": "eq.{{id_notificacion_admin}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "login Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Login Admin Exitoso (200 OK)\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token guardado correctamente\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"        pm.expect(jsonData.access_token).to.exist;\r",
+									"        pm.environment.set(\"token_admin\", jsonData.access_token);\r",
+									"\r",
+									"        pm.environment.set(\"my_id\", jsonData.user.id);\r",
+									"        console.log(\"ID de usuario guardado: \" + jsonData.user.id);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin@test.com\",\r\n  \"password\": \"1234TeddY24.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_SUPABASE}}/auth/v1/token?grant_type=password&apikey={{ANON_KEY}}&Content-Type=application/json",
+							"host": [
+								"{{URL_SUPABASE}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"token"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "apikey",
+									"value": "{{ANON_KEY}}"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver dashboard",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Petición correcta (Status 200 o 206)\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 206]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Dashboard: Contador de usuarios recibidos\", function () {\r",
+									"    pm.expect(pm.response.headers.has(\"Content-Range\")).to.be.true;\r",
+									"    var headerValue = pm.response.headers.get(\"Content-Range\");\r",
+									"    var totalUsuarios = headerValue.split('/')[1];\r",
+									"    console.log(\"📊 TOTAL USUARIOS EN DASHBOARD: \" + totalUsuarios);\r",
+									"        pm.environment.set(\"dashboard_total_usuarios\", totalUsuarios);\r",
+									"        pm.expect(parseInt(totalUsuarios)).to.be.at.least(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apikey",
+								"value": "{{ANON_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_admin}}",
+								"type": "text"
+							},
+							{
+								"key": "Prefer",
+								"value": "count=exact",
+								"type": "text"
+							},
+							{
+								"key": "Range",
+								"value": "0-0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL_SUPABASE}}/rest/v1/Usuario?select=*",
+							"host": [
+								"{{URL_SUPABASE}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"Usuario"
+							],
+							"query": [
+								{
+									"key": "select",
+									"value": "*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar perfil propio (admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Perfil actualizado correctamente (200 OK)\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"El servidor devuelve los nuevos datos\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an('array');\r",
+									"    pm.expect(jsonData.length).to.be.above(0);\r",
+									"        var requestBody = JSON.parse(pm.request.body.raw);\r",
+									"        if(requestBody.nombre) {\r",
+									"        pm.expect(jsonData[0].nombre).to.eql(requestBody.nombre);\r",
+									"        console.log(\"Nombre cambiado a: \" + jsonData[0].nombre);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "apikey",
+								"value": "{{ANON_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_admin}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Prefer",
+								"value": "return=representation",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Admin (Actualizado)\",\r\n  \"telef\": \"666999666\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_SUPABASE}}/rest/v1/Usuario?id_usuario=eq.{{my_id}}",
+							"host": [
+								"{{URL_SUPABASE}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"Usuario"
+							],
+							"query": [
+								{
+									"key": "id_usuario",
+									"value": "eq.{{my_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar administrador",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Éxito: El Administrador ha eliminado su propia cuenta\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Limpieza de sesión: Admin fuera del sistema\", function () {\r",
+									"    pm.environment.unset(\"token_admin\");\r",
+									"    pm.environment.unset(\"mi_id_admin\");\r",
+									"    console.log(\"🚫 Cuenta de administrador eliminada de DB y Auth.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apikey",
+								"value": "{{SERVICE_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{SERVICE_KEY}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_a_borrar\": \"{{mi_id_admin}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_SUPABASE}}/rest/v1/rpc/eliminar_usuario_total",
+							"host": [
+								"{{URL_SUPABASE}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"rpc",
+								"eliminar_usuario_total"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Empresa",
+			"item": [
+				{
+					"name": "gestionar mensajes",
+					"item": [
+						{
+							"name": "ver mensajes empresa",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Mensajes recuperados\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Privacidad: Solo se muestran mensajes vinculados a esta empresa\", function () {\r",
+											"    const data = pm.response.json();\r",
+											"    const idEmpresa = pm.environment.get(\"mi_id_empresa\");\r",
+											"    const esSeguro = data.every(msg => \r",
+											"        msg.id_emisor === idEmpresa || msg.id_receptor === idEmpresa\r",
+											"    );\r",
+											"    pm.expect(esSeguro).to.be.true;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Integridad de Bandeja: No se muestran mensajes borrados\", function () {\r",
+											"    const data = pm.response.json();\r",
+											"    const todosVisibles = data.every(m => m.eliminado_por_emisor === false);\r",
+											"    pm.expect(todosVisibles).to.be.true;\r",
+											"    \r",
+											"    console.log(\"📨 Tienes \" + data.length + \" mensajes activos en tu bandeja.\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_empresa}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion?and=(or(id_emisor.eq.{{mi_id_empresa}},id_receptor.eq.{{mi_id_empresa}}),eliminado_por_emisor.eq.false)&order=fecha_envio.desc",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "and",
+											"value": "(or(id_emisor.eq.{{mi_id_empresa}},id_receptor.eq.{{mi_id_empresa}}),eliminado_por_emisor.eq.false)"
+										},
+										{
+											"key": "order",
+											"value": "fecha_envio.desc"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "eliminar mensaje",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Mensaje marcado como eliminado para el emisor\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Seguridad: El filtro de la URL protegió el mensaje\", function () {\r",
+											"    pm.expect(pm.response.status).to.not.include(\"Error\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Limpieza: Variable de mensaje eliminada\", function () {\r",
+											"    pm.collectionVariables.unset(\"ultimo_mensaje_id\");\r",
+											"    console.log(\" El mensaje ya no aparecerá en la bandeja de la empresa.\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_empresa}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"eliminado_por_emisor\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion?id_comunicacion=eq.{{ultimo_mensaje_id}}&id_emisor=eq.{{mi_id_empresa}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id_comunicacion",
+											"value": "eq.{{ultimo_mensaje_id}}"
+										},
+										{
+											"key": "id_emisor",
+											"value": "eq.{{mi_id_empresa}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "enviar mensaje",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Mensaje enviado correctamente\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 200]);\r",
+											"    const res = pm.response.json();\r",
+											"    pm.collectionVariables.set(\"ultimo_mensaje_id\", res[0].id_comunicacion);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Mensaje creado con metadatos completos\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 200]);\r",
+											"    const res = pm.response.json()[0];\r",
+											"        pm.expect(res.eliminado_por_emisor).to.be.false;\r",
+											"    pm.expect(res.eliminado_por_receptor).to.be.false;\r",
+											"    pm.expect(res.tipo_comunicacion).to.eql(\"mensaje\");\r",
+											"    pm.environment.set(\"ultimo_mensaje_id\", res.id_comunicacion);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_empresa}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_emisor\": \"{{mi_id_empresa}}\",\r\n    \"id_receptor\": \"{{mi_id_empresa}}\",\r\n    \"contenido\": \"Hola, confirmamos que podemos realizar el servicio el próximo martes.\",\r\n    \"leido\": false,\r\n    \"fecha_envio\": \"2026-01-04T19:30:00Z\",\r\n    \"tipo_comunicacion\": \"mensaje\",\r\n    \"eliminado_por_emisor\": false,\r\n    \"eliminado_por_receptor\": false, \r\n    \"asunto\": \"asunto de mensaje\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "gestionar notificaciones",
+					"item": [
+						{
+							"name": "ver notificaciones",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Notificaciones de sistema recuperadas\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const data = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Integridad: Registros de tipo 'notificacion' y privacidad\", function () {\r",
+											"    const idEmpresa = pm.environment.get(\"mi_id_empresa\");\r",
+											"    \r",
+											"    const esValido = data.every(m => \r",
+											"        m.tipo_notificacion === \"notificacion\" && \r",
+											"        m.id_receptor === idEmpresa\r",
+											"    );\r",
+											"    \r",
+											"    pm.expect(esValido).to.be.true;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Captura de ID: Preparando para marcar como leída\", function () {\r",
+											"    if (data.length > 0) {\r",
+											"        const idCapturado = data[0].id_comunicacion;\r",
+											"                pm.environment.set(\"id_notificacion_empresa\", idCapturado);\r",
+											"        pm.expect(idCapturado).to.not.be.undefined;\r",
+											"        console.log(\"📌 ID Empresa capturado: \" + idCapturado);\r",
+											"    } else {\r",
+											"        console.warn(\"🔔 No hay notificaciones pendientes para capturar.\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_empresa}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion?id_receptor=eq.{{mi_id_empresa}}&tipo_comunicacion=eq.notificacion&order=fecha_envio.desc",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id_receptor",
+											"value": "eq.{{mi_id_empresa}}"
+										},
+										{
+											"key": "tipo_comunicacion",
+											"value": "eq.notificacion"
+										},
+										{
+											"key": "order",
+											"value": "fecha_envio.desc"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "actualizar a leido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Notificación de empresa marcada como leída\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Limpieza: Variable id_notificacion_empresa eliminada\", function () {\r",
+											"    pm.environment.unset(\"id_notificacion_empresa\");\r",
+											"    console.log(\"✅ Proceso completado: Notificación procesada y variable limpia.\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_empresa}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"leido\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion?id_comunicacion=eq.{{id_notificacion_empresa}}&id_receptor=eq.{{mi_id_empresa}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id_comunicacion",
+											"value": "eq.{{id_notificacion_empresa}}"
+										},
+										{
+											"key": "id_receptor",
+											"value": "eq.{{mi_id_empresa}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "gestionar servicios_horarios",
+					"item": [
+						{
+							"name": "ver servicios horarios",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Lectura exitosa de horarios\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"    pm.expect(pm.response.json()).to.be.an('array');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_empresa}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Servicio_Horario?id_empresa=eq.{{mi_id_empresa}}&select=*,Servicio(nombre)",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Servicio_Horario"
+									],
+									"query": [
+										{
+											"key": "id_empresa",
+											"value": "eq.{{mi_id_empresa}}"
+										},
+										{
+											"key": "select",
+											"value": "*,Servicio(nombre)"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "eliminar servicios horarios",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Horario eliminado\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"    pm.environment.unset(\"id_servicio_horario\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_empresa}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Servicio_Horario?id_servicio_horario=eq.{{id_servicio_horario}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Servicio_Horario"
+									],
+									"query": [
+										{
+											"key": "id_servicio_horario",
+											"value": "eq.{{id_servicio_horario}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "crear servicio horario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Horario creado\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 200]);\r",
+											"    \r",
+											"    var data = pm.response.json();\r",
+											"    var item = Array.isArray(data) ? data[0] : data;\r",
+											"    pm.environment.set(\"id_servicio_horario\", item.id_servicio_horario);\r",
+											"    console.log(\"✅ ID de Servicio_Horario capturado: \" + item.id_servicio_horario);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_empresa}}",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_servicio\": \"91d91dac-0d8f-4ff4-8c93-097a976db905\",\r\n    \"id_horario\": \"3ee12fb4-19ed-4233-942c-b66b64620560\",\r\n    \"id_empresa\": \"{{mi_id_empresa}}\",\r\n    \"precio\": 5, \r\n    \"descripcion\": \"empresa de limpieza de Postman\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Servicio_Horario",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Servicio_Horario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "actualizar servicio horario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Actualización confirmada\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_empresa}}",
+										"type": "text"
+									},
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"precio\": 7.50,\r\n    \"descripcion\": \"Limpieza profunda de Postman (Tarifa actualizada)\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Servicio_Horario?id_servicio_horario=eq.{{id_servicio_horario}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Servicio_Horario"
+									],
+									"query": [
+										{
+											"key": "id_servicio_horario",
+											"value": "eq.{{id_servicio_horario}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "login empresa",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();\r",
+									"pm.environment.set(\"token_empresa\", data.access_token);\r",
+									"pm.environment.set(\"mi_id_empresa\", data.user.id);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apikey",
+								"value": "{{ANON_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_admin}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Prefer",
+								"value": "return=representation",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"empresa.por.admin@test.com\",\r\n  \"password\": \"1234TeddY24.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_SUPABASE}}/auth/v1/token?grant_type=password",
+							"host": [
+								"{{URL_SUPABASE}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"token"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar perfil",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Éxito: Perfil actualizado\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Seguridad: El ID enviado debe ser el de la sesión\", function () {\r",
+									"    var body = JSON.parse(pm.request.body.raw);\r",
+									"    pm.expect(body.p_user_id).to.eql(pm.environment.get(\"mi_id_empresa\"));\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apikey",
+								"value": "{{ANON_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_empresa}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_user_id\": \"{{mi_id_empresa}}\",\r\n    \"p_rol\": \"empresa\",\r\n    \"p_nombre\": \"Mi Empresa S.L. Actualizada\",\r\n    \"p_localidad\": \"Madrid\",\r\n    \"p_comunidad\": \"Madrid\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_SUPABASE}}/rest/v1/rpc/update_profile_complete",
+							"host": [
+								"{{URL_SUPABASE}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"rpc",
+								"update_profile_complete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "darse baja",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Baja total confirmada (Usuario eliminado)\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 401]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Cierre de sesión local\", function () {\r",
+									"    pm.environment.unset(\"token_empresa\");\r",
+									"    pm.environment.unset(\"mi_id_empresa\");\r",
+									"    console.log(\"🚫 El acceso ha sido revocado. El usuario ya no existe en el sistema.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apikey",
+								"value": "{{ANON_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_empresa}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_a_borrar\": \"{{mi_id_empresa}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_SUPABASE}}/rest/v1/rpc/eliminar_usuario_total",
+							"host": [
+								"{{URL_SUPABASE}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"rpc",
+								"eliminar_usuario_total"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "gestion contratos",
+					"item": [
+						{
+							"name": "ver contratos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();\r",
+											"pm.test(\"Carga de contratos exitosa\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"    pm.expect(data).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"SEGURIDAD: Solo se muestran mis contratos\", function () {\r",
+											"    data.forEach(contrato => {\r",
+											"        pm.expect(contrato.id_cliente).to.eql(pm.environment.get(\"mi_id_cliente\"));\r",
+											"    });\r",
+											"});\r",
+											"if (data.length > 0) {\r",
+											"    pm.collectionVariables.set(\"temp_id_contrato\", data[0].id_contrato);\r",
+											"    console.log(\"Contrato guardado para pruebas: \" + data[0].id_contrato);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_cliente}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Contrato?id_cliente=eq.{{mi_id_cliente}}&select=*,datos_cliente:Usuario!fk_contrato_cliente(nombre),datos_empresa:Usuario!fk_contrato_empresa(nombre)",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Contrato"
+									],
+									"query": [
+										{
+											"key": "id_cliente",
+											"value": "eq.{{mi_id_cliente}}"
+										},
+										{
+											"key": "select",
+											"value": "*,datos_cliente:Usuario!fk_contrato_cliente(nombre),datos_empresa:Usuario!fk_contrato_empresa(nombre)"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "crear contrato",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Contrato creado directamente\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 200]);\r",
+											"});\r",
+											"\r",
+											"var data = pm.response.json();\r",
+											"if (data.length > 0) {\r",
+											"    pm.environment.set(\"temp_id_contrato\", data[0].id_contrato);\r",
+											"    console.log(\"Contrato activo creado: \" + data[0].id_contrato);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_cliente}}",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_cliente\": \"{{mi_id_cliente}}\",\r\n    \"id_empresa\": \"{{id_empresa_real}}\",    \r\n    \"id_servicio_horario\": \"{{id_servicio_real}}\",\r\n    \"fecha_inicio\": \"{{$isoTimestamp}}\", \r\n    \"fecha_creacion\":  \"{{$isoTimestamp}}\", \r\n    \"estado\": \"activo\", \r\n    \"dia_semana_contratado\": \"lunes\", \r\n    \"hora_contratada\": \"12:00:00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Contrato",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Contrato"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "modificar contrato",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Contrato modificado\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Seguridad: El contrato sigue vinculado a mí\", function () {\r",
+											"    var data = pm.response.json();\r",
+											"    if (data.length > 0) {\r",
+											"        pm.expect(data[0].id_cliente).to.eql(pm.environment.get(\"mi_id_cliente\"));\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_cliente}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"estado\": \"no activo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Contrato?id_contrato=eq.{{temp_id_contrato}}&id_cliente=eq.{{mi_id_cliente}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Contrato"
+									],
+									"query": [
+										{
+											"key": "id_contrato",
+											"value": "eq.{{temp_id_contrato}}"
+										},
+										{
+											"key": "id_cliente",
+											"value": "eq.{{mi_id_cliente}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "eliminar contrato",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Contrato eliminado\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"});\r",
+											"pm.collectionVariables.unset(\"temp_id_contrato\");\r",
+											"console.log(\"🗑️ Registro de contrato borrado. Se actualiza el estado a null y se añade una fecha de fin\");"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_cliente}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"estado\": \"no activo\",\r\n    \"fecha_fin\": \"{{$isoTimestamp}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Contrato?id_contrato=eq.{{temp_id_contrato}}&id_cliente=eq.{{mi_id_cliente}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Contrato"
+									],
+									"query": [
+										{
+											"key": "id_contrato",
+											"value": "eq.{{temp_id_contrato}}"
+										},
+										{
+											"key": "id_cliente",
+											"value": "eq.{{mi_id_cliente}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "gestionar mensajes",
+					"item": [
+						{
+							"name": "enviar mensaje",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Mensaje creado (201 Created)\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 200]);\r",
+											"});\r",
+											"var data = pm.response.json();\r",
+											"var mensaje = Array.isArray(data) ? data[0] : data;\r",
+											"pm.test(\"Integridad: El mensaje tiene ID y contenido correcto\", function () {\r",
+											"    pm.expect(mensaje).to.have.property('id_comunicacion');\r",
+											"    pm.expect(mensaje.contenido).to.include(\"confirmar la cita\");\r",
+											"        pm.collectionVariables.set(\"id_mensaje_reciente\", mensaje.id_comunicacion);\r",
+											"    console.log(\"✅ ID de Mensaje capturado: \" + mensaje.id_comunicacion);\r",
+											"});\r",
+											"pm.test(\"Validación de tipos: Booleanos correctos\", function () {\r",
+											"    pm.expect(mensaje.leido).to.be.false;\r",
+											"    pm.expect(mensaje.eliminado_por_emisor).to.be.false;\r",
+											"    pm.expect(mensaje.eliminado_por_receptor).to.be.false;\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_cliente}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_emisor\": \"{{mi_id_cliente}}\",\r\n    \"id_receptor\":\"{{mi_id_cliente}}\",\r\n    \"contenido\": \"Hola, ¿podemos confirmar la cita?\",\r\n    \"tipo_comunicacion\": \"mensaje\",\r\n    \"fecha_envio\": \"{{$isoTimestamp}}\", \r\n    \"leido\": false, \r\n    \"asunto\": \"cita confirmacion\", \r\n    \"eliminado_por_emisor\": false, \r\n    \"eliminado_por_receptor\": false \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ver mensaje",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Bandeja de entrada cargada\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var data = pm.response.json();\r",
+											"pm.test(\"Seguridad: Solo soy el receptor y no está eliminado\", function () {\r",
+											"    data.forEach(msg => {\r",
+											"        pm.expect(msg.id_receptor).to.eql(pm.environment.get(\"mi_id_cliente\"));\r",
+											"        pm.expect(msg.eliminado_por_receptor).to.be.false;\r",
+											"        pm.expect(msg.tipo_comunicacion).to.eql(\"mensaje\");\r",
+											"    });\r",
+											"});\r",
+											"if (data.length > 0) {\r",
+											"    pm.collectionVariables.set(\"id_mensaje_a_borrar\", data[0].id_comunicacion);\r",
+											"    console.log(\"📩 Mensaje listo para borrar: \" + data[0].id_comunicacion);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_cliente}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion?id_receptor=eq.{{mi_id_cliente}}&tipo_comunicacion=eq.mensaje&eliminado_por_receptor=eq.false&select=*,emisor:Usuario!fk_comunicacion_emisor(nombre)",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id_receptor",
+											"value": "eq.{{mi_id_cliente}}"
+										},
+										{
+											"key": "tipo_comunicacion",
+											"value": "eq.mensaje"
+										},
+										{
+											"key": "eliminado_por_receptor",
+											"value": "eq.false"
+										},
+										{
+											"key": "select",
+											"value": "*,emisor:Usuario!fk_comunicacion_emisor(nombre)"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "eliminar mensaje",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Mensaje ocultado para el receptor\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Seguridad: El filtro de ID impidió borrar mensajes ajenos\", function () {\r",
+											"    pm.expect(pm.response.status).to.not.include(\"Forbidden\");\r",
+											"});\r",
+											"\r",
+											"pm.collectionVariables.unset(\"id_mensaje_a_borrar\");"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_cliente}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"eliminado_por_receptor\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion?id_comunicacion=eq.{{id_mensaje_a_borrar}}&id_receptor=eq.{{mi_id_cliente}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id_comunicacion",
+											"value": "eq.{{id_mensaje_a_borrar}}"
+										},
+										{
+											"key": "id_receptor",
+											"value": "eq.{{mi_id_cliente}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "gestionar notificaciones",
+					"item": [
+						{
+							"name": "ver notificaciones",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Éxito: Notificaciones obtenidas\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var data = pm.response.json();\r",
+											"pm.test(\"Seguridad: Solo soy el RECEPTOR\", function () {\r",
+											"    data.forEach(notif => {\r",
+											"        pm.expect(notif.id_receptor).to.eql(pm.environment.get(\"mi_id_cliente\"));\r",
+											"                pm.expect(notif.id_emisor).to.not.eql(pm.environment.get(\"mi_id_cliente\"));\r",
+											"                pm.expect(notif.tipo_comunicacion).to.eql(\"notificacion\");\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Contenido: La notificación tiene mensaje\", function () {\r",
+											"    if (data.length > 0) {\r",
+											"        var idCapturado = data[0].id_comunicacion;\r",
+											"        pm.environment.set(\"id_notificacion_cliente\", idCapturado);        \r",
+											"        pm.expect(data[0].contenido).to.not.be.null;\r",
+											"        console.log(\"Última notificación: \" + data[0].contenido);\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_cliente}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Prefer",
+										"value": "return=representation",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion?id_receptor=eq.{{mi_id_cliente}}&tipo_comunicacion=eq.notificacion&select=*",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id_receptor",
+											"value": "eq.{{mi_id_cliente}}"
+										},
+										{
+											"key": "tipo_comunicacion",
+											"value": "eq.notificacion"
+										},
+										{
+											"key": "select",
+											"value": "*"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "actualizar a leido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Cliente: Notificación marcada como leída\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"    pm.environment.unset(\"id_notificacion_cliente\");\r",
+											"    console.log(\"✅ Variable id_notificacion_cliente eliminada tras éxito.\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_cliente}}",
+										"type": "text"
+									},
+									{
+										"key": "apikey",
+										"value": "{{ANON_KEY}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"leido\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_SUPABASE}}/rest/v1/Comunicacion?id_comunicacion=eq.{{id_notificacion_cliente}}&id_receptor=eq.{{mi_id_cliente}}",
+									"host": [
+										"{{URL_SUPABASE}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id_comunicacion",
+											"value": "eq.{{id_notificacion_cliente}}"
+										},
+										{
+											"key": "id_receptor",
+											"value": "eq.{{mi_id_cliente}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "login-cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();\r",
+									"pm.environment.set(\"token_cliente\", data.access_token);\r",
+									"pm.environment.set(\"mi_id_cliente\", data.user.id);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apikey",
+								"value": "{{ANON_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_admin}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Prefer",
+								"value": "return=representation",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"cliente.por.admin@test.com\",\r\n  \"password\": \"1234TeddY24.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_SUPABASE}}/auth/v1/token?grant_type=password",
+							"host": [
+								"{{URL_SUPABASE}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"token"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver servicios_horarios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Consulta relacional exitosa (200 OK)\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var data = pm.response.json();\r",
+									"pm.test(\"Validar integridad de la jerarquía\", function () {\r",
+									"    pm.expect(data).to.be.an('array');\r",
+									"    \r",
+									"    if (data.length > 0) {\r",
+									"        pm.environment.set(\"id_servicio_real\", data[0].id_servicio_horario);\r",
+									"        pm.environment.set(\"id_empresa_real\", data[0].id_empresa);\r",
+									"        pm.expect(data[0]).to.have.property('id_servicio'); \r",
+									"                pm.expect(data[0].Empresa).to.be.an('object');\r",
+									"        console.log(\"🏢 Datos Empresa encontrados para el horario\");\r",
+									"        pm.expect(data[0].Empresa.Usuario).to.be.an('object');\r",
+									"        pm.expect(data[0].Empresa.Usuario.nombre).to.not.be.null;\r",
+									"        console.log(\"Nombre del dueño de la empresa: \" + data[0].Empresa.Usuario.nombre);\r",
+									"    } else {\r",
+									"        console.warn(\"No hay datos en Servicio_Horario para validar.\");\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apikey",
+								"value": "{{ANON_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_admin}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Prefer",
+								"value": "return=representation",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL_SUPABASE}}/rest/v1/Servicio_Horario?select=*,Empresa(*,Usuario(*))",
+							"host": [
+								"{{URL_SUPABASE}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"Servicio_Horario"
+							],
+							"query": [
+								{
+									"key": "select",
+									"value": "*,Empresa(*,Usuario(*))"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar perfil",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Éxito: Perfil actualizado (200 o 204)\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+									"});\r",
+									"pm.test(\"Seguridad: El ID enviado coincide con el usuario autenticado\", function () {\r",
+									"    var requestBody = JSON.parse(pm.request.body.raw);\r",
+									"    var idSesion = pm.environment.get(\"mi_id_cliente\");\r",
+									"        pm.expect(requestBody.p_user_id).to.eql(idSesion);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificación de Integridad\", function () {\r",
+									"    if (pm.response.text()) {\r",
+									"        var response = pm.response.json();\r",
+									"        pm.expect(response).to.not.have.property('code');\r",
+									"    } else {\r",
+									"        pm.expect(pm.response.code).to.equal(204);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apikey",
+								"value": "{{ANON_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_cliente}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_user_id\": \"{{mi_id_cliente}}\",\r\n    \"p_rol\": \"cliente\",\r\n    \"p_nombre\": \"Juan Actualizado\",\r\n    \"p_email\": \"juan@example.com\",\r\n    \"p_telef\": \"666777888\",\r\n    \"p_ape1\": \"García\",\r\n    \"p_ape2\": \"Pérez\",\r\n    \"p_direccion\": \"Calle Mayor 1\",\r\n    \"p_localidad\": \"Barcelona\",\r\n    \"p_codpostal\": \"08001\",\r\n    \"p_comunidad\": \"Cataluña\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_SUPABASE}}/rest/v1/rpc/update_profile_complete",
+							"host": [
+								"{{URL_SUPABASE}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"rpc",
+								"update_profile_complete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "darse de baja",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Baja total confirmada (DB + Auth)\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Cierre de sesión local\", function () {\r",
+									"    pm.environment.unset(\"token_cliente\");\r",
+									"    pm.environment.unset(\"mi_id_cliente\");\r",
+									"    console.log(\"🚫 El usuario ha sido eliminado de todas las tablas y del sistema de autenticación.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apikey",
+								"value": "{{ANON_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token_cliente}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_a_borrar\": \"{{mi_id_cliente}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_SUPABASE}}/rest/v1/rpc/eliminar_usuario_total",
+							"host": [
+								"{{URL_SUPABASE}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"rpc",
+								"eliminar_usuario_total"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seguridad - Intento de borrado no autorizado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Seguridad: Acceso denegado por falta de permisos\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400, 500]);\r",
+							"});\r",
+							"pm.test(\"Mensaje de error: 'No tienes permisos'\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response.message).to.include(\"No tienes permisos para eliminar este usuario\");\r",
+							"});\r",
+							"pm.test(\"Integridad: Las variables de sesión permanecen intactas\", function () {\r",
+							"    pm.expect(pm.environment.get(\"token_cliente\")).to.not.be.null;\r",
+							"    console.log(\"🛡️ Bloqueo confirmado: La cuenta objetivo sigue a salvo.\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "apikey",
+						"value": "{{ANON_KEY}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token_cliente}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_a_borrar\": \"7342b840-8ee3-4482-945d-61c93590a71c\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_SUPABASE}}/rest/v1/rpc/eliminar_usuario_total",
+					"host": [
+						"{{URL_SUPABASE}}"
+					],
+					"path": [
+						"rest",
+						"v1",
+						"rpc",
+						"eliminar_usuario_total"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id_mensaje_reciente",
+			"value": ""
+		},
+		{
+			"key": "id_notificacion_reciente",
+			"value": ""
+		}
+	]
+}

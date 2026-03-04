@@ -1,0 +1,1930 @@
+{
+	"id": "baa1c7f1-21c6-47a5-ab0a-2ab854353ead",
+	"name": "TFG CuidaDos - Validación de Roles",
+	"timestamp": "2026-02-01T08:23:16.059Z",
+	"collection_id": "46126713-98c7ffdf-8830-4efc-9942-6f2b1b336698",
+	"folder_id": "46126713-236955c7-f63d-47a4-9a99-203bc3969313",
+	"environment_id": "46126713-943cdb17-5ca7-4d1b-998d-0c005add7e4a",
+	"totalPass": 94,
+	"delay": "20",
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2026-02-01T08:23:03.012Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "3a846eff-13dd-4738-92f0-3f9d1a522cd9",
+			"name": "crear admin nuevo demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/auth/v1/signup",
+			"time": 343,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Registro Cliente: OK e inserción por Trigger": true
+			},
+			"testPassFailCounts": {
+				"Registro Cliente: OK e inserción por Trigger": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				343
+			],
+			"allTests": [
+				{
+					"Registro Cliente: OK e inserción por Trigger": true
+				}
+			]
+		},
+		{
+			"id": "3cadaebf-6145-46c1-989e-a3750d2e563d",
+			"name": "crear empresa (autoregistro) demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/auth/v1/signup",
+			"time": 181,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Registro Cliente: OK e inserción por Trigger": true
+			},
+			"testPassFailCounts": {
+				"Registro Cliente: OK e inserción por Trigger": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				181
+			],
+			"allTests": [
+				{
+					"Registro Cliente: OK e inserción por Trigger": true
+				}
+			]
+		},
+		{
+			"id": "50ad4fcb-8e3c-40ce-8a6c-bb063e43bbd8",
+			"name": "crear cliente (autoregistro) demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/auth/v1/signup",
+			"time": 241,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Registro Cliente: OK e inserción por Trigger": true
+			},
+			"testPassFailCounts": {
+				"Registro Cliente: OK e inserción por Trigger": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				241
+			],
+			"allTests": [
+				{
+					"Registro Cliente: OK e inserción por Trigger": true
+				}
+			]
+		},
+		{
+			"id": "2c0ef39f-2dab-4fc0-9860-367b4f105ebd",
+			"name": "login empresa demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/auth/v1/token?grant_type=password",
+			"time": 176,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				176
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "e32bc16d-5417-41cf-96d6-f1c7d39f2530",
+			"name": "login cliente demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/auth/v1/token?grant_type=password",
+			"time": 181,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				181
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "3816e32a-5508-4d1d-831a-f475cd65a608",
+			"name": "login Admin demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/auth/v1/token?grant_type=password&apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiY21naW9yZXl2dXloeHJpcmd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5NTc4NjAsImV4cCI6MjA3NzUzMzg2MH0.nyAQmDfjuxzqdAi2u8PwTv99hrCZ5THcoEP3ek6mReQ&Content-Type=application/json",
+			"time": 175,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Login Admin Exitoso (200 OK)": true,
+				"Token guardado correctamente": true
+			},
+			"testPassFailCounts": {
+				"Login Admin Exitoso (200 OK)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Token guardado correctamente": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				175
+			],
+			"allTests": [
+				{
+					"Login Admin Exitoso (200 OK)": true,
+					"Token guardado correctamente": true
+				}
+			]
+		},
+		{
+			"id": "6aa39d27-38c9-41a0-96c0-1fa38dd3c5d5",
+			"name": "crear cliente por admin",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/auth/v1/admin/users",
+			"time": 178,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Usuario creado por Admin (200 OK)": true
+			},
+			"testPassFailCounts": {
+				"Usuario creado por Admin (200 OK)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				178
+			],
+			"allTests": [
+				{
+					"Usuario creado por Admin (200 OK)": true
+				}
+			]
+		},
+		{
+			"id": "a76eae8a-fed5-4617-956a-915028cd1c4d",
+			"name": "leer cliente demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Cliente?select=*,Usuario(*)",
+			"time": 177,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Lectura de Clientes OK (200)": true
+			},
+			"testPassFailCounts": {
+				"Lectura de Clientes OK (200)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				177
+			],
+			"allTests": [
+				{
+					"Lectura de Clientes OK (200)": true
+				}
+			]
+		},
+		{
+			"id": "15289d90-3143-4ebc-9729-50f93cbe4afc",
+			"name": "actualizar cliente por admin demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/rpc/update_profile_complete",
+			"time": 90,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Cliente actualizado por Admin  (200 OK)": true
+			},
+			"testPassFailCounts": {
+				"Cliente actualizado por Admin  (200 OK)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				90
+			],
+			"allTests": [
+				{
+					"Cliente actualizado por Admin  (200 OK)": true
+				}
+			]
+		},
+		{
+			"id": "5e633e2e-2863-40cd-8276-354ccbfaf885",
+			"name": "borrar cliente demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/rpc/eliminar_usuario_total",
+			"time": 153,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Éxito: El Admin ha ejecutado el borrado total": true,
+				"Integridad: Sin errores de PostgreSQL": true
+			},
+			"testPassFailCounts": {
+				"Éxito: El Admin ha ejecutado el borrado total": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Integridad: Sin errores de PostgreSQL": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				153
+			],
+			"allTests": [
+				{
+					"Éxito: El Admin ha ejecutado el borrado total": true,
+					"Integridad: Sin errores de PostgreSQL": true
+				}
+			]
+		},
+		{
+			"id": "6f82d6c7-188c-415e-b4f8-82089122da36",
+			"name": "crear empresa demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/auth/v1/admin/users",
+			"time": 172,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Usuario creado por Admin (200 OK)": true
+			},
+			"testPassFailCounts": {
+				"Usuario creado por Admin (200 OK)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				172
+			],
+			"allTests": [
+				{
+					"Usuario creado por Admin (200 OK)": true
+				}
+			]
+		},
+		{
+			"id": "bb2d0800-a94c-4875-b3f1-3da7fc735aa7",
+			"name": "leer empresa demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Empresa?select=*,Usuario(*)",
+			"time": 95,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Lectura de Clientes OK (200)": true
+			},
+			"testPassFailCounts": {
+				"Lectura de Clientes OK (200)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				95
+			],
+			"allTests": [
+				{
+					"Lectura de Clientes OK (200)": true
+				}
+			]
+		},
+		{
+			"id": "0256215a-e6cb-4581-8622-369399011f1b",
+			"name": "actualizar empresa demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/rpc/update_profile_complete",
+			"time": 89,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Empresa actualizada correctamente por Admin (200 OK)": true
+			},
+			"testPassFailCounts": {
+				"Empresa actualizada correctamente por Admin (200 OK)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				89
+			],
+			"allTests": [
+				{
+					"Empresa actualizada correctamente por Admin (200 OK)": true
+				}
+			]
+		},
+		{
+			"id": "0ff21463-7ea9-44ce-b608-8d7bc5ffa332",
+			"name": "borrar empresa demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/rpc/eliminar_usuario_total",
+			"time": 84,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Éxito: El Admin ha ejecutado el borrado total": true,
+				"Integridad: Sin errores de PostgreSQL": true
+			},
+			"testPassFailCounts": {
+				"Éxito: El Admin ha ejecutado el borrado total": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Integridad: Sin errores de PostgreSQL": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				84
+			],
+			"allTests": [
+				{
+					"Éxito: El Admin ha ejecutado el borrado total": true,
+					"Integridad: Sin errores de PostgreSQL": true
+				}
+			]
+		},
+		{
+			"id": "d892d822-51d0-4b7a-9d7c-0288b3f08242",
+			"name": "automodificacion empresa demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/rpc/update_profile_complete",
+			"time": 89,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Éxito: Perfil actualizado (200 o 204)": true,
+				"Seguridad: El ID enviado coincide con el usuario autenticado": true,
+				"Verificación de Integridad": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Perfil actualizado (200 o 204)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Seguridad: El ID enviado coincide con el usuario autenticado": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificación de Integridad": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				89
+			],
+			"allTests": [
+				{
+					"Éxito: Perfil actualizado (200 o 204)": true,
+					"Seguridad: El ID enviado coincide con el usuario autenticado": true,
+					"Verificación de Integridad": true
+				}
+			]
+		},
+		{
+			"id": "b552dd70-d2f6-4267-981a-de6e4b4d7307",
+			"name": "automodificacion cliente demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/rpc/update_profile_complete",
+			"time": 87,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Éxito: Perfil actualizado (200 o 204)": true,
+				"Seguridad: El ID enviado coincide con el usuario autenticado": true,
+				"Verificación de Integridad": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Perfil actualizado (200 o 204)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Seguridad: El ID enviado coincide con el usuario autenticado": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificación de Integridad": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				87
+			],
+			"allTests": [
+				{
+					"Éxito: Perfil actualizado (200 o 204)": true,
+					"Seguridad: El ID enviado coincide con el usuario autenticado": true,
+					"Verificación de Integridad": true
+				}
+			]
+		},
+		{
+			"id": "a2c1ced1-ff91-4772-950a-21366fdd2847",
+			"name": "modificar perfil propio (admin) demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/rpc/update_profile_complete",
+			"time": 83,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Éxito: Perfil actualizado (200 o 204)": true,
+				"Seguridad: El ID enviado coincide con el usuario autenticado": true,
+				"Verificación de Integridad": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Perfil actualizado (200 o 204)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Seguridad: El ID enviado coincide con el usuario autenticado": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificación de Integridad": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				83
+			],
+			"allTests": [
+				{
+					"Éxito: Perfil actualizado (200 o 204)": true,
+					"Seguridad: El ID enviado coincide con el usuario autenticado": true,
+					"Verificación de Integridad": true
+				}
+			]
+		},
+		{
+			"id": "052e007e-2494-4d0e-98b5-c21ed47d9483",
+			"name": "crear notificaciones",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion",
+			"time": 91,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Éxito: Notificacion del Admin creado (201)": true,
+				"Integridad: Emisor correcto": true,
+				"Captura de ID: Notificacion registrado": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Notificacion del Admin creado (201)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Integridad: Emisor correcto": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Captura de ID: Notificacion registrado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				91
+			],
+			"allTests": [
+				{
+					"Éxito: Notificacion del Admin creado (201)": true,
+					"Integridad: Emisor correcto": true,
+					"Captura de ID: Notificacion registrado": true
+				}
+			]
+		},
+		{
+			"id": "a1ecd5b1-621f-4b9c-8d7f-7bbad46e8b52",
+			"name": "ver mis notificaciones demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion?id_receptor=eq.a5eb5329-79d5-418e-8506-6ce201cb05b4&tipo_comunicacion=eq.notificacion&select=*",
+			"time": 85,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Admin: Notificaciones recuperadas": true,
+				"Captura de ID para el Admin": true
+			},
+			"testPassFailCounts": {
+				"Admin: Notificaciones recuperadas": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Captura de ID para el Admin": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				85
+			],
+			"allTests": [
+				{
+					"Admin: Notificaciones recuperadas": true,
+					"Captura de ID para el Admin": true
+				}
+			]
+		},
+		{
+			"id": "b6cea3b5-5af3-4d13-89d8-ea898ae2d6a9",
+			"name": "actualizar a leido notifcaciones demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion?id_comunicacion=eq.4b8690dc-6db1-4888-98d8-a04bf65f4331",
+			"time": 91,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Admin: Alerta marcada como leída": true
+			},
+			"testPassFailCounts": {
+				"Admin: Alerta marcada como leída": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				91
+			],
+			"allTests": [
+				{
+					"Admin: Alerta marcada como leída": true
+				}
+			]
+		},
+		{
+			"id": "95710687-b8da-407d-94d8-1f596318edf7",
+			"name": "crear mensaje demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion",
+			"time": 89,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Éxito: Mensaje del Admin creado (201)": true,
+				"Integridad: Emisor correcto": true,
+				"Captura de ID: Mensaje registrado": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Mensaje del Admin creado (201)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Integridad: Emisor correcto": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Captura de ID: Mensaje registrado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				89
+			],
+			"allTests": [
+				{
+					"Éxito: Mensaje del Admin creado (201)": true,
+					"Integridad: Emisor correcto": true,
+					"Captura de ID: Mensaje registrado": true
+				}
+			]
+		},
+		{
+			"id": "a41fc25c-7b19-4ca2-91b2-624e281bc028",
+			"name": "ver mis mensajes demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion?id_receptor=eq.a5eb5329-79d5-418e-8506-6ce201cb05b4&tipo_comunicacion=eq.mensaje&order=fecha_envio.desc",
+			"time": 86,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Éxito: Mensajes recibidos por Admin recuperados": true,
+				"Seguridad: El id_receptor coincide con my_id": true,
+				"Captura: ID guardado para marcar como leído": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Mensajes recibidos por Admin recuperados": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Seguridad: El id_receptor coincide con my_id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Captura: ID guardado para marcar como leído": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				86
+			],
+			"allTests": [
+				{
+					"Éxito: Mensajes recibidos por Admin recuperados": true,
+					"Seguridad: El id_receptor coincide con my_id": true,
+					"Captura: ID guardado para marcar como leído": true
+				}
+			]
+		},
+		{
+			"id": "59b3eb59-5508-41d9-8649-c31132860e95",
+			"name": "crear servicio demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Servicio",
+			"time": 91,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Servicio creado correctamente (201)": true,
+				"El servicio pertenece a este Admin": true
+			},
+			"testPassFailCounts": {
+				"Servicio creado correctamente (201)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"El servicio pertenece a este Admin": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				91
+			],
+			"allTests": [
+				{
+					"Servicio creado correctamente (201)": true,
+					"El servicio pertenece a este Admin": true
+				}
+			]
+		},
+		{
+			"id": "8e258cb3-b68b-454b-a2a4-c54cf98958aa",
+			"name": "actualizar servicio demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Servicio?id_servicio=eq.44127173-429f-4021-bf20-a9c4441162a5",
+			"time": 105,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Actualización correcta (200)": true,
+				"El nombre ha cambiado": true
+			},
+			"testPassFailCounts": {
+				"Actualización correcta (200)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"El nombre ha cambiado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				105
+			],
+			"allTests": [
+				{
+					"Actualización correcta (200)": true,
+					"El nombre ha cambiado": true
+				}
+			]
+		},
+		{
+			"id": "92c9abd4-275f-43a9-b2d9-52512d6ae9fc",
+			"name": "leer servicio demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Servicio?select=*",
+			"time": 88,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Lectura correcta (200)": true
+			},
+			"testPassFailCounts": {
+				"Lectura correcta (200)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				88
+			],
+			"allTests": [
+				{
+					"Lectura correcta (200)": true
+				}
+			]
+		},
+		{
+			"id": "6aef5792-7c12-43af-9584-f601d03df46e",
+			"name": "crear horario demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Horario",
+			"time": 87,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Horario creado (201 Created)": true
+			},
+			"testPassFailCounts": {
+				"Horario creado (201 Created)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				87
+			],
+			"allTests": [
+				{
+					"Horario creado (201 Created)": true
+				}
+			]
+		},
+		{
+			"id": "697002c6-9ae9-4a4f-af32-8f9ec17106f6",
+			"name": "actualizar horario demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Horario?id_horario=eq.270c79f1-cd3c-4272-8bbb-7069c48e2af7",
+			"time": 87,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Actualización correcta (200 OK)": true,
+				"La hora se ha actualizado": true
+			},
+			"testPassFailCounts": {
+				"Actualización correcta (200 OK)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"La hora se ha actualizado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				87
+			],
+			"allTests": [
+				{
+					"Actualización correcta (200 OK)": true,
+					"La hora se ha actualizado": true
+				}
+			]
+		},
+		{
+			"id": "477d1951-4ca2-4565-a2f3-eac84bec8dc8",
+			"name": "leer horario demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Horario?select=*",
+			"time": 85,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Lectura correcta (200)": true
+			},
+			"testPassFailCounts": {
+				"Lectura correcta (200)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				85
+			],
+			"allTests": [
+				{
+					"Lectura correcta (200)": true
+				}
+			]
+		},
+		{
+			"id": "afbf4972-0e08-480a-be03-498ffd2085bf",
+			"name": "ver dashboard demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Usuario?select=*",
+			"time": 98,
+			"responseCode": {
+				"code": 206,
+				"name": "Partial Content"
+			},
+			"tests": {
+				"Petición correcta (Status 200 o 206)": true,
+				"Dashboard: Contador de usuarios recibidos": true
+			},
+			"testPassFailCounts": {
+				"Petición correcta (Status 200 o 206)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Dashboard: Contador de usuarios recibidos": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				98
+			],
+			"allTests": [
+				{
+					"Petición correcta (Status 200 o 206)": true,
+					"Dashboard: Contador de usuarios recibidos": true
+				}
+			]
+		},
+		{
+			"id": "27d244af-e967-4057-b0cc-11e56a38d26e",
+			"name": "crear notificaciones empresa demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion",
+			"time": 92,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Éxito: Notificacion del Admin creado (201)": true,
+				"Integridad: Emisor correcto": true,
+				"Captura de ID: Notificacion registrado": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Notificacion del Admin creado (201)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Integridad: Emisor correcto": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Captura de ID: Notificacion registrado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				92
+			],
+			"allTests": [
+				{
+					"Éxito: Notificacion del Admin creado (201)": true,
+					"Integridad: Emisor correcto": true,
+					"Captura de ID: Notificacion registrado": true
+				}
+			]
+		},
+		{
+			"id": "80b58d2c-56fa-4f47-a9ee-c8811f1764a7",
+			"name": "ver notificaciones demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion?id_receptor=eq.667a4d98-05f3-4926-b480-21e36c31a333&tipo_comunicacion=eq.notificacion&order=fecha_envio.desc",
+			"time": 84,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Éxito: Notificaciones de sistema recuperadas": true,
+				"Integridad: Registros de tipo 'notificacion' y privacidad": true,
+				"Captura de ID: Preparando para marcar como leída": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Notificaciones de sistema recuperadas": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Integridad: Registros de tipo 'notificacion' y privacidad": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Captura de ID: Preparando para marcar como leída": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				84
+			],
+			"allTests": [
+				{
+					"Éxito: Notificaciones de sistema recuperadas": true,
+					"Integridad: Registros de tipo 'notificacion' y privacidad": true,
+					"Captura de ID: Preparando para marcar como leída": true
+				}
+			]
+		},
+		{
+			"id": "6f3db633-85ce-42c1-9ce2-0130fbacd337",
+			"name": "actualizar a leido demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion?id_comunicacion=eq.88f2b79b-1963-469c-82e1-ec7887a723f2&id_receptor=eq.667a4d98-05f3-4926-b480-21e36c31a333",
+			"time": 90,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Éxito: Notificación de empresa marcada como leída": true,
+				"Limpieza: Variable id_notificacion_empresa eliminada": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Notificación de empresa marcada como leída": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Limpieza: Variable id_notificacion_empresa eliminada": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				90
+			],
+			"allTests": [
+				{
+					"Éxito: Notificación de empresa marcada como leída": true,
+					"Limpieza: Variable id_notificacion_empresa eliminada": true
+				}
+			]
+		},
+		{
+			"id": "b7bfd436-93df-4a13-8e36-b88a210fbfad",
+			"name": "ver mensajes empresa demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion?and=(or(id_emisor.eq.667a4d98-05f3-4926-b480-21e36c31a333,id_receptor.eq.667a4d98-05f3-4926-b480-21e36c31a333),eliminado_por_emisor.eq.false)&order=fecha_envio.desc",
+			"time": 86,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Éxito: Mensajes recuperados": true,
+				"Privacidad: Solo se muestran mensajes vinculados a esta empresa": true,
+				"Integridad de Bandeja: No se muestran mensajes borrados": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Mensajes recuperados": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Privacidad: Solo se muestran mensajes vinculados a esta empresa": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Integridad de Bandeja: No se muestran mensajes borrados": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				86
+			],
+			"allTests": [
+				{
+					"Éxito: Mensajes recuperados": true,
+					"Privacidad: Solo se muestran mensajes vinculados a esta empresa": true,
+					"Integridad de Bandeja: No se muestran mensajes borrados": true
+				}
+			]
+		},
+		{
+			"id": "66d04611-e110-4b19-bd62-a45626ccf22a",
+			"name": "enviar mensaje demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion",
+			"time": 90,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Mensaje enviado correctamente": true,
+				"Mensaje creado con metadatos completos": true
+			},
+			"testPassFailCounts": {
+				"Mensaje enviado correctamente": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Mensaje creado con metadatos completos": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				90
+			],
+			"allTests": [
+				{
+					"Mensaje enviado correctamente": true,
+					"Mensaje creado con metadatos completos": true
+				}
+			]
+		},
+		{
+			"id": "a44eafef-67b1-4cd6-83b4-0e0a26b0db3b",
+			"name": "crear servicio horario demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Servicio_Horario",
+			"time": 90,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Éxito: Horario creado": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Horario creado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				90
+			],
+			"allTests": [
+				{
+					"Éxito: Horario creado": true
+				}
+			]
+		},
+		{
+			"id": "71945f61-9d99-429a-8981-6fd17c5cffab",
+			"name": "ver servicios horarios demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Servicio_Horario?id_empresa=eq.667a4d98-05f3-4926-b480-21e36c31a333&select=*,Servicio(nombre)",
+			"time": 87,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Lectura exitosa de horarios": true
+			},
+			"testPassFailCounts": {
+				"Lectura exitosa de horarios": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				87
+			],
+			"allTests": [
+				{
+					"Lectura exitosa de horarios": true
+				}
+			]
+		},
+		{
+			"id": "3178ef1d-5821-4dbe-b802-ce1fa9abb511",
+			"name": "actualizar servicio horario demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Servicio_Horario?id_servicio_horario=eq.c00e4269-7c28-4cc8-aa0f-b0a30a46b423",
+			"time": 91,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Actualización confirmada": true
+			},
+			"testPassFailCounts": {
+				"Actualización confirmada": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				91
+			],
+			"allTests": [
+				{
+					"Actualización confirmada": true
+				}
+			]
+		},
+		{
+			"id": "f3a4c343-e1be-4971-bb4e-62b4f457e55f",
+			"name": "crear notificaciones cliente demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion",
+			"time": 100,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Éxito: Notificacion del Admin creado (201)": true,
+				"Integridad: Emisor correcto": true,
+				"Captura de ID: Notificacion registrado": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Notificacion del Admin creado (201)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Integridad: Emisor correcto": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Captura de ID: Notificacion registrado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				100
+			],
+			"allTests": [
+				{
+					"Éxito: Notificacion del Admin creado (201)": true,
+					"Integridad: Emisor correcto": true,
+					"Captura de ID: Notificacion registrado": true
+				}
+			]
+		},
+		{
+			"id": "03ebad40-e9c4-440d-a80e-1081ef05fe39",
+			"name": "enviar mensaje demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion",
+			"time": 88,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Éxito: Mensaje creado (201 Created)": true,
+				"Integridad: El mensaje tiene ID y contenido correcto": true,
+				"Validación de tipos: Booleanos correctos": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Mensaje creado (201 Created)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Integridad: El mensaje tiene ID y contenido correcto": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Validación de tipos: Booleanos correctos": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				88
+			],
+			"allTests": [
+				{
+					"Éxito: Mensaje creado (201 Created)": true,
+					"Integridad: El mensaje tiene ID y contenido correcto": true,
+					"Validación de tipos: Booleanos correctos": true
+				}
+			]
+		},
+		{
+			"id": "f075d25a-2381-40fb-b2ba-42baba743ddf",
+			"name": "ver mensaje demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion?id_receptor=eq.bdfb485d-39dd-40b3-9225-3e30669b2c4d&tipo_comunicacion=eq.mensaje&eliminado_por_receptor=eq.false&select=*,emisor:Usuario!fk_comunicacion_emisor(nombre)",
+			"time": 85,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Éxito: Bandeja de entrada cargada": true,
+				"Seguridad: Solo soy el receptor y no está eliminado": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Bandeja de entrada cargada": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Seguridad: Solo soy el receptor y no está eliminado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				85
+			],
+			"allTests": [
+				{
+					"Éxito: Bandeja de entrada cargada": true,
+					"Seguridad: Solo soy el receptor y no está eliminado": true
+				}
+			]
+		},
+		{
+			"id": "6b8b37e2-2ed4-4fd9-861c-7ee2d672e483",
+			"name": "actualizar a leido demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion?id_comunicacion=eq.efab2bb4-8631-485d-88f8-dc647d3fc784&id_receptor=eq.bdfb485d-39dd-40b3-9225-3e30669b2c4d",
+			"time": 98,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Cliente: Notificación marcada como leída": true
+			},
+			"testPassFailCounts": {
+				"Cliente: Notificación marcada como leída": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				98
+			],
+			"allTests": [
+				{
+					"Cliente: Notificación marcada como leída": true
+				}
+			]
+		},
+		{
+			"id": "8680cd1e-a197-4853-8823-d8fa1256612e",
+			"name": "ver contratos demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Contrato?id_cliente=eq.bdfb485d-39dd-40b3-9225-3e30669b2c4d&select=*,datos_cliente:Cliente!fk_contrato_cliente(Usuario(nombre)),datos_empresa:Empresa!fk_contrato_empresa(Usuario(nombre))",
+			"time": 86,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Carga de contratos exitosa": true,
+				"SEGURIDAD: Solo se muestran mis contratos": true
+			},
+			"testPassFailCounts": {
+				"Carga de contratos exitosa": {
+					"pass": 1,
+					"fail": 0
+				},
+				"SEGURIDAD: Solo se muestran mis contratos": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				86
+			],
+			"allTests": [
+				{
+					"Carga de contratos exitosa": true,
+					"SEGURIDAD: Solo se muestran mis contratos": true
+				}
+			]
+		},
+		{
+			"id": "c672c3b6-d6af-4a73-bdad-581fa657d59f",
+			"name": "crear contrato demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Contrato",
+			"time": 90,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Éxito: Contrato creado directamente": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Contrato creado directamente": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				90
+			],
+			"allTests": [
+				{
+					"Éxito: Contrato creado directamente": true
+				}
+			]
+		},
+		{
+			"id": "0f21b476-b553-4959-bcb3-ec2d616ea3dd",
+			"name": "ver servicios_horarios demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Servicio_Horario?select=*,Empresa(*,Usuario(*))",
+			"time": 85,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Consulta relacional exitosa (200 OK)": true
+			},
+			"testPassFailCounts": {
+				"Consulta relacional exitosa (200 OK)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				85
+			],
+			"allTests": [
+				{
+					"Consulta relacional exitosa (200 OK)": true
+				}
+			]
+		},
+		{
+			"id": "5dc3b831-09ae-466a-8500-aefa215ee365",
+			"name": "eliminar mensaje admin demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion?id_comunicacion=eq.f7363b44-7839-4bfa-a7aa-a5450065718f&id_receptor=eq.a5eb5329-79d5-418e-8506-6ce201cb05b4",
+			"time": 103,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Éxito: Mensaje del Admin actualizado a 'leído'": true,
+				"Limpieza: Variable de mensaje procesado eliminada": true,
+				"Rendimiento: Respuesta en menos de 500ms": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Mensaje del Admin actualizado a 'leído'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Limpieza: Variable de mensaje procesado eliminada": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Rendimiento: Respuesta en menos de 500ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				103
+			],
+			"allTests": [
+				{
+					"Éxito: Mensaje del Admin actualizado a 'leído'": true,
+					"Limpieza: Variable de mensaje procesado eliminada": true,
+					"Rendimiento: Respuesta en menos de 500ms": true
+				}
+			]
+		},
+		{
+			"id": "403437ed-ebd4-4b5c-ac9b-5ad313337259",
+			"name": "eliminar mensaje empresa demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion?id_comunicacion=eq.bc79949d-cad5-47fc-8ebc-93ddc7e5d943&id_emisor=eq.667a4d98-05f3-4926-b480-21e36c31a333",
+			"time": 88,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Éxito: Mensaje marcado como eliminado para el emisor": true,
+				"Seguridad: El filtro de la URL protegió el mensaje": true,
+				"Limpieza: Variable de mensaje eliminada": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Mensaje marcado como eliminado para el emisor": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Seguridad: El filtro de la URL protegió el mensaje": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Limpieza: Variable de mensaje eliminada": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				88
+			],
+			"allTests": [
+				{
+					"Éxito: Mensaje marcado como eliminado para el emisor": true,
+					"Seguridad: El filtro de la URL protegió el mensaje": true,
+					"Limpieza: Variable de mensaje eliminada": true
+				}
+			]
+		},
+		{
+			"id": "b870dff8-5e94-4d58-8c32-90081dbf73cf",
+			"name": "eliminar mensaje cliente demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Comunicacion?id_comunicacion=eq.8a5bc1c6-3ec2-4629-b761-b9a65c69a4e4&id_receptor=eq.bdfb485d-39dd-40b3-9225-3e30669b2c4d",
+			"time": 99,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Éxito: Mensaje ocultado para el receptor": true,
+				"Seguridad: El filtro de ID impidió borrar mensajes ajenos": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Mensaje ocultado para el receptor": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Seguridad: El filtro de ID impidió borrar mensajes ajenos": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				99
+			],
+			"allTests": [
+				{
+					"Éxito: Mensaje ocultado para el receptor": true,
+					"Seguridad: El filtro de ID impidió borrar mensajes ajenos": true
+				}
+			]
+		},
+		{
+			"id": "f6307dd4-82de-4c45-9055-ce23055d40a9",
+			"name": "eliminar contrato por cliente demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Contrato?id_contrato=eq.cb819ea4-8127-4c31-975e-eb8a03f51205&id_cliente=eq.bdfb485d-39dd-40b3-9225-3e30669b2c4d",
+			"time": 88,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Éxito: Contrato eliminado": true
+			},
+			"testPassFailCounts": {
+				"Éxito: Contrato eliminado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				88
+			],
+			"allTests": [
+				{
+					"Éxito: Contrato eliminado": true
+				}
+			]
+		},
+		{
+			"id": "26ede20c-e6b2-4b5c-96fd-161aeee387b7",
+			"name": "borrar servicio demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Servicio?id_servicio=eq.44127173-429f-4021-bf20-a9c4441162a5",
+			"time": 90,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Borrado correcto (204 o 200)": true
+			},
+			"testPassFailCounts": {
+				"Borrado correcto (204 o 200)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				90
+			],
+			"allTests": [
+				{
+					"Borrado correcto (204 o 200)": true
+				}
+			]
+		},
+		{
+			"id": "2e0a16dd-0301-4356-9669-a311b6991e7c",
+			"name": "borrar horario demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Horario?id_horario=eq.270c79f1-cd3c-4272-8bbb-7069c48e2af7",
+			"time": 86,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Borrado correcto (204 o 200)": true
+			},
+			"testPassFailCounts": {
+				"Borrado correcto (204 o 200)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				86
+			],
+			"allTests": [
+				{
+					"Borrado correcto (204 o 200)": true
+				}
+			]
+		},
+		{
+			"id": "15d5a44b-785e-42d1-b77c-f6c0b83b4302",
+			"name": "eliminar servicios horarios",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/Servicio_Horario?id_servicio_horario=eq.c00e4269-7c28-4cc8-aa0f-b0a30a46b423",
+			"time": 91,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Horario eliminado": true
+			},
+			"testPassFailCounts": {
+				"Horario eliminado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				91
+			],
+			"allTests": [
+				{
+					"Horario eliminado": true
+				}
+			]
+		},
+		{
+			"id": "e064d417-d41e-4953-a9ba-455b3b030104",
+			"name": "baja empresa demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/rpc/eliminar_usuario_total",
+			"time": 88,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Baja total confirmada (Usuario eliminado)": true,
+				"Cierre de sesión local": true
+			},
+			"testPassFailCounts": {
+				"Baja total confirmada (Usuario eliminado)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cierre de sesión local": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				88
+			],
+			"allTests": [
+				{
+					"Baja total confirmada (Usuario eliminado)": true,
+					"Cierre de sesión local": true
+				}
+			]
+		},
+		{
+			"id": "fff24be9-fc57-4605-97c7-7c644e0a56b4",
+			"name": "baja cliente demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/rpc/eliminar_usuario_total",
+			"time": 87,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Baja total confirmada (DB + Auth)": true,
+				"Cierre de sesión local": true
+			},
+			"testPassFailCounts": {
+				"Baja total confirmada (DB + Auth)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cierre de sesión local": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				87
+			],
+			"allTests": [
+				{
+					"Baja total confirmada (DB + Auth)": true,
+					"Cierre de sesión local": true
+				}
+			]
+		},
+		{
+			"id": "f571e6e2-9d1c-4640-acf4-42e6fecf9d98",
+			"name": "baja admin demo",
+			"url": "https://gbcmgioreyvuyhxrirgx.supabase.co/rest/v1/rpc/eliminar_usuario_total",
+			"time": 101,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Éxito: El Administrador ha eliminado su propia cuenta": true,
+				"Limpieza de sesión: Admin fuera del sistema": true
+			},
+			"testPassFailCounts": {
+				"Éxito: El Administrador ha eliminado su propia cuenta": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Limpieza de sesión: Admin fuera del sistema": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				101
+			],
+			"allTests": [
+				{
+					"Éxito: El Administrador ha eliminado su propia cuenta": true,
+					"Limpieza de sesión: Admin fuera del sistema": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 5940,
+	"collection": {
+		"requests": [
+			{
+				"id": "3a846eff-13dd-4738-92f0-3f9d1a522cd9",
+				"method": "POST"
+			},
+			{
+				"id": "3cadaebf-6145-46c1-989e-a3750d2e563d",
+				"method": "POST"
+			},
+			{
+				"id": "50ad4fcb-8e3c-40ce-8a6c-bb063e43bbd8",
+				"method": "POST"
+			},
+			{
+				"id": "2c0ef39f-2dab-4fc0-9860-367b4f105ebd",
+				"method": "POST"
+			},
+			{
+				"id": "e32bc16d-5417-41cf-96d6-f1c7d39f2530",
+				"method": "POST"
+			},
+			{
+				"id": "3816e32a-5508-4d1d-831a-f475cd65a608",
+				"method": "POST"
+			},
+			{
+				"id": "6aa39d27-38c9-41a0-96c0-1fa38dd3c5d5",
+				"method": "POST"
+			},
+			{
+				"id": "a76eae8a-fed5-4617-956a-915028cd1c4d",
+				"method": "GET"
+			},
+			{
+				"id": "15289d90-3143-4ebc-9729-50f93cbe4afc",
+				"method": "POST"
+			},
+			{
+				"id": "5e633e2e-2863-40cd-8276-354ccbfaf885",
+				"method": "POST"
+			},
+			{
+				"id": "6f82d6c7-188c-415e-b4f8-82089122da36",
+				"method": "POST"
+			},
+			{
+				"id": "bb2d0800-a94c-4875-b3f1-3da7fc735aa7",
+				"method": "GET"
+			},
+			{
+				"id": "0256215a-e6cb-4581-8622-369399011f1b",
+				"method": "POST"
+			},
+			{
+				"id": "0ff21463-7ea9-44ce-b608-8d7bc5ffa332",
+				"method": "POST"
+			},
+			{
+				"id": "d892d822-51d0-4b7a-9d7c-0288b3f08242",
+				"method": "POST"
+			},
+			{
+				"id": "b552dd70-d2f6-4267-981a-de6e4b4d7307",
+				"method": "POST"
+			},
+			{
+				"id": "a2c1ced1-ff91-4772-950a-21366fdd2847",
+				"method": "POST"
+			},
+			{
+				"id": "052e007e-2494-4d0e-98b5-c21ed47d9483",
+				"method": "POST"
+			},
+			{
+				"id": "a1ecd5b1-621f-4b9c-8d7f-7bbad46e8b52",
+				"method": "GET"
+			},
+			{
+				"id": "b6cea3b5-5af3-4d13-89d8-ea898ae2d6a9",
+				"method": "PATCH"
+			},
+			{
+				"id": "95710687-b8da-407d-94d8-1f596318edf7",
+				"method": "POST"
+			},
+			{
+				"id": "a41fc25c-7b19-4ca2-91b2-624e281bc028",
+				"method": "GET"
+			},
+			{
+				"id": "59b3eb59-5508-41d9-8649-c31132860e95",
+				"method": "POST"
+			},
+			{
+				"id": "8e258cb3-b68b-454b-a2a4-c54cf98958aa",
+				"method": "PATCH"
+			},
+			{
+				"id": "92c9abd4-275f-43a9-b2d9-52512d6ae9fc",
+				"method": "GET"
+			},
+			{
+				"id": "6aef5792-7c12-43af-9584-f601d03df46e",
+				"method": "POST"
+			},
+			{
+				"id": "697002c6-9ae9-4a4f-af32-8f9ec17106f6",
+				"method": "PATCH"
+			},
+			{
+				"id": "477d1951-4ca2-4565-a2f3-eac84bec8dc8",
+				"method": "GET"
+			},
+			{
+				"id": "afbf4972-0e08-480a-be03-498ffd2085bf",
+				"method": "GET"
+			},
+			{
+				"id": "27d244af-e967-4057-b0cc-11e56a38d26e",
+				"method": "POST"
+			},
+			{
+				"id": "80b58d2c-56fa-4f47-a9ee-c8811f1764a7",
+				"method": "GET"
+			},
+			{
+				"id": "6f3db633-85ce-42c1-9ce2-0130fbacd337",
+				"method": "PATCH"
+			},
+			{
+				"id": "b7bfd436-93df-4a13-8e36-b88a210fbfad",
+				"method": "GET"
+			},
+			{
+				"id": "66d04611-e110-4b19-bd62-a45626ccf22a",
+				"method": "POST"
+			},
+			{
+				"id": "a44eafef-67b1-4cd6-83b4-0e0a26b0db3b",
+				"method": "POST"
+			},
+			{
+				"id": "71945f61-9d99-429a-8981-6fd17c5cffab",
+				"method": "GET"
+			},
+			{
+				"id": "3178ef1d-5821-4dbe-b802-ce1fa9abb511",
+				"method": "PATCH"
+			},
+			{
+				"id": "f3a4c343-e1be-4971-bb4e-62b4f457e55f",
+				"method": "POST"
+			},
+			{
+				"id": "03ebad40-e9c4-440d-a80e-1081ef05fe39",
+				"method": "POST"
+			},
+			{
+				"id": "f075d25a-2381-40fb-b2ba-42baba743ddf",
+				"method": "GET"
+			},
+			{
+				"id": "6b8b37e2-2ed4-4fd9-861c-7ee2d672e483",
+				"method": "PATCH"
+			},
+			{
+				"id": "8680cd1e-a197-4853-8823-d8fa1256612e",
+				"method": "GET"
+			},
+			{
+				"id": "c672c3b6-d6af-4a73-bdad-581fa657d59f",
+				"method": "POST"
+			},
+			{
+				"id": "0f21b476-b553-4959-bcb3-ec2d616ea3dd",
+				"method": "GET"
+			},
+			{
+				"id": "5dc3b831-09ae-466a-8500-aefa215ee365",
+				"method": "PATCH"
+			},
+			{
+				"id": "403437ed-ebd4-4b5c-ac9b-5ad313337259",
+				"method": "PATCH"
+			},
+			{
+				"id": "b870dff8-5e94-4d58-8c32-90081dbf73cf",
+				"method": "PATCH"
+			},
+			{
+				"id": "f6307dd4-82de-4c45-9055-ce23055d40a9",
+				"method": "PATCH"
+			},
+			{
+				"id": "26ede20c-e6b2-4b5c-96fd-161aeee387b7",
+				"method": "DELETE"
+			},
+			{
+				"id": "2e0a16dd-0301-4356-9669-a311b6991e7c",
+				"method": "DELETE"
+			},
+			{
+				"id": "15d5a44b-785e-42d1-b77c-f6c0b83b4302",
+				"method": "DELETE"
+			},
+			{
+				"id": "e064d417-d41e-4953-a9ba-455b3b030104",
+				"method": "POST"
+			},
+			{
+				"id": "fff24be9-fc57-4605-97c7-7c644e0a56b4",
+				"method": "POST"
+			},
+			{
+				"id": "f571e6e2-9d1c-4640-acf4-42e6fecf9d98",
+				"method": "POST"
+			}
+		]
+	}
+}

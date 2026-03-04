@@ -1,0 +1,163 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
+  <diagram name="Página-1" id="8vHB1g1G6-oJgyisQFcb">
+    <mxGraphModel dx="1985" dy="955" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-1" value="Cliente" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;align=center;size=65;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="35" height="1484" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-2" value="SearchBusiness&#xa;(Smart Component)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="375" y="20" width="159" height="1484" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-3" value="SearchBar&#xa;(Dumb Component)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="650" y="20" width="161" height="1484" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-4" value="BusinessService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="861" y="20" width="150" height="1484" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-5" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="UqQzfqyJWqnFyLT94uQE-4">
+          <mxGeometry x="70" y="211" width="10" height="489" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-6" value="Supabase DB" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1132" y="20" width="150" height="1484" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-7" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="UqQzfqyJWqnFyLT94uQE-6">
+          <mxGeometry x="70" y="413" width="10" height="139" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-8" value="alt" style="shape=umlFrame;dashed=1;pointerEvents=0;dropTarget=0;strokeColor=#B3B3B3;height=20;width=30" vertex="1" parent="1">
+          <mxGeometry x="443" y="251" width="968" height="479" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-9" value="[Datos en Caché (BehaviorSubject)]" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="UqQzfqyJWqnFyLT94uQE-8">
+          <mxGeometry x="30" width="938" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-10" value="[Primera Carga / Refresco]" style="shape=line;dashed=1;whiteSpace=wrap;verticalAlign=top;labelPosition=center;verticalLabelPosition=middle;align=center;strokeColor=#B3B3B3;" vertex="1" parent="UqQzfqyJWqnFyLT94uQE-8">
+          <mxGeometry y="106" width="968" height="3" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-11" value="" style="shape=umlFrame;dashed=1;pointerEvents=0;dropTarget=0;strokeColor=#B3B3B3;height=20;width=0" vertex="1" parent="1">
+          <mxGeometry x="330" y="1118" width="327" height="237" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-12" value="" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="UqQzfqyJWqnFyLT94uQE-11">
+          <mxGeometry width="327" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-13" value="1. Entra en &quot;Buscar Empresas&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-1" target="UqQzfqyJWqnFyLT94uQE-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="283" y="177" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-14" value="2. getBusinessesObservable()" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-2" target="UqQzfqyJWqnFyLT94uQE-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="703" y="231" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-15" value="Retorna lista actual" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-5" target="UqQzfqyJWqnFyLT94uQE-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="704" y="332" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-16" value="3. SELECT * FROM Empresa..." style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-5" target="UqQzfqyJWqnFyLT94uQE-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1082" y="433" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-17" value="4. Retorna JSON Jerárquico" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-7" target="UqQzfqyJWqnFyLT94uQE-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1083" y="572" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-18" value="5. businessList$.next(data)" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-5" target="UqQzfqyJWqnFyLT94uQE-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="991" y="626" />
+              <mxPoint x="991" y="656" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-19" value="6. Emite Array Completo" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-5" target="UqQzfqyJWqnFyLT94uQE-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="704" y="710" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-20" value="7. Actualiza Signal: empresas()" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-2" target="UqQzfqyJWqnFyLT94uQE-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="505" y="774" />
+              <mxPoint x="505" y="804" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-21" value="8. Muestra listado completo" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-2" target="UqQzfqyJWqnFyLT94uQE-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="286" y="858" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-22" value="9. Escribe &quot;Fisioterapia&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-1" target="UqQzfqyJWqnFyLT94uQE-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="421" y="960" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-23" value="10. Emite event (searchEvent)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-3" target="UqQzfqyJWqnFyLT94uQE-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="604" y="1014" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-24" value="11. set filtroTexto(&#39;Fisioterapia&#39;)" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-2" target="UqQzfqyJWqnFyLT94uQE-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="505" y="1068" />
+              <mxPoint x="505" y="1098" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-25" value="12. Recalcula empresasFiltradas()" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-2" target="UqQzfqyJWqnFyLT94uQE-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="505" y="1220" />
+              <mxPoint x="505" y="1250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-26" value="13. La lista se actualiza instantáneamente" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="UqQzfqyJWqnFyLT94uQE-2" target="UqQzfqyJWqnFyLT94uQE-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="286" y="1399" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-27" value="FASE 1: CARGA DE DATOS (Inicialización)" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+          <mxGeometry x="429" y="95" width="803" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-28" value="JOIN Complejo:&#xa;Empresa + Usuario +&#xa;Servicio + Horario" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+          <mxGeometry x="1232" y="453" width="169" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-29" value="FASE 2: FILTRADO REACTIVO (Client-Side)" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+          <mxGeometry x="429" y="878" width="803" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-30" value="Signal Computed" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+          <mxGeometry x="479" y="1138" width="159" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-31" value="Filtra por:&#xa;Nombre, Localidad o&#xa;Tipo de Servicio" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+          <mxGeometry x="479" y="1270" width="167" height="85" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
