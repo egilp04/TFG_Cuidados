@@ -16,7 +16,6 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-messages',
@@ -110,20 +109,20 @@ export class Messages implements OnInit {
         .pipe(
           tap(() => {
             this.dataSource.data = this.dataSource.data.filter(
-              (m) => m.id_comunicacion !== mensaje.id_comunicacion
+              (m) => m.id_comunicacion !== mensaje.id_comunicacion,
             );
           }),
           switchMap(() =>
             this.translate
               .get('MESSAGES_PAGE.ALERTS.DELETE_SUCCESS')
-              .pipe(map((text) => ({ type: 'exito' as const, text })))
+              .pipe(map((text) => ({ type: 'exito' as const, text }))),
           ),
           catchError((err) => {
             console.error('Error al borrar:', err);
             return this.translate
               .get('MESSAGES_PAGE.ALERTS.DELETE_ERROR')
               .pipe(map((text) => ({ type: 'error' as const, text })));
-          })
+          }),
         )
         .subscribe((resultado) => {
           this.messageService.showMessage(resultado.text, resultado.type);

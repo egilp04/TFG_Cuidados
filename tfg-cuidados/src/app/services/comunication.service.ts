@@ -104,6 +104,7 @@ export class ComunicationService {
       .select('*')
       .eq('tipo_comunicacion', 'notificacion')
       .eq('id_receptor', user.id_usuario)
+      .eq('eliminado_por_receptor', false)
       .order('fecha_envio', { ascending: false });
 
     if (!error) {
