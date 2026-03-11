@@ -81,7 +81,9 @@ export class ComunicationService {
       `,
       )
       .eq('tipo_comunicacion', 'mensaje')
-      .or(`id_receptor.eq.${user.id_usuario},id_emisor.eq.${user.id_usuario}`)
+      .or(
+        `and(id_receptor.eq.${user.id_usuario},eliminado_por_receptor.eq.false),and(id_emisor.eq.${user.id_usuario},eliminado_por_emisor.eq.false)`,
+      )
       .order('fecha_envio', { ascending: false });
 
     if (!error) {
