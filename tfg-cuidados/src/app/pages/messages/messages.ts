@@ -49,6 +49,7 @@ export class Messages implements OnInit {
 
   ngOnInit() {
     this.suscribirAMensajes();
+    console.log(this.dataSource);
   }
 
   private suscribirAMensajes() {
@@ -110,20 +111,20 @@ export class Messages implements OnInit {
         .pipe(
           tap(() => {
             this.dataSource.data = this.dataSource.data.filter(
-              (m) => m.id_comunicacion !== mensaje.id_comunicacion
+              (m) => m.id_comunicacion !== mensaje.id_comunicacion,
             );
           }),
           switchMap(() =>
             this.translate
               .get('MESSAGES_PAGE.ALERTS.DELETE_SUCCESS')
-              .pipe(map((text) => ({ type: 'exito' as const, text })))
+              .pipe(map((text) => ({ type: 'exito' as const, text }))),
           ),
           catchError((err) => {
             console.error('Error al borrar:', err);
             return this.translate
               .get('MESSAGES_PAGE.ALERTS.DELETE_ERROR')
               .pipe(map((text) => ({ type: 'error' as const, text })));
-          })
+          }),
         )
         .subscribe((resultado) => {
           this.messageService.showMessage(resultado.text, resultado.type);

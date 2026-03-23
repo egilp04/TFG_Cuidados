@@ -3,11 +3,12 @@ import { ButtonComponent } from '../../components/button/button';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { ChatAdminComponent } from '../../components/chat-admin/chat-admin.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ButtonComponent, TranslateModule],
+  imports: [ButtonComponent, TranslateModule, ChatAdminComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

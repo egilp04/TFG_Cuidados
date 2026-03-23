@@ -76,7 +76,7 @@ export class ComunicationService {
       .select(
         `
         *,
-        Emisor:Usuario!fk_comunicacion_emisor ( nombre ),
+        Emisor:Usuario!fk_comunicacion_emisor (email),
         Receptor:Usuario!fk_comunicacion_receptor ( nombre )
       `,
       )
