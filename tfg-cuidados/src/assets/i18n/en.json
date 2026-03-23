@@ -759,5 +759,11 @@
     "SUCCESS_MESSAGE": "Ticket sent successfully!",
     "SENDING_BTN": "Sending...",
     "SEND_BTN": "Submit Ticket"
+  },
+  "AI_ASSISTANT": {
+    "HEADER_TITLE": "Virtual Assistant (AI)",
+    "INPUT_PLACEHOLDER": "Ask something about CuidaDos...",
+    "INITIAL_MESSAGE": "Hi! I'm the CuidaDos smart assistant. Do you have any questions about the manuals or how the platform works?",
+    "ERROR_MESSAGE": "Oops, I had a small short circuit. Can you repeat that?"
   }
 }
