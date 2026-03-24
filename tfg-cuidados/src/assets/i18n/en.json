@@ -392,6 +392,7 @@
     }
   },
   "NOTIFICATIONS": {
+    "ADMIN": "Open a ticker to the administrator",
     "TITLE": "Notifications",
     "TABLE": {
       "NAME": "Name",
@@ -399,7 +400,8 @@
       "DATE": "Date"
     },
     "MESSAGES": {
-      "CONNECTION_ERROR": "Error in live notifications connection"
+      "CONNECTION_ERROR": "Error in live notifications connection",
+      "EMPTY": "There´s any notifications"
     }
   },
   "RECOVER_PASSWORD": {
@@ -747,5 +749,21 @@
   },
   "MANAGEMENT_GLOBAL": {
     "DELETE": "It has been deleted"
+  },
+  "SUPPORT_WIDGET": {
+    "HEADER_TITLE": "Direct Support",
+    "HELP_TITLE": "Need help?",
+    "HELP_DESCRIPTION": "Send a ticket to the administration team and we will respond in your message inbox.",
+    "MESSAGE_LABEL": "Your Message",
+    "MESSAGE_PLACEHOLDER": "Describe your issue or question...",
+    "SUCCESS_MESSAGE": "Ticket sent successfully!",
+    "SENDING_BTN": "Sending...",
+    "SEND_BTN": "Submit Ticket"
+  },
+  "AI_ASSISTANT": {
+    "HEADER_TITLE": "Virtual Assistant (AI)",
+    "INPUT_PLACEHOLDER": "Ask something about CuidaDos...",
+    "INITIAL_MESSAGE": "Hi! I'm the CuidaDos smart assistant. Do you have any questions about the manuals or how the platform works?",
+    "ERROR_MESSAGE": "Oops, I had a small short circuit. Can you repeat that?"
   }
 }

@@ -348,6 +348,7 @@
   },
 
   "NOTIFICATIONS": {
+    "ADMIN": "Abre un ticket con el administrador",
     "TITLE": "Notificaciones",
     "TABLE": {
       "NAME": "Nombre",
@@ -355,7 +356,8 @@
       "DATE": "Fecha"
     },
     "MESSAGES": {
-      "CONNECTION_ERROR": "Error en la conexión de avisos en vivo"
+      "CONNECTION_ERROR": "Error en la conexión de avisos en vivo",
+      "EMPTY": "No hay notificaciones"
     }
   },
   "RECOVER_PASSWORD": {
@@ -738,5 +740,21 @@
   },
   "MANAGEMENT_GLOBAL": {
     "DELETE": "Borrado con éxito"
+  },
+  "SUPPORT_WIDGET": {
+    "HEADER_TITLE": "Soporte Directo",
+    "HELP_TITLE": "¿Necesitas ayuda?",
+    "HELP_DESCRIPTION": "Envía un ticket al equipo de administración y te responderemos en tu bandeja de mensajes.",
+    "MESSAGE_LABEL": "Tu Mensaje",
+    "MESSAGE_PLACEHOLDER": "Describe tu problema o consulta...",
+    "SUCCESS_MESSAGE": "¡Ticket enviado correctamente!",
+    "SENDING_BTN": "Enviando...",
+    "SEND_BTN": "Enviar Ticket"
+  },
+  "AI_ASSISTANT": {
+    "HEADER_TITLE": "Asistente Virtual (IA)",
+    "INPUT_PLACEHOLDER": "Pregunta algo sobre CuidaDos...",
+    "INITIAL_MESSAGE": "¡Hola! Soy el asistente inteligente de CuidaDos. ¿Tienes alguna duda sobre los manuales o cómo funciona la plataforma?",
+    "ERROR_MESSAGE": "Ups, he tenido un pequeño cruce de cables. ¿Puedes repetirlo?"
   }
 }

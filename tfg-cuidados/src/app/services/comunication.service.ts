@@ -76,12 +76,12 @@ export class ComunicationService {
       .select(
         `
         *,
-        Emisor:Usuario!fk_comunicacion_emisor ( nombre ),
+        Emisor:Usuario!fk_comunicacion_emisor (email),
         Receptor:Usuario!fk_comunicacion_receptor ( nombre )
       `,
       )
       .eq('tipo_comunicacion', 'mensaje')
-      .or(`id_receptor.eq.${user.id_usuario},id_emisor.eq.${user.id_usuario}`)
+      .eq('id_receptor', user.id_usuario)
       .order('fecha_envio', { ascending: false });
 
     if (!error) {

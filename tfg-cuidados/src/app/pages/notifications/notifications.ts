@@ -43,9 +43,9 @@ export class Notifications implements OnInit {
           console.error('Error IRL:', err);
           return this.translate.get('NOTIFICATIONS.MESSAGES.CONNECTION_ERROR').pipe(
             tap((res) => this.messageService.showMessage(res, 'error')),
-            map(() => [])
+            map(() => []),
           );
-        })
+        }),
       )
       .subscribe((data) => {
         this.dataSource.data = data;

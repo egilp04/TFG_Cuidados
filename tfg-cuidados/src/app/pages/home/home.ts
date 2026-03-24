@@ -3,11 +3,12 @@ import { ButtonComponent } from '../../components/button/button';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { AiAssistantComponent } from '../../components/ai-assistant/ai-assistant.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ButtonComponent, TranslateModule],
+  imports: [ButtonComponent, TranslateModule, AiAssistantComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
