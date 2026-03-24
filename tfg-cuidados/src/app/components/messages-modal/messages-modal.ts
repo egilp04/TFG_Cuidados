@@ -55,7 +55,7 @@ export class MessagesModal implements OnInit {
   ngOnInit() {
     if (this.data.modo === 'verMensaje' && this.data.contenido) {
       this.mensajeForm.patchValue({
-        emisor: this.data.contenido.Emisor?.nombre,
+        emisor: this.data.contenido.Emisor?.email,
         receptor: this.data.contenido.Receptor?.nombre,
         asunto: this.data.contenido.asunto,
         contenido: this.data.contenido.contenido,
@@ -86,7 +86,7 @@ export class MessagesModal implements OnInit {
       if (!idEmisor) {
         this.messageService.showMessage(
           this.translate.instant('MESSAGES_MODAL.FEEDBACK.ERROR_SENDER'),
-          'error'
+          'error',
         );
         this.cd.markForCheck();
         return;
@@ -111,13 +111,13 @@ export class MessagesModal implements OnInit {
             };
 
             return this.comunicationService.insertComunicacion(nuevaComunicacion);
-          })
+          }),
         )
         .subscribe({
           next: () => {
             this.messageService.showMessage(
               this.translate.instant('MESSAGES_MODAL.FEEDBACK.SEND_SUCCESS'),
-              'exito'
+              'exito',
             );
             this.dialogRef.close();
             this.cd.markForCheck();

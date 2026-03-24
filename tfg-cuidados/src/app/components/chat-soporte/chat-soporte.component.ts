@@ -8,13 +8,13 @@ import { ComunicacionModel } from '../../models/Comunicacion';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-chat-admin',
+  selector: 'app-chat-soporte',
   standalone: true,
   imports: [CommonModule, FormsModule, TranslateModule],
-  templateUrl: './chat-admin.component.html',
-  styleUrls: ['./chat-admin.component.css'],
+  templateUrl: './chat-soporte.component.html',
+  styleUrls: ['./chat-soporte.component.css'],
 })
-export class ChatAdminComponent implements OnInit {
+export class ChatSoporteComponent implements OnInit {
   private comunicationService = inject(ComunicationService);
   private authService = inject(AuthService);
   private supabase = inject(SupabaseService).getClient();
