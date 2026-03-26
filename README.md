@@ -29,6 +29,8 @@ La aplicación se encuentra desplegada en **Vercel**.
 ![Landing page de cuidaDos](./carpeta_imgs/landing.png)
 
 
+[![Presentación CuidaDos](https://img.youtube.com/vi/ID_DEL_VIDEO/maxresdefault.jpg)](https://youtu.be/vepcTSAasaY)
+
 ## 🧱 Estructura del proyecto
 
 ```text
