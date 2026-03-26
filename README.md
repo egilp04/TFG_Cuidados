@@ -27,10 +27,7 @@ La aplicación se encuentra desplegada en **Vercel**.
 **IMPORTANTE**: tener el navegador al 100% y la configuración de la pantalla al **100%**, suelen venir al **125%**.
 
 ![Landing page de cuidaDos](./carpeta_imgs/landing.png)
-
-
-[![Presentación CuidaDos](https://img.youtube.com/vi/ID_DEL_VIDEO/maxresdefault.jpg)](https://youtu.be/vepcTSAasaY)
-
+[![Ver presentación de CuidaDos](https://img.youtube.com/vi/vepcTSAasaY/hqdefault.jpg)](https://youtu.be/vepcTSAasaY)
 ## 🧱 Estructura del proyecto
 
 ```text
