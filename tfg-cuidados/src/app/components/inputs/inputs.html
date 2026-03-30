@@ -1,10 +1,10 @@
-<div class="flex flex-col items-start text-left w-full gap-2">
-  <label class="text-primary text-label font-poppins ml-1" [for]="name()"> {{ label() }} </label>
+<div class="input-container">
+  <label class="input-label" [for]="name()"> {{ label() }} </label>
   <div class="relative w-full">
     @if (type() === 'textarea') {
       <textarea
         [id]="name()"
-        class="w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent h-120 xl:h-150 resize-none"
+        class="input-text-area"
         [placeholder]="label()"
         [formControl]="control()"
         [class.border-primary]="!errorMessage()"
@@ -15,7 +15,7 @@
     } @else {
       <input
         [id]="name()"
-        class="w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent"
+        class="input-basic"
         [placeholder]="label()"
         [formControl]="control()"
         [type]="inputType()"
@@ -28,12 +28,7 @@
     }
 
     @if (type() === 'password') {
-      <button
-        type="button"
-        (click)="togglePasswordVisibility()"
-        class="absolute right-4 top-1/2 -translate-y-1/2 text-primary hover:text-accent focus:outline-none cursor-pointer flex items-center justify-center p-1"
-        tabindex="-1"
-      >
+      <button type="button" (click)="togglePasswordVisibility()" class="eye-passwd" tabindex="-1">
         @if (isPasswordVisible()) {
           <lucide-icon name="eye-off" class="w-5 h-5"></lucide-icon>
         } @else {
@@ -43,11 +38,7 @@
     }
   </div>
   @if (errorMessage()) {
-    <span
-      [id]="name() + '-error'"
-      class="text-red text-label ml-2 animate-fade-in"
-      aria-live="polite"
-    >
+    <span [id]="name() + '-error'" class="input-error animate-fade-in" aria-live="polite">
       {{ errorMessage() }}
     </span>
   }

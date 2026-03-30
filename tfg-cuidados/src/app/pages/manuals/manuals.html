@@ -1,13 +1,11 @@
 <div class="w-full mb-4">
   <app-buttonback></app-buttonback>
 </div>
-<div class="flex flex-col justify-center items-center bg-surface p-20 md:px-24">
-  <h1 class="text-h1 text-primary mt-10 mb-20 text-center">{{ 'MANUALS.TITLE' | translate }}</h1>
-  <div
-    class="h-full px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-20 mt-20 w-full items-stretch mb-14"
-  >
+<div class="manuals-container">
+  <h1 class="manuals-title">{{ 'MANUALS.TITLE' | translate }}</h1>
+  <div class="manuals-download-container">
     @for (item of cardsdata; track item.titulo; let i = $index) {
-      <div class="flex flex-col gap-20 justify-between items-center flex-1 h-full">
+      <div class="manuals-cards-container">
         <app-cards-landing
           class="w-full h-full"
           [titulo]="item.titulo"
@@ -17,23 +15,18 @@
         >
         </app-cards-landing>
 
-        <a
-          [href]="item.archivo"
-          [download]="item.archivo"
-          target="_blank"
-          class="md:w-48 md:h-11 xl:h-[4rem] 2xl:h-80 2xl:w-1/3"
-        >
+        <a [href]="item.archivo" [download]="item.archivo" target="_blank" class="manuals-link">
           <app-button label="Descargar PDF" variant="primary" class=""></app-button>
         </a>
       </div>
     }
   </div>
-  <div class="w-full p-10 justify-center flex flex-col gap-3 items-center">
-    <h1 class="text-h1 text-primary mt-10 mb-20 text-center">
+  <div class="manual-video-container">
+    <h2 class="manuals-title">
       {{ 'MANUALS.USERVIDEO' | translate }}
-    </h1>
+    </h2>
     <a
-      class="button-base bg-primary text-white w-1/2"
+      class="button-base manual-video-btn"
       href="https://youtu.be/okBBfYk9x3I?si=TXp7t2F1XyDVUOtA"
       target="_blank"
       >{{ 'MANUALS.USERVIDEO' | translate }}</a
