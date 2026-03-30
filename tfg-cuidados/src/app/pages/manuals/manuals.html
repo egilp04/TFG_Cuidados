@@ -2,10 +2,9 @@
   <app-buttonback></app-buttonback>
 </div>
 <div class="flex flex-col justify-center items-center bg-surface p-20 md:px-24">
-  <h1 class="text-h1 text-primary mt-10 mb-20 text-center">Manuales</h1>
-
+  <h1 class="text-h1 text-primary mt-10 mb-20 text-center">{{ 'MANUALS.TITLE' | translate }}</h1>
   <div
-    class="h-full px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-20 mt-20 w-full items-stretch"
+    class="h-full px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-20 mt-20 w-full items-stretch mb-14"
   >
     @for (item of cardsdata; track item.titulo; let i = $index) {
       <div class="flex flex-col gap-20 justify-between items-center flex-1 h-full">
@@ -29,7 +28,18 @@
       </div>
     }
   </div>
+  <div class="w-full p-10 justify-center flex flex-col gap-3 items-center">
+    <h1 class="text-h1 text-primary mt-10 mb-20 text-center">
+      {{ 'MANUALS.USERVIDEO' | translate }}
+    </h1>
+    <a
+      class="button-base bg-primary text-white w-1/2"
+      href="https://youtu.be/okBBfYk9x3I?si=TXp7t2F1XyDVUOtA"
+      target="_blank"
+      >{{ 'MANUALS.USERVIDEO' | translate }}</a
+    >
+  </div>
 </div>
-@if (authService.isAuthenticated()) {
+@if (authService.isAuthenticated() && rol != 'administrador') {
   <app-chat-soporte></app-chat-soporte>
 }
