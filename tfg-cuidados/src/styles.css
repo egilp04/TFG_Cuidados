@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-primary: #344f51;
@@ -10,13 +11,20 @@
   --color-red: #ff383c;
   --color-nav-border: #e4e4e4;
 
-  --color-surface-dark: #121b1c;
-  --color-primary-dark: #78a1a4;
-  --color-secondary-dark: #72a294;
-  --color-accent-dark: #93d18d;
+  --color-surface-dark: #0b1712;
+  --color-app-dark: #1d3329;
+  --color-dark-muted: #456568;
+  --color-primary-dark: #0f2a1f;
+  --color-secondary-dark: #16352a;
+  --color-accent-dark: #6fbf73;
+  --color-btn-dark: #9ccd78;
   --color-disabled-dark: #3d4a4b;
   --color-red-dark: #ff5c5f;
-  --color-nav-border-dark: #233436;
+  --color-dark-surface-hover: #1a2628;
+  --color-dark-border: #233436;
+  --color-cards-dark: #1a2f26;
+  --color-text-dark: #f1f5f4;
+  --color-subtitle-dark: #a8b3af;
 
   /* Familias */
   --font-fraunces: 'Fraunces', serif;
@@ -127,6 +135,10 @@
     @apply m-0 p-0 h-full;
   }
 
+  body {
+    @apply bg-surface dark:bg-surface-dark;
+  }
+
   h1,
   h2,
   p,
@@ -160,11 +172,11 @@
     @apply disabled:bg-disabled disabled:text-surface disabled:cursor-not-allowed dark:bg-gray-500;
   }
   .btn-primary {
-    @apply bg-secondary text-surface hover:bg-accent;
+    @apply bg-secondary text-surface hover:bg-accent dark:bg-btn-dark dark:text-surface-dark;
   }
 
   .btn-secondary {
-    @apply bg-transparent text-primary underline hover:text-accent;
+    @apply bg-transparent text-primary underline hover:text-accent dark:text-btn-dark;
   }
 
   .btn-danger {
@@ -235,13 +247,16 @@
     @apply italic;
   }
   .services-section {
-    @apply w-full overflow-hidden flex flex-col items-center justify-center bg-surface;
+    @apply w-full overflow-hidden flex flex-col items-center justify-center;
   }
   .services-title {
-    @apply text-center text-h1 text-primary m-20 lg:m-[2rem] 2xl:m-[2.5rem] uppercase;
+    @apply text-center text-h1 text-primary dark:text-surface m-20 lg:m-[2rem] 2xl:m-[2.5rem] uppercase;
   }
   .services-grid {
     @apply h-full px-4 grid grid-cols-1 grid-rows-3 gap-10 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col lg:grid-cols-3 lg:grid-rows-1;
+  }
+
+  .services-card-special {
   }
 
   .register-btn {
@@ -252,7 +267,7 @@
     @apply ml-4 mr-6 w-14 h-[32px] p-1;
     @apply rounded-full flex items-center shrink-0 cursor-pointer
            transition-colors duration-300 outline-none focus:outline-none border-none
-           active:bg-primary;
+           active:bg-btn-dark;
   }
 
   .span-toggle-dark-mode {
@@ -262,8 +277,17 @@
            transition-transform duration-300 ease-in-out;
   }
 
+  .footer-container {
+    @apply flex flex-col items-center justify-between md:flex-row py-20 px-4 bg-primary dark:bg-app-dark;
+  }
+
+  .footer-text {
+    @apply text-label text-surface hover:text-accent transition-colors cursor-pointer;
+  }
+
   .nav-container {
-    @apply relative flex justify-between items-center p-2 lg:p-10 bg-surface border-b border-nav-border min-h-20 z-50;
+    @apply relative flex justify-between items-center p-2 lg:p-10 bg-surface  min-h-20 z-50
+    dark:bg-surface-dark;
   }
 
   .nav-menu-icon {
@@ -313,15 +337,28 @@
   .nav-open-icon {
     @apply text-primary w-20 h-20;
   }
-}
 
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  .cards-landing-container {
+    @apply h-auto bg-surface border border-nav-border dark:border-gray-200 dark:bg-surface-dark flex flex-col items-center text-center hover:shadow-soft transition-all duration-300;
+  }
+  .cards-landing-img-container {
+    @apply w-full shrink-0 overflow-hidden;
+  }
+  .cards-landing-img {
+    @apply w-full h-full aspect-video object-cover;
+  }
+
+  .cards-landing-title {
+    @apply font-fraunces text-h2 text-primary mb-10 dark:text-surface;
+  }
+
+  .cards-landing-cargo {
+    @apply text-secondary font-semibold uppercase text-label dark:text-surface;
+  }
+
+  .cards-landing-description {
+    @apply text-p text-secondary overflow-hidden dark:text-surface;
+  }
 }
 
 @keyframes tooltip-entry {
