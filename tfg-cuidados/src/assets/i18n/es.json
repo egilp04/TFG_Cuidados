@@ -514,7 +514,7 @@
       "ERROR_GENERIC": "Error, inténtalo de nuevo."
     },
     "PLACEHOLDER": {
-      "SELECTREGION": "Seleccione una comunidad"
+      "SELECTREGION": "Escoja una"
     },
     "LABELS": {
       "USERNAME": "Nombre de usuario",
@@ -529,7 +529,7 @@
       "ADDRESS": "Dirección",
       "CITY": "Localidad",
       "ZIP": "CP",
-      "REGION": "Comunidad Autónoma",
+      "REGION": "C.C.A.A.",
       "PASSWORD": "Contraseña",
       "REPASSWORD": "Repetir contraseña",
       "DESCRIPTION": "Descripción"

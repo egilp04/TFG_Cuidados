@@ -1,5 +1,5 @@
-<div class="flex flex-col justify-center items-center w-full p-20">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-8 w-full">
+<div class="register-container">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
     @if (isUser) {
       <app-inputs
         name="nombre"
@@ -7,8 +7,8 @@
         [control]="getCtrl('nombre')"
         [errorMessage]="getErrorMessage('nombre')"
       ></app-inputs>
-      <div class="flex flex-col gap-6">
-        <div class="flex flex-row gap-6">
+      <div class="register-form-col">
+        <div class="register-form-row">
           <app-inputs
             name="ape1"
             [label]="'REGISTER.LABELS.SURNAME1' | translate"
@@ -25,14 +25,14 @@
             class="flex-1"
           ></app-inputs>
         </div>
-        <div class="flex flex-row gap-6">
+        <div class="register-form-row">
           <app-inputs
             name="fechnac"
             [label]="'REGISTER.LABELS.BIRTHDATE' | translate"
             type="date"
             [control]="getCtrl('fechnac')"
             [errorMessage]="getErrorMessage('fechnac')"
-            class="flex-1"
+            class="w-3/4"
           ></app-inputs>
           <app-inputs
             name="dni"
@@ -44,7 +44,7 @@
         </div>
       </div>
     } @else {
-      <div class="flex flex-col gap-6">
+      <div class="register-form-col">
         <app-inputs
           name="nombreEmpresa"
           [label]="'REGISTER.LABELS.COMPANY_NAME' | translate"
@@ -95,7 +95,7 @@
       [errorMessage]="getErrorMessage('localidad')"
     ></app-inputs>
 
-    <div class="flex flex-row gap-6">
+    <div class="register-form-row">
       <app-inputs
         name="codpostal"
         [label]="'REGISTER.LABELS.ZIP' | translate"
@@ -104,7 +104,7 @@
         class="flex-1"
       ></app-inputs>
 
-      <div class="flex flex-col gap-2 w-full flex-1">
+      <div class="register-form-select-container">
         <label for="comunidad" class="register-form-select-label">
           {{ 'REGISTER.LABELS.REGION' | translate }}
         </label>
@@ -120,9 +120,7 @@
             }
           </select>
 
-          <div
-            class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary dark:text-white flex items-center"
-          >
+          <div class="register-form-select-arrow">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"

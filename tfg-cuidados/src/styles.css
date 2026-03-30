@@ -542,8 +542,31 @@
   .register-form-options {
     @apply text-primary;
   }
+
+  .register-form-select-container {
+    @apply flex flex-col gap-2 w-full flex-1;
+  }
   .register-form-select {
     @apply text-primary dark:text-surface appearance-none bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary dark:border-surface! border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer;
+  }
+
+  .register-form-col {
+    @apply flex flex-col gap-6;
+  }
+  .register-form-row {
+    @apply flex flex-row gap-6;
+  }
+
+  .register-form-select-arrow {
+    @apply absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary dark:text-white flex items-center;
+  }
+
+  .register-container {
+    @apply flex flex-col justify-center items-center w-full p-2 2xl:p-24;
+  }
+
+  .register-form {
+    @apply flex flex-col gap-8 w-full;
   }
 
   .home-container {

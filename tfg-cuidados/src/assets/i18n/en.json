@@ -554,7 +554,7 @@
   "SEARCH_PLACEHOLDER": "Search...",
   "REGISTER": {
     "PLACEHOLDER": {
-      "SELECTREGION": "Select a region"
+      "SELECTREGION": "Choose"
     },
     "MESSAGES": {
       "SUCCESS": "Registration successful! Please check your email.",
@@ -574,7 +574,7 @@
       "ADDRESS": "Address",
       "CITY": "City",
       "ZIP": "Zip Code",
-      "REGION": "Region / State",
+      "REGION": "State",
       "PASSWORD": "Password",
       "REPASSWORD": "Repeat Password",
       "DESCRIPTION": "Description"
