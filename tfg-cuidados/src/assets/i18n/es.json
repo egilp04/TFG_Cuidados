@@ -7,9 +7,9 @@
     "ACTIVITIES": "Actividades",
     "SERVICES": "Servicios",
     "PROFILE": "Perfil",
-    "LOGIN": "Iniciar Sesión",
-    "LOGOUT": "Cerrar Sesión",
-    "REGISTER": "Registrarse"
+    "LOGIN": "Inicio de Sesión",
+    "LOGOUT": "Cierre de Sesión",
+    "REGISTER": "Registro"
   },
   "HOME": {
     "WELCOME": "Bienvenido",

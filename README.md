@@ -22,10 +22,17 @@ El proyecto ofrece una solución integral para la gestión de servicios de cuida
 La aplicación se encuentra desplegada en **Vercel**.
 
 🔗 **Accede a la versión en producción:**
-[![Desplegado en Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://tfg-cuidados-evelia.vercel.app/)
+[![Desplegado en Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://tfg-cuidados.vercel.app/)
 > Sitio web intermodular para la contratación y gestión de servicios de cuidados especializados.
+**IMPORTANTE**: tener el navegador al 100% y la configuración de la pantalla al **100%**, suelen venir al **125%**.
 
 ![Landing page de cuidaDos](./carpeta_imgs/landing.png)
+
+## Video promocional del aplicativo 
+[![Ver presentación de CuidaDos](https://img.youtube.com/vi/vepcTSAasaY/hqdefault.jpg)](https://youtu.be/vepcTSAasaY)
+*(Haz clic en la imagen para ver el vídeo promocional de la plataforma).*
+
+
 
 
 ## 🧱 Estructura del proyecto
@@ -255,10 +262,10 @@ A continuación, se detallan los hitos alcanzados durante el proceso:
 | 27.01.26  | **Elección de Tecnologías**           | Selección del stack tecnológico definitivo para el desarrollo del aplicativo. Justificación de la elección de Angular y Supabase. Análisis de ventajas técnicas y de mantenimiento. |
 | 03.02.26  | **Estructuración Documentación**      | Organización de la memoria técnica del TFG. Definición de capítulos, apartados y anexos. Preparación de la base documental para la redacción final. |
 | 10.02.26  | **Esquema de Manuales**               | Definición de la estructura de los manuales de Usuario y Técnico. Identificación de contenidos clave y capturas necesarias. Planificación de la redacción detallada. |
-| —         | **Desarrollo de Manuales**            | Redacción del manual de usuario con instrucciones de uso del aplicativo. Elaboración del manual técnico con detalles de arquitectura y configuración. Inclusión de capturas y ejemplos prácticos. |
-| —         | **Opciones de Despliegue**            | Análisis de distintas alternativas de hosting para el aplicativo. Comparación de costes, rendimiento y facilidad de mantenimiento. Selección de la opción más adecuada. |
-| —         | **Pruebas en Entorno Local**          | Configuración del entorno de desarrollo local. Ejecución de pruebas funcionales y técnicas. Corrección de errores antes del despliegue en producción. |
-| —         | **Pruebas de Despliegue en Vercel**   | Despliegue del aplicativo en Vercel como entorno de producción. Verificación del correcto funcionamiento del sistema. Validación final del proyecto. |
+| 24.02.26         | **Desarrollo de Manuales**            | Redacción del manual de usuario con instrucciones de uso del aplicativo. Elaboración del manual técnico con detalles de arquitectura y configuración. Inclusión de capturas y ejemplos prácticos. |
+| 03.0.326        | **Opciones de Despliegue**            | Análisis de distintas alternativas de hosting para el aplicativo. Comparación de costes, rendimiento y facilidad de mantenimiento. Selección de la opción más adecuada. |
+| 10.03.26         | **Pruebas en Entorno Local**          | Configuración del entorno de desarrollo local. Ejecución de pruebas funcionales y técnicas. Corrección de errores antes del despliegue en producción. |
+| 17.0.3.26         | **Pruebas de Despliegue en Vercel**   | Despliegue del aplicativo en Vercel como entorno de producción. Verificación del correcto funcionamiento del sistema. Validación final del proyecto. |
 
 Notas del seguimiento
 Cada sesión siguió la estructura: resumen de avances, demo funcional, bloqueo/riesgos y tareas para la siguiente semana.
