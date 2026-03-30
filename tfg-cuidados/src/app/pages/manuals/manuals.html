@@ -30,4 +30,6 @@
     }
   </div>
 </div>
-<app-chat-soporte></app-chat-soporte>
+@if (authService.isAuthenticated()) {
+  <app-chat-soporte></app-chat-soporte>
+}
