@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class AiService {
   private http = inject(HttpClient);
-  private readonly API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${environment.geminiApiKey}`;
+  private readonly API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${environment.geminiApiKey}`;
 
   private readonly CONTEXTO_CUIDADOS = `
     Eres el Asistente Virtual Oficial de CuidaDos, una plataforma web que conecta a personas que requieren cuidados con empresas y profesionales del sector sociosanitario.
@@ -38,19 +38,13 @@ export class AiService {
 
   askAssistant(userMessage: string, lang: string = 'es'): Promise<string> {
     const idiomaSeleccionado = lang === 'en' ? 'ENGLISH' : 'ESPAÑOL';
+    const mensajeCompleto = `${this.CONTEXTO_CUIDADOS}\n\nREGLA OBLIGATORIA: Responde en ${idiomaSeleccionado}.\n\nUsuario dice: ${userMessage}`;
 
     const body = {
-      systemInstruction: {
-        parts: [
-          {
-            text: `${this.CONTEXTO_CUIDADOS}\n\nREGLA OBLIGATORIA: Debes responder SIEMPRE en ${idiomaSeleccionado}.`,
-          },
-        ],
-      },
       contents: [
         {
           role: 'user',
-          parts: [{ text: userMessage }],
+          parts: [{ text: mensajeCompleto }],
         },
       ],
     };
@@ -90,3 +84,5 @@ export class AiService {
     );
   }
 }
+
+//Consulta de los modelos disponibles. https://generativelanguage.googleapis.com/v1beta/models?key=

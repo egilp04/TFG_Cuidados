@@ -62,14 +62,12 @@
         (click)="gestionrHorariosGlobales()"
       ></app-button>
     }
-    @if (rol != 'administrador') {
-      <app-button
-        [label]="'MAIN_MENU.COMMON.ACTIVITIES' | translate"
-        variant="primary"
-        class="h-[3rem] w-[60%] md:h-80 lg:h-36 md:mb-20"
-        (click)="actividadesProgramadas()"
-      ></app-button>
-      <app-ai-assistant></app-ai-assistant>
-    }
+    <app-button
+      [label]="'MAIN_MENU.COMMON.ACTIVITIES' | translate"
+      variant="primary"
+      class="h-[3rem] w-[60%] md:h-80 lg:h-36 md:mb-20"
+      (click)="actividadesProgramadas()"
+    ></app-button>
+    <app-ai-assistant></app-ai-assistant>
   </div>
 </div>
