@@ -163,13 +163,13 @@
 
   .mat-mdc-select-value,
   .mat-mdc-select-arrow {
-    @apply !text-primary;
+    @apply text-primary dark:text-surface!;
   }
 }
 
 @layer components {
   .btn-disabled {
-    @apply disabled:bg-disabled disabled:text-surface disabled:cursor-not-allowed dark:bg-gray-500;
+    @apply disabled:bg-disabled disabled:text-surface disabled:cursor-not-allowed dark:bg-disabled-dark;
   }
   .btn-primary {
     @apply bg-secondary text-surface hover:bg-accent dark:bg-btn-dark dark:text-surface-dark;
@@ -248,7 +248,7 @@
     @apply text-center;
   }
   .hero-title {
-    @apply text-h2 text-primary;
+    @apply text-h2 text-primary font-bold;
   }
   .hero-subtitle {
     @apply italic;
@@ -307,15 +307,15 @@
   }
 
   .nav-menu-open {
-    @apply absolute top-full right-0 w-auto bg-surface border-b border-nav-border shadow-lg flex flex-col p-6 gap-6 lg:hidden;
+    @apply absolute top-full right-0 w-auto bg-surface dark:bg-surface-dark border-b border-nav-border shadow-lg flex flex-col p-6 gap-6 lg:hidden;
   }
 
   .nav-notis-toggle {
-    @apply absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5;
+    @apply absolute -top-2 -right-2 bg-red-600 dark:bg-red-dark text-white text-xs rounded-full px-1.5 py-0.5;
   }
 
   .nav-notis {
-    @apply absolute -top-1 -right-1 bg-red-600 text-white text-[10px] rounded-full px-1.5;
+    @apply absolute -top-1 -right-1 bg-red-600 dark:bg-red-dark text-white text-[10px] rounded-full px-1.5;
   }
 
   .nav-menu-toggle-autenticated-container {
@@ -323,7 +323,7 @@
   }
 
   .nav-menu-open-autenticated-container {
-    @apply flex flex-col gap-10 items-end w-auto;
+    @apply flex flex-col gap-10 justify-center items-center w-auto;
   }
 
   .nav-menu-open-no-autenticated-container {
@@ -331,7 +331,7 @@
   }
 
   .nav-menu-open-divs {
-    @apply flex flex-col justify-around w-auto border-b p-4 pr-8.5 border-gray-200 gap-4;
+    @apply flex flex-col justify-around w-auto border-b p-4 gap-4;
   }
 
   .nav-menu-toggle-divs {
@@ -339,11 +339,11 @@
   }
 
   .nav-menu-icon {
-    @apply text-h2 text-primary cursor-pointer;
+    @apply text-h2 text-primary dark:text-surface cursor-pointer;
   }
 
   .nav-open-icon {
-    @apply text-primary w-20 h-20;
+    @apply text-primary dark:text-surface w-20 h-20;
   }
 
   .cards-landing-container {
@@ -466,6 +466,99 @@
   }
   .message-noti {
     @apply flex flex-col items-center p-6;
+  }
+
+  .login-modal-container {
+    @apply p-6 flex flex-col w-full justify-center items-center gap-6  dark:bg-surface-dark!;
+  }
+
+  .login-modal-close-btn {
+    @apply cursor-pointer h-10 w-10 md:h-16 md:w-16 lg:h-20 lg:w-20;
+  }
+
+  .login-modal-title {
+    @apply text-primary text-h2 text-center mb-10 dark:text-surface;
+  }
+
+  .login-login-form {
+    @apply w-full flex flex-col items-center;
+  }
+
+  .login-login-form-div {
+    @apply flex justify-center items-center flex-col w-full;
+  }
+  .login-form-reset {
+    @apply p-0! flex! flex-col! gap-10 w-full justify-center items-center;
+  }
+  .login-login-error {
+    @apply text-red dark:text-red-dark;
+  }
+
+  .login-subtitle {
+    @apply text-p text-secondary mb-20 text-center px-4 dark:text-surface;
+  }
+
+  .login-other-actions {
+    @apply flex! flex-col! mb-10! gap-4 w-full;
+  }
+
+  .login-recuperar-container {
+    @apply w-full flex flex-col items-center;
+  }
+
+  .login-registro-container {
+    @apply w-full flex flex-col items-center;
+  }
+  .login-form-label-base {
+    @apply ml-2 transition-all duration-300 mb-4 text-center;
+  }
+
+  .register-form-check-error {
+    @apply text-red-500 text-label mt-1 dark:text-red-dark;
+  }
+
+  .register-form-btn-send {
+    @apply flex w-full justify-center items-center m-20;
+  }
+  .register-form-terms-title {
+    @apply text-primary text-label dark:text-surface;
+  }
+  .register-form-terms {
+    @apply text-accent text-label cursor-pointer hover:underline;
+  }
+
+  .register-form-check-container {
+    @apply flex flex-col justify-center items-center gap-2;
+  }
+
+  .register-form-check-inner-container {
+    @apply flex flex-row justify-center items-center gap-10 p-6;
+  }
+
+  .register-form-select-label {
+    @apply text-label text-primary font-medium dark:text-surface;
+  }
+
+  .register-form-options {
+    @apply text-primary;
+  }
+  .register-form-select {
+    @apply text-primary dark:text-surface appearance-none bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary dark:border-surface! border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer;
+  }
+
+  .home-container {
+    @apply flex flex-col p-20 w-full justify-start items-center h-full;
+  }
+
+  .home-title {
+    @apply text-h1 text-primary w-full text-center mt-10 mb-10 dark:text-surface;
+  }
+
+  .home-btn-container {
+    @apply flex flex-col justify-around items-center w-full pt-20 h-full gap-10 overflow-auto;
+  }
+  .home-btn {
+    @apply h-[3rem] w-[60%] md:h-80 lg:h-36;
   }
 }
 
