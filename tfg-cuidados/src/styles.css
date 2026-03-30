@@ -2,7 +2,6 @@
 @import 'tailwindcss';
 
 @theme {
-  /* Definiendo colores */
   --color-primary: #344f51;
   --color-secondary: #51786e;
   --color-surface: #fafafa;
@@ -11,7 +10,14 @@
   --color-red: #ff383c;
   --color-nav-border: #e4e4e4;
 
-  /* Definiendo fuentes */
+  --color-surface-dark: #121b1c;
+  --color-primary-dark: #78a1a4;
+  --color-secondary-dark: #72a294;
+  --color-accent-dark: #93d18d;
+  --color-disabled-dark: #3d4a4b;
+  --color-red-dark: #ff5c5f;
+  --color-nav-border-dark: #233436;
+
   /* Familias */
   --font-fraunces: 'Fraunces', serif;
   --font-poppins: 'Poppins', sans-serif;
@@ -70,7 +76,6 @@
 }
 
 @media (width >= 48rem) {
-  /* md */
   :root {
     --text-h1: 1.5rem;
     --text-h2: 1.25rem;
@@ -81,7 +86,6 @@
 }
 
 @media (width >= 64rem) {
-  /* lg */
   :root {
     --text-h1: 2rem;
     --text-h2: 1.5rem;
@@ -91,7 +95,6 @@
   }
 }
 
-/* xl (Pantallas grandes - 1280px) */
 @media (width >= 80rem) {
   :root {
     --text-h1: 2.5rem;
@@ -102,7 +105,6 @@
   }
 }
 
-/* 2xl (Pantallas ultra anchas - 1536px) */
 @media (width >= 96rem) {
   :root {
     --text-h1: 3rem;
@@ -119,12 +121,21 @@
   ::after {
     box-sizing: border-box;
   }
+
+  html,
+  body {
+    @apply m-0 p-0 h-full;
+  }
+
   h1,
   h2,
   p,
   label {
-    margin: 0;
-    padding: 0;
+    @apply m-0 p-0;
+  }
+
+  small {
+    @apply max-w-1/2 2xl:max-w-4/5;
   }
   .mat-mdc-paginator-outer-container {
     @apply !bg-surface;
@@ -145,23 +156,162 @@
 }
 
 @layer components {
-  .btn-disabled-primary {
-    @apply disabled:bg-disabled disabled:text-surface disabled:cursor-not-allowed;
+  .btn-disabled {
+    @apply disabled:bg-disabled disabled:text-surface disabled:cursor-not-allowed dark:bg-gray-500;
   }
-  .btn-disabled-secondary {
-    @apply disabled:text-disabled underline disabled:cursor-not-allowed;
+  .btn-primary {
+    @apply bg-secondary text-surface hover:bg-accent;
   }
+
+  .btn-secondary {
+    @apply bg-transparent text-primary underline hover:text-accent;
+  }
+
+  .btn-danger {
+    @apply bg-red text-surface;
+  }
+
+  .button-base {
+    @apply text-button rounded-12 transition-all duration-200 cursor-pointer flex items-center justify-center border-none px-10 py-6 md:px-15 md:py-8 lg:px-20 lg:py-10 disabled:bg-disabled h-full w-full;
+  }
+
   .animate-tooltip {
     animation: tooltip-entry 0.25s ease-out forwards;
   }
   .animate-text {
-    animation: text-entry 2s ease-out forwards;
+    animation: text-entry 2.4s ease-out forwards;
   }
   .animate-cards {
-    animation: cards-entry 1.5s ease-out forwards;
+    animation: cards-entry 2s ease-out forwards;
   }
-  .button-base {
-    @apply text-button rounded-12 transition-all duration-200 cursor-pointer flex items-center justify-center border-none px-10 py-6 md:px-15 md:py-8 lg:px-20 lg:py-10 disabled:bg-disabled h-full w-full;
+  .header-container {
+    @apply w-full mb-4;
+  }
+
+  .about-container {
+    @apply flex flex-col justify-center items-center bg-surface p-20 md:px-20 xl:px-24;
+  }
+  .about-title {
+    @apply text-h1 text-primary mt-10 mb-20 text-center;
+  }
+  .about-description {
+    @apply text-p text-secondary mb-20 md:mt-20 md:mb-20;
+  }
+  .about-list {
+    @apply list-disc list-outside px-10 space-y-4 text-secondary text-p;
+  }
+  .about-list-title {
+    @apply font-bold text-primary;
+  }
+  .about-sublist {
+    @apply list-none ml-4 mt-2 space-y-2;
+  }
+  .about-sublist-title {
+    @apply font-semibold text-primary;
+  }
+  .about-subtitle {
+    @apply text-h2 text-primary m-20 text-center;
+  }
+  .about-grid {
+    @apply h-full px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mt-20 w-full;
+  }
+
+  .landing-container {
+    @apply flex flex-col justify-center items-center w-full;
+  }
+  .hero-section {
+    @apply relative w-full h-300 md:h-[50svh] 2xl:h-[600px] overflow-hidden flex items-end justify-center pb-12 md:pb-20;
+  }
+  .hero-image {
+    @apply absolute inset-0 w-full h-full object-cover -z-10;
+  }
+  .hero-text-container {
+    @apply text-center;
+  }
+  .hero-title {
+    @apply text-h2 text-primary;
+  }
+  .hero-subtitle {
+    @apply italic;
+  }
+  .services-section {
+    @apply w-full overflow-hidden flex flex-col items-center justify-center bg-surface;
+  }
+  .services-title {
+    @apply text-center text-h1 text-primary m-20 lg:m-[2rem] 2xl:m-[2.5rem] uppercase;
+  }
+  .services-grid {
+    @apply h-full px-4 grid grid-cols-1 grid-rows-3 gap-10 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col lg:grid-cols-3 lg:grid-rows-1;
+  }
+
+  .register-btn {
+    @apply my-20;
+  }
+
+  .btn-toggle-dark-mode {
+    @apply ml-4 mr-6 w-14 h-[32px] p-1;
+    @apply rounded-full flex items-center shrink-0 cursor-pointer
+           transition-colors duration-300 outline-none focus:outline-none border-none
+           active:bg-primary;
+  }
+
+  .span-toggle-dark-mode {
+    @apply w-[24px] h-[24px];
+    @apply bg-white rounded-full shadow-md
+           flex items-center justify-center shrink-0
+           transition-transform duration-300 ease-in-out;
+  }
+
+  .nav-container {
+    @apply relative flex justify-between items-center p-2 lg:p-10 bg-surface border-b border-nav-border min-h-20 z-50;
+  }
+
+  .nav-menu-icon {
+    @apply text-primary focus:outline-none;
+  }
+
+  .nav-menu-toggle {
+    @apply hidden md:flex items-center gap-10;
+  }
+
+  .nav-menu-open {
+    @apply absolute top-full right-0 w-auto bg-surface border-b border-nav-border shadow-lg flex flex-col p-6 gap-6 lg:hidden;
+  }
+
+  .nav-notis-toggle {
+    @apply absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5;
+  }
+
+  .nav-notis {
+    @apply absolute -top-1 -right-1 bg-red-600 text-white text-[10px] rounded-full px-1.5;
+  }
+
+  .nav-menu-toggle-autenticated-container {
+    @apply flex items-center gap-10;
+  }
+
+  .nav-menu-open-autenticated-container {
+    @apply flex flex-col gap-10 items-end w-auto;
+  }
+
+  .nav-menu-open-no-autenticated-container {
+    @apply flex flex-col gap-4 w-full;
+  }
+
+  .nav-menu-open-divs {
+    @apply flex flex-col justify-around w-auto border-b p-4 pr-8.5 border-gray-200 gap-4;
+  }
+
+  .nav-menu-toggle-divs {
+    @apply flex flex-col gap-1 relative;
+  }
+
+  .nav-menu-icon {
+    @apply text-h2 text-primary cursor-pointer;
+  }
+
+  .nav-open-icon {
+    @apply text-primary w-20 h-20;
   }
 }
 

@@ -234,6 +234,10 @@
       "CANCELCONTRACT": "Error al cancelar el contrato.",
       "CONTACT": "El mensjae no ha sido enviado, inténtelo más tarde.",
       "DELETE_USER": "Error al eliminar el registro."
+    },
+    "TITLE": {
+      "RECEIVED": "Recibidos",
+      "SENT": "Enviados"
     }
   },
   "MANAGEMENT_SERVICES": {

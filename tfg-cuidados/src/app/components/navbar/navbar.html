@@ -1,6 +1,4 @@
-<nav
-  class="relative flex justify-between items-center p-2 lg:p-10 bg-surface border-b border-nav-border min-h-20 z-50"
->
+<nav class="nav-container">
   <div class="flex items-center">
     <a (click)="backHome()" class="cursor-pointer">
       <picture>
@@ -12,45 +10,39 @@
   </div>
 
   <div class="flex md:hidden">
-    <button (click)="toggleMenu()" class="text-primary focus:outline-none">
+    <button (click)="toggleMenu()" class="nav-menu-icon">
       <lucide-icon name="menu" class="w-22 h-20"></lucide-icon>
     </button>
   </div>
 
-  <div class="hidden md:flex items-center gap-10">
+  <div class="nav-menu-toggle">
     @if (authService.isAuthenticated()) {
-      <div class="flex items-center gap-10">
-        <div class="flex flex-col gap-1 relative">
+      <div class="nav-menu-toggle-autenticated-container">
+        <div class="nav-menu-toggle-divs">
           <lucide-icon
             [name]="'mail'"
-            class="text-h2 text-primary cursor-pointer"
+            class="nav-menu-icon"
             (click)="verComunicaciones('mensajes')"
           ></lucide-icon>
           @if (countMensajes$ | async; as countMensajes) {
-            <span
-              class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5"
-              >{{ countMensajes }}</span
-            >
+            <span class="nav-notis-toggle">{{ countMensajes }}</span>
           }
         </div>
 
-        <div class="flex flex-col gap-1 relative">
+        <div class="nav-menu-toggle-divs">
           <lucide-icon
             [name]="'bell'"
-            class="text-h2 text-primary cursor-pointer"
+            class="nav-menu-icon"
             (click)="verComunicaciones('notificaciones')"
           ></lucide-icon>
           @if (countNotificaciones$ | async; as countNotis) {
-            <span
-              class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5"
-              >{{ countNotis }}</span
-            >
+            <span class="nav-notis-toggle">{{ countNotis }}</span>
           }
         </div>
 
         <lucide-icon
           [name]="'user'"
-          class="text-h2 text-primary cursor-pointer"
+          class="nav-menu-icon"
           (click)="modificarPerfil()"
         ></lucide-icon>
 
@@ -73,41 +65,32 @@
         (onClick)="iniciarSesion()"
       ></app-button>
     }
+    <app-dark-mode-btn></app-dark-mode-btn>
   </div>
 
   @if (isMenuOpen) {
-    <div
-      class="absolute top-full right-0 w-auto bg-surface border-b border-nav-border shadow-lg flex flex-col p-6 gap-6 lg:hidden"
-    >
+    <div class="nav-menu-open">
       @if (authService.isAuthenticated()) {
-        <div class="flex flex-col gap-10 items-end w-auto">
-          <div
-            class="flex flex-col justify-around w-auto border-b p-4 pr-8.5 border-gray-200 gap-4"
-          >
+        <div class="nav-menu-open-autenticated-container">
+          <div class="nav-menu-open-divs">
             <div class="relative" (click)="verComunicaciones('mensajes')">
-              <lucide-icon [name]="'mail'" class="text-primary w-20 h-20"></lucide-icon>
+              <lucide-icon [name]="'mail'" class="nav-open-icon"></lucide-icon>
               @if (countMensajes$ | async; as countMensajes) {
-                <span
-                  class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] rounded-full px-1.5"
-                  >{{ countMensajes }}</span
-                >
+                <span class="nav-notis">{{ countMensajes }}</span>
               }
               <span class="sr-only">Mensajes</span>
             </div>
 
             <div class="relative" (click)="verComunicaciones('notificaciones')">
-              <lucide-icon [name]="'bell'" class="text-primary w-20 h-20"></lucide-icon>
+              <lucide-icon [name]="'bell'" class="nav-open-icon"></lucide-icon>
               @if (countNotificaciones$ | async; as countNotis) {
-                <span
-                  class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] rounded-full px-1.5"
-                  >{{ countNotis }}</span
-                >
+                <span class="nav-notis">{{ countNotis }}</span>
               }
               <span class="sr-only">Notificaciones</span>
             </div>
 
             <div (click)="modificarPerfil()">
-              <lucide-icon [name]="'user'" class="text-primary w-20 h-20"></lucide-icon>
+              <lucide-icon [name]="'user'" class="nav-open-icon"></lucide-icon>
             </div>
           </div>
 
@@ -120,7 +103,7 @@
           ></app-button>
         </div>
       } @else {
-        <div class="flex flex-col gap-4 w-full">
+        <div class="nav-menu-open-no-autenticated-container">
           <app-button
             [label]="'NAVBAR.REGISTER' | translate"
             variant="secondary"
@@ -135,6 +118,7 @@
           ></app-button>
         </div>
       }
+      <app-dark-mode-btn></app-dark-mode-btn>
     </div>
   }
 </nav>

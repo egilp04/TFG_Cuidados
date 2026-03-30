@@ -233,6 +233,10 @@
       "CANCELCONTRACT": "Error cancelling the contract.",
       "CONTACT": "Email could not be sent, try it later.",
       "DELETE_USER": "Error deleting record."
+    },
+    "TITLE": {
+      "RECEIVED": "Received",
+      "SENT": "Sent"
     }
   },
   "MANAGEMENT_SERVICES": {
