@@ -16,7 +16,6 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-messages',
@@ -43,19 +42,38 @@ export class Messages implements OnInit {
   private cd = inject(ChangeDetectorRef);
   private translate = inject(TranslateService);
   public messageService = inject(MessageService);
+
   displayedColumns: string[] = ['Emisor', 'Receptor', 'Asunto', 'Fecha', 'acciones'];
   dataSource = new MatTableDataSource<ComunicacionModel>([]);
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  public filtroActual: 'recibidos' | 'enviados' = 'recibidos';
 
   ngOnInit() {
     this.suscribirAMensajes();
-    console.log(this.dataSource);
+  }
+
+  filtrar(tipo: 'recibidos' | 'enviados') {
+    this.filtroActual = tipo;
+    this.comunicationService.refreshUsersData();
   }
 
   private suscribirAMensajes() {
+    const user = this.authService.currentUser();
+    if (!user) return;
+
     this.comunicationService
       .getMessagesObservable()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        map((mensajes) => {
+          if (this.filtroActual === 'recibidos') {
+            return mensajes.filter((m) => m.id_receptor === user.id_usuario);
+          } else {
+            return mensajes.filter((m) => m.id_emisor === user.id_usuario);
+          }
+        }),
+      )
       .subscribe({
         next: (data) => {
           this.dataSource.data = data;
@@ -64,9 +82,10 @@ export class Messages implements OnInit {
           }
           this.cd.markForCheck();
         },
-        error: (err) => console.error('Error en el flujo IRL de mensajes:', err),
+        error: (err) => console.error('Error en el flujo de mensajes:', err),
       });
   }
+
   ordenar(criterio: string) {
     const data = [...this.dataSource.data];
     switch (criterio) {
@@ -84,53 +103,41 @@ export class Messages implements OnInit {
   }
 
   verMensaje(mensaje: ComunicacionModel) {
-    const user = this.authService.currentUser();
     this.dialog.open(MessagesModal, {
-      data: {
-        modo: 'verMensaje',
-        contenido: mensaje,
-      },
+      data: { modo: 'verMensaje', contenido: mensaje },
       width: '600px',
     });
+
+    const user = this.authService.currentUser();
     if (user && mensaje.id_receptor === user.id_usuario && !mensaje.leido) {
       this.comunicationService
         .updateComunicacion(mensaje.id_comunicacion!, { leido: true })
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          error: (err) => console.error('Error al marcar como leído', err),
-        });
+        .subscribe();
     }
   }
 
   borrarMensaje(mensaje: ComunicacionModel) {
     const confirmMsg = this.translate.instant('MESSAGES_PAGE.ALERTS.CONFIRM_DELETE');
-
-    if (confirm(confirmMsg)) {
-      this.comunicationService
-        .deleteComunicacion(mensaje)
-        .pipe(
-          tap(() => {
-            this.dataSource.data = this.dataSource.data.filter(
-              (m) => m.id_comunicacion !== mensaje.id_comunicacion,
-            );
-          }),
-          switchMap(() =>
-            this.translate
-              .get('MESSAGES_PAGE.ALERTS.DELETE_SUCCESS')
-              .pipe(map((text) => ({ type: 'exito' as const, text }))),
-          ),
-          catchError((err) => {
-            console.error('Error al borrar:', err);
-            return this.translate
-              .get('MESSAGES_PAGE.ALERTS.DELETE_ERROR')
-              .pipe(map((text) => ({ type: 'error' as const, text })));
-          }),
-        )
-        .subscribe((resultado) => {
-          this.messageService.showMessage(resultado.text, resultado.type);
-          this.cd.markForCheck();
-        });
-    }
+    this.comunicationService
+      .deleteComunicacion(mensaje)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        switchMap(() =>
+          this.translate
+            .get('MESSAGES_PAGE.ALERTS.DELETE_SUCCESS')
+            .pipe(map((text) => ({ type: 'exito' as const, text }))),
+        ),
+        catchError((err) => {
+          console.error('Error al borrar:', err);
+          return this.translate
+            .get('MESSAGES_PAGE.ALERTS.DELETE_ERROR')
+            .pipe(map((text) => ({ type: 'error' as const, text })));
+        }),
+      )
+      .subscribe((resultado) => {
+        this.messageService.showMessage(resultado.text, resultado.type);
+      });
   }
 
   escribirMensaje() {

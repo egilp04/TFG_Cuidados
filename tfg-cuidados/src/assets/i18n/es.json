@@ -227,6 +227,8 @@
       "CONTACT": "El mensaje ha sido enviado con éxito.",
       "DELETE_USER": "Registro eliminado correctamente."
     },
+    "SENT": "Enviados",
+    "RECEIVED": "Recibidos",
     "ERROR": {
       "GENERIC": "Ha ocurrido un error. Inténtelo más tarde.",
       "CANCELCONTRACT": "Error al cancelar el contrato.",

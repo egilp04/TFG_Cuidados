@@ -21,7 +21,7 @@
   </h1>
 
   <div class="flex flex-row justify-between w-full items-start gap-4 px-10 m-10">
-    <div class="flex-none">
+    <div class="flex flex-row justify-around w-full">
       <button
         class="flex items-center gap-2 px-6 py-3 border rounded-12 border-primary text-primary hover:bg-primary hover:text-white transition-all cursor-pointer"
         (click)="escribirMensaje()"
@@ -35,6 +35,21 @@
           {{ 'MESSAGES_PAGE.NEW_MSG' | translate }}
         </span>
       </button>
+      <app-button
+        (click)="filtrar('recibidos')"
+        [ngClass]="{ 'bg-primary text-white': filtroActual === 'recibidos' }"
+        variant="primary"
+        [label]="'MESSAGES.RECEIVED' | translate"
+      >
+      </app-button>
+
+      <app-button
+        variant="primary"
+        (click)="filtrar('enviados')"
+        [ngClass]="{ 'bg-primary text-white': filtroActual === 'enviados' }"
+        [label]="'MESSAGES.SENT' | translate"
+      >
+      </app-button>
     </div>
 
     <div class="relative">
@@ -46,6 +61,7 @@
           'MESSAGES_PAGE.SORT_OPTIONS.SUBJECT_ZA',
         ]"
         (onSelect)="ordenar($event)"
+        class="z-10"
       ></app-dropdown>
     </div>
   </div>
