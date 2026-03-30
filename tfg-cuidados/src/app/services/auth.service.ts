@@ -4,8 +4,8 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { SupabaseService } from './supabase.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { createClient } from '@supabase/supabase-js';
-import { environment } from '../../environments/environment.development';
 import { ComunicationService } from './comunication.service';
+import { environment } from '../../environments/environments';
 
 /**
  * @description Servicio de autenticación y gestión de sesiones.

@@ -45,3 +45,6 @@ Thumbs.db
 # Entornos y Claves API
 src/environments/environment.ts
 src/environments/environment.*.ts
+src/environments/
+src/enviroments/
+*environments*
