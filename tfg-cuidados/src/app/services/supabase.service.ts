@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../environments/environments';
+import { environment } from '../../environments/environment';
 /**../../environments/environment
  * @description Proveedor centralizado del cliente de Supabase.
  * Actúa como un Singleton que encapsula la configuración de conexión y

@@ -5,7 +5,7 @@ import { SupabaseService } from './supabase.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { createClient } from '@supabase/supabase-js';
 import { ComunicationService } from './comunication.service';
-import { environment } from '../../environments/environments';
+import { environment } from '../../environments/environment';
 
 /**
  * @description Servicio de autenticación y gestión de sesiones.
