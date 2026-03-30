@@ -226,6 +226,8 @@
       "CONTACT": "Email sent successfully!",
       "DELETE_USER": "Record deleted successfully."
     },
+    "SENT": "Sent",
+    "RECEIVED": "Received",
     "ERROR": {
       "GENERIC": "An error occurred. Please try again later.",
       "CANCELCONTRACT": "Error cancelling the contract.",

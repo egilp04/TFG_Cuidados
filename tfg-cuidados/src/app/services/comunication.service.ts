@@ -75,22 +75,28 @@ export class ComunicationService {
       .from('Comunicacion')
       .select(
         `
-        *,
-        Emisor:Usuario!fk_comunicacion_emisor (email),
-        Receptor:Usuario!fk_comunicacion_receptor ( nombre )
-      `,
+      *,
+      Emisor:Usuario!fk_comunicacion_emisor (email),
+      Receptor:Usuario!fk_comunicacion_receptor (nombre, email)
+    `,
       )
       .eq('tipo_comunicacion', 'mensaje')
-      .eq('id_receptor', user.id_usuario)
+      .or(`id_receptor.eq.${user.id_usuario},id_emisor.eq.${user.id_usuario}`)
       .order('fecha_envio', { ascending: false });
 
     if (!error) {
-      this.mensajesList$.next(data || []);
+      const mensajesFiltrados = (data || []).filter((m) => {
+        if (m.id_receptor === user.id_usuario) return !m.eliminado_por_receptor;
+        if (m.id_emisor === user.id_usuario) return !m.eliminado_por_emisor;
+        return true;
+      });
+      this.mensajesList$.next(mensajesFiltrados);
     } else {
       console.error('Error fetching mensajes:', error);
     }
   }
 
+  
   private async refreshNotificaciones() {
     const user = this.authService.currentUser();
     if (!user) {

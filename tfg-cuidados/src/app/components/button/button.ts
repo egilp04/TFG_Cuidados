@@ -18,7 +18,7 @@ export class ButtonComponent {
 
   buttonClass = computed(() => {
     const variants = {
-      primary: `bg-secondary text-surface hover:bg-accent btn-disabled-primary`,
+      primary: `bg-secondary text-surface hover:bg-accent btn-disabled-primary `,
       secondary: `bg-transparent text-primary underline hover:text-accent btn-disabled-secondary`,
       danger: `bg-red text-surface btn-disabled-primary`,
     };
