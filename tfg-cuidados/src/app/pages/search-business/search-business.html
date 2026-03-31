@@ -1,7 +1,8 @@
-<div class="w-full mb-4">
+<div class="button-back-container">
   <app-buttonback></app-buttonback>
 </div>
-<div class="message-noti mt-20">
+
+<div class="search-main">
   <app-searchbar
     [control]="filtroControl"
     (searchEvent)="applyFilter($event)"
@@ -9,19 +10,21 @@
   >
   </app-searchbar>
 
-  @if (messageService.messageData(); as data) {
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-green-600': data.tipo === 'exito',
-      }"
-      class="text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm"
-    >
-      {{ data.mensaje }}
-    </div>
-  }
+  <div class="message-noti">
+    @if (this.messageService.messageData(); as data) {
+      <div
+        [ngClass]="{
+          'text-red-500': data.tipo === 'error',
+          'text-primary': data.tipo === 'exito',
+        }"
+        class="message-noti-text"
+      >
+        {{ data.mensaje }}
+      </div>
+    }
+  </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
+  <div class="search-container">
     @for (empresa of empresasFiltradas(); track empresa.id_empresa) {
       <div
         class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 flex flex-col justify-around hover:shadow-lg transition-shadow"
@@ -93,7 +96,7 @@
         </div>
       </div>
     } @empty {
-      <div class="col-span-full text-center py-10 text-gray-500">
+      <div class="search-no-bssns">
         {{ 'SEARCH_BUSINESS.LIST.EMPTY' | translate }}
       </div>
     }

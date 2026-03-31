@@ -140,9 +140,13 @@ export class Messages implements OnInit {
       });
   }
 
+  isMobile = window.innerWidth < 768;
   escribirMensaje() {
     this.dialog.open(MessagesModal, {
       data: { modo: 'escribir' },
+      width: '100%',
+      maxWidth: this.isMobile ? '60vw' : '500px',
+      panelClass: 'custom-modal-padding',
     });
   }
 }

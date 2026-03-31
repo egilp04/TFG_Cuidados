@@ -1,88 +1,125 @@
-<div class="w-full flex justify-end p-4 bg-surface">
-  <img
-    mat-dialog-close
-    class="cursor-pointer h-10 w-10 md:h-12 md:w-12 lg:h-3.5 lg:w-3.5 transition-transform hover:scale-110"
-    src="assets/icons/cerrar.webp"
-  />
-</div>
-<form [formGroup]="form" class="flex flex-col justify-center gap-8 p-10 bg-surface">
-  <app-inputs
-    name="descripcion"
-    [label]="'SERVICE_TIME_MODAL.LABELS.DESCRIPTION' | translate"
-    [control]="getCtrl('descripcion')"
-    [errorMessage]="getErrorMessage('descripcion')"
-    class="w-full"
-  >
-  </app-inputs>
-
-  <div class="flex flex-col gap-2 flex-1 w-full">
-    <label class="text-label text-primary">
-      {{ 'SERVICE_TIME_MODAL.LABELS.GLOBAL_SERVICE' | translate }}
-    </label>
-    <select
-      formControlName="id_servicio"
-      class="text-label p-4 rounded-12 border border-gray-200 bg-white"
+<div class="service-modal-container">
+  <div class="w-full flex justify-end p-6">
+    <svg
+      mat-dialog-close
+      xmlns="http://www.w3.org/2000/svg"
+      class="modal-close-btn"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
     >
-      <option value="" disabled selected>
-        {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.SELECT_SERVICE' | translate }}
-      </option>
-
-      @for (s of servicios$ | async; track s.id_servicio) {
-      <option [value]="s.id_servicio">{{ s.nombre }} ({{ s.tipo_servicio }})</option>
-      } @empty {
-      <option disabled>
-        {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.LOADING_SERVICES' | translate }}
-      </option>
-      }
-    </select>
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
   </div>
 
-  <app-inputs
-    name="precio"
-    [label]="'SERVICE_TIME_MODAL.LABELS.PRICE' | translate"
-    [control]="getCtrl('precio')"
-    placeholder="0.00"
-    [errorMessage]="getErrorMessage('precio')"
-    class="w-full md:w-32"
-  >
-  </app-inputs>
+  <form [formGroup]="form" class="service-form-container">
+    <app-inputs
+      name="descripcion"
+      [label]="'SERVICE_TIME_MODAL.LABELS.DESCRIPTION' | translate"
+      [control]="getCtrl('descripcion')"
+      [errorMessage]="getErrorMessage('descripcion')"
+      class="w-full"
+    ></app-inputs>
 
-  <div class="flex flex-col gap-2 w-full">
-    <label class="text-label text-primary">
-      {{ 'SERVICE_TIME_MODAL.LABELS.AVAILABLE_SCHEDULE' | translate }}
-    </label>
-    <select
-      formControlName="id_horario"
-      class="text-label w-full p-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none transition-all appearance-none"
-    >
-      <option value="" disabled selected>
-        {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.SELECT_TIME' | translate }}
-      </option>
+    <div class="service-select-container">
+      <label class="service-global-services">
+        {{ 'SERVICE_TIME_MODAL.LABELS.GLOBAL_SERVICE' | translate }}
+      </label>
 
-      @for (h of horarios$ | async; track h.id_horario) {
-      <option [value]="h.id_horario">{{ h.dia_semana }} a las {{ h.hora }}</option>
-      } @empty {
-      <option disabled>
-        {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.LOADING_TIMES' | translate }}
-      </option>
-      }
-    </select>
-    <div
-      class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary flex items-center"
-    >
-      <lucide-icon name="chevron-down" class="w-5 h-5"></lucide-icon>
+      <div class="relative w-full">
+        <select id="id_servicio" formControlName="id_servicio" class="register-form-select">
+          <option value="" disabled selected class="select-option-disabled">
+            {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.SELECT_SERVICE' | translate }}
+          </option>
+
+          @for (s of servicios$ | async; track s.id_servicio) {
+            <option [value]="s.id_servicio" class="register-form-options">
+              {{ s.nombre }} - {{ s.tipo_servicio }}
+            </option>
+          } @empty {
+            <option disabled>
+              {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.LOADING_SERVICES' | translate }}
+            </option>
+          }
+        </select>
+        <div class="register-form-select-arrow">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </div>
     </div>
-  </div>
-</form>
 
-<div class="flex justify-center gap-4 mt-4 mb-20">
-  <app-button
-    [label]="
-      (isEditing ? 'SERVICE_TIME_MODAL.BTN.UPDATE' : 'SERVICE_TIME_MODAL.BTN.CREATE') | translate
-    "
-    variant="primary"
-    [disabled]="form.invalid"
-    (click)="save()"
-  >
-  </app-button>
+    <app-inputs
+      name="precio"
+      [label]="'SERVICE_TIME_MODAL.LABELS.PRICE' | translate"
+      [control]="getCtrl('precio')"
+      placeholder="0.00"
+      [errorMessage]="getErrorMessage('precio')"
+      class="w-full"
+    ></app-inputs>
+
+    <div class="service-select-container">
+      <label class="service-global-services">
+        {{ 'SERVICE_TIME_MODAL.LABELS.AVAILABLE_SCHEDULE' | translate }}
+      </label>
+
+      <div class="relative w-full">
+        <select id="id_horario" formControlName="id_horario" class="register-form-select">
+          <option value="" disabled selected class="select-option-disabled">
+            {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.SELECT_TIME' | translate }}
+          </option>
+          @for (h of horarios$ | async; track h.id_horario) {
+            <option [value]="h.id_horario" class="register-form-options">
+              {{ h.dia_semana }} - {{ h.hora }}
+            </option>
+          } @empty {
+            <option disabled>
+              {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.LOADING_TIMES' | translate }}
+            </option>
+          }
+        </select>
+        <div class="register-form-select-arrow">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="service-btn-container">
+    <app-button
+      [label]="
+        (isEditing ? 'SERVICE_TIME_MODAL.BTN.UPDATE' : 'SERVICE_TIME_MODAL.BTN.CREATE') | translate
+      "
+      variant="primary"
+      [disabled]="form.invalid"
+      (click)="save()"
+    ></app-button>
+  </div>
 </div>

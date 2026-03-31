@@ -1,5 +1,5 @@
-<div class="flex flex-col p-6 gap-6 bg-surface">
-  <div class="w-full flex items-center justify-between mb-4 gap-10">
+<div class="flex flex-col p-6 gap-6">
+  <div class="button-back-container">
     <app-buttonback></app-buttonback>
   </div>
 
@@ -10,81 +10,78 @@
           'text-red-500': data.tipo === 'error',
           'text-primary': data.tipo === 'exito',
         }"
-        class="text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm"
+        class="message-noti-text"
       >
         {{ data.mensaje }}
       </div>
     }
   </div>
 
-  <div class="flex flex-col mt-20 w-full bg-surface">
-    <div class="flex flex-col gap-20 mb-20">
-      <div class="flex justify-center">
-        <app-button
-          [label]="'SERVICES_BUSINESS.BTN_NEW' | translate"
-          variant="primary"
-          (click)="openModal()"
-        ></app-button>
-      </div>
+  <div class="services-bss-container">
+    <div class="services-new-btn-container">
+      <app-button
+        [label]="'SERVICES_BUSINESS.BTN_NEW' | translate"
+        variant="primary"
+        (click)="openModal()"
+      ></app-button>
     </div>
   </div>
-  <div class="overflow-x-auto bg-surface">
+  <div class="service-table-containter">
     <table mat-table [dataSource]="dataSource" class="w-full">
       <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header">
           {{ 'SERVICES_BUSINESS.TABLE.NAME' | translate }}
         </th>
-        <td mat-cell *matCellDef="let element" class="p-4 text-label">
+        <td mat-cell *matCellDef="let element" class="text-label service-table-text">
           {{ element.Servicio?.nombre }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="precio">
-        <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header">
           {{ 'SERVICES_BUSINESS.TABLE.PRICE' | translate }}
         </th>
-        <td mat-cell *matCellDef="let element" class="p-4 text-label font-medium">
+        <td mat-cell *matCellDef="let element" class="text-label service-table-text">
           {{ element.precio }}€
         </td>
       </ng-container>
 
       <ng-container matColumnDef="tipo">
-        <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header">
           {{ 'SERVICES_BUSINESS.TABLE.TYPE' | translate }}
         </th>
-        <td mat-cell *matCellDef="let element" class="p-4 text-label text-primary">
+        <td mat-cell *matCellDef="let element" class="text-label service-table-text">
           {{ element.Servicio?.tipo_servicio }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="hora">
-        <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header">
           {{ 'SERVICES_BUSINESS.TABLE.TIME' | translate }}
         </th>
-        <td mat-cell *matCellDef="let element" class="p-4 text-label text-primary">
+        <td mat-cell *matCellDef="let element" class="text-label service-table-text">
           {{ element.Horario?.hora }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="dia">
-        <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header">
           {{ 'SERVICES_BUSINESS.TABLE.DAY' | translate }}
         </th>
-        <td mat-cell *matCellDef="let element" class="p-4 text-label text-primary">
+        <td mat-cell *matCellDef="let element" class="text-label service-table-text">
           {{ element.Horario?.dia_semana }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef class="p-4 text-surface text-label"></th>
-        <td mat-cell *matCellDef="let element" class="p-4 text-primary">
-          <div class="flex justify-center items-center gap-6 p-10">
-            <button
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header"></th>
+        <td mat-cell *matCellDef="let element" class="p-4">
+          <div class="service-btn-container">
+            <app-button
+              [label]="'SERVICES_BUSINESS.BTN_DELETE' | translate"
               (click)="onDelete(element.id_servicio_horario)"
-              class="text-secondary text-label font-bold hover:underline"
-            >
-              {{ 'SERVICES_BUSINESS.BTN_DELETE' | translate }}
-            </button>
+              variant="secondary"
+            ></app-button>
             <app-button
               [label]="'SERVICES_BUSINESS.BTN_MODIFY' | translate"
               variant="primary"

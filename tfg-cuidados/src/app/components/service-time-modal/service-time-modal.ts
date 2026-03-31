@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
+import { MatDialogModule } from '@angular/material/dialog';
 import { ServiceTimeService } from '../../services/service-time.service';
 import { ServiceService } from '../../services/service.service';
 import { TimeService } from '../../services/time.service';
@@ -22,6 +22,7 @@ import { LucideAngularModule } from 'lucide-angular';
     ButtonComponent,
     TranslateModule,
     LucideAngularModule,
+    MatDialogModule,
   ],
   templateUrl: './service-time-modal.html',
   styleUrl: './service-time-modal.css',
