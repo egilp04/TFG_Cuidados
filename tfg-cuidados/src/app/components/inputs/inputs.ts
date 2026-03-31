@@ -1,10 +1,11 @@
+import { NgClass } from '@angular/common';
 import { Component, computed, input, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 @Component({
   selector: 'app-inputs',
   standalone: true,
-  imports: [ReactiveFormsModule, LucideAngularModule],
+  imports: [ReactiveFormsModule, LucideAngularModule, NgClass],
   templateUrl: './inputs.html',
   styleUrl: './inputs.css',
 })
@@ -15,6 +16,7 @@ export class Inputs {
   control = input.required<FormControl>();
   errorMessage = input<string>('');
   isPasswordVisible = signal(false);
+  
   inputType = computed(() => {
     if (this.type() !== 'password') {
       return this.type();

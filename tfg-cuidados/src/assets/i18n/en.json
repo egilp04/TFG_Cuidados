@@ -669,8 +669,9 @@
       "RESEND": "Resend register email"
     },
     "HINTS": {
-      "PASS_PATTERN": "Password must be at least 6 chars, letters and numbers.",
-      "RECOVER_DESC": "Enter your email and we will send you a link to reset your password."
+      "PASS_PATTERN": "Password must be at least 6 chars, letters, numbers and special characters.",
+      "RECOVER_DESC": "Enter your email and we will send you a link to reset your password.",
+      "EMAIL_ERROR": "Check the email, please"
     },
     "BTN": {
       "ENTER": "Login",

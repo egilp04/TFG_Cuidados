@@ -38,6 +38,11 @@
             name="email"
             [label]="'LOGIN_MODAL.LABELS.EMAIL' | translate"
             [control]="getCtrl('email')"
+            [errorMessage]="
+              getCtrl('email').invalid && getCtrl('email').touched
+                ? ('LOGIN_MODAL.HINTS.EMAIL_ERROR' | translate)
+                : ''
+            "
           >
           </app-inputs>
 
@@ -46,13 +51,13 @@
             [label]="'LOGIN_MODAL.LABELS.PASSWORD' | translate"
             type="password"
             [control]="getCtrl('password')"
+            [errorMessage]="
+              getCtrl('email').invalid &&
+              getCtrl('password').hasError('pattern') && getCtrl('password').touched
+                ? ('LOGIN_MODAL.HINTS.PASS_PATTERN' | translate)
+                : ''
+            "
           ></app-inputs>
-
-          @if (getCtrl('password').touched && getCtrl('password').hasError('pattern')) {
-            <small class="login-login-error label-text">
-              {{ 'LOGIN_MODAL.HINTS.PASS_PATTERN' | translate }}
-            </small>
-          }
         </mat-dialog-content>
       </div>
 

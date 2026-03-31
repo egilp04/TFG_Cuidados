@@ -660,8 +660,9 @@
       "RESEND": "Reenviar el email de registro"
     },
     "HINTS": {
-      "PASS_PATTERN": "La contraseña debe tener al menos 6 caracteres, letras y números.",
-      "RECOVER_DESC": "Introduce tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña."
+      "PASS_PATTERN": "La contraseña debe tener al menos 6 caracteres, letras, números y caracteres especiales.",
+      "RECOVER_DESC": "Introduce tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.",
+      "EMAIL_ERROR": "Revise el email, por favor"
     },
     "BTN": {
       "ENTER": "Entrar",

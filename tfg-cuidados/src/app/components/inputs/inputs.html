@@ -7,8 +7,7 @@
         class="input-text-area"
         [placeholder]="label()"
         [formControl]="control()"
-        [class.border-primary]="!errorMessage()"
-        [class.border-red]="errorMessage()"
+        [ngClass]="errorMessage() ? 'input-error' : 'input-no-error'"
         [attr.aria-invalid]="errorMessage() ? true : null"
         [attr.aria-describedby]="errorMessage() ? label() + '-error' : null"
       ></textarea>
@@ -19,8 +18,7 @@
         [placeholder]="label()"
         [formControl]="control()"
         [type]="inputType()"
-        [class.border-primary]="!errorMessage()"
-        [class.border-red]="errorMessage()"
+        [ngClass]="errorMessage() ? 'input-error ' : 'input-no-error'"
         [attr.aria-invalid]="errorMessage() ? true : null"
         [attr.aria-describedby]="errorMessage() ? label() + '-error' : null"
         autocomplete=""
@@ -37,9 +35,15 @@
       </button>
     }
   </div>
-  @if (errorMessage()) {
-    <span [id]="name() + '-error'" class="input-error animate-fade-in" aria-live="polite">
-      {{ errorMessage() }}
-    </span>
-  }
+  <div class="w-full max-w-sm mx-auto">
+    @if (errorMessage()) {
+      <span
+        [id]="name() + '-error'"
+        class="input-error-text block animate-fade-in"
+        aria-live="polite"
+      >
+        {{ errorMessage() }}
+      </span>
+    }
+  </div>
 </div>

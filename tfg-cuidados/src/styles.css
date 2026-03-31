@@ -18,7 +18,7 @@
   --color-secondary-dark: #16352a;
   --color-accent-dark: #6fbf73;
   --color-btn-dark: #9ccd78;
-  --color-disabled-dark: #b1b1b1;
+  --color-disabled-dark: #3d4a4b;
   --color-red-dark: #ff5c5f;
   --color-dark-surface-hover: #1a2628;
   --color-dark-border: #233436;
@@ -470,7 +470,7 @@
   }
 
   .input-container {
-    @apply flex flex-col items-start text-left w-full gap-2;
+    @apply flex flex-col items-start text-left justify-center w-full gap-2;
   }
 
   .input-label {
@@ -493,8 +493,15 @@
     @apply absolute right-4 top-1/2 -translate-y-1/2 text-primary dark:text-surface! hover:text-accent focus:outline-none cursor-pointer flex items-center justify-center p-1;
   }
 
+  .input-error-text {
+    @apply text-red font-bold ml-2  dark:text-red-dark w-full;
+  }
+
   .input-error {
-    @apply text-red text-label ml-2  dark:text-red-dark;
+    @apply border-red dark:border-red-dark;
+  }
+  .input-no-error {
+    @apply border-primary dark:border-white;
   }
   .message-noti {
     @apply flex flex-col items-center;
@@ -502,6 +509,13 @@
 
   .message-noti-text {
     @apply text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm;
+  }
+
+  .login-error {
+    @apply border-red dark:border-red-dark;
+  }
+  .login-no-error {
+    @apply border-primary dark:border-white;
   }
 
   .login-modal-container {
@@ -527,7 +541,7 @@
     @apply p-0! flex! flex-col! gap-10 w-full justify-center items-center;
   }
   .login-login-error {
-    @apply text-red dark:text-red-dark;
+    @apply text-red font-bold dark:text-red-dark;
   }
 
   .login-subtitle {

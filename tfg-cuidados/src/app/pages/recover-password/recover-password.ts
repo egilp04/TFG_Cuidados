@@ -15,7 +15,6 @@ import { MessageService } from '../../services/message-service';
 import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
 import { EMPTY } from 'rxjs';
-import { CdkObserveContent } from '@angular/cdk/observers';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -29,7 +28,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     TranslateModule,
     ButtonComponent,
     TranslateModule,
-    CdkObserveContent,
   ],
   templateUrl: './recover-password.html',
   styleUrl: './recover-password.css',
