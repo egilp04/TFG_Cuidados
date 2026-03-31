@@ -1,10 +1,8 @@
 @if (currentUser?.rol !== 'administrador') {
-  <div class="fixed bottom-40 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4">
+  <div class="soporte-container">
     @if (isOpen) {
-      <div
-        class="w-[calc(100vw-2rem)] md:w-88 h-[450px] md:h-96 bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden animate-fade-in-up"
-      >
-        <div class="bg-primary text-white p-4 flex justify-between items-center shadow-md shrink-0">
+      <div class="soporte-container-open animate-fade-in-up">
+        <div class="soporte-icon">
           <div class="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -21,12 +19,9 @@
                 d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
               ></path>
             </svg>
-            <h3 class="font-bold text-sm">{{ 'SUPPORT_WIDGET.HEADER_TITLE' | translate }}</h3>
+            <h3 class="soporte-title">{{ 'SUPPORT_WIDGET.HEADER_TITLE' | translate }}</h3>
           </div>
-          <button
-            (click)="toggleChat()"
-            class="p-1 hover:bg-white/20 rounded-full transition-colors"
-          >
+          <button (click)="toggleChat()" class="soporte-btn-toggle" type="button">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -44,34 +39,26 @@
           </button>
         </div>
 
-        <div class="p-5 md:p-6 flex flex-col gap-4 bg-slate-50 overflow-y-auto flex-1">
+        <div class="soporte-message-container">
           <div class="text-center">
-            <h4 class="text-sm font-bold text-gray-800">
-              {{ 'SUPPORT_WIDGET.HELP_TITLE' | translate }}
-            </h4>
-            <p class="text-xs text-gray-500 mt-1 leading-relaxed">
-              {{ 'SUPPORT_WIDGET.HELP_DESCRIPTION' | translate }}
-            </p>
+            <h4 class="soporte-subtitle">{{ 'SUPPORT_WIDGET.HELP_TITLE' | translate }}</h4>
+            <p class="soporte-text">{{ 'SUPPORT_WIDGET.HELP_DESCRIPTION' | translate }}</p>
           </div>
 
-          <div class="flex flex-col gap-2">
-            <label
-              class="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center"
-            >
+          <div class="sorpote-form">
+            <label class="soporte-form-label">
               {{ 'SUPPORT_WIDGET.MESSAGE_LABEL' | translate }}
             </label>
             <textarea
               [(ngModel)]="newMessage"
               rows="4"
               [placeholder]="'SUPPORT_WIDGET.MESSAGE_PLACEHOLDER' | translate"
-              class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 resize-none shadow-inner bg-white"
+              class="soporte-text-area"
             ></textarea>
           </div>
 
           @if (messageSent) {
-            <div
-              class="bg-green-100 border border-green-200 text-green-700 text-xs p-3 rounded-lg flex items-center justify-center gap-2 animate-fade-in-up"
-            >
+            <div class="soporte-sent animate-fade-in-up">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -90,16 +77,15 @@
           }
         </div>
 
-        <div class="p-4 bg-white border-t border-gray-100 shrink-0">
+        <div class="soporte-btn-container">
           <button
             (click)="sendMessage()"
             [disabled]="!newMessage.trim() || isSending"
-            class="w-full bg-primary text-white rounded-xl py-3 font-bold hover:opacity-90 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2 shadow-md"
+            class="soporte-send-btn"
+            type="button"
           >
             @if (isSending) {
-              <div
-                class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
-              ></div>
+              <div class="soporte-sending-spinner"></div>
               {{ 'SUPPORT_WIDGET.SENDING_BTN' | translate }}
             } @else {
               <svg
@@ -123,10 +109,7 @@
       </div>
     }
 
-    <button
-      (click)="toggleChat()"
-      class="w-14 h-14 bg-accent rounded-full shadow-lg flex items-center justify-center text-white hover:bg-opacity-90 hover:scale-110 active:scale-90 transition-all duration-200 z-50"
-    >
+    <button (click)="toggleChat()" class="soporte-btn hover:bg-opacity-90" type="button">
       @if (!isOpen) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
