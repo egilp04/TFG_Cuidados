@@ -39,17 +39,18 @@
             @if (eventos.length > 0 && selectedDia === dia) {
               <div class="activity-tooltip-event-container animate-tooltip">
                 @for (ev of eventos; track ev.id_contrato) {
-                  <div class="py-1 flex flex-col gap-0.5">
-                    <span class="text-surface">{{ ev.nombreServicio }}</span>
-                    <span class="text-surface"
+                  <div class="activity-tooltip-text-container">
+                    <span class="activity-tooltip-event-text text-sm lg:text-lg">{{
+                      ev.nombreServicio
+                    }}</span>
+                    <span class="activity-tooltip-event-text text-sm lg:text-lg"
                       >{{ ev.hora_contratada }} - {{ ev.dia_semana_contratado }}</span
                     >
-                    <span class="text-white">📍{{ ev.lugar }}</span>
+                    <span class="activity-tooltip-event-text text-sm lg:text-lg"
+                      >📍{{ ev.lugar }}</span
+                    >
                   </div>
                 }
-                <div
-                  class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-primary"
-                ></div>
               </div>
             }
           }

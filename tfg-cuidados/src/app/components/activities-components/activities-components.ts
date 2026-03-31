@@ -87,7 +87,7 @@ export class ActivitiesComponents implements OnInit {
       return {
         ...contrato,
         nombreAMostrar: nombreAMostrar || 'N/A',
-        lugar: lugar,
+        lugar: lugar || 'SL',
       };
     });
     this.dataSourceTable.data = dataMapeada;
@@ -95,13 +95,15 @@ export class ActivitiesComponents implements OnInit {
 
   private precalcularEventosDelMes() {
     this.eventosMap = {};
-    if (!this.dataSource) return;
+
+    const datosProcesados = this.dataSourceTable.data;
+    if (!datosProcesados || datosProcesados.length === 0) return;
 
     const year = this.displayDate.getFullYear();
     const month = this.displayDate.getMonth();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    this.dataSource.forEach((contrato) => {
+    datosProcesados.forEach((contrato) => {
       const fechaInicio = new Date(contrato.fecha_inicio);
       const fechaFin = contrato.fecha_fin ? new Date(contrato.fecha_fin) : new Date(2100, 0, 1);
       fechaInicio.setHours(0, 0, 0, 0);
