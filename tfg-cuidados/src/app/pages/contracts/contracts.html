@@ -3,7 +3,7 @@
 </div>
 
 <div class="message-noti">
-  <h1 class="text-h1 text-primary text-center mb-10">
+  <h1 class="contracts-title">
     {{ 'CONTRACTS.TITLE' | translate }}
   </h1>
 
@@ -19,20 +19,22 @@
     </div>
   }
 
-  <div class="flex flex-col p-10 w-full">
+  <div class="contracts-table-container">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full">
       <ng-container matColumnDef="ID">
-        <th mat-header-cell *matHeaderCellDef class="text-label">
+        <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
           {{ 'CONTRACTS.TABLE.ID' | translate }}
         </th>
-        <td mat-cell *matCellDef="let contrato" class="text-label">{{ contrato.id_contrato }}</td>
+        <td mat-cell *matCellDef="let contrato" class="text-label contracts-text">
+          {{ contrato.id_contrato }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="fecha">
-        <th mat-header-cell *matHeaderCellDef class="text-label">
+        <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
           {{ 'CONTRACTS.TABLE.DATE' | translate }}
         </th>
-        <td mat-cell *matCellDef="let contrato" class="text-label">
+        <td mat-cell *matCellDef="let contrato" class="text-label contracts-text">
           {{ contrato.fecha_creacion | date: 'dd/MM/yyyy' }}
         </td>
       </ng-container>
