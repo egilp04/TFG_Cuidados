@@ -1,67 +1,56 @@
-<div class="flex flex-col gap-8 p-6 bg-surface w-full">
-  <div class="bg-surface rounded-12 p-8 border border-nav-border 2xl:h-400">
+<div class="activity-component-container">
+  <div class="activity-calendar-container">
     <div class="flex justify-between items-center mb-8 p-10">
-      <h2 class="text-h2 text-primary capitalize">
+      <h2 class="activity-calendar-title">
         {{ displayDate | date: 'MMMM yyyy' }}
       </h2>
       <div class="flex gap-2">
         <div class="flex gap-2">
-          <button
-            (click)="cambiarMes(-1)"
-            class="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 text-label"
-          >
-            ‹
-          </button>
-          <button
-            (click)="cambiarMes(1)"
-            class="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 text-label"
-          >
-            ›
-          </button>
+          <button (click)="cambiarMes(-1)" class="activiy-month-change-btn">‹</button>
+          <button (click)="cambiarMes(1)" class="activiy-month-change-btn">›</button>
         </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-7 mb-4">
+    <div class="activity-calendar-grid">
       @for (wd of weekDays; track wd) {
-        <span class="text-center text-label font-semibold text-gray-400 uppercase tracking-widest">
+        <span class="activity-calendar-dary">
           {{ 'ACTIVITIES.DAYS.' + wd | translate }}
         </span>
       }
     </div>
 
-    <div class="grid grid-cols-7">
+    <div class="activity-days-display">
       @for (dia of monthDays; track $index) {
-        <div class="relative group flex justify-center items-center w-full h-full">
+        <div class="activity-days-inner-display group">
           @if (dia) {
             @let eventos = getEventosDia(dia);
             <span
               (click)="manejarClickDia(dia, eventos)"
               [ngClass]="{
-                'bg-primary text-surface cursor-pointer': eventos.length > 0,
-                'text-primary bg-surface ': eventos.length === 0,
+                'activity-events': eventos.length > 0,
+                'activity-no-events': eventos.length === 0,
               }"
-              class="w-20 h-20 2xl:w-[3rem] 2xl:h-[3rem] text-label flex items-center justify-center text-sm font-bold transition-all duration-300"
+              class="activity-events-base"
             >
               {{ dia }}
             </span>
 
             @if (eventos.length > 0 && selectedDia === dia) {
-              <div
-                class="absolute overflow-y-auto max-h-32 bottom-full z-50 w-56 bg-secondary text-white text-[11px] p-3 shadow-2xl animate-tooltip"
-              >
+              <div class="activity-tooltip-event-container animate-tooltip">
                 @for (ev of eventos; track ev.id_contrato) {
-                  <div class="py-1 flex flex-col gap-0.5">
-                    <span class="text-surface">{{ ev.nombreServicio }}</span>
-                    <span class="text-surface"
+                  <div class="activity-tooltip-text-container">
+                    <span class="activity-tooltip-event-text text-sm lg:text-lg">{{
+                      ev.nombreServicio
+                    }}</span>
+                    <span class="activity-tooltip-event-text text-sm lg:text-lg"
                       >{{ ev.hora_contratada }} - {{ ev.dia_semana_contratado }}</span
                     >
-                    <span class="text-white">📍{{ ev.lugar }}</span>
+                    <span class="activity-tooltip-event-text text-sm lg:text-lg"
+                      >📍{{ ev.lugar }}</span
+                    >
                   </div>
                 }
-                <div
-                  class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-primary"
-                ></div>
               </div>
             }
           }
@@ -70,49 +59,49 @@
     </div>
   </div>
 
-  <div class="bg-surfaceshadow-soft overflow-auto mt-10">
+  <div class="activity-table-container">
     <table mat-table [dataSource]="dataSourceTable" class="w-full">
       <ng-container matColumnDef="usuario">
-        <th mat-header-cell *matHeaderCellDef class="text-primary text-label">
+        <th mat-header-cell *matHeaderCellDef class="activity-text text-label">
           {{ headerContrato() | translate }}
         </th>
-        <td mat-cell *matCellDef="let element" class="text-secondary text-label">
+        <td mat-cell *matCellDef="let element" class="activity-text-secondary text-label">
           {{ element.nombreAMostrar }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef class="text-primary text-label">
+        <th mat-header-cell *matHeaderCellDef class="activity-text text-label">
           {{ 'ACTIVITIES.TABLE.NAME' | translate }}
         </th>
-        <td mat-cell *matCellDef="let element" class="text-secondary text-label">
+        <td mat-cell *matCellDef="let element" class="activity-text-secondary text-label">
           {{ element.nombreServicio }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="dia">
-        <th mat-header-cell *matHeaderCellDef class="text-primary text-label">
+        <th mat-header-cell *matHeaderCellDef class="activity-text text-label">
           {{ 'ACTIVITIES.TABLE.DAY' | translate }}
         </th>
-        <td mat-cell *matCellDef="let element" class="text-secondary text-label">
+        <td mat-cell *matCellDef="let element" class="activity-text-secondary text-label">
           {{ element.dia_semana_contratado }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="hora">
-        <th mat-header-cell *matHeaderCellDef class="text-primary text-label">
+        <th mat-header-cell *matHeaderCellDef class="activity-text text-label">
           {{ 'ACTIVITIES.TABLE.TIME' | translate }}
         </th>
-        <td mat-cell *matCellDef="let element" class="text-secondary text-label">
+        <td mat-cell *matCellDef="let element" class="activity-text-secondary text-label">
           {{ element.hora_contratada }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="lugar">
-        <th mat-header-cell *matHeaderCellDef class="text-primary text-label">
+        <th mat-header-cell *matHeaderCellDef class="activity-text text-label">
           {{ 'ACTIVITIES.TABLE.LOCATION' | translate }}
         </th>
-        <td mat-cell *matCellDef="let element" class="text-secondary text-label">
+        <td mat-cell *matCellDef="let element" class="activity-text-secondary text-label">
           {{ element.lugar }}
         </td>
       </ng-container>

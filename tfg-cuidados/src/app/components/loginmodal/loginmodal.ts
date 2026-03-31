@@ -65,6 +65,7 @@ export class Loginmodal {
       ],
     ],
   });
+
   emailCtrl = new FormControl('', [Validators.required, Validators.email]);
 
   getCtrl(name: string): FormControl {

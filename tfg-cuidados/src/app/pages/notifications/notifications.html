@@ -1,68 +1,77 @@
-<div class="w-full mb-4">
+<div class="button-back-container">
   <app-buttonback></app-buttonback>
 </div>
 
-<div class="flex flex-col items-center p-6 bg-surface min-h-screen">
-  <h1 class="text-h1 text-primary text-center my-12">
+<div class="notifications-container">
+  <h1 class="notifications-title">
     {{ 'NOTIFICATIONS.TITLE' | translate }}
   </h1>
 
-  @if (this.messageService.messageData(); as data) {
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="text-label ml-2 transition-all duration-300"
-    >
-      {{ data.mensaje }}
+  <div class="message-noti">
+    @if (this.messageService.messageData(); as data) {
+      <div
+        [ngClass]="{
+          'text-red-500': data.tipo === 'error',
+          'text-primary': data.tipo === 'exito',
+        }"
+        class="message-noti-text"
+      >
+        {{ data.mensaje }}
+      </div>
+    }
+  </div>
+
+  <div class="notifications-table-container">
+    <div class="notifications-table-container-inner">
+      <table mat-table [dataSource]="dataSource" class="notifications-table">
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef class="text-label notifications-text">
+            {{ 'NOTIFICATIONS.TABLE.NAME' | translate }}
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let noti"
+            (mouseenter)="marcarComoLeida(noti)"
+            class="notifications-name"
+            [ngClass]="{
+              'text-red-500 dark:text-red-dark': !noti.leido,
+              'text-green-600 dark:text-green-300': noti.leido,
+            }"
+          >
+            {{ noti.asunto }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="notificacion">
+          <th mat-header-cell *matHeaderCellDef class="text-label notifications-text">
+            {{ 'NOTIFICATIONS.TABLE.CONTENT' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let noti" class="text-label notifications-text">
+            {{ noti.contenido }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="notifications-text text-label whitespace-nowrap px-4"
+          >
+            {{ 'NOTIFICATIONS.TABLE.DATE' | translate }}
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let noti"
+            class="text-label notifications-text whitespace-nowrap px-4"
+          >
+            {{ noti.fecha_envio | date: 'dd/MM/yyyy' }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
     </div>
-  }
-
-  <div
-    class="flex flex-col p-10 w-full max-w-6xl bg-surface! rounded-2xl shadow-md border border-disabled!"
-  >
-    <table mat-table [dataSource]="dataSource" class="w-full">
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef class="text-label text-primary">
-          {{ 'NOTIFICATIONS.TABLE.NAME' | translate }}
-        </th>
-        <td
-          mat-cell
-          *matCellDef="let noti"
-          (mouseenter)="marcarComoLeida(noti)"
-          class="cursor-pointer font-bold transition-colors duration-500 !text-label"
-          [ngClass]="{
-            'text-red-500': !noti.leido,
-            'text-green-600': noti.leido,
-          }"
-        >
-          {{ noti.asunto }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="notificacion">
-        <th mat-header-cell *matHeaderCellDef class="text-label text-primary">
-          {{ 'NOTIFICATIONS.TABLE.CONTENT' | translate }}
-        </th>
-        <td mat-cell *matCellDef="let noti" class="text-label text-primary">
-          {{ noti.contenido }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="fecha">
-        <th mat-header-cell *matHeaderCellDef class="text-primary !text-label">
-          {{ 'NOTIFICATIONS.TABLE.DATE' | translate }}
-        </th>
-        <td mat-cell *matCellDef="let noti" class="text-label text-primary">
-          {{ noti.fecha_envio | date: 'dd/MM/yyyy' }}
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons class="mt-4">
     </mat-paginator>
   </div>

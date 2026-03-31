@@ -1,13 +1,22 @@
-<div class="p-6 flex flex-col w-full justify-center items-center gap-6">
+<div class="login-modal-container">
   <div class="w-full flex justify-end p-10">
-    <img
+    <svg
       mat-dialog-close
-      class="cursor-pointer h-10 w-10 md:h-16 md:w-16 lg:h-20 lg:w-20"
-      src="assets/icons/cerrar.webp"
-    />
+      xmlns="http://www.w3.org/2000/svg"
+      class="modal-close-btn"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
   </div>
 
-  <h2 class="text-primary text-h2 text-center mb-10">
+  <h1 class="login-modal-title">
     @if (modoActual === 'login') {
       {{ 'LOGIN_MODAL.TITLES.LOGIN' | translate }}
     } @else if (modoActual === 'registro') {
@@ -19,16 +28,21 @@
     } @else {
       {{ 'LOGIN_MODAL.TITLES.NOTITLE' | translate }}
     }
-  </h2>
+  </h1>
 
   @if (modoActual === 'login') {
-    <form [formGroup]="loginForm" class="w-full flex flex-col items-center">
-      <div class="flex justify-center items-center flex-col w-full">
-        <mat-dialog-content class="p-0! flex! flex-col! gap-10 w-full justify-center items-center">
+    <form [formGroup]="loginForm" class="login-login-form">
+      <div class="login-login-form-div">
+        <mat-dialog-content class="login-form-reset">
           <app-inputs
             name="email"
             [label]="'LOGIN_MODAL.LABELS.EMAIL' | translate"
             [control]="getCtrl('email')"
+            [errorMessage]="
+              getCtrl('email').invalid && getCtrl('email').touched
+                ? ('LOGIN_MODAL.HINTS.EMAIL_ERROR' | translate)
+                : ''
+            "
           >
           </app-inputs>
 
@@ -37,17 +51,18 @@
             [label]="'LOGIN_MODAL.LABELS.PASSWORD' | translate"
             type="password"
             [control]="getCtrl('password')"
+            [errorMessage]="
+              getCtrl('email').invalid &&
+              getCtrl('password').hasError('pattern') &&
+              getCtrl('password').touched
+                ? ('LOGIN_MODAL.HINTS.PASS_PATTERN' | translate)
+                : ''
+            "
           ></app-inputs>
-
-          @if (getCtrl('password').touched && getCtrl('password').hasError('pattern')) {
-            <small class="label-text text-red">
-              {{ 'LOGIN_MODAL.HINTS.PASS_PATTERN' | translate }}
-            </small>
-          }
         </mat-dialog-content>
       </div>
 
-      <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
+      <mat-dialog-actions class="login-other-actions">
         <app-button
           [label]="'LOGIN_MODAL.BTN.ENTER' | translate"
           variant="primary"
@@ -77,12 +92,12 @@
     </form>
   }
   @if (modoActual === 'recuperar') {
-    <div class="w-full flex flex-col items-center">
-      <div class="flex justify-center items-center flex-col w-full mb-6">
-        <p class="text-p text-secondary mb-20 text-center px-4">
+    <div class="login-recuperar-container">
+      <div class="login-login-form-div mb-6">
+        <p class="login-subtitle">
           {{ 'LOGIN_MODAL.HINTS.RECOVER_DESC' | translate }}
         </p>
-        <mat-dialog-content class="p-0! flex! flex-col! w-full justify-center items-center">
+        <mat-dialog-content class="login-form-reset">
           <app-inputs
             name="emailRecuperacion"
             [label]="'LOGIN_MODAL.LABELS.EMAIL' | translate"
@@ -92,7 +107,7 @@
         </mat-dialog-content>
       </div>
 
-      <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
+      <mat-dialog-actions class="login-other-actions">
         <app-button
           [label]="'LOGIN_MODAL.BTN.SEND_LINK' | translate"
           variant="primary"
@@ -110,8 +125,8 @@
     </div>
   }
   @if (modoActual === 'registro') {
-    <div class="w-full flex flex-col items-center">
-      <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
+    <div class="login-registro-container">
+      <mat-dialog-actions class="login-other-actions">
         <app-button
           [label]="'LOGIN_MODAL.BTN.REG_USER' | translate"
           variant="primary"
@@ -139,11 +154,11 @@
 
   @if (modoActual === 'reenviar') {
     <div class="w-full flex flex-col items-center">
-      <div class="flex justify-center items-center flex-col w-full mb-6">
-        <p class="text-p text-secondary mb-20 text-center px-4">
+      <div class="login-login-form-div mb-6">
+        <p class="login-subtitle">
           {{ 'LOGIN_MODAL.LABELS.RESEND' | translate }}
         </p>
-        <mat-dialog-content class="p-0! flex! flex-col! w-full justify-center items-center">
+        <mat-dialog-content class="login-form-reset">
           <app-inputs
             name="emailresend"
             [label]="'LOGIN_MODAL.LABELS.EMAIL' | translate"
@@ -153,7 +168,7 @@
         </mat-dialog-content>
       </div>
 
-      <mat-dialog-actions class="flex! flex-col! mb-10! gap-4 w-full">
+      <mat-dialog-actions class="login-other-actions">
         <app-button
           (click)="onReenviarCorreo()"
           [label]="'LOGIN_MODAL.BTN.SEND_LINK' | translate"
@@ -166,8 +181,11 @@
 
   @if (messageService.messageData(); as data) {
     <div
-      [ngClass]="{ 'text-red-500': data.tipo === 'error', 'text-green-600': data.tipo === 'exito' }"
-      class="text-label ml-2 transition-all duration-300 mb-4 text-center"
+      [ngClass]="{
+        'text-red-500 dark:text-red-dark': data.tipo === 'error',
+        'text-green-600 dark:text-green-300': data.tipo === 'exito',
+      }"
+      class="login-form-label-base text-label"
     >
       {{ data.mensaje }}
     </div>

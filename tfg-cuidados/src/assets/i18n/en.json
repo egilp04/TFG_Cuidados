@@ -233,6 +233,10 @@
       "CANCELCONTRACT": "Error cancelling the contract.",
       "CONTACT": "Email could not be sent, try it later.",
       "DELETE_USER": "Error deleting record."
+    },
+    "TITLE": {
+      "RECEIVED": "Received",
+      "SENT": "Sent"
     }
   },
   "MANAGEMENT_SERVICES": {
@@ -421,7 +425,8 @@
     "TOAST": {
       "SUCCESS": "Password updated! Welcome back.",
       "ERROR": "The link has expired or an error occurred, try later or use another password, remember new password must be different from the old one."
-    }
+    },
+    "HOME": "Start"
   },
 
   "SEARCH_BUSINESS": {
@@ -550,7 +555,7 @@
   "SEARCH_PLACEHOLDER": "Search...",
   "REGISTER": {
     "PLACEHOLDER": {
-      "SELECTREGION": "Select a region"
+      "SELECTREGION": "Choose"
     },
     "MESSAGES": {
       "SUCCESS": "Registration successful! Please check your email.",
@@ -570,7 +575,7 @@
       "ADDRESS": "Address",
       "CITY": "City",
       "ZIP": "Zip Code",
-      "REGION": "Region / State",
+      "REGION": "State",
       "PASSWORD": "Password",
       "REPASSWORD": "Repeat Password",
       "DESCRIPTION": "Description"
@@ -664,8 +669,9 @@
       "RESEND": "Resend register email"
     },
     "HINTS": {
-      "PASS_PATTERN": "Password must be at least 6 chars, letters and numbers.",
-      "RECOVER_DESC": "Enter your email and we will send you a link to reset your password."
+      "PASS_PATTERN": "Password must be at least 6 chars, letters, numbers and special characters.",
+      "RECOVER_DESC": "Enter your email and we will send you a link to reset your password.",
+      "EMAIL_ERROR": "Check the email, please"
     },
     "BTN": {
       "ENTER": "Login",

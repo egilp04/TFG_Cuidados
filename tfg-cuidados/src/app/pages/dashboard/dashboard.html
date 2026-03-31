@@ -1,14 +1,14 @@
-<div class="w-full mb-4">
+<div class="button-back-container">
   <app-buttonback></app-buttonback>
 </div>
 
-<div class="bg-surface p-10 flex flex-col items-center">
-  <div class="flex flex-col gap-22 w-full items-center">
-    <h2 class="text-h2 text-primar">
+<div class="dashboard-container">
+  <div class="dashboard-contracts-container">
+    <h2 class="dashboard-contracts-title">
       {{ 'DASHBOARD.TITLE_CONTRACTS' | translate }}
     </h2>
 
-    <div class="w-full h-48 md:h-52 lg:h-64 mb-28 justify-center items-center flex flex-col gap-12">
+    <div class="dashboard-contracts-canvas">
       <canvas
         baseChart
         [data]="doughnutChartData"
@@ -16,37 +16,35 @@
         [type]="'doughnut'"
       >
       </canvas>
-      <div class="flex flex-row gap-10">
-        <span class="text-label text-secondary">
+      <div class="dashboard-contracts-texts-container">
+        <span class="dashboard-contracts-text-total">
           {{ 'DASHBOARD.TOTAL_CONTRACTS.TOTAL' | translate }}
           {{ contratosActivos + contratosCancelados }}
         </span>
-        <span class="text-label text-[#3B82F6]">
+        <span class="dashboard-contracts-text-active">
           {{ 'DASHBOARD.TOTAL_CONTRACTS.ACTIVE' | translate }}
           {{ contratosActivos }}
         </span>
-        <span class="text-label text-[#ca165b]">
+        <span class="dashboard-contracts-text-no-active">
           {{ 'DASHBOARD.TOTAL_CONTRACTS.NO_ACTIVE' | translate }}
-          {{ contratosActivos }}
+          {{ contratosCancelados }}
         </span>
       </div>
     </div>
   </div>
 
-  <div
-    class="w-full bg-surface border border-gray-200 rounded-xl py-10 px-10 shadow-soft mb-28 flex justify-center"
-  >
-    <h2 class="text-h2 text-primary">
+  <div class="dashboard-total-users-container">
+    <h2 class="dashboard-total-users-title">
       {{ 'DASHBOARD.TOTAL_USERS' | translate }}
-      <span class="font-sans font-bold ml-2">{{ totalUsuarios }}</span>
+      <span class="dashboard-total-users-text">{{ totalUsuarios }}</span>
     </h2>
   </div>
 
-  <div class="w-full text-center">
-    <h2 class="text-h2 text-primary mb-2">
+  <div class="dashboard-login-container">
+    <h2 class="dashboard-login-title">
       {{ 'DASHBOARD.LOGIN.TITLE' | translate }}
     </h2>
-    <p class="text-gray-400 mb-10 text-p">
+    <p class="dashboard-login-text">
       {{ 'DASHBOARD.LOGIN.SUBTITLE' | translate }}
     </p>
 

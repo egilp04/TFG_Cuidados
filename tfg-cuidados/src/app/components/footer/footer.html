@@ -1,61 +1,28 @@
-<div class="flex flex-col items-center justify-between md:flex-row py-20 px-4 bg-primary">
-  <a
-    [routerLink]="homeLink()"
-    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-  >
+<div class="footer-container">
+  <a [routerLink]="homeLink()" class="footer-text">
     {{ 'FOOTER.HOME' | translate }}
   </a>
-  <a
-    routerLink="/contact"
-    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-  >
+  <a routerLink="/contact" class="footer-text">
     {{ 'FOOTER.CONTACT' | translate }}
   </a>
-  <a
-    routerLink="/about-us"
-    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-  >
+  <a routerLink="/about-us" class="footer-text">
     {{ 'FOOTER.ABOUT' | translate }}
   </a>
-  <a
-    routerLink="/manuals"
-    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-  >
+  <a routerLink="/manuals" class="footer-text">
     {{ 'FOOTER.MANUALS' | translate }}
   </a>
-  <a
-    routerLink="/terms"
-    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-  >
+  <a routerLink="/terms" class="footer-text">
     {{ 'FOOTER.LEGAL_ASPECTS' | translate }}
   </a>
-  <a
-    routerLink="/terms"
-    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-  >
+  <a routerLink="/terms" class="footer-text">
     {{ 'FOOTER.PRIVACY_POLICTICS' | translate }}
   </a>
-  <a
-    routerLink="/terms"
-    class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-  >
+  <a routerLink="/terms" class="footer-text">
     {{ 'FOOTER.COOKIES_POLICIES' | translate }}
   </a>
   <div class="flex flex-row gap-4">
-    <button
-      (click)="cambiarIdioma('es')"
-      class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-    >
-      ES
-    </button>
-    <span class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-      >|</span
-    >
-    <button
-      (click)="cambiarIdioma('en')"
-      class="text-label text-surface hover:text-accent transition-colors cursor-pointer"
-    >
-      EN
-    </button>
+    <button (click)="cambiarIdioma('es')" class="footer-text">ES</button>
+    <span class="footer-text">|</span>
+    <button (click)="cambiarIdioma('en')" class="footer-text">EN</button>
   </div>
 </div>

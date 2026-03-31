@@ -9,11 +9,18 @@ import { AuthService } from '../../services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
 import { ComunicationService } from '../../services/comunication.service';
+import { DarkModeBtnComponent } from '../dark-mode-btn/dark-mode-btn.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, LucideAngularModule, TranslateModule],
+  imports: [
+    CommonModule,
+    ButtonComponent,
+    LucideAngularModule,
+    TranslateModule,
+    DarkModeBtnComponent,
+  ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })

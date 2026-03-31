@@ -234,6 +234,10 @@
       "CANCELCONTRACT": "Error al cancelar el contrato.",
       "CONTACT": "El mensjae no ha sido enviado, inténtelo más tarde.",
       "DELETE_USER": "Error al eliminar el registro."
+    },
+    "TITLE": {
+      "RECEIVED": "Recibidos",
+      "SENT": "Enviados"
     }
   },
   "MANAGEMENT_SERVICES": {
@@ -377,7 +381,8 @@
     "TOAST": {
       "SUCCESS": "¡Contraseña actualizada! Bienvenido de nuevo.",
       "ERROR": "El enlace ha expirado o hubo un error, inténtalo más tarde o prueba con otra contraseña, recuerde que la contraseña anterior debe ser distinta a la nueva."
-    }
+    },
+    "HOME": "Inicio"
   },
   "SEARCH_BUSINESS": {
     "MESSAGES": {
@@ -510,7 +515,7 @@
       "ERROR_GENERIC": "Error, inténtalo de nuevo."
     },
     "PLACEHOLDER": {
-      "SELECTREGION": "Seleccione una comunidad"
+      "SELECTREGION": "Escoja una"
     },
     "LABELS": {
       "USERNAME": "Nombre de usuario",
@@ -525,7 +530,7 @@
       "ADDRESS": "Dirección",
       "CITY": "Localidad",
       "ZIP": "CP",
-      "REGION": "Comunidad Autónoma",
+      "REGION": "C.C.A.A.",
       "PASSWORD": "Contraseña",
       "REPASSWORD": "Repetir contraseña",
       "DESCRIPTION": "Descripción"
@@ -655,8 +660,9 @@
       "RESEND": "Reenviar el email de registro"
     },
     "HINTS": {
-      "PASS_PATTERN": "La contraseña debe tener al menos 6 caracteres, letras y números.",
-      "RECOVER_DESC": "Introduce tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña."
+      "PASS_PATTERN": "La contraseña debe tener al menos 6 caracteres, letras, números y caracteres especiales.",
+      "RECOVER_DESC": "Introduce tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.",
+      "EMAIL_ERROR": "Revise el email, por favor"
     },
     "BTN": {
       "ENTER": "Entrar",

@@ -1,5 +1,5 @@
-<div class="flex flex-col justify-center items-center w-full p-20">
-  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-8 w-full">
+<div class="modify-form-container">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="modify-profile-form">
     @if (userRole != 'empresa') {
       <app-inputs
         name="usuario"
@@ -9,8 +9,8 @@
       ></app-inputs>
     }
     @if (userRole === 'cliente') {
-      <div class="flex flex-col gap-6">
-        <div class="flex flex-row gap-6">
+      <div class="register-form-col">
+        <div class="register-form-row">
           <app-inputs
             name="primerApe"
             [label]="'MODIFY_PROFILE.LABELS.SURNAME1' | translate"
@@ -29,22 +29,22 @@
         </div>
       </div>
     } @else if (userRole === 'empresa') {
-      <div class="flex flex-col gap-6">
+      <div class="register-form-col">
         <app-inputs
           name="nombreEmpresa"
           [label]="'MODIFY_PROFILE.LABELS.COMPANY_NAME' | translate"
           [control]="getCtrl('nombreEmpresa')"
           [errorMessage]="getErrorMessage('nombreEmpresa')"
         ></app-inputs>
-        <div class="flex flex-col gap-2 w-full">
-          <label for="descripcion" class="text-label text-primary font-medium">
+        <div class="input-area-modify-profile-container">
+          <label for="descripcion" class="input-label">
             {{ 'MODIFY_PROFILE.LABELS.DESCRIPTION' | translate }}
           </label>
           <textarea
             id="descripcion"
             formControlName="descripcion"
             rows="4"
-            class="bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary border-2 rounded-12 font-poppins text-label outline-none focus:border-accent transition-all resize-none"
+            class="input-text-area"
             [placeholder]="'MODIFY_PROFILE.PLACEHOLDER.DESCRIPTION' | translate"
           ></textarea>
         </div>
@@ -81,7 +81,7 @@
         [errorMessage]="getErrorMessage('localidad')"
       ></app-inputs>
 
-      <div class="flex flex-row gap-6">
+      <div class="register-form-row">
         <app-inputs
           name="codpostal"
           [label]="'MODIFY_PROFILE.LABELS.ZIP' | translate"
@@ -89,35 +89,38 @@
           [errorMessage]="getErrorMessage('codpostal')"
           class="flex-1"
         ></app-inputs>
-        <div class="flex flex-col gap-2 w-full flex-1">
-          <label for="comunidad" class="text-label text-primary font-medium">
+
+        <div class="register-form-select-container">
+          <label for="comunidad" class="register-form-select-label">
             {{ 'REGISTER.LABELS.REGION' | translate }}
           </label>
-
           <div class="relative w-full">
-            <select
-              id="comunidad"
-              formControlName="comunidad"
-              class="appearance-none bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer"
-            >
-              <option [ngValue]="null" disabled selected class="text-gray-400">
-                {{ 'REGISTER.PLACEHOLDER.SELECTREGION' | translate }}
-              </option>
-
+            <select id="comunidad" formControlName="comunidad" class="register-form-select">
               @for (comunidad of comunidades; track $index) {
-                <option [value]="comunidad">{{ comunidad }}</option>
+                <option [value]="comunidad" class="register-form-options">{{ comunidad }}</option>
               }
             </select>
-            <div
-              class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary flex items-center"
-            >
-              <lucide-icon name="chevron-down" class="w-5 h-5"></lucide-icon>
+
+            <div class="register-form-select-arrow">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
             </div>
           </div>
         </div>
       </div>
     }
-    <div class="flex flex-col gap-4 mt-10 w-full items-center">
+    <div class="modify-profile-btn-container">
       <div class="flex flex-row gap-4 w-full justify-center">
         <app-button
           [label]="'MODIFY_PROFILE.BTN.CANCEL' | translate"

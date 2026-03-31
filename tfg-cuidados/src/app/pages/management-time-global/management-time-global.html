@@ -1,27 +1,27 @@
-<div class="w-full mb-4">
+<div class="button-back-container">
   <app-buttonback></app-buttonback>
 </div>
 
-<div class="flex flex-col items-center p-6 bg-surface">
+<div class="message-noti">
   @if (this.messageService.messageData(); as data) {
     <div
       [ngClass]="{
         'text-red-500': data.tipo === 'error',
         'text-primary': data.tipo === 'exito',
       }"
-      class="text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm"
+      class="message-noti-text"
     >
       {{ data.mensaje }}
     </div>
   }
 </div>
 
-<div class="flex flex-col p-6 gap-4 mt-20 md:mt-120">
-  <h2 class="text-primary text-h2 text-center">
+<div class="managements-time-global-container">
+  <h2 class="management-title-time">
     {{ 'MANAGEMENT_SCHEDULES.TITLE' | translate }}
   </h2>
 
-  <div class="flex flex-col gap-20 px-10">
+  <div class="management-time-global-form">
     <app-inputs
       name="time"
       [label]="'MANAGEMENT_SCHEDULES.FORM.START_TIME' | translate"
@@ -31,32 +31,27 @@
     >
     </app-inputs>
 
-    <div class="flex flex-col gap-1">
-      <label class="text-label text-primary">
+    <div class="management-time-global-day-week">
+      <label class="management-time-global-day-label">
         {{ 'MANAGEMENT_SCHEDULES.FORM.DAY_LABEL' | translate }}
       </label>
       <div class="relative w-full">
-        <select
-          name="dia"
-          [formControl]="getCtrl('dia')"
-          class="text-label w-full p-4 rounded-12 border-2 border-primary bg-transparent text-primary outline-none focus:border-accent cursor-pointer transition-colors"
-        >
+        <select name="dia" [formControl]="getCtrl('dia')" class="management-time-global-select">
           <option value="" disabled selected>
             {{ 'MANAGEMENT_SCHEDULES.FORM.SELECT_DAY' | translate }}
           </option>
-          <option value="lunes">{{ 'MANAGEMENT_SCHEDULES.DAYS.MONDAY' | translate }}</option>
-          <option value="martes">{{ 'MANAGEMENT_SCHEDULES.DAYS.TUESDAY' | translate }}</option>
-          <option value="miercoles">{{ 'MANAGEMENT_SCHEDULES.DAYS.WEDNESDAY' | translate }}</option>
-          <option value="jueves">{{ 'MANAGEMENT_SCHEDULES.DAYS.THURSDAY' | translate }}</option>
-          <option value="viernes">{{ 'MANAGEMENT_SCHEDULES.DAYS.FRIDAY' | translate }}</option>
-          <option value="sabado">{{ 'MANAGEMENT_SCHEDULES.DAYS.SATURDAY' | translate }}</option>
-          <option value="domingo">{{ 'MANAGEMENT_SCHEDULES.DAYS.SUNDAY' | translate }}</option>
+
+          @for (dia of dias_semana; track dia.valor) {
+            <option [value]="dia.valor" class="register-form-options">
+              {{ dia.label | translate }}
+            </option>
+          }
         </select>
       </div>
     </div>
   </div>
 
-  <div class="flex gap-4 w-full justify-center items-center">
+  <div class="management-time-global-btn-container">
     <app-button
       [label]="
         (isEditing ? 'MANAGEMENT_SCHEDULES.FORM.SAVE' : 'MANAGEMENT_SCHEDULES.FORM.ADD') | translate
@@ -77,34 +72,38 @@
   </div>
 </div>
 
-<div class="flex flex-col p-6 gap-4 mt-20">
-  <h2 class="text-secondary text-h2 text-center">
+<div class="management-time-global-table-container">
+  <h2 class="management-time-global-table-title">
     {{ 'MANAGEMENT_SCHEDULES.LIST.TITLE' | translate }}
   </h2>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 w-full">
     <ng-container matColumnDef="hora">
-      <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
+      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text">
         {{ 'MANAGEMENT_SCHEDULES.TABLE.TIME' | translate }}
       </th>
-      <td mat-cell *matCellDef="let horario" class="p-4 text-label text-primary">
+      <td mat-cell *matCellDef="let horario" class="text-label management-global-text">
         {{ horario.hora }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="dia">
-      <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary">
+      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text">
         {{ 'MANAGEMENT_SCHEDULES.TABLE.DAY' | translate }}
       </th>
-      <td mat-cell *matCellDef="let horario" class="p-4 text-label text-primary">
-        {{ horario.dia_semana }}
+      <td mat-cell *matCellDef="let horario" class="text-label management-global-text">
+        {{ tradus_dias[horario.dia_semana] | translate }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef class="p-4 text-label text-primary text-center"></th>
-      <td mat-cell *matCellDef="let horario" class="p-4 text-label text-primary">
-        <div class="flex justify-center items-center gap-2 p-10">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        class="text-label management-global-text text-center"
+      ></th>
+      <td mat-cell *matCellDef="let horario" class="text-label management-global-text">
+        <div class="management-time-global-actions">
           <app-button
             [label]="'MANAGEMENT_SCHEDULES.TABLE.EDIT' | translate"
             variant="primary"

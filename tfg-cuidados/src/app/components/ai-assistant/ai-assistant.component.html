@@ -1,9 +1,7 @@
-<div class="fixed bottom-44 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4">
+<div class="ia-container">
   @if (isOpen) {
-    <div
-      class="w-[calc(100vw-2rem)] md:w-88 h-[500px] md:h-[450px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden animate-fade-in-up"
-    >
-      <div class="bg-primary text-white p-4 flex justify-between items-center shadow-md shrink-0">
+    <div class="ia-container-open animate-fade-in-up">
+      <div class="ia-icon">
         <div class="flex items-center gap-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +22,7 @@
           </svg>
           <h3 class="font-bold text-sm">{{ 'AI_ASSISTANT.HEADER_TITLE' | translate }}</h3>
         </div>
-        <button (click)="toggleChat()" class="p-1 hover:bg-white/20 rounded-full transition-colors">
+        <button (click)="toggleChat()" class="ia-btn-toggle">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -42,7 +40,7 @@
         </button>
       </div>
 
-      <div class="flex-1 p-4 bg-slate-50 overflow-y-auto flex flex-col gap-3">
+      <div class="ia-messages-container">
         @for (msg of messages; track $index) {
           <div class="flex w-full" [ngClass]="msg.isUser ? 'justify-end' : 'justify-start'">
             <div
@@ -59,7 +57,7 @@
         }
 
         @if (isLoading) {
-          <div class="flex w-full justify-start animate-fade-in-up">
+          <div class="ia-loading-container animate-fade-in-up">
             <div
               class="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm flex items-center gap-1.5"
             >
@@ -77,20 +75,16 @@
         }
       </div>
 
-      <div class="p-3 bg-white border-t border-gray-100 flex gap-2 items-center shrink-0">
+      <div class="ia-new-message-container">
         <input
           type="text"
           [(ngModel)]="newMessage"
           (keyup.enter)="sendMessage()"
           [disabled]="isLoading"
           [placeholder]="'AI_ASSISTANT.INPUT_PLACEHOLDER' | translate"
-          class="flex-1 border border-gray-300 rounded-full px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all disabled:bg-gray-50"
+          class="ia-input"
         />
-        <button
-          (click)="sendMessage()"
-          [disabled]="!newMessage.trim() || isLoading"
-          class="bg-accent text-white rounded-full w-12 h-12 flex items-center justify-center hover:opacity-90 active:scale-90 transition-all disabled:opacity-50 shadow-sm"
-        >
+        <button (click)="sendMessage()" [disabled]="!newMessage.trim() || isLoading" class="ia-btn">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

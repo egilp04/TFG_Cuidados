@@ -1,11 +1,11 @@
-<div class="flex flex-col h-screen overflow-hidden">
+<div class="main-container">
   @if (!router.url.includes('recover-password')) {
-  <app-navbar class="flex-none"></app-navbar>
+    <app-navbar class="flex-none"></app-navbar>
   }
-  <main class="flex-1 overflow-auto">
+  <main>
     <router-outlet></router-outlet>
   </main>
   @if (!router.url.includes('recover-password')) {
-  <app-footer class="flex-none"></app-footer>
+    <app-footer class="flex-none"></app-footer>
   }
 </div>
