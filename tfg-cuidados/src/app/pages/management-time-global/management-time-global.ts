@@ -18,7 +18,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { switchMap, throwError, map, catchError, of, filter } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-
+import { dias_semana, tradusDia } from '../../core/constants/dias_semana';
 import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
 import { Buttonback } from '../../components/buttonback/buttonback';
@@ -53,6 +53,8 @@ export class ManagementTimeGlobal implements OnInit {
   private translate = inject(TranslateService);
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
+  public dias_semana: { valor: string; label: string }[] = dias_semana;
+  public tradus_dias: { [key: string]: string } = tradusDia;
 
   isEditing: boolean = false;
   currentTimeId: string | null = null;

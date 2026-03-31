@@ -149,16 +149,18 @@
   small {
     @apply max-w-1/2 2xl:max-w-4/5;
   }
+
   .mat-mdc-paginator-outer-container {
-    @apply !bg-surface;
+    @apply !bg-surface dark:bg-surface-dark!;
   }
-
   .mat-mdc-paginator {
-    @apply !bg-surface !text-primary;
+    @apply !bg-surface dark:bg-surface-dark! !text-primary dark:text-surface! py-20;
   }
-
   .mat-mdc-paginator .mat-mdc-icon-button {
-    @apply !text-primary;
+    @apply !text-primary dark:text-surface! my-10;
+  }
+  .mat-mdc-paginator .mat-mdc-select-value {
+    @apply flex justify-center text-center w-full;
   }
 
   .mat-mdc-select-value,
@@ -172,6 +174,26 @@
 }
 
 @layer components {
+  .table-admin {
+    @apply mx-4 md:mx-12 overflow-hidden flex flex-col;
+  }
+
+  .table-admin-content {
+    @apply w-full text-left;
+  }
+
+  .table-column-name {
+    @apply text-primary dark:text-surface p-5 pl-8;
+  }
+
+  .table-admin-btn-container {
+    @apply flex justify-end items-center gap-4 p-10;
+  }
+
+  .table-paginator-end {
+    @apply border-t border-gray-200;
+  }
+
   .main-container {
     @apply flex flex-col h-screen;
   }
@@ -187,7 +209,7 @@
   }
 
   .btn-danger {
-    @apply bg-red text-surface;
+    @apply bg-red dark:bg-red-dark text-surface;
   }
 
   .button-base {
@@ -708,6 +730,212 @@
   .dashboard-login-text {
     @apply text-gray-400 mb-10 text-p dark:text-gray-50;
   }
+
+  .dropdown-container {
+    @apply w-full max-w-xs relative;
+  }
+
+  .mangment-admin-container {
+    @apply flex flex-col mt-20 w-full max-h-screen gap-20;
+  }
+
+  .mangment-admin-btn-container {
+    @apply flex justify-center;
+  }
+
+  .table-admin-container {
+    @apply w-full h-full flex flex-col p-4 md:p-8 gap-20;
+  }
+
+  .table-admin-search-container {
+    @apply w-full flex gap-4 items-center justify-end px-20;
+  }
+
+  .table-admin-search-title {
+    @apply text-primary text-label dark:text-surface;
+  }
+
+  .search-bar-container {
+    @apply relative w-full border-2 border-primary dark:border-surface disabled:border-disabled hover:border-accent focus:border-accent rounded-12;
+  }
+
+  .search-icon {
+    @apply absolute inset-y-0 right-0 flex items-center pl-4 pointer-events-none px-10;
+  }
+
+  .search-icon {
+    @apply text-h2 text-primary dark:text-surface disabled:text-disabled hover:text-accent focus:text-accent cursor-pointer;
+  }
+
+  .search-input {
+    @apply flex p-8 md:p-10 lg:p-15 outline-none transition-all w-[90%] bg-transparent dark:placeholder:text-surface dark:text-surface;
+  }
+
+  .cancel-modal-container {
+    @apply flex flex-col justify-center items-center p-6 gap-2 w-full relative md:py-20 max-h-screen dark:bg-surface-dark;
+  }
+
+  .cancel-modal-title-container {
+    @apply h-full p-10;
+  }
+  .cancel-modal-title {
+    @apply text-primary text-h1 text-center dark:text-surface;
+  }
+
+  .cancel-modal-content {
+    @apply p-0! m-0! w-full;
+  }
+
+  .cancel-modal-text {
+    @apply py-8 px-4 text-secondary leading-relaxed dark:text-gray-50;
+  }
+
+  .cancel-modal-action-container {
+    @apply flex flex-col! items-center gap-6 w-full m-0! p-0!;
+  }
+
+  .notifications-title {
+    @apply text-h1 text-primary text-center dark:text-surface mb-20;
+  }
+
+  .notifications-name {
+    @apply cursor-pointer font-bold transition-colors duration-500 !text-label;
+  }
+
+  .notifications-container {
+    @apply flex flex-col items-center px-10 gap-10 lg:gap-20;
+  }
+
+  .notifications-table-container {
+    @apply flex flex-col p-10 w-full max-w-6xl bg-surface! rounded-2xl shadow-md border border-disabled! dark:bg-surface-dark!;
+  }
+
+  .notifications-table-container-inner {
+    @apply w-full overflow-x-auto pb-2;
+  }
+
+  .notifications-table {
+    @apply w-full min-w-[500px] md:min-w-full;
+  }
+
+  .notifications-text {
+    @apply text-primary dark:text-surface;
+  }
+
+  .messages-page-container {
+    @apply flex flex-col items-center p-6;
+  }
+  .messages-page-title {
+    @apply w-full text-h1 text-primary font-serif mb-6 text-center dark:text-surface;
+  }
+
+  .messages-page-btn-container {
+    @apply flex flex-col md:flex-row justify-between w-full gap-4 px-10 my-14;
+  }
+
+  .messages-btn-new-message {
+    @apply flex items-center justify-center gap-2 px-6 py-3 border rounded-12 border-primary dark:border-surface text-primary dark:text-surface hover:bg-primary hover:text-white transition-all cursor-pointer;
+  }
+
+  .messages-page-subtitle {
+    @apply w-full text-h1 text-primary font-serif mb-20 text-center dark:text-surface;
+  }
+
+  .dropdown-container {
+    @apply w-full relative z-20;
+  }
+  .dropdown-icon {
+    @apply h-4 w-4 transition-transform duration-300 text-primary dark:text-surface;
+  }
+  .dropdown-options {
+    @apply p-3  hover:border-accent cursor-pointer text-primary dark:text-surface text-label transition-colors focus:border-primary first:rounded-t-12 last:rounded-b-12 border-t-0 border-l-2 border-r-2 border-b-0 first:border-t-2 last:border-b-2 border-disabled;
+  }
+  .dropdown-open-container {
+    @apply w-full mt-2 bg-surface dark:bg-surface-dark rounded-12 overflow-hidden absolute z-50 shadow-xl border border-gray-200 dark:border-gray-700;
+  }
+
+  .dropdown-inner-container {
+    @apply flex justify-around items-center p-2 rounded-12 border-2 cursor-pointer transition-all border-disabled hover:border-accent focus:border-primary w-full;
+  }
+
+  .dropdown-title {
+    @apply text-secondary dark:text-surface text-label;
+  }
+
+  .dropdown-subtitle {
+    @apply text-secondary text-h2 text-center dark:text-surface;
+  }
+
+  .managements-services-global-container {
+    @apply flex flex-col p-20 gap-20 mt-20 max-h-screen;
+  }
+
+  .management-title-services-global {
+    @apply text-h1 text-primary text-center dark:text-surface;
+  }
+
+  .management-services-global-table-container {
+    @apply flex flex-col p-6 gap-4;
+  }
+
+  .management-services-global-form {
+    @apply w-full h-full md:px-40 gap-20 flex flex-col;
+  }
+
+  .management-services-global-form-btn {
+    @apply flex gap-10 justify-center items-center;
+  }
+
+  .management-services-global-search {
+    @apply text-label text-primary dark:text-surface;
+  }
+
+  .management-global-text {
+    @apply p-4 text-primary dark:text-surface;
+  }
+
+  .management-service-global-actions {
+    @apply flex justify-center items-center gap-2 p-10;
+  }
+
+  .managements-time-global-container {
+    @apply flex flex-col p-6 gap-4 mt-20 md:mt-120;
+  }
+  .management-title-time {
+    @apply text-primary text-h2 text-center dark:text-surface;
+  }
+
+  .management-time-global-form {
+    @apply flex flex-col gap-20 px-10;
+  }
+
+  .management-time-global-day-week {
+    @apply flex flex-col gap-2;
+  }
+
+  .management-time-global-day-label {
+    @apply text-label text-primary dark:text-surface;
+  }
+
+  .management-time-global-select {
+    @apply text-label w-full p-4 rounded-12 border-2 border-primary bg-transparent text-primary dark:text-surface dark:border-surface outline-none focus:border-accent cursor-pointer transition-colors;
+  }
+
+  .management-time-global-btn-container {
+    @apply flex gap-4 w-full justify-center items-center;
+  }
+
+  .management-time-global-actions {
+    @apply flex justify-center items-center gap-2 p-10;
+  }
+
+  .management-time-global-table-container {
+    @apply flex flex-col p-6  gap-4 lg:gap-14 mt-20;
+  }
+
+  .management-time-global-table-title {
+    @apply text-secondary text-h2 text-center dark:text-surface;
+  }
 }
 
 @keyframes tooltip-entry {
@@ -739,4 +967,12 @@
   to {
     transform: scale(1);
   }
+}
+
+.cdk-overlay-pane .mat-mdc-select-panel {
+  @apply bg-surface rounded-12 shadow-lg  dark:bg-surface-dark;
+}
+
+html.dark .cdk-overlay-pane .mat-mdc-select-panel {
+  @apply bg-surface-dark;
 }

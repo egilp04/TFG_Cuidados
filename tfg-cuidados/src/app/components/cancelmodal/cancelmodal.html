@@ -1,15 +1,23 @@
-<div
-  class="flex flex-col justify-center items-center p-6 gap-2 w-full relative md:py-20 max-h-screen"
->
+<div class="cancel-modal-container">
   <div class="w-full flex justify-end p-10">
-    <img
+    <svg
       mat-dialog-close
-      class="cursor-pointer h-10 w-10 md:h-16 md:w-16 lg:h-20 lg:w-20"
-      src="assets/icons/cerrar.webp"
-    />
+      xmlns="http://www.w3.org/2000/svg"
+      class="login-modal-close-btn text-primary dark:text-surface cursor-pointer w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
   </div>
-  <div class="h-full p-10">
-    <h1 class="text-primary text-h1 text-center">
+
+  <div class="cancel-modal-title-container">
+    <h1 class="cancel-modal-title">
       @if (data.modo === 'baja') {
         {{ 'CANCEL_MODAL.BAJA.TITLE' | translate }}
       } @else if (data.modo === 'cancelarContrato') {
@@ -22,8 +30,8 @@
     </h1>
   </div>
 
-  <mat-dialog-content class="p-0! m-0! w-full">
-    <div class="py-8 px-4 text-secondary leading-relaxed">
+  <mat-dialog-content class="cancel-modal-content">
+    <div class="cancel-modal-text">
       @if (data.modo === 'baja') {
         <div class="text-center space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.BAJA.DESC_1' | translate }}</p>
@@ -47,7 +55,7 @@
             <li [innerHTML]="'CANCEL_MODAL.SERVICE.LIST.CESSATION' | translate"></li>
             <li [innerHTML]="'CANCEL_MODAL.SERVICE.LIST.VISIBILITY' | translate"></li>
           </ol>
-          <p class="font-bold text-p mt-4">
+          <p class="text-p">
             {{ 'CANCEL_MODAL.SERVICE.IMPORTANT_TITLE' | translate }}
           </p>
           <p>{{ 'CANCEL_MODAL.SERVICE.IMPORTANT_DESC' | translate }}</p>
@@ -69,7 +77,7 @@
     </div>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="flex flex-col! items-center gap-6 w-full m-0! p-0!">
+  <mat-dialog-actions class="cancel-modal-action-container">
     <app-button mat-dialog-close [label]="getPrimaryLabel() | translate" variant="secondary">
     </app-button>
     <app-button

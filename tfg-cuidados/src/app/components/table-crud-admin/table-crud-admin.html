@@ -1,51 +1,41 @@
-<div class="bg-surface w-full h-full flex flex-col p-4 md:p-8 gap-20">
-  <div class="w-full flex gap-2 items-center justify-end px-20">
-    <label class="text-primary text-label">{{ 'ADMIN_TABLE.SEARCH_LABEL' | translate }}</label>
+<div class="table-admin-container">
+  <div class="table-admin-search-container">
+    <label class="table-admin-search-title">{{ 'ADMIN_TABLE.SEARCH_LABEL' | translate }}</label>
     <app-searchbar [control]="searchControl"> </app-searchbar>
   </div>
 
-  <div class="mx-4 md:mx-12 bg-surface overflow-hidden flex flex-col">
+  <div class="table-admin">
     <div class="overflow-x-auto">
-      <table mat-table [dataSource]="dataSource" class="w-full text-left">
+      <table mat-table [dataSource]="dataSource" class="table-admin-content">
         <ng-container matColumnDef="nombre">
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-            class="text-text-primary text-label p-5 pl-8 font-bold"
-          >
+          <th mat-header-cell *matHeaderCellDef class="table-column-name text-label">
             {{ 'ADMIN_TABLE.HEADER.NAME' | translate }}
           </th>
-          <td mat-cell *matCellDef="let item" class="p-5 pl-8 text-primary font-medium text-label">
+          <td mat-cell *matCellDef="let item" class="table-column-name text-label">
             {{ item.nombre }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="apellidos">
-          <th mat-header-cell *matHeaderCellDef class="text-primary text-label p-5 font-bold">
+          <th mat-header-cell *matHeaderCellDef class="table-column-name text-label">
             {{ 'ADMIN_TABLE.HEADER.SURNAME' | translate }}
           </th>
-          <td mat-cell *matCellDef="let item" class="p-5 text-primary text-label">
+          <td mat-cell *matCellDef="let item" class="p-5 table-column-name text-label">
             {{ item.ape1 }} {{ item.ape2 }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef class="text-primary text-label p-5 font-bold">
-            Email
-          </th>
-          <td mat-cell *matCellDef="let item" class="p-5 text-primary text-label">
+          <th mat-header-cell *matHeaderCellDef class="table-column-name text-label">Email</th>
+          <td mat-cell *matCellDef="let item" class="table-column-name text-label">
             {{ item.email }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="acciones">
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-            class="text-primary text-label p-5 pr-8 font-bold"
-          ></th>
-          <td mat-cell *matCellDef="let item" class="p-5 pr-8">
-            <div class="flex justify-end items-center gap-4 p-10">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let item">
+            <div class="table-admin-btn-container">
               <app-button
                 [label]="'ADMIN_TABLE.BTN.DELETE' | translate"
                 variant="secondary"
@@ -65,7 +55,7 @@
 
         <tr class="mat-row" *matNoDataRow>
           <td class="p-8 text-center" [attr.colspan]="displayedColumns.length">
-            <p class="text-p text-primary font-medium">
+            <p class="table-column-name text-label">
               {{ 'ADMIN_TABLE.NO_DATA' | translate }}
             </p>
           </td>
@@ -78,7 +68,7 @@
       [pageSize]="10"
       showFirstLastButtons
       [attr.aria-label]="'ADMIN_TABLE.PAGINATOR_LABEL' | translate"
-      class="bg-surface text-primary border-t border-gray-200"
+      class="table-paginator-end"
     >
     </mat-paginator>
   </div>
