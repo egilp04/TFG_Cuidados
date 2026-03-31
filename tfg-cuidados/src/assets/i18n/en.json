@@ -425,7 +425,8 @@
     "TOAST": {
       "SUCCESS": "Password updated! Welcome back.",
       "ERROR": "The link has expired or an error occurred, try later or use another password, remember new password must be different from the old one."
-    }
+    },
+    "HOME": "Start"
   },
 
   "SEARCH_BUSINESS": {

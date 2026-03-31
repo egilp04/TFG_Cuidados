@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -15,11 +15,22 @@ import { MessageService } from '../../services/message-service';
 import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
 import { EMPTY } from 'rxjs';
+import { CdkObserveContent } from '@angular/cdk/observers';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-recover-password',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Inputs, ButtonComponent, TranslateModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    Inputs,
+    ButtonComponent,
+    TranslateModule,
+    ButtonComponent,
+    TranslateModule,
+    CdkObserveContent,
+  ],
   templateUrl: './recover-password.html',
   styleUrl: './recover-password.css',
 })
@@ -37,7 +48,7 @@ export class RecoverPasswordPage {
         Validators.required,
         Validators.minLength(6),
         Validators.pattern(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/,
         ),
       ],
     ],
@@ -83,10 +94,20 @@ export class RecoverPasswordPage {
 
           return this.translate.get('RECOVER_PASSWORD.TOAST.ERROR').pipe(
             tap((msg) => this.messageService.showMessage(msg, 'error')),
-            switchMap(() => EMPTY)
+            switchMap(() => EMPTY),
           );
-        })
+        }),
       )
       .subscribe();
+  }
+
+  private destroyRef = inject(DestroyRef);
+  goHome() {
+    this.authService
+      .signOut()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.router.navigate(['/']);
+      });
   }
 }
