@@ -1,4 +1,4 @@
-<div class="w-full mb-4">
+<div class="button-back-container">
   <app-buttonback></app-buttonback>
 </div>
 <div class="p-20 relative">
@@ -9,7 +9,7 @@
           'text-red-500': data.tipo === 'error',
           'text-primary': data.tipo === 'exito',
         }"
-        class="text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm"
+        class="message-noti-text"
       >
         {{ data.mensaje }}
       </div>

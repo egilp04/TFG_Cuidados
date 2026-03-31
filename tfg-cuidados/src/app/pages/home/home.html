@@ -62,12 +62,14 @@
         (click)="gestionrHorariosGlobales()"
       ></app-button>
     }
-    <app-button
-      [label]="'MAIN_MENU.COMMON.ACTIVITIES' | translate"
-      variant="primary"
-      class="home-btn md:mb-20"
-      (click)="actividadesProgramadas()"
-    ></app-button>
+    @if (rol != 'administrador') {
+      <app-button
+        [label]="'MAIN_MENU.COMMON.ACTIVITIES' | translate"
+        variant="primary"
+        class="home-btn md:mb-20"
+        (click)="actividadesProgramadas()"
+      ></app-button>
+    }
     <app-ai-assistant></app-ai-assistant>
   </div>
 </div>

@@ -191,6 +191,10 @@
     @apply flex items-center gap-2 px-4 py-2 text-gray-500 dark:text-surface hover:text-gray-800 dark:hover:text-accent-dark transition-colors duration-200 focus:outline-none cursor-pointer;
   }
 
+  .button-back-container {
+    @apply w-full 2xl:m-4;
+  }
+
   .button-back-text {
     @apply text-button text-primary dark:text-surface;
   }
@@ -294,7 +298,7 @@
   }
 
   .nav-container {
-    @apply relative flex justify-between items-center p-2 lg:p-10 bg-surface  min-h-20 z-50
+    @apply relative flex justify-between items-center p-2 lg:p-10 border border-b-nav-border border-t-0 border-l-0 border-r-0 bg-surface  min-h-20 z-50 dark:border-b-gray-800
     dark:bg-surface-dark;
   }
 
@@ -453,6 +457,10 @@
     @apply w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary dark:border-surface! border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent h-120 xl:h-150 resize-none text-primary dark:text-surface dark:placeholder:text-surface;
   }
 
+  .input-area-modify-profile-container {
+    @apply flex flex-col gap-2 w-full;
+  }
+
   .input-basic {
     @apply w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary dark:border-surface! border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent placeholder:text-gray-400 dark:text-surface dark:placeholder:text-white;
   }
@@ -466,6 +474,10 @@
   }
   .message-noti {
     @apply flex flex-col items-center p-6;
+  }
+
+  .message-noti-text {
+    @apply text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm;
   }
 
   .login-modal-container {
@@ -582,6 +594,25 @@
   }
   .home-btn {
     @apply h-[3rem] w-[60%] md:h-80 lg:h-36;
+  }
+
+  .activity-component-container {
+    @apply flex flex-col gap-8 p-6 bg-surface w-full;
+  }
+
+  .modify-profile-title {
+    @apply text-h1 text-center text-primary dark:text-surface my-13;
+  }
+
+  .modify-profile-form-container {
+    @apply flex flex-col items-center w-full;
+  }
+  .modify-profile-form {
+    @apply flex flex-col gap-2 w-full;
+  }
+
+  .modify-profile-btn-container {
+    @apply flex flex-col gap-4 my-10 md:my-13 2xl:my-21 w-full items-center;
   }
 }
 
