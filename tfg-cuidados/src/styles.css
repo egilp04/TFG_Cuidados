@@ -859,9 +859,9 @@
     @apply flex flex-col mt-20 w-full max-h-screen gap-20 justify-center;
   }
 
-  /* .mangment-admin-btn-container {
+  .mangment-admin-btn-container {
     @apply flex justify-center;
-  } */
+  }
 
   .table-admin-container {
     @apply w-full h-full flex flex-col p-4 md:p-8 gap-20;
