@@ -1,5 +1,5 @@
-<div class="login-modal-container">
-  <div class="w-full flex justify-end p-10">
+<section class="login-modal-container">
+  <header class="w-full flex justify-end p-10">
     <svg
       mat-dialog-close
       xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +14,7 @@
       <line x1="18" y1="6" x2="6" y2="18"></line>
       <line x1="6" y1="6" x2="18" y2="18"></line>
     </svg>
-  </div>
+  </header>
 
   <h1 class="login-modal-title">
     @if (modoActual === 'login') {
@@ -92,7 +92,7 @@
     </form>
   }
   @if (modoActual === 'recuperar') {
-    <div class="login-recuperar-container">
+    <main class="login-recuperar-container">
       <div class="login-login-form-div mb-6">
         <p class="login-subtitle">
           {{ 'LOGIN_MODAL.HINTS.RECOVER_DESC' | translate }}
@@ -122,10 +122,10 @@
           (click)="modoActual = 'login'"
         ></app-button>
       </mat-dialog-actions>
-    </div>
+    </main>
   }
   @if (modoActual === 'registro') {
-    <div class="login-registro-container">
+    <main class="login-registro-container">
       <mat-dialog-actions class="login-other-actions">
         <app-button
           [label]="'LOGIN_MODAL.BTN.REG_USER' | translate"
@@ -149,11 +149,11 @@
           (click)="modoActual = 'login'"
         ></app-button>
       </mat-dialog-actions>
-    </div>
+    </main>
   }
 
   @if (modoActual === 'reenviar') {
-    <div class="w-full flex flex-col items-center">
+    <main class="w-full flex flex-col items-center">
       <div class="login-login-form-div mb-6">
         <p class="login-subtitle">
           {{ 'LOGIN_MODAL.LABELS.RESEND' | translate }}
@@ -176,11 +176,11 @@
           variant="primary"
         ></app-button>
       </mat-dialog-actions>
-    </div>
+    </main>
   }
 
   @if (messageService.messageData(); as data) {
-    <div
+    <footer
       [ngClass]="{
         'text-red-500 dark:text-red-dark': data.tipo === 'error',
         'text-green-600 dark:text-green-300': data.tipo === 'exito',
@@ -188,6 +188,6 @@
       class="login-form-label-base text-label"
     >
       {{ data.mensaje }}
-    </div>
+    </footer>
   }
-</div>
+</section>

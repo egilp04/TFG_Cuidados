@@ -1,30 +1,22 @@
-<div class="button-back-container">
+<section class="button-back-container">
   <app-buttonback></app-buttonback>
-</div>
-
-<div class="message-noti w-full h-full">
+</section>
+@if (this.messageService.messageData(); as data) {
+<section class="message-noti">
+  <div [ngClass]="{
+        'text-red-500': data.tipo === 'error',
+        'text-primary': data.tipo === 'exito',
+      }" class="message-noti-text">
+    {{ data.mensaje }}
+  </div>
+</section>
+}
+<section class="message-noti w-full h-full">
   <h1 class="modify-profile-title">
     {{ 'MODIFY_PROFILE.TITLE' | translate }}
   </h1>
-
-  @if (this.messageService.messageData(); as data) {
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      {{ data.mensaje }}
-    </div>
-  }
-
-  <app-modifyprofileform
-    [userRole]="userRole()"
-    [userData]="usuarioAEditar()"
-    (formSubmitted)="ejecutarActualizacion($event)"
-    (deleteRequested)="ejecutarBaja()"
-    (cancelRequested)="volverAHome()"
-  >
+  <app-modifyprofileform [userRole]="userRole()" [userData]="usuarioAEditar()"
+    (formSubmitted)="ejecutarActualizacion($event)" (deleteRequested)="ejecutarBaja()"
+    (cancelRequested)="volverAHome()">
   </app-modifyprofileform>
-</div>
+</section>

@@ -1,4 +1,4 @@
-<div class="modify-form-container">
+<section class="modify-form-container">
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="modify-profile-form">
     @if (userRole != 'empresa') {
       <app-inputs
@@ -120,7 +120,7 @@
         </div>
       </div>
     }
-    <div class="modify-profile-btn-container">
+    <footer class="modify-profile-btn-container">
       <div class="flex flex-row gap-4 w-full justify-center">
         <app-button
           [label]="'MODIFY_PROFILE.BTN.CANCEL' | translate"
@@ -149,6 +149,6 @@
           </app-button>
         </div>
       }
-    </div>
+    </footer>
   </form>
-</div>
+</section>

@@ -1,32 +1,26 @@
-<div class="flex flex-col p-6 gap-6">
-  <div class="button-back-container">
-    <app-buttonback></app-buttonback>
-  </div>
-
-  <div class="message-noti">
-    @if (this.messageService.messageData(); as data) {
-      <div
-        [ngClass]="{
+<section class="button-back-container">
+  <app-buttonback></app-buttonback>
+</section>
+@if (this.messageService.messageData(); as data) {
+<section class="message-noti">
+  <div [ngClass]="{
           'text-red-500': data.tipo === 'error',
           'text-primary': data.tipo === 'exito',
-        }"
-        class="message-noti-text"
-      >
-        {{ data.mensaje }}
-      </div>
-    }
+        }" class="message-noti-text">
+    {{ data.mensaje }}
   </div>
+</section>
+}
+<section class="flex flex-col p-6 gap-6">
+
 
   <div class="services-bss-container">
     <div class="services-new-btn-container">
-      <app-button
-        [label]="'SERVICES_BUSINESS.BTN_NEW' | translate"
-        variant="primary"
-        (click)="openModal()"
-      ></app-button>
+      <app-button [label]="'SERVICES_BUSINESS.BTN_NEW' | translate" variant="primary"
+        (click)="openModal()"></app-button>
     </div>
   </div>
-  <div class="service-table-containter">
+  <main class="service-table-containter">
     <table mat-table [dataSource]="dataSource" class="w-full">
       <ng-container matColumnDef="nombre">
         <th mat-header-cell *matHeaderCellDef class="text-label service-table-header">
@@ -77,16 +71,10 @@
         <th mat-header-cell *matHeaderCellDef class="text-label service-table-header"></th>
         <td mat-cell *matCellDef="let element" class="p-4">
           <div class="service-btn-container">
-            <app-button
-              [label]="'SERVICES_BUSINESS.BTN_DELETE' | translate"
-              (click)="onDelete(element.id_servicio_horario)"
-              variant="secondary"
-            ></app-button>
-            <app-button
-              [label]="'SERVICES_BUSINESS.BTN_MODIFY' | translate"
-              variant="primary"
-              (click)="openModal(element)"
-            ></app-button>
+            <app-button [label]="'SERVICES_BUSINESS.BTN_DELETE' | translate"
+              (click)="onDelete(element.id_servicio_horario)" variant="secondary"></app-button>
+            <app-button [label]="'SERVICES_BUSINESS.BTN_MODIFY' | translate" variant="primary"
+              (click)="openModal(element)"></app-button>
           </div>
         </td>
       </ng-container>
@@ -94,5 +82,5 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-  </div>
-</div>
+  </main>
+</section>

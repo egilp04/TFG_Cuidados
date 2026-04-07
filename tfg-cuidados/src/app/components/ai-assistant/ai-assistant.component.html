@@ -1,7 +1,7 @@
-<div class="ia-container">
+<section class="ia-container">
   @if (isOpen) {
     <div class="ia-container-open animate-fade-in-up">
-      <div class="ia-icon">
+      <header class="ia-icon">
         <div class="flex items-center gap-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -38,9 +38,8 @@
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
-      </div>
-
-      <div class="ia-messages-container">
+      </header>
+      <main class="ia-messages-container">
         @for (msg of messages; track $index) {
           <div class="flex w-full" [ngClass]="msg.isUser ? 'justify-end' : 'justify-start'">
             <div
@@ -73,9 +72,9 @@
             </div>
           </div>
         }
-      </div>
+      </main>
 
-      <div class="ia-new-message-container">
+      <footer class="ia-new-message-container">
         <input
           type="text"
           [(ngModel)]="newMessage"
@@ -100,7 +99,7 @@
             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
           </svg>
         </button>
-      </div>
+      </footer>
     </div>
   }
 
@@ -143,4 +142,4 @@
       </svg>
     }
   </button>
-</div>
+</section>

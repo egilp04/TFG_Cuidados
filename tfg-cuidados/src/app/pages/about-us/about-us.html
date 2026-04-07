@@ -1,8 +1,8 @@
-<div class="header-container">
+<section class="header-container">
   <app-buttonback></app-buttonback>
-</div>
+</section>
 
-<div class="about-container">
+<section class="about-container">
   <h1 class="about-title">
     {{ 'ABOUT.TITLE' | translate }}
   </h1>
@@ -15,7 +15,6 @@
   <p class="about-description">
     {{ 'ABOUT.PROJECTDESCRIPTION' | translate }}
   </p>
-
   <ul class="about-list">
     <li>
       <span class="about-list-title">{{ 'ABOUT.SCOPE.TITLE' | translate }}:</span>
@@ -32,23 +31,19 @@
         </li>
       </ul>
     </li>
-
     <li>
       <span class="about-list-title">{{ 'ABOUT.VALUE.TITLE' | translate }}:</span>
       {{ 'ABOUT.VALUE.DESC' | translate }}
     </li>
-
     <li>
       <span class="about-list-title">{{ 'ABOUT.ASSISTANCE.TITLE' | translate }}:</span>
       {{ 'ABOUT.ASSISTANCE.DESC' | translate }}
     </li>
   </ul>
-
   <h2 class="about-subtitle">
     {{ 'ABOUT.TEAM.TITLE' | translate }}
   </h2>
-
-  <div class="about-grid">
+  <footer class="about-grid">
     @for (item of cardsdata; track item.titulo; let i = $index) {
       <app-cards-landing
         [titulo]="item.titulo"
@@ -59,5 +54,5 @@
       >
       </app-cards-landing>
     }
-  </div>
-</div>
+  </footer>
+</section>

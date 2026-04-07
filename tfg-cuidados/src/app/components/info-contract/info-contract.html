@@ -1,4 +1,4 @@
-<div class="info-container">
+<section class="info-container">
   <!-- <div class="w-full flex justify-end p-10">
     <img
       mat-dialog-close
@@ -25,7 +25,7 @@
 
   <h2 class="info-contract-title">{{ 'INFO_CONTRACT.TITLE_DETAILS' | translate }}:</h2>
 
-  <div class="info-contract-content-container">
+  <header class="info-contract-content-container">
     <mat-dialog-content class="info-contract-content">
       <p>
         <strong>{{ 'INFO_CONTRACT.ID' | translate }}:</strong>
@@ -48,11 +48,11 @@
         {{ data.contrato.estado }}
       </p>
     </mat-dialog-content>
-  </div>
+  </header>
 
   <h2 class="info-contract-activity-title">{{ 'INFO_CONTRACT.TITLE_ACTIVITY' | translate }}:</h2>
 
-  <div class="info-contract-activity-container">
+  <main class="info-contract-activity-container">
     <mat-dialog-content class="info-contract-content">
       <p>
         <strong>{{ 'INFO_CONTRACT.TIME' | translate }}:</strong>
@@ -75,5 +75,5 @@
         {{ data.contrato.Empresa?.nombreDeLaEmpresa }}
       </p>
     </mat-dialog-content>
-  </div>
-</div>
+  </main>
+</section>

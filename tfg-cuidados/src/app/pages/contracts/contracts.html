@@ -1,26 +1,22 @@
-<div class="w-full mb-4">
+<section class="button-back-container">
   <app-buttonback></app-buttonback>
-</div>
-
-<div class="message-noti">
+</section>
+@if (this.messageService.messageData(); as data) {
+<section class="message-noti">
+  <div [ngClass]="{
+          'text-red-500': data.tipo === 'error',
+          'text-primary': data.tipo === 'exito',
+        }" class="message-noti-text">
+    {{ data.mensaje }}
+  </div>
+</section>
+}
+<section class="contacts-container-section">
   <h1 class="contracts-title">
     {{ 'CONTRACTS.TITLE' | translate }}
   </h1>
-
-  @if (this.messageService.messageData(); as data) {
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      {{ data.mensaje }}
-    </div>
-  }
-
   <div class="contracts-table-container">
-    <div class="contracts-table">
+    <main class="contracts-table">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full">
         <ng-container matColumnDef="ID">
           <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
@@ -60,7 +56,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-    </div>
+    </main>
 
     <mat-paginator
       class="mt-20"
@@ -68,4 +64,4 @@
       showFirstLastButtons
     ></mat-paginator>
   </div>
-</div>
+</section>

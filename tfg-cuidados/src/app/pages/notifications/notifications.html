@@ -1,28 +1,21 @@
-<div class="button-back-container">
+<section class="button-back-container">
   <app-buttonback></app-buttonback>
-</div>
-
-<div class="notifications-container">
+</section>
+@if (this.messageService.messageData(); as data) {
+  <section class="message-noti">
+    <div [ngClass]="{
+          'text-red-500': data.tipo === 'error',
+          'text-primary': data.tipo === 'exito',
+        }" class="message-noti-text">
+      {{ data.mensaje }}
+    </div>
+  </section> }
+<section class="notifications-container">
   <h1 class="notifications-title">
     {{ 'NOTIFICATIONS.TITLE' | translate }}
   </h1>
-
-  <div class="message-noti">
-    @if (this.messageService.messageData(); as data) {
-      <div
-        [ngClass]="{
-          'text-red-500': data.tipo === 'error',
-          'text-primary': data.tipo === 'exito',
-        }"
-        class="message-noti-text"
-      >
-        {{ data.mensaje }}
-      </div>
-    }
-  </div>
-
   <div class="notifications-table-container">
-    <div class="notifications-table-container-inner">
+    <main class="notifications-table-container-inner">
       <table mat-table [dataSource]="dataSource" class="notifications-table">
         <ng-container matColumnDef="nombre">
           <th mat-header-cell *matHeaderCellDef class="text-label notifications-text">
@@ -71,8 +64,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-    </div>
+    </main>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons class="mt-4">
     </mat-paginator>
   </div>
-</div>
+</section>

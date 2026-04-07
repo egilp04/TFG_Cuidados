@@ -1,17 +1,13 @@
-<div class="button-back-container">
+<section class="button-back-container">
   <app-buttonback></app-buttonback>
-</div>
-<div class="message-noti">
-  @if (this.messageService.messageData(); as data) {
-    <div
-      [ngClass]="{
+</section>
+@if (this.messageService.messageData(); as data) {
+<section class="message-noti">
+  <div [ngClass]="{
         'text-red-500': data.tipo === 'error',
         'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      {{ data.mensaje }}
-    </div>
-  }
-</div>
+      }" class="message-noti-text">
+    {{ data.mensaje }}
+  </div>
+</section> }
 <app-registerform [isUser]="isUser" (formSubmitted)="onRegister($event)"> </app-registerform>

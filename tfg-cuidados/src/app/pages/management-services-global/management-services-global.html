@@ -1,26 +1,21 @@
-<div class="button-back-container">
+<section class="button-back-container">
   <app-buttonback></app-buttonback>
-</div>
-
-<div class="message-noti">
-  @if (this.messageService.messageData(); as data) {
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      {{ data.mensaje }}
-    </div>
-  }
-</div>
-<div class="managements-services-global-container">
+</section>
+@if (this.messageService.messageData(); as data) {
+<section class="message-noti">
+  <div [ngClass]="{
+          'text-red-500': data.tipo === 'error',
+          'text-primary': data.tipo === 'exito',
+        }" class="message-noti-text">
+    {{ data.mensaje }}
+  </div>
+</section>
+}
+<section class="managements-services-global-container">
   <h1 class="management-title-services-global">
     {{ 'MANAGEMENT_SERVICES.TITLE' | translate }}
   </h1>
-
-  <div class="management-services-global-form">
+  <main class="management-services-global-form">
     <app-inputs
       name="nombre"
       [label]="'MANAGEMENT_SERVICES.FORM.NAME' | translate"
@@ -33,9 +28,8 @@
       [control]="getCtrl('tipo')"
     >
     </app-inputs>
-  </div>
-
-  <div class="management-services-global-form-btn">
+  </main>
+  <footer class="management-services-global-form-btn">
     <app-button
       [label]="
         (isEditing ? 'MANAGEMENT_SERVICES.FORM.SAVE' : 'MANAGEMENT_SERVICES.FORM.ADD') | translate
@@ -53,21 +47,18 @@
       >
       </app-button>
     }
-  </div>
-</div>
-
-<div class="management-services-global-table-container">
+  </footer>
+</section>
+<section class="management-services-global-table-container">
   <h2 class="dropdown-subtitle">
     {{ 'MANAGEMENT_SERVICES.LIST.TITLE' | translate }}
   </h2>
-
   <div class="w-full flex flex-col md:flex-row gap-10 p-20 items-center">
     <label class="management-services-global-search">
       {{ 'MANAGEMENT_SERVICES.LIST.SEARCH' | translate }}
     </label>
     <app-searchbar [control]="filtroControl" (searchEvent)="aplicarFiltro($event)"> </app-searchbar>
   </div>
-
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 w-full">
     <ng-container matColumnDef="nombre">
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text">
@@ -77,7 +68,6 @@
         {{ serv.nombre }}
       </td>
     </ng-container>
-
     <ng-container matColumnDef="tipo_servicio">
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text">
         {{ 'MANAGEMENT_SERVICES.TABLE.TYPE' | translate }}
@@ -86,7 +76,6 @@
         {{ serv.tipo_servicio }}
       </td>
     </ng-container>
-
     <ng-container matColumnDef="acciones">
       <th
         mat-header-cell
@@ -110,14 +99,12 @@
         </div>
       </td>
     </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns" class="hover:bg-gray-50"></tr>
-
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell text-label management-global-text" colspan="3">
         {{ 'MANAGEMENT_SERVICES.LIST.EMPTY' | translate }}
       </td>
     </tr>
   </table>
-</div>
+</section>

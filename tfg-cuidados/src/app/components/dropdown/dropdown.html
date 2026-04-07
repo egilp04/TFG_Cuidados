@@ -1,5 +1,5 @@
 <div class="dropdown-container">
-  <div class="dropdown-inner-container" (click)="toggleDropdown()">
+  <section class="dropdown-inner-container" (click)="toggleDropdown()">
     <span class="dropdown-title">
       {{ selectedOption || label | translate }}
     </span>
@@ -16,15 +16,14 @@
     >
       <path d="m6 9 6 6 6-6" />
     </svg>
-  </div>
-
+  </section>
   @if (isOpen) {
-    <div class="dropdown-open-container options-list">
+    <section class="dropdown-open-container options-list">
       @for (option of options; track option) {
         <div class="option-item dropdown-options" (click)="selectOption(option)">
           {{ option | translate }}
         </div>
       }
-    </div>
+    </section>
   }
 </div>

@@ -1,9 +1,8 @@
-<div class="home-container">
+<section class="home-container">
   <h1 class="home-title">
     {{ 'MAIN_MENU.TITLE' | translate }}
   </h1>
-
-  <div class="home-btn-container">
+  <main class="home-btn-container">
     @if (rol === 'cliente') {
       <app-button
         [label]="'MAIN_MENU.CLIENT.SEARCH_COMPANIES' | translate"
@@ -71,5 +70,5 @@
       ></app-button>
     }
     <app-ai-assistant></app-ai-assistant>
-  </div>
-</div>
+  </main>
+</section>

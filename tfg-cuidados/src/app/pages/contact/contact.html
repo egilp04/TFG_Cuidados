@@ -1,22 +1,17 @@
-<div class="w-full mb-4">
+<section class="button-back-container">
   <app-buttonback></app-buttonback>
-</div>
-
-<div class="message-noti">
-  @if (this.messageService.messageData(); as data) {
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      {{ data.mensaje }}
-    </div>
-  }
-</div>
-
-<div class="contact-container">
+</section>
+@if (this.messageService.messageData(); as data) {
+<section class="message-noti">
+  <div [ngClass]="{
+          'text-red-500': data.tipo === 'error',
+          'text-primary': data.tipo === 'exito',
+        }" class="message-noti-text">
+    {{ data.mensaje }}
+  </div>
+</section>
+}
+<section class="contact-container">
   <h1 class="contact-title">
     {{ 'CONTACT.TITLE' | translate }}
   </h1>
@@ -29,14 +24,12 @@
         [control]="getCtrl('username')"
         class="w-full"
       ></app-inputs>
-
       @if (getCtrl('username').invalid && getCtrl('username').touched) {
         <span class="contact-form-error">
           {{ 'CONTACT.ERRORS.NAME' | translate }}
         </span>
       }
     </div>
-
     <div class="contact-form-divs">
       <app-inputs
         name="email"
@@ -44,14 +37,12 @@
         [control]="getCtrl('email')"
         class="w-full"
       ></app-inputs>
-
       @if (getCtrl('email').invalid && getCtrl('email').touched) {
         <span class="contact-form-error">
           {{ 'CONTACT.ERRORS.EMAIL' | translate }}
         </span>
       }
     </div>
-
     <div class="contact-form-divs">
       <app-inputs
         name="subject"
@@ -66,7 +57,6 @@
         </span>
       }
     </div>
-
     <div class="contact-form-divs">
       <app-inputs
         name="message"
@@ -82,7 +72,6 @@
         </span>
       }
     </div>
-
     <app-button
       [label]="'CONTACT.FORM.SEND' | translate"
       variant="primary"
@@ -90,4 +79,4 @@
       class="contact-form-btn"
     ></app-button>
   </form>
-</div>
+</section>

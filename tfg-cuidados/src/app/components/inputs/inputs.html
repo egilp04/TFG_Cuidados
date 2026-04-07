@@ -1,6 +1,6 @@
-<div class="input-container">
+<section class="input-container">
   <label class="input-label" [for]="name()"> {{ label() }} </label>
-  <div class="relative w-full">
+  <main class="relative w-full">
     @if (type() === 'textarea') {
       <textarea
         [id]="name()"
@@ -34,8 +34,8 @@
         }
       </button>
     }
-  </div>
-  <div class="input-error-text-container">
+  </main>
+  <footer class="input-error-text-container">
     @if (errorMessage()) {
       <span
         [id]="name() + '-error'"
@@ -45,5 +45,5 @@
         {{ errorMessage() }}
       </span>
     }
-  </div>
-</div>
+  </footer>
+</section>

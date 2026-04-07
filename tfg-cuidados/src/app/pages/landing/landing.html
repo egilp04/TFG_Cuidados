@@ -1,4 +1,4 @@
-<div class="landing-container">
+<section class="landing-container">
   <section class="hero-section">
     <picture>
       <source srcset="assets/img/hero/hero-2xl-laptop.webp" media="(min-width: 2561px)" />
@@ -18,13 +18,11 @@
       </h2>
     </div>
   </section>
-
   <section class="services-section">
     <h2 class="services-title">
       {{ 'LANDING.SERVICES' | translate }}
     </h2>
-
-    <div class="services-grid">
+    <main class="services-grid">
       @for (item of cardsdata; track item.titulo; let i = $index) {
         <app-cards-landing
           [titulo]="item.titulo"
@@ -34,15 +32,14 @@
         >
         </app-cards-landing>
       }
-    </div>
-
-    <div class="register-btn">
+    </main>
+    <footer class="register-btn">
       <app-button
         [label]="'LANDING.REGISTER' | translate"
         variant="primary"
         (onClick)="abrirModal()"
         class="register-btn"
       ></app-button>
-    </div>
+    </footer>
   </section>
-</div>
+</section>

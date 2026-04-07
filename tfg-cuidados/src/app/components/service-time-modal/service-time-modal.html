@@ -1,5 +1,5 @@
-<div class="service-modal-container">
-  <div class="w-full flex justify-end p-6">
+<section class="service-modal-container">
+  <header class="w-full flex justify-end p-6">
     <svg
       mat-dialog-close
       xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +14,7 @@
       <line x1="18" y1="6" x2="6" y2="18"></line>
       <line x1="6" y1="6" x2="18" y2="18"></line>
     </svg>
-  </div>
+  </header>
 
   <form [formGroup]="form" class="service-form-container">
     <app-inputs
@@ -112,7 +112,7 @@
     </div>
   </form>
 
-  <div class="service-btn-container">
+  <footer class="service-btn-container">
     <app-button
       [label]="
         (isEditing ? 'SERVICE_TIME_MODAL.BTN.UPDATE' : 'SERVICE_TIME_MODAL.BTN.CREATE') | translate
@@ -121,5 +121,5 @@
       [disabled]="form.invalid"
       (click)="save()"
     ></app-button>
-  </div>
-</div>
+  </footer>
+</section>

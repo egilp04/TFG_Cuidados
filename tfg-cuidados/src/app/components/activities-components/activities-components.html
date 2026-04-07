@@ -1,25 +1,21 @@
 <div class="activity-component-container">
-  <div class="activity-calendar-container">
+  <section class="activity-calendar-container">
     <div class="flex justify-between items-center mb-8 p-10">
       <h2 class="activity-calendar-title">
         {{ displayDate | date: 'MMMM yyyy' }}
       </h2>
       <div class="flex gap-2">
-        <div class="flex gap-2">
           <button (click)="cambiarMes(-1)" class="activiy-month-change-btn">‹</button>
           <button (click)="cambiarMes(1)" class="activiy-month-change-btn">›</button>
-        </div>
       </div>
     </div>
-
     <div class="activity-calendar-grid">
       @for (wd of weekDays; track wd) {
-        <span class="activity-calendar-dary">
+        <span class="activity-calendar-day">
           {{ 'ACTIVITIES.DAYS.' + wd | translate }}
         </span>
       }
     </div>
-
     <div class="activity-days-display">
       @for (dia of monthDays; track $index) {
         <div class="activity-days-inner-display group">
@@ -57,9 +53,9 @@
         </div>
       }
     </div>
-  </div>
+  </section>
 
-  <div class="activity-table-container">
+  <section class="activity-table-container">
     <table mat-table [dataSource]="dataSourceTable" class="w-full">
       <ng-container matColumnDef="usuario">
         <th mat-header-cell *matHeaderCellDef class="activity-text text-label">
@@ -120,6 +116,6 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-  </div>
+  </section>
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons class="mt-20"></mat-paginator>
 </div>

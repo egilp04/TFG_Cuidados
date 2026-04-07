@@ -1,22 +1,18 @@
-<div class="button-back-container">
+<section class="button-back-container">
   <app-buttonback></app-buttonback>
-</div>
+</section>
+@if (this.messageService.messageData(); as data) {
+<section class="message-noti">
+  <div [ngClass]="{
+          'text-red-500': data.tipo === 'error',
+          'text-primary': data.tipo === 'exito',
+        }" class="message-noti-text">
+    {{ data.mensaje }}
+  </div>
+</section>
+}
 
-<div class="message-noti">
-  @if (this.messageService.messageData(); as data) {
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      {{ data.mensaje }}
-    </div>
-  }
-</div>
-<div class="mangment-admin-container">
-  <div class="mangment-admin-btn-container">
+<section class="mangment-admin-container">
     <app-button
       [label]="
         (isUser ? 'ADMIN_MANAGEMENT.NEW_CLIENT' : 'ADMIN_MANAGEMENT.NEW_COMPANY') | translate
@@ -25,12 +21,10 @@
       (click)="onNuevoUsuario()"
     >
     </app-button>
-  </div>
-
   <app-table-crud-admin
     [modo]="isUser ? 'cliente' : 'empresa'"
     [datos]="(usuarios$ | async) || []"
     (eliminar)="onEliminarUsuario($event)"
     (modificar)="onEditar($event)"
   ></app-table-crud-admin>
-</div>
+</section>

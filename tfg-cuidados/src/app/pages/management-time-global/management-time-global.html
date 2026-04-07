@@ -1,27 +1,23 @@
-<div class="button-back-container">
+<section class="button-back-container">
   <app-buttonback></app-buttonback>
-</div>
+</section>
+@if (this.messageService.messageData(); as data) {
+<section class="message-noti">
+  <div [ngClass]="{
+          'text-red-500': data.tipo === 'error',
+          'text-primary': data.tipo === 'exito',
+        }" class="message-noti-text">
+    {{ data.mensaje }}
+  </div>
+</section>
+}
 
-<div class="message-noti">
-  @if (this.messageService.messageData(); as data) {
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      {{ data.mensaje }}
-    </div>
-  }
-</div>
-
-<div class="managements-time-global-container">
+<section class="managements-time-global-container">
   <h2 class="management-title-time">
     {{ 'MANAGEMENT_SCHEDULES.TITLE' | translate }}
   </h2>
 
-  <div class="management-time-global-form">
+  <main class="management-time-global-form">
     <app-inputs
       name="time"
       [label]="'MANAGEMENT_SCHEDULES.FORM.START_TIME' | translate"
@@ -30,7 +26,6 @@
       step="1800"
     >
     </app-inputs>
-
     <div class="management-time-global-day-week">
       <label class="management-time-global-day-label">
         {{ 'MANAGEMENT_SCHEDULES.FORM.DAY_LABEL' | translate }}
@@ -49,9 +44,8 @@
         </select>
       </div>
     </div>
-  </div>
-
-  <div class="management-time-global-btn-container">
+  </main>
+  <footer class="management-time-global-btn-container">
     <app-button
       [label]="
         (isEditing ? 'MANAGEMENT_SCHEDULES.FORM.SAVE' : 'MANAGEMENT_SCHEDULES.FORM.ADD') | translate
@@ -60,7 +54,6 @@
       (click)="onSave()"
     >
     </app-button>
-
     @if (isEditing) {
       <app-button
         [label]="'MANAGEMENT_SCHEDULES.FORM.CANCEL' | translate"
@@ -69,14 +62,12 @@
       >
       </app-button>
     }
-  </div>
-</div>
-
-<div class="management-time-global-table-container">
+  </footer>
+</section>
+<section class="management-time-global-table-container">
   <h2 class="management-time-global-table-title">
     {{ 'MANAGEMENT_SCHEDULES.LIST.TITLE' | translate }}
   </h2>
-
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 w-full">
     <ng-container matColumnDef="hora">
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text">
@@ -86,7 +77,6 @@
         {{ horario.hora }}
       </td>
     </ng-container>
-
     <ng-container matColumnDef="dia">
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text">
         {{ 'MANAGEMENT_SCHEDULES.TABLE.DAY' | translate }}
@@ -95,7 +85,6 @@
         {{ tradus_dias[horario.dia_semana] | translate }}
       </td>
     </ng-container>
-
     <ng-container matColumnDef="acciones">
       <th
         mat-header-cell
@@ -122,4 +111,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns" class="hover:bg-gray-50"></tr>
   </table>
-</div>
+</section>

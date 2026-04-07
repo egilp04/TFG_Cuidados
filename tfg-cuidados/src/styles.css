@@ -533,9 +533,11 @@
   .input-no-error {
     @apply border-primary dark:border-white;
   }
+
   .message-noti {
     @apply flex flex-col items-center;
   }
+
 
   .message-noti-text {
     @apply text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm;
@@ -688,7 +690,7 @@
     @apply grid grid-cols-7 mb-4;
   }
 
-  .activity-calendar-dary {
+  .activity-calendar-day {
     @apply text-center text-label font-semibold text-gray-400 dark:text-surface uppercase tracking-widest;
   }
 
@@ -738,7 +740,9 @@
   .contracts-title {
     @apply text-h1 text-primary text-center mb-10 dark:text-surface;
   }
-
+  .contacts-container-section {
+    @apply flex flex-col items-center;
+  }
   .contracts-table-container {
     @apply flex flex-col p-10 w-full;
   }
@@ -853,13 +857,13 @@
     @apply text-gray-400 mb-10 text-p dark:text-gray-50;
   }
 
-  .mangment-admin-container {
-    @apply flex flex-col mt-20 w-full max-h-screen gap-20;
+  .message-noti {
+    @apply flex flex-col mt-20 w-full max-h-screen gap-20 justify-center;
   }
 
-  .mangment-admin-btn-container {
+  /* .mangment-admin-btn-container {
     @apply flex justify-center;
-  }
+  } */
 
   .table-admin-container {
     @apply w-full h-full flex flex-col p-4 md:p-8 gap-20;

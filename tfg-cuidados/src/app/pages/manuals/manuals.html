@@ -1,9 +1,9 @@
-<div class="w-full mb-4">
+<section class="w-full mb-4">
   <app-buttonback></app-buttonback>
-</div>
-<div class="manuals-container">
+</section>
+<section class="manuals-container">
   <h1 class="manuals-title">{{ 'MANUALS.TITLE' | translate }}</h1>
-  <div class="manuals-download-container">
+  <section class="manuals-download-container">
     @for (item of cardsdata; track item.titulo; let i = $index) {
       <div class="manuals-cards-container">
         <app-cards-landing
@@ -20,8 +20,8 @@
         </a>
       </div>
     }
-  </div>
-  <div class="manual-video-container">
+  </section>
+  <section class="manual-video-container">
     <h2 class="manuals-title">
       {{ 'MANUALS.USERVIDEO' | translate }}
     </h2>
@@ -31,8 +31,8 @@
       target="_blank"
       >{{ 'MANUALS.USERVIDEO' | translate }}</a
     >
-  </div>
-</div>
+  </section>
+</section>
 @if (authService.isAuthenticated() && rol != 'administrador') {
   <app-chat-soporte></app-chat-soporte>
 }
