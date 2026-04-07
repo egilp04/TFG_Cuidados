@@ -892,7 +892,7 @@
   }
 
   .cancel-modal-container {
-    @apply flex flex-col justify-center items-center p-6 gap-2 w-full relative md:py-20 max-h-screen dark:bg-surface-dark;
+    @apply flex flex-col justify-center items-center p-6 gap-2 w-full relative md:py-20 max-h-screen dark:bg-surface-dark bg-surface;
   }
 
   .cancel-modal-title-container {
