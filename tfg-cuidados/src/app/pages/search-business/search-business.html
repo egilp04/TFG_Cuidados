@@ -1,99 +1,72 @@
-<div class="button-back-container">
+<section class="button-back-container">
   <app-buttonback></app-buttonback>
-</div>
-
-<div class="search-main">
-  <app-searchbar
-    [control]="filtroControl"
-    (searchEvent)="applyFilter($event)"
-    class="w-full max-w-4xl mb-10"
-  >
-  </app-searchbar>
-
-  <div class="message-noti">
-    @if (this.messageService.messageData(); as data) {
-      <div
-        [ngClass]="{
+</section>
+@if (this.messageService.messageData(); as data) {
+<section class="message-noti">
+  <div [ngClass]="{
           'text-red-500': data.tipo === 'error',
           'text-primary': data.tipo === 'exito',
-        }"
-        class="message-noti-text"
-      >
-        {{ data.mensaje }}
-      </div>
-    }
+        }" class="message-noti-text">
+    {{ data.mensaje }}
   </div>
-
+</section>
+}
+<section class="search-main">
+  <app-searchbar [control]="filtroControl" (searchEvent)="applyFilter($event)" class="w-full max-w-4xl mb-10">
+  </app-searchbar>
   <div class="search-container">
     @for (empresa of empresasFiltradas(); track empresa.id_empresa) {
-      <div class="search-card-container">
-        <div class="space-y-4">
-          <header class="search-card-header">
-            <h2 class="search-bssn-name text-h2">{{ empresa.nombre }}</h2>
-            <p class="search-card-location text-label">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              {{ empresa.direccion }}
-            </p>
-          </header>
+    <main class="search-card-container space-y-4">
+      <header class="search-card-header">
+        <h2 class="search-bssn-name text-h2">{{ empresa.nombre }}</h2>
+        <p class="search-card-location text-label">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          {{ empresa.direccion }}
+        </p>
+      </header>
 
-          <section>
-            <h3 class="search-description-title-section text-label">
-              {{ 'SEARCH_BUSINESS.CARD.DESCRIPTION' | translate }}
-            </h3>
-            <p class="search-description-section text-label">{{ empresa.descripcion }}</p>
-          </section>
+      <section>
+        <h3 class="search-description-title-section text-label">
+          {{ 'SEARCH_BUSINESS.CARD.DESCRIPTION' | translate }}
+        </h3>
+        <p class="search-description-section text-label">{{ empresa.descripcion }}</p>
+      </section>
 
-          <section class="search-select-section">
-            <label class="search-description-section text-label">
-              {{ 'SEARCH_BUSINESS.CARD.SELECT_SERVICE' | translate }}
-            </label>
-            <select [(ngModel)]="empresa.seleccion" class="search-card-select">
-              <option [ngValue]="undefined" disabled selected>
-                {{ 'SEARCH_BUSINESS.CARD.CHOOSE_OPTION' | translate }}
-              </option>
+      <section class="search-select-section">
+        <label class="search-description-section text-label">
+          {{ 'SEARCH_BUSINESS.CARD.SELECT_SERVICE' | translate }}
+        </label>
+        <select [(ngModel)]="empresa.seleccion" class="search-card-select">
+          <option [ngValue]="undefined" disabled selected>
+            {{ 'SEARCH_BUSINESS.CARD.CHOOSE_OPTION' | translate }}
+          </option>
 
-              @for (sh of empresa.Servicio_Horario; track sh.id_servicio_horario) {
-                <option [ngValue]="sh">
-                  {{ sh.Servicio?.nombre }} — {{ sh.Horario?.dia_semana | titlecase }}
-                  {{ sh.Horario?.hora }}
-                  ({{ sh.precio | currency: 'EUR' }})
-                </option>
-              }
-            </select>
-          </section>
-        </div>
+          @for (sh of empresa.Servicio_Horario; track sh.id_servicio_horario) {
+          <option [ngValue]="sh">
+            {{ sh.Servicio?.nombre }} — {{ sh.Horario?.dia_semana | titlecase }}
+            {{ sh.Horario?.hora }}
+            ({{ sh.precio | currency: 'EUR' }})
+          </option>
+          }
+        </select>
+      </section>
 
-        <div class="search-card-btn-container">
-          <app-button
-            [label]="'SEARCH_BUSINESS.BTN_MESSAGE' | translate"
-            variant="secondary"
-            class="flex-1"
-            (click)="enviarMensaje(empresa)"
-          ></app-button>
+      <footer class="search-card-btn-container">
+        <app-button [label]="'SEARCH_BUSINESS.BTN_MESSAGE' | translate" variant="secondary" class="flex-1"
+          (click)="enviarMensaje(empresa)"></app-button>
 
-          <app-button
-            [label]="'SEARCH_BUSINESS.BTN_CONTRACT' | translate"
-            variant="primary"
-            class="flex-1"
-            (click)="contratar(empresa)"
-            [disabled]="!empresa.seleccion"
-          ></app-button>
-        </div>
-      </div>
+        <app-button [label]="'SEARCH_BUSINESS.BTN_CONTRACT' | translate" variant="primary" class="flex-1"
+          (click)="contratar(empresa)" [disabled]="!empresa.seleccion"></app-button>
+      </footer>
+    </main>
     } @empty {
-      <div class="search-no-bssns">
-        {{ 'SEARCH_BUSINESS.LIST.EMPTY' | translate }}
-      </div>
+    <main class="search-no-bssns">
+      {{ 'SEARCH_BUSINESS.LIST.EMPTY' | translate }}
+    </main>
     }
   </div>
-</div>
+</section>

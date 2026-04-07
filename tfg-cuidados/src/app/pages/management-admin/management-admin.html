@@ -1,9 +1,8 @@
-<div class="button-back-container">
+<section class="button-back-container">
   <app-buttonback></app-buttonback>
-</div>
-
-<div class="message-noti">
-  @if (this.messageService.messageData(); as data) {
+</section>
+@if (this.messageService.messageData(); as data) {
+  <section class="message-noti">
     <div
       [ngClass]="{
         'text-red-500': data.tipo === 'error',
@@ -13,9 +12,10 @@
     >
       {{ data.mensaje }}
     </div>
-  }
-</div>
-<div class="mangment-admin-container">
+  </section>
+}
+
+<section class="mangment-admin-container">
   <div class="mangment-admin-btn-container">
     <app-button
       [label]="
@@ -26,11 +26,10 @@
     >
     </app-button>
   </div>
-
   <app-table-crud-admin
     [modo]="isUser ? 'cliente' : 'empresa'"
     [datos]="(usuarios$ | async) || []"
     (eliminar)="onEliminarUsuario($event)"
     (modificar)="onEditar($event)"
   ></app-table-crud-admin>
-</div>
+</section>

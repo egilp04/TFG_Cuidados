@@ -1,14 +1,13 @@
-<div class="button-back-container">
+<section class="button-back-container">
   <app-buttonback></app-buttonback>
-</div>
+</section>
 
-<div class="dashboard-container">
-  <div class="dashboard-contracts-container">
+<section class="dashboard-container">
+  <section class="dashboard-contracts-container">
     <h2 class="dashboard-contracts-title">
       {{ 'DASHBOARD.TITLE_CONTRACTS' | translate }}
     </h2>
-
-    <div class="dashboard-contracts-canvas">
+    <main class="dashboard-contracts-canvas">
       <canvas
         baseChart
         [data]="doughnutChartData"
@@ -30,27 +29,24 @@
           {{ contratosCancelados }}
         </span>
       </div>
-    </div>
-  </div>
-
-  <div class="dashboard-total-users-container">
+    </main>
+  </section>
+  <section class="dashboard-total-users-container">
     <h2 class="dashboard-total-users-title">
       {{ 'DASHBOARD.TOTAL_USERS' | translate }}
       <span class="dashboard-total-users-text">{{ totalUsuarios }}</span>
     </h2>
-  </div>
-
-  <div class="dashboard-login-container">
+  </section>
+  <section class="dashboard-login-container">
     <h2 class="dashboard-login-title">
       {{ 'DASHBOARD.LOGIN.TITLE' | translate }}
     </h2>
     <p class="dashboard-login-text">
       {{ 'DASHBOARD.LOGIN.SUBTITLE' | translate }}
     </p>
-
-    <div class="h-64 w-full">
+    <main class="h-64 w-full">
       <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'">
       </canvas>
-    </div>
-  </div>
-</div>
+    </main>
+  </section>
+</section>

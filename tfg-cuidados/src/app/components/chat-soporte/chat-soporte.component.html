@@ -1,8 +1,8 @@
 @if (currentUser?.rol !== 'administrador') {
-  <div class="soporte-container">
+  <section class="soporte-container">
     @if (isOpen) {
       <div class="soporte-container-open animate-fade-in-up">
-        <div class="soporte-icon">
+        <header class="soporte-icon">
           <div class="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -37,9 +37,9 @@
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
-        </div>
+        </header>
 
-        <div class="soporte-message-container">
+        <main class="soporte-message-container">
           <div class="text-center">
             <h4 class="soporte-subtitle">{{ 'SUPPORT_WIDGET.HELP_TITLE' | translate }}</h4>
             <p class="soporte-text">{{ 'SUPPORT_WIDGET.HELP_DESCRIPTION' | translate }}</p>
@@ -75,9 +75,9 @@
               {{ 'SUPPORT_WIDGET.SUCCESS_MESSAGE' | translate }}
             </div>
           }
-        </div>
+        </main>
 
-        <div class="soporte-btn-container">
+        <footer class="soporte-btn-container">
           <button
             (click)="sendMessage()"
             [disabled]="!newMessage.trim() || isSending"
@@ -105,7 +105,7 @@
               {{ 'SUPPORT_WIDGET.SEND_BTN' | translate }}
             }
           </button>
-        </div>
+        </footer>
       </div>
     }
 
@@ -144,5 +144,5 @@
         </svg>
       }
     </button>
-  </div>
+  </section>
 }

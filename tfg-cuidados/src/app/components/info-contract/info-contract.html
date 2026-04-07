@@ -1,63 +1,85 @@
-<div class="info-container">
-  <div class="w-full flex justify-end p-10">
+<section class="info-container">
+  <!-- <div class="w-full flex justify-end p-10">
     <img
       mat-dialog-close
       class="cursor-pointer h-10 w-10 md:h-16 md:w-16 lg:h-20 lg:w-20"
       src="assets/icons/cerrar.webp"
     />
+  </div> -->
+  <div class="w-full flex justify-end p-10">
+    <svg
+      mat-dialog-close
+      xmlns="http://www.w3.org/2000/svg"
+      class="modal-close-btn"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
   </div>
 
-  <h2 class="text-secondary text-h2 p-6 mb-2">{{ 'INFO_CONTRACT.TITLE_DETAILS' | translate }}:</h2>
+  <h2 class="info-contract-title">{{ 'INFO_CONTRACT.TITLE_DETAILS' | translate }}:</h2>
 
-  <div class="flex justify-center items-center flex-col w-full px-4">
-    <mat-dialog-content class="p-0! flex! flex-col! gap-4 w-full text-left max-w-lg">
-      <p>
-        <strong>{{ 'INFO_CONTRACT.ID' | translate }}:</strong>
+  <header class="info-contract-content-container">
+    <mat-dialog-content class="info-contract-content">
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.ID' | translate }}:</strong>
         {{ data.contrato.id_contrato }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.DATE_CREATION' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title"
+          >{{ 'INFO_CONTRACT.DATE_CREATION' | translate }}:</strong
+        >
         {{ data.contrato.fecha_creacion }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.DATE_START' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title"
+          >{{ 'INFO_CONTRACT.DATE_START' | translate }}:</strong
+        >
         {{ data.contrato.fecha_inicio }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.DATE_END' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title"
+          >{{ 'INFO_CONTRACT.DATE_END' | translate }}:</strong
+        >
         {{ data.contrato.fecha_fin || ('INFO_CONTRACT.NOT_FINALIZED' | translate) }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.STATUS' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.STATUS' | translate }}:</strong>
         {{ data.contrato.estado }}
       </p>
     </mat-dialog-content>
-  </div>
+  </header>
 
-  <h2 class="text-secondary text-h2 p-6 mb-2">{{ 'INFO_CONTRACT.TITLE_ACTIVITY' | translate }}:</h2>
+  <h2 class="info-contract-activity-title">{{ 'INFO_CONTRACT.TITLE_ACTIVITY' | translate }}:</h2>
 
-  <div class="flex justify-center items-center flex-col w-full px-4">
-    <mat-dialog-content class="p-0! flex! flex-col! gap-4 w-full text-left max-w-lg">
-      <p>
-        <strong>{{ 'INFO_CONTRACT.TIME' | translate }}:</strong>
+  <main class="info-contract-activity-container">
+    <mat-dialog-content class="info-contract-content">
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.TIME' | translate }}:</strong>
         {{ data.contrato.hora_contratada }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.DAY' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.DAY' | translate }}:</strong>
         {{ data.contrato.dia_semana_contratado }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.SERVICE' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.SERVICE' | translate }}:</strong>
         {{ data.contrato.id_servicio_horario?.Servicio?.nombre || 'Sin servicio' }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.CLIENT' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.CLIENT' | translate }}:</strong>
         {{ data.contrato.Cliente?.nombreDelCliente }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.COMPANY' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.COMPANY' | translate }}:</strong>
         {{ data.contrato.Empresa?.nombreDeLaEmpresa }}
       </p>
     </mat-dialog-content>
-  </div>
-</div>
+  </main>
+</section>

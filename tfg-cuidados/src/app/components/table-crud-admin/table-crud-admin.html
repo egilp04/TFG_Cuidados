@@ -1,11 +1,10 @@
-<div class="table-admin-container">
-  <div class="table-admin-search-container">
+<section class="table-admin-container">
+  <header class="table-admin-search-container">
     <label class="table-admin-search-title">{{ 'ADMIN_TABLE.SEARCH_LABEL' | translate }}</label>
     <app-searchbar [control]="searchControl"> </app-searchbar>
-  </div>
-
+  </header>
   <div class="table-admin">
-    <div class="overflow-x-auto">
+    <main class="overflow-x-auto">
       <table mat-table [dataSource]="dataSource" class="table-admin-content">
         <ng-container matColumnDef="nombre">
           <th mat-header-cell *matHeaderCellDef class="table-column-name text-label">
@@ -15,7 +14,6 @@
             {{ item.nombre }}
           </td>
         </ng-container>
-
         <ng-container matColumnDef="apellidos">
           <th mat-header-cell *matHeaderCellDef class="table-column-name text-label">
             {{ 'ADMIN_TABLE.HEADER.SURNAME' | translate }}
@@ -24,14 +22,12 @@
             {{ item.ape1 }} {{ item.ape2 }}
           </td>
         </ng-container>
-
         <ng-container matColumnDef="email">
           <th mat-header-cell *matHeaderCellDef class="table-column-name text-label">Email</th>
           <td mat-cell *matCellDef="let item" class="table-column-name text-label">
             {{ item.email }}
           </td>
         </ng-container>
-
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let item">
@@ -49,7 +45,6 @@
             </div>
           </td>
         </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
@@ -61,8 +56,7 @@
           </td>
         </tr>
       </table>
-    </div>
-
+    </main>
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"
       [pageSize]="10"
@@ -72,4 +66,4 @@
     >
     </mat-paginator>
   </div>
-</div>
+</section>
