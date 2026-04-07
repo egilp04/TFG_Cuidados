@@ -27,24 +27,30 @@
 
   <header class="info-contract-content-container">
     <mat-dialog-content class="info-contract-content">
-      <p>
-        <strong>{{ 'INFO_CONTRACT.ID' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.ID' | translate }}:</strong>
         {{ data.contrato.id_contrato }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.DATE_CREATION' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title"
+          >{{ 'INFO_CONTRACT.DATE_CREATION' | translate }}:</strong
+        >
         {{ data.contrato.fecha_creacion }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.DATE_START' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title"
+          >{{ 'INFO_CONTRACT.DATE_START' | translate }}:</strong
+        >
         {{ data.contrato.fecha_inicio }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.DATE_END' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title"
+          >{{ 'INFO_CONTRACT.DATE_END' | translate }}:</strong
+        >
         {{ data.contrato.fecha_fin || ('INFO_CONTRACT.NOT_FINALIZED' | translate) }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.STATUS' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.STATUS' | translate }}:</strong>
         {{ data.contrato.estado }}
       </p>
     </mat-dialog-content>
@@ -54,24 +60,24 @@
 
   <main class="info-contract-activity-container">
     <mat-dialog-content class="info-contract-content">
-      <p>
-        <strong>{{ 'INFO_CONTRACT.TIME' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.TIME' | translate }}:</strong>
         {{ data.contrato.hora_contratada }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.DAY' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.DAY' | translate }}:</strong>
         {{ data.contrato.dia_semana_contratado }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.SERVICE' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.SERVICE' | translate }}:</strong>
         {{ data.contrato.id_servicio_horario?.Servicio?.nombre || 'Sin servicio' }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.CLIENT' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.CLIENT' | translate }}:</strong>
         {{ data.contrato.Cliente?.nombreDelCliente }}
       </p>
-      <p>
-        <strong>{{ 'INFO_CONTRACT.COMPANY' | translate }}:</strong>
+      <p class="info-contract-text">
+        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.COMPANY' | translate }}:</strong>
         {{ data.contrato.Empresa?.nombreDeLaEmpresa }}
       </p>
     </mat-dialog-content>
