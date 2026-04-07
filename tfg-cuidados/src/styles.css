@@ -269,7 +269,7 @@
     @apply text-h2 mt-10 mb-20 2xl:mb-24 text-primary text-center dark:text-surface font-bold;
   }
   .about-grid {
-    @apply h-full px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mt-20 w-full mb-20 2xl:mb-24;
+    @apply h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 my-20 w-full;
   }
 
   .landing-container {
@@ -297,7 +297,7 @@
     @apply text-center text-h1 text-primary dark:text-surface m-20 lg:m-[2rem] 2xl:m-[2.5rem] uppercase;
   }
   .services-grid {
-    @apply h-full px-4 grid grid-cols-1 grid-rows-3 gap-10 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col lg:grid-cols-3 lg:grid-rows-1;
+    @apply h-full px-4 grid grid-cols-1 grid-rows-3 gap-10 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 py-4;
   }
 
   .services-card-special {
@@ -419,21 +419,20 @@
   }
 
   .cards-landing-description {
-    @apply text-p text-secondary overflow-hidden dark:text-surface;
+    @apply text-lg font-poppins text-secondary overflow-hidden dark:text-surface;
   }
 
   .manuals-container {
-    @apply flex flex-col justify-center items-center p-20 md:px-24;
+    @apply flex flex-col justify-center items-center px-6 py-10 md:px-12 lg:px-24 lg:py-20 w-full;
   }
-
   .manuals-download-container {
-    @apply h-full px-4 grid grid-cols-1 md:grid-cols-2 gap-20 mt-20 w-full items-stretch mb-14;
+    @apply w-full  grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 mt-10 mb-14 items-stretch;
   }
   .manuals-title {
     @apply text-h1 text-primary mt-10 mb-20 text-center dark:text-surface;
   }
   .manuals-cards-container {
-    @apply flex flex-col gap-20 justify-between items-center flex-1 h-full;
+    @apply flex flex-col gap-20 justify-between items-center flex-1 h-full p-4;
   }
 
   .manuals-link {
@@ -538,7 +537,6 @@
     @apply flex flex-col items-center;
   }
 
-
   .message-noti-text {
     @apply text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm;
   }
@@ -551,7 +549,7 @@
   }
 
   .login-modal-container {
-    @apply p-6 flex flex-col w-full justify-center items-center gap-6  dark:bg-surface-dark!;
+    @apply p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface  dark:bg-surface-dark!;
   }
 
   .service-modal-container {
@@ -1225,7 +1223,6 @@
     @apply p-10 bg-surface flex flex-col w-full justify-center gap-6 dark:bg-surface-dark;
   }
 
-
   .service-modal-form-container {
     @apply flex flex-col gap-2 w-full;
   }
@@ -1258,24 +1255,24 @@
     @apply text-h1 text-primary text-center mb-20 dark:text-surface;
   }
 
-  .info-contract-title{
-    @apply text-secondary text-h2 p-6 mb-2 dark:text-surface
+  .info-contract-title {
+    @apply text-secondary text-h2 p-6 mb-2 dark:text-surface;
   }
 
-  .info-contract-content-container{
-    @appy flex justify-center items-center flex-col w-full px-4 
+  .info-contract-content-container {
+    @appy flex justify-center items-center flex-col w-full px-4;
   }
 
-  .info-contract-content{
-    @apply p-0! flex! flex-col! gap-4 w-full text-left max-w-lg text-primary dark:text-surface
+  .info-contract-content {
+    @apply p-0! flex! flex-col! gap-4 w-full text-left max-w-lg text-primary dark:text-surface;
   }
 
-  .info-contract-activity-title{
-    @apply text-secondary text-h2 p-6 mb-2 dark:text-surface
+  .info-contract-activity-title {
+    @apply text-secondary text-h2 p-6 mb-2 dark:text-surface;
   }
 
-  .info-contract-activity-container{
-    @apply flex justify-center items-center flex-col w-full px-4
+  .info-contract-activity-container {
+    @apply flex justify-center items-center flex-col w-full px-4;
   }
 }
 

@@ -96,7 +96,7 @@
         "DESC": "Responsable del desarrollo tecnológico y de garantizar una plataforma segura y accesible."
       },
       "MEMBER3": {
-        "ROLE": "Directora de Operaciones",
+        "ROLE": "Coordinadora",
         "DESC": "Especialista en coordinar la red de cuidadores y asegurar la calidad de los servicios."
       },
       "MEMBER4": {
@@ -326,7 +326,7 @@
         "DESC": "Manual de buenas prácticas para cuidadores y empresas de salud."
       }
     },
-    "USERVIDEO": "Ver video - Uso del apicativo"
+    "USERVIDEO": "Video: uso del apicativo"
   },
   "MESSAGES_PAGE": {
     "TITLE": "Mensajes",

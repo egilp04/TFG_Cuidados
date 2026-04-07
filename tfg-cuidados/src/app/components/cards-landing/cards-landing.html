@@ -1,8 +1,8 @@
-<section class="animate-cards cards-landing-container">
-  <header class="cards-landing-img-container">
+<div class="animate-cards cards-landing-container">
+  <div class="cards-landing-img-container">
     <img [src]="imagen()" [alt]="titulo() | translate" class="cards-landing-img" />
-  </header>
-  <main [class]="cardClasses()">
+  </div>
+  <div [class]="cardClasses()">
     <h2 class="cards-landing-title">{{ titulo() | translate }}</h2>
     @if (cargo()) {
       <label class="cards-landing-cargo">
@@ -10,5 +10,5 @@
       </label>
     }
     <p class="cards-landing-description">{{ descripcion() | translate }}</p>
-  </main>
-</section>
+  </div>
+</div>
