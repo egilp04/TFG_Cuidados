@@ -427,7 +427,7 @@
   }
 
   .manuals-download-container {
-    @apply h-full px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-20 mt-20 w-full items-stretch mb-14;
+    @apply h-full px-4 grid grid-cols-1 md:grid-cols-2 gap-20 mt-20 w-full items-stretch mb-14;
   }
   .manuals-title {
     @apply text-h1 text-primary mt-10 mb-20 text-center dark:text-surface;
@@ -1218,8 +1218,9 @@
   }
 
   .info-container {
-    @apply p-10 flex flex-col w-full justify-center gap-6;
+    @apply p-10 bg-surface flex flex-col w-full justify-center gap-6 dark:bg-surface-dark;
   }
+
 
   .service-modal-form-container {
     @apply flex flex-col gap-2 w-full;
@@ -1251,6 +1252,26 @@
 
   .activities-page-title {
     @apply text-h1 text-primary text-center mb-20 dark:text-surface;
+  }
+
+  .info-contract-title{
+    @apply text-secondary text-h2 p-6 mb-2 dark:text-surface
+  }
+
+  .info-contract-content-container{
+    @appy flex justify-center items-center flex-col w-full px-4 
+  }
+
+  .info-contract-content{
+    @apply p-0! flex! flex-col! gap-4 w-full text-left max-w-lg text-primary dark:text-surface
+  }
+
+  .info-contract-activity-title{
+    @apply text-secondary text-h2 p-6 mb-2 dark:text-surface
+  }
+
+  .info-contract-activity-container{
+    @apply flex justify-center items-center flex-col w-full px-4
   }
 }
 
