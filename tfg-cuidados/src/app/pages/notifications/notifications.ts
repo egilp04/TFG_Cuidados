@@ -8,11 +8,20 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { catchError, tap, map } from 'rxjs/operators';
+import { catchError, tap, map, switchMap } from 'rxjs/operators';
+import { ComunicacionModel } from '../../models/Comunicacion';
+import { ButtonComponent } from '../../components/button/button';
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, Buttonback, TranslateModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    Buttonback,
+    TranslateModule,
+    ButtonComponent,
+  ],
   providers: [{ provide: MatPaginatorIntl, useClass: PaginacionEs }],
   templateUrl: './notifications.html',
   styleUrl: './notifications.css',
@@ -26,7 +35,7 @@ export class Notifications implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
   dataSource = new MatTableDataSource<ComunicacionModel>([]);
-  displayedColumns: string[] = ['nombre', 'notificacion', 'fecha'];
+  displayedColumns: string[] = ['nombre', 'notificacion', 'fecha', 'acciones'];
 
   ngOnInit() {
     this.suscribirANotificaciones();
@@ -58,10 +67,34 @@ export class Notifications implements OnInit {
     if (!noti.leido) {
       noti.leido = true;
       if (noti.id_comunicacion) {
-        this.comunicationService.updateComunicacion(noti.id_comunicacion, { leido: true }).subscribe({
-          error: (err) => console.error('Error al marcar notificación:', err),
-        });
+        this.comunicationService
+          .updateComunicacion(noti.id_comunicacion, { leido: true })
+          .subscribe({
+            error: (err) => console.error('Error al marcar notificación:', err),
+          });
       }
     }
+  }
+
+  borrarMensaje(mensaje: ComunicacionModel) {
+    this.comunicationService
+      .deleteComunicacion(mensaje)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        switchMap(() =>
+          this.translate
+            .get('NOTIFICATIONS.ALERTS.DELETE_SUCCESS')
+            .pipe(map((text) => ({ type: 'exito' as const, text }))),
+        ),
+        catchError((err) => {
+          console.error('Error al borrar:', err);
+          return this.translate
+            .get('NOTIFICATIONS.ALERTS.DELETE_ERROR')
+            .pipe(map((text) => ({ type: 'error' as const, text })));
+        }),
+      )
+      .subscribe((resultado) => {
+        this.messageService.showMessage(resultado.text, resultado.type);
+      });
   }
 }

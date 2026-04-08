@@ -2,6 +2,13 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { from, Observable, throwError, BehaviorSubject, of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
+import {
+  RpcSuccessResponse,
+  UpdateProfilePayload,
+  UserEmailResponse,
+  UserModel,
+  UserNameResponse,
+} from '../models/User-Service';
 /**
  * @description Servicio de administración de usuarios y perfiles.
  * Implementa una lógica de consulta dinámica para unificar la identidad (Usuario)
@@ -10,7 +17,7 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private supabase = inject(SupabaseService).getClient();
-  
+
   private usersList$ = new BehaviorSubject<UserModel[]>([]);
   private currentType: 'cliente' | 'empresa' = 'cliente';
 
@@ -51,28 +58,26 @@ export class UserService {
    */
   private async refreshUsers() {
     const tableRel = this.currentType === 'cliente' ? 'Cliente' : 'Empresa';
-    console.log(`Intentando cargar: ${tableRel}...`);
-    
     const { data, error } = await this.supabase
       .from('Usuario')
       .select(`*, "${tableRel}"!inner(*)`)
       .eq('estado', true);
-      
+
     if (error) {
       console.error(`ERROR cargando ${tableRel}:`, error);
       return;
     }
-    
     if (data) {
-      console.log(`Datos crudos ${tableRel}:`, data);
-            const flattened: UserModel[] = data.map((u: Record<string, unknown>) => {
-        const detalle = (u[tableRel] || u[tableRel.toLowerCase()] || u[`"${tableRel}"`]) as Record<string, unknown> | undefined;
+      const flattened: UserModel[] = data.map((u: Record<string, unknown>) => {
+        const detalle = (u[tableRel] || u[tableRel.toLowerCase()] || u[`"${tableRel}"`]) as
+          | Record<string, unknown>
+          | undefined;
         return {
           ...u,
           ...(detalle || {}),
-        } as UserModel;
+        } as unknown as UserModel;
       });
-      
+
       this.usersList$.next(flattened);
     }
   }
@@ -85,7 +90,7 @@ export class UserService {
       catchError((err) => throwError(() => err)),
     );
   }
-  
+
   /**
    * Validación de unicidad de credenciales.
    * Realiza una comprobación de existencia cruzada, excluyendo al usuario actual
@@ -111,7 +116,11 @@ export class UserService {
    * Esto garantiza la atomicidad: o se actualizan ambas tablas (Usuario + Perfil) o ninguna.
    * @param bodyRPC Encapsula los parámetros necesarios para la transacción en la base de datos.
    */
-  updateProfileDirect(userId: string, datosLimpios: UpdateProfilePayload, rol: string): Observable<RpcSuccessResponse> {
+  updateProfileDirect(
+    userId: string,
+    datosLimpios: UpdateProfilePayload,
+    rol: string,
+  ): Observable<RpcSuccessResponse> {
     const bodyRPC = {
       p_user_id: userId,
       p_rol: rol,
@@ -126,7 +135,7 @@ export class UserService {
       p_comunidad: datosLimpios.comunidad || null,
       p_descripcion: datosLimpios.descripcion || null,
     };
-    
+
     return from(this.supabase.rpc('update_profile_complete', bodyRPC)).pipe(
       map(({ data, error }) => {
         if (error) throw new Error(error.message);

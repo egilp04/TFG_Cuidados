@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, map, switchMap } from 'rxjs';
+import { ContratoDetalle } from '../../models/Contrato';
 
 @Component({
   selector: 'app-activities',

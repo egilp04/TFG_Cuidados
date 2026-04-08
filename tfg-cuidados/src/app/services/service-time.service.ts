@@ -3,6 +3,7 @@ import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Servicio_HorarioModel } from '../models/Servicio_Horario';
+import { ServicioHorarioJoined } from '../models/Service-Time-Service';
 
 
 /**
@@ -14,7 +15,7 @@ import { Servicio_HorarioModel } from '../models/Servicio_Horario';
 })
 export class ServiceTimeService {
   private supabase = inject(SupabaseService).getClient();
-  
+
   private serviceTimeList$ = new BehaviorSubject<ServicioHorarioJoined[]>([]);
   private currentIdEmpresa: string | null = null;
 
@@ -111,7 +112,6 @@ export class ServiceTimeService {
         const currentList = this.serviceTimeList$.getValue();
         const filtered = currentList.filter((item) => item.id_servicio_horario !== id);
         this.serviceTimeList$.next(filtered);
-        
         if (this.currentIdEmpresa) this.refreshList(this.currentIdEmpresa);
       }),
       catchError((err) => throwError(() => err)),

@@ -21,6 +21,7 @@ import { Searchbar } from '../searchbar/searchbar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
+import { UserModel } from '../../models/User-Service';
 
 @Component({
   selector: 'app-table-crud-admin',

@@ -11,6 +11,8 @@ import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { TableCrudAdmin } from '../../components/table-crud-admin/table-crud-admin';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { ButtonComponent } from '../../components/button/button';
+import { UserService } from '../../services/user.service';
+import { UserModel } from '../../models/User-Service';
 
 @Component({
   selector: 'app-management-admin',
@@ -27,7 +29,7 @@ export class ManagementAdmin implements OnInit {
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);
   private translate = inject(TranslateService);
-  
+
   public isUser: boolean = true;
     public usuarios$!: Observable<UserModel[]>;
 

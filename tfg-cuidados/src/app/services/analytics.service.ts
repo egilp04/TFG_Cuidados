@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ContractStats, EstadoContratoResponse, RegistroFechaResponse } from '../models/Analitycs-Service';
 
 /**
  * @description Servicio de métricas y análisis de datos para el dashboard administrativo.
@@ -11,7 +12,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class AnalyticsService {
   private supabase = inject(SupabaseService).getClient();
-  
+
   private _totalUsuarios$ = new BehaviorSubject<number>(0);
   private _registrosSemanales$ = new BehaviorSubject<number[]>(new Array(7).fill(0));
     private _contratosStats$ = new BehaviorSubject<ContractStats>({
@@ -79,14 +80,14 @@ export class AnalyticsService {
       const haceSieteDias = new Date();
       haceSieteDias.setDate(haceSieteDias.getDate() - 6);
       haceSieteDias.setHours(0, 0, 0, 0);
-      
+
       const { data, error } = await this.supabase
         .from('Usuario')
         .select('fecha_registro')
         .gte('fecha_registro', haceSieteDias.toISOString());
-        
+
       if (error) throw error;
-      
+
       if (data) {
         const registros = data as RegistroFechaResponse[];
         this._registrosSemanales$.next(this.groupByDay(registros, haceSieteDias));

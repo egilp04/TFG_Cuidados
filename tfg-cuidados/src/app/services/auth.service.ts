@@ -6,6 +6,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { createClient, AuthResponse, UserResponse, User } from '@supabase/supabase-js';
 import { ComunicationService } from './comunication.service';
 import { environment } from '../../environments/environment';
+import { AuthUserModel, PreparacionRegistro, RegisterPayload } from '../models/Auth-Service';
 
 /**
  * @description Servicio de autenticación y gestión de sesiones.
@@ -20,7 +21,7 @@ export class AuthService {
 
   isLoading = signal<boolean>(true);
     currentUser = signal<AuthUserModel | null>(null);
-  
+
   isAuthenticated = computed(() => !!this.currentUser());
   userRol = computed(() => this.currentUser()?.rol || null);
 
@@ -104,7 +105,7 @@ export class AuthService {
 
   register(datos: RegisterPayload, esCliente: boolean): Observable<AuthResponse> {
     const { emailLimpio, passwordLimpia, metaData } = this.prepararDatosRegistro(datos, esCliente);
-    
+
     return from(this.supabase.rpc('email_exists', { email_check: emailLimpio })).pipe(
       switchMap(({ data: existe, error }) => {
         if (error) throw new Error('Error técnico al verificar el correo.');
@@ -171,7 +172,7 @@ export class AuthService {
     const emailLimpio = String(datos.email).trim().toLowerCase().replace(/\s/g, '');
     const passwordLimpia = String(datos.password).trim();
     const rol = esCliente ? 'cliente' : 'empresa';
-    
+
     const metaData = {
       rol: rol,
       nombre: datos.nombre ? String(datos.nombre).trim() : '',
@@ -187,7 +188,7 @@ export class AuthService {
       cif: datos.cif ? datos.cif.toUpperCase() : null,
       descripcion: datos.descripcion || null,
     };
-    
+
     return { emailLimpio, passwordLimpia, metaData };
   }
 

@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatButtonModule } from '@angular/material/button';
 import { ButtonComponent } from '../button/button';
 import { TranslateModule } from '@ngx-translate/core';
+import { CancelModalData } from '../../models/Cancel-Modal';
 
 @Component({
   selector: 'app-cancelmodal',
@@ -13,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './cancelmodal.css',
 })
 export class Cancelmodal {
-  public data = inject(MAT_DIALOG_DATA);
+  public data = inject<CancelModalData>(MAT_DIALOG_DATA);
   private dialogRef = inject(MatDialogRef<Cancelmodal>);
 
   getPrimaryLabel() {

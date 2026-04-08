@@ -13,6 +13,7 @@ import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { MessageService } from '../../services/message-service';
 import { InfoContract } from '../../components/info-contract/info-contract';
 import { Buttonback } from '../../components/buttonback/buttonback';
+import { ContratoDetalle } from '../../models/Contrato';
 
 @Component({
   selector: 'app-contracts',

@@ -118,7 +118,6 @@ export class Messages implements OnInit {
   }
 
   borrarMensaje(mensaje: ComunicacionModel) {
-    const confirmMsg = this.translate.instant('MESSAGES_PAGE.ALERTS.CONFIRM_DELETE');
     this.comunicationService
       .deleteComunicacion(mensaje)
       .pipe(

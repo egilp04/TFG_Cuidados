@@ -8,6 +8,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
+import { Modifyprofileform } from '../../components/modifyprofileform/modifyprofileform';
+import { AuthUserModel } from '../../models/Auth-Service';
+import { FormSubmitEvent } from '../../models/ModifyProfileForm';
+import { UpdateProfilePayload } from '../../models/User-Service';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-modify-profile',
@@ -50,7 +56,7 @@ export class ModifyProfilePage implements OnInit {
     if (!user) return;
         const nuevosDatos = event.datos as UpdateProfilePayload;
     const rol = event.rol;
-    
+
     this.usuerService
       .updateProfileDirect(user.id_usuario, nuevosDatos, rol)
       .pipe(

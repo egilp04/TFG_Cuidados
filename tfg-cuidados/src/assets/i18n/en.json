@@ -154,6 +154,7 @@
     }
   },
   "DASHBOARD": {
+    "NO_CONTRACTS": "No contracts",
     "TITLE_CONTRACTS": "Contracts",
     "TOTAL_CONTRACTS": {
       "TOTAL": "Total contract: ",
@@ -409,6 +410,12 @@
     "MESSAGES": {
       "CONNECTION_ERROR": "Error in live notifications connection",
       "EMPTY": "There´s any notifications"
+    },
+    "ALERTS": {
+      "CONFIRM_DELETE": "Are you sure you want to delete this notification?",
+      "DELETE_SUCCESS": "The notificacion has been deleted.",
+      "DELETE_ERROR": "Could not delete the notification.",
+      "VIEW_ERROR": "Cannot view this notification at this time"
     }
   },
   "RECOVER_PASSWORD": {

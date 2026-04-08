@@ -63,7 +63,7 @@ export class Contact {
         'service_oqks3xm',
         'template_pn792zm',
         templateParams,
-        'lXKk2y0Z41TMBq3NO'
+        'lXKk2y0Z41TMBq3NO',
       );
       const msg = await lastValueFrom(this.translate.get('MESSAGES.SUCCESS.CONTACT'));
       this.messageService.showMessage(msg, 'exito');

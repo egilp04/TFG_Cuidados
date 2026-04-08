@@ -18,6 +18,8 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { MessageService } from '../../services/message-service';
 import { ServiceTimeModal } from '../../components/service-time-modal/service-time-modal';
 import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
+import { ServiceTimeService } from '../../services/service-time.service';
+import { ServicioHorarioJoined } from '../../models/Service-Time-Service';
 
 @Component({
   selector: 'app-management-servicetime',
@@ -68,7 +70,7 @@ export class Servicesbusiness implements OnInit {
       maxWidth: this.isMobile ? '95vw' : '600px',
       data: element || null,
     });
-    
+
     dialogRef
       .afterClosed()
       .pipe(
@@ -110,7 +112,6 @@ export class Servicesbusiness implements OnInit {
         if (resultado.type === 'exito') {
           this.cargarServicios();
         }
-
         this.cd.markForCheck();
       });
   }

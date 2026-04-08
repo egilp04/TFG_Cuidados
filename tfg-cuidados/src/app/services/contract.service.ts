@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { AuthService } from './auth.service';
-import { ContratoModel } from '../models/Contrato';
+import { ContratoDetalle, ContratoModel, SupabaseContratoJoin } from '../models/Contrato';
 import { from, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ComunicationService } from './comunication.service';
@@ -59,12 +59,12 @@ export class ContractService {
   private async refreshContracts() {
     const user = this.authService.currentUser();
     if (!user) return;
-    
+
     let query = this.supabase
       .from('Contrato')
       .select(this.CONTRATO_SELECT)
       .neq('estado', 'no activo');
-      
+
     if (user.id_usuario && user.rol !== 'administrador') {
       query = query.or(`id_cliente.eq.${user.id_usuario},id_empresa.eq.${user.id_usuario}`);
     }
@@ -89,7 +89,7 @@ export class ContractService {
           nombreServicio: contrato.id_servicio_horario?.Servicio?.nombre,
         } as ContratoDetalle;
       });
-      
+
       this.contractsList$.next(mappedData);
     } else {
       console.error('Error al refrescar contratos:', error?.message);

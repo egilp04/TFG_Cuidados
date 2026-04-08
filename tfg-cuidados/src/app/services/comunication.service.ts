@@ -108,6 +108,7 @@ export class ComunicationService {
       .select('*')
       .eq('tipo_comunicacion', 'notificacion')
       .eq('id_receptor', user.id_usuario)
+      .eq('eliminado_por_receptor', false)
       .order('fecha_envio', { ascending: false });
 
     if (!error) {
@@ -173,7 +174,7 @@ export class ComunicationService {
   deleteComunicacion(mensaje: ComunicacionModel): Observable<void> {
     const user = this.authService.currentUser();
     if (!user || !mensaje.id_comunicacion) return of(undefined);
-    
+
     if (mensaje.tipo_comunicacion === 'mensaje') {
       const currentMensajes = this.mensajesList$.getValue();
       const newMensajes = currentMensajes.filter(
@@ -191,7 +192,7 @@ export class ComunicationService {
     }
 
     let updates: Partial<ComunicacionModel> = {};
-    
+
     if (mensaje.id_emisor === user.id_usuario) {
       updates = { eliminado_por_emisor: true };
     } else if (mensaje.id_receptor === user.id_usuario) {

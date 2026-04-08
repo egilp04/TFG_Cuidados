@@ -23,6 +23,7 @@ import { AuthService } from '../../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { comunidades } from '../../core/constants/locations';
 import { LucideAngularModule } from 'lucide-angular';
+import { UserProfileModel, FormSubmitEvent } from '../../models/ModifyProfileForm';
 
 
 @Component({

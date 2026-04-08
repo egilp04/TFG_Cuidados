@@ -23,6 +23,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
 import { comunidades } from '../../core/constants/locations';
+import { FormSubmittedEvent, RegisterFormData } from '../../models/RegisterForm';
 
 
 @Component({

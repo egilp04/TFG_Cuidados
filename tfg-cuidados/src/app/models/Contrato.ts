@@ -1,9 +1,9 @@
 export interface ContratoModel {
-  id_contrato?: number;
+  id_contrato?: string;
   estado: 'activo' | 'no activo';
   fecha_inicio: string;
   fecha_fin: string | null;
-  dia_semana_contratado: 'lunes' | 'martes' | 'miercoles' | 'jueves' | 'viernes';
+  dia_semana_contratado: string;
   hora_contratada: string;
   id_servicio_horario: string;
   fecha_creacion: string;
@@ -36,6 +36,7 @@ export interface SupabaseContratoJoin {
   [key: string]: unknown;
 }
 export interface ContratoDetalle extends ContratoModel {
+  id_contrato: string;
   id_sh_plano?: string;
   nombreServicio?: string;
   Cliente?: {

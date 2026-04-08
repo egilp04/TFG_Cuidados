@@ -2,22 +2,26 @@
   <app-buttonback></app-buttonback>
 </section>
 @if (this.messageService.messageData(); as data) {
-<section class="message-noti">
-  <div [ngClass]="{
-          'text-red-500': data.tipo === 'error',
-          'text-primary': data.tipo === 'exito',
-        }" class="message-noti-text">
-    {{ data.mensaje }}
-  </div>
-</section>
+  <section class="message-noti">
+    <div
+      [ngClass]="{
+        'text-red-500': data.tipo === 'error',
+        'text-primary': data.tipo === 'exito',
+      }"
+      class="message-noti-text"
+    >
+      {{ data.mensaje }}
+    </div>
+  </section>
 }
 <section class="flex flex-col p-6 gap-6">
-
-
   <div class="services-bss-container">
     <div class="services-new-btn-container">
-      <app-button [label]="'SERVICES_BUSINESS.BTN_NEW' | translate" variant="primary"
-        (click)="openModal()"></app-button>
+      <app-button
+        [label]="'SERVICES_BUSINESS.BTN_NEW' | translate"
+        variant="primary"
+        (click)="openModal()"
+      ></app-button>
     </div>
   </div>
   <main class="service-table-containter">
@@ -71,10 +75,16 @@
         <th mat-header-cell *matHeaderCellDef class="text-label service-table-header"></th>
         <td mat-cell *matCellDef="let element" class="p-4">
           <div class="service-btn-container">
-            <app-button [label]="'SERVICES_BUSINESS.BTN_DELETE' | translate"
-              (click)="onDelete(element.id_servicio_horario)" variant="secondary"></app-button>
-            <app-button [label]="'SERVICES_BUSINESS.BTN_MODIFY' | translate" variant="primary"
-              (click)="openModal(element)"></app-button>
+            <app-button
+              [label]="'SERVICES_BUSINESS.BTN_DELETE' | translate"
+              (click)="onDelete(element.id_servicio_horario)"
+              variant="secondary"
+            ></app-button>
+            <app-button
+              [label]="'SERVICES_BUSINESS.BTN_MODIFY' | translate"
+              variant="primary"
+              (click)="openModal(element)"
+            ></app-button>
           </div>
         </td>
       </ng-container>

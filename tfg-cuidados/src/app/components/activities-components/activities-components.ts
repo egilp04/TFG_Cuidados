@@ -15,6 +15,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { ButtonComponent } from '../button/button';
 import { AuthService } from '../../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { ContratoModel, FilaTablaContrato } from '../../models/Acitvities-component';
+import { ContratoDetalle } from '../../models/Contrato';
 
 @Component({
   selector: 'app-activities-components',
@@ -34,7 +36,7 @@ export class ActivitiesComponents implements OnInit {
   private authService = inject(AuthService);
 
   @Output() onCancelContract = new EventEmitter<string>();
-  @Input() dataSource: ContratoModel[] = [];
+  @Input() dataSource: ContratoDetalle[] = [];
 
   displayedColumns: string[] = ['usuario', 'nombre', 'dia', 'hora', 'lugar', 'acciones'];
   dataSourceTable = new MatTableDataSource<FilaTablaContrato>([]);

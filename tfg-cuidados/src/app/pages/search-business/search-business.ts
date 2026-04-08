@@ -21,6 +21,8 @@ import { MessageService } from '../../services/message-service';
 import { ContratoModel } from '../../models/Contrato';
 import { MessagesModal } from '../../components/messages-modal/messages-modal';
 import { Buttonback } from '../../components/buttonback/buttonback';
+import { EmpresaModel, ServicioHorarioResponse } from '../../models/Bussiness-Service';
+import { BusinessService } from '../../services/business.service';
 
 export interface EmpresaUI extends EmpresaModel {
   seleccion?: ServicioHorarioResponse;

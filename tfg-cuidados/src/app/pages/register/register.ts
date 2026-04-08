@@ -16,6 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { filter, switchMap, tap, delay, catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
+import { FormSubmittedEvent } from '../../models/RegisterForm';
 
 @Component({
   selector: 'app-register',
