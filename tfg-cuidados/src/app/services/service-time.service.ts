@@ -4,20 +4,6 @@ import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Servicio_HorarioModel } from '../models/Servicio_Horario';
 
-export interface ServicioAnidado {
-  nombre: string;
-  tipo_servicio: string;
-}
-
-export interface HorarioAnidado {
-  hora: string;
-  dia_semana: string;
-}
-
-export interface ServicioHorarioJoined extends Servicio_HorarioModel {
-  Servicio?: ServicioAnidado;
-  Horario?: HorarioAnidado;
-}
 
 /**
  * @description Servicio encargado de gestionar la disponibilidad horaria de los servicios.

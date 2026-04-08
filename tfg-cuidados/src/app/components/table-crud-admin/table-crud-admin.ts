@@ -42,12 +42,12 @@ import { TranslateModule } from '@ngx-translate/core';
 export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
   private destroyRef = inject(DestroyRef);
   @Input() modo: 'cliente' | 'empresa' = 'cliente';
-  @Input() datos: any[] = [];
-  @Output() eliminar = new EventEmitter<any>();
-  @Output() modificar = new EventEmitter<any>();
+  @Input() datos: UserModel[] = [];
+  @Output() eliminar = new EventEmitter<UserModel>();
+  @Output() modificar = new EventEmitter<UserModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<UserModel>([]);
   searchControl = new FormControl('');
 
   ngOnInit() {
@@ -85,11 +85,11 @@ export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
     return columnas;
   }
 
-  onEliminar(item: any) {
+  onEliminar(item: UserModel) {
     this.eliminar.emit(item);
   }
 
-  onModificar(item: any) {
+  onModificar(item: UserModel) {
     this.modificar.emit(item);
   }
 }

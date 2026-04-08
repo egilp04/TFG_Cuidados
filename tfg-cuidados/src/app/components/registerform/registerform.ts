@@ -6,7 +6,6 @@ import {
   Output,
   EventEmitter,
   SimpleChanges,
-  DestroyRef,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -24,6 +23,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
 import { comunidades } from '../../core/constants/locations';
+
 
 @Component({
   selector: 'app-registerform',
@@ -45,7 +45,7 @@ export class Registerform implements OnInit {
   private translate = inject(TranslateService);
 
   @Input() isUser: boolean = true;
-  @Output() formSubmitted = new EventEmitter<{ datos: any; esCliente: boolean }>();
+  @Output() formSubmitted = new EventEmitter<FormSubmittedEvent>();
 
   public comunidades: string[] = comunidades;
 
@@ -103,7 +103,7 @@ export class Registerform implements OnInit {
   onSubmit() {
     if (this.registerForm.valid) {
       const formValue = this.registerForm.getRawValue();
-      let datosParaEnviar = {};
+      let datosParaEnviar: RegisterFormData;
       if (this.isUser) {
         datosParaEnviar = {
           rol: 'cliente',
@@ -135,8 +135,6 @@ export class Registerform implements OnInit {
           comunidad: formValue.comunidad,
         };
       }
-
-      console.log('📤 Formulario válido, enviando datos:', datosParaEnviar);
       this.formSubmitted.emit({ datos: datosParaEnviar, esCliente: this.isUser });
     } else {
       this.registerForm.markAllAsTouched();

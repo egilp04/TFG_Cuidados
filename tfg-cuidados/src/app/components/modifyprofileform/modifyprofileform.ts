@@ -24,22 +24,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { comunidades } from '../../core/constants/locations';
 import { LucideAngularModule } from 'lucide-angular';
 
-export interface UserProfileModel {
-  email?: string;
-  telef?: string;
-  nombre?: string;
-  direccion?: string;
-  localidad?: string;
-  codpostal?: string;
-  comunidad?: string;
-  ape1?: string;
-  ape2?: string;
-  descripcion?: string;
-}
-export interface FormSubmitEvent {
-  datos: UserProfileModel;
-  rol: string;
-}
 
 @Component({
   selector: 'app-modifyprofileform',

@@ -6,44 +6,6 @@ import { from, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ComunicationService } from './comunication.service';
 
-export interface SupabaseContratoJoin {
-  id_contrato: string;
-  estado: string;
-  id_cliente: string;
-  id_empresa: string;
-  fecha_creacion?: string;
-  fecha_fin?: string;
-  id_servicio_horario?: {
-    id_servicio_horario?: string;
-    Servicio?: { nombre?: string };
-  };
-  Cliente?: {
-    nombre?: string;
-    direccion?: string;
-    localidad?: string;
-    codpostal?: string;
-    Usuario?: { nombre?: string; email?: string };
-  };
-  Empresa?: {
-    nombre?: string;
-    Usuario?: { nombre?: string; email?: string };
-  };
-  [key: string]: unknown;
-}
-export interface ContratoDetalle extends ContratoModel {
-  id_sh_plano?: string;
-  nombreServicio?: string;
-  Cliente?: {
-    direccion?: string;
-    localidad?: string;
-    codpostal?: string;
-    nombreDelCliente: string;
-  };
-  Empresa?: {
-    nombreDeLaEmpresa: string;
-  };
-}
-
 /**
  * @description Orquestador del ciclo de vida de los servicios contratados.
  * Maneja la lógica condicional basada en roles (Cliente/Empresa/Admin).

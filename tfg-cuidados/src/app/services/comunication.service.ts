@@ -5,10 +5,6 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 import { ComunicacionModel } from '../models/Comunicacion';
 import { AuthService } from './auth.service';
 
-interface AdminResponse {
-  id_usuario: string;
-}
-
 /**
  * @description Servicio central de comunicaciones. Gestiona el flujo bidireccional
  * de mensajes y notificaciones del sistema utilizando programación reactiva (RxJS).

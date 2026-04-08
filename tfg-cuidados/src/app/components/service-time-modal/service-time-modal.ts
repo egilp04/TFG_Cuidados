@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ServiceTimeService } from '../../services/service-time.service';
@@ -11,6 +11,8 @@ import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LucideAngularModule } from 'lucide-angular';
+import { Servicio_HorarioModel } from '../../models/Servicio_Horario';
+import {ServiceTimeModalData} from "../../models/Service-Time"
 
 @Component({
   selector: 'app-service-time-modal',
@@ -29,7 +31,7 @@ import { LucideAngularModule } from 'lucide-angular';
 })
 export class ServiceTimeModal implements OnInit {
   public dialogRef = inject(MatDialogRef<ServiceTimeModal>);
-  public data = inject(MAT_DIALOG_DATA);
+  public data = inject<ServiceTimeModalData | null>(MAT_DIALOG_DATA);
 
   private fb = inject(FormBuilder);
   private serviceTimeService = inject(ServiceTimeService);
@@ -65,9 +67,11 @@ export class ServiceTimeModal implements OnInit {
 
   save() {
     if (this.form.invalid) return;
-    const request = this.isEditing
-      ? this.serviceTimeService.updateServiceTime(this.data.id_servicio_horario, this.form.value)
-      : this.serviceTimeService.insertServiceTime(this.form.value);
+        const formPayload = this.form.getRawValue() as Servicio_HorarioModel;
+    const request = this.isEditing && this.data
+      ? this.serviceTimeService.updateServiceTime(this.data.id_servicio_horario, formPayload)
+      : this.serviceTimeService.insertServiceTime(formPayload);
+      
     request.subscribe({
       next: () => {
         this.dialogRef.close();
@@ -76,8 +80,8 @@ export class ServiceTimeModal implements OnInit {
     });
   }
 
-  getCtrl(name: string) {
-    return this.form.get(name) as any;
+  getCtrl(name: string): FormControl {
+    return this.form.get(name) as FormControl;
   }
 
   getErrorMessage(controlName: string): string {

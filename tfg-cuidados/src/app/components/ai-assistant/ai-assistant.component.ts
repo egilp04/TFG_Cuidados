@@ -4,11 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { AiService } from '../../services/ai';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-interface ChatMessage {
-  text: string;
-  isUser: boolean;
-}
-
 @Component({
   selector: 'app-ai-assistant',
   standalone: true,

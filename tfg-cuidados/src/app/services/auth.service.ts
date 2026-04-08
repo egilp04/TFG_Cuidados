@@ -7,48 +7,6 @@ import { createClient, AuthResponse, UserResponse, User } from '@supabase/supaba
 import { ComunicationService } from './comunication.service';
 import { environment } from '../../environments/environment';
 
-export interface RegisterPayload {
-  email: string;
-  password?: string;
-  nombre?: string;
-  telef?: string;
-  ape1?: string;
-  ape2?: string;
-  dni?: string;
-  fechnac?: string | Date;
-  direccion?: string;
-  localidad?: string;
-  codpostal?: string;
-  comunidad?: string;
-  cif?: string;
-  descripcion?: string;
-}
-
-export interface AuthUserModel {
-  id_usuario: string;
-  rol: 'cliente' | 'empresa' | 'administrador';
-  estado: boolean;
-  email: string;
-  nombre?: string;
-  telef?: string;
-  ape1?: string;
-  ape2?: string;
-  dni?: string;
-  fechnac?: string;
-  direccion?: string;
-  localidad?: string;
-  codpostal?: string;
-  comunidad?: string;
-  cif?: string;
-  descripcion?: string;
-}
-
-interface PreparacionRegistro {
-  emailLimpio: string;
-  passwordLimpia: string;
-  metaData: Record<string, any>;
-}
-
 /**
  * @description Servicio de autenticación y gestión de sesiones.
  * Implementa el patrón de persistencia de perfiles extendidos para manejar

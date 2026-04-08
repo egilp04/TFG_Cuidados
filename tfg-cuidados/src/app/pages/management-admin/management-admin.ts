@@ -1,12 +1,11 @@
 import { Component, inject, OnInit, ChangeDetectorRef, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { filter, Observable } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { UserService } from '../../services/user.service';
 import { MessageService } from '../../services/message-service';
 import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { TableCrudAdmin } from '../../components/table-crud-admin/table-crud-admin';
@@ -28,8 +27,9 @@ export class ManagementAdmin implements OnInit {
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);
   private translate = inject(TranslateService);
+  
   public isUser: boolean = true;
-  public usuarios$!: Observable<any[]>;
+    public usuarios$!: Observable<UserModel[]>;
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
@@ -37,6 +37,7 @@ export class ManagementAdmin implements OnInit {
       this.cargarDatos(tipo === 'empresa' ? 'empresa' : 'cliente');
     });
   }
+
   private cargarDatos(tipo: 'cliente' | 'empresa'): void {
     this.isUser = tipo === 'cliente';
     this.usuarios$ = this.userService.getUsersObservable(tipo);
@@ -52,7 +53,7 @@ export class ManagementAdmin implements OnInit {
   }
 
   isMobile = window.innerWidth < 768;
-  onEliminarUsuario(item: any) {
+  onEliminarUsuario(item: UserModel) {
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
       maxWidth: this.isMobile ? '95vw' : '500px',
@@ -85,8 +86,7 @@ export class ManagementAdmin implements OnInit {
         },
       });
   }
-
-  onEditar(item: any) {
+  onEditar(item: UserModel) {
     const usuarioConRol = {
       ...item,
       rol: this.isUser ? 'cliente' : 'empresa',

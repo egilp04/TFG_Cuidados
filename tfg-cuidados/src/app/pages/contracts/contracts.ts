@@ -40,7 +40,7 @@ export class Contracts implements OnInit {
   private translate = inject(TranslateService);
 
   displayedColumns: string[] = ['ID', 'fecha', 'acciones'];
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<ContratoDetalle>([]);
 
   isMobile = window.innerWidth < 768;
 

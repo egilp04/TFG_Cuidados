@@ -12,13 +12,13 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { switchMap, filter, map, catchError } from 'rxjs/operators';
-import { ServiceTimeService } from '../../services/service-time.service';
 import { AuthService } from '../../services/auth.service';
 import { ButtonComponent } from '../../components/button/button';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { MessageService } from '../../services/message-service';
 import { ServiceTimeModal } from '../../components/service-time-modal/service-time-modal';
 import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
+
 @Component({
   selector: 'app-management-servicetime',
   standalone: true,
@@ -42,8 +42,7 @@ export class Servicesbusiness implements OnInit {
   private cd = inject(ChangeDetectorRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
-
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<ServicioHorarioJoined>([]);
   displayedColumns: string[] = ['nombre', 'precio', 'tipo', 'hora', 'dia', 'acciones'];
 
   ngOnInit() {
@@ -55,7 +54,7 @@ export class Servicesbusiness implements OnInit {
       this.serviceTimeService
         .getServiceTimeByEmpresa(empresaId)
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((data) => {
+        .subscribe((data: ServicioHorarioJoined[]) => {
           this.dataSource.data = data;
           this.cd.markForCheck();
         });
@@ -63,12 +62,13 @@ export class Servicesbusiness implements OnInit {
   }
 
   isMobile = window.innerWidth < 768;
-  openModal(element?: any) {
+  openModal(element?: ServicioHorarioJoined) {
     const dialogRef = this.dialog.open(ServiceTimeModal, {
       width: '100%',
       maxWidth: this.isMobile ? '95vw' : '600px',
       data: element || null,
     });
+    
     dialogRef
       .afterClosed()
       .pipe(

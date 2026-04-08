@@ -63,7 +63,7 @@ export class Register implements OnInit {
     }
   }
 
-  onRegister(event: { datos: any; esCliente: boolean }) {
+  onRegister(event: FormSubmittedEvent) {
     const user = this.authService.currentUser();
     const soyAdmin = user?.rol === 'administrador';
 
@@ -74,7 +74,6 @@ export class Register implements OnInit {
       );
       return;
     }
-
     const registro$ = soyAdmin
       ? this.authService.registerByAdmin(event.datos, event.esCliente)
       : this.authService.register(event.datos, event.esCliente);

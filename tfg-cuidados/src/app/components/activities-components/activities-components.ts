@@ -16,29 +16,6 @@ import { ButtonComponent } from '../button/button';
 import { AuthService } from '../../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
 
-export interface ContratoModel {
-  id_contrato: string;
-  fecha_inicio: string | Date;
-  fecha_fin?: string | Date | null;
-  dia_semana_contratado?: string;
-  hora_contratada?: string;
-  nombreServicio?: string;
-  Empresa?: {
-    nombreDeLaEmpresa?: string;
-  };
-  Cliente?: {
-    nombreDelCliente?: string;
-    direccion?: string;
-    localidad?: string;
-    codpostal?: string;
-  };
-}
-
-export interface FilaTablaContrato extends ContratoModel {
-  nombreAMostrar: string;
-  lugar: string;
-}
-
 @Component({
   selector: 'app-activities-components',
   standalone: true,

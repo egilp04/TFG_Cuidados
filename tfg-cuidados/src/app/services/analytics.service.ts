@@ -2,19 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-export interface ContractStats {
-  activos: number;
-  cancelados: number;
-}
-
-export interface RegistroFechaResponse {
-  fecha_registro: string;
-}
-
-export interface EstadoContratoResponse {
-  estado:  'activo' | 'no activo';
-}
-
 /**
  * @description Servicio de métricas y análisis de datos para el dashboard administrativo.
  * Centraliza la lógica de agregación temporal y estadística.

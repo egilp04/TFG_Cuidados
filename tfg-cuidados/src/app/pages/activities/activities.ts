@@ -23,7 +23,7 @@ export class Activities {
   private contractService = inject(ContractService);
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);
-  public dataSource = new MatTableDataSource<any>([]);
+  public dataSource = new MatTableDataSource<ContratoDetalle>([]);
   private dialog = inject(MatDialog);
   private translate = inject(TranslateService);
 

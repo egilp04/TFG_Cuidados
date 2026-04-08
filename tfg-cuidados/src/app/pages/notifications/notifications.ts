@@ -9,7 +9,6 @@ import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, tap, map } from 'rxjs/operators';
-
 @Component({
   selector: 'app-notifications',
   standalone: true,
@@ -26,8 +25,7 @@ export class Notifications implements OnInit {
   private cd = inject(ChangeDetectorRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
-
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<ComunicacionModel>([]);
   displayedColumns: string[] = ['nombre', 'notificacion', 'fecha'];
 
   ngOnInit() {
@@ -47,7 +45,7 @@ export class Notifications implements OnInit {
           );
         }),
       )
-      .subscribe((data) => {
+      .subscribe((data: ComunicacionModel[]) => {
         this.dataSource.data = data;
 
         if (this.paginator) {
@@ -56,13 +54,14 @@ export class Notifications implements OnInit {
         this.cd.markForCheck();
       });
   }
-
-  marcarComoLeida(noti: any) {
+  marcarComoLeida(noti: ComunicacionModel) {
     if (!noti.leido) {
       noti.leido = true;
-      this.comunicationService.updateComunicacion(noti.id_comunicacion, { leido: true }).subscribe({
-        error: (err) => console.error('Error al marcar notificación:', err),
-      });
+      if (noti.id_comunicacion) {
+        this.comunicationService.updateComunicacion(noti.id_comunicacion, { leido: true }).subscribe({
+          error: (err) => console.error('Error al marcar notificación:', err),
+        });
+      }
     }
   }
 }

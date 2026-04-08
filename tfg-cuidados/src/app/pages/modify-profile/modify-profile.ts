@@ -5,9 +5,6 @@ import { CommonModule, Location } from '@angular/common';
 import { of, switchMap, filter, tap, timer, catchError, map, EMPTY } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Modifyprofileform } from '../../components/modifyprofileform/modifyprofileform';
-import { AuthService } from '../../services/auth.service';
-import { UserService } from '../../services/user.service';
 import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
@@ -31,10 +28,10 @@ export class ModifyProfilePage implements OnInit {
   private location = inject(Location);
 
   userRole = signal<'cliente' | 'empresa' | 'administrador'>('cliente');
-  usuarioAEditar = signal<any>(null);
+    usuarioAEditar = signal<AuthUserModel | null>(null);
 
   ngOnInit() {
-    const state = history.state as { usuario?: any };
+    const state = history.state as { usuario?: AuthUserModel };
     if (state && state.usuario) {
       this.usuarioAEditar.set(state.usuario);
       this.userRole.set(state.usuario.rol);
@@ -47,21 +44,21 @@ export class ModifyProfilePage implements OnInit {
     }
     setTimeout(() => this.cd.detectChanges(), 0);
   }
-
-  ejecutarActualizacion(event: { datos: any; rol: string }) {
+  ejecutarActualizacion(event: FormSubmitEvent) {
     const user = this.usuarioAEditar();
     const userLogueado = this.authService.currentUser();
     if (!user) return;
-    const nuevosDatos = event.datos;
+        const nuevosDatos = event.datos as UpdateProfilePayload;
     const rol = event.rol;
+    
     this.usuerService
       .updateProfileDirect(user.id_usuario, nuevosDatos, rol)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap(() => {
-          const soyYoMismo = user.id_usuario === userLogueado?.id_usuario;
+          const soyYo = user.id_usuario === userLogueado?.id_usuario;
           const emailCambio = nuevosDatos.email !== user.email;
-          if (soyYoMismo && emailCambio) {
+          if (soyYo && emailCambio) {
             return this.authService.updateAuthCredentiales(nuevosDatos.email);
           }
           return of(null);
@@ -69,9 +66,9 @@ export class ModifyProfilePage implements OnInit {
         switchMap(() => this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_SUCCESS')),
         tap((msg) => {
           this.messageService.showMessage(msg, 'exito');
-          const soyYoMismo = user.id_usuario === userLogueado?.id_usuario;
-          if (soyYoMismo) {
-            const usuarioActualizado = { ...userLogueado, ...nuevosDatos };
+          const soyYo = user.id_usuario === userLogueado?.id_usuario;
+          if (soyYo) {
+            const usuarioActualizado = { ...userLogueado, ...nuevosDatos } as AuthUserModel;
             this.authService.updateUserSignal(usuarioActualizado);
           }
           this.cd.detectChanges();
@@ -88,7 +85,6 @@ export class ModifyProfilePage implements OnInit {
       )
       .subscribe();
   }
-
   ejecutarBaja() {
     const user = this.usuarioAEditar();
     const currentUser = this.authService.currentUser();
@@ -105,8 +101,8 @@ export class ModifyProfilePage implements OnInit {
         filter((result) => result === true),
         switchMap(() => this.usuerService.deleteUser(user.id_usuario)),
         switchMap(() => {
-          const soyYoMismo = user.id_usuario === currentUser?.id_usuario;
-          if (soyYoMismo) {
+          const soyYo = user.id_usuario === currentUser?.id_usuario;
+          if (soyYo) {
             return this.authService.signOut().pipe(tap(() => this.router.navigate(['/'])));
           } else {
             this.location.back();
@@ -119,7 +115,6 @@ export class ModifyProfilePage implements OnInit {
       )
       .subscribe();
   }
-
   volverAHome() {
     this.location.back();
   }

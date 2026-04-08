@@ -15,13 +15,16 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { switchMap, catchError, map, tap, take } from 'rxjs/operators';
 import { Searchbar } from '../../components/searchbar/searchbar';
 import { ButtonComponent } from '../../components/button/button';
-import { BusinessService } from '../../services/business.service';
 import { AuthService } from '../../services/auth.service';
 import { ContractService } from '../../services/contract.service';
 import { MessageService } from '../../services/message-service';
 import { ContratoModel } from '../../models/Contrato';
 import { MessagesModal } from '../../components/messages-modal/messages-modal';
 import { Buttonback } from '../../components/buttonback/buttonback';
+
+export interface EmpresaUI extends EmpresaModel {
+  seleccion?: ServicioHorarioResponse;
+}
 
 @Component({
   selector: 'app-verempresas',
@@ -48,7 +51,7 @@ export class SearchBusiness implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
 
-  public todasLasEmpresas = signal<any[]>([]);
+  public todasLasEmpresas = signal<EmpresaUI[]>([]);
   public filtroBusqueda = signal<string>('');
   public filtroControl = new FormControl('');
 
@@ -58,7 +61,7 @@ export class SearchBusiness implements OnInit {
     return this.todasLasEmpresas().filter((emp) => {
       const coincideNombre = emp.nombre.toLowerCase().includes(filtro);
       const coincideServicio = emp.Servicio_Horario?.some(
-        (sh: any) =>
+        (sh: ServicioHorarioResponse) =>
           sh.Servicio?.nombre.toLowerCase().includes(filtro) ||
           sh.Horario?.dia_semana.toLowerCase().includes(filtro)
       );
@@ -84,10 +87,10 @@ export class SearchBusiness implements OnInit {
           );
         })
       )
-      .subscribe((data) => {
-        const dataConSeleccion = data.map((e: any) => ({
+      .subscribe((data: EmpresaModel[]) => {
+        const dataConSeleccion: EmpresaUI[] = data.map((e) => ({
           ...e,
-          seleccion: e.seleccion || undefined,
+          seleccion: undefined,
         }));
         this.todasLasEmpresas.set(dataConSeleccion);
         this.cd.markForCheck();
@@ -97,8 +100,7 @@ export class SearchBusiness implements OnInit {
   applyFilter(valor: string) {
     this.filtroBusqueda.set(valor);
   }
-
-  contratar(empresa: any) {
+  contratar(empresa: EmpresaUI) {
     const user = this.authService.currentUser();
     if (!user) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.LOGIN_REQUIRED').subscribe((res) => {
@@ -106,6 +108,7 @@ export class SearchBusiness implements OnInit {
       });
       return;
     }
+
     const seleccion = empresa.seleccion;
     if (!seleccion) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.SELECT_SERVICE').subscribe((res) => {
@@ -125,7 +128,6 @@ export class SearchBusiness implements OnInit {
           contratos.map((c) => c.id_sh_plano)
         );
         const yaContratado = contratos.find((c) => {
-          // Comparamos strings para evitar errores de tipo (number vs string)
           const coincidenIds = String(c.id_sh_plano) === String(idSeleccionado);
           const esMismoCliente = c.id_cliente === user.id_usuario;
           const estaActivo = c.estado === 'activo';
@@ -144,8 +146,8 @@ export class SearchBusiness implements OnInit {
           estado: 'activo',
           fecha_inicio: new Date().toISOString().split('T')[0],
           fecha_fin: null,
-          dia_semana_contratado: seleccion.Horario.dia_semana,
-          hora_contratada: seleccion.Horario.hora,
+          dia_semana_contratado: seleccion.Horario?.dia_semana || '',
+          hora_contratada: seleccion.Horario?.hora || '',
           fecha_creacion: new Date().toISOString(),
           id_servicio_horario: seleccion.id_servicio_horario,
           id_cliente: user.id_usuario,
@@ -177,8 +179,7 @@ export class SearchBusiness implements OnInit {
           });
       });
   }
-
-  enviarMensaje(empresa: any) {
+  enviarMensaje(empresa: EmpresaUI) {
     const user = this.authService.currentUser();
     if (!user) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.LOGIN_MSG_REQUIRED').subscribe((res) => {
