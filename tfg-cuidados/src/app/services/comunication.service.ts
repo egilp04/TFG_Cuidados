@@ -5,6 +5,10 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 import { ComunicacionModel } from '../models/Comunicacion';
 import { AuthService } from './auth.service';
 
+interface AdminResponse {
+  id_usuario: string;
+}
+
 /**
  * @description Servicio central de comunicaciones. Gestiona el flujo bidireccional
  * de mensajes y notificaciones del sistema utilizando programación reactiva (RxJS).
@@ -85,7 +89,8 @@ export class ComunicationService {
       .order('fecha_envio', { ascending: false });
 
     if (!error) {
-      const mensajesFiltrados = (data || []).filter((m) => {
+      const mensajesData = (data as ComunicacionModel[]) || [];
+      const mensajesFiltrados = mensajesData.filter((m) => {
         if (m.id_receptor === user.id_usuario) return !m.eliminado_por_receptor;
         if (m.id_emisor === user.id_usuario) return !m.eliminado_por_emisor;
         return true;
@@ -96,7 +101,6 @@ export class ComunicationService {
     }
   }
 
-  
   private async refreshNotificaciones() {
     const user = this.authService.currentUser();
     if (!user) {
@@ -111,16 +115,17 @@ export class ComunicationService {
       .order('fecha_envio', { ascending: false });
 
     if (!error) {
-      this.notificacionesList$.next(data || []);
+      this.notificacionesList$.next((data as ComunicacionModel[]) || []);
     }
   }
+
   /**
    * Lógica de interceptación: Tras insertar un registro de tipo 'mensaje',
    * el sistema dispara una llamada interna para generar una notificación persistente
    * al usuario receptor.
    */
   insertComunicacion(comunicacion: ComunicacionModel): Observable<void> {
-    if (!this.tiposValidos.includes(comunicacion.tipo_comunicacion)) {
+    if (!this.tiposValidos.includes(comunicacion.tipo_comunicacion as any)) {
       return throwError(() => new Error('tipo_comunicacion inválido.'));
     }
     return from(this.supabase.from('Comunicacion').insert(comunicacion)).pipe(
@@ -172,6 +177,7 @@ export class ComunicationService {
   deleteComunicacion(mensaje: ComunicacionModel): Observable<void> {
     const user = this.authService.currentUser();
     if (!user || !mensaje.id_comunicacion) return of(undefined);
+    
     if (mensaje.tipo_comunicacion === 'mensaje') {
       const currentMensajes = this.mensajesList$.getValue();
       const newMensajes = currentMensajes.filter(
@@ -187,7 +193,9 @@ export class ComunicationService {
         this.notificacionesList$.next(newNotis);
       }
     }
-    let updates: any = {};
+
+    let updates: Partial<ComunicacionModel> = {};
+    
     if (mensaje.id_emisor === user.id_usuario) {
       updates = { eliminado_por_emisor: true };
     } else if (mensaje.id_receptor === user.id_usuario) {
@@ -251,8 +259,8 @@ export class ComunicationService {
     ).pipe(
       switchMap(({ data }) => {
         if (!data || data.length === 0) return of(void 0);
-
-        const notificaciones = data.map((admin: any) =>
+        const adminsData = data as AdminResponse[];
+        const notificaciones = adminsData.map((admin) =>
           this.sendNotification(admin.id_usuario, asunto, contenido),
         );
 

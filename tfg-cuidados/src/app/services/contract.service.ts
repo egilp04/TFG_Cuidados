@@ -6,6 +6,44 @@ import { from, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ComunicationService } from './comunication.service';
 
+export interface SupabaseContratoJoin {
+  id_contrato: string;
+  estado: string;
+  id_cliente: string;
+  id_empresa: string;
+  fecha_creacion?: string;
+  fecha_fin?: string;
+  id_servicio_horario?: {
+    id_servicio_horario?: string;
+    Servicio?: { nombre?: string };
+  };
+  Cliente?: {
+    nombre?: string;
+    direccion?: string;
+    localidad?: string;
+    codpostal?: string;
+    Usuario?: { nombre?: string; email?: string };
+  };
+  Empresa?: {
+    nombre?: string;
+    Usuario?: { nombre?: string; email?: string };
+  };
+  [key: string]: unknown;
+}
+export interface ContratoDetalle extends ContratoModel {
+  id_sh_plano?: string;
+  nombreServicio?: string;
+  Cliente?: {
+    direccion?: string;
+    localidad?: string;
+    codpostal?: string;
+    nombreDelCliente: string;
+  };
+  Empresa?: {
+    nombreDeLaEmpresa: string;
+  };
+}
+
 /**
  * @description Orquestador del ciclo de vida de los servicios contratados.
  * Maneja la lógica condicional basada en roles (Cliente/Empresa/Admin).
@@ -16,8 +54,9 @@ import { ComunicationService } from './comunication.service';
 export class ContractService {
   private supabase = inject(SupabaseService).getClient();
   private authService = inject(AuthService);
-  private contractsList$ = new BehaviorSubject<any[]>([]);
+    private contractsList$ = new BehaviorSubject<ContratoDetalle[]>([]);
   private comunicationService = inject(ComunicationService);
+
   /**
    * Consulta compleja con JOINs (relaciones) para recuperar datos del Servicio,
    * Horario y metadatos de Usuario en una sola petición.
@@ -41,7 +80,7 @@ export class ContractService {
     this.initRealtime();
   }
 
-  getContractsObservable(): Observable<any[]> {
+  getContractsObservable(): Observable<ContratoDetalle[]> {
     this.refreshContracts();
     return this.contractsList$.asObservable();
   }
@@ -58,10 +97,12 @@ export class ContractService {
   private async refreshContracts() {
     const user = this.authService.currentUser();
     if (!user) return;
+    
     let query = this.supabase
       .from('Contrato')
       .select(this.CONTRATO_SELECT)
       .neq('estado', 'no activo');
+      
     if (user.id_usuario && user.rol !== 'administrador') {
       query = query.or(`id_cliente.eq.${user.id_usuario},id_empresa.eq.${user.id_usuario}`);
     }
@@ -69,11 +110,10 @@ export class ContractService {
     const { data, error } = await query.order('fecha_creacion', { ascending: false });
 
     if (!error && data) {
-      const mappedData = data.map((contrato: any) => {
+      const mappedData: ContratoDetalle[] = (data as SupabaseContratoJoin[]).map((contrato) => {
         return {
-          ...contrato,
-          id_sh_plano:
-            contrato.id_servicio_horario?.id_servicio_horario || contrato.id_servicio_horario,
+          ...(contrato as any),
+          id_sh_plano: contrato.id_servicio_horario?.id_servicio_horario || contrato.id_servicio_horario,
           Cliente: {
             ...contrato.Cliente,
             nombreDelCliente:
@@ -85,8 +125,9 @@ export class ContractService {
               contrato.Empresa?.nombre || contrato.Empresa?.Usuario?.nombre || 'Desconocida',
           },
           nombreServicio: contrato.id_servicio_horario?.Servicio?.nombre,
-        };
+        } as ContratoDetalle;
       });
+      
       this.contractsList$.next(mappedData);
     } else {
       console.error('Error al refrescar contratos:', error?.message);
@@ -103,7 +144,7 @@ export class ContractService {
     );
   }
 
-  getContractsById(id: string): Observable<any> {
+  getContractsById(id: string): Observable<SupabaseContratoJoin> {
     return from(
       this.supabase
         .from('Contrato')
@@ -113,17 +154,18 @@ export class ContractService {
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return data;
+        return data as SupabaseContratoJoin;
       }),
       catchError((err) => throwError(() => err)),
     );
   }
+
   /**
    * Realiza una cancelación de contrato (borrado lógico).
    * @post Calcula dinámicamente el mensaje de notificación basándose en quién
    * canceló (cliente o empresa) para informar a la contraparte.
    */
-  deleteContract(id: string): Observable<any> {
+  deleteContract(id: string): Observable<SupabaseContratoJoin> {
     const fechaHoy = new Date().toISOString();
     return from(
       this.supabase
@@ -138,9 +180,9 @@ export class ContractService {
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return data;
+        return data as SupabaseContratoJoin;
       }),
-      tap((contratoCancelado: any) => {
+      tap((contratoCancelado: SupabaseContratoJoin) => {
         const currentUser = this.authService.currentUser();
         if (!currentUser || !contratoCancelado) return;
 
@@ -148,14 +190,12 @@ export class ContractService {
           contratoCancelado.id_servicio_horario?.Servicio?.nombre || 'un servicio';
         let idDestino = '';
         let mensaje = '';
-
-        // Si el que borra es el cliente del contrato
         if (currentUser.id_usuario === contratoCancelado.id_cliente) {
           idDestino = contratoCancelado.id_empresa;
-          mensaje = `El cliente ${contratoCancelado.Cliente?.Usuario?.nombre} ha cancelado el contrato del servicio: ${nombreServicio}.`;
+          mensaje = `El cliente ${contratoCancelado.Cliente?.Usuario?.nombre || 'Desconocido'} ha cancelado el contrato del servicio: ${nombreServicio}.`;
         } else {
           idDestino = contratoCancelado.id_cliente;
-          mensaje = `La empresa ${contratoCancelado.Empresa?.Usuario?.nombre} ha cancelado el contrato del servicio: ${nombreServicio}.`;
+          mensaje = `La empresa ${contratoCancelado.Empresa?.Usuario?.nombre || 'Desconocida'} ha cancelado el contrato del servicio: ${nombreServicio}.`;
         }
 
         this.comunicationService

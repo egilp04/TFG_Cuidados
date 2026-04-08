@@ -16,6 +16,29 @@ import { ButtonComponent } from '../button/button';
 import { AuthService } from '../../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
 
+export interface ContratoModel {
+  id_contrato: string;
+  fecha_inicio: string | Date;
+  fecha_fin?: string | Date | null;
+  dia_semana_contratado?: string;
+  hora_contratada?: string;
+  nombreServicio?: string;
+  Empresa?: {
+    nombreDeLaEmpresa?: string;
+  };
+  Cliente?: {
+    nombreDelCliente?: string;
+    direccion?: string;
+    localidad?: string;
+    codpostal?: string;
+  };
+}
+
+export interface FilaTablaContrato extends ContratoModel {
+  nombreAMostrar: string;
+  lugar: string;
+}
+
 @Component({
   selector: 'app-activities-components',
   standalone: true,
@@ -34,10 +57,10 @@ export class ActivitiesComponents implements OnInit {
   private authService = inject(AuthService);
 
   @Output() onCancelContract = new EventEmitter<string>();
-  @Input() dataSource: any[] = [];
+  @Input() dataSource: ContratoModel[] = [];
 
   displayedColumns: string[] = ['usuario', 'nombre', 'dia', 'hora', 'lugar', 'acciones'];
-  dataSourceTable = new MatTableDataSource<any>([]);
+  dataSourceTable = new MatTableDataSource<FilaTablaContrato>([]);
   rol = this.authService.userRol();
 
   public headerContrato = computed(() => {
@@ -48,7 +71,7 @@ export class ActivitiesComponents implements OnInit {
   public weekDays = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
   public displayDate = new Date();
   public monthDays: (number | null)[] = [];
-  public eventosMap: { [key: string]: any[] } = {};
+  public eventosMap: { [key: string]: FilaTablaContrato[] } = {};
   private diasSemanaNombres = [
     'Domingo',
     'Lunes',
@@ -150,7 +173,7 @@ export class ActivitiesComponents implements OnInit {
     this.precalcularEventosDelMes();
   }
 
-  getEventosDia(dia: number): any[] {
+  getEventosDia(dia: number): FilaTablaContrato[] {
     const key = `${this.displayDate.getFullYear()}-${this.displayDate.getMonth()}-${dia}`;
     return this.eventosMap[key] || [];
   }
@@ -160,7 +183,7 @@ export class ActivitiesComponents implements OnInit {
   }
 
   selectedDia: number | null = null;
-  manejarClickDia(dia: number, eventos: any[]) {
+  manejarClickDia(dia: number, eventos: FilaTablaContrato[]) {
     if (eventos.length === 0) return;
     if (this.selectedDia === dia) {
       this.selectedDia = null;

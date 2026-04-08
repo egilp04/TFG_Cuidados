@@ -2,6 +2,19 @@ import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+export interface ContractStats {
+  activos: number;
+  cancelados: number;
+}
+
+export interface RegistroFechaResponse {
+  fecha_registro: string;
+}
+
+export interface EstadoContratoResponse {
+  estado:  'activo' | 'no activo';
+}
+
 /**
  * @description Servicio de métricas y análisis de datos para el dashboard administrativo.
  * Centraliza la lógica de agregación temporal y estadística.
@@ -11,9 +24,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class AnalyticsService {
   private supabase = inject(SupabaseService).getClient();
+  
   private _totalUsuarios$ = new BehaviorSubject<number>(0);
   private _registrosSemanales$ = new BehaviorSubject<number[]>(new Array(7).fill(0));
-  private _contratosStats$ = new BehaviorSubject<{ activos: number; cancelados: number }>({
+    private _contratosStats$ = new BehaviorSubject<ContractStats>({
     activos: 0,
     cancelados: 0,
   });
@@ -30,7 +44,7 @@ export class AnalyticsService {
     return this._registrosSemanales$.asObservable();
   }
 
-  getContractStats(): Observable<{ activos: number; cancelados: number }> {
+  getContractStats(): Observable<ContractStats> {
     return this._contratosStats$.asObservable();
   }
 
@@ -58,10 +72,11 @@ export class AnalyticsService {
 
   private async chargeContractsStatics() {
     try {
-      const { data: contratos, error } = await this.supabase.from('Contrato').select('estado');
+      const { data, error } = await this.supabase.from('Contrato').select('estado');
       if (error) throw error;
-      if (contratos) {
-        const stats = {
+      if (data) {
+        const contratos = data as EstadoContratoResponse[];
+        const stats: ContractStats = {
           activos: contratos.filter((c) => c.estado === 'activo').length,
           cancelados: contratos.filter((c) => c.estado === 'no activo').length,
         };
@@ -77,13 +92,17 @@ export class AnalyticsService {
       const haceSieteDias = new Date();
       haceSieteDias.setDate(haceSieteDias.getDate() - 6);
       haceSieteDias.setHours(0, 0, 0, 0);
+      
       const { data, error } = await this.supabase
         .from('Usuario')
         .select('fecha_registro')
         .gte('fecha_registro', haceSieteDias.toISOString());
+        
       if (error) throw error;
+      
       if (data) {
-        this._registrosSemanales$.next(this.groupByDay(data, haceSieteDias));
+        const registros = data as RegistroFechaResponse[];
+        this._registrosSemanales$.next(this.groupByDay(registros, haceSieteDias));
       }
     } catch (e) {
       console.error('Error cargando registros semanales:', e);
@@ -115,7 +134,7 @@ export class AnalyticsService {
    * las fechas de registro en un array de 7 días, facilitando su
    * representación en gráficos lineales.
    */
-  private groupByDay(registros: any[], fechaInicio: Date): number[] {
+  private groupByDay(registros: RegistroFechaResponse[], fechaInicio: Date): number[] {
     const dias = new Array(7).fill(0);
     registros.forEach((reg) => {
       const fechaReg = new Date(reg.fecha_registro);

@@ -3,6 +3,37 @@ import { SupabaseService } from './supabase.service';
 import { from, Observable, throwError, BehaviorSubject, of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 
+export interface UpdateProfilePayload {
+  nombre: string;
+  email: string;
+  telef: string;
+  ape1?: string;
+  ape2?: string;
+  direccion?: string;
+  localidad?: string;
+  codpostal?: string;
+  comunidad?: string;
+  descripcion?: string;
+}
+export interface UserModel extends UpdateProfilePayload {
+  id_usuario: string;
+  rol: string;
+  estado: boolean;
+}
+export interface UserEmailResponse {
+  id_usuario: string;
+  nombre: string;
+  email: string;
+}
+
+export interface UserNameResponse {
+  nombre: string;
+}
+
+export interface RpcSuccessResponse {
+  success: boolean;
+}
+
 /**
  * @description Servicio de administración de usuarios y perfiles.
  * Implementa una lógica de consulta dinámica para unificar la identidad (Usuario)
@@ -11,14 +42,14 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private supabase = inject(SupabaseService).getClient();
-  private usersList$ = new BehaviorSubject<any[]>([]);
+  
+  private usersList$ = new BehaviorSubject<UserModel[]>([]);
   private currentType: 'cliente' | 'empresa' = 'cliente';
 
   constructor() {
     this.initRealtime();
   }
-
-  getUsersObservable(tipo: 'cliente' | 'empresa'): Observable<any[]> {
+  getUsersObservable(tipo: 'cliente' | 'empresa'): Observable<UserModel[]> {
     this.currentType = tipo;
     this.usersList$.next([]);
     this.refreshUsers();
@@ -51,28 +82,29 @@ export class UserService {
    * con perfiles de especialización válidos y activos.
    */
   private async refreshUsers() {
-    // La lógica de aplanamiento (flattening) asegura que el frontend
-    // reciba una interfaz simplificada sin anidamiento excesivo.
     const tableRel = this.currentType === 'cliente' ? 'Cliente' : 'Empresa';
     console.log(`Intentando cargar: ${tableRel}...`);
+    
     const { data, error } = await this.supabase
       .from('Usuario')
       .select(`*, "${tableRel}"!inner(*)`)
       .eq('estado', true);
+      
     if (error) {
       console.error(`ERROR cargando ${tableRel}:`, error);
       return;
     }
+    
     if (data) {
       console.log(`Datos crudos ${tableRel}:`, data);
-      const flattened = data.map((u: any) => {
-        const detalle = u[tableRel] || u[tableRel.toLowerCase()] || u[`"${tableRel}"`];
-
+            const flattened: UserModel[] = data.map((u: Record<string, unknown>) => {
+        const detalle = (u[tableRel] || u[tableRel.toLowerCase()] || u[`"${tableRel}"`]) as Record<string, unknown> | undefined;
         return {
           ...u,
-          ...detalle,
-        };
+          ...(detalle || {}),
+        } as UserModel;
       });
+      
       this.usersList$.next(flattened);
     }
   }
@@ -85,6 +117,7 @@ export class UserService {
       catchError((err) => throwError(() => err)),
     );
   }
+  
   /**
    * Validación de unicidad de credenciales.
    * Realiza una comprobación de existencia cruzada, excluyendo al usuario actual
@@ -110,7 +143,7 @@ export class UserService {
    * Esto garantiza la atomicidad: o se actualizan ambas tablas (Usuario + Perfil) o ninguna.
    * @param bodyRPC Encapsula los parámetros necesarios para la transacción en la base de datos.
    */
-  updateProfileDirect(userId: string, datosLimpios: any, rol: string): Observable<any> {
+  updateProfileDirect(userId: string, datosLimpios: UpdateProfilePayload, rol: string): Observable<RpcSuccessResponse> {
     const bodyRPC = {
       p_user_id: userId,
       p_rol: rol,
@@ -119,12 +152,13 @@ export class UserService {
       p_telef: datosLimpios.telef,
       p_ape1: datosLimpios.ape1 || null,
       p_ape2: datosLimpios.ape2 || null,
-      p_direccion: datosLimpios.direccion,
-      p_localidad: datosLimpios.localidad,
-      p_codpostal: datosLimpios.codpostal,
-      p_comunidad: datosLimpios.comunidad,
+      p_direccion: datosLimpios.direccion || null,
+      p_localidad: datosLimpios.localidad || null,
+      p_codpostal: datosLimpios.codpostal || null,
+      p_comunidad: datosLimpios.comunidad || null,
       p_descripcion: datosLimpios.descripcion || null,
     };
+    
     return from(this.supabase.rpc('update_profile_complete', bodyRPC)).pipe(
       map(({ data, error }) => {
         if (error) throw new Error(error.message);
@@ -134,7 +168,7 @@ export class UserService {
     );
   }
 
-  getUserByEmail(email: string): Observable<any> {
+  getUserByEmail(email: string): Observable<UserEmailResponse> {
     return from(
       this.supabase
         .from('Usuario')
@@ -144,19 +178,20 @@ export class UserService {
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return data;
+        // Se catea la respuesta para garantizar que coincide con la interfaz
+        return data as UserEmailResponse;
       }),
       catchError((err) => throwError(() => err)),
     );
   }
 
-  getUserById(id: string): Observable<any> {
+  getUserById(id: string): Observable<UserNameResponse> {
     return from(
       this.supabase.from('Usuario').select('nombre').eq('id_usuario', id).maybeSingle(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return data;
+        return data as UserNameResponse;
       }),
       catchError((err) => throwError(() => err)),
     );

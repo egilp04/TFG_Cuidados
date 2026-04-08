@@ -122,7 +122,7 @@ export class MessagesModal implements OnInit {
             this.dialogRef.close();
             this.cd.markForCheck();
           },
-          error: (err: any) => {
+          error: (err: unknown) => {
             const msg =
               err.message === 'usuario_no_encontrado'
                 ? this.translate.instant('MESSAGES_MODAL.FEEDBACK.USER_NOT_FOUND')

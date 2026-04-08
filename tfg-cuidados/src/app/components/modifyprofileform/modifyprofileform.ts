@@ -24,6 +24,23 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { comunidades } from '../../core/constants/locations';
 import { LucideAngularModule } from 'lucide-angular';
 
+export interface UserProfileModel {
+  email?: string;
+  telef?: string;
+  nombre?: string;
+  direccion?: string;
+  localidad?: string;
+  codpostal?: string;
+  comunidad?: string;
+  ape1?: string;
+  ape2?: string;
+  descripcion?: string;
+}
+export interface FormSubmitEvent {
+  datos: UserProfileModel;
+  rol: string;
+}
+
 @Component({
   selector: 'app-modifyprofileform',
   standalone: true,
@@ -45,13 +62,15 @@ export class Modifyprofileform implements OnInit, OnChanges {
   private translate = inject(TranslateService);
 
   public comunidades: string[] = comunidades;
-  @Input() userData: any = null;
+
+  @Input() userData: UserProfileModel | null = null;
   @Input() userRole: 'cliente' | 'empresa' | 'administrador' = 'cliente';
-  @Output() formSubmitted = new EventEmitter<{ datos: any; rol: string }>();
+
+  @Output() formSubmitted = new EventEmitter<FormSubmitEvent>();
   @Output() deleteRequested = new EventEmitter<void>();
   @Output() cancelRequested = new EventEmitter<void>();
 
-  private targetUser: any = null;
+  private targetUser: UserProfileModel | null = null;
   public isAdminViewer: boolean = false;
 
   profileForm: FormGroup = this.fb.group({
@@ -85,7 +104,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
   }
 
   private cargarDatosFormulario() {
-    this.targetUser = this.userData || this.authService.currentUser();
+    this.targetUser = this.userData || this.authService.currentUser() as UserProfileModel;
     if (this.targetUser) {
       this.profileForm.patchValue({
         telefono: this.targetUser.telef,
@@ -173,16 +192,19 @@ export class Modifyprofileform implements OnInit, OnChanges {
   onSubmit() {
     if (this.profileForm.valid) {
       const formValue = this.profileForm.getRawValue();
-      const datosParaBBDD: any = {
+
+      const datosParaBBDD: UserProfileModel = {
         email: formValue.email,
         telef: formValue.telefono,
         nombre: this.userRole === 'empresa' ? formValue.nombreEmpresa : formValue.usuario,
       };
+
       if (this.userRole !== 'administrador') {
         datosParaBBDD.direccion = formValue.direccion;
         datosParaBBDD.localidad = formValue.localidad;
         datosParaBBDD.codpostal = formValue.codpostal;
         datosParaBBDD.comunidad = formValue.comunidad;
+
         if (this.userRole === 'cliente') {
           datosParaBBDD.ape1 = formValue.primerApe;
           datosParaBBDD.ape2 = formValue.segundoApe;

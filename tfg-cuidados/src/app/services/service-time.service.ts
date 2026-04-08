@@ -4,6 +4,21 @@ import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Servicio_HorarioModel } from '../models/Servicio_Horario';
 
+export interface ServicioAnidado {
+  nombre: string;
+  tipo_servicio: string;
+}
+
+export interface HorarioAnidado {
+  hora: string;
+  dia_semana: string;
+}
+
+export interface ServicioHorarioJoined extends Servicio_HorarioModel {
+  Servicio?: ServicioAnidado;
+  Horario?: HorarioAnidado;
+}
+
 /**
  * @description Servicio encargado de gestionar la disponibilidad horaria de los servicios.
  * Implementa una lógica de vinculación entre la entidad 'Servicio' y la entidad 'Horario'.
@@ -13,10 +28,11 @@ import { Servicio_HorarioModel } from '../models/Servicio_Horario';
 })
 export class ServiceTimeService {
   private supabase = inject(SupabaseService).getClient();
-  private serviceTimeList$ = new BehaviorSubject<any[]>([]);
+  
+  private serviceTimeList$ = new BehaviorSubject<ServicioHorarioJoined[]>([]);
   private currentIdEmpresa: string | null = null;
 
-  getServiceTimeByEmpresa(idEmpresa: string): Observable<any[]> {
+  getServiceTimeByEmpresa(idEmpresa: string): Observable<ServicioHorarioJoined[]> {
     this.currentIdEmpresa = idEmpresa;
     this.initRealtimeSubscription(idEmpresa);
     this.refreshList(idEmpresa);
@@ -68,7 +84,7 @@ export class ServiceTimeService {
       .order('id_servicio_horario', { ascending: false });
 
     if (!error) {
-      this.serviceTimeList$.next(data || []);
+      this.serviceTimeList$.next((data as ServicioHorarioJoined[]) || []);
     } else {
       console.error('Error refrescando lista:', error);
     }
@@ -109,6 +125,7 @@ export class ServiceTimeService {
         const currentList = this.serviceTimeList$.getValue();
         const filtered = currentList.filter((item) => item.id_servicio_horario !== id);
         this.serviceTimeList$.next(filtered);
+        
         if (this.currentIdEmpresa) this.refreshList(this.currentIdEmpresa);
       }),
       catchError((err) => throwError(() => err)),
