@@ -150,7 +150,7 @@ describe('Modifyprofileform', () => {
     spyOn(component.formSubmitted, 'emit');
     component.userRole = 'empresa';
 
-    (component as any).setValidators();
+    (component as any).checkValidators();
 
     component.profileForm.patchValue({
       nombreEmpresa: 'Corp',

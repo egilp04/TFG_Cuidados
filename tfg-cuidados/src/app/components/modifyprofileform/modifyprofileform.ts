@@ -77,7 +77,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
       this.chargeProfileFormData();
     }
     if (changes['userRole']) {
-      this.setValidators();
+      this.checkValidators();
     }
   }
 
@@ -117,11 +117,11 @@ export class Modifyprofileform implements OnInit, OnChanges {
         }
       }
     }
-    this.setValidators();
+    this.checkValidators();
     this.cd.detectChanges();
   }
 
-  private setValidators() {
+  private checkValidators() {
     Object.keys(this.profileForm.controls).forEach((key) => {
       this.profileForm.get(key)?.clearValidators();
       this.profileForm.get(key)?.updateValueAndValidity();
