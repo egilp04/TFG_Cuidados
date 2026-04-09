@@ -58,7 +58,7 @@ export class ManagementTimeGlobal implements OnInit {
   isEditing: boolean = false;
   currentTimeId: string | null = null;
 
-  horarioForm: FormGroup = this.fb.group({
+  timeFormular: FormGroup = this.fb.group({
     hora: ['', [Validators.required]],
     dia: ['', [Validators.required]],
   });
@@ -77,12 +77,12 @@ export class ManagementTimeGlobal implements OnInit {
   }
 
   onSave() {
-    if (this.horarioForm.invalid) {
-      this.horarioForm.markAllAsTouched();
+    if (this.timeFormular.invalid) {
+      this.timeFormular.markAllAsTouched();
       this.showMessageTraducido('MANAGEMENT_SCHEDULES.MESSAGES.FILL_FIELDS', 'error');
       return;
     }
-    const { hora, dia } = this.horarioForm.getRawValue();
+    const { hora, dia } = this.timeFormular.getRawValue();
     const diasValidos = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
     const user = this.authService.currentUser();
 
@@ -155,7 +155,7 @@ export class ManagementTimeGlobal implements OnInit {
   onEdit(horario: HorarioModel) {
     this.isEditing = true;
     this.currentTimeId = horario.id_horario!;
-    this.horarioForm.patchValue({
+    this.timeFormular.patchValue({
       hora: horario.hora,
       dia: horario.dia_semana,
     });
@@ -200,8 +200,8 @@ export class ManagementTimeGlobal implements OnInit {
   resetForm() {
     this.isEditing = false;
     this.currentTimeId = null;
-    this.horarioForm.reset();
-    this.horarioForm.get('dia')?.setValue('');
+    this.timeFormular.reset();
+    this.timeFormular.get('dia')?.setValue('');
     this.cd.markForCheck();
   }
   private showMessageTraducido(key: string, type: 'error' | 'exito') {
@@ -211,6 +211,6 @@ export class ManagementTimeGlobal implements OnInit {
   }
 
   getCtrl(name: string) {
-    return this.horarioForm.get(name) as FormControl;
+    return this.timeFormular.get(name) as FormControl;
   }
 }

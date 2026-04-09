@@ -33,25 +33,25 @@ export class ModifyProfilePage implements OnInit {
   private location = inject(Location);
 
   userRole = signal<'cliente' | 'empresa' | 'administrador'>('cliente');
-  usuarioAEditar = signal<AuthUserModel | null>(null);
+  userToEdit = signal<AuthUserModel | null>(null);
 
   ngOnInit() {
     const state = history.state as { usuario?: AuthUserModel };
     if (state && state.usuario) {
-      this.usuarioAEditar.set(state.usuario);
+      this.userToEdit.set(state.usuario);
       this.userRole.set(state.usuario.rol);
     } else {
       const user = this.authService.currentUser();
       if (user) {
-        this.usuarioAEditar.set(user);
+        this.userToEdit.set(user);
         this.userRole.set(user.rol);
       }
     }
     setTimeout(() => this.cd.detectChanges(), 0);
   }
   
-  ejecutarActualizacion(event: FormSubmitEvent) {
-    const user = this.usuarioAEditar();
+  doUpdateProfile(event: FormSubmitEvent) {
+    const user = this.userToEdit();
     const userLogueado = this.authService.currentUser();
     if (!user) return;
     const nuevosDatos = event.datos as UpdateProfilePayload;
@@ -91,8 +91,8 @@ export class ModifyProfilePage implements OnInit {
       )
       .subscribe();
   }
-  async ejecutarBaja() {
-    const user = this.usuarioAEditar();
+  async doUserLow() {
+    const user = this.userToEdit();
     const currentUser = this.authService.currentUser();
     if (!user) return;
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');

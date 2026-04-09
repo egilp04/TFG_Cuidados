@@ -104,7 +104,7 @@ export class AuthService {
   }
 
   register(datos: RegisterPayload, esCliente: boolean): Observable<AuthResponse> {
-    const { emailLimpio, passwordLimpia, metaData } = this.prepararDatosRegistro(datos, esCliente);
+    const { emailLimpio, passwordLimpia, metaData } = this.registerDataPreparation(datos, esCliente);
 
     return from(this.supabase.rpc('email_exists', { email_check: emailLimpio })).pipe(
       switchMap(({ data: existe, error }) => {
@@ -122,7 +122,7 @@ export class AuthService {
           }),
         );
       }),
-      map((res: AuthResponse) => this.validarRespuestaRegistro(res)),
+      map((res: AuthResponse) => this.registerAnswerValidation(res)),
       tap((res: AuthResponse) => {
         if (res.data.user) {
           const rolTexto = esCliente ? 'cliente' : 'empresa';
@@ -139,7 +139,7 @@ export class AuthService {
   }
 
   registerByAdmin(datos: RegisterPayload, esCliente: boolean): Observable<AuthResponse> {
-    const { emailLimpio, passwordLimpia, metaData } = this.prepararDatosRegistro(datos, esCliente);
+    const { emailLimpio, passwordLimpia, metaData } = this.registerDataPreparation(datos, esCliente);
     const tempSupabase = createClient(environment.supabaseUrl, environment.supabaseKey, {
       auth: {
         persistSession: false,
@@ -152,7 +152,6 @@ export class AuthService {
       switchMap(({ data: existe, error }) => {
         if (error) throw new Error('Error técnico al verificar el correo.');
         if (existe) throw new Error('Este correo electrónico ya está registrado.');
-
         return from(
           tempSupabase.auth.signUp({
             email: emailLimpio,
@@ -164,11 +163,11 @@ export class AuthService {
           }),
         );
       }),
-      map((res: AuthResponse) => this.validarRespuestaRegistro(res)),
+      map((res: AuthResponse) => this.registerAnswerValidation(res)),
     );
   }
 
-  private prepararDatosRegistro(datos: RegisterPayload, esCliente: boolean): PreparacionRegistro {
+  private registerDataPreparation(datos: RegisterPayload, esCliente: boolean): PreparacionRegistro {
     const emailLimpio = String(datos.email).trim().toLowerCase().replace(/\s/g, '');
     const passwordLimpia = String(datos.password).trim();
     const rol = esCliente ? 'cliente' : 'empresa';
@@ -192,7 +191,7 @@ export class AuthService {
     return { emailLimpio, passwordLimpia, metaData };
   }
 
-  private validarRespuestaRegistro(res: AuthResponse): AuthResponse {
+  private registerAnswerValidation(res: AuthResponse): AuthResponse {
     if (res.error) throw res.error;
     if (res.data.user && res.data.user.identities && res.data.user.identities.length === 0) {
       throw new Error('Este correo electrónico ya está registrado.');

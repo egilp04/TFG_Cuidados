@@ -58,7 +58,7 @@ export class ManagementServicesGlobal implements OnInit {
   isEditing: boolean = false;
   currentServiceId: string | null = null;
 
-  filtroControl = new FormControl('');
+  controlFilterItem = new FormControl('');
   servicioForm: FormGroup = this.fb.group({
     nombre: ['', [Validators.required, Validators.minLength(3)]],
     tipo: ['', [Validators.required]],
@@ -186,7 +186,7 @@ export class ManagementServicesGlobal implements OnInit {
     this.servicioForm.reset();
   }
 
-  aplicarFiltro(valor: string) {
+  toFilter(valor: string) {
     this.dataSource.filter = valor.trim().toLowerCase();
   }
 

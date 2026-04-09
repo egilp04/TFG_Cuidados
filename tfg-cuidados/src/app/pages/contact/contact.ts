@@ -44,7 +44,7 @@ export class Contact {
   getCtrl(name: string): FormControl {
     return this.contactForm.get(name) as FormControl;
   }
-  async onContactar() {
+  async toContactFunction() {
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
       return;

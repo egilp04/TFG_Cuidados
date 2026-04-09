@@ -22,7 +22,7 @@
         (isUser ? 'ADMIN_MANAGEMENT.NEW_CLIENT' : 'ADMIN_MANAGEMENT.NEW_COMPANY') | translate
       "
       variant="primary"
-      (click)="onNuevoUsuario()"
+      (click)="createNewUser()"
     >
     </app-button>
   </div>
@@ -30,6 +30,6 @@
     [modo]="isUser ? 'cliente' : 'empresa'"
     [datos]="(usuarios$ | async) || []"
     (eliminar)="onEliminarUsuario($event)"
-    (modificar)="onEditar($event)"
+    (modificar)="toEditFunction($event)"
   ></app-table-crud-admin>
 </section>

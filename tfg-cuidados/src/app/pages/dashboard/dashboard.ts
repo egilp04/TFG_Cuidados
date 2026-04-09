@@ -32,9 +32,9 @@ export class Dashboard implements OnInit {
 
   @ViewChildren(BaseChartDirective) charts: QueryList<BaseChartDirective> | undefined;
 
-  public totalUsuarios = 0;
-  public contratosActivos = 0;
-  public contratosCancelados = 0;
+  public totalAppUsers = 0;
+  public activeContracts = 0;
+  public canceledContracts = 0;
 
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: [],
@@ -80,8 +80,8 @@ export class Dashboard implements OnInit {
   };
 
   ngOnInit() {
-    this.traducirGraficas();
-    this.suscribirADatos();
+    this.translateGraphs();
+    this.subcribeData();
   }
   private updateCharts() {
     this.cd.markForCheck();
@@ -90,7 +90,7 @@ export class Dashboard implements OnInit {
     });
   }
 
-  private traducirGraficas() {
+  private translateGraphs() {
     this.translate
       .stream('DASHBOARD.CHART')
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -101,20 +101,20 @@ export class Dashboard implements OnInit {
       });
   }
 
-  private suscribirADatos() {
+  private subcribeData() {
     this.analyticsService
       .getUsuariosCount()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((count) => {
-        this.totalUsuarios = count;
+        this.totalAppUsers = count;
         this.cd.markForCheck();
       });
     this.analyticsService
       .getContractStats()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((stats) => {
-        this.contratosActivos = stats.activos;
-        this.contratosCancelados = stats.cancelados;
+        this.activeContracts = stats.activos;
+        this.canceledContracts = stats.cancelados;
         this.doughnutChartData.datasets[0].data = [stats.activos, stats.cancelados];
         this.updateCharts();
       });

@@ -50,8 +50,8 @@ export class ActivitiesComponents implements OnInit {
   public weekDays = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
   public displayDate = new Date();
   public monthDays: (number | null)[] = [];
-  public eventosMap: { [key: string]: FilaTablaContrato[] } = {};
-  private diasSemanaNombres = [
+  public mapWithEvents: { [key: string]: FilaTablaContrato[] } = {};
+  private daysOfWeekNames = [
     'Domingo',
     'Lunes',
     'Martes',
@@ -64,14 +64,14 @@ export class ActivitiesComponents implements OnInit {
   ngOnInit(): void {
     this.generateCalendar();
     this.updateTable();
-    this.precalcularEventosDelMes();
+    this.preCalculateMonthEvents();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['dataSource']) {
       this.generateCalendar();
       this.updateTable();
-      this.precalcularEventosDelMes();
+      this.preCalculateMonthEvents();
     }
   }
 
@@ -81,50 +81,50 @@ export class ActivitiesComponents implements OnInit {
       return;
     }
 
-    const dataMapeada = this.dataSource.map((contrato) => {
-      let nombreAMostrar;
-      if (this.rol == 'cliente') nombreAMostrar = contrato.Empresa?.nombreDeLaEmpresa;
-      if (this.rol == 'empresa') nombreAMostrar = contrato.Cliente?.nombreDelCliente;
+    const mappedData = this.dataSource.map((contrato) => {
+      let nameToShow;
+      if (this.rol == 'cliente') nameToShow = contrato.Empresa?.nombreDeLaEmpresa;
+      if (this.rol == 'empresa') nameToShow = contrato.Cliente?.nombreDelCliente;
       const lugar = `${contrato.Cliente?.direccion}, ${contrato.Cliente?.localidad}, ${contrato.Cliente?.codpostal}`;
       return {
         ...contrato,
-        nombreAMostrar: nombreAMostrar || 'N/A',
+        nameToShow: nameToShow || 'N/A',
         lugar: lugar || 'SL',
       };
     });
-    this.dataSourceTable.data = dataMapeada;
+    this.dataSourceTable.data = mappedData;
   }
 
-  private precalcularEventosDelMes() {
-    this.eventosMap = {};
+  private preCalculateMonthEvents() {
+    this.mapWithEvents = {};
 
-    const datosProcesados = this.dataSourceTable.data;
-    if (!datosProcesados || datosProcesados.length === 0) return;
+    const processedData = this.dataSourceTable.data;
+    if (!processedData || processedData.length === 0) return;
 
     const year = this.displayDate.getFullYear();
     const month = this.displayDate.getMonth();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    datosProcesados.forEach((contrato) => {
-      const fechaInicio = new Date(contrato.fecha_inicio);
-      const fechaFin = contrato.fecha_fin ? new Date(contrato.fecha_fin) : new Date(2100, 0, 1);
-      fechaInicio.setHours(0, 0, 0, 0);
-      fechaFin.setHours(23, 59, 59, 999);
-      const diaContratadoStr = (contrato.dia_semana_contratado || '').toLowerCase().trim();
+    processedData.forEach((contrato) => {
+      const startDate = new Date(contrato.fecha_inicio);
+      const endDate = contrato.fecha_fin ? new Date(contrato.fecha_fin) : new Date(2100, 0, 1);
+      startDate.setHours(0, 0, 0, 0);
+      endDate.setHours(23, 59, 59, 999);
+      const foundDayStr = (contrato.dia_semana_contratado || '').toLowerCase().trim();
       for (let d = 1; d <= daysInMonth; d++) {
-        const fechaEvaluar = new Date(year, month, d);
-        const indiceDia = fechaEvaluar.getDay();
-        const nombreDiaCalendario = this.diasSemanaNombres[indiceDia].toLowerCase();
+        const evaluatingDate = new Date(year, month, d);
+        const dateIndex = evaluatingDate.getDay();
+        const calendarDayName = this.daysOfWeekNames[dateIndex].toLowerCase();
         if (
-          fechaEvaluar >= fechaInicio &&
-          fechaEvaluar <= fechaFin &&
-          diaContratadoStr === nombreDiaCalendario
+          evaluatingDate >= startDate &&
+          evaluatingDate <= endDate &&
+          foundDayStr === calendarDayName
         ) {
           const key = `${year}-${month}-${d}`;
-          if (!this.eventosMap[key]) {
-            this.eventosMap[key] = [];
+          if (!this.mapWithEvents[key]) {
+            this.mapWithEvents[key] = [];
           }
-          this.eventosMap[key].push(contrato);
+          this.mapWithEvents[key].push(contrato);
         }
       }
     });
@@ -142,19 +142,19 @@ export class ActivitiesComponents implements OnInit {
     this.monthDays = days;
   }
 
-  public cambiarMes(delta: number) {
+  public changeMonth(delta: number) {
     this.displayDate = new Date(
       this.displayDate.getFullYear(),
       this.displayDate.getMonth() + delta,
       1,
     );
     this.generateCalendar();
-    this.precalcularEventosDelMes();
+    this.preCalculateMonthEvents();
   }
 
   getEventosDia(dia: number): FilaTablaContrato[] {
     const key = `${this.displayDate.getFullYear()}-${this.displayDate.getMonth()}-${dia}`;
-    return this.eventosMap[key] || [];
+    return this.mapWithEvents[key] || [];
   }
 
   onCancel(id: string) {

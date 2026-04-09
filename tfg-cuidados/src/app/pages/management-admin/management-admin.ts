@@ -30,28 +30,28 @@ export class ManagementAdmin implements OnInit {
   private translate = inject(TranslateService);
 
   public isUser: boolean = true;
-    public usuarios$!: Observable<UserModel[]>;
+  public usuarios$!: Observable<UserModel[]>;
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       const tipo = params['tipo'];
-      this.cargarDatos(tipo === 'empresa' ? 'empresa' : 'cliente');
+      this.chargeData(tipo === 'empresa' ? 'empresa' : 'cliente');
     });
   }
 
-  private cargarDatos(tipo: 'cliente' | 'empresa'): void {
+  private chargeData(tipo: 'cliente' | 'empresa'): void {
     this.isUser = tipo === 'cliente';
     this.usuarios$ = this.userService.getUsersObservable(tipo);
     this.cd.detectChanges();
   }
 
-  cambiarVista(tipo: 'cliente' | 'empresa') {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { tipo: tipo },
-      queryParamsHandling: 'merge',
-    });
-  }
+  // cambiarVista(tipo: 'cliente' | 'empresa') {
+  //   this.router.navigate([], {
+  //     relativeTo: this.route,
+  //     queryParams: { tipo: tipo },
+  //     queryParamsHandling: 'merge',
+  //   });
+  // }
 
   isMobile = window.innerWidth < 768;
   async onEliminarUsuario(item: UserModel) {
@@ -84,11 +84,14 @@ export class ManagementAdmin implements OnInit {
       .subscribe({
         next: (res) => {
           this.messageService.showMessage(res.text, res.type);
-          this.cargarDatos(this.isUser ? 'cliente' : 'empresa');
+          if (res.type === 'exito') {
+            this.chargeData(this.isUser ? 'cliente' : 'empresa');
+          }
         },
       });
   }
-  onEditar(item: UserModel) {
+
+  toEditFunction(item: UserModel) {
     const usuarioConRol = {
       ...item,
       rol: this.isUser ? 'cliente' : 'empresa',
@@ -96,7 +99,7 @@ export class ManagementAdmin implements OnInit {
     this.router.navigate(['/modify-profile'], { state: { usuario: usuarioConRol } });
   }
 
-  onNuevoUsuario() {
+  createNewUser() {
     const tipo = this.isUser ? 'cliente' : 'empresa';
     this.router.navigate(['/register'], { state: { tipo } });
   }

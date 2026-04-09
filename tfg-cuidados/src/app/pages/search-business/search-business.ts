@@ -52,30 +52,30 @@ export class SearchBusiness implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
 
-  public todasLasEmpresas = signal<EmpresaUI[]>([]);
-  public filtroBusqueda = signal<string>('');
-  public filtroControl = new FormControl('');
+  public allBussinesses = signal<EmpresaUI[]>([]);
+  public searchFilterItem = signal<string>('');
+  public controlFilterItem = new FormControl('');
 
-  public empresasFiltradas = computed(() => {
-    const filtro = this.filtroBusqueda().toLowerCase().trim();
-    if (!filtro) return this.todasLasEmpresas();
-    return this.todasLasEmpresas().filter((emp) => {
-      const coincideNombre = emp.nombre.toLowerCase().includes(filtro);
-      const coincideServicio = emp.Servicio_Horario?.some(
+  public filteredBussinesses = computed(() => {
+    const filtro = this.searchFilterItem().toLowerCase().trim();
+    if (!filtro) return this.allBussinesses();
+    return this.allBussinesses().filter((emp) => {
+      const sameName = emp.nombre.toLowerCase().includes(filtro);
+      const sameService = emp.Servicio_Horario?.some(
         (sh: ServicioHorarioResponse) =>
           sh.Servicio?.nombre.toLowerCase().includes(filtro) ||
           sh.Horario?.dia_semana.toLowerCase().includes(filtro)
       );
 
-      return coincideNombre || coincideServicio;
+      return sameName || sameService;
     });
   });
 
   ngOnInit() {
-    this.cargarEmpresasReactiva();
+    this.chargeBussinessRealTime();
   }
 
-  cargarEmpresasReactiva() {
+  chargeBussinessRealTime() {
     this.businessService
       .getBusinessesObservable()
       .pipe(
@@ -93,15 +93,16 @@ export class SearchBusiness implements OnInit {
           ...e,
           seleccion: undefined,
         }));
-        this.todasLasEmpresas.set(dataConSeleccion);
+        this.allBussinesses.set(dataConSeleccion);
         this.cd.markForCheck();
       });
   }
 
   applyFilter(valor: string) {
-    this.filtroBusqueda.set(valor);
+    this.searchFilterItem.set(valor);
   }
-  contratar(empresa: EmpresaUI) {
+  
+  toHire(empresa: EmpresaUI) {
     const user = this.authService.currentUser();
     if (!user) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.LOGIN_REQUIRED').subscribe((res) => {

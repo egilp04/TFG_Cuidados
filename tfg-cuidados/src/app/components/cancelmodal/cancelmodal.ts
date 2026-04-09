@@ -39,7 +39,7 @@ export class Cancelmodal {
     }
   }
 
-  cancelar() {
+  toCancel() {
     this.dialogRef.close(true);
   }
 }

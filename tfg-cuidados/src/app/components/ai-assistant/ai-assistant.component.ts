@@ -44,15 +44,12 @@ export class AiAssistantComponent {
 
   async sendMessage() {
     if (!this.newMessage.trim() || this.isLoading) return;
-
     const userText = this.newMessage.trim();
-
     this.messages.push({ text: userText, isUser: true });
     this.newMessage = '';
     this.isLoading = true;
     this.cdr.detectChanges();
     this.scrollToBottom();
-
     try {
       const lang = this.translate.currentLang || this.translate.getDefaultLang() || 'es';
       const aiResponse = await this.aiService.askAssistant(userText, lang);

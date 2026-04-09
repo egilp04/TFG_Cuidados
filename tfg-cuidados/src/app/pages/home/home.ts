@@ -17,34 +17,34 @@ export class Home {
   rol = this.authService.userRol();
   private router = inject(Router);
 
-  buscarEmpresas() {
+  searchForBussiness() {
     this.router.navigate(['/search-business']);
   }
-  gestionarServicios() {
+  manageServices() {
     this.router.navigate(['/admin-services']);
   }
-  verContratos() {
+  checkContracts() {
     this.router.navigate(['/contract']);
   }
 
-  gestionarEmpresas() {
+  manageBussinesses() {
     this.router.navigate(['/admin-gestion'], { queryParams: { tipo: 'empresa' } });
   }
 
-  gestionarUsuarios() {
+  manageUsers() {
     this.router.navigate(['/admin-gestion'], { queryParams: { tipo: 'cliente' } });
   }
 
-  verDashboard() {
+  checkDashboard() {
     this.router.navigate(['/dashboard']);
   }
-  actividadesProgramadas() {
+  programedActivities() {
     this.router.navigate(['/activities']);
   }
-  gestionrServiciosGlobales() {
+  manageGlobalServices() {
     this.router.navigate(['/global-services']);
   }
-  gestionrHorariosGlobales() {
+  manageGlobalTimes() {
     this.router.navigate(['/global-times']);
   }
 }

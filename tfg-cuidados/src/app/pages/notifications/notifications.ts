@@ -63,7 +63,8 @@ export class Notifications implements OnInit {
         this.cd.markForCheck();
       });
   }
-  marcarComoLeida(noti: ComunicacionModel) {
+
+  markAsRead(noti: ComunicacionModel) {
     if (!noti.leido) {
       noti.leido = true;
       if (noti.id_comunicacion) {

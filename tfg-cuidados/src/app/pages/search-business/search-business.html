@@ -12,10 +12,10 @@
 </section>
 }
 <section class="search-main">
-  <app-searchbar [control]="filtroControl" (searchEvent)="applyFilter($event)" class="w-full max-w-4xl mb-10">
+  <app-searchbar [control]="controlFilterItem" (searchEvent)="applyFilter($event)" class="w-full max-w-4xl mb-10">
   </app-searchbar>
   <div class="search-container">
-    @for (empresa of empresasFiltradas(); track empresa.id_empresa) {
+    @for (empresa of filteredBussinesses(); track empresa.id_empresa) {
     <main class="search-card-container space-y-4">
       <header class="search-card-header">
         <h2 class="search-bssn-name text-h2">{{ empresa.nombre }}</h2>
@@ -60,7 +60,7 @@
           (click)="sendMessage(empresa)"></app-button>
 
         <app-button [label]="'SEARCH_BUSINESS.BTN_CONTRACT' | translate" variant="primary" class="flex-1"
-          (click)="contratar(empresa)" [disabled]="!empresa.seleccion"></app-button>
+          (click)="toHire(empresa)" [disabled]="!empresa.seleccion"></app-button>
       </footer>
     </main>
     } @empty {

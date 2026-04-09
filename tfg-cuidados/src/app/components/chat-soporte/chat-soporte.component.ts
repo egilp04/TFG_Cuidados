@@ -58,8 +58,8 @@ export class ChatSoporteComponent implements OnInit {
     this.isSending = true;
     this.messageSent = false;
 
-    const mensaje: ComunicacionModel = {
-      tipo_comunicacion: 'mensaje',
+    const messageToSend: ComunicacionModel = {
+      tipo_comunicacion: 'messageToSend',
       id_emisor: this.currentUser.id_usuario,
       id_receptor: this.adminId,
       asunto: 'Soporte Directo',
@@ -70,7 +70,7 @@ export class ChatSoporteComponent implements OnInit {
       eliminado_por_receptor: false,
     };
 
-    this.comunicationService.insertComunicacion(mensaje).subscribe({
+    this.comunicationService.insertComunicacion(messageToSend).subscribe({
       next: () => {
         this.isSending = false;
         this.messageSent = true;

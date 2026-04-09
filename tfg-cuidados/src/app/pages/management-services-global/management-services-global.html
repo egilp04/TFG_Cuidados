@@ -57,7 +57,7 @@
     <label class="management-services-global-search">
       {{ 'MANAGEMENT_SERVICES.LIST.SEARCH' | translate }}
     </label>
-    <app-searchbar [control]="filtroControl" (searchEvent)="aplicarFiltro($event)"> </app-searchbar>
+    <app-searchbar [control]="controlFilterItem" (searchEvent)="toFilter($event)"> </app-searchbar>
   </div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 w-full">
     <ng-container matColumnDef="nombre">

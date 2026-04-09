@@ -8,7 +8,7 @@
       {{ 'DASHBOARD.TITLE_CONTRACTS' | translate }}
     </h2>
     @defer (on viewport) {
-    @if (contratosActivos > 0 || contratosCancelados > 0) {
+    @if (activeContracts > 0 || canceledContracts > 0) {
     <div class="chart-wrapper">
       <canvas baseChart [data]="doughnutChartData" [options]="doughnutChartOptions" [type]="'doughnut'">
       </canvas>
@@ -21,15 +21,15 @@
     <div class="dashboard-contracts-texts-container">
       <span class="dashboard-contracts-text-total">
         {{ 'DASHBOARD.TOTAL_CONTRACTS.TOTAL' | translate }}
-        {{ contratosActivos + contratosCancelados }}
+        {{ activeContracts + canceledContracts }}
       </span>
       <span class="dashboard-contracts-text-active">
         {{ 'DASHBOARD.TOTAL_CONTRACTS.ACTIVE' | translate }}
-        {{ contratosActivos }}
+        {{ activeContracts }}
       </span>
       <span class="dashboard-contracts-text-no-active">
         {{ 'DASHBOARD.TOTAL_CONTRACTS.NO_ACTIVE' | translate }}
-        {{ contratosCancelados }}
+        {{ canceledContracts }}
       </span>
     </div>
     }@placeholder{
@@ -43,7 +43,7 @@
     <div class="dashboard-total-users">
       <h2 class="dashboard-total-users-title">
         {{ 'DASHBOARD.TOTAL_USERS' | translate }}
-        <span class="dashboard-total-users-text">{{ totalUsuarios }}</span>
+        <span class="dashboard-total-users-text">{{ totalAppUsers }}</span>
       </h2>
     </div>
   </section>

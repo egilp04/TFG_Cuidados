@@ -15,8 +15,8 @@
   <h1 class="modify-profile-title">
     {{ 'MODIFY_PROFILE.TITLE' | translate }}
   </h1>
-  <app-modifyprofileform [userRole]="userRole()" [userData]="usuarioAEditar()"
-    (formSubmitted)="ejecutarActualizacion($event)" (deleteRequested)="ejecutarBaja()"
+  <app-modifyprofileform [userRole]="userRole()" [userData]="userToEdit()"
+    (formSubmitted)="doUpdateProfile($event)" (deleteRequested)="doUserLow()"
     (cancelRequested)="backHome()">
   </app-modifyprofileform>
 </section>

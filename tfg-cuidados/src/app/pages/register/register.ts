@@ -37,10 +37,10 @@ export class Register implements OnInit {
 
   isUser: boolean = true;
 
-  get esAdminReal(): boolean {
-    const user = this.authService.currentUser();
-    return user?.rol === 'administrador';
-  }
+  // get esAdminReal(): boolean {
+  //   const user = this.authService.currentUser();
+  //   return user?.rol === 'administrador';
+  // }
 
   ngOnInit(): void {
     this.router.events
@@ -49,12 +49,12 @@ export class Register implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
-        this.detectarTipo();
+        this.showTypeUser();
       });
-    this.detectarTipo();
+    this.showTypeUser();
   }
 
-  private detectarTipo(): void {
+  private showTypeUser(): void {
     if (isPlatformBrowser(this.platformId)) {
       const state = history.state as { tipo?: string };
       if (state && state.tipo) {
@@ -66,16 +66,16 @@ export class Register implements OnInit {
 
   onRegister(event: FormSubmittedEvent) {
     const user = this.authService.currentUser();
-    const soyAdmin = user?.rol === 'administrador';
+    const isAdmin = user?.rol === 'administrador';
 
-    if (user && !soyAdmin) {
+    if (user && !isAdmin) {
       this.messageService.showMessage(
         'Error: Cierra sesión antes de registrar una cuenta nueva.',
         'error'
       );
       return;
     }
-    const registro$ = soyAdmin
+    const registro$ = isAdmin
       ? this.authService.registerByAdmin(event.datos, event.esCliente)
       : this.authService.register(event.datos, event.esCliente);
 
@@ -89,7 +89,7 @@ export class Register implements OnInit {
         }),
         delay(2000),
         tap(() => {
-          if (soyAdmin) {
+          if (isAdmin) {
             const tipoPestana = event.esCliente ? 'cliente' : 'empresa';
             this.router.navigate(['/admin-gestion'], { queryParams: { tipo: tipoPestana } });
           } else {
