@@ -92,13 +92,13 @@ export class Registerform implements OnInit {
   );
 
   ngOnInit(): void {
-    this.setValidators();
+    this.checkValidators();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isUser']) {
       this.registerForm.reset();
-      this.setValidators();
+      this.checkValidators();
     }
   }
 
@@ -187,7 +187,7 @@ export class Registerform implements OnInit {
     return key ? this.translate.instant(key) : this.translate.instant('REGISTER.ERRORS.INVALID');
   }
 
-  private setValidators() {
+  private checkValidators() {
     const camposUser = ['ape1', 'ape2', 'fechnac', 'dni', 'nombre'];
     const camposEmpresa = ['nombreEmpresa', 'cif', 'descripcion'];
     if (this.isUser) {
