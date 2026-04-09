@@ -29,7 +29,7 @@
   <app-table-crud-admin
     [modo]="isUser ? 'cliente' : 'empresa'"
     [data]="(usuarios$ | async) || []"
-    (eliminar)="onEliminarUsuario($event)"
-    (modificar)="toEditFunction($event)"
+    (deleteData)="toDeleteUser($event)"
+    (modifyData)="toEditFunction($event)"
   ></app-table-crud-admin>
 </section>

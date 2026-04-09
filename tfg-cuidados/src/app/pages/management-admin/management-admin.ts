@@ -54,7 +54,7 @@ export default class ManagementAdmin implements OnInit {
   // }
 
   isMobile = window.innerWidth < 768;
-  async onEliminarUsuario(item: UserModel) {
+  async toDeleteUser(item: UserModel) {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
