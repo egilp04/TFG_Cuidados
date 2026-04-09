@@ -69,10 +69,6 @@ export default class Register implements OnInit {
     const isAdmin = user?.rol === 'administrador';
 
     if (user && !isAdmin) {
-      this.messageService.showMessage(
-        'Error: Cierra sesión antes de registrar una cuenta nueva.',
-        'error'
-      );
       return;
     }
     const registro$ = isAdmin
@@ -99,10 +95,9 @@ export default class Register implements OnInit {
         catchError((err) => {
           console.error(err);
           const key =
-            err.message === 'EMAIL_EXISTS' || err.message?.includes('registered')
+            err.message === 'EMAIL_EXISTS' || err.message?.includes('registered') || err.message?.includes('registrado')
               ? 'REGISTER.MESSAGES.ERROR_EMAIL'
               : 'REGISTER.MESSAGES.ERROR_GENERIC';
-
           return this.translate.get(key).pipe(
             tap((msg) => {
               this.messageService.showMessage(msg, 'error');

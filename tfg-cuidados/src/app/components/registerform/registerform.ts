@@ -24,7 +24,7 @@ import { LucideAngularModule } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
 import { comunidades } from '../../core/constants/locations';
 import { FormSubmittedEvent, RegisterFormData } from '../../models/RegisterForm';
-
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-registerform',
@@ -44,6 +44,7 @@ import { FormSubmittedEvent, RegisterFormData } from '../../models/RegisterForm'
 export class Registerform implements OnInit {
   private fb = inject(FormBuilder);
   private translate = inject(TranslateService);
+  public authService = inject(AuthService);
 
   @Input() isUser: boolean = true;
   @Output() formSubmitted = new EventEmitter<FormSubmittedEvent>();
@@ -62,7 +63,7 @@ export class Registerform implements OnInit {
       cif: [''],
       descripcion: [''],
       telef: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email], [this.validatorEmailRegistered()]],
       direccion: ['', Validators.required],
       localidad: ['', Validators.required],
       codpostal: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
@@ -148,7 +149,7 @@ export class Registerform implements OnInit {
 
   getErrorMessage(controlName: string): string {
     const control = this.registerForm.get(controlName);
-    if (!control || !control.touched) return '';
+    if (!control || (!control.touched && !control.dirty)) return '';
 
     const errors =
       control.errors || (controlName === 'repassword' ? this.registerForm.errors : null);
@@ -309,5 +310,18 @@ export class Registerform implements OnInit {
       isValid = cifLastChar === String(controlDigit) || cifLastChar === controlLetter;
     }
     return isValid ? null : { invalidCifChecksum: true };
+  }
+
+  validatorEmailRegistered(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      if (!control.value) {
+        return of(null);
+      }
+      return timer(500).pipe(
+        switchMap(() => this.authService.checkEmailExists(control.value)),
+        map((existe: boolean) => (existe ? { emailTaken: true } : null)),
+        catchError(() => of(null))
+      );
+    };
   }
 }
