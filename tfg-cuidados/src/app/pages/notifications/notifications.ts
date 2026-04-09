@@ -8,17 +8,25 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { catchError, tap, map } from 'rxjs/operators';
-
+import { catchError, tap, map, switchMap } from 'rxjs/operators';
+import { ComunicacionModel } from '../../models/Comunicacion';
+import { ButtonComponent } from '../../components/button/button';
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, Buttonback, TranslateModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    Buttonback,
+    TranslateModule,
+    ButtonComponent,
+  ],
   providers: [{ provide: MatPaginatorIntl, useClass: PaginacionEs }],
   templateUrl: './notifications.html',
   styleUrl: './notifications.css',
 })
-export class Notifications implements OnInit {
+export default class Notifications implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   private comunicationService = inject(ComunicationService);
@@ -26,9 +34,8 @@ export class Notifications implements OnInit {
   private cd = inject(ChangeDetectorRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
-
-  dataSource = new MatTableDataSource<any>([]);
-  displayedColumns: string[] = ['nombre', 'notificacion', 'fecha'];
+  dataSource = new MatTableDataSource<ComunicacionModel>([]);
+  displayedColumns: string[] = ['nombre', 'notificacion', 'fecha', 'acciones'];
 
   ngOnInit() {
     this.suscribirANotificaciones();
@@ -47,7 +54,7 @@ export class Notifications implements OnInit {
           );
         }),
       )
-      .subscribe((data) => {
+      .subscribe((data: ComunicacionModel[]) => {
         this.dataSource.data = data;
 
         if (this.paginator) {
@@ -57,12 +64,38 @@ export class Notifications implements OnInit {
       });
   }
 
-  marcarComoLeida(noti: any) {
+  markAsRead(noti: ComunicacionModel) {
     if (!noti.leido) {
       noti.leido = true;
-      this.comunicationService.updateComunicacion(noti.id_comunicacion, { leido: true }).subscribe({
-        error: (err) => console.error('Error al marcar notificación:', err),
-      });
+      if (noti.id_comunicacion) {
+        this.comunicationService
+          .updateComunicacion(noti.id_comunicacion, { leido: true })
+          .subscribe({
+            error: (err) => console.error('Error al marcar notificación:', err),
+          });
+      }
     }
+  }
+
+  deleteCommunication(mensaje: ComunicacionModel) {
+    this.comunicationService
+      .deleteComunicacion(mensaje)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        switchMap(() =>
+          this.translate
+            .get('NOTIFICATIONS.ALERTS.DELETE_SUCCESS')
+            .pipe(map((text) => ({ type: 'exito' as const, text }))),
+        ),
+        catchError((err) => {
+          console.error('Error al borrar:', err);
+          return this.translate
+            .get('NOTIFICATIONS.ALERTS.DELETE_ERROR')
+            .pipe(map((text) => ({ type: 'error' as const, text })));
+        }),
+      )
+      .subscribe((resultado) => {
+        this.messageService.showMessage(resultado.text, resultado.type);
+      });
   }
 }

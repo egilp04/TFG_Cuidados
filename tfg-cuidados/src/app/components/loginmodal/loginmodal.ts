@@ -22,6 +22,7 @@ import { AuthService } from '../../services/auth.service';
 import { MessageService } from '../../services/message-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LoginModalData } from '../../models/Login-Modal';
 
 @Component({
   selector: 'app-loginmodal',
@@ -41,7 +42,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Loginmodal {
-  public data = inject(MAT_DIALOG_DATA);
+  public data = inject<LoginModalData | null>(MAT_DIALOG_DATA);
+
   private fb = inject(FormBuilder);
   private dialog = inject(MatDialog);
   private dialogRef = inject(MatDialogRef<Loginmodal>);
@@ -78,15 +80,14 @@ export class Loginmodal {
     }
   }
 
-  onEntrar() {
+  toEnterApp() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-
       this.authService
         .signIn(email, password)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
-          next: (user) => {
+          next: () => {
             this.dialogRef.close({ loginSuccess: true });
             this.dialog.closeAll();
             this.cd.detectChanges();
@@ -119,7 +120,7 @@ export class Loginmodal {
     }
   }
 
-  onRecuperar() {
+  toRecoverPasswd() {
     if (this.emailCtrl.invalid) {
       this.messageService.showMessage(
         this.translate.instant('LOGIN_MODAL.FEEDBACK.INVALID_EMAIL'),
@@ -131,6 +132,7 @@ export class Loginmodal {
     }
     const email = this.emailCtrl.value || '';
     if (!email) return;
+
     this.authService.checkEmailExists(email).subscribe({
       next: (existe) => {
         if (!existe) {
@@ -140,7 +142,7 @@ export class Loginmodal {
           );
           return;
         }
-        this.enviarPeticionRecuperacion(email);
+        this.askRecoverPasswd(email);
       },
       error: (err) => {
         console.error(err);
@@ -152,40 +154,33 @@ export class Loginmodal {
     });
   }
 
-  // Función auxiliar privada para enviar el correo
-  private enviarPeticionRecuperacion(email: string) {
+  private askRecoverPasswd(email: string) {
     this.authService
       .recoverPassword(email)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: ({ error }) => {
-          if (error) {
-            this.messageService.showMessage(error.message, 'error');
-          } else {
-            this.messageService.showMessage(
-              this.translate.instant('LOGIN_MODAL.FEEDBACK.LINK_SENT'),
-              'exito',
-            );
-            setTimeout(() => {
-              this.messageService.clear();
-              this.modoActual = 'login';
-              this.cd.detectChanges();
-            }, 3000);
-          }
+        next: () => {
+          this.messageService.showMessage(
+            this.translate.instant('LOGIN_MODAL.FEEDBACK.LINK_SENT'),
+            'exito',
+          );
+          setTimeout(() => {
+            this.messageService.clear();
+            this.modoActual = 'login';
+            this.cd.detectChanges();
+          }, 3000);
           this.cd.markForCheck();
         },
         error: (err) => {
           console.error(err);
-          this.messageService.showMessage(
-            this.translate.instant('LOGIN_MODAL.FEEDBACK.CONN_ERROR'),
-            'error',
-          );
+          const errorMsg = err.message || this.translate.instant('LOGIN_MODAL.FEEDBACK.CONN_ERROR');
+          this.messageService.showMessage(errorMsg, 'error');
           this.cd.markForCheck();
         },
       });
   }
 
-  onReenviarCorreo() {
+  toRecoverEmail() {
     if (this.emailCtrl.invalid) {
       this.messageService.showMessage(
         this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'),
@@ -195,6 +190,7 @@ export class Loginmodal {
     }
     const email = this.emailCtrl.value || '';
     if (!email) return;
+
     this.authService.checkEmailExists(email).subscribe({
       next: (existe) => {
         if (!existe) {
@@ -204,7 +200,7 @@ export class Loginmodal {
           );
           return;
         }
-        this.enviarPeticionReenvio(email);
+        this.askResendEmail(email);
       },
       error: (err) => {
         console.error(err);
@@ -212,30 +208,28 @@ export class Loginmodal {
       },
     });
   }
-
-  // Función auxiliar para mantener el código limpio
-  private enviarPeticionReenvio(email: string) {
+  private askResendEmail(email: string) {
     this.authService.resendVerificationEmail(email).subscribe({
-      next: ({ error }) => {
-        if (error) {
-          this.messageService.showMessage(
-            this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'),
-            'error',
-          );
-        } else {
-          this.messageService.showMessage(
-            this.translate.instant('LOGIN_MODAL.FEEDBACK.NO_ERROR'),
-            'exito',
-          );
-          setTimeout(() => {
-            this.messageService.clear();
-            this.modoActual = 'login';
-            this.cd.detectChanges();
-          }, 2000);
-        }
+      next: () => {
+        this.messageService.showMessage(
+          this.translate.instant('LOGIN_MODAL.FEEDBACK.NO_ERROR'),
+          'exito',
+        );
+        setTimeout(() => {
+          this.messageService.clear();
+          this.modoActual = 'login';
+          this.cd.detectChanges();
+        }, 2000);
         this.cd.markForCheck();
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+        this.messageService.showMessage(
+          this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'),
+          'error',
+        );
+        this.cd.markForCheck();
+      },
     });
   }
 }

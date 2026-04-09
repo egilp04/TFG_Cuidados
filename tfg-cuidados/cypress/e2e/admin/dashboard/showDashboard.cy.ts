@@ -1,7 +1,7 @@
 describe('Admin: Ver el dashboard', () => {
   beforeEach(() => {
     cy.intercept('GET', '**/Usuario?select=*').as('getUsuarios');
-    cy.intercept('GET', '**/Contrato?select=*').as('getContratosStats');
+    cy.intercept('GET', '**/Contrato?select=*').as('getcontractsAmountData');
     cy.login('admin@test.com', '13122000Teddy13@');
     cy.visit('/home');
   });
@@ -11,7 +11,7 @@ describe('Admin: Ver el dashboard', () => {
       .should('be.visible')
       .click();
     cy.url().should('include', '/dashboard');
-    cy.wait(['@getUsuarios', '@getContratosStats']);
+    cy.wait(['@getUsuarios', '@getcontractsAmountData']);
     cy.contains('h2', /Contratos/i).should('be.visible');
     cy.get('canvas').should('be.visible');
     cy.get('.bg-surface')

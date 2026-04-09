@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { EmpresaModel, SupabaseEmpresaJoin } from '../models/Bussiness-Service';
 
 /**
  * @description Servicio de consulta para la búsqueda de empresas.
@@ -10,16 +11,17 @@ import { Observable, BehaviorSubject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class BusinessService {
   private supabase = inject(SupabaseService).getClient();
-  private businessesList$ = new BehaviorSubject<any[]>([]);
+
+  private businessesList$ = new BehaviorSubject<EmpresaModel[]>([]);
 
   constructor() {
     this.initRealtime();
   }
-
-  getBusinessesObservable(): Observable<any[]> {
+  getBusinessesObservable(): Observable<EmpresaModel[]> {
     this.refreshBusinesses();
     return this.businessesList$.asObservable();
   }
+
   /**
    * Configura una suscripción Realtime multi-tabla.
    * Si cambian los datos de la Empresa o sus horarios, la vista de búsqueda
@@ -54,18 +56,21 @@ export class BusinessService {
     `,
       )
       .eq('Usuario.estado', true);
+
     if (error) {
-      console.error('❌ Error cargando empresas:', error.message);
+      console.error('Error cargando empresas:', error.message);
       return;
     }
-    console.log('✅ Empresas con servicios cargadas:', data);
+
+    console.log('Empresas con servicios cargadas:', data);
+
     if (data) {
-      const formatted = data.map((emp: any) => ({
-        ...emp,
+      const formatted: EmpresaModel[] = (data as SupabaseEmpresaJoin[]).map((emp) => ({
+        ...(emp as any),
         nombre: emp.Usuario?.nombre || 'Empresa (Sin nombre)',
         email: emp.Usuario?.email || '',
         Servicio_Horario: emp.Servicio_Horario || [],
-      }));
+      } as EmpresaModel));
       this.businessesList$.next(formatted);
     }
   }

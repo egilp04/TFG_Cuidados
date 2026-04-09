@@ -16,7 +16,7 @@ export class Footer {
 
   homeLink = computed(() => (this.authService.isAuthenticated() ? '/home' : '/'));
 
-  cambiarIdioma(lang: string) {
+  changeLanguage(lang: string) {
     this.translate.use(lang);
     localStorage.setItem('idioma_seleccionado', lang);
   }

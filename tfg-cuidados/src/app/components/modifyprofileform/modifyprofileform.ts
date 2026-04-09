@@ -23,6 +23,8 @@ import { AuthService } from '../../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { comunidades } from '../../core/constants/locations';
 import { LucideAngularModule } from 'lucide-angular';
+import { UserProfileModel, FormSubmitEvent } from '../../models/ModifyProfileForm';
+
 
 @Component({
   selector: 'app-modifyprofileform',
@@ -45,13 +47,15 @@ export class Modifyprofileform implements OnInit, OnChanges {
   private translate = inject(TranslateService);
 
   public comunidades: string[] = comunidades;
-  @Input() userData: any = null;
+
+  @Input() userData: UserProfileModel | null = null;
   @Input() userRole: 'cliente' | 'empresa' | 'administrador' = 'cliente';
-  @Output() formSubmitted = new EventEmitter<{ datos: any; rol: string }>();
+
+  @Output() formSubmitted = new EventEmitter<FormSubmitEvent>();
   @Output() deleteRequested = new EventEmitter<void>();
   @Output() cancelRequested = new EventEmitter<void>();
 
-  private targetUser: any = null;
+  private targetUser: UserProfileModel | null = null;
   public isAdminViewer: boolean = false;
 
   profileForm: FormGroup = this.fb.group({
@@ -70,22 +74,22 @@ export class Modifyprofileform implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userData'] && this.userData) {
-      this.cargarDatosFormulario();
+      this.chargeProfileFormData();
     }
     if (changes['userRole']) {
-      this.configurarValidadores();
+      this.checkValidators();
     }
   }
 
   ngOnInit(): void {
     this.isAdminViewer = this.authService.userRol() === 'administrador';
     if (!this.userData) {
-      this.cargarDatosFormulario();
+      this.chargeProfileFormData();
     }
   }
 
-  private cargarDatosFormulario() {
-    this.targetUser = this.userData || this.authService.currentUser();
+  private chargeProfileFormData() {
+    this.targetUser = this.userData || this.authService.currentUser() as UserProfileModel;
     if (this.targetUser) {
       this.profileForm.patchValue({
         telefono: this.targetUser.telef,
@@ -113,11 +117,11 @@ export class Modifyprofileform implements OnInit, OnChanges {
         }
       }
     }
-    this.configurarValidadores();
+    this.checkValidators();
     this.cd.detectChanges();
   }
 
-  private configurarValidadores() {
+  private checkValidators() {
     Object.keys(this.profileForm.controls).forEach((key) => {
       this.profileForm.get(key)?.clearValidators();
       this.profileForm.get(key)?.updateValueAndValidity();
@@ -173,16 +177,19 @@ export class Modifyprofileform implements OnInit, OnChanges {
   onSubmit() {
     if (this.profileForm.valid) {
       const formValue = this.profileForm.getRawValue();
-      const datosParaBBDD: any = {
+
+      const datosParaBBDD: UserProfileModel = {
         email: formValue.email,
         telef: formValue.telefono,
         nombre: this.userRole === 'empresa' ? formValue.nombreEmpresa : formValue.usuario,
       };
+
       if (this.userRole !== 'administrador') {
         datosParaBBDD.direccion = formValue.direccion;
         datosParaBBDD.localidad = formValue.localidad;
         datosParaBBDD.codpostal = formValue.codpostal;
         datosParaBBDD.comunidad = formValue.comunidad;
+
         if (this.userRole === 'cliente') {
           datosParaBBDD.ape1 = formValue.primerApe;
           datosParaBBDD.ape2 = formValue.segundoApe;

@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './manuals.html',
   styleUrl: './manuals.css',
 })
-export class Manuals {
+export default class Manuals {
   public cardsdata: Card[] = cardsdata;
   public authService = inject(AuthService);
   rol = this.authService.userRol();

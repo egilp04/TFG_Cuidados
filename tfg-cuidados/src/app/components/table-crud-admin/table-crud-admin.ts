@@ -21,6 +21,7 @@ import { Searchbar } from '../searchbar/searchbar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
+import { UserModel } from '../../models/User-Service';
 
 @Component({
   selector: 'app-table-crud-admin',
@@ -42,12 +43,12 @@ import { TranslateModule } from '@ngx-translate/core';
 export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
   private destroyRef = inject(DestroyRef);
   @Input() modo: 'cliente' | 'empresa' = 'cliente';
-  @Input() datos: any[] = [];
-  @Output() eliminar = new EventEmitter<any>();
-  @Output() modificar = new EventEmitter<any>();
+  @Input() data: UserModel[] = [];
+  @Output() deleteData = new EventEmitter<UserModel>();
+  @Output() modifyData = new EventEmitter<UserModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<UserModel>([]);
   searchControl = new FormControl('');
 
   ngOnInit() {
@@ -61,8 +62,8 @@ export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['datos'] && changes['datos'].currentValue) {
-      this.dataSource.data = changes['datos'].currentValue;
+    if (changes['data'] && changes['data'].currentValue) {
+      this.dataSource.data = changes['data'].currentValue;
       if (this.searchControl.value) {
         this.dataSource.filter = this.searchControl.value.trim().toLowerCase();
       }
@@ -85,11 +86,11 @@ export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
     return columnas;
   }
 
-  onEliminar(item: any) {
-    this.eliminar.emit(item);
+  onDeleteItem(item: UserModel) {
+    this.deleteData.emit(item);
   }
 
-  onModificar(item: any) {
-    this.modificar.emit(item);
+  onModifyItem(item: UserModel) {
+    this.modifyData.emit(item);
   }
 }

@@ -5,33 +5,25 @@
   <h1 class="manuals-title">{{ 'MANUALS.TITLE' | translate }}</h1>
   <section class="manuals-download-container">
     @for (item of cardsdata; track item.titulo; let i = $index) {
-      <div class="manuals-cards-container">
-        <app-cards-landing
-          class="w-full h-full"
-          [titulo]="item.titulo"
-          [cargo]="item.cargo"
-          [descripcion]="item.descripcion"
-          [imagen]="item.imagen"
-        >
-        </app-cards-landing>
-        <a [href]="item.archivo" [download]="item.archivo" target="_blank" class="manuals-link">
-          <app-button label="Descargar PDF" variant="primary" class=""></app-button>
-        </a>
-      </div>
+    <div class="manuals-cards-container">
+      <app-cards-landing class="w-full h-full" [titulo]="item.titulo" [cargo]="item.cargo"
+        [descripcion]="item.descripcion" [imagen]="item.imagen">
+      </app-cards-landing>
+      <a [href]="item.archivo" [download]="item.archivo" target="_blank" class="manuals-link">
+        <app-button label="Descargar PDF" variant="primary" class=""></app-button>
+      </a>
+    </div>
     }
   </section>
   <section class="manual-video-container">
     <h2 class="manuals-title">
       {{ 'MANUALS.USERVIDEO' | translate }}
     </h2>
-    <a
-      class="button-base manual-video-btn"
-      href="https://youtu.be/okBBfYk9x3I?si=TXp7t2F1XyDVUOtA"
-      target="_blank"
-      >{{ 'MANUALS.USERVIDEO' | translate }}</a
-    >
+    <a class="button-base manual-video-btn" href="https://youtu.be/okBBfYk9x3I?si=TXp7t2F1XyDVUOtA" target="_blank">{{
+      'MANUALS.USERVIDEO' | translate }}</a>
   </section>
 </section>
 @if (authService.isAuthenticated() && rol != 'administrador') {
-  <app-chat-soporte></app-chat-soporte>
+@defer (on idle) {
+<app-chat-soporte></app-chat-soporte>}
 }

@@ -4,5 +4,5 @@
   (click)="onClick.emit($event)"
   [type]="type()"
 >
-  {{ label() | translate }}
+  {{ label() || '' | translate }}
 </button>

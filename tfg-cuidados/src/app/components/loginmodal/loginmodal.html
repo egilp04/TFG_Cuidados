@@ -67,7 +67,7 @@
           [label]="'LOGIN_MODAL.BTN.ENTER' | translate"
           variant="primary"
           type="submit"
-          (click)="onEntrar()"
+          (click)="toEnterApp()"
           [disabled]="loginForm.invalid"
         ></app-button>
         <app-button
@@ -112,7 +112,7 @@
           [label]="'LOGIN_MODAL.BTN.SEND_LINK' | translate"
           variant="primary"
           type="button"
-          (click)="onRecuperar()"
+          (click)="toRecoverPasswd()"
         ></app-button>
 
         <app-button
@@ -170,7 +170,7 @@
 
       <mat-dialog-actions class="login-other-actions">
         <app-button
-          (click)="onReenviarCorreo()"
+          (click)="toRecoverEmail()"
           [label]="'LOGIN_MODAL.BTN.SEND_LINK' | translate"
           type="button"
           variant="primary"

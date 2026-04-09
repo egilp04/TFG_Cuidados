@@ -16,6 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { filter, switchMap, tap, delay, catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
+import { FormSubmittedEvent } from '../../models/RegisterForm';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,7 @@ import { EMPTY } from 'rxjs';
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-export class Register implements OnInit {
+export default class Register implements OnInit {
   private router = inject(Router);
   public authService = inject(AuthService);
   private cd = inject(ChangeDetectorRef);
@@ -36,10 +37,10 @@ export class Register implements OnInit {
 
   isUser: boolean = true;
 
-  get esAdminReal(): boolean {
-    const user = this.authService.currentUser();
-    return user?.rol === 'administrador';
-  }
+  // get esAdminReal(): boolean {
+  //   const user = this.authService.currentUser();
+  //   return user?.rol === 'administrador';
+  // }
 
   ngOnInit(): void {
     this.router.events
@@ -48,12 +49,12 @@ export class Register implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
-        this.detectarTipo();
+        this.showTypeUser();
       });
-    this.detectarTipo();
+    this.showTypeUser();
   }
 
-  private detectarTipo(): void {
+  private showTypeUser(): void {
     if (isPlatformBrowser(this.platformId)) {
       const state = history.state as { tipo?: string };
       if (state && state.tipo) {
@@ -63,19 +64,14 @@ export class Register implements OnInit {
     }
   }
 
-  onRegister(event: { datos: any; esCliente: boolean }) {
+  onRegister(event: FormSubmittedEvent) {
     const user = this.authService.currentUser();
-    const soyAdmin = user?.rol === 'administrador';
+    const isAdmin = user?.rol === 'administrador';
 
-    if (user && !soyAdmin) {
-      this.messageService.showMessage(
-        'Error: Cierra sesión antes de registrar una cuenta nueva.',
-        'error'
-      );
+    if (user && !isAdmin) {
       return;
     }
-
-    const registro$ = soyAdmin
+    const registro$ = isAdmin
       ? this.authService.registerByAdmin(event.datos, event.esCliente)
       : this.authService.register(event.datos, event.esCliente);
 
@@ -89,7 +85,7 @@ export class Register implements OnInit {
         }),
         delay(2000),
         tap(() => {
-          if (soyAdmin) {
+          if (isAdmin) {
             const tipoPestana = event.esCliente ? 'cliente' : 'empresa';
             this.router.navigate(['/admin-gestion'], { queryParams: { tipo: tipoPestana } });
           } else {
@@ -99,10 +95,9 @@ export class Register implements OnInit {
         catchError((err) => {
           console.error(err);
           const key =
-            err.message === 'EMAIL_EXISTS' || err.message?.includes('registered')
+            err.message === 'EMAIL_EXISTS' || err.message?.includes('registered') || err.message?.includes('registrado')
               ? 'REGISTER.MESSAGES.ERROR_EMAIL'
               : 'REGISTER.MESSAGES.ERROR_GENERIC';
-
           return this.translate.get(key).pipe(
             tap((msg) => {
               this.messageService.showMessage(msg, 'error');

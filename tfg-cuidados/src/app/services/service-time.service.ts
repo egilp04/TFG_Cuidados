@@ -3,6 +3,7 @@ import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Servicio_HorarioModel } from '../models/Servicio_Horario';
+import { ServicioHorarioJoined } from '../models/Service-Time-Service';
 
 /**
  * @description Servicio encargado de gestionar la disponibilidad horaria de los servicios.
@@ -13,10 +14,11 @@ import { Servicio_HorarioModel } from '../models/Servicio_Horario';
 })
 export class ServiceTimeService {
   private supabase = inject(SupabaseService).getClient();
-  private serviceTimeList$ = new BehaviorSubject<any[]>([]);
+
+  private serviceTimeList$ = new BehaviorSubject<ServicioHorarioJoined[]>([]);
   private currentIdEmpresa: string | null = null;
 
-  getServiceTimeByEmpresa(idEmpresa: string): Observable<any[]> {
+  getServiceTimeByEmpresa(idEmpresa: string): Observable<ServicioHorarioJoined[]> {
     this.currentIdEmpresa = idEmpresa;
     this.initRealtimeSubscription(idEmpresa);
     this.refreshList(idEmpresa);
@@ -60,7 +62,7 @@ export class ServiceTimeService {
       .select(
         `
         *,
-        Servicio:id_servicio ( nombre, tipo_servicio ),
+        Servicio:id_servicio ( nombre, tipo_servicio),
         Horario:id_horario ( hora, dia_semana )
       `,
       )
@@ -68,7 +70,7 @@ export class ServiceTimeService {
       .order('id_servicio_horario', { ascending: false });
 
     if (!error) {
-      this.serviceTimeList$.next(data || []);
+      this.serviceTimeList$.next((data as ServicioHorarioJoined[]) || []);
     } else {
       console.error('Error refrescando lista:', error);
     }

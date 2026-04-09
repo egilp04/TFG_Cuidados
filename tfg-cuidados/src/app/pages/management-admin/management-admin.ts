@@ -1,17 +1,18 @@
 import { Component, inject, OnInit, ChangeDetectorRef, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { filter, Observable } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { UserService } from '../../services/user.service';
 import { MessageService } from '../../services/message-service';
-import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { TableCrudAdmin } from '../../components/table-crud-admin/table-crud-admin';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { ButtonComponent } from '../../components/button/button';
+import { UserService } from '../../services/user.service';
+import { UserModel } from '../../models/User-Service';
+import { ResponsiveSize } from '../../services/responsive-size';
 
 @Component({
   selector: 'app-management-admin',
@@ -19,7 +20,7 @@ import { ButtonComponent } from '../../components/button/button';
   imports: [CommonModule, TableCrudAdmin, Buttonback, ButtonComponent, TranslateModule],
   templateUrl: './management-admin.html',
 })
-export class ManagementAdmin implements OnInit {
+export default class ManagementAdmin implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private userService = inject(UserService);
@@ -28,34 +29,31 @@ export class ManagementAdmin implements OnInit {
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);
   private translate = inject(TranslateService);
+
   public isUser: boolean = true;
-  public usuarios$!: Observable<any[]>;
+  public usuarios$!: Observable<UserModel[]>;
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       const tipo = params['tipo'];
-      this.cargarDatos(tipo === 'empresa' ? 'empresa' : 'cliente');
+      this.chargeData(tipo === 'empresa' ? 'empresa' : 'cliente');
     });
   }
-  private cargarDatos(tipo: 'cliente' | 'empresa'): void {
+
+  private chargeData(tipo: 'cliente' | 'empresa'): void {
     this.isUser = tipo === 'cliente';
     this.usuarios$ = this.userService.getUsersObservable(tipo);
     this.cd.detectChanges();
   }
 
-  cambiarVista(tipo: 'cliente' | 'empresa') {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { tipo: tipo },
-      queryParamsHandling: 'merge',
-    });
-  }
+  private responsive = inject(ResponsiveSize);
 
   isMobile = window.innerWidth < 768;
-  onEliminarUsuario(item: any) {
+  async toDeleteUser(item: UserModel) {
+    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
-      maxWidth: this.isMobile ? '95vw' : '500px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
       data: { modo: 'eliminar' },
     });
     dialogRef
@@ -81,12 +79,14 @@ export class ManagementAdmin implements OnInit {
       .subscribe({
         next: (res) => {
           this.messageService.showMessage(res.text, res.type);
-          this.cargarDatos(this.isUser ? 'cliente' : 'empresa');
+          if (res.type === 'exito') {
+            this.chargeData(this.isUser ? 'cliente' : 'empresa');
+          }
         },
       });
   }
 
-  onEditar(item: any) {
+  toEditFunction(item: UserModel) {
     const usuarioConRol = {
       ...item,
       rol: this.isUser ? 'cliente' : 'empresa',
@@ -94,7 +94,7 @@ export class ManagementAdmin implements OnInit {
     this.router.navigate(['/modify-profile'], { state: { usuario: usuarioConRol } });
   }
 
-  onNuevoUsuario() {
+  createNewUser() {
     const tipo = this.isUser ? 'cliente' : 'empresa';
     this.router.navigate(['/register'], { state: { tipo } });
   }

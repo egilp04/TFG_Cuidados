@@ -19,7 +19,7 @@
     <h1 class="cancel-modal-title">
       @if (data.modo === 'baja') {
         {{ 'CANCEL_MODAL.BAJA.TITLE' | translate }}
-      } @else if (data.modo === 'cancelarContrato') {
+      } @else if (data.modo === 'cancelContract') {
         {{ 'CANCEL_MODAL.CONTRACT.TITLE' | translate }}
       } @else if (data.modo === 'eliminarServicio') {
         {{ 'CANCEL_MODAL.SERVICE.TITLE' | translate }}
@@ -35,13 +35,13 @@
           <p class="text-p">{{ 'CANCEL_MODAL.BAJA.DESC_1' | translate }}</p>
           <p class="text-p">{{ 'CANCEL_MODAL.BAJA.DESC_2' | translate }}</p>
         </div>
-      } @else if (data.modo === 'cancelarContrato') {
+      } @else if (data.modo === 'cancelContract') {
         <div class="space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.CONTRACT.DESC_1' | translate }}</p>
           <ul class="list-disc pl-5 space-y-3">
-            <li [innerHTML]="'CANCEL_MODAL.CONTRACT.LIST.RECORD' | translate"></li>
-            <li [innerHTML]="'CANCEL_MODAL.CONTRACT.LIST.COMM' | translate"></li>
-            <li [innerHTML]="'CANCEL_MODAL.CONTRACT.LIST.NOTIFY' | translate"></li>
+            <li [innerHTML]="'CANCEL_MODAL.CONTRACT.LIST.RECORD' | translate" class="text-p"></li>
+            <li [innerHTML]="'CANCEL_MODAL.CONTRACT.LIST.COMM' | translate" class="text-p"></li>
+            <li [innerHTML]="'CANCEL_MODAL.CONTRACT.LIST.NOTIFY' | translate" class="text-p"></li>
           </ul>
           <p class="text-p">{{ 'CANCEL_MODAL.CONTRACT.NOTE' | translate }}</p>
         </div>
@@ -56,7 +56,9 @@
           <p class="text-p">
             {{ 'CANCEL_MODAL.SERVICE.IMPORTANT_TITLE' | translate }}
           </p>
-          <p>{{ 'CANCEL_MODAL.SERVICE.IMPORTANT_DESC' | translate }}</p>
+          <p class="text-p">
+            {{ 'CANCEL_MODAL.SERVICE.IMPORTANT_DESC' | translate }}
+          </p>
         </div>
       } @else if (data.modo === 'eliminarAdminGlobal') {
         <div class="space-y-4">
@@ -79,7 +81,7 @@
     <app-button mat-dialog-close [label]="getPrimaryLabel() | translate" variant="secondary">
     </app-button>
     <app-button
-      (click)="cancelar()"
+      (click)="toCancel()"
       [label]="getSecondaryLabel() | translate"
       variant="danger"
       class="mb-10"

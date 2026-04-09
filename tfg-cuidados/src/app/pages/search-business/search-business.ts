@@ -15,13 +15,17 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { switchMap, catchError, map, tap, take } from 'rxjs/operators';
 import { Searchbar } from '../../components/searchbar/searchbar';
 import { ButtonComponent } from '../../components/button/button';
-import { BusinessService } from '../../services/business.service';
 import { AuthService } from '../../services/auth.service';
 import { ContractService } from '../../services/contract.service';
 import { MessageService } from '../../services/message-service';
 import { ContratoModel } from '../../models/Contrato';
-import { MessagesModal } from '../../components/messages-modal/messages-modal';
 import { Buttonback } from '../../components/buttonback/buttonback';
+import { EmpresaModel, ServicioHorarioResponse } from '../../models/Bussiness-Service';
+import { BusinessService } from '../../services/business.service';
+
+export interface EmpresaUI extends EmpresaModel {
+  seleccion?: ServicioHorarioResponse;
+}
 
 @Component({
   selector: 'app-verempresas',
@@ -38,7 +42,7 @@ import { Buttonback } from '../../components/buttonback/buttonback';
   templateUrl: './search-business.html',
   styleUrl: './search-business.css',
 })
-export class SearchBusiness implements OnInit {
+export default class SearchBusiness implements OnInit {
   private businessService = inject(BusinessService);
   private contractService = inject(ContractService);
   private authService = inject(AuthService);
@@ -48,30 +52,30 @@ export class SearchBusiness implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
 
-  public todasLasEmpresas = signal<any[]>([]);
-  public filtroBusqueda = signal<string>('');
-  public filtroControl = new FormControl('');
+  public allBussinesses = signal<EmpresaUI[]>([]);
+  public searchFilterItem = signal<string>('');
+  public controlFilterItem = new FormControl('');
 
-  public empresasFiltradas = computed(() => {
-    const filtro = this.filtroBusqueda().toLowerCase().trim();
-    if (!filtro) return this.todasLasEmpresas();
-    return this.todasLasEmpresas().filter((emp) => {
-      const coincideNombre = emp.nombre.toLowerCase().includes(filtro);
-      const coincideServicio = emp.Servicio_Horario?.some(
-        (sh: any) =>
+  public filteredBussinesses = computed(() => {
+    const filtro = this.searchFilterItem().toLowerCase().trim();
+    if (!filtro) return this.allBussinesses();
+    return this.allBussinesses().filter((emp) => {
+      const sameName = emp.nombre.toLowerCase().includes(filtro);
+      const sameService = emp.Servicio_Horario?.some(
+        (sh: ServicioHorarioResponse) =>
           sh.Servicio?.nombre.toLowerCase().includes(filtro) ||
           sh.Horario?.dia_semana.toLowerCase().includes(filtro)
       );
 
-      return coincideNombre || coincideServicio;
+      return sameName || sameService;
     });
   });
 
   ngOnInit() {
-    this.cargarEmpresasReactiva();
+    this.chargeBussinessRealTime();
   }
 
-  cargarEmpresasReactiva() {
+  chargeBussinessRealTime() {
     this.businessService
       .getBusinessesObservable()
       .pipe(
@@ -84,21 +88,21 @@ export class SearchBusiness implements OnInit {
           );
         })
       )
-      .subscribe((data) => {
-        const dataConSeleccion = data.map((e: any) => ({
+      .subscribe((data: EmpresaModel[]) => {
+        const dataConSeleccion: EmpresaUI[] = data.map((e) => ({
           ...e,
-          seleccion: e.seleccion || undefined,
+          seleccion: undefined,
         }));
-        this.todasLasEmpresas.set(dataConSeleccion);
+        this.allBussinesses.set(dataConSeleccion);
         this.cd.markForCheck();
       });
   }
 
   applyFilter(valor: string) {
-    this.filtroBusqueda.set(valor);
+    this.searchFilterItem.set(valor);
   }
-
-  contratar(empresa: any) {
+  
+  toHire(empresa: EmpresaUI) {
     const user = this.authService.currentUser();
     if (!user) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.LOGIN_REQUIRED').subscribe((res) => {
@@ -106,6 +110,7 @@ export class SearchBusiness implements OnInit {
       });
       return;
     }
+
     const seleccion = empresa.seleccion;
     if (!seleccion) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.SELECT_SERVICE').subscribe((res) => {
@@ -125,7 +130,6 @@ export class SearchBusiness implements OnInit {
           contratos.map((c) => c.id_sh_plano)
         );
         const yaContratado = contratos.find((c) => {
-          // Comparamos strings para evitar errores de tipo (number vs string)
           const coincidenIds = String(c.id_sh_plano) === String(idSeleccionado);
           const esMismoCliente = c.id_cliente === user.id_usuario;
           const estaActivo = c.estado === 'activo';
@@ -144,8 +148,8 @@ export class SearchBusiness implements OnInit {
           estado: 'activo',
           fecha_inicio: new Date().toISOString().split('T')[0],
           fecha_fin: null,
-          dia_semana_contratado: seleccion.Horario.dia_semana,
-          hora_contratada: seleccion.Horario.hora,
+          dia_semana_contratado: seleccion.Horario?.dia_semana || '',
+          hora_contratada: seleccion.Horario?.hora || '',
           fecha_creacion: new Date().toISOString(),
           id_servicio_horario: seleccion.id_servicio_horario,
           id_cliente: user.id_usuario,
@@ -178,7 +182,7 @@ export class SearchBusiness implements OnInit {
       });
   }
 
-  enviarMensaje(empresa: any) {
+  async sendMessage(empresa: EmpresaUI) {
     const user = this.authService.currentUser();
     if (!user) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.LOGIN_MSG_REQUIRED').subscribe((res) => {
@@ -186,7 +190,7 @@ export class SearchBusiness implements OnInit {
       });
       return;
     }
-
+    const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
     this.dialog.open(MessagesModal, {
       data: {
         modo: 'escribir',

@@ -27,7 +27,7 @@ import { MessageService } from '../../services/message-service';
 import { HorarioModel } from '../../models/Horario';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
+import { ResponsiveSize } from '../../services/responsive-size';
 @Component({
   selector: 'app-management-time-global',
   standalone: true,
@@ -44,7 +44,7 @@ import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
   styleUrl: './management-time-global.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManagementTimeGlobal implements OnInit {
+export default class ManagementTimeGlobal implements OnInit {
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);
@@ -59,7 +59,7 @@ export class ManagementTimeGlobal implements OnInit {
   isEditing: boolean = false;
   currentTimeId: string | null = null;
 
-  horarioForm: FormGroup = this.fb.group({
+  timeFormular: FormGroup = this.fb.group({
     hora: ['', [Validators.required]],
     dia: ['', [Validators.required]],
   });
@@ -78,12 +78,12 @@ export class ManagementTimeGlobal implements OnInit {
   }
 
   onSave() {
-    if (this.horarioForm.invalid) {
-      this.horarioForm.markAllAsTouched();
+    if (this.timeFormular.invalid) {
+      this.timeFormular.markAllAsTouched();
       this.showMessageTraducido('MANAGEMENT_SCHEDULES.MESSAGES.FILL_FIELDS', 'error');
       return;
     }
-    const { hora, dia } = this.horarioForm.getRawValue();
+    const { hora, dia } = this.timeFormular.getRawValue();
     const diasValidos = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
     const user = this.authService.currentUser();
 
@@ -156,18 +156,19 @@ export class ManagementTimeGlobal implements OnInit {
   onEdit(horario: HorarioModel) {
     this.isEditing = true;
     this.currentTimeId = horario.id_horario!;
-    this.horarioForm.patchValue({
+    this.timeFormular.patchValue({
       hora: horario.hora,
       dia: horario.dia_semana,
     });
   }
 
-  isMobile = window.innerWidth < 768;
-  onDelete(id: string) {
+  private responsive = inject(ResponsiveSize);
+  async onDelete(id: string) {
+    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { modo: 'eliminarAdminGlobal' },
       width: '100%',
-      maxWidth: this.isMobile ? '95vw' : '500px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
     });
 
     dialogRef
@@ -200,8 +201,8 @@ export class ManagementTimeGlobal implements OnInit {
   resetForm() {
     this.isEditing = false;
     this.currentTimeId = null;
-    this.horarioForm.reset();
-    this.horarioForm.get('dia')?.setValue('');
+    this.timeFormular.reset();
+    this.timeFormular.get('dia')?.setValue('');
     this.cd.markForCheck();
   }
   private showMessageTraducido(key: string, type: 'error' | 'exito') {
@@ -211,6 +212,6 @@ export class ManagementTimeGlobal implements OnInit {
   }
 
   getCtrl(name: string) {
-    return this.horarioForm.get(name) as FormControl;
+    return this.timeFormular.get(name) as FormControl;
   }
 }

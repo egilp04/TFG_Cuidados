@@ -3,9 +3,10 @@ import { from, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { SupabaseService } from './supabase.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, AuthResponse, UserResponse, User } from '@supabase/supabase-js';
 import { ComunicationService } from './comunication.service';
 import { environment } from '../../environments/environment';
+import { AuthUserModel, PreparacionRegistro, RegisterPayload } from '../models/Auth-Service';
 
 /**
  * @description Servicio de autenticación y gestión de sesiones.
@@ -19,12 +20,8 @@ export class AuthService {
   private injector = inject(Injector);
 
   isLoading = signal<boolean>(true);
-  /**
-   * Uso de Angular Signals para un estado de usuario reactivo y eficiente.
-   * 'currentUser' permite que toda la aplicación reaccione a cambios en la sesión
-   * sin necesidad de suscripciones manuales costosas.
-   */
-  currentUser = signal<any | null>(null);
+    currentUser = signal<AuthUserModel | null>(null);
+
   isAuthenticated = computed(() => !!this.currentUser());
   userRol = computed(() => this.currentUser()?.rol || null);
 
@@ -37,11 +34,11 @@ export class AuthService {
     from(this.supabase.auth.getUser())
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        switchMap((res) => {
+        switchMap((res: UserResponse) => {
           const user = res.data?.user;
           return user ? this.getProfile(user.id) : of(null);
         }),
-        tap((userProfile) => {
+        tap((userProfile: AuthUserModel | null) => {
           this.currentUser.set(userProfile);
           this.isLoading.set(false);
         }),
@@ -53,30 +50,25 @@ export class AuthService {
       )
       .subscribe();
   }
-
-  signIn(email: string, password: string): Observable<any> {
+  signIn(email: string, password: string): Observable<AuthUserModel> {
     return from(this.supabase.auth.signInWithPassword({ email, password })).pipe(
-      switchMap((res) => {
+      switchMap((res: AuthResponse) => {
         if (res.error) throw res.error;
+        if (!res.data.user) throw new Error('Usuario no encontrado');
         return this.getProfile(res.data.user.id);
       }),
-      tap((user) => this.currentUser.set(user)),
+      tap((user: AuthUserModel) => this.currentUser.set(user)),
     );
   }
 
   /**
    * Recuperación de perfil compuesto.
-   * Realiza una agregación de datos consultando en paralelo las tablas de especialización.
-   * Garantiza que el objeto de usuario contenga toda la información necesaria
-   * según su rol detectado en el login.
    */
-  getProfile(userId: string): Observable<any> {
-    // 1. Pedimos el usuario base (que ya trae 'rol' y 'estado')
+  getProfile(userId: string): Observable<AuthUserModel> {
     return from(this.supabase.from('Usuario').select('*').eq('id_usuario', userId).single()).pipe(
       switchMap(async ({ data: user, error: userErr }) => {
         if (userErr) throw userErr;
 
-        // Se usa Promise.all para que sea rápido (en paralelo)
         const [cli, emp, adm] = await Promise.all([
           this.supabase.from('Cliente').select('*').eq('id_cliente', userId).maybeSingle(),
           this.supabase.from('Empresa').select('*').eq('id_empresa', userId).maybeSingle(),
@@ -95,26 +87,25 @@ export class AuthService {
         } else if (user.rol === 'cliente' && cli.data) {
           datosExtra = cli.data;
         }
-        return { ...user, ...datosExtra };
+                return { ...user, ...datosExtra } as AuthUserModel;
       }),
     );
   }
 
-  signOut(): Observable<any> {
+  signOut(): Observable<void> {
     return from(this.supabase.auth.signOut()).pipe(
+      map(({ error }) => {
+        if (error) throw error;
+      }),
       tap(() => {
         this.currentUser.set(null);
       }),
     );
   }
 
-  /**
-   * Registro con notificación proactiva.
-   * Tras un alta exitosa, el sistema invoca al ComunicationService para alertar
-   * a los administradores, integrando dos servicios de forma desacoplada.
-   */
-  register(datos: any, esCliente: boolean): Observable<any> {
-    const { emailLimpio, passwordLimpia, metaData } = this.prepararDatosRegistro(datos, esCliente);
+  register(datos: RegisterPayload, esCliente: boolean): Observable<AuthResponse> {
+    const { emailLimpio, passwordLimpia, metaData } = this.registerDataPreparation(datos, esCliente);
+
     return from(this.supabase.rpc('email_exists', { email_check: emailLimpio })).pipe(
       switchMap(({ data: existe, error }) => {
         if (error) throw new Error('Error técnico al verificar el correo.');
@@ -126,13 +117,13 @@ export class AuthService {
             password: passwordLimpia,
             options: {
               data: metaData,
-              emailRedirectTo: 'http://localhost:4200/home',
+              emailRedirectTo: `${window.location.origin}/home`,
             },
           }),
         );
       }),
-      map((res) => this.validarRespuestaRegistro(res)),
-      tap((res) => {
+      map((res: AuthResponse) => this.registerAnswerValidation(res)),
+      tap((res: AuthResponse) => {
         if (res.data.user) {
           const rolTexto = esCliente ? 'cliente' : 'empresa';
           const comunicationService = this.injector.get(ComunicationService);
@@ -146,8 +137,9 @@ export class AuthService {
       }),
     );
   }
-  registerByAdmin(datos: any, esCliente: boolean): Observable<any> {
-    const { emailLimpio, passwordLimpia, metaData } = this.prepararDatosRegistro(datos, esCliente);
+
+  registerByAdmin(datos: RegisterPayload, esCliente: boolean): Observable<AuthResponse> {
+    const { emailLimpio, passwordLimpia, metaData } = this.registerDataPreparation(datos, esCliente);
     const tempSupabase = createClient(environment.supabaseUrl, environment.supabaseKey, {
       auth: {
         persistSession: false,
@@ -160,26 +152,26 @@ export class AuthService {
       switchMap(({ data: existe, error }) => {
         if (error) throw new Error('Error técnico al verificar el correo.');
         if (existe) throw new Error('Este correo electrónico ya está registrado.');
-
         return from(
           tempSupabase.auth.signUp({
             email: emailLimpio,
             password: passwordLimpia,
             options: {
               data: { ...metaData, created_by_admin: true },
-              emailRedirectTo: 'http://localhost:4200/login',
+              emailRedirectTo: `${window.location.origin}/login`,
             },
           }),
         );
       }),
-      map((res) => this.validarRespuestaRegistro(res)),
+      map((res: AuthResponse) => this.registerAnswerValidation(res)),
     );
   }
 
-  private prepararDatosRegistro(datos: any, esCliente: boolean) {
+  private registerDataPreparation(datos: RegisterPayload, esCliente: boolean): PreparacionRegistro {
     const emailLimpio = String(datos.email).trim().toLowerCase().replace(/\s/g, '');
     const passwordLimpia = String(datos.password).trim();
     const rol = esCliente ? 'cliente' : 'empresa';
+
     const metaData = {
       rol: rol,
       nombre: datos.nombre ? String(datos.nombre).trim() : '',
@@ -193,28 +185,32 @@ export class AuthService {
       codpostal: datos.codpostal || '',
       comunidad: datos.comunidad || '',
       cif: datos.cif ? datos.cif.toUpperCase() : null,
-      descripcion: datos.descripcion,
+      descripcion: datos.descripcion || null,
     };
+
     return { emailLimpio, passwordLimpia, metaData };
   }
-  private validarRespuestaRegistro(res: any) {
+
+  private registerAnswerValidation(res: AuthResponse): AuthResponse {
     if (res.error) throw res.error;
     if (res.data.user && res.data.user.identities && res.data.user.identities.length === 0) {
       throw new Error('Este correo electrónico ya está registrado.');
     }
     return res;
   }
-  updateUserSignal(newUserData: any) {
+
+  updateUserSignal(newUserData: AuthUserModel) {
     this.currentUser.set(newUserData);
   }
-  updateAuthCredentiales(nuevoEmail?: string): Observable<any> {
-    const updateData: any = {};
+
+  updateAuthCredentiales(nuevoEmail?: string): Observable<UserResponse> {
+    const updateData: { email?: string } = {};
     if (nuevoEmail) updateData.email = nuevoEmail;
 
     return from(this.supabase.auth.updateUser(updateData)).pipe(
-      map(({ data, error }) => {
-        if (error) throw error;
-        return data;
+      map((res: UserResponse) => {
+        if (res.error) throw res.error;
+        return res;
       }),
       catchError((err) => {
         console.error('Error actualizando credenciales:', err);
@@ -222,42 +218,46 @@ export class AuthService {
       }),
     );
   }
-  recoverPassword(email: string): Observable<any> {
+
+  recoverPassword(email: string): Observable<void> {
     return from(
       this.supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: 'http://localhost:4200/recover-password',
+        redirectTo: `${window.location.origin}/recover-password`,
       }),
     ).pipe(
-      map(({ data, error }) => {
+      map(({ error }) => {
         if (error) throw error;
-        return data;
       }),
       catchError((err) => throwError(() => err)),
     );
   }
-  updatePass(newPassword: string): Observable<any> {
+
+  updatePass(newPassword: string): Observable<UserResponse> {
     return from(
       this.supabase.auth.updateUser({
         password: newPassword,
       }),
     ).pipe(
-      map(({ data, error }) => {
-        if (error) throw error;
-        return data;
+      map((res: UserResponse) => {
+        if (res.error) throw res.error;
+        return res;
       }),
       catchError((err) => throwError(() => err)),
     );
   }
-  resendVerificationEmail(email: string): Observable<any> {
-    const promise = this.supabase.auth.resend({
+
+  resendVerificationEmail(email: string): Observable<void> {
+    return from(this.supabase.auth.resend({
       type: 'signup',
       email: email,
       options: {
-        emailRedirectTo: 'http://localhost:4200/',
+        emailRedirectTo: `${window.location.origin}/`,
       },
-    });
-
-    return from(promise);
+    })).pipe(
+      map(({ error }) => {
+        if (error) throw error;
+      })
+    );
   }
 
   checkEmailExists(email: string): Observable<boolean> {

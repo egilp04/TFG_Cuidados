@@ -154,6 +154,8 @@
     }
   },
   "DASHBOARD": {
+    "NO_CONTRACTS": "No contracts",
+    "CHARGING": "Charging Data",
     "TITLE_CONTRACTS": "Contracts",
     "TOTAL_CONTRACTS": {
       "TOTAL": "Total contract: ",
@@ -202,7 +204,7 @@
     "REGISTER": "Sign Up",
     "CARDS": {
       "CONTRATACION": {
-        "TITLE": "Easily Hire Services",
+        "TITLE": "Easily Hire",
         "DESC": "Find and hire services from professional companies dedicated to personal care, companionship, and wellness."
       },
       "GESTION": {
@@ -409,6 +411,12 @@
     "MESSAGES": {
       "CONNECTION_ERROR": "Error in live notifications connection",
       "EMPTY": "There´s any notifications"
+    },
+    "ALERTS": {
+      "CONFIRM_DELETE": "Are you sure you want to delete this notification?",
+      "DELETE_SUCCESS": "The notificacion has been deleted.",
+      "DELETE_ERROR": "Could not delete the notification.",
+      "VIEW_ERROR": "Cannot view this notification at this time"
     }
   },
   "RECOVER_PASSWORD": {
@@ -460,7 +468,8 @@
       "PRICE": "Price/h",
       "TYPE": "Type",
       "TIME": "Time",
-      "DAY": "Day"
+      "DAY": "Day",
+      "DESCRIPTION": "Description"
     },
     "MESSAGES": {
       "DELETE_SUCCESS": "Service successfully deleted.",

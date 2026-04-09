@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ContractStats, EstadoContratoResponse, RegistroFechaResponse } from '../models/Analitycs-Service';
 
 /**
  * @description Servicio de métricas y análisis de datos para el dashboard administrativo.
@@ -11,9 +12,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class AnalyticsService {
   private supabase = inject(SupabaseService).getClient();
-  private _totalUsuarios$ = new BehaviorSubject<number>(0);
-  private _registrosSemanales$ = new BehaviorSubject<number[]>(new Array(7).fill(0));
-  private _contratosStats$ = new BehaviorSubject<{ activos: number; cancelados: number }>({
+
+  private _totalAppUsers$ = new BehaviorSubject<number>(0);
+  private _weeklyRegisters$ = new BehaviorSubject<number[]>(new Array(7).fill(0));
+    private _contractsAmountData$ = new BehaviorSubject<ContractStats>({
     activos: 0,
     cancelados: 0,
   });
@@ -23,15 +25,15 @@ export class AnalyticsService {
   }
 
   getUsuariosCount(): Observable<number> {
-    return this._totalUsuarios$.asObservable();
+    return this._totalAppUsers$.asObservable();
   }
 
   fetchWeeklyRecords(): Observable<number[]> {
-    return this._registrosSemanales$.asObservable();
+    return this._weeklyRegisters$.asObservable();
   }
 
-  getContractStats(): Observable<{ activos: number; cancelados: number }> {
-    return this._contratosStats$.asObservable();
+  getContractStats(): Observable<ContractStats> {
+    return this._contractsAmountData$.asObservable();
   }
 
   private async initDashboard() {
@@ -50,7 +52,7 @@ export class AnalyticsService {
         .select('*', { count: 'exact', head: true });
 
       if (error) throw error;
-      this._totalUsuarios$.next(count || 0);
+      this._totalAppUsers$.next(count || 0);
     } catch (e) {
       console.error('Error cargando total usuarios:', e);
     }
@@ -58,14 +60,15 @@ export class AnalyticsService {
 
   private async chargeContractsStatics() {
     try {
-      const { data: contratos, error } = await this.supabase.from('Contrato').select('estado');
+      const { data, error } = await this.supabase.from('Contrato').select('estado');
       if (error) throw error;
-      if (contratos) {
-        const stats = {
+      if (data) {
+        const contratos = data as EstadoContratoResponse[];
+        const stats: ContractStats = {
           activos: contratos.filter((c) => c.estado === 'activo').length,
           cancelados: contratos.filter((c) => c.estado === 'no activo').length,
         };
-        this._contratosStats$.next(stats);
+        this._contractsAmountData$.next(stats);
       }
     } catch (e) {
       console.error('Error cargando estadísticas contratos:', e);
@@ -77,13 +80,17 @@ export class AnalyticsService {
       const haceSieteDias = new Date();
       haceSieteDias.setDate(haceSieteDias.getDate() - 6);
       haceSieteDias.setHours(0, 0, 0, 0);
+
       const { data, error } = await this.supabase
         .from('Usuario')
         .select('fecha_registro')
         .gte('fecha_registro', haceSieteDias.toISOString());
+
       if (error) throw error;
+
       if (data) {
-        this._registrosSemanales$.next(this.groupByDay(data, haceSieteDias));
+        const registros = data as RegistroFechaResponse[];
+        this._weeklyRegisters$.next(this.groupByDay(registros, haceSieteDias));
       }
     } catch (e) {
       console.error('Error cargando registros semanales:', e);
@@ -115,7 +122,7 @@ export class AnalyticsService {
    * las fechas de registro en un array de 7 días, facilitando su
    * representación en gráficos lineales.
    */
-  private groupByDay(registros: any[], fechaInicio: Date): number[] {
+  private groupByDay(registros: RegistroFechaResponse[], fechaInicio: Date): number[] {
     const dias = new Array(7).fill(0);
     registros.forEach((reg) => {
       const fechaReg = new Date(reg.fecha_registro);

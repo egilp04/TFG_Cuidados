@@ -63,7 +63,6 @@
     "ACCEPT": "Aceptar",
     "CANCEL": "Cancelar"
   },
-
   "ABOUT": {
     "TITLE": "Sobre Nosotros",
     "DESCRIPTION": "CuidaDos es una plataforma que busca ser un intermediario seguro y eficiente para la contratación de servicios de cuidado y atención a personas mayores o que necesiten ayuda en su vida diaria. Somos una plataforma digital de cuidados creada con el objetivo de mejorar la calidad de vida de las personas que necesitan apoyo en su día a día. Nuestro equipo está formado por profesionales del ámbito tecnológico y social que comparten una misma visión: facilitar el acceso a servicios de atención y cuidado de forma sencilla, segura y transparente. Creemos firmemente que el cuidado de las personas debe estar basado en la confianza, la profesionalidad y la cercanía, y por ello trabajamos para conectar a usuarios con empresas especializadas en el sector. El proyecto nace en el contexto del desarrollo del Proyecto Final del Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Web, durante el curso académico 2025-2026. A partir del análisis del sector y de la experiencia cercana con este ámbito, se identificaron carencias que podían resolverse mediante una solución tecnológica moderna, accesible y escalable. Nuestro compromiso es crear un entorno digital inclusivo, intuitivo y fiable, que contribuya a dignificar el sector de los cuidados y a facilitar la vida de las personas que más lo necesitan.",
@@ -155,6 +154,8 @@
     }
   },
   "DASHBOARD": {
+    "NO_CONTRACTS": "Sin contratos",
+    "CHARGING": "Cargando gráficas",
     "TITLE_CONTRACTS": "Contratos",
     "TOTAL_CONTRACTS": {
       "TOTAL": "Contratos totales: ",
@@ -200,10 +201,10 @@
       "SUBTITLE": "porque cuidar es cosa de dos"
     },
     "SERVICES": "Servicios",
-    "REGISTER": "Registrarse",
+    "REGISTER": "Registrar",
     "CARDS": {
       "CONTRATACION": {
-        "TITLE": "Contrata servicios fácilmente",
+        "TITLE": "Contrata fácilmente",
         "DESC": "Encuentra y contrata servicios  de empresas profesionales  dedicadas al cuidado personal, acompañamiento y bienestar."
       },
       "GESTION": {
@@ -353,7 +354,6 @@
       "VIEW_ERROR": "No se puede ver este mensaje en este momento"
     }
   },
-
   "NOTIFICATIONS": {
     "ADMIN": "Abre un ticket con el administrador",
     "TITLE": "Notificaciones",
@@ -365,6 +365,12 @@
     "MESSAGES": {
       "CONNECTION_ERROR": "Error en la conexión de avisos en vivo",
       "EMPTY": "No hay notificaciones"
+    },
+    "ALERTS": {
+      "CONFIRM_DELETE": "Are you sure you want to delete this notification?",
+      "DELETE_SUCCESS": "The notificacion has been deleted.",
+      "DELETE_ERROR": "Could not delete the notification.",
+      "VIEW_ERROR": "Cannot view this notification at this time"
     }
   },
   "RECOVER_PASSWORD": {
@@ -415,7 +421,8 @@
       "PRICE": "Precio/h",
       "TYPE": "Tipo",
       "TIME": "Hora",
-      "DAY": "Día"
+      "DAY": "Día",
+      "DESCRIPTION": "Descripcion"
     },
     "MESSAGES": {
       "DELETE_SUCCESS": "El servicio ha sido eliminado con éxito.",
@@ -541,7 +548,7 @@
       "PART_2": "y la Política de Privacidad, y autorizo el tratamiento de mis datos personales.",
       "ERROR": "Debes aceptar los términos para continuar"
     },
-    "BTN": "Registrarse",
+    "BTN": "Registrar",
     "ERRORS": {
       "REQUIRED": "Este campo es obligatorio",
       "EMAIL": "Formato de correo inválido",
@@ -590,7 +597,9 @@
     }
   },
   "MODIFY_PROFILE": {
-    "PLACEHOLDER": { "DESCRIPTION": "Descripción" },
+    "PLACEHOLDER": {
+      "DESCRIPTION": "Descripción"
+    },
     "DESCRIPTION_MODIFY": "Modify descripcion",
     "TITLE": "Modificar Perfil",
     "MESSAGES": {
@@ -649,7 +658,7 @@
   "LOGIN_MODAL": {
     "TITLES": {
       "LOGIN": "Iniciar Sesión",
-      "REGISTER": "Registrarse",
+      "REGISTER": "Registrar",
       "RECOVER": "Recuperar Contraseña",
       "RESEND": "Reenviar email de registro",
       "NOTITLE": "No disponible"
@@ -667,7 +676,7 @@
     "BTN": {
       "ENTER": "Entrar",
       "FORGOT": "He olvidado mi contraseña",
-      "REGISTER": "Registrarse",
+      "REGISTER": "Registrar",
       "REG_USER": "Registrarse como usuario",
       "REG_COMPANY": "Registrarse como empresa",
       "HAVE_ACCOUNT": "Ya tengo cuenta",

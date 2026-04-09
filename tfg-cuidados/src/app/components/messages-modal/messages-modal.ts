@@ -1,40 +1,43 @@
-import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef, DestroyRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { Inputs } from '../inputs/inputs';
-import { ButtonComponent } from '../button/button';
 import {
+  FormBuilder,
   FormGroup,
-  FormControl,
   Validators,
   ReactiveFormsModule,
-  FormBuilder,
+  FormControl,
 } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs/operators';
+
 import { AuthService } from '../../services/auth.service';
-import { ComunicacionModel } from '../../models/Comunicacion';
 import { ComunicationService } from '../../services/comunication.service';
 import { UserService } from '../../services/user.service';
 import { MessageService } from '../../services/message-service';
-import { CommonModule } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Inputs } from '../inputs/inputs';
+import { ButtonComponent } from '../button/button';
+import { MessagesModalData } from '../../models/Message-Modal';
+import { ComunicacionModel } from '../../models/Comunicacion';
 
 @Component({
   selector: 'app-messages-modal',
   standalone: true,
   imports: [
+    CommonModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    TranslateModule,
     Inputs,
     ButtonComponent,
-    ReactiveFormsModule,
-    CommonModule,
-    TranslateModule,
-    MatDialogModule,
   ],
   templateUrl: './messages-modal.html',
   styleUrl: './messages-modal.css',
 })
 export class MessagesModal implements OnInit {
-  public data = inject(MAT_DIALOG_DATA);
+  public data = inject<MessagesModalData>(MAT_DIALOG_DATA);
+
   private dialogRef = inject(MatDialogRef<MessagesModal>);
   private fb = inject(FormBuilder);
   private cd = inject(ChangeDetectorRef);
@@ -45,7 +48,7 @@ export class MessagesModal implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
 
-  mensajeForm: FormGroup = this.fb.group({
+  messageForm: FormGroup = this.fb.group({
     emisor: [''],
     receptor: ['', [Validators.required, Validators.email]],
     asunto: ['', [Validators.required]],
@@ -53,16 +56,16 @@ export class MessagesModal implements OnInit {
   });
 
   ngOnInit() {
-    if (this.data.modo === 'verMensaje' && this.data.contenido) {
-      this.mensajeForm.patchValue({
+    if (this.data.modo === 'showMessage' && this.data.contenido) {
+      this.messageForm.patchValue({
         emisor: this.data.contenido.Emisor?.email,
         receptor: this.data.contenido.Receptor?.nombre,
         asunto: this.data.contenido.asunto,
         contenido: this.data.contenido.contenido,
       });
-      this.mensajeForm.disable();
+      this.messageForm.disable();
     } else if (this.data.modo === 'escribir' && this.data.receptorEmail) {
-      this.mensajeForm.patchValue({
+      this.messageForm.patchValue({
         receptor: this.data.receptorEmail,
       });
       this.getCtrl('receptor').disable();
@@ -70,19 +73,18 @@ export class MessagesModal implements OnInit {
   }
 
   getCtrl(name: string): FormControl {
-    return this.mensajeForm.get(name) as FormControl;
+    return this.messageForm.get(name) as FormControl;
   }
 
-  enviarMensaje() {
+  sendMessage() {
     if (
-      this.mensajeForm.valid ||
+      this.messageForm.valid ||
       (this.data.modo === 'escribir' &&
         this.getCtrl('asunto').valid &&
         this.getCtrl('contenido').valid)
     ) {
       const idEmisor = this.authService.currentUser()?.id_usuario;
-      const emailDestino = this.mensajeForm.getRawValue().receptor;
-
+      const emailDestino = this.messageForm.getRawValue().receptor;
       if (!idEmisor) {
         this.messageService.showMessage(
           this.translate.instant('MESSAGES_MODAL.FEEDBACK.ERROR_SENDER'),
@@ -95,22 +97,21 @@ export class MessagesModal implements OnInit {
         .getUserByEmail(emailDestino)
         .pipe(
           takeUntilDestroyed(this.destroyRef),
-          switchMap((usuarioEncontrado) => {
-            if (!usuarioEncontrado || !usuarioEncontrado.id_usuario) {
+          switchMap((foundUser) => {
+            if (!foundUser || !foundUser.id_usuario) {
               throw new Error('usuario_no_encontrado');
             }
-
-            const nuevaComunicacion: ComunicacionModel = {
+            const newComunication: ComunicacionModel = {
               id_emisor: idEmisor,
-              id_receptor: usuarioEncontrado.id_usuario,
-              asunto: this.mensajeForm.value.asunto,
-              contenido: this.mensajeForm.value.contenido,
+              id_receptor: foundUser.id_usuario,
+              asunto: this.messageForm.value.asunto,
+              contenido: this.messageForm.value.contenido,
               tipo_comunicacion: 'mensaje',
               fecha_envio: new Date(),
               leido: false,
             };
 
-            return this.comunicationService.insertComunicacion(nuevaComunicacion);
+            return this.comunicationService.insertComunicacion(newComunication);
           }),
         )
         .subscribe({
@@ -122,7 +123,7 @@ export class MessagesModal implements OnInit {
             this.dialogRef.close();
             this.cd.markForCheck();
           },
-          error: (err: any) => {
+          error: (err: Error) => {
             const msg =
               err.message === 'usuario_no_encontrado'
                 ? this.translate.instant('MESSAGES_MODAL.FEEDBACK.USER_NOT_FOUND')

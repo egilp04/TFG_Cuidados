@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './terms.html',
   styleUrl: './terms.css',
 })
-export class Terms {
+export default class Terms {
   currentDate = new Date();
   params = {
     appName: 'CuidaDos',
