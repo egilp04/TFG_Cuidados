@@ -27,7 +27,6 @@ import { MessageService } from '../../services/message-service';
 import { HorarioModel } from '../../models/Horario';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 @Component({
   selector: 'app-management-time-global',
   standalone: true,
@@ -163,7 +162,8 @@ export class ManagementTimeGlobal implements OnInit {
   }
 
   isMobile = window.innerWidth < 768;
-  onDelete(id: string) {
+  async  onDelete(id: string) {
+    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { modo: 'eliminarAdminGlobal' },
       width: '100%',

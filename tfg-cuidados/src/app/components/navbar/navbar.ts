@@ -3,7 +3,6 @@ import { ChangeDetectorRef, Component, DestroyRef, effect, inject, OnInit } from
 import { ButtonComponent } from '../button/button';
 import { LucideAngularModule } from 'lucide-angular';
 import { MatDialog } from '@angular/material/dialog';
-import { Loginmodal } from '../../components/loginmodal/loginmodal';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -41,7 +40,7 @@ export class Navbar implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
@@ -74,34 +73,39 @@ export class Navbar implements OnInit {
       });
   }
 
-  iniciarSesion() {
+  async startSession() {
     this.closeMenu();
+    const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
+
     const dialogRef = this.dialog.open(Loginmodal, {
       data: { modo: 'login' },
       width: '500px',
     });
+
     dialogRef
       .afterClosed()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((result) => {
-        if (result && result.loginSuccess) {
-          this.comunicationService.refreshUsersData();
-          this.cd.markForCheck();
-        }
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        filter((result) => result && result.loginSuccess === true)
+      )
+      .subscribe(() => {
+        this.comunicationService.refreshUsersData();
+        this.cd.markForCheck();
       });
   }
 
-  registrarse() {
+  async registerFunction() {
     this.closeMenu();
+    const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
     this.dialog.open(Loginmodal, { data: { modo: 'registro' }, width: '500px' });
   }
 
-  modificarPerfil() {
+  modifyProfileFunction() {
     this.closeMenu();
     this.router.navigate(['/modify-profile']);
   }
 
-  verComunicaciones(tipo: string) {
+  showComunications(tipo: string) {
     this.closeMenu();
     switch (tipo) {
       case 'mensajes':

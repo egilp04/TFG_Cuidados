@@ -19,7 +19,7 @@
     <h1 class="cancel-modal-title">
       @if (data.modo === 'baja') {
         {{ 'CANCEL_MODAL.BAJA.TITLE' | translate }}
-      } @else if (data.modo === 'cancelarContrato') {
+      } @else if (data.modo === 'cancelContract') {
         {{ 'CANCEL_MODAL.CONTRACT.TITLE' | translate }}
       } @else if (data.modo === 'eliminarServicio') {
         {{ 'CANCEL_MODAL.SERVICE.TITLE' | translate }}
@@ -35,7 +35,7 @@
           <p class="text-p">{{ 'CANCEL_MODAL.BAJA.DESC_1' | translate }}</p>
           <p class="text-p">{{ 'CANCEL_MODAL.BAJA.DESC_2' | translate }}</p>
         </div>
-      } @else if (data.modo === 'cancelarContrato') {
+      } @else if (data.modo === 'cancelContract') {
         <div class="space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.CONTRACT.DESC_1' | translate }}</p>
           <ul class="list-disc pl-5 space-y-3">

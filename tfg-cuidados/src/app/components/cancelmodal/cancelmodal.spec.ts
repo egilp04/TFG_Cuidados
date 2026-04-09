@@ -39,8 +39,8 @@ describe('Cancelmodal', () => {
     expect(component.getSecondaryLabel()).toBe('CANCEL_MODAL.BTN.UNSUBSCRIBE');
   });
 
-  it('should return correct labels for cancelarContrato mode', () => {
-    component.data = { modo: 'cancelarContrato' };
+  it('should return correct labels for cancelContract mode', () => {
+    component.data = { modo: 'cancelContract' };
     expect(component.getPrimaryLabel()).toBe('CANCEL_MODAL.BTN.KEEP_CONTRACT');
     expect(component.getSecondaryLabel()).toBe('CANCEL_MODAL.BTN.CANCEL_CONTRACT');
   });

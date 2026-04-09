@@ -57,7 +57,7 @@
 
       <footer class="search-card-btn-container">
         <app-button [label]="'SEARCH_BUSINESS.BTN_MESSAGE' | translate" variant="secondary" class="flex-1"
-          (click)="enviarMensaje(empresa)"></app-button>
+          (click)="sendMessage(empresa)"></app-button>
 
         <app-button [label]="'SEARCH_BUSINESS.BTN_CONTRACT' | translate" variant="primary" class="flex-1"
           (click)="contratar(empresa)" [disabled]="!empresa.seleccion"></app-button>

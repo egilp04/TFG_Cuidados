@@ -5,7 +5,6 @@ import { CommonModule, Location } from '@angular/common';
 import { of, switchMap, filter, tap, timer, catchError, map, EMPTY } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { Modifyprofileform } from '../../components/modifyprofileform/modifyprofileform';
@@ -24,7 +23,7 @@ import { UserService } from '../../services/user.service';
 })
 export class ModifyProfilePage implements OnInit {
   private authService = inject(AuthService);
-  private usuerService = inject(UserService);
+  private userService = inject(UserService);
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private cd = inject(ChangeDetectorRef);
@@ -34,7 +33,7 @@ export class ModifyProfilePage implements OnInit {
   private location = inject(Location);
 
   userRole = signal<'cliente' | 'empresa' | 'administrador'>('cliente');
-    usuarioAEditar = signal<AuthUserModel | null>(null);
+  usuarioAEditar = signal<AuthUserModel | null>(null);
 
   ngOnInit() {
     const state = history.state as { usuario?: AuthUserModel };
@@ -50,14 +49,15 @@ export class ModifyProfilePage implements OnInit {
     }
     setTimeout(() => this.cd.detectChanges(), 0);
   }
+  
   ejecutarActualizacion(event: FormSubmitEvent) {
     const user = this.usuarioAEditar();
     const userLogueado = this.authService.currentUser();
     if (!user) return;
-        const nuevosDatos = event.datos as UpdateProfilePayload;
+    const nuevosDatos = event.datos as UpdateProfilePayload;
     const rol = event.rol;
 
-    this.usuerService
+    this.userService
       .updateProfileDirect(user.id_usuario, nuevosDatos, rol)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
@@ -91,10 +91,11 @@ export class ModifyProfilePage implements OnInit {
       )
       .subscribe();
   }
-  ejecutarBaja() {
+  async ejecutarBaja() {
     const user = this.usuarioAEditar();
     const currentUser = this.authService.currentUser();
     if (!user) return;
+    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     this.dialog
       .open(Cancelmodal, {
         width: '500px',
@@ -105,23 +106,30 @@ export class ModifyProfilePage implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter((result) => result === true),
-        switchMap(() => this.usuerService.deleteUser(user.id_usuario)),
+        switchMap(() => this.userService.deleteUser(user.id_usuario)),
         switchMap(() => {
           const soyYo = user.id_usuario === currentUser?.id_usuario;
           if (soyYo) {
             return this.authService.signOut().pipe(tap(() => this.router.navigate(['/'])));
           } else {
             this.location.back();
-            return of(null);
+            return of(true);
           }
         }),
-        tap(() => {
-          this.messageService.showMessage('Usuario eliminado correctamente', 'exito');
-        }),
+        catchError((err) => {
+          console.error('Error al dar de baja:', err);
+          this.messageService.showMessage('Hubo un error al eliminar el usuario', 'error');
+          return of(false);
+        })
       )
-      .subscribe();
+      .subscribe((exito) => {
+        if (exito) {
+          this.messageService.showMessage('Usuario eliminado correctamente', 'exito');
+        }
+      });
   }
-  volverAHome() {
+
+  backHome() {
     this.location.back();
   }
 }

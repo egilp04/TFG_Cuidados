@@ -867,7 +867,7 @@
   }
 
   .message-noti {
-    @apply flex flex-col mt-20 w-full max-h-screen gap-20 justify-center;
+    @apply flex flex-col mt-20 w-full max-h-screen gap-20 justify-center z-40;
   }
 
   .mangment-admin-btn-container {
@@ -983,7 +983,6 @@
   .messages-page-subtitle {
     @apply w-full text-h1 text-primary font-serif mb-20 text-center dark:text-surface;
   }
-
   .dropdown-container {
     @apply relative z-20 w-full sm:w-fit;
   }
@@ -1079,7 +1078,6 @@
   .management-time-global-table-title {
     @apply text-secondary text-h2 text-center dark:text-surface;
   }
-
   .ia-container {
     @apply fixed bottom-44 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
   }

@@ -56,9 +56,9 @@ describe('MessagesModal', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should patch value in ngOnInit if verMensaje', () => {
+  it('should patch value in ngOnInit if showMessagee', () => {
     component.data = {
-      modo: 'verMensaje',
+      modo: 'showMessage',
       contenido: {
         Emisor: { nombre: 'Juan' },
         Receptor: { nombre: 'Pepe' },

@@ -19,7 +19,6 @@ import { AuthService } from '../../services/auth.service';
 import { ContractService } from '../../services/contract.service';
 import { MessageService } from '../../services/message-service';
 import { ContratoModel } from '../../models/Contrato';
-import { MessagesModal } from '../../components/messages-modal/messages-modal';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { EmpresaModel, ServicioHorarioResponse } from '../../models/Bussiness-Service';
 import { BusinessService } from '../../services/business.service';
@@ -181,7 +180,8 @@ export class SearchBusiness implements OnInit {
           });
       });
   }
-  enviarMensaje(empresa: EmpresaUI) {
+
+  async sendMessage(empresa: EmpresaUI) {
     const user = this.authService.currentUser();
     if (!user) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.LOGIN_MSG_REQUIRED').subscribe((res) => {
@@ -189,7 +189,7 @@ export class SearchBusiness implements OnInit {
       });
       return;
     }
-
+    const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
     this.dialog.open(MessagesModal, {
       data: {
         modo: 'escribir',

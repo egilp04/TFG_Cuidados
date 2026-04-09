@@ -26,7 +26,6 @@ import { MessageService } from '../../services/message-service';
 import { ServicioModel } from '../../models/Servicio';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { AuthService } from '../../services/auth.service';
-import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -146,7 +145,8 @@ export class ManagementServicesGlobal implements OnInit {
   }
 
   isMobile = window.innerWidth < 768;
-  onDelete(id: string) {
+  async onDelete(id: string) {
+    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { modo: 'eliminarAdminGlobal' },
       width: '100%',

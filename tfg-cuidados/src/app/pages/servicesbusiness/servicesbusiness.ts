@@ -16,8 +16,6 @@ import { AuthService } from '../../services/auth.service';
 import { ButtonComponent } from '../../components/button/button';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { MessageService } from '../../services/message-service';
-import { ServiceTimeModal } from '../../components/service-time-modal/service-time-modal';
-import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { ServiceTimeService } from '../../services/service-time.service';
 import { ServicioHorarioJoined } from '../../models/Service-Time-Service';
 
@@ -48,9 +46,10 @@ export class Servicesbusiness implements OnInit {
   displayedColumns: string[] = ['nombre', 'precio', 'tipo', 'hora', 'dia', 'acciones'];
 
   ngOnInit() {
-    this.cargarServicios();
+    this.chargeServices();
   }
-  cargarServicios() {
+
+  chargeServices() {
     const empresaId = this.authService.currentUser()?.id_usuario;
     if (empresaId) {
       this.serviceTimeService
@@ -64,7 +63,9 @@ export class Servicesbusiness implements OnInit {
   }
 
   isMobile = window.innerWidth < 768;
-  openModal(element?: ServicioHorarioJoined) {
+  
+  async openModal(element?: ServicioHorarioJoined) {
+    const { ServiceTimeModal } = await import('../../components/service-time-modal/service-time-modal');
     const dialogRef = this.dialog.open(ServiceTimeModal, {
       width: '100%',
       maxWidth: this.isMobile ? '95vw' : '600px',
@@ -78,17 +79,17 @@ export class Servicesbusiness implements OnInit {
         filter((result) => result === true),
       )
       .subscribe(() => {
-        this.cargarServicios();
+        this.chargeServices();
       });
   }
 
-  onDelete(id: string) {
+  async onDelete(id: string) {
+    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
       maxWidth: this.isMobile ? '95vw' : '600px',
       data: { modo: 'eliminarServicio' },
     });
-
     dialogRef
       .afterClosed()
       .pipe(
@@ -110,7 +111,7 @@ export class Servicesbusiness implements OnInit {
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
         if (resultado.type === 'exito') {
-          this.cargarServicios();
+          this.chargeServices();
         }
         this.cd.markForCheck();
       });

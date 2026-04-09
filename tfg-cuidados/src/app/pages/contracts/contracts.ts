@@ -9,9 +9,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { switchMap, filter, catchError, map } from 'rxjs/operators';
 import { ButtonComponent } from '../../components/button/button';
 import { ContractService } from '../../services/contract.service';
-import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { MessageService } from '../../services/message-service';
-import { InfoContract } from '../../components/info-contract/info-contract';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { ContratoDetalle } from '../../models/Contrato';
 
@@ -46,10 +44,10 @@ export class Contracts implements OnInit {
   isMobile = window.innerWidth < 768;
 
   ngOnInit() {
-    this.suscribirAContratos();
+    this.subcribeContracts();
   }
 
-  private suscribirAContratos() {
+  private subcribeContracts() {
     this.contractService
       .getContractsObservable()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -65,9 +63,10 @@ export class Contracts implements OnInit {
       });
   }
 
-  cancelarContrato(id: string) {
+  async cancelContract(id: string) {
+    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
-      data: { modo: 'cancelarContrato' },
+      data: { modo: 'cancelContract' },
       width: '100%',
       maxWidth: this.isMobile ? '95vw' : '650px',
       panelClass: 'custom-modal-padding',
@@ -101,21 +100,30 @@ export class Contracts implements OnInit {
       });
   }
 
-  verDetalles(id: string) {
+  async showDetails(id: string){
+    const { InfoContract } = await import('../../components/info-contract/info-contract');
+    const dialogConfig = {
+      width: '100%',
+      maxWidth: this.isMobile ? '95vw' : '500px',
+    };
     const contratoYaMapeado = this.dataSource.data.find((c) => c.id_contrato === id);
     if (contratoYaMapeado) {
       this.dialog.open(InfoContract, {
-        width: '100%',
-        maxWidth: this.isMobile ? '95vw' : '500px',
+        ...dialogConfig,
         data: { contrato: contratoYaMapeado },
       });
     } else {
-      this.contractService.getContractsById(id).subscribe((contrato) => {
-        this.dialog.open(InfoContract, {
-          width: '100%',
-          maxWidth: '450px',
-          data: { contrato: contrato },
-        });
+      this.contractService.getContractsById(id).subscribe({
+        next: (contrato) => {
+          this.dialog.open(InfoContract, {
+            ...dialogConfig,
+            data: { contrato: contrato },
+          });
+        },
+        error: (err) => {
+          console.error('Error al obtener el contrato:', err);
+          this.messageService.showMessage('No se pudieron cargar los detalles del contrato', 'error');
+        }
       });
     }
   }

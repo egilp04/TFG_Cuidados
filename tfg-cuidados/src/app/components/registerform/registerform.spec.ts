@@ -78,7 +78,7 @@ describe('Registerform', () => {
     spyOn(component.formSubmitted, 'emit');
     component.isUser = true;
 
-    (component as any).configurarValidadores();
+    (component as any).setValidators();
 
     const validDNI = '00000000T';
     const today = new Date();

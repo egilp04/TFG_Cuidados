@@ -4,7 +4,6 @@ import { CardsLanding } from '../../components/cards-landing/cards-landing';
 import cardsdata from '../../../assets/data/Cards.json';
 import { MatDialog } from '@angular/material/dialog';
 import { Card } from '../../interfaces/card';
-import { Loginmodal } from '../../components/loginmodal/loginmodal';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -17,7 +16,9 @@ import { TranslateModule } from '@ngx-translate/core';
 export class Landing {
   public cardsdata: Card[] = cardsdata;
   private dialog = inject(MatDialog);
-  abrirModal() {
+  
+  async openModal() {
+    const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
     this.dialog.open(Loginmodal, { data: { modo: 'registro' }, width: '500px' });
   }
 }

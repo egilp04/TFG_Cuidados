@@ -7,7 +7,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivitiesComponents } from '../../components/activities-components/activities-components';
 import { MatDialog } from '@angular/material/dialog';
-import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, map, switchMap } from 'rxjs';
 import { ContratoDetalle } from '../../models/Contrato';
@@ -29,10 +28,10 @@ export class Activities {
   private translate = inject(TranslateService);
 
   ngOnInit() {
-    this.suscribirAContratos();
+    this.subcribeContracts();
   }
 
-  private suscribirAContratos() {
+  private subcribeContracts() {
     this.contractService
       .getContractsObservable()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -46,38 +45,33 @@ export class Activities {
   }
 
   isMobile = window.innerWidth < 768;
-  cancelarContrato(id: string) {
-    const dialogRef = this.dialog.open(Cancelmodal, {
-      data: { modo: 'cancelarContrato' },
+
+  async cancelContract(id: string) {
+    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
+    this.dialog.open(Cancelmodal, {
+      data: { modo: 'cancelContract' },
       width: '100%',
       maxWidth: this.isMobile ? '95vw' : '650px',
-    });
-
-    dialogRef
+    })
       .afterClosed()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((result) => {
-        if (result === true) {
-          this.contractService
-            .deleteContract(id)
-            .pipe(
-              switchMap(() =>
-                this.translate
-                  .get('MESSAGES.SUCCESS.CANCELCONTRACT')
-                  .pipe(map((msg) => ({ texto: msg, tipo: 'exito' as const }))),
-              ),
-              catchError(() =>
-                this.translate
-                  .get('MESSAGES.ERROR.CANCELCONTRACT')
-                  .pipe(map((msg) => ({ texto: msg, tipo: 'error' as const }))),
-              ),
-            )
-            .subscribe({
-              next: (resultado) => {
-                this.messageService.showMessage(resultado.texto, resultado.tipo);
-              },
-            });
-        }
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        filter((result) => result === true),
+        switchMap(() => this.contractService.deleteContract(id)),
+        switchMap(() =>
+          this.translate
+            .get('MESSAGES.SUCCESS.CANCELCONTRACT')
+            .pipe(map((msg) => ({ texto: msg, tipo: 'exito' as const })))
+        ),
+        catchError((err) => {
+          console.error('Error al cancelar el contrato:', err);
+          return this.translate
+            .get('MESSAGES.ERROR.CANCELCONTRACT')
+            .pipe(map((msg) => ({ texto: msg, tipo: 'error' as const })));
+        })
+      )
+      .subscribe((resultado) => {
+        this.messageService.showMessage(resultado.texto, resultado.tipo);
       });
   }
 }

@@ -17,7 +17,7 @@
     {{ 'MESSAGES_PAGE.TITLE' | translate }}
   </h1>
   <header class="messages-page-btn-container">
-    <button class="messages-btn-new-message group" (click)="escribirMensaje()">
+    <button class="messages-btn-new-message group" (click)="writeMessage()">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" class="message-new-message-icon" role="img"
         aria-label="Editar mensaje">
@@ -29,16 +29,16 @@
         {{ 'MESSAGES_PAGE.NEW_MSG' | translate }}
       </span>
     </button>
-    <app-button (click)="filtrar('recibidos')" variant="primary" [label]="'MESSAGES.RECEIVED' | translate">
+    <app-button (click)="toFilterFunction('recibidos')" variant="primary" [label]="'MESSAGES.RECEIVED' | translate">
     </app-button>
 
-    <app-button variant="primary" (click)="filtrar('enviados')" [label]="'MESSAGES.SENT' | translate">
+    <app-button variant="primary" (click)="toFilterFunction('enviados')" [label]="'MESSAGES.SENT' | translate">
     </app-button>
     <app-dropdown [label]="'MESSAGES_PAGE.SORT_LABEL' | translate" [options]="[
         'MESSAGES_PAGE.SORT_OPTIONS.DATE',
         'MESSAGES_PAGE.SORT_OPTIONS.SUBJECT_AZ',
         'MESSAGES_PAGE.SORT_OPTIONS.SUBJECT_ZA',
-      ]" (onSelect)="ordenar($event)"></app-dropdown>
+      ]" (onSelect)="sortFunction($event)"></app-dropdown>
   </header>
   <div class="flex flex-col p-10 w-full">
     <h2 class="messages-page-subtitle">
@@ -91,9 +91,9 @@
           <td mat-cell *matCellDef="let mensaje" class="p-4 text-center">
             <div class="flex justify-center gap-4 p-10">
               <app-button [label]="'MESSAGES_PAGE.TABLE.BTN_DELETE' | translate" variant="secondary"
-                (click)="borrarMensaje(mensaje)"></app-button>
+                (click)="deleteCommunication(mensaje)"></app-button>
               <app-button [label]="'MESSAGES_PAGE.TABLE.BTN_VIEW' | translate" variant="primary"
-                (click)="verMensaje(mensaje)"></app-button>
+                (click)="showMessagee(mensaje)"></app-button>
             </div>
           </td>
         </ng-container>

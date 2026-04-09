@@ -76,7 +76,7 @@ export class Notifications implements OnInit {
     }
   }
 
-  borrarMensaje(mensaje: ComunicacionModel) {
+  deleteCommunication(mensaje: ComunicacionModel) {
     this.comunicationService
       .deleteComunicacion(mensaje)
       .pipe(

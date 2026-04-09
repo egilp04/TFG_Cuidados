@@ -7,7 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { MessageService } from '../../services/message-service';
-import { Cancelmodal } from '../../components/cancelmodal/cancelmodal';
 import { TableCrudAdmin } from '../../components/table-crud-admin/table-crud-admin';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { ButtonComponent } from '../../components/button/button';
@@ -55,7 +54,8 @@ export class ManagementAdmin implements OnInit {
   }
 
   isMobile = window.innerWidth < 768;
-  onEliminarUsuario(item: UserModel) {
+  async onEliminarUsuario(item: UserModel) {
+    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
       maxWidth: this.isMobile ? '95vw' : '500px',

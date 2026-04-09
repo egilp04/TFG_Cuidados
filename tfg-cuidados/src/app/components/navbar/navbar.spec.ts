@@ -95,7 +95,7 @@ describe('Navbar', () => {
   });
 
   it('should navigate to modify profile', () => {
-    component.modificarPerfil();
+    component.modifyProfileFunction();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/modify-profile']);
   });
 
@@ -108,17 +108,17 @@ describe('Navbar', () => {
   });
 
   it('should navigate to messages when type is mensajes', () => {
-    component.verComunicaciones('mensajes');
+    component.showComunications('mensajes');
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/messages']);
   });
 
   it('should navigate to notifications when type is notificaciones', () => {
-    component.verComunicaciones('notificaciones');
+    component.showComunications('notificaciones');
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/notifications']);
   });
 
   it('should open login dialog and refresh data on success', () => {
-    component.iniciarSesion();
+    component.startSession();
 
     expect(dialogSpy.open).toHaveBeenCalled();
     expect(comunicationServiceSpy.refreshUsersData).toHaveBeenCalled();

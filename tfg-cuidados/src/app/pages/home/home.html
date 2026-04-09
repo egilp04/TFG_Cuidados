@@ -4,71 +4,35 @@
   </h1>
   <main class="home-btn-container">
     @if (rol === 'cliente') {
-      <app-button
-        [label]="'MAIN_MENU.CLIENT.SEARCH_COMPANIES' | translate"
-        variant="primary"
-        class="home-btn"
-        (click)="buscarEmpresas()"
-      ></app-button>
-      <app-button
-        [label]="'MAIN_MENU.CLIENT.MY_SERVICES' | translate"
-        variant="primary"
-        class="home-btn"
-        (click)="verContratos()"
-      ></app-button>
+    <app-button [label]="'MAIN_MENU.CLIENT.SEARCH_COMPANIES' | translate" variant="primary" class="home-btn"
+      (click)="buscarEmpresas()"></app-button>
+    <app-button [label]="'MAIN_MENU.CLIENT.MY_SERVICES' | translate" variant="primary" class="home-btn"
+      (click)="verContratos()"></app-button>
     } @else if (rol === 'empresa') {
-      <app-button
-        [label]="'MAIN_MENU.COMPANY.MANAGE_SERVICES' | translate"
-        variant="primary"
-        class="home-btn"
-        (click)="gestionarServicios()"
-      ></app-button>
-      <app-button
-        [label]="'MAIN_MENU.COMPANY.ALL_CONTRACTS' | translate"
-        variant="primary"
-        class="home-btn"
-        (click)="verContratos()"
-      ></app-button>
+    <app-button [label]="'MAIN_MENU.COMPANY.MANAGE_SERVICES' | translate" variant="primary" class="home-btn"
+      (click)="gestionarServicios()"></app-button>
+    <app-button [label]="'MAIN_MENU.COMPANY.ALL_CONTRACTS' | translate" variant="primary" class="home-btn"
+      (click)="verContratos()"></app-button>
     } @else if (rol === 'administrador') {
-      <app-button
-        [label]="'MAIN_MENU.ADMIN.DASHBOARD' | translate"
-        variant="primary"
-        class="home-btn"
-        (click)="verDashboard()"
-      ></app-button>
-      <app-button
-        [label]="'MAIN_MENU.ADMIN.MANAGE_USERS' | translate"
-        variant="primary"
-        class="home-btn"
-        (click)="gestionarUsuarios()"
-      ></app-button>
-      <app-button
-        [label]="'MAIN_MENU.ADMIN.MANAGE_COMPANIES' | translate"
-        variant="primary"
-        class="home-btn"
-        (click)="gestionarEmpresas()"
-      ></app-button>
-      <app-button
-        [label]="'MAIN_MENU.ADMIN.MANAGE_SERVICES' | translate"
-        variant="primary"
-        class="home-btn"
-        (click)="gestionrServiciosGlobales()"
-      ></app-button>
-      <app-button
-        [label]="'MAIN_MENU.ADMIN.MANAGE_SCHEDULES' | translate"
-        variant="primary"
-        class="home-btn"
-        (click)="gestionrHorariosGlobales()"
-      ></app-button>
+    <app-button [label]="'MAIN_MENU.ADMIN.DASHBOARD' | translate" variant="primary" class="home-btn"
+      (click)="verDashboard()"></app-button>
+    <app-button [label]="'MAIN_MENU.ADMIN.MANAGE_USERS' | translate" variant="primary" class="home-btn"
+      (click)="gestionarUsuarios()"></app-button>
+    <app-button [label]="'MAIN_MENU.ADMIN.MANAGE_COMPANIES' | translate" variant="primary" class="home-btn"
+      (click)="gestionarEmpresas()"></app-button>
+    <app-button [label]="'MAIN_MENU.ADMIN.MANAGE_SERVICES' | translate" variant="primary" class="home-btn"
+      (click)="gestionrServiciosGlobales()"></app-button>
+    <app-button [label]="'MAIN_MENU.ADMIN.MANAGE_SCHEDULES' | translate" variant="primary" class="home-btn"
+      (click)="gestionrHorariosGlobales()"></app-button>
     }
     @if (rol != 'administrador') {
-      <app-button
-        [label]="'MAIN_MENU.COMMON.ACTIVITIES' | translate"
-        variant="primary"
-        class="home-btn md:mb-20"
-        (click)="actividadesProgramadas()"
-      ></app-button>
+    <app-button [label]="'MAIN_MENU.COMMON.ACTIVITIES' | translate" variant="primary" class="home-btn md:mb-20"
+      (click)="actividadesProgramadas()"></app-button>
     }
+    @defer (on idle) {
     <app-ai-assistant></app-ai-assistant>
+    } @placeholder {
+    <div></div>
+    }
   </main>
 </section>

@@ -22,7 +22,7 @@
           <lucide-icon
             [name]="'mail'"
             class="nav-menu-icon"
-            (click)="verComunicaciones('mensajes')"
+            (click)="showComunications('mensajes')"
           ></lucide-icon>
           @if (countMensajes$ | async; as countMensajes) {
             <span class="nav-notis-toggle">{{ countMensajes }}</span>
@@ -33,7 +33,7 @@
           <lucide-icon
             [name]="'bell'"
             class="nav-menu-icon"
-            (click)="verComunicaciones('notificaciones')"
+            (click)="showComunications('notificaciones')"
           ></lucide-icon>
           @if (countNotificaciones$ | async; as countNotis) {
             <span class="nav-notis-toggle">{{ countNotis }}</span>
@@ -43,7 +43,7 @@
         <lucide-icon
           [name]="'user'"
           class="nav-menu-icon"
-          (click)="modificarPerfil()"
+          (click)="modifyProfileFunction()"
         ></lucide-icon>
 
         <app-button
@@ -57,12 +57,12 @@
       <app-button
         [label]="'NAVBAR.REGISTER' | translate"
         variant="secondary"
-        (onClick)="registrarse()"
+        (onClick)="registerFunction()"
       ></app-button>
       <app-button
         [label]="'NAVBAR.LOGIN' | translate"
         variant="primary"
-        (onClick)="iniciarSesion()"
+        (onClick)="startSession()"
       ></app-button>
     }
     <app-dark-mode-btn></app-dark-mode-btn>
@@ -73,7 +73,7 @@
       @if (authService.isAuthenticated()) {
         <div class="nav-menu-open-autenticated-container">
           <div class="nav-menu-open-divs">
-            <div class="relative" (click)="verComunicaciones('mensajes')">
+            <div class="relative" (click)="showComunications('mensajes')">
               <lucide-icon [name]="'mail'" class="nav-open-icon"></lucide-icon>
               @if (countMensajes$ | async; as countMensajes) {
                 <span class="nav-notis">{{ countMensajes }}</span>
@@ -81,7 +81,7 @@
               <span class="sr-only">Mensajes</span>
             </div>
 
-            <div class="relative" (click)="verComunicaciones('notificaciones')">
+            <div class="relative" (click)="showComunications('notificaciones')">
               <lucide-icon [name]="'bell'" class="nav-open-icon"></lucide-icon>
               @if (countNotificaciones$ | async; as countNotis) {
                 <span class="nav-notis">{{ countNotis }}</span>
@@ -89,7 +89,7 @@
               <span class="sr-only">Notificaciones</span>
             </div>
 
-            <div (click)="modificarPerfil()">
+            <div (click)="modifyProfileFunction()">
               <lucide-icon [name]="'user'" class="nav-open-icon"></lucide-icon>
             </div>
           </div>
@@ -108,13 +108,13 @@
             [label]="'NAVBAR.REGISTER' | translate"
             variant="secondary"
             class="w-full"
-            (onClick)="registrarse()"
+            (onClick)="registerFunction()"
           ></app-button>
           <app-button
             [label]="'NAVBAR.LOGIN' | translate"
             variant="primary"
             class="w-full"
-            (onClick)="iniciarSesion()"
+            (onClick)="startSession()"
           ></app-button>
         </div>
       }

@@ -91,22 +91,22 @@ export class Registerform implements OnInit {
   );
 
   ngOnInit(): void {
-    this.configurarValidadores();
+    this.setValidators();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isUser']) {
       this.registerForm.reset();
-      this.configurarValidadores();
+      this.setValidators();
     }
   }
 
   onSubmit() {
     if (this.registerForm.valid) {
       const formValue = this.registerForm.getRawValue();
-      let datosParaEnviar: RegisterFormData;
+      let dataToSend: RegisterFormData;
       if (this.isUser) {
-        datosParaEnviar = {
+        dataToSend = {
           rol: 'cliente',
           email: (formValue.email || '').trim(),
           password: (formValue.password || '').trim(),
@@ -122,7 +122,7 @@ export class Registerform implements OnInit {
           comunidad: formValue.comunidad,
         };
       } else {
-        datosParaEnviar = {
+        dataToSend = {
           rol: 'empresa',
           email: (formValue.email || '').trim(),
           password: (formValue.password || '').trim(),
@@ -136,7 +136,7 @@ export class Registerform implements OnInit {
           comunidad: formValue.comunidad,
         };
       }
-      this.formSubmitted.emit({ datos: datosParaEnviar, esCliente: this.isUser });
+      this.formSubmitted.emit({ datos: dataToSend, esCliente: this.isUser });
     } else {
       this.registerForm.markAllAsTouched();
     }
@@ -186,7 +186,7 @@ export class Registerform implements OnInit {
     return key ? this.translate.instant(key) : this.translate.instant('REGISTER.ERRORS.INVALID');
   }
 
-  private configurarValidadores() {
+  private setValidators() {
     const camposUser = ['ape1', 'ape2', 'fechnac', 'dni', 'nombre'];
     const camposEmpresa = ['nombreEmpresa', 'cif', 'descripcion'];
     if (this.isUser) {

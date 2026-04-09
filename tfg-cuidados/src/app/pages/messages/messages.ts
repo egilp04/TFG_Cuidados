@@ -11,7 +11,6 @@ import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/mat
 import { PaginacionEs } from '../../services/paginacion-es';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MessagesModal } from '../../components/messages-modal/messages-modal';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
@@ -50,15 +49,15 @@ export class Messages implements OnInit {
   public filtroActual: 'recibidos' | 'enviados' = 'recibidos';
 
   ngOnInit() {
-    this.suscribirAMensajes();
+    this.subcribeToMessages();
   }
 
-  filtrar(tipo: 'recibidos' | 'enviados') {
+  toFilterFunction(tipo: 'recibidos' | 'enviados') {
     this.filtroActual = tipo;
     this.comunicationService.refreshUsersData();
   }
 
-  private suscribirAMensajes() {
+  private subcribeToMessages() {
     const user = this.authService.currentUser();
     if (!user) return;
 
@@ -86,7 +85,7 @@ export class Messages implements OnInit {
       });
   }
 
-  ordenar(criterio: string) {
+  sortFunction(criterio: string) {
     const data = [...this.dataSource.data];
     switch (criterio) {
       case 'MESSAGES_PAGE.SORT_OPTIONS.DATE':
@@ -102,22 +101,28 @@ export class Messages implements OnInit {
     this.dataSource.data = data;
   }
 
-  verMensaje(mensaje: ComunicacionModel) {
+  async showMessage(mensaje: ComunicacionModel) {
+    const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
     this.dialog.open(MessagesModal, {
-      data: { modo: 'verMensaje', contenido: mensaje },
+      data: { modo: 'showMessage', contenido: mensaje },
       width: '600px',
     });
-
     const user = this.authService.currentUser();
     if (user && mensaje.id_receptor === user.id_usuario && !mensaje.leido) {
+      mensaje.leido = true;
       this.comunicationService
         .updateComunicacion(mensaje.id_comunicacion!, { leido: true })
-        .pipe(takeUntilDestroyed(this.destroyRef))
+        .pipe(takeUntilDestroyed(this.destroyRef),
+          catchError((err) => {
+            mensaje.leido = false;
+            console.error('Error al marcar mensaje como leído en segundo plano:', err);
+            return of(null);
+          }))
         .subscribe();
     }
   }
 
-  borrarMensaje(mensaje: ComunicacionModel) {
+  deleteCommunication(mensaje: ComunicacionModel) {
     this.comunicationService
       .deleteComunicacion(mensaje)
       .pipe(
@@ -140,7 +145,8 @@ export class Messages implements OnInit {
   }
 
   isMobile = window.innerWidth < 768;
-  escribirMensaje() {
+
+  writeMessage() {
     this.dialog.open(MessagesModal, {
       data: { modo: 'escribir' },
       width: '100%',
