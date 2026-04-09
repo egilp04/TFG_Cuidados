@@ -15,6 +15,7 @@ import {
   FormGroup,
   AbstractControl,
   ValidationErrors,
+  AsyncValidatorFn
 } from '@angular/forms';
 import { ButtonComponent } from '../button/button';
 import { Inputs } from '../inputs/inputs';

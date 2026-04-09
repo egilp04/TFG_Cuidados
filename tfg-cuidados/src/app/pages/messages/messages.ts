@@ -15,7 +15,8 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
-import { of } from 'rxjs'; 
+import { of } from 'rxjs';
+import type { MessagesModal } from '../../components/messages-modal/messages-modal'; 
 
 @Component({
   selector: 'app-messages',
@@ -103,7 +104,8 @@ export default class Messages implements OnInit {
   }
 
   async showMessage(mensaje: ComunicacionModel) {
-    const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
+    const modalModule = await import('../../components/messages-modal/messages-modal');
+
     this.dialog.open(MessagesModal, {
       data: { modo: 'showMessage', contenido: mensaje },
       width: '600px',

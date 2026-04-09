@@ -43,7 +43,7 @@ import { UserModel } from '../../models/User-Service';
 export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
   private destroyRef = inject(DestroyRef);
   @Input() modo: 'cliente' | 'empresa' = 'cliente';
-  @Input() itemData: UserModel[] = [];
+  @Input() data: UserModel[] = [];
   @Output() deleteData = new EventEmitter<UserModel>();
   @Output() modifyData = new EventEmitter<UserModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -62,8 +62,8 @@ export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['itemData'] && changes['itemData'].currentValue) {
-      this.dataSource.data = changes['itemData'].currentValue;
+    if (changes['data'] && changes['data'].currentValue) {
+      this.dataSource.data = changes['data'].currentValue;
       if (this.searchControl.value) {
         this.dataSource.filter = this.searchControl.value.trim().toLowerCase();
       }
