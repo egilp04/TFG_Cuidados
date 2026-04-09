@@ -18,7 +18,7 @@ export class Inputs {
   isPasswordVisible = signal(false);
   
   inputType = computed(() => {
-    if (this.type() !== 'password') {
+    if (this.type() != 'password') {
       return this.type();
     }
     return this.isPasswordVisible() ? 'text' : 'password';
