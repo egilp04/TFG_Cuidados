@@ -152,15 +152,15 @@
   }
 
   .mat-mdc-paginator-outer-container {
-    @apply !bg-surface dark:bg-surface-dark !;
+    @apply !bg-surface dark:bg-surface-dark!;
   }
 
   .mat-mdc-paginator {
-    @apply !bg-surface dark:bg-surface-dark ! !text-primary dark:text-surface ! py-20;
+    @apply !bg-surface dark:bg-surface-dark! !text-primary dark:text-surface! py-20;
   }
 
   .mat-mdc-paginator .mat-mdc-icon-button {
-    @apply !text-primary dark:text-surface ! my-10;
+    @apply !text-primary dark:text-surface! my-10;
   }
 
   .mat-mdc-paginator .mat-mdc-select-value {
@@ -174,7 +174,7 @@
 
   /* modales */
   .mat-mdc-dialog-surface {
-    @apply bg-transparent ! dark:border dark:border-gray-200 rounded-12 !;
+    @apply bg-transparent! dark:border dark:border-gray-200 rounded-12!;
   }
 
   main {
@@ -558,7 +558,7 @@
   }
 
   .input-text-area {
-    @apply w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary dark:border-surface ! border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent h-120 xl:h-150 resize-none text-primary dark:text-surface dark:placeholder:text-surface;
+    @apply w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary dark:border-surface! border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent h-120 xl:h-150 resize-none text-primary dark:text-surface dark:placeholder:text-surface;
   }
 
   .input-area-modify-profile-container {
@@ -566,11 +566,11 @@
   }
 
   .input-basic {
-    @apply w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary dark:border-surface ! border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent placeholder:text-gray-400 dark:text-surface dark:placeholder:text-white;
+    @apply w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary dark:border-surface! border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent placeholder:text-gray-400 dark:text-surface dark:placeholder:text-white;
   }
 
   .eye-passwd {
-    @apply absolute right-4 top-1/2 -translate-y-1/2 text-primary dark:text-surface ! hover:text-accent focus:outline-none cursor-pointer flex items-center justify-center p-1;
+    @apply absolute right-4 top-1/2 -translate-y-1/2 text-primary dark:text-surface! hover:text-accent focus:outline-none cursor-pointer flex items-center justify-center p-1;
   }
 
   .input-error-text {
@@ -606,11 +606,11 @@
   }
 
   .login-modal-container {
-    @apply p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark !;
+    @apply p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark!;
   }
 
   .service-modal-container {
-    @apply p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface ! dark:bg-surface-dark !;
+    @apply p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface! dark:bg-surface-dark!;
   }
 
   .modal-close-btn {
@@ -630,7 +630,7 @@
   }
 
   .login-form-reset {
-    @apply p-0 ! flex ! flex-col ! gap-10 w-full justify-center items-center;
+    @apply p-0! flex! flex-col! gap-10 w-full justify-center items-center;
   }
 
   .login-login-error {
@@ -642,7 +642,7 @@
   }
 
   .login-other-actions {
-    @apply flex ! flex-col ! mb-10 ! gap-4 w-full;
+    @apply flex! flex-col! mb-10! gap-4 w-full;
   }
 
   .login-recuperar-container {
@@ -694,7 +694,7 @@
   }
 
   .register-form-select {
-    @apply text-primary dark:text-surface appearance-none bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary dark:border-surface ! border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer;
+    @apply text-primary dark:text-surface appearance-none bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary dark:border-surface! border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer;
   }
 
   .register-form-col {
@@ -990,7 +990,7 @@
   }
 
   .cancel-modal-content {
-    @apply p-0 ! m-0 ! w-full;
+    @apply p-0! m-0! w-full;
   }
 
   .cancel-modal-text {
@@ -998,7 +998,7 @@
   }
 
   .cancel-modal-action-container {
-    @apply flex flex-col ! items-center gap-6 w-full m-0 ! p-0 !;
+    @apply flex flex-col! items-center gap-6 w-full m-0! p-0!;
   }
 
   .notifications-title {
@@ -1006,7 +1006,7 @@
   }
 
   .notifications-name {
-    @apply cursor-pointer font-bold transition-colors duration-500 !text-label;
+    @apply cursor-pointer font-bold transition-colors duration-500! text-label;
   }
 
   .notifications-container {
@@ -1014,7 +1014,7 @@
   }
 
   .notifications-table-container {
-    @apply flex flex-col p-10 w-full max-w-6xl bg-surface ! rounded-2xl shadow-md border border-disabled ! dark:bg-surface-dark ! mb-20;
+    @apply flex flex-col p-10 w-full max-w-6xl bg-surface! rounded-2xl shadow-md border border-disabled! dark:bg-surface-dark! mb-20;
   }
 
   .notifications-table-container-inner {
@@ -1050,7 +1050,7 @@
   }
 
   .messages-page-header {
-    @apply bg-surface ! text-primary ! dark:bg-surface-dark ! dark:text-surface ! p-4;
+    @apply bg-surface! text-primary! dark:bg-surface-dark! dark:text-surface! p-4;
   }
 
   .messages-page-content {
@@ -1374,7 +1374,7 @@
   }
 
   .info-contract-content {
-    @apply p-0 ! flex ! flex-col ! gap-4 w-full text-left max-w-lg text-primary dark:text-surface;
+    @apply p-0! flex! flex-col! gap-4 w-full text-left max-w-lg text-primary dark:text-surface;
   }
 
   .info-contract-activity-title {
