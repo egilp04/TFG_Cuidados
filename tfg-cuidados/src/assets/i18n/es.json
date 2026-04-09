@@ -201,7 +201,7 @@
       "SUBTITLE": "porque cuidar es cosa de dos"
     },
     "SERVICES": "Servicios",
-    "REGISTER": "Registrarse",
+    "REGISTER": "Registrar",
     "CARDS": {
       "CONTRATACION": {
         "TITLE": "Contrata fácilmente",
@@ -548,7 +548,7 @@
       "PART_2": "y la Política de Privacidad, y autorizo el tratamiento de mis datos personales.",
       "ERROR": "Debes aceptar los términos para continuar"
     },
-    "BTN": "Registrarse",
+    "BTN": "Registrar",
     "ERRORS": {
       "REQUIRED": "Este campo es obligatorio",
       "EMAIL": "Formato de correo inválido",
@@ -658,7 +658,7 @@
   "LOGIN_MODAL": {
     "TITLES": {
       "LOGIN": "Iniciar Sesión",
-      "REGISTER": "Registrarse",
+      "REGISTER": "Registrar",
       "RECOVER": "Recuperar Contraseña",
       "RESEND": "Reenviar email de registro",
       "NOTITLE": "No disponible"
@@ -676,7 +676,7 @@
     "BTN": {
       "ENTER": "Entrar",
       "FORGOT": "He olvidado mi contraseña",
-      "REGISTER": "Registrarse",
+      "REGISTER": "Registrar",
       "REG_USER": "Registrarse como usuario",
       "REG_COMPANY": "Registrarse como empresa",
       "HAVE_ACCOUNT": "Ya tengo cuenta",
