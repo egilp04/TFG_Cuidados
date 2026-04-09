@@ -25,7 +25,7 @@ import { FormSubmittedEvent } from '../../models/RegisterForm';
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-export class Register implements OnInit {
+export default class Register implements OnInit {
   private router = inject(Router);
   public authService = inject(AuthService);
   private cd = inject(ChangeDetectorRef);

@@ -32,7 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './recover-password.html',
   styleUrl: './recover-password.css',
 })
-export class RecoverPasswordPage {
+export default class RecoverPasswordPage {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);

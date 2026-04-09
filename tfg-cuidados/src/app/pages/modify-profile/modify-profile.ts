@@ -21,7 +21,7 @@ import { UserService } from '../../services/user.service';
   templateUrl: './modify-profile.html',
   styleUrl: './modify-profile.css',
 })
-export class ModifyProfilePage implements OnInit {
+export default class ModifyProfilePage implements OnInit {
   private authService = inject(AuthService);
   private userService = inject(UserService);
   private router = inject(Router);

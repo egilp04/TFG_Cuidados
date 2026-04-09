@@ -42,7 +42,7 @@ export interface EmpresaUI extends EmpresaModel {
   templateUrl: './search-business.html',
   styleUrl: './search-business.css',
 })
-export class SearchBusiness implements OnInit {
+export default class SearchBusiness implements OnInit {
   private businessService = inject(BusinessService);
   private contractService = inject(ContractService);
   private authService = inject(AuthService);

@@ -18,7 +18,7 @@ import { ContratoDetalle } from '../../models/Contrato';
   templateUrl: './activities.html',
   styleUrl: './activities.css',
 })
-export class Activities {
+export default class Activities {
   public messageService = inject(MessageService);
   private contractService = inject(ContractService);
   private destroyRef = inject(DestroyRef);

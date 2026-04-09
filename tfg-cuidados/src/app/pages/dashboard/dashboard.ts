@@ -24,7 +24,7 @@ Chart.register(...registerables);
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard implements OnInit {
+export default class Dashboard implements OnInit {
   private analyticsService = inject(AnalyticsService);
   private translate = inject(TranslateService);
   private destroyRef = inject(DestroyRef);

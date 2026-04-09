@@ -29,7 +29,7 @@ import { MessageService } from '../../services/message-service';
   templateUrl: './contact.html',
   styleUrl: './contact.css',
 })
-export class Contact {
+export default class Contact {
   private fb = inject(FormBuilder);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);

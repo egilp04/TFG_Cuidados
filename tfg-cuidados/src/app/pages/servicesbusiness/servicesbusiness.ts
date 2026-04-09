@@ -34,7 +34,7 @@ import { ServicioHorarioJoined } from '../../models/Service-Time-Service';
   styleUrl: './servicesbusiness.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Servicesbusiness implements OnInit {
+export default class Servicesbusiness implements OnInit {
   private serviceTimeService = inject(ServiceTimeService);
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);

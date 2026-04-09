@@ -28,7 +28,7 @@ import { ContratoDetalle } from '../../models/Contrato';
   templateUrl: './contracts.html',
   styleUrl: './contracts.css',
 })
-export class Contracts implements OnInit {
+export default class Contracts implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   private contractService = inject(ContractService);

@@ -13,7 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './landing.html',
   styleUrl: './landing.css',
 })
-export class Landing {
+export default class Landing {
   public cardsdata: Card[] = cardsdata;
   private dialog = inject(MatDialog);
   

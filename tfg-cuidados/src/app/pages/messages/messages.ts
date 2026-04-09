@@ -33,7 +33,7 @@ import { switchMap, map, catchError, tap } from 'rxjs/operators';
   templateUrl: './messages.html',
   styleUrl: './messages.css',
 })
-export class Messages implements OnInit {
+export default class Messages implements OnInit {
   public authService = inject(AuthService);
   private comunicationService = inject(ComunicationService);
   private dialog = inject(MatDialog);

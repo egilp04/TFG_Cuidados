@@ -26,7 +26,7 @@ import { ButtonComponent } from '../../components/button/button';
   templateUrl: './notifications.html',
   styleUrl: './notifications.css',
 })
-export class Notifications implements OnInit {
+export default class Notifications implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   private comunicationService = inject(ComunicationService);

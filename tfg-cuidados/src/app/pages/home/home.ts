@@ -12,7 +12,7 @@ import { AiAssistantComponent } from '../../components/ai-assistant/ai-assistant
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {
+export default class Home {
   private authService = inject(AuthService);
   rol = this.authService.userRol();
   private router = inject(Router);

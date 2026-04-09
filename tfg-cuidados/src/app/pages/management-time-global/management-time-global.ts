@@ -43,7 +43,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './management-time-global.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManagementTimeGlobal implements OnInit {
+export default class ManagementTimeGlobal implements OnInit {
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);

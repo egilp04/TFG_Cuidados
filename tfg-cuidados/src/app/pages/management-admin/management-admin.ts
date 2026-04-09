@@ -19,7 +19,7 @@ import { UserModel } from '../../models/User-Service';
   imports: [CommonModule, TableCrudAdmin, Buttonback, ButtonComponent, TranslateModule],
   templateUrl: './management-admin.html',
 })
-export class ManagementAdmin implements OnInit {
+export default class ManagementAdmin implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private userService = inject(UserService);

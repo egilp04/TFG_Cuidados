@@ -45,7 +45,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './management-services-global.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManagementServicesGlobal implements OnInit {
+export default class ManagementServicesGlobal implements OnInit {
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);
