@@ -468,7 +468,8 @@
       "PRICE": "Price/h",
       "TYPE": "Type",
       "TIME": "Time",
-      "DAY": "Day"
+      "DAY": "Day",
+      "DESCRIPTION": "Description"
     },
     "MESSAGES": {
       "DELETE_SUCCESS": "Service successfully deleted.",

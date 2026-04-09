@@ -5,7 +5,6 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { Servicio_HorarioModel } from '../models/Servicio_Horario';
 import { ServicioHorarioJoined } from '../models/Service-Time-Service';
 
-
 /**
  * @description Servicio encargado de gestionar la disponibilidad horaria de los servicios.
  * Implementa una lógica de vinculación entre la entidad 'Servicio' y la entidad 'Horario'.
@@ -63,7 +62,7 @@ export class ServiceTimeService {
       .select(
         `
         *,
-        Servicio:id_servicio ( nombre, tipo_servicio ),
+        Servicio:id_servicio ( nombre, tipo_servicio),
         Horario:id_horario ( hora, dia_semana )
       `,
       )

@@ -553,7 +553,7 @@
   }
 
   .message-noti {
-    @apply flex flex-col items-center -z-10;
+    @apply flex flex-col items-center;
   }
 
   .message-noti-text {
@@ -569,11 +569,11 @@
   }
 
   .login-modal-container {
-    @apply p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark;
+    @apply p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark z-30;
   }
 
   .service-modal-container {
-    @apply p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark;
+    @apply p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark z-30;
   }
 
   .modal-close-btn {
@@ -941,7 +941,7 @@
   }
 
   .cancel-modal-container {
-    @apply flex flex-col justify-center items-center p-6 gap-2 w-full relative md:py-20 max-h-screen dark:bg-surface-dark bg-surface;
+    @apply flex flex-col justify-center items-center p-6 gap-2 w-full relative md:py-20 max-h-screen dark:bg-surface-dark bg-surface z-30;
   }
 
   .cancel-modal-title-container {
@@ -1225,7 +1225,7 @@
   }
 
   .message-modal-container {
-    @apply p-6 md:p-12 xl:p-[14px] flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark rounded-12;
+    @apply p-6 md:p-12 xl:p-3.5 flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark rounded-12 z-30;
   }
 
   .message-modal-form-container {
@@ -1285,7 +1285,7 @@
   }
 
   .info-container {
-    @apply p-10 bg-surface flex flex-col w-full justify-center gap-6 dark:bg-surface-dark items-center;
+    @apply p-10 bg-surface flex flex-col w-full justify-center gap-6 dark:bg-surface-dark items-center z-30;
   }
 
   .info-contract-text {

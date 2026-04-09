@@ -421,7 +421,8 @@
       "PRICE": "Precio/h",
       "TYPE": "Tipo",
       "TIME": "Hora",
-      "DAY": "Día"
+      "DAY": "Día",
+      "DESCRIPTION": "Descripcion"
     },
     "MESSAGES": {
       "DELETE_SUCCESS": "El servicio ha sido eliminado con éxito.",

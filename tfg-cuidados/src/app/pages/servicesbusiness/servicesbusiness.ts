@@ -43,7 +43,15 @@ export default class Servicesbusiness implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
   dataSource = new MatTableDataSource<ServicioHorarioJoined>([]);
-  displayedColumns: string[] = ['nombre', 'precio', 'tipo', 'hora', 'dia', 'acciones'];
+  displayedColumns: string[] = [
+    'nombre',
+    'precio',
+    'tipo',
+    'hora',
+    'dia',
+    'descripcion',
+    'acciones',
+  ];
 
   ngOnInit() {
     this.chargeServices();
@@ -63,9 +71,10 @@ export default class Servicesbusiness implements OnInit {
   }
 
   isMobile = window.innerWidth < 768;
-  
+
   async openModal(element?: ServicioHorarioJoined) {
-    const { ServiceTimeModal } = await import('../../components/service-time-modal/service-time-modal');
+    const { ServiceTimeModal } =
+      await import('../../components/service-time-modal/service-time-modal');
     const dialogRef = this.dialog.open(ServiceTimeModal, {
       width: '100%',
       maxWidth: this.isMobile ? '95vw' : '600px',
