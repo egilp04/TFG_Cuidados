@@ -15,6 +15,7 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
+import { of } from 'rxjs'; 
 
 @Component({
   selector: 'app-messages',

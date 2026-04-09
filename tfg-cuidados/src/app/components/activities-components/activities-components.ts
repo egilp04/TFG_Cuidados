@@ -82,13 +82,13 @@ export class ActivitiesComponents implements OnInit {
     }
 
     const mappedData = this.dataSource.map((contrato) => {
-      let nameToShow;
-      if (this.rol == 'cliente') nameToShow = contrato.Empresa?.nombreDeLaEmpresa;
-      if (this.rol == 'empresa') nameToShow = contrato.Cliente?.nombreDelCliente;
+      let nombreAMostrarhow;
+      if (this.rol == 'cliente') nombreAMostrarhow = contrato.Empresa?.nombreDeLaEmpresa;
+      if (this.rol == 'empresa') nombreAMostrarhow = contrato.Cliente?.nombreDelCliente;
       const lugar = `${contrato.Cliente?.direccion}, ${contrato.Cliente?.localidad}, ${contrato.Cliente?.codpostal}`;
       return {
         ...contrato,
-        nameToShow: nameToShow || 'N/A',
+        nombreAMostrarhow: nombreAMostrarhow || 'N/A',
         lugar: lugar || 'SL',
       };
     });

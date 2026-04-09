@@ -9,6 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
 import { ComunicationService } from '../../services/comunication.service';
 import { DarkModeBtnComponent } from '../dark-mode-btn/dark-mode-btn.component';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',

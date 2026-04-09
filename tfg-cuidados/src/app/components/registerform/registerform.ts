@@ -25,6 +25,8 @@ import { RouterLink } from '@angular/router';
 import { comunidades } from '../../core/constants/locations';
 import { FormSubmittedEvent, RegisterFormData } from '../../models/RegisterForm';
 import { AuthService } from '../../services/auth.service';
+import { of, timer, Observable } from 'rxjs'; 
+import { map, switchMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registerform',

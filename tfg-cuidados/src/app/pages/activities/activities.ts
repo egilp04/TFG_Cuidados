@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, map, switchMap } from 'rxjs';
 import { ContratoDetalle } from '../../models/Contrato';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-activities',
