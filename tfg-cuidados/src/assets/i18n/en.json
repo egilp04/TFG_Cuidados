@@ -155,7 +155,7 @@
   },
   "DASHBOARD": {
     "NO_CONTRACTS": "No contracts",
-    "CHARGING":"Charging Data",
+    "CHARGING": "Charging Data",
     "TITLE_CONTRACTS": "Contracts",
     "TOTAL_CONTRACTS": {
       "TOTAL": "Total contract: ",
@@ -204,7 +204,7 @@
     "REGISTER": "Sign Up",
     "CARDS": {
       "CONTRATACION": {
-        "TITLE": "Easily Hire Services",
+        "TITLE": "Easily Hire",
         "DESC": "Find and hire services from professional companies dedicated to personal care, companionship, and wellness."
       },
       "GESTION": {

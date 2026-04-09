@@ -381,7 +381,7 @@
   }
 
   .nav-menu-unified {
-    @apply absolute top-full right-0 w-full sm:w-auto bg-surface dark:bg-surface-dark border-b border-nav-border shadow-lg flex-col p-6 gap-6 z-40 md:static md:flex-row md:items-center md:p-0 md:border-none md:shadow-none md:gap-10;
+    @apply absolute top-full right-0 sm:w-auto bg-surface dark:bg-surface-dark border-b border-nav-border shadow-lg flex-col p-6 gap-6 z-40 md:static md:flex-row md:items-center md:p-0 md:border-none md:shadow-none md:gap-10;
   }
 
   .nav-authenticated-wrapper {
@@ -408,52 +408,16 @@
     @apply absolute top-0 right-1/3 md:-top-2 md:-right-2 bg-red-600 dark:bg-red-dark text-white text-[10px] md:text-xs rounded-full px-1.5 py-0.5 font-bold;
   }
 
-  /* .nav-menu-open {
-    @apply absolute top-full right-0 w-auto bg-surface dark:bg-surface-dark border-b border-nav-border shadow-lg flex flex-col p-6 gap-6 lg:hidden;
-  } */
-
-  /* .nav-menu-toggle {
-    @apply hidden md:flex items-center gap-10;
-  } */
-
-  /* .nav-notis-toggle {
-    @apply absolute -top-2 -right-2 bg-red-600 dark:bg-red-dark text-white text-xs rounded-full px-1.5 py-0.5;
-  } */
-
-  /* .nav-notis {
-    @apply absolute -top-1 -right-1 bg-red-600 dark:bg-red-dark text-white text-[10px] rounded-full px-1.5;
-  } */
-
-  /* .nav-menu-toggle-autenticated-container {
-    @apply flex items-center gap-10;
-  } */
-
-  /* .nav-menu-open-autenticated-container {
-    @apply flex flex-col gap-10 justify-center items-center w-auto;
-  } */
-
-  /* .nav-menu-open-no-autenticated-container {
-    @apply flex flex-col gap-4 w-full;
-  } */
-
-  /* .nav-menu-open-divs {
-    @apply flex flex-col justify-around w-auto border-b p-4 gap-4;
-  } */
-
-  /* .nav-menu-toggle-divs {
-    @apply flex flex-col gap-1 relative;
-  } */
-
-  /* .nav-open-icon {
-    @apply text-primary dark:text-surface w-20 h-20;
-  } */
-
   .cards-landing-container {
-    @apply h-auto bg-surface border border-nav-border dark:border-gray-200 dark:bg-surface-dark flex flex-col items-center text-center hover:shadow-soft transition-all duration-300;
+    @apply h-full bg-surface border border-nav-border dark:border-gray-200 dark:bg-surface-dark flex flex-col items-center text-center shadow-xs hover:shadow-soft transition-all duration-300;
   }
 
   .cards-landing-img-container {
-    @apply w-full shrink-0 overflow-hidden;
+    @apply w-full shrink-0 overflow-hidden relative;
+  }
+
+  .cards-text-container {
+    @apply p-20 shadow-soft flex flex-col flex flex-col gap-2 min-h-40 lg:min-h-48 w-full flex-1;
   }
 
   .cards-landing-img {

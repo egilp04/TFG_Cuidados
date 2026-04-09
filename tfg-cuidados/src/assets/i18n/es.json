@@ -170,15 +170,7 @@
     "CHART": {
       "ACTIVE": "Activos",
       "CANCELED": "Cancelados",
-      "DAYS": [
-        "Lun",
-        "Mar",
-        "Mie",
-        "Jue",
-        "Vie",
-        "Sab",
-        "Dom"
-      ]
+      "DAYS": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"]
     }
   },
   "MAIN_MENU": {
@@ -212,7 +204,7 @@
     "REGISTER": "Registrarse",
     "CARDS": {
       "CONTRATACION": {
-        "TITLE": "Contrata servicios fácilmente",
+        "TITLE": "Contrata fácilmente",
         "DESC": "Encuentra y contrata servicios  de empresas profesionales  dedicadas al cuidado personal, acompañamiento y bienestar."
       },
       "GESTION": {
