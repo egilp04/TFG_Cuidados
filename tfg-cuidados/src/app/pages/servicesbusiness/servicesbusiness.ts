@@ -18,6 +18,7 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { MessageService } from '../../services/message-service';
 import { ServiceTimeService } from '../../services/service-time.service';
 import { ServicioHorarioJoined } from '../../models/Service-Time-Service';
+import { ResponsiveSize } from '../../services/responsive-size';
 
 @Component({
   selector: 'app-management-servicetime',
@@ -70,14 +71,14 @@ export default class Servicesbusiness implements OnInit {
     }
   }
 
-  isMobile = window.innerWidth < 768;
+  private responsive = inject(ResponsiveSize);
 
   async openModal(element?: ServicioHorarioJoined) {
     const { ServiceTimeModal } =
       await import('../../components/service-time-modal/service-time-modal');
     const dialogRef = this.dialog.open(ServiceTimeModal, {
       width: '100%',
-      maxWidth: this.isMobile ? '95vw' : '600px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       data: element || null,
     });
 
@@ -96,7 +97,7 @@ export default class Servicesbusiness implements OnInit {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
-      maxWidth: this.isMobile ? '95vw' : '600px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       data: { modo: 'eliminarServicio' },
     });
     dialogRef

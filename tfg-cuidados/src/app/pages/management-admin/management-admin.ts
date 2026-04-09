@@ -12,6 +12,7 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { ButtonComponent } from '../../components/button/button';
 import { UserService } from '../../services/user.service';
 import { UserModel } from '../../models/User-Service';
+import { ResponsiveSize } from '../../services/responsive-size';
 
 @Component({
   selector: 'app-management-admin',
@@ -45,20 +46,14 @@ export default class ManagementAdmin implements OnInit {
     this.cd.detectChanges();
   }
 
-  // cambiarVista(tipo: 'cliente' | 'empresa') {
-  //   this.router.navigate([], {
-  //     relativeTo: this.route,
-  //     queryParams: { tipo: tipo },
-  //     queryParamsHandling: 'merge',
-  //   });
-  // }
+  private responsive = inject(ResponsiveSize);
 
   isMobile = window.innerWidth < 768;
   async toDeleteUser(item: UserModel) {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
-      maxWidth: this.isMobile ? '95vw' : '500px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
       data: { modo: 'eliminar' },
     });
     dialogRef

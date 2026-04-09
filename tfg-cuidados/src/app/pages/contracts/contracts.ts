@@ -12,6 +12,7 @@ import { ContractService } from '../../services/contract.service';
 import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { ContratoDetalle } from '../../models/Contrato';
+import { ResponsiveSize } from '../../services/responsive-size';
 
 @Component({
   selector: 'app-contracts',
@@ -41,7 +42,7 @@ export default class Contracts implements OnInit {
   displayedColumns: string[] = ['ID', 'fecha', 'acciones'];
   dataSource = new MatTableDataSource<ContratoDetalle>([]);
 
-  isMobile = window.innerWidth < 768;
+  private responsive = inject(ResponsiveSize);
 
   ngOnInit() {
     this.subcribeContracts();
@@ -68,7 +69,7 @@ export default class Contracts implements OnInit {
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { modo: 'cancelContract' },
       width: '100%',
-      maxWidth: this.isMobile ? '95vw' : '650px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '650px',
       panelClass: 'custom-modal-padding',
     });
 
@@ -100,11 +101,11 @@ export default class Contracts implements OnInit {
       });
   }
 
-  async showDetails(id: string){
+  async showDetails(id: string) {
     const { InfoContract } = await import('../../components/info-contract/info-contract');
     const dialogConfig = {
       width: '100%',
-      maxWidth: this.isMobile ? '95vw' : '500px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
     };
     const contratoYaMapeado = this.dataSource.data.find((c) => c.id_contrato === id);
     if (contratoYaMapeado) {
@@ -122,8 +123,11 @@ export default class Contracts implements OnInit {
         },
         error: (err) => {
           console.error('Error al obtener el contrato:', err);
-          this.messageService.showMessage('No se pudieron cargar los detalles del contrato', 'error');
-        }
+          this.messageService.showMessage(
+            'No se pudieron cargar los detalles del contrato',
+            'error',
+          );
+        },
       });
     }
   }

@@ -16,6 +16,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { ResponsiveSize } from '../../services/responsive-size';
 
 @Component({
   selector: 'app-messages',
@@ -114,12 +115,14 @@ export default class Messages implements OnInit {
       mensaje.leido = true;
       this.comunicationService
         .updateComunicacion(mensaje.id_comunicacion!, { leido: true })
-        .pipe(takeUntilDestroyed(this.destroyRef),
+        .pipe(
+          takeUntilDestroyed(this.destroyRef),
           catchError((err) => {
             mensaje.leido = false;
             console.error('Error al marcar mensaje como leído en segundo plano:', err);
             return of(null);
-          }))
+          }),
+        )
         .subscribe();
     }
   }
@@ -146,14 +149,14 @@ export default class Messages implements OnInit {
       });
   }
 
-  isMobile = window.innerWidth < 768;
+  private responsive = inject(ResponsiveSize);
 
   async writeMessage() {
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
     this.dialog.open(MessagesModal, {
       data: { modo: 'escribir' },
       width: '100%',
-      maxWidth: this.isMobile ? '60vw' : '500px',
+      maxWidth: this.responsive.isMobile() ? '60vw' : '500px',
       panelClass: 'custom-modal-padding',
     });
   }

@@ -11,6 +11,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, map, switchMap } from 'rxjs';
 import { ContratoDetalle } from '../../models/Contrato';
 import { filter } from 'rxjs';
+import { ResponsiveSize } from '../../services/responsive-size';
 
 @Component({
   selector: 'app-activities',
@@ -45,15 +46,16 @@ export default class Activities {
       });
   }
 
-  isMobile = window.innerWidth < 768;
+  private responsive = inject(ResponsiveSize);
 
   async cancelContract(id: string) {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
-    this.dialog.open(Cancelmodal, {
-      data: { modo: 'cancelContract' },
-      width: '100%',
-      maxWidth: this.isMobile ? '95vw' : '650px',
-    })
+    this.dialog
+      .open(Cancelmodal, {
+        data: { modo: 'cancelContract' },
+        width: '100%',
+        maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+      })
       .afterClosed()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
@@ -62,14 +64,14 @@ export default class Activities {
         switchMap(() =>
           this.translate
             .get('MESSAGES.SUCCESS.CANCELCONTRACT')
-            .pipe(map((msg) => ({ texto: msg, tipo: 'exito' as const })))
+            .pipe(map((msg) => ({ texto: msg, tipo: 'exito' as const }))),
         ),
         catchError((err) => {
           console.error('Error al cancelar el contrato:', err);
           return this.translate
             .get('MESSAGES.ERROR.CANCELCONTRACT')
             .pipe(map((msg) => ({ texto: msg, tipo: 'error' as const })));
-        })
+        }),
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.texto, resultado.tipo);

@@ -27,6 +27,7 @@ import { ServicioModel } from '../../models/Servicio';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ResponsiveSize } from '../../services/responsive-size';
 
 @Component({
   selector: 'app-management-services-global',
@@ -144,13 +145,14 @@ export default class ManagementServicesGlobal implements OnInit {
     });
   }
 
+  private responsive = inject(ResponsiveSize);
   isMobile = window.innerWidth < 768;
   async onDelete(id: string) {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { modo: 'eliminarAdminGlobal' },
       width: '100%',
-      maxWidth: this.isMobile ? '95vw' : '500px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
     });
 
     dialogRef
