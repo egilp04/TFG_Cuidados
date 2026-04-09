@@ -15,7 +15,7 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
-import { of } from 'rxjs'; 
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-messages',
@@ -104,7 +104,7 @@ export default class Messages implements OnInit {
 
   async checkMessage(mensaje: ComunicacionModel) {
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
-  
+
     this.dialog.open(MessagesModal, {
       data: { modo: 'showMessage', contenido: mensaje },
       width: '600px',
@@ -148,7 +148,8 @@ export default class Messages implements OnInit {
 
   isMobile = window.innerWidth < 768;
 
-  writeMessage() {
+  async writeMessage() {
+    const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
     this.dialog.open(MessagesModal, {
       data: { modo: 'escribir' },
       width: '100%',
