@@ -1,10 +1,10 @@
 import { Component, computed, input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { NgOptimizedImage } from '@angular/common';
 @Component({
   selector: 'app-cards-landing',
   standalone: true,
-  imports: [TranslateModule],
+  imports: [TranslateModule, NgOptimizedImage],
   templateUrl: './cards-landing.html',
   styleUrl: './cards-landing.css',
 })

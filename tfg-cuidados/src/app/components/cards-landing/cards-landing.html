@@ -1,6 +1,6 @@
 <div class="animate-cards cards-landing-container">
   <div class="cards-landing-img-container">
-    <img [src]="imagen()" [alt]="titulo() | translate" class="cards-landing-img" />
+    <img [ngSrc]="imagen()" [alt]="titulo() | translate" class="cards-landing-img" />
   </div>
   <div [class]="cardClasses()">
     <h2 class="cards-landing-title">{{ titulo() | translate }}</h2>
