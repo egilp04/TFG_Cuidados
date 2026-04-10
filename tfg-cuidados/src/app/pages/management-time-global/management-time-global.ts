@@ -58,6 +58,7 @@ export default class ManagementTimeGlobal implements OnInit {
   private dialog = inject(MatDialog);
   public dias_semana: { valor: string; label: string }[] = dias_semana;
   public tradus_dias: { [key: string]: string } = tradusDia;
+  public isLoading = signal(false);
 
   isEditing: boolean = false;
   currentTimeId: string | null = null;
@@ -79,8 +80,6 @@ export default class ManagementTimeGlobal implements OnInit {
         this.cd.markForCheck();
       });
   }
-
-  public isLoading = signal(false);
 
   onSave() {
     if (this.timeFormular.invalid) {

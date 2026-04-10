@@ -57,6 +57,7 @@ export default class ManagementServicesGlobal implements OnInit {
   private authService = inject(AuthService);
   private translate = inject(TranslateService);
   private dialog = inject(MatDialog);
+  public isLoading = signal(false);
 
   isEditing: boolean = false;
   currentServiceId: string | null = null;
@@ -80,8 +81,6 @@ export default class ManagementServicesGlobal implements OnInit {
         this.cd.markForCheck();
       });
   }
-
-  public isLoading = signal(false);
 
   onSave() {
 
