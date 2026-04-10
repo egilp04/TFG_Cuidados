@@ -83,7 +83,11 @@ export default class ManagementTimeGlobal implements OnInit {
       this.showMessageTraducido('MANAGEMENT_SCHEDULES.MESSAGES.FILL_FIELDS', 'error');
       return;
     }
-    const { hora, dia } = this.timeFormular.getRawValue();
+
+    const rawValue = this.timeFormular.getRawValue();
+    const hora = rawValue.hora ?? '';
+    const dia = rawValue.dia ?? '';    
+    
     const diasValidos = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
     const user = this.authService.currentUser();
 
