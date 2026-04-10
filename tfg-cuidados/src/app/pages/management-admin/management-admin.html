@@ -28,7 +28,7 @@
   </div>
   <app-table-crud-admin
     [modo]="isUser ? 'cliente' : 'empresa'"
-    [usuarios]="userService.usersList()"    
+    [data]="userService.usersList()"    
     (deleteData)="toDeleteUser($event)"
     (modifyData)="toEditFunction($event)"
   ></app-table-crud-admin>
