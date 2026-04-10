@@ -148,7 +148,6 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   private responsive = inject(ResponsiveSize);
-  isMobile = window.innerWidth < 768;
   async onDelete(id: string) {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {

@@ -167,7 +167,6 @@ export class ContractService {
             id_receptor: idDestino,
             id_emisor: currentUser.id_usuario,
             tipo_comunicacion: 'notificacion',
-            fecha_envio: new Date(),
             leido: false,
             eliminado_por_emisor: false,
             eliminado_por_receptor: false,

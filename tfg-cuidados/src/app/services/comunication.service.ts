@@ -237,7 +237,6 @@ export class ComunicationService {
       id_receptor: idReceptor,
       asunto: asunto,
       contenido: contenido,
-      fecha_envio: new Date(),
       leido: false,
       eliminado_por_emisor: false,
       eliminado_por_receptor: false,

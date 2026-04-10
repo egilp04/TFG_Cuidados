@@ -64,7 +64,6 @@ export class ChatSoporteComponent implements OnInit {
       id_receptor: this.adminId,
       asunto: 'Soporte Directo',
       contenido: this.newMessage.trim(),
-      fecha_envio: new Date(),
       leido: false,
       eliminado_por_emisor: false,
       eliminado_por_receptor: false,

@@ -107,7 +107,6 @@ export class MessagesModal implements OnInit {
               asunto: this.messageForm.value.asunto ?? "",
               contenido: this.messageForm.value.contenido ?? "",
               tipo_comunicacion: 'mensaje',
-              fecha_envio: new Date(),
               leido: false,
             };
 
