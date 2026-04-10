@@ -105,12 +105,12 @@ export class Registerform implements OnInit {
           ape1: (formValue.ape1 || '').trim(),
           ape2: (formValue.ape2 || '').trim(),
           dni: (formValue.dni || '').trim(),
-          fechnac: formValue.fechnac,
+          fechnac: formValue.fechnac ?? undefined,
           telef: (formValue.telef || '').trim(),
           direccion: (formValue.direccion || '').trim(),
           localidad: (formValue.localidad || '').trim(),
           codpostal: (formValue.codpostal || '').trim(),
-          comunidad: formValue.comunidad,
+          comunidad: formValue.comunidad ?? undefined,
         };
       } else {
         dataToSend = {
@@ -124,7 +124,7 @@ export class Registerform implements OnInit {
           direccion: (formValue.direccion || '').trim(),
           localidad: (formValue.localidad || '').trim(),
           codpostal: (formValue.codpostal || '').trim(),
-          comunidad: formValue.comunidad,
+          comunidad: formValue.comunidad ?? undefined,
         };
       }
       this.formSubmitted.emit({ datos: dataToSend, esCliente: this.isUser });

@@ -60,7 +60,7 @@ export class MessagesModal implements OnInit {
       this.messageForm.patchValue({
         emisor: this.data.contenido.Emisor?.email,
         receptor: this.data.contenido.Receptor?.nombre,
-        asunto: this.data.contenido.asunto,
+        asunto: this.data.contenido.asunto || undefined,
         contenido: this.data.contenido.contenido,
       });
       this.messageForm.disable();
@@ -104,8 +104,8 @@ export class MessagesModal implements OnInit {
             const newComunication: ComunicacionModel = {
               id_emisor: idEmisor,
               id_receptor: foundUser.id_usuario,
-              asunto: this.messageForm.value.asunto,
-              contenido: this.messageForm.value.contenido,
+              asunto: this.messageForm.value.asunto ?? undefined,
+              contenido: this.messageForm.value.contenido ?? undefined,
               tipo_comunicacion: 'mensaje',
               fecha_envio: new Date(),
               leido: false,

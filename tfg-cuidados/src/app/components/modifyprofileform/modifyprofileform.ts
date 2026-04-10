@@ -178,8 +178,8 @@ export class Modifyprofileform implements OnInit, OnChanges {
       const formValue = this.profileForm.getRawValue();
 
       const datosParaBBDD: UserProfileModel = {
-        email: formValue.email,
-        telef: formValue.telefono,
+        email: formValue.email ?? undefined,
+        telef: formValue.telefono ?? undefined,
         nombre: this.userRole === 'empresa' ? formValue.nombreEmpresa : formValue.usuario,
       };
 
