@@ -28,6 +28,8 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { finalize } from 'rxjs';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-management-services-global',
@@ -61,7 +63,7 @@ export default class ManagementServicesGlobal implements OnInit {
 
   controlFilterItem = new FormControl<string>('');
 
-  servicioForm = this.fb.group({
+  serviceFormular = this.fb.group({
     nombre: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
     tipo: this.fb.control<string>('', [Validators.required]),
   });
@@ -79,18 +81,27 @@ export default class ManagementServicesGlobal implements OnInit {
       });
   }
 
+  public isLoading = signal(false);
+
   onSave() {
-    if (this.servicioForm.invalid) {
-      this.servicioForm.markAllAsTouched();
+
+    if (this.serviceFormular.invalid) {
+      this.serviceFormular.markAllAsTouched();
       return;
     }
-    
-    const rawValue = this.servicioForm.getRawValue();
+    if (this.isLoading()) return
+
+    this.isLoading.set(true);
+
+    const rawValue = this.serviceFormular.getRawValue();
     const nombre = (rawValue.nombre ?? '').trim();
     const tipo = (rawValue.tipo ?? '').trim();
 
     const user = this.authService.currentUser();
-    if (!user || !user.id_usuario) return;
+    if (!user || !user.id_usuario) {
+      this.isLoading.set(false); 
+      return;
+    }
 
     this.serviceService
       .existsService(nombre, this.currentServiceId || undefined)
@@ -128,6 +139,10 @@ export default class ManagementServicesGlobal implements OnInit {
           }
           return this.translate.get(msgKey).pipe(map((text) => ({ type: 'error' as const, text })));
         }),
+        finalize(() => {
+          this.isLoading.set(false);
+          this.cd.markForCheck();
+        })
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
@@ -141,7 +156,7 @@ export default class ManagementServicesGlobal implements OnInit {
   onEdit(servicio: ServicioModel) {
     this.isEditing = true;
     this.currentServiceId = servicio.id_servicio!;
-    this.servicioForm.patchValue({
+    this.serviceFormular.patchValue({
       nombre: servicio.nombre,
       tipo: servicio.tipo_servicio,
     });
@@ -186,7 +201,7 @@ export default class ManagementServicesGlobal implements OnInit {
   resetForm() {
     this.isEditing = false;
     this.currentServiceId = null;
-    this.servicioForm.reset();
+    this.serviceFormular.reset();
   }
 
   toFilter(valor: string) {
@@ -194,6 +209,6 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   getCtrl(name: string) {
-    return this.servicioForm.get(name) as FormControl;
+    return this.serviceFormular.get(name) as FormControl;
   }
 }

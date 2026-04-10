@@ -28,6 +28,9 @@ import { HorarioModel } from '../../models/Horario';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { finalize } from 'rxjs';
+import { signal } from '@angular/core';
+
 @Component({
   selector: 'app-management-time-global',
   standalone: true,
@@ -77,12 +80,17 @@ export default class ManagementTimeGlobal implements OnInit {
       });
   }
 
+  public isLoading = signal(false);
+
   onSave() {
     if (this.timeFormular.invalid) {
       this.timeFormular.markAllAsTouched();
       this.showMessageTraducido('MANAGEMENT_SCHEDULES.MESSAGES.FILL_FIELDS', 'error');
       return;
     }
+    if(this.isLoading()) return;
+
+    this.isLoading.set(true)
 
     const rawValue = this.timeFormular.getRawValue();
     const hora = rawValue.hora ?? '';
@@ -91,7 +99,10 @@ export default class ManagementTimeGlobal implements OnInit {
     const diasValidos = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
     const user = this.authService.currentUser();
 
-    if (!user || !user.id_usuario) return;
+    if (!user || !user.id_usuario){    
+      this.isLoading.set(false);
+      return;
+};
 
     if (!diasValidos.includes(dia.toLowerCase())) {
       this.showMessageTraducido('MANAGEMENT_SCHEDULES.MESSAGES.INVALID_DAY', 'error');
@@ -146,6 +157,10 @@ export default class ManagementTimeGlobal implements OnInit {
             .get(msgKey, params)
             .pipe(map((text) => ({ type: 'error' as const, text })));
         }),
+        finalize(() => {
+          this.isLoading.set(false);
+          this.cd.markForCheck();
+        })
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
