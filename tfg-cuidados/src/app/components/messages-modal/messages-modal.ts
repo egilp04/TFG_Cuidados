@@ -84,7 +84,7 @@ export class MessagesModal implements OnInit {
         this.getCtrl('contenido').valid)
     ) {
       const idEmisor = this.authService.currentUser()?.id_usuario;
-      const emailDestino = this.messageForm.getRawValue().receptor;
+      const emailDestino = this.messageForm.getRawValue().receptor ?? undefined;
       if (!idEmisor) {
         this.messageService.showMessage(
           this.translate.instant('MESSAGES_MODAL.FEEDBACK.ERROR_SENDER'),

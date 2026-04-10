@@ -184,16 +184,16 @@ export class Modifyprofileform implements OnInit, OnChanges {
       };
 
       if (this.userRole !== 'administrador') {
-        datosParaBBDD.direccion = formValue.direccion;
-        datosParaBBDD.localidad = formValue.localidad;
-        datosParaBBDD.codpostal = formValue.codpostal;
-        datosParaBBDD.comunidad = formValue.comunidad;
+        datosParaBBDD.direccion = formValue.direccion ?? undefined;
+        datosParaBBDD.localidad = formValue.localidad ?? undefined;
+        datosParaBBDD.codpostal = formValue.codpostal ?? undefined;
+        datosParaBBDD.comunidad = formValue.comunidad ?? undefined;
 
         if (this.userRole === 'cliente') {
           datosParaBBDD.ape1 = formValue.primerApe;
-          datosParaBBDD.ape2 = formValue.segundoApe;
+          datosParaBBDD.ape2 = formValue.segundoApe ?? undefined;
         } else if (this.userRole === 'empresa') {
-          datosParaBBDD.descripcion = formValue.descripcion;
+          datosParaBBDD.descripcion = formValue.descripcion ?? undefined;
         }
       }
       this.formSubmitted.emit({ datos: datosParaBBDD, rol: this.userRole });
