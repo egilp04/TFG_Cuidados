@@ -84,9 +84,10 @@ export default class ManagementServicesGlobal implements OnInit {
       this.servicioForm.markAllAsTouched();
       return;
     }
+    
     const rawValue = this.servicioForm.getRawValue();
-    const nombre = rawValue.nombre.trim();
-    const tipo = rawValue.tipo.trim();
+    const nombre = (rawValue.nombre ?? '').trim();
+    const tipo = (rawValue.tipo ?? '').trim();
 
     const user = this.authService.currentUser();
     if (!user || !user.id_usuario) return;

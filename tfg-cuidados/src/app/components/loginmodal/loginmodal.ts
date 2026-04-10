@@ -79,7 +79,9 @@ export class Loginmodal {
 
   toEnterApp() {
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
+      const rawForm = this.loginForm.getRawValue();
+      const email = rawForm.email ?? '';
+      const password = rawForm.password ?? '';
       this.authService
         .signIn(email, password)
         .pipe(takeUntilDestroyed(this.destroyRef))

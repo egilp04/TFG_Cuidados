@@ -86,8 +86,8 @@ export default class ManagementTimeGlobal implements OnInit {
 
     const rawValue = this.timeFormular.getRawValue();
     const hora = rawValue.hora ?? '';
-    const dia = rawValue.dia ?? '';    
-    
+    const dia = rawValue.dia ?? '';
+
     const diasValidos = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
     const user = this.authService.currentUser();
 
@@ -118,13 +118,12 @@ export default class ManagementTimeGlobal implements OnInit {
 
           if (this.isEditing && this.currentTimeId) {
             return this.timeService.updateTime(this.currentTimeId, {
-              dia_semana: dia,
-              hora: hora,
+              dia_semana: dia as 'lunes' | 'martes' | 'miercoles' | 'jueves' | 'viernes', hora: hora,
             });
           } else {
             return this.timeService.insertTime({
               id_admin: user.id_usuario,
-              dia_semana: dia,
+              dia_semana: dia as 'lunes' | 'martes' | 'miercoles' | 'jueves' | 'viernes',
               hora: hora,
             });
           }
