@@ -56,16 +56,13 @@ export class Loginmodal {
 
   modoActual: 'login' | 'registro' | 'recuperar' | 'reenviar' = 'login';
 
-  loginForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(6),
-        Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/),
-      ],
-    ],
+  loginForm = this.fb.group({
+    email: this.fb.control<string>('', [Validators.required, Validators.email]),
+    password: this.fb.control<string>('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/),
+    ]),
   });
 
   emailCtrl = new FormControl('', [Validators.required, Validators.email]);

@@ -47,12 +47,12 @@ export class MessagesModal implements OnInit {
   private destroyRef = inject(DestroyRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
-
-  messageForm: FormGroup = this.fb.group({
-    emisor: [''],
-    receptor: ['', [Validators.required, Validators.email]],
-    asunto: ['', [Validators.required]],
-    contenido: ['', [Validators.required]],
+  
+  messageForm = this.fb.group({
+    emisor: this.fb.control<string>(''),
+    receptor: this.fb.control<string>('', [Validators.required, Validators.email]),
+    asunto: this.fb.control<string>('', [Validators.required]),
+    contenido: this.fb.control<string>('', [Validators.required]),
   });
 
   ngOnInit() {

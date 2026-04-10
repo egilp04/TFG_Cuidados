@@ -59,10 +59,11 @@ export default class ManagementServicesGlobal implements OnInit {
   isEditing: boolean = false;
   currentServiceId: string | null = null;
 
-  controlFilterItem = new FormControl('');
-  servicioForm: FormGroup = this.fb.group({
-    nombre: ['', [Validators.required, Validators.minLength(3)]],
-    tipo: ['', [Validators.required]],
+  controlFilterItem = new FormControl<string>('');
+
+  servicioForm = this.fb.group({
+    nombre: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
+    tipo: this.fb.control<string>('', [Validators.required]),
   });
 
   dataSource = new MatTableDataSource<ServicioModel>([]);

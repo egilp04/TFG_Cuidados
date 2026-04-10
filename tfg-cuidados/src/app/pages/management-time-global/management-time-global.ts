@@ -59,9 +59,9 @@ export default class ManagementTimeGlobal implements OnInit {
   isEditing: boolean = false;
   currentTimeId: string | null = null;
 
-  timeFormular: FormGroup = this.fb.group({
-    hora: ['', [Validators.required]],
-    dia: ['', [Validators.required]],
+  timeFormular = this.fb.group({
+    hora: this.fb.control<string>('', [Validators.required]),
+    dia: this.fb.control<string>('', [Validators.required]),
   });
 
   dataSource = new MatTableDataSource<HorarioModel>([]);
