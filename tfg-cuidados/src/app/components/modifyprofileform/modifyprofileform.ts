@@ -180,7 +180,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
       const datosParaBBDD: UserProfileModel = {
         email: formValue.email ?? undefined,
         telef: formValue.telefono ?? undefined,
-        nombre: this.userRole === 'empresa' ? formValue.nombreEmpresa : formValue.usuario,
+        nombre: (this.userRole === 'empresa' ? formValue.nombreEmpresa : formValue.usuario) ?? undefined
       };
 
       if (this.userRole !== 'administrador') {
