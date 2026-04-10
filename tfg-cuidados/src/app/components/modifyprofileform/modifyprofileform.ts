@@ -190,7 +190,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
         datosParaBBDD.comunidad = formValue.comunidad ?? undefined;
 
         if (this.userRole === 'cliente') {
-          datosParaBBDD.ape1 = formValue.primerApe;
+          datosParaBBDD.ape1 = formValue.primerApe ?? undefined;
           datosParaBBDD.ape2 = formValue.segundoApe ?? undefined;
         } else if (this.userRole === 'empresa') {
           datosParaBBDD.descripcion = formValue.descripcion ?? undefined;
