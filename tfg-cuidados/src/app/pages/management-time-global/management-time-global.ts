@@ -87,29 +87,26 @@ export default class ManagementTimeGlobal implements OnInit {
       this.showMessageTraducido('MANAGEMENT_SCHEDULES.MESSAGES.FILL_FIELDS', 'error');
       return;
     }
-    if(this.isLoading()) return;
 
-    this.isLoading.set(true)
+    if (this.isLoading()) return;
 
     const rawValue = this.timeFormular.getRawValue();
-    const hora = rawValue.hora ?? '';
-    const dia = rawValue.dia ?? '';
-
-    const diasValidos = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+    const hora = rawValue.hora;
+    const dia = rawValue.dia;
     const user = this.authService.currentUser();
 
-    if (!user || !user.id_usuario){    
-      this.isLoading.set(false);
-      return;
-};
+    if (!user || !user.id_usuario) return;
 
+    const diasValidos = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
     if (!diasValidos.includes(dia.toLowerCase())) {
       this.showMessageTraducido('MANAGEMENT_SCHEDULES.MESSAGES.INVALID_DAY', 'error');
       return;
     }
+
     const [horasStr, minutosStr] = hora.split(':');
     const h = parseInt(horasStr, 10);
     const m = parseInt(minutosStr, 10);
+
     if (isNaN(h) || h < 0 || h > 23) {
       this.showMessageTraducido('MANAGEMENT_SCHEDULES.MESSAGES.INVALID_TIME_RANGE', 'error');
       return;
@@ -118,7 +115,11 @@ export default class ManagementTimeGlobal implements OnInit {
       this.showMessageTraducido('MANAGEMENT_SCHEDULES.MESSAGES.INVALID_MINUTES', 'error');
       return;
     }
+
+    this.isLoading.set(true);
+
     const idExcluir = this.isEditing && this.currentTimeId ? this.currentTimeId : undefined;
+
     this.timeService
       .existsTime(dia, hora, idExcluir)
       .pipe(
@@ -126,23 +127,20 @@ export default class ManagementTimeGlobal implements OnInit {
         switchMap((existe) => {
           if (existe) return throwError(() => new Error('DUPLICADO'));
 
-          if (this.isEditing && this.currentTimeId) {
-            return this.timeService.updateTime(this.currentTimeId, {
-              dia_semana: dia as 'lunes' | 'martes' | 'miercoles' | 'jueves' | 'viernes', hora: hora,
-            });
-          } else {
-            return this.timeService.insertTime({
-              id_admin: user.id_usuario,
-              dia_semana: dia as 'lunes' | 'martes' | 'miercoles' | 'jueves' | 'viernes',
-              hora: hora,
-            });
-          }
+          const payload: Partial<HorarioModel> = {
+            dia_semana: dia as any,
+            hora: hora,
+            id_admin: user.id_usuario
+          };
+
+          return this.isEditing && this.currentTimeId
+            ? this.timeService.updateTime(this.currentTimeId, payload)
+            : this.timeService.insertTime(payload);
         }),
         switchMap(() => {
           const msgKey = this.isEditing
             ? 'MANAGEMENT_SCHEDULES.MESSAGES.SUCCESS_UPDATE'
             : 'MANAGEMENT_SCHEDULES.MESSAGES.SUCCESS_CREATE';
-
           return this.translate.get(msgKey).pipe(map((text) => ({ type: 'exito' as const, text })));
         }),
         catchError((err) => {
@@ -152,9 +150,7 @@ export default class ManagementTimeGlobal implements OnInit {
             msgKey = 'MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DUPLICATE';
             params = { dia, hora };
           }
-          return this.translate
-            .get(msgKey, params)
-            .pipe(map((text) => ({ type: 'error' as const, text })));
+          return this.translate.get(msgKey, params).pipe(map((text) => ({ type: 'error' as const, text })));
         }),
         finalize(() => {
           this.isLoading.set(false);
@@ -166,7 +162,6 @@ export default class ManagementTimeGlobal implements OnInit {
         if (resultado.type === 'exito') {
           this.resetForm();
         }
-        this.cd.markForCheck();
       });
   }
 
@@ -181,6 +176,8 @@ export default class ManagementTimeGlobal implements OnInit {
 
   private responsive = inject(ResponsiveSize);
   async onDelete(id: string) {
+    if (this.isLoading()) return;
+
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { modo: 'eliminarAdminGlobal' },
@@ -188,31 +185,30 @@ export default class ManagementTimeGlobal implements OnInit {
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
     });
 
-    dialogRef
-      .afterClosed()
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        filter((result) => result === true),
-        switchMap(() =>
-          this.timeService.deleteTime(id).pipe(
-            switchMap(() =>
-              this.translate
-                .get('MANAGEMENT_GLOBAL.DELETE')
-                .pipe(map((text) => ({ type: 'exito' as const, text }))),
-            ),
-            catchError(() =>
-              this.translate
-                .get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DELETE')
-                .pipe(map((text) => ({ type: 'error' as const, text }))),
-            ),
-          ),
-        ),
+    dialogRef.afterClosed().pipe(
+      takeUntilDestroyed(this.destroyRef),
+      filter((result) => result === true),
+      tap(() => {
+        this.isLoading.set(true);
+        this.cd.markForCheck();
+      }),
+      switchMap(() => 
+        this.timeService.deleteTime(id).pipe(
+          finalize(() => {
+            this.isLoading.set(false);
+            this.cd.markForCheck();
+          }),
+          switchMap(() => this.translate.get('MANAGEMENT_GLOBAL.DELETE').pipe(
+            map((text) => ({ type: 'exito' as const, text }))
+          )),
+          catchError(() => this.translate.get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DELETE').pipe(
+            map((text) => ({ type: 'error' as const, text }))
+          ))
+        )
       )
-      .subscribe({
-        next: (resultado) => {
-          this.messageService.showMessage(resultado.text, resultado.type);
-        },
-      });
+    ).subscribe((resultado) => {
+      this.messageService.showMessage(resultado.text, resultado.type);
+    });
   }
 
   resetForm() {

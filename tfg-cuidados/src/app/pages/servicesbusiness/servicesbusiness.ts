@@ -19,6 +19,8 @@ import { MessageService } from '../../services/message-service';
 import { ServiceTimeService } from '../../services/service-time.service';
 import { ServicioHorarioJoined } from '../../models/Service-Time-Service';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { signal } from '@angular/core';
+import { finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'app-management-servicetime',
@@ -43,6 +45,8 @@ export default class Servicesbusiness implements OnInit {
   private cd = inject(ChangeDetectorRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
+  public isLoading = signal(false);
+
   dataSource = new MatTableDataSource<ServicioHorarioJoined>([]);
   displayedColumns: string[] = [
     'nombre',
@@ -94,6 +98,8 @@ export default class Servicesbusiness implements OnInit {
   }
 
   async onDelete(id: string) {
+    if (this.isLoading()) return;
+    
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
@@ -105,7 +111,16 @@ export default class Servicesbusiness implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter((result) => result === true),
-        switchMap(() => this.serviceTimeService.deleteServiceTime(id)),
+        tap(() => {
+          this.isLoading.set(true);
+          this.cd.markForCheck();
+        }),
+        switchMap(() => this.serviceTimeService.deleteServiceTime(id).pipe(
+          finalize(() => {
+            this.isLoading.set(false);
+            this.cd.markForCheck();
+          })
+        )),        
         switchMap(() =>
           this.translate
             .get('SERVICES_BUSINESS.MESSAGES.DELETE_SUCCESS')

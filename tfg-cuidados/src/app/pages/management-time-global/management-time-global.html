@@ -98,12 +98,14 @@
             [label]="'MANAGEMENT_SCHEDULES.TABLE.EDIT' | translate"
             variant="primary"
             (click)="onEdit(horario)"
+            [disabled]="isLoading()"
           >
           </app-button>
           <app-button
             [label]="'MANAGEMENT_SCHEDULES.TABLE.DELETE' | translate"
             variant="secondary"
             (click)="onDelete(horario.id_horario!)"
+            [disabled]="isLoading()"
           >
           </app-button>
         </div>

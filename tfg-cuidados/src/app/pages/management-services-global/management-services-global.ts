@@ -162,7 +162,10 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   private responsive = inject(ResponsiveSize);
+
   async onDelete(id: string) {
+    if (this.isLoading()) return;
+
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { modo: 'eliminarAdminGlobal' },
@@ -175,8 +178,16 @@ export default class ManagementServicesGlobal implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter((result) => result === true),
+        tap(() => {
+          this.isLoading.set(true);
+          this.cd.markForCheck();
+        }),
         switchMap(() =>
           this.serviceService.deleteService(id).pipe(
+            finalize(() => {
+              this.isLoading.set(false);
+              this.cd.markForCheck();
+            }),
             switchMap(() =>
               this.translate
                 .get('MANAGEMENT_SERVICES.MESSAGES.SUCCESS_DELETE')
@@ -196,7 +207,7 @@ export default class ManagementServicesGlobal implements OnInit {
         },
       });
   }
-
+  
   resetForm() {
     this.isEditing = false;
     this.currentServiceId = null;
