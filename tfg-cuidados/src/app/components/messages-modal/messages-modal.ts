@@ -101,7 +101,7 @@ export class MessagesModal implements OnInit {
             if (!foundUser || !foundUser.id_usuario) {
               throw new Error('usuario_no_encontrado');
             }
-            const newComunication: ComunicacionModel = {
+            const newComunication = {
               id_emisor: idEmisor,
               id_receptor: foundUser.id_usuario,
               asunto: this.messageForm.value.asunto ?? "",
