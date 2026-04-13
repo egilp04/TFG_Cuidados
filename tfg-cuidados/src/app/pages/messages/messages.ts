@@ -43,6 +43,7 @@ export default class Messages implements OnInit {
   private cd = inject(ChangeDetectorRef);
   private translate = inject(TranslateService);
   public messageService = inject(MessageService);
+  private responsive = inject(ResponsiveSize);
 
   displayedColumns: string[] = ['Emisor', 'Receptor', 'Asunto', 'Fecha', 'acciones'];
   dataSource = new MatTableDataSource<ComunicacionModel>([]);
@@ -109,7 +110,7 @@ export default class Messages implements OnInit {
       data: { modo: 'showMessage', contenido: mensaje },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-      panelClass: 'custom-modal-padding',
+      maxHeight: '90vh',
     });
     const user = this.authService.currentUser();
     if (user && mensaje.id_receptor === user.id_usuario && !mensaje.leido) {
@@ -150,15 +151,13 @@ export default class Messages implements OnInit {
       });
   }
 
-  private responsive = inject(ResponsiveSize);
-
   async writeMessage() {
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
     this.dialog.open(MessagesModal, {
       data: { modo: 'escribir' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
-      panelClass: 'custom-modal-padding',
+      maxHeight: '90vh',
     });
   }
 }

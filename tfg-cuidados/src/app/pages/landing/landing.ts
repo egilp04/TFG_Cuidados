@@ -5,6 +5,7 @@ import cardsdata from '../../../assets/data/Cards.json';
 import { MatDialog } from '@angular/material/dialog';
 import { Card } from '../../interfaces/card';
 import { TranslateModule } from '@ngx-translate/core';
+import { ResponsiveSize } from '../../services/responsive-size';
 
 @Component({
   selector: 'app-landing',
@@ -16,9 +17,13 @@ import { TranslateModule } from '@ngx-translate/core';
 export default class Landing {
   public cardsdata: Card[] = cardsdata;
   private dialog = inject(MatDialog);
-  
+  private responsive = inject(ResponsiveSize);
+
   async openModal() {
     const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
-    this.dialog.open(Loginmodal, { data: { modo: 'registro' }, width: '500px' });
+    this.dialog.open(Loginmodal, { data: { modo: 'registro' }, 
+    width: '100%',
+    maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+    maxHeight: '90vh'});
   }
 }

@@ -46,6 +46,7 @@ export default class Servicesbusiness implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
   public isLoading = signal(false);
+  private responsive = inject(ResponsiveSize);
 
   dataSource = new MatTableDataSource<ServicioHorarioJoined>([]);
   displayedColumns: string[] = [
@@ -75,14 +76,13 @@ export default class Servicesbusiness implements OnInit {
     }
   }
 
-  private responsive = inject(ResponsiveSize);
-
   async openModal(element?: ServicioHorarioJoined) {
     const { ServiceTimeModal } =
       await import('../../components/service-time-modal/service-time-modal');
     const dialogRef = this.dialog.open(ServiceTimeModal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+      maxHeight: '90vh',
       data: element || null,
     });
 
@@ -104,6 +104,7 @@ export default class Servicesbusiness implements OnInit {
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+      maxHeight: '90vh',
       data: { modo: 'eliminarServicio' },
     });
     dialogRef

@@ -28,6 +28,7 @@ export default class Activities {
   public dataSource = new MatTableDataSource<ContratoDetalle>([]);
   private dialog = inject(MatDialog);
   private translate = inject(TranslateService);
+  private responsive = inject(ResponsiveSize);
 
   ngOnInit() {
     this.subcribeContracts();
@@ -46,8 +47,6 @@ export default class Activities {
       });
   }
 
-  private responsive = inject(ResponsiveSize);
-
   async cancelContract(id: string) {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     this.dialog
@@ -55,6 +54,7 @@ export default class Activities {
         data: { modo: 'cancelContract' },
         width: '100%',
         maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+        maxHeight: '90vh'
       })
       .afterClosed()
       .pipe(
