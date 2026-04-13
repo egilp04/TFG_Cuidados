@@ -367,10 +367,10 @@
       "EMPTY": "No hay notificaciones"
     },
     "ALERTS": {
-      "CONFIRM_DELETE": "Are you sure you want to delete this notification?",
-      "DELETE_SUCCESS": "The notificacion has been deleted.",
-      "DELETE_ERROR": "Could not delete the notification.",
-      "VIEW_ERROR": "Cannot view this notification at this time"
+      "CONFIRM_DELETE": "¿Seguro que quieres eliminar estaa notificación?",
+      "DELETE_SUCCESS": "La notificación se ha eliminado.",
+      "DELETE_ERROR": "La notificación se ha podido eliminar.",
+      "VIEW_ERROR": "Error al ver la notificación"
     }
   },
   "RECOVER_PASSWORD": {
