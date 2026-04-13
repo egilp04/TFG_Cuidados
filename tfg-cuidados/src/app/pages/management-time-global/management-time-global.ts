@@ -18,7 +18,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { switchMap, throwError, map, catchError, of, filter } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { dias_semana, tradusDia } from '../../core/constants/dias_semana';
+import { dias_semana, tradusDia, diasValidos } from '../../core/constants/dias_semana';
 import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
 import { Buttonback } from '../../components/buttonback/buttonback';
@@ -91,13 +91,12 @@ export default class ManagementTimeGlobal implements OnInit {
     if (this.isLoading()) return;
 
     const rawValue = this.timeFormular.getRawValue();
-    const hora = rawValue.hora;
-    const dia = rawValue.dia;
+    const hora = rawValue.hora ?? '';
+    const dia = rawValue.dia ?? '';
     const user = this.authService.currentUser();
 
     if (!user || !user.id_usuario) return;
 
-    const diasValidos = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
     if (!diasValidos.includes(dia.toLowerCase())) {
       this.showMessageTraducido('MANAGEMENT_SCHEDULES.MESSAGES.INVALID_DAY', 'error');
       return;
@@ -192,7 +191,7 @@ export default class ManagementTimeGlobal implements OnInit {
         this.isLoading.set(true);
         this.cd.markForCheck();
       }),
-      switchMap(() => 
+      switchMap(() =>
         this.timeService.deleteTime(id).pipe(
           finalize(() => {
             this.isLoading.set(false);

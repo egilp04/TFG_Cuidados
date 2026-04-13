@@ -16,7 +16,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { switchMap, throwError, map, catchError, of, filter } from 'rxjs';
+import { switchMap, tap, throwError, map, catchError, of, filter } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
