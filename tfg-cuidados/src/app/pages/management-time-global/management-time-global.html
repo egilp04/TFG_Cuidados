@@ -27,6 +27,11 @@
       type="time"
       [control]="getCtrl('hora')"
       step="1800"
+      [errorMessage]="
+        getCtrl('hora').invalid && getCtrl('hora').touched
+          ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
+          : ''
+      "
     >
     </app-inputs>
     <div class="management-time-global-day-week">
@@ -34,15 +39,7 @@
         {{ 'MANAGEMENT_SCHEDULES.FORM.DAY_LABEL' | translate }}
       </label>
       <div class="relative w-full">
-        <select
-          name="dia"
-          [formControl]="getCtrl('dia')"
-          class="management-time-global-select"
-          [ngClass]="{
-            'border-red-500 dark:border-red-700':
-              getCtrl('dia').invalid && (getCtrl('dia').dirty || getCtrl('dia').touched),
-          }"
-        >
+        <select name="dia" [formControl]="getCtrl('dia')" class="management-time-global-select">
           <option value="" disabled selected>
             {{ 'MANAGEMENT_SCHEDULES.FORM.SELECT_DAY' | translate }}
           </option>

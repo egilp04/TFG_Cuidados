@@ -51,7 +51,7 @@
   --text-p--font-family: var(--font-poppins);
   --text-p--font-weight: var(--font-weight-medium);
 
-  --text-label: 0.75rem;
+  --text-label: 1rem;
   --text-label--line-height: 1.2;
   --text-label--font-family: var(--font-poppins);
   --text-label--font-weight: var(--font-weight-regular);
@@ -381,7 +381,7 @@
   }
 
   .nav-menu-unified {
-    @apply absolute top-full right-0 sm:w-auto bg-surface dark:bg-surface-dark border-b border-nav-border shadow-lg flex-col p-6 gap-6 z-40 md:static md:flex-row md:items-center md:p-0 md:border-none md:shadow-none md:gap-10;
+    @apply absolute top-full right-0 sm:w-auto bg-surface dark:bg-surface-dark border-b border-nav-border shadow-lg flex-col p-6 gap-6 z-40 md:static md:flex-row md:items-center md:p-0 md:border-none md:shadow-none md:gap-10 items-center;
   }
 
   .nav-authenticated-wrapper {
