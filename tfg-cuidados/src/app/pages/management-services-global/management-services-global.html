@@ -2,14 +2,17 @@
   <app-buttonback></app-buttonback>
 </section>
 @if (this.messageService.messageData(); as data) {
-<section class="message-noti">
-  <div [ngClass]="{
-          'text-red-500': data.tipo === 'error',
-          'text-primary': data.tipo === 'exito',
-        }" class="message-noti-text">
-    {{ data.mensaje }}
-  </div>
-</section>
+  <section class="message-noti">
+    <div
+      [ngClass]="{
+        'text-red-500': data.tipo === 'error',
+        'text-primary': data.tipo === 'exito',
+      }"
+      class="message-noti-text"
+    >
+      {{ data.mensaje }}
+    </div>
+  </section>
 }
 <section class="managements-services-global-container">
   <h1 class="management-title-services-global">
@@ -20,12 +23,22 @@
       name="nombre"
       [label]="'MANAGEMENT_SERVICES.FORM.NAME' | translate"
       [control]="getCtrl('nombre')"
+      [errorMessage]="
+        getCtrl('nombre').invalid && getCtrl('nombre').touched
+          ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
+          : ''
+      "
     >
     </app-inputs>
     <app-inputs
       name="tipo"
       [label]="'MANAGEMENT_SERVICES.FORM.TYPE' | translate"
       [control]="getCtrl('tipo')"
+      [errorMessage]="
+        getCtrl('tipo').invalid && getCtrl('tipo').touched
+          ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
+          : ''
+      "
     >
     </app-inputs>
   </main>
@@ -95,7 +108,7 @@
             [label]="'MANAGEMENT_SERVICES.TABLE.DELETE' | translate"
             variant="secondary"
             (click)="onDelete(serv.id_servicio!)"
-            [disabled]="isLoading()"           
+            [disabled]="isLoading()"
           >
           </app-button>
         </div>
