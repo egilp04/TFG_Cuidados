@@ -109,7 +109,7 @@ export default class Messages implements OnInit {
       data: { modo: 'showMessage', contenido: mensaje },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-      panelClass: 'custom-modal-padding',
+      maxHeight: '90vh',
     });
     const user = this.authService.currentUser();
     if (user && mensaje.id_receptor === user.id_usuario && !mensaje.leido) {
@@ -158,7 +158,7 @@ export default class Messages implements OnInit {
       data: { modo: 'escribir' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
-      panelClass: 'custom-modal-padding',
+      maxHeight: '90vh',
     });
   }
 }

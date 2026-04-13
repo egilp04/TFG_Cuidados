@@ -70,7 +70,7 @@ export default class Contracts implements OnInit {
       data: { modo: 'cancelContract' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '650px',
-      panelClass: 'custom-modal-padding',
+      maxHeight: '90vh',
     });
 
     dialogRef
@@ -105,7 +105,8 @@ export default class Contracts implements OnInit {
     const { InfoContract } = await import('../../components/info-contract/info-contract');
     const dialogConfig = {
       width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',      
+      maxHeight: '90vh'
     };
     const contratoYaMapeado = this.dataSource.data.find((c) => c.id_contrato === id);
     if (contratoYaMapeado) {

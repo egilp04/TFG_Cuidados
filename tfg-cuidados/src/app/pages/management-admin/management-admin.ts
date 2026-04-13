@@ -49,6 +49,7 @@ export default class ManagementAdmin implements OnInit {
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+      maxHeight: '90vh',
       data: { modo: 'eliminar' },
     });
     dialogRef

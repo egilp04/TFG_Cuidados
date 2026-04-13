@@ -55,6 +55,7 @@ export default class Activities {
         data: { modo: 'cancelContract' },
         width: '100%',
         maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+        maxHeight: '90vh'
       })
       .afterClosed()
       .pipe(

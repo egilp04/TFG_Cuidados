@@ -182,6 +182,7 @@ export default class ManagementTimeGlobal implements OnInit {
       data: { modo: 'eliminarAdminGlobal' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+      maxHeight: '90vh'
     });
 
     dialogRef.afterClosed().pipe(

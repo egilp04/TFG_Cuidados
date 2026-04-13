@@ -83,6 +83,7 @@ export default class Servicesbusiness implements OnInit {
     const dialogRef = this.dialog.open(ServiceTimeModal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+      maxHeight: '90vh',
       data: element || null,
     });
 
@@ -104,6 +105,7 @@ export default class Servicesbusiness implements OnInit {
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+      maxHeight: '90vh',
       data: { modo: 'eliminarServicio' },
     });
     dialogRef
