@@ -28,6 +28,7 @@ export default class Activities {
   public dataSource = new MatTableDataSource<ContratoDetalle>([]);
   private dialog = inject(MatDialog);
   private translate = inject(TranslateService);
+  private responsive = inject(ResponsiveSize);
 
   ngOnInit() {
     this.subcribeContracts();
@@ -45,8 +46,6 @@ export default class Activities {
         error: (error) => console.error('Error en el flujo IRL de contratos:', error),
       });
   }
-
-  private responsive = inject(ResponsiveSize);
 
   async cancelContract(id: string) {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');

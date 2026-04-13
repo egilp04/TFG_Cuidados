@@ -43,6 +43,7 @@ export default class Messages implements OnInit {
   private cd = inject(ChangeDetectorRef);
   private translate = inject(TranslateService);
   public messageService = inject(MessageService);
+  private responsive = inject(ResponsiveSize);
 
   displayedColumns: string[] = ['Emisor', 'Receptor', 'Asunto', 'Fecha', 'acciones'];
   dataSource = new MatTableDataSource<ComunicacionModel>([]);
@@ -149,8 +150,6 @@ export default class Messages implements OnInit {
         this.messageService.showMessage(resultado.text, resultado.type);
       });
   }
-
-  private responsive = inject(ResponsiveSize);
 
   async writeMessage() {
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');

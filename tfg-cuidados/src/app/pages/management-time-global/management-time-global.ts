@@ -59,6 +59,7 @@ export default class ManagementTimeGlobal implements OnInit {
   public dias_semana: { valor: string; label: string }[] = dias_semana;
   public tradus_dias: { [key: string]: string } = tradusDia;
   public isLoading = signal(false);
+  private responsive = inject(ResponsiveSize);
 
   isEditing: boolean = false;
   currentTimeId: string | null = null;
@@ -173,7 +174,6 @@ export default class ManagementTimeGlobal implements OnInit {
     });
   }
 
-  private responsive = inject(ResponsiveSize);
   async onDelete(id: string) {
     if (this.isLoading()) return;
 

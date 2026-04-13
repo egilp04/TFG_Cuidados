@@ -58,6 +58,7 @@ export default class ManagementServicesGlobal implements OnInit {
   private translate = inject(TranslateService);
   private dialog = inject(MatDialog);
   public isLoading = signal(false);
+  private responsive = inject(ResponsiveSize);
 
   isEditing: boolean = false;
   currentServiceId: string | null = null;
@@ -160,8 +161,6 @@ export default class ManagementServicesGlobal implements OnInit {
       tipo: servicio.tipo_servicio,
     });
   }
-
-  private responsive = inject(ResponsiveSize);
 
   async onDelete(id: string) {
     if (this.isLoading()) return;

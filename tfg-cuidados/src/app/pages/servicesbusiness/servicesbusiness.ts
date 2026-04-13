@@ -46,6 +46,7 @@ export default class Servicesbusiness implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
   public isLoading = signal(false);
+  private responsive = inject(ResponsiveSize);
 
   dataSource = new MatTableDataSource<ServicioHorarioJoined>([]);
   displayedColumns: string[] = [
@@ -74,8 +75,6 @@ export default class Servicesbusiness implements OnInit {
         });
     }
   }
-
-  private responsive = inject(ResponsiveSize);
 
   async openModal(element?: ServicioHorarioJoined) {
     const { ServiceTimeModal } =

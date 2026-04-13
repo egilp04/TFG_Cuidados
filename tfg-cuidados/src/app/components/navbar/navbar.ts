@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ComunicationService } from '../../services/comunication.service';
 import { DarkModeBtnComponent } from '../dark-mode-btn/dark-mode-btn.component';
 import { filter } from 'rxjs';
+import { ResponsiveSize } from '../../services/responsive-size';
 
 @Component({
   selector: 'app-navbar',
@@ -29,6 +30,7 @@ export class Navbar implements OnInit {
   public authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
   private comunicationService = inject(ComunicationService);
+  private responsive = inject(ResponsiveSize);
 
   public isMenuOpen = false;
 
@@ -77,10 +79,11 @@ export class Navbar implements OnInit {
   async startSession() {
     this.closeMenu();
     const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
-
     const dialogRef = this.dialog.open(Loginmodal, {
       data: { modo: 'login' },
-      width: '500px',
+      width: '100%',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+      maxHeight: '90vh'
     });
 
     dialogRef

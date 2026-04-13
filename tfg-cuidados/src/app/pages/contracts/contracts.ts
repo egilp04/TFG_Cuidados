@@ -38,11 +38,10 @@ export default class Contracts implements OnInit {
   private cd = inject(ChangeDetectorRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
+  private responsive = inject(ResponsiveSize);
 
   displayedColumns: string[] = ['ID', 'fecha', 'acciones'];
   dataSource = new MatTableDataSource<ContratoDetalle>([]);
-
-  private responsive = inject(ResponsiveSize);
 
   ngOnInit() {
     this.subcribeContracts();
