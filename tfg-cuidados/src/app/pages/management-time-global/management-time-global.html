@@ -2,14 +2,17 @@
   <app-buttonback></app-buttonback>
 </section>
 @if (this.messageService.messageData(); as data) {
-<section class="message-noti">
-  <div [ngClass]="{
-          'text-red-500': data.tipo === 'error',
-          'text-primary': data.tipo === 'exito',
-        }" class="message-noti-text">
-    {{ data.mensaje }}
-  </div>
-</section>
+  <section class="message-noti">
+    <div
+      [ngClass]="{
+        'text-red-500': data.tipo === 'error',
+        'text-primary': data.tipo === 'exito',
+      }"
+      class="message-noti-text"
+    >
+      {{ data.mensaje }}
+    </div>
+  </section>
 }
 
 <section class="managements-time-global-container">
@@ -24,6 +27,11 @@
       type="time"
       [control]="getCtrl('hora')"
       step="1800"
+      [errorMessage]="
+        getCtrl('hora').invalid && getCtrl('hora').touched
+          ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
+          : ''
+      "
     >
     </app-inputs>
     <div class="management-time-global-day-week">

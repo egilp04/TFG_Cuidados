@@ -2,21 +2,28 @@
   <app-buttonback></app-buttonback>
 </section>
 @if (this.messageService.messageData(); as data) {
-<section class="message-noti">
-  <div [ngClass]="{
+  <section class="message-noti">
+    <div
+      [ngClass]="{
         'text-red-500': data.tipo === 'error',
         'text-primary': data.tipo === 'exito',
-      }" class="message-noti-text">
-    {{ data.mensaje }}
-  </div>
-</section>
+      }"
+      class="message-noti-text"
+    >
+      {{ data.mensaje }}
+    </div>
+  </section>
 }
-<section class="message-noti w-full h-full">
+<section class="modify-profile-page-container">
   <h1 class="modify-profile-title">
     {{ 'MODIFY_PROFILE.TITLE' | translate }}
   </h1>
-  <app-modifyprofileform [userRole]="userRole()" [userData]="userToEdit()"
-    (formSubmitted)="doUpdateProfile($event)" (deleteRequested)="doUserLow()"
-    (cancelRequested)="backHome()">
+  <app-modifyprofileform
+    [userRole]="userRole()"
+    [userData]="userToEdit()"
+    (formSubmitted)="doUpdateProfile($event)"
+    (deleteRequested)="doUserLow()"
+    (cancelRequested)="backHome()"
+  >
   </app-modifyprofileform>
 </section>
