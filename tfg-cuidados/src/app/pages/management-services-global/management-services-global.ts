@@ -16,7 +16,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { switchMap, throwError, map, catchError, of, filter } from 'rxjs';
+import { switchMap, tap, throwError, map, catchError, of, filter } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
@@ -28,6 +28,8 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { finalize } from 'rxjs';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-management-services-global',
@@ -55,14 +57,16 @@ export default class ManagementServicesGlobal implements OnInit {
   private authService = inject(AuthService);
   private translate = inject(TranslateService);
   private dialog = inject(MatDialog);
+  public isLoading = signal(false);
 
   isEditing: boolean = false;
   currentServiceId: string | null = null;
 
-  controlFilterItem = new FormControl('');
-  servicioForm: FormGroup = this.fb.group({
-    nombre: ['', [Validators.required, Validators.minLength(3)]],
-    tipo: ['', [Validators.required]],
+  controlFilterItem = new FormControl<string>('');
+
+  serviceFormular = this.fb.group({
+    nombre: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
+    tipo: this.fb.control<string>('', [Validators.required]),
   });
 
   dataSource = new MatTableDataSource<ServicioModel>([]);
@@ -79,16 +83,24 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   onSave() {
-    if (this.servicioForm.invalid) {
-      this.servicioForm.markAllAsTouched();
+
+    if (this.serviceFormular.invalid) {
+      this.serviceFormular.markAllAsTouched();
       return;
     }
-    const rawValue = this.servicioForm.getRawValue();
-    const nombre = rawValue.nombre.trim();
-    const tipo = rawValue.tipo.trim();
+    if (this.isLoading()) return
+
+    this.isLoading.set(true);
+
+    const rawValue = this.serviceFormular.getRawValue();
+    const nombre = (rawValue.nombre ?? '').trim();
+    const tipo = (rawValue.tipo ?? '').trim();
 
     const user = this.authService.currentUser();
-    if (!user || !user.id_usuario) return;
+    if (!user || !user.id_usuario) {
+      this.isLoading.set(false); 
+      return;
+    }
 
     this.serviceService
       .existsService(nombre, this.currentServiceId || undefined)
@@ -126,6 +138,10 @@ export default class ManagementServicesGlobal implements OnInit {
           }
           return this.translate.get(msgKey).pipe(map((text) => ({ type: 'error' as const, text })));
         }),
+        finalize(() => {
+          this.isLoading.set(false);
+          this.cd.markForCheck();
+        })
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
@@ -139,15 +155,17 @@ export default class ManagementServicesGlobal implements OnInit {
   onEdit(servicio: ServicioModel) {
     this.isEditing = true;
     this.currentServiceId = servicio.id_servicio!;
-    this.servicioForm.patchValue({
+    this.serviceFormular.patchValue({
       nombre: servicio.nombre,
       tipo: servicio.tipo_servicio,
     });
   }
 
   private responsive = inject(ResponsiveSize);
-  isMobile = window.innerWidth < 768;
+
   async onDelete(id: string) {
+    if (this.isLoading()) return;
+
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { modo: 'eliminarAdminGlobal' },
@@ -160,8 +178,16 @@ export default class ManagementServicesGlobal implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter((result) => result === true),
+        tap(() => {
+          this.isLoading.set(true);
+          this.cd.markForCheck();
+        }),
         switchMap(() =>
           this.serviceService.deleteService(id).pipe(
+            finalize(() => {
+              this.isLoading.set(false);
+              this.cd.markForCheck();
+            }),
             switchMap(() =>
               this.translate
                 .get('MANAGEMENT_SERVICES.MESSAGES.SUCCESS_DELETE')
@@ -181,11 +207,11 @@ export default class ManagementServicesGlobal implements OnInit {
         },
       });
   }
-
+  
   resetForm() {
     this.isEditing = false;
     this.currentServiceId = null;
-    this.servicioForm.reset();
+    this.serviceFormular.reset();
   }
 
   toFilter(valor: string) {
@@ -193,6 +219,6 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   getCtrl(name: string) {
-    return this.servicioForm.get(name) as FormControl;
+    return this.serviceFormular.get(name) as FormControl;
   }
 }

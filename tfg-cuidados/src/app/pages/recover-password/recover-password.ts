@@ -39,19 +39,14 @@ export default class RecoverPasswordPage {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
 
-  recoverForm: FormGroup = this.fb.group({
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(6),
-        Validators.pattern(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/,
-        ),
-      ],
-    ],
+  recoverForm = this.fb.group({
+    password: this.fb.control<string>('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/),
+    ]),
   });
-
+  
   getCtrl(name: string): FormControl {
     return this.recoverForm.get(name) as FormControl;
   }

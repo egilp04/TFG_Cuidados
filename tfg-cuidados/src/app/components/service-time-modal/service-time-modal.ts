@@ -47,14 +47,15 @@ export class ServiceTimeModal implements OnInit {
   constructor() {
     this.isEditing = !!this.data;
     this.form = this.fb.group({
-      id_servicio: [this.data?.id_servicio || '', Validators.required],
-      id_horario: [this.data?.id_horario || '', Validators.required],
-      id_empresa: [this.data?.id_empresa || ''],
-      precio: [
-        this.data?.precio || '',
-        [Validators.required, Validators.min(0), Validators.pattern(/^\d+(\.\d{1,2})?$/)],
-      ],
-      descripcion: [this.data?.descripcion || '', [Validators.required]],
+      id_servicio: this.fb.control<string>(this.data?.id_servicio || '', Validators.required),
+      id_horario: this.fb.control<string>(this.data?.id_horario || '', Validators.required),
+      id_empresa: this.fb.control<string>(this.data?.id_empresa || ''),
+      precio: this.fb.control<string | number>(this.data?.precio || '', [
+        Validators.required, 
+        Validators.min(0), 
+        Validators.pattern(/^\d+(\.\d{1,2})?$/)
+      ]),
+      descripcion: this.fb.control<string>(this.data?.descripcion || '', [Validators.required]),
     });
   }
 

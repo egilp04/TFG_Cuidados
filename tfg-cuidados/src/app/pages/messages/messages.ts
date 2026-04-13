@@ -105,10 +105,11 @@ export default class Messages implements OnInit {
 
   async checkMessage(mensaje: ComunicacionModel) {
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
-
     this.dialog.open(MessagesModal, {
       data: { modo: 'showMessage', contenido: mensaje },
-      width: '600px',
+      width: '100%',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+      panelClass: 'custom-modal-padding',
     });
     const user = this.authService.currentUser();
     if (user && mensaje.id_receptor === user.id_usuario && !mensaje.leido) {
@@ -156,7 +157,7 @@ export default class Messages implements OnInit {
     this.dialog.open(MessagesModal, {
       data: { modo: 'escribir' },
       width: '100%',
-      maxWidth: this.responsive.isMobile() ? '60vw' : '500px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
       panelClass: 'custom-modal-padding',
     });
   }

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { from, Observable, throwError, BehaviorSubject, of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
@@ -18,17 +18,19 @@ import {
 export class UserService {
   private supabase = inject(SupabaseService).getClient();
 
-  private usersList$ = new BehaviorSubject<UserModel[]>([]);
+  private _usersList = signal<UserModel[]>([]);
+  public usersList = this._usersList.asReadonly();
+  
   private currentType: 'cliente' | 'empresa' = 'cliente';
 
   constructor() {
     this.initRealtime();
   }
-  getUsersObservable(tipo: 'cliente' | 'empresa'): Observable<UserModel[]> {
+
+  loadUsers(tipo: 'cliente' | 'empresa'): void {
     this.currentType = tipo;
-    this.usersList$.next([]);
+    this._usersList.set([]);
     this.refreshUsers();
-    return this.usersList$.asObservable();
   }
 
   /**
@@ -78,8 +80,7 @@ export class UserService {
         } as unknown as UserModel;
       });
 
-      this.usersList$.next(flattened);
-    }
+      this._usersList.set(flattened);    }
   }
 
   deleteUser(userId: string): Observable<void> {
