@@ -155,11 +155,11 @@
   }
 
   .mat-mdc-paginator {
-    @apply !bg-surface dark:bg-surface-dark !text-primary dark:text-surface py-20;
+    @apply !bg-surface dark:!bg-surface-dark !text-primary dark:!text-surface py-20;
   }
 
   .mat-mdc-paginator .mat-mdc-icon-button {
-    @apply !text-primary dark:text-surface my-10;
+    @apply !text-primary dark:!text-surface my-10;
   }
 
   .mat-mdc-paginator .mat-mdc-select-value {
@@ -401,7 +401,7 @@
   }
 
   .nav-icon-style {
-    @apply text-primary dark:text-surface w-12 h-12 md:w-auto md:h-auto md:text-h2 transition-colors duration-200 hover:text-blue-600;
+    @apply text-primary dark:text-surface w-12 h-12 md:w-auto md:h-auto md:text-h2 transition-colors duration-200 hover:text-accent;
   }
 
   .nav-badge {
@@ -904,8 +904,8 @@
     @apply text-gray-400 mb-10 text-p dark:text-gray-50;
   }
 
-  .message-noti {
-    @apply flex flex-col mt-20 w-full max-h-screen gap-20 justify-center z-40;
+  .modify-profile-page-container {
+    @apply flex flex-col w-full gap-10 justify-center z-40 p-10 lg:py-10 lg:px-120;
   }
 
   .mangment-admin-btn-container {
@@ -1105,7 +1105,16 @@
   }
 
   .management-time-global-select {
-    @apply text-label w-full p-4 rounded-12 border-2 border-primary bg-transparent text-primary dark:text-surface dark:border-surface outline-none focus:border-accent cursor-pointer transition-colors;
+    @apply text-label w-full rounded-12 border-2 border-primary bg-transparent text-primary
+    dark:text-surface dark:border-surface outline-none focus:border-accent cursor-pointer transition-colors
+
+    appearance-none bg-no-repeat
+    p-3 pr-10 bg-position-[right_1rem_center] bg-size-[1.2rem]
+    md:p-4 md:pr-12 md:bg-[postion:right_1.2rem_center] md:bg-[length:1.5rem];
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%23000000"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>');
+  }
+  .dark .management-time-global-select {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%23FFFFFF"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>');
   }
 
   .management-time-global-btn-container {
@@ -1393,4 +1402,9 @@ html.dark .cdk-overlay-pane .mat-mdc-select-panel {
 
 html.dark .mat-mdc-header-cell {
   @apply !border-b !border-white;
+}
+
+.dark input[type='time']::-webkit-calendar-picker-indicator,
+.dark input[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(100%);
 }

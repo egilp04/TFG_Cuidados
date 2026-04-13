@@ -2,14 +2,17 @@
   <app-buttonback></app-buttonback>
 </section>
 @if (this.messageService.messageData(); as data) {
-<section class="message-noti">
-  <div [ngClass]="{
-          'text-red-500': data.tipo === 'error',
-          'text-primary': data.tipo === 'exito',
-        }" class="message-noti-text">
-    {{ data.mensaje }}
-  </div>
-</section>
+  <section class="message-noti">
+    <div
+      [ngClass]="{
+        'text-red-500': data.tipo === 'error',
+        'text-primary': data.tipo === 'exito',
+      }"
+      class="message-noti-text"
+    >
+      {{ data.mensaje }}
+    </div>
+  </section>
 }
 
 <section class="managements-time-global-container">
@@ -31,7 +34,15 @@
         {{ 'MANAGEMENT_SCHEDULES.FORM.DAY_LABEL' | translate }}
       </label>
       <div class="relative w-full">
-        <select name="dia" [formControl]="getCtrl('dia')" class="management-time-global-select">
+        <select
+          name="dia"
+          [formControl]="getCtrl('dia')"
+          class="management-time-global-select"
+          [ngClass]="{
+            'border-red-500 dark:border-red-700':
+              getCtrl('dia').invalid && (getCtrl('dia').dirty || getCtrl('dia').touched),
+          }"
+        >
           <option value="" disabled selected>
             {{ 'MANAGEMENT_SCHEDULES.FORM.SELECT_DAY' | translate }}
           </option>
