@@ -58,6 +58,7 @@ export default class ManagementServicesGlobal implements OnInit {
   private translate = inject(TranslateService);
   private dialog = inject(MatDialog);
   public isLoading = signal(false);
+  private responsive = inject(ResponsiveSize);
 
   isEditing: boolean = false;
   currentServiceId: string | null = null;
@@ -161,8 +162,6 @@ export default class ManagementServicesGlobal implements OnInit {
     });
   }
 
-  private responsive = inject(ResponsiveSize);
-
   async onDelete(id: string) {
     if (this.isLoading()) return;
 
@@ -171,6 +170,7 @@ export default class ManagementServicesGlobal implements OnInit {
       data: { modo: 'eliminarAdminGlobal' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+      maxHeight: '90vh'
     });
 
     dialogRef

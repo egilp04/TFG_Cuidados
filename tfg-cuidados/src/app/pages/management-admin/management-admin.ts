@@ -29,6 +29,7 @@ export default class ManagementAdmin implements OnInit {
   private destroyRef = inject(DestroyRef);
   private translate = inject(TranslateService);
   public isUser: boolean = true;
+  private responsive = inject(ResponsiveSize);
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
@@ -42,13 +43,12 @@ export default class ManagementAdmin implements OnInit {
     this.userService.loadUsers(tipo);
   }
 
-  private responsive = inject(ResponsiveSize);
-
   async toDeleteUser(item: UserModel) {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+      maxHeight: '90vh',
       data: { modo: 'eliminar' },
     });
     dialogRef
