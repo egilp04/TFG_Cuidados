@@ -1093,7 +1093,7 @@
   }
 
   .management-time-global-form {
-    @apply flex flex-col gap-20 px-10;
+    @apply w-full h-full md:px-40 gap-20 flex flex-col;
   }
 
   .management-time-global-day-week {
