@@ -36,6 +36,7 @@
       "
       variant="primary"
       (click)="onSave()"
+      [disabled]="isLoading()"
     >
     </app-button>
 
@@ -94,6 +95,7 @@
             [label]="'MANAGEMENT_SERVICES.TABLE.DELETE' | translate"
             variant="secondary"
             (click)="onDelete(serv.id_servicio!)"
+            [disabled]="isLoading()"           
           >
           </app-button>
         </div>

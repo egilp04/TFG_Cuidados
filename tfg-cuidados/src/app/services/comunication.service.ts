@@ -121,7 +121,7 @@ export class ComunicationService {
    * el sistema dispara una llamada interna para generar una notificación persistente
    * al usuario receptor.
    */
-  insertComunicacion(comunicacion: ComunicacionModel): Observable<void> {
+  insertComunicacion(comunicacion: Omit<ComunicacionModel, 'fecha_envio'>): Observable<void> {
     if (!this.tiposValidos.includes(comunicacion.tipo_comunicacion as any)) {
       return throwError(() => new Error('tipo_comunicacion inválido.'));
     }
@@ -231,13 +231,13 @@ export class ComunicationService {
     asunto: string,
     contenido: string,
   ): Observable<void> {
-    const notificacion: ComunicacionModel = {
-      tipo_comunicacion: 'notificacion',
+
+    const notificacion = {
+      tipo_comunicacion: 'notificacion' as const,
       id_emisor: null,
       id_receptor: idReceptor,
       asunto: asunto,
       contenido: contenido,
-      fecha_envio: new Date(),
       leido: false,
       eliminado_por_emisor: false,
       eliminado_por_receptor: false,

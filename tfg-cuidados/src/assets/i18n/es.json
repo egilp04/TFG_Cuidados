@@ -91,7 +91,7 @@
         "DESC": "Estratega con más de 10 años de experiencia en el ámbito sociosanitario y gestión de equipos."
       },
       "MEMBER2": {
-        "ROLE": "CTO & Co-Fundador",
+        "ROLE": "Co-Fundador",
         "DESC": "Responsable del desarrollo tecnológico y de garantizar una plataforma segura y accesible."
       },
       "MEMBER3": {
@@ -99,7 +99,7 @@
         "DESC": "Especialista en coordinar la red de cuidadores y asegurar la calidad de los servicios."
       },
       "MEMBER4": {
-        "ROLE": "Atención al Cliente",
+        "ROLE": "Soporte",
         "DESC": "Dedicado a ofrecer soporte humano y resolver dudas para una experiencia excelente."
       }
     }
@@ -367,10 +367,10 @@
       "EMPTY": "No hay notificaciones"
     },
     "ALERTS": {
-      "CONFIRM_DELETE": "Are you sure you want to delete this notification?",
-      "DELETE_SUCCESS": "The notificacion has been deleted.",
-      "DELETE_ERROR": "Could not delete the notification.",
-      "VIEW_ERROR": "Cannot view this notification at this time"
+      "CONFIRM_DELETE": "¿Seguro que quieres eliminar estaa notificación?",
+      "DELETE_SUCCESS": "La notificación se ha eliminado.",
+      "DELETE_ERROR": "La notificación se ha podido eliminar.",
+      "VIEW_ERROR": "Error al ver la notificación"
     }
   },
   "RECOVER_PASSWORD": {

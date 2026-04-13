@@ -58,20 +58,19 @@ export class Modifyprofileform implements OnInit, OnChanges {
   private targetUser: UserProfileModel | null = null;
   public isAdminViewer: boolean = false;
 
-  profileForm: FormGroup = this.fb.group({
-    usuario: ['', [Validators.required, Validators.minLength(3)]],
-    primerApe: [''],
-    segundoApe: [''],
-    nombreEmpresa: [''],
-    telefono: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
-    email: ['', [Validators.required, Validators.email]],
-    direccion: [''],
-    localidad: [''],
-    codpostal: [''],
-    comunidad: [null],
-    descripcion: [''],
+  profileForm = this.fb.group({
+    usuario: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
+    primerApe: this.fb.control<string>(''),
+    segundoApe: this.fb.control<string>(''),
+    nombreEmpresa: this.fb.control<string>(''),
+    telefono: this.fb.control<string>('', [Validators.required, Validators.pattern('^[0-9]{9}$')]),
+    email: this.fb.control<string>('', [Validators.required, Validators.email]),
+    direccion: this.fb.control<string>(''),
+    localidad: this.fb.control<string>(''),
+    codpostal: this.fb.control<string>(''),
+    comunidad: this.fb.control<string | null>(null),
+    descripcion: this.fb.control<string>(''),
   });
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userData'] && this.userData) {
       this.chargeProfileFormData();
@@ -179,22 +178,22 @@ export class Modifyprofileform implements OnInit, OnChanges {
       const formValue = this.profileForm.getRawValue();
 
       const datosParaBBDD: UserProfileModel = {
-        email: formValue.email,
-        telef: formValue.telefono,
-        nombre: this.userRole === 'empresa' ? formValue.nombreEmpresa : formValue.usuario,
+        email: formValue.email ?? undefined,
+        telef: formValue.telefono ?? undefined,
+        nombre: (this.userRole === 'empresa' ? formValue.nombreEmpresa : formValue.usuario) ?? undefined
       };
 
       if (this.userRole !== 'administrador') {
-        datosParaBBDD.direccion = formValue.direccion;
-        datosParaBBDD.localidad = formValue.localidad;
-        datosParaBBDD.codpostal = formValue.codpostal;
-        datosParaBBDD.comunidad = formValue.comunidad;
+        datosParaBBDD.direccion = formValue.direccion ?? undefined;
+        datosParaBBDD.localidad = formValue.localidad ?? undefined;
+        datosParaBBDD.codpostal = formValue.codpostal ?? undefined;
+        datosParaBBDD.comunidad = formValue.comunidad ?? undefined;
 
         if (this.userRole === 'cliente') {
-          datosParaBBDD.ape1 = formValue.primerApe;
-          datosParaBBDD.ape2 = formValue.segundoApe;
+          datosParaBBDD.ape1 = formValue.primerApe ?? undefined;
+          datosParaBBDD.ape2 = formValue.segundoApe ?? undefined;
         } else if (this.userRole === 'empresa') {
-          datosParaBBDD.descripcion = formValue.descripcion;
+          datosParaBBDD.descripcion = formValue.descripcion ?? undefined;
         }
       }
       this.formSubmitted.emit({ datos: datosParaBBDD, rol: this.userRole });
