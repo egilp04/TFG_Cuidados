@@ -21,6 +21,7 @@
         [label]="'SERVICES_BUSINESS.BTN_NEW' | translate"
         variant="primary"
         (click)="openModal()"
+        [disabled]="isLoading()"
       ></app-button>
     </div>
   </div>
@@ -88,11 +89,13 @@
               [label]="'SERVICES_BUSINESS.BTN_DELETE' | translate"
               (click)="onDelete(element.id_servicio_horario)"
               variant="secondary"
+              [disabled]="isLoading()"
             ></app-button>
             <app-button
               [label]="'SERVICES_BUSINESS.BTN_MODIFY' | translate"
               variant="primary"
               (click)="openModal(element)"
+              [disabled]="isLoading()"
             ></app-button>
           </div>
         </td>

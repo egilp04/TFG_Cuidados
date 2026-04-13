@@ -1,7 +1,7 @@
-import { Component, inject, OnInit, ChangeDetectorRef, DestroyRef } from '@angular/core';
+import { Component, inject, OnInit, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { filter, Observable } from 'rxjs';
+import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -23,15 +23,12 @@ import { ResponsiveSize } from '../../services/responsive-size';
 export default class ManagementAdmin implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private userService = inject(UserService);
+  public userService = inject(UserService);
   public messageService = inject(MessageService);
   private dialog = inject(MatDialog);
   private destroyRef = inject(DestroyRef);
-  private cd = inject(ChangeDetectorRef);
   private translate = inject(TranslateService);
-
   public isUser: boolean = true;
-  public usuarios$!: Observable<UserModel[]>;
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
@@ -42,13 +39,11 @@ export default class ManagementAdmin implements OnInit {
 
   private chargeData(tipo: 'cliente' | 'empresa'): void {
     this.isUser = tipo === 'cliente';
-    this.usuarios$ = this.userService.getUsersObservable(tipo);
-    this.cd.detectChanges();
+    this.userService.loadUsers(tipo);
   }
 
   private responsive = inject(ResponsiveSize);
 
-  isMobile = window.innerWidth < 768;
   async toDeleteUser(item: UserModel) {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {

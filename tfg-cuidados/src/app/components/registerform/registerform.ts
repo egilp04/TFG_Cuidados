@@ -54,45 +54,32 @@ export class Registerform implements OnInit {
 
   public comunidades: string[] = comunidades;
 
-  registerForm: FormGroup = this.fb.group(
-    {
-      nombre: ['', [Validators.minLength(3)]],
-      termsCondition: [false, Validators.requiredTrue],
-      ape1: [''],
-      ape2: [''],
-      fechnac: [''],
-      dni: [''],
-      nombreEmpresa: [''],
-      cif: [''],
-      descripcion: [''],
-      telef: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
-      email: ['', [Validators.required, Validators.email], [this.validatorEmailRegistered()]],
-      direccion: ['', Validators.required],
-      localidad: ['', Validators.required],
-      codpostal: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
-      comunidad: [null, Validators.required],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.pattern(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/
-          ),
-        ],
-      ],
-      repassword: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/
-          ),
-        ],
-      ],
-    },
-    { validators: [this.passwordMatchValidator] }
-  );
+  registerForm = this.fb.group({
+    nombre: this.fb.control<string>('', [Validators.minLength(3)]),
+    termsCondition: this.fb.control<boolean>(false, Validators.requiredTrue),
+    ape1: this.fb.control<string>(''),
+    ape2: this.fb.control<string>(''),
+    fechnac: this.fb.control<string>(''),
+    dni: this.fb.control<string>(''),
+    nombreEmpresa: this.fb.control<string>(''),
+    cif: this.fb.control<string>(''),
+    descripcion: this.fb.control<string>(''),
+    telef: this.fb.control<string>('', [Validators.required, Validators.pattern('^[0-9]{9}$')]),
+    email: this.fb.control<string>('', [Validators.required, Validators.email], [this.validatorEmailRegistered()]),
+    direccion: this.fb.control<string>('', Validators.required),
+    localidad: this.fb.control<string>('', Validators.required),
+    codpostal: this.fb.control<string>('', [Validators.required, Validators.pattern('^[0-9]{5}$')]),
+    comunidad: this.fb.control<string | null>(null, Validators.required),
+    password: this.fb.control<string>('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/),
+    ]),
+    repassword: this.fb.control<string>('', [
+      Validators.required,
+      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/),
+    ]),
+  }, { validators: [this.passwordMatchValidator] });
 
   ngOnInit(): void {
     this.checkValidators();
@@ -118,12 +105,12 @@ export class Registerform implements OnInit {
           ape1: (formValue.ape1 || '').trim(),
           ape2: (formValue.ape2 || '').trim(),
           dni: (formValue.dni || '').trim(),
-          fechnac: formValue.fechnac,
+          fechnac: formValue.fechnac ?? undefined,
           telef: (formValue.telef || '').trim(),
           direccion: (formValue.direccion || '').trim(),
           localidad: (formValue.localidad || '').trim(),
           codpostal: (formValue.codpostal || '').trim(),
-          comunidad: formValue.comunidad,
+          comunidad: formValue.comunidad ?? undefined,
         };
       } else {
         dataToSend = {
@@ -137,7 +124,7 @@ export class Registerform implements OnInit {
           direccion: (formValue.direccion || '').trim(),
           localidad: (formValue.localidad || '').trim(),
           codpostal: (formValue.codpostal || '').trim(),
-          comunidad: formValue.comunidad,
+          comunidad: formValue.comunidad ?? undefined,
         };
       }
       this.formSubmitted.emit({ datos: dataToSend, esCliente: this.isUser });

@@ -17,3 +17,7 @@ export const tradusDia: { [key: string]: string } = {
   sabado: 'MANAGEMENT_SCHEDULES.DAYS.SATURDAY',
   domingo: 'MANAGEMENT_SCHEDULES.DAYS.SUNDAY',
 };
+
+
+export const diasValidos = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+ 

@@ -34,11 +34,11 @@ export default class Contact {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
 
-  contactForm: FormGroup = this.fb.group({
-    username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-    email: ['', [Validators.required, Validators.email]],
-    subject: ['', [Validators.required, Validators.minLength(6)]],
-    message: ['', [Validators.required, Validators.minLength(6)]],
+  contactForm = this.fb.group({
+    username: this.fb.control<string>('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]),
+    email: this.fb.control<string>('', [Validators.required, Validators.email]),
+    subject: this.fb.control<string>('', [Validators.required, Validators.minLength(6)]),
+    message: this.fb.control<string>('', [Validators.required, Validators.minLength(6)]),
   });
 
   getCtrl(name: string): FormControl {

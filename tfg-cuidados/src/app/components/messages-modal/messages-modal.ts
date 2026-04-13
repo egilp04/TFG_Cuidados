@@ -47,12 +47,12 @@ export class MessagesModal implements OnInit {
   private destroyRef = inject(DestroyRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
-
-  messageForm: FormGroup = this.fb.group({
-    emisor: [''],
-    receptor: ['', [Validators.required, Validators.email]],
-    asunto: ['', [Validators.required]],
-    contenido: ['', [Validators.required]],
+  
+  messageForm = this.fb.group({
+    emisor: this.fb.control<string>(''),
+    receptor: this.fb.control<string>('', [Validators.required, Validators.email]),
+    asunto: this.fb.control<string>('', [Validators.required]),
+    contenido: this.fb.control<string>('', [Validators.required]),
   });
 
   ngOnInit() {
@@ -60,7 +60,7 @@ export class MessagesModal implements OnInit {
       this.messageForm.patchValue({
         emisor: this.data.contenido.Emisor?.email,
         receptor: this.data.contenido.Receptor?.nombre,
-        asunto: this.data.contenido.asunto,
+        asunto: this.data.contenido.asunto || undefined,
         contenido: this.data.contenido.contenido,
       });
       this.messageForm.disable();
@@ -84,7 +84,7 @@ export class MessagesModal implements OnInit {
         this.getCtrl('contenido').valid)
     ) {
       const idEmisor = this.authService.currentUser()?.id_usuario;
-      const emailDestino = this.messageForm.getRawValue().receptor;
+      const emailDestino = this.messageForm.getRawValue().receptor ?? '';
       if (!idEmisor) {
         this.messageService.showMessage(
           this.translate.instant('MESSAGES_MODAL.FEEDBACK.ERROR_SENDER'),
@@ -101,13 +101,12 @@ export class MessagesModal implements OnInit {
             if (!foundUser || !foundUser.id_usuario) {
               throw new Error('usuario_no_encontrado');
             }
-            const newComunication: ComunicacionModel = {
+            const newComunication = {
               id_emisor: idEmisor,
               id_receptor: foundUser.id_usuario,
-              asunto: this.messageForm.value.asunto,
-              contenido: this.messageForm.value.contenido,
-              tipo_comunicacion: 'mensaje',
-              fecha_envio: new Date(),
+              asunto: this.messageForm.value.asunto ?? "",
+              contenido: this.messageForm.value.contenido ?? "",
+              tipo_comunicacion: 'mensaje' as const,
               leido: false,
             };
 
