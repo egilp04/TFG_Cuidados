@@ -29,7 +29,7 @@ import { MessageService } from '../../services/message-service';
   templateUrl: './contact.html',
   styleUrl: './contact.css',
 })
-export class Contact {
+export default class Contact {
   private fb = inject(FormBuilder);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
@@ -44,7 +44,7 @@ export class Contact {
   getCtrl(name: string): FormControl {
     return this.contactForm.get(name) as FormControl;
   }
-  async onContactar() {
+  async toContactFunction() {
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
       return;

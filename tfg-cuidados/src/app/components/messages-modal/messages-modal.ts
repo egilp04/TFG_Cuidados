@@ -48,7 +48,7 @@ export class MessagesModal implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
 
-  mensajeForm: FormGroup = this.fb.group({
+  messageForm: FormGroup = this.fb.group({
     emisor: [''],
     receptor: ['', [Validators.required, Validators.email]],
     asunto: ['', [Validators.required]],
@@ -56,16 +56,16 @@ export class MessagesModal implements OnInit {
   });
 
   ngOnInit() {
-    if (this.data.modo === 'verMensaje' && this.data.contenido) {
-      this.mensajeForm.patchValue({
+    if (this.data.modo === 'showMessage' && this.data.contenido) {
+      this.messageForm.patchValue({
         emisor: this.data.contenido.Emisor?.email,
         receptor: this.data.contenido.Receptor?.nombre,
         asunto: this.data.contenido.asunto,
         contenido: this.data.contenido.contenido,
       });
-      this.mensajeForm.disable();
+      this.messageForm.disable();
     } else if (this.data.modo === 'escribir' && this.data.receptorEmail) {
-      this.mensajeForm.patchValue({
+      this.messageForm.patchValue({
         receptor: this.data.receptorEmail,
       });
       this.getCtrl('receptor').disable();
@@ -73,18 +73,18 @@ export class MessagesModal implements OnInit {
   }
 
   getCtrl(name: string): FormControl {
-    return this.mensajeForm.get(name) as FormControl;
+    return this.messageForm.get(name) as FormControl;
   }
 
-  enviarMensaje() {
+  sendMessage() {
     if (
-      this.mensajeForm.valid ||
+      this.messageForm.valid ||
       (this.data.modo === 'escribir' &&
         this.getCtrl('asunto').valid &&
         this.getCtrl('contenido').valid)
     ) {
       const idEmisor = this.authService.currentUser()?.id_usuario;
-      const emailDestino = this.mensajeForm.getRawValue().receptor;
+      const emailDestino = this.messageForm.getRawValue().receptor;
       if (!idEmisor) {
         this.messageService.showMessage(
           this.translate.instant('MESSAGES_MODAL.FEEDBACK.ERROR_SENDER'),
@@ -97,21 +97,21 @@ export class MessagesModal implements OnInit {
         .getUserByEmail(emailDestino)
         .pipe(
           takeUntilDestroyed(this.destroyRef),
-          switchMap((usuarioEncontrado) => {
-            if (!usuarioEncontrado || !usuarioEncontrado.id_usuario) {
+          switchMap((foundUser) => {
+            if (!foundUser || !foundUser.id_usuario) {
               throw new Error('usuario_no_encontrado');
             }
-            const nuevaComunicacion: ComunicacionModel = {
+            const newComunication: ComunicacionModel = {
               id_emisor: idEmisor,
-              id_receptor: usuarioEncontrado.id_usuario,
-              asunto: this.mensajeForm.value.asunto,
-              contenido: this.mensajeForm.value.contenido,
+              id_receptor: foundUser.id_usuario,
+              asunto: this.messageForm.value.asunto,
+              contenido: this.messageForm.value.contenido,
               tipo_comunicacion: 'mensaje',
               fecha_envio: new Date(),
               leido: false,
             };
 
-            return this.comunicationService.insertComunicacion(nuevaComunicacion);
+            return this.comunicationService.insertComunicacion(newComunication);
           }),
         )
         .subscribe({

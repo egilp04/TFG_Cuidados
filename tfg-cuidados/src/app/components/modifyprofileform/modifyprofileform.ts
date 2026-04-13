@@ -74,21 +74,21 @@ export class Modifyprofileform implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userData'] && this.userData) {
-      this.cargarDatosFormulario();
+      this.chargeProfileFormData();
     }
     if (changes['userRole']) {
-      this.configurarValidadores();
+      this.checkValidators();
     }
   }
 
   ngOnInit(): void {
     this.isAdminViewer = this.authService.userRol() === 'administrador';
     if (!this.userData) {
-      this.cargarDatosFormulario();
+      this.chargeProfileFormData();
     }
   }
 
-  private cargarDatosFormulario() {
+  private chargeProfileFormData() {
     this.targetUser = this.userData || this.authService.currentUser() as UserProfileModel;
     if (this.targetUser) {
       this.profileForm.patchValue({
@@ -117,11 +117,11 @@ export class Modifyprofileform implements OnInit, OnChanges {
         }
       }
     }
-    this.configurarValidadores();
+    this.checkValidators();
     this.cd.detectChanges();
   }
 
-  private configurarValidadores() {
+  private checkValidators() {
     Object.keys(this.profileForm.controls).forEach((key) => {
       this.profileForm.get(key)?.clearValidators();
       this.profileForm.get(key)?.updateValueAndValidity();

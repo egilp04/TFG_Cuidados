@@ -15,110 +15,56 @@
     </button>
   </div>
 
-  <div class="nav-menu-toggle">
+  <div class="nav-menu-unified" [ngClass]="{'hidden md:flex': !isMenuOpen, 'flex': isMenuOpen}">
     @if (authService.isAuthenticated()) {
-      <div class="nav-menu-toggle-autenticated-container">
-        <div class="nav-menu-toggle-divs">
-          <lucide-icon
-            [name]="'mail'"
-            class="nav-menu-icon"
-            (click)="verComunicaciones('mensajes')"
-          ></lucide-icon>
+      <div class="nav-authenticated-wrapper">
+        <div class="nav-icon-container" (click)="showComunications('mensajes')">
+          <lucide-icon name="mail" class="nav-icon-style"></lucide-icon>
           @if (countMensajes$ | async; as countMensajes) {
-            <span class="nav-notis-toggle">{{ countMensajes }}</span>
+            <span class="nav-badge">{{ countMensajes }}</span>
           }
+          <span class="sr-only">Mensajes</span>
         </div>
 
-        <div class="nav-menu-toggle-divs">
-          <lucide-icon
-            [name]="'bell'"
-            class="nav-menu-icon"
-            (click)="verComunicaciones('notificaciones')"
-          ></lucide-icon>
+        <div class="nav-icon-container" (click)="showComunications('notificaciones')">
+          <lucide-icon name="bell" class="nav-icon-style"></lucide-icon>
           @if (countNotificaciones$ | async; as countNotis) {
-            <span class="nav-notis-toggle">{{ countNotis }}</span>
+            <span class="nav-badge">{{ countNotis }}</span>
           }
+          <span class="sr-only">Notificaciones</span>
         </div>
 
-        <lucide-icon
-          [name]="'user'"
-          class="nav-menu-icon"
-          (click)="modificarPerfil()"
-        ></lucide-icon>
+        <div class="nav-icon-container" (click)="modifyProfileFunction()">
+          <lucide-icon name="user" class="nav-icon-style"></lucide-icon>
+          <span class="sr-only">Perfil</span>
+        </div>
 
         <app-button
           [label]="'NAVBAR.LOGOUT' | translate"
           variant="primary"
           size="lg"
+          class="w-full md:w-auto mt-4 md:mt-0"
           (onClick)="logout()"
         ></app-button>
+        
       </div>
     } @else {
-      <app-button
-        [label]="'NAVBAR.REGISTER' | translate"
-        variant="secondary"
-        (onClick)="registrarse()"
-      ></app-button>
-      <app-button
-        [label]="'NAVBAR.LOGIN' | translate"
-        variant="primary"
-        (onClick)="iniciarSesion()"
-      ></app-button>
+      <div class="nav-guest-wrapper">
+        <app-button
+          [label]="'NAVBAR.REGISTER' | translate"
+          variant="secondary"
+          class="w-full md:w-auto"
+          (onClick)="registerFunction()"
+        ></app-button>
+        <app-button
+          [label]="'NAVBAR.LOGIN' | translate"
+          variant="primary"
+          class="w-full md:w-auto mt-2 md:mt-0"
+          (onClick)="startSession()"
+        ></app-button>
+      </div>
     }
-    <app-dark-mode-btn></app-dark-mode-btn>
+    
+    <app-dark-mode-btn class="mt-4 md:mt-0"></app-dark-mode-btn>
   </div>
-
-  @if (isMenuOpen) {
-    <div class="nav-menu-open">
-      @if (authService.isAuthenticated()) {
-        <div class="nav-menu-open-autenticated-container">
-          <div class="nav-menu-open-divs">
-            <div class="relative" (click)="verComunicaciones('mensajes')">
-              <lucide-icon [name]="'mail'" class="nav-open-icon"></lucide-icon>
-              @if (countMensajes$ | async; as countMensajes) {
-                <span class="nav-notis">{{ countMensajes }}</span>
-              }
-              <span class="sr-only">Mensajes</span>
-            </div>
-
-            <div class="relative" (click)="verComunicaciones('notificaciones')">
-              <lucide-icon [name]="'bell'" class="nav-open-icon"></lucide-icon>
-              @if (countNotificaciones$ | async; as countNotis) {
-                <span class="nav-notis">{{ countNotis }}</span>
-              }
-              <span class="sr-only">Notificaciones</span>
-            </div>
-
-            <div (click)="modificarPerfil()">
-              <lucide-icon [name]="'user'" class="nav-open-icon"></lucide-icon>
-            </div>
-          </div>
-
-          <app-button
-            [label]="'NAVBAR.LOGOUT' | translate"
-            variant="primary"
-            size="lg"
-            class="w-full"
-            (onClick)="logout()"
-          ></app-button>
-        </div>
-      } @else {
-        <div class="nav-menu-open-no-autenticated-container">
-          <app-button
-            [label]="'NAVBAR.REGISTER' | translate"
-            variant="secondary"
-            class="w-full"
-            (onClick)="registrarse()"
-          ></app-button>
-          <app-button
-            [label]="'NAVBAR.LOGIN' | translate"
-            variant="primary"
-            class="w-full"
-            (onClick)="iniciarSesion()"
-          ></app-button>
-        </div>
-      }
-      <app-dark-mode-btn></app-dark-mode-btn>
-    </div>
-  }
 </nav>

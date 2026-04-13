@@ -13,9 +13,9 @@ import { ContractStats, EstadoContratoResponse, RegistroFechaResponse } from '..
 export class AnalyticsService {
   private supabase = inject(SupabaseService).getClient();
 
-  private _totalUsuarios$ = new BehaviorSubject<number>(0);
-  private _registrosSemanales$ = new BehaviorSubject<number[]>(new Array(7).fill(0));
-    private _contratosStats$ = new BehaviorSubject<ContractStats>({
+  private _totalAppUsers$ = new BehaviorSubject<number>(0);
+  private _weeklyRegisters$ = new BehaviorSubject<number[]>(new Array(7).fill(0));
+    private _contractsAmountData$ = new BehaviorSubject<ContractStats>({
     activos: 0,
     cancelados: 0,
   });
@@ -25,15 +25,15 @@ export class AnalyticsService {
   }
 
   getUsuariosCount(): Observable<number> {
-    return this._totalUsuarios$.asObservable();
+    return this._totalAppUsers$.asObservable();
   }
 
   fetchWeeklyRecords(): Observable<number[]> {
-    return this._registrosSemanales$.asObservable();
+    return this._weeklyRegisters$.asObservable();
   }
 
   getContractStats(): Observable<ContractStats> {
-    return this._contratosStats$.asObservable();
+    return this._contractsAmountData$.asObservable();
   }
 
   private async initDashboard() {
@@ -52,7 +52,7 @@ export class AnalyticsService {
         .select('*', { count: 'exact', head: true });
 
       if (error) throw error;
-      this._totalUsuarios$.next(count || 0);
+      this._totalAppUsers$.next(count || 0);
     } catch (e) {
       console.error('Error cargando total usuarios:', e);
     }
@@ -68,7 +68,7 @@ export class AnalyticsService {
           activos: contratos.filter((c) => c.estado === 'activo').length,
           cancelados: contratos.filter((c) => c.estado === 'no activo').length,
         };
-        this._contratosStats$.next(stats);
+        this._contractsAmountData$.next(stats);
       }
     } catch (e) {
       console.error('Error cargando estadísticas contratos:', e);
@@ -90,7 +90,7 @@ export class AnalyticsService {
 
       if (data) {
         const registros = data as RegistroFechaResponse[];
-        this._registrosSemanales$.next(this.groupByDay(registros, haceSieteDias));
+        this._weeklyRegisters$.next(this.groupByDay(registros, haceSieteDias));
       }
     } catch (e) {
       console.error('Error cargando registros semanales:', e);

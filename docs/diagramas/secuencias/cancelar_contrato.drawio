@@ -47,7 +47,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="pM22x5z0se9e5QTfOIHg-14" value="2. open(CancelModal, {modo: &#39;cancelarContrato&#39;})" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="pM22x5z0se9e5QTfOIHg-2" target="pM22x5z0se9e5QTfOIHg-4">
+        <mxCell id="pM22x5z0se9e5QTfOIHg-14" value="2. open(CancelModal, {modo: &#39;cancelContract&#39;})" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="pM22x5z0se9e5QTfOIHg-2" target="pM22x5z0se9e5QTfOIHg-4">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="615" y="183" />

@@ -55,7 +55,7 @@ describe('Footer', () => {
 
   it('should change language and save to localStorage', () => {
     const lang = 'en';
-    component.cambiarIdioma(lang);
+    component.changeLanguage(lang);
     expect(translateServiceSpy.use).toHaveBeenCalledWith(lang);
     expect(localStorage.setItem).toHaveBeenCalledWith('idioma_seleccionado', lang);
   });

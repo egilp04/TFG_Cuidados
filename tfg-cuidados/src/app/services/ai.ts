@@ -85,4 +85,4 @@ export class AiService {
   }
 }
 
-//Consulta de los modelos disponibles. https://generativelanguage.googleapis.com/v1beta/models?key=
+//Consulta de los modelos disponibles: https://generativelanguage.googleapis.com/v1beta/models?key=

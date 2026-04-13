@@ -16,7 +16,7 @@
     {{ 'CONTACT.TITLE' | translate }}
   </h1>
 
-  <form [formGroup]="contactForm" (ngSubmit)="onContactar()" class="contact-form">
+  <form [formGroup]="contactForm" (ngSubmit)="toContactFunction()" class="contact-form">
     <div class="contact-form-divs">
       <app-inputs
         name="username"

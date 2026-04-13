@@ -5,8 +5,8 @@
         {{ displayDate | date: 'MMMM yyyy' }}
       </h2>
       <div class="flex gap-2">
-          <button (click)="cambiarMes(-1)" class="activiy-month-change-btn">‹</button>
-          <button (click)="cambiarMes(1)" class="activiy-month-change-btn">›</button>
+          <button (click)="changeMonth(-1)" class="activiy-month-change-btn">‹</button>
+          <button (click)="changeMonth(1)" class="activiy-month-change-btn">›</button>
       </div>
     </div>
     <div class="activity-calendar-grid">

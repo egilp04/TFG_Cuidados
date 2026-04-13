@@ -80,10 +80,9 @@ export class Loginmodal {
     }
   }
 
-  onEntrar() {
+  toEnterApp() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-
       this.authService
         .signIn(email, password)
         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -121,7 +120,7 @@ export class Loginmodal {
     }
   }
 
-  onRecuperar() {
+  toRecoverPasswd() {
     if (this.emailCtrl.invalid) {
       this.messageService.showMessage(
         this.translate.instant('LOGIN_MODAL.FEEDBACK.INVALID_EMAIL'),
@@ -143,7 +142,7 @@ export class Loginmodal {
           );
           return;
         }
-        this.enviarPeticionRecuperacion(email);
+        this.askRecoverPasswd(email);
       },
       error: (err) => {
         console.error(err);
@@ -155,7 +154,7 @@ export class Loginmodal {
     });
   }
 
-  private enviarPeticionRecuperacion(email: string) {
+  private askRecoverPasswd(email: string) {
     this.authService
       .recoverPassword(email)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -181,7 +180,7 @@ export class Loginmodal {
       });
   }
 
-  onReenviarCorreo() {
+  toRecoverEmail() {
     if (this.emailCtrl.invalid) {
       this.messageService.showMessage(
         this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'),
@@ -201,7 +200,7 @@ export class Loginmodal {
           );
           return;
         }
-        this.enviarPeticionReenvio(email);
+        this.askResendEmail(email);
       },
       error: (err) => {
         console.error(err);
@@ -209,10 +208,9 @@ export class Loginmodal {
       },
     });
   }
-  private enviarPeticionReenvio(email: string) {
+  private askResendEmail(email: string) {
     this.authService.resendVerificationEmail(email).subscribe({
       next: () => {
-        // EXITO
         this.messageService.showMessage(
           this.translate.instant('LOGIN_MODAL.FEEDBACK.NO_ERROR'),
           'exito',

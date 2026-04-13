@@ -15,6 +15,7 @@ import {
   FormGroup,
   AbstractControl,
   ValidationErrors,
+  AsyncValidatorFn
 } from '@angular/forms';
 import { ButtonComponent } from '../button/button';
 import { Inputs } from '../inputs/inputs';
@@ -24,7 +25,9 @@ import { LucideAngularModule } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
 import { comunidades } from '../../core/constants/locations';
 import { FormSubmittedEvent, RegisterFormData } from '../../models/RegisterForm';
-
+import { AuthService } from '../../services/auth.service';
+import { of, timer, Observable } from 'rxjs'; 
+import { map, switchMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registerform',
@@ -44,6 +47,7 @@ import { FormSubmittedEvent, RegisterFormData } from '../../models/RegisterForm'
 export class Registerform implements OnInit {
   private fb = inject(FormBuilder);
   private translate = inject(TranslateService);
+  public authService = inject(AuthService);
 
   @Input() isUser: boolean = true;
   @Output() formSubmitted = new EventEmitter<FormSubmittedEvent>();
@@ -62,7 +66,7 @@ export class Registerform implements OnInit {
       cif: [''],
       descripcion: [''],
       telef: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email], [this.validatorEmailRegistered()]],
       direccion: ['', Validators.required],
       localidad: ['', Validators.required],
       codpostal: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
@@ -91,22 +95,22 @@ export class Registerform implements OnInit {
   );
 
   ngOnInit(): void {
-    this.configurarValidadores();
+    this.checkValidators();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isUser']) {
       this.registerForm.reset();
-      this.configurarValidadores();
+      this.checkValidators();
     }
   }
 
   onSubmit() {
     if (this.registerForm.valid) {
       const formValue = this.registerForm.getRawValue();
-      let datosParaEnviar: RegisterFormData;
+      let dataToSend: RegisterFormData;
       if (this.isUser) {
-        datosParaEnviar = {
+        dataToSend = {
           rol: 'cliente',
           email: (formValue.email || '').trim(),
           password: (formValue.password || '').trim(),
@@ -122,7 +126,7 @@ export class Registerform implements OnInit {
           comunidad: formValue.comunidad,
         };
       } else {
-        datosParaEnviar = {
+        dataToSend = {
           rol: 'empresa',
           email: (formValue.email || '').trim(),
           password: (formValue.password || '').trim(),
@@ -136,7 +140,7 @@ export class Registerform implements OnInit {
           comunidad: formValue.comunidad,
         };
       }
-      this.formSubmitted.emit({ datos: datosParaEnviar, esCliente: this.isUser });
+      this.formSubmitted.emit({ datos: dataToSend, esCliente: this.isUser });
     } else {
       this.registerForm.markAllAsTouched();
     }
@@ -148,7 +152,7 @@ export class Registerform implements OnInit {
 
   getErrorMessage(controlName: string): string {
     const control = this.registerForm.get(controlName);
-    if (!control || !control.touched) return '';
+    if (!control || (!control.touched && !control.dirty)) return '';
 
     const errors =
       control.errors || (controlName === 'repassword' ? this.registerForm.errors : null);
@@ -186,7 +190,7 @@ export class Registerform implements OnInit {
     return key ? this.translate.instant(key) : this.translate.instant('REGISTER.ERRORS.INVALID');
   }
 
-  private configurarValidadores() {
+  private checkValidators() {
     const camposUser = ['ape1', 'ape2', 'fechnac', 'dni', 'nombre'];
     const camposEmpresa = ['nombreEmpresa', 'cif', 'descripcion'];
     if (this.isUser) {
@@ -309,5 +313,18 @@ export class Registerform implements OnInit {
       isValid = cifLastChar === String(controlDigit) || cifLastChar === controlLetter;
     }
     return isValid ? null : { invalidCifChecksum: true };
+  }
+
+  validatorEmailRegistered(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      if (!control.value) {
+        return of(null);
+      }
+      return timer(500).pipe(
+        switchMap(() => this.authService.checkEmailExists(control.value)),
+        map((existe: boolean) => (existe ? { emailTaken: true } : null)),
+        catchError(() => of(null))
+      );
+    };
   }
 }

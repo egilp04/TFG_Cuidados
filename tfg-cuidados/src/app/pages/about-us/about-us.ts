@@ -12,6 +12,6 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './about-us.html',
   styleUrl: './about-us.css',
 })
-export class AboutUs {
+export default class AboutUs {
   public cardsdata: Card[] = cardsdata;
 }

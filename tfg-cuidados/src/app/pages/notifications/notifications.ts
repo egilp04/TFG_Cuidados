@@ -26,7 +26,7 @@ import { ButtonComponent } from '../../components/button/button';
   templateUrl: './notifications.html',
   styleUrl: './notifications.css',
 })
-export class Notifications implements OnInit {
+export default class Notifications implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   private comunicationService = inject(ComunicationService);
@@ -63,7 +63,8 @@ export class Notifications implements OnInit {
         this.cd.markForCheck();
       });
   }
-  marcarComoLeida(noti: ComunicacionModel) {
+
+  markAsRead(noti: ComunicacionModel) {
     if (!noti.leido) {
       noti.leido = true;
       if (noti.id_comunicacion) {
@@ -76,7 +77,7 @@ export class Notifications implements OnInit {
     }
   }
 
-  borrarMensaje(mensaje: ComunicacionModel) {
+  deleteCommunication(mensaje: ComunicacionModel) {
     this.comunicationService
       .deleteComunicacion(mensaje)
       .pipe(

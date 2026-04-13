@@ -22,7 +22,6 @@ export class ButtonComponent {
       secondary: `btn-secondary`,
       danger: `btn-danger`,
     };
-
     return `button-base ${variants[this.variant()]} disabled:btn-disabled`;
   });
 }

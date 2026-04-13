@@ -42,13 +42,13 @@
             <app-button
               [label]="'CONTRACTS.ACTIONS.CANCEL' | translate"
               variant="secondary"
-              (click)="cancelarContrato(contrato.id_contrato)"
+              (click)="cancelContract(contrato.id_contrato)"
             ></app-button>
 
             <app-button
               [label]="'CONTRACTS.ACTIONS.DETAILS' | translate"
               variant="primary"
-              (click)="verDetalles(contrato.id_contrato)"
+              (click)="showDetails(contrato.id_contrato)"
             ></app-button>
           </td>
         </ng-container>

@@ -21,7 +21,7 @@ export class Cancelmodal {
     switch (this.data.modo) {
       case 'baja':
         return 'CANCEL_MODAL.BTN.KEEP_ACCOUNT';
-      case 'cancelarContrato':
+      case 'cancelContract':
         return 'CANCEL_MODAL.BTN.KEEP_CONTRACT';
       default:
         return 'CANCEL_MODAL.BTN.CANCEL_ACTION';
@@ -32,14 +32,14 @@ export class Cancelmodal {
     switch (this.data.modo) {
       case 'baja':
         return 'CANCEL_MODAL.BTN.UNSUBSCRIBE';
-      case 'cancelarContrato':
+      case 'cancelContract':
         return 'CANCEL_MODAL.BTN.CANCEL_CONTRACT';
       default:
         return 'CANCEL_MODAL.BTN.DELETE';
     }
   }
 
-  cancelar() {
+  toCancel() {
     this.dialogRef.close(true);
   }
 }
