@@ -16,7 +16,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { switchMap, throwError, map, catchError, of, filter } from 'rxjs';
+import { switchMap, throwError, map, catchError, of, filter, tap } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { dias_semana, tradusDia, diasValidos } from '../../core/constants/dias_semana';
 import { Inputs } from '../../components/inputs/inputs';
@@ -126,7 +126,7 @@ export default class ManagementTimeGlobal implements OnInit {
         switchMap((existe) => {
           if (existe) return throwError(() => new Error('DUPLICADO'));
 
-          const payload: Partial<HorarioModel> = {
+          const payload: HorarioModel = {
             dia_semana: dia as any,
             hora: hora,
             id_admin: user.id_usuario

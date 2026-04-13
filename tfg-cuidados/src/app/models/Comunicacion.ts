@@ -3,7 +3,7 @@ export interface ComunicacionModel {
   tipo_comunicacion: 'mensaje' | 'notificacion';
   contenido: string;
   leido: boolean;
-  fecha_emvio: Date;
+  fecha_envio: Date;
   id_receptor?: string;
   id_emisor?: string | null;
   asunto: string;
