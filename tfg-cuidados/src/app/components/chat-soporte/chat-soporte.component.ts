@@ -59,7 +59,7 @@ export class ChatSoporteComponent implements OnInit {
     this.messageSent = false;
 
     const messageToSend = {
-      tipo_comunicacion: 'mensaje',
+      tipo_comunicacion: 'mensaje' as const,
       id_emisor: this.currentUser.id_usuario,
       id_receptor: this.adminId,
       asunto: 'Soporte Directo',

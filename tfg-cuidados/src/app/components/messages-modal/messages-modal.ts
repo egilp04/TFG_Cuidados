@@ -106,7 +106,7 @@ export class MessagesModal implements OnInit {
               id_receptor: foundUser.id_usuario,
               asunto: this.messageForm.value.asunto ?? "",
               contenido: this.messageForm.value.contenido ?? "",
-              tipo_comunicacion: 'mensaje',
+              tipo_comunicacion: 'mensaje' as const,
               leido: false,
             };
 

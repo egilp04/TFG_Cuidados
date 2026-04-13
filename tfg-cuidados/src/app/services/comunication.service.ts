@@ -231,9 +231,9 @@ export class ComunicationService {
     asunto: string,
     contenido: string,
   ): Observable<void> {
-    
+
     const notificacion = {
-      tipo_comunicacion: 'notificacion',
+      tipo_comunicacion: 'notificacion' as const,
       id_emisor: null,
       id_receptor: idReceptor,
       asunto: asunto,
