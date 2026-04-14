@@ -437,11 +437,11 @@
   }
 
   .manuals-container {
-    @apply flex flex-col justify-center items-center px-6 py-10 md:px-12 lg:px-24 lg:py-20 w-full;
+    @apply flex flex-col justify-center items-center px-6 py-10 md:px-12 lg:px-24 lg:py-20 w-full mb-4;
   }
 
   .manuals-download-container {
-    @apply w-full grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 mt-10 mb-14 items-stretch;
+    @apply w-full grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 mt-10 items-stretch;
   }
 
   .manuals-title {
@@ -577,7 +577,7 @@
   }
 
   .modal-close-btn {
-    @apply text-primary dark:text-surface cursor-pointer w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20;
+    @apply text-primary dark:text-surface cursor-pointer w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20;
   }
 
   .login-modal-title {
