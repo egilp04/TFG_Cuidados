@@ -1298,7 +1298,7 @@
   }
 
   .info-contract-text {
-    @apply dark:text-surface text-secondary text-lg;
+    @apply dark:text-surface text-secondary text-lg break-all;
   }
 
   .info-contract-text-title {
