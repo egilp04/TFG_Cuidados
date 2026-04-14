@@ -1,26 +1,22 @@
-<section class="button-back-container">
+<header
+  class="button-back-container"
+  [attr.aria-label]="'MANAGEMENT_SCHEDULES.ACCESSIBILITY.BACK_NAV' | translate"
+>
   <app-buttonback></app-buttonback>
-</section>
-@if (this.messageService.messageData(); as data) {
-  <section class="message-noti">
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      {{ data.mensaje }}
-    </div>
-  </section>
-}
+</header>
 
-<section class="managements-time-global-container">
-  <h2 class="management-title-time">
+
+
+<section class="managements-time-global-container" aria-labelledby="management-time-title">
+  <h2 id="management-time-title" class="management-title-time">
     {{ 'MANAGEMENT_SCHEDULES.TITLE' | translate }}
   </h2>
 
-  <main class="management-time-global-form">
+  <main
+    class="management-time-global-form"
+    role="form"
+    [attr.aria-label]="'MANAGEMENT_SCHEDULES.TITLE' | translate"
+  >
     <app-inputs
       name="time"
       [label]="'MANAGEMENT_SCHEDULES.FORM.START_TIME' | translate"
@@ -35,11 +31,17 @@
     >
     </app-inputs>
     <div class="management-time-global-day-week">
-      <label class="management-time-global-day-label">
+      <label for="dia-select" class="management-time-global-day-label">
         {{ 'MANAGEMENT_SCHEDULES.FORM.DAY_LABEL' | translate }}
       </label>
       <div class="relative w-full">
-        <select name="dia" [formControl]="getCtrl('dia')" class="management-time-global-select">
+        <select
+          id="dia-select"
+          name="dia"
+          [formControl]="getCtrl('dia')"
+          class="management-time-global-select"
+          [attr.aria-invalid]="getCtrl('dia').invalid && getCtrl('dia').touched"
+        >
           <option value="" disabled selected>
             {{ 'MANAGEMENT_SCHEDULES.FORM.SELECT_DAY' | translate }}
           </option>
@@ -53,6 +55,7 @@
       </div>
     </div>
   </main>
+
   <footer class="management-time-global-btn-container">
     <app-button
       [label]="
@@ -61,45 +64,70 @@
       variant="primary"
       (click)="onSave()"
       [disabled]="isLoading()"
+      [attr.aria-label]="
+        (isEditing
+          ? 'MANAGEMENT_SCHEDULES.ACCESSIBILITY.SAVE_BTN'
+          : 'MANAGEMENT_SCHEDULES.ACCESSIBILITY.ADD_BTN'
+        ) | translate
+      "
     >
     </app-button>
+
     @if (isEditing) {
       <app-button
         [label]="'MANAGEMENT_SCHEDULES.FORM.CANCEL' | translate"
         variant="secondary"
         (click)="resetForm()"
+        [attr.aria-label]="'MANAGEMENT_SCHEDULES.ACCESSIBILITY.CANCEL_BTN' | translate"
       >
       </app-button>
     }
   </footer>
 </section>
-<section class="management-time-global-table-container">
-  <h2 class="management-time-global-table-title">
+
+<section
+  class="management-time-global-table-container"
+  aria-labelledby="management-time-list-title"
+>
+  <h2 id="management-time-list-title" class="management-time-global-table-title">
     {{ 'MANAGEMENT_SCHEDULES.LIST.TITLE' | translate }}
   </h2>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 w-full">
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z2 w-full"
+    [attr.aria-label]="'MANAGEMENT_SCHEDULES.LIST.TITLE' | translate"
+  >
     <ng-container matColumnDef="hora">
-      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text">
+      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SCHEDULES.TABLE.TIME' | translate }}
       </th>
       <td mat-cell *matCellDef="let horario" class="text-label management-global-text">
         {{ horario.hora }}
       </td>
     </ng-container>
+
     <ng-container matColumnDef="dia">
-      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text">
+      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SCHEDULES.TABLE.DAY' | translate }}
       </th>
       <td mat-cell *matCellDef="let horario" class="text-label management-global-text">
         {{ tradus_dias[horario.dia_semana] | translate }}
       </td>
     </ng-container>
+
     <ng-container matColumnDef="acciones">
       <th
         mat-header-cell
         *matHeaderCellDef
         class="text-label management-global-text text-center"
-      ></th>
+        scope="col"
+      >
+        <span class="sr-only">{{
+          'MANAGEMENT_SCHEDULES.ACCESSIBILITY.ACTIONS_COL' | translate
+        }}</span>
+      </th>
       <td mat-cell *matCellDef="let horario" class="text-label management-global-text">
         <div class="management-time-global-actions">
           <app-button
@@ -107,6 +135,13 @@
             variant="primary"
             (click)="onEdit(horario)"
             [disabled]="isLoading()"
+            [attr.aria-label]="
+              ('MANAGEMENT_SCHEDULES.TABLE.EDIT' | translate) +
+              ': ' +
+              (tradus_dias[horario.dia_semana] | translate) +
+              ' ' +
+              horario.hora
+            "
           >
           </app-button>
           <app-button
@@ -114,11 +149,19 @@
             variant="secondary"
             (click)="onDelete(horario.id_horario!)"
             [disabled]="isLoading()"
+            [attr.aria-label]="
+              ('MANAGEMENT_SCHEDULES.TABLE.DELETE' | translate) +
+              ': ' +
+              (tradus_dias[horario.dia_semana] | translate) +
+              ' ' +
+              horario.hora
+            "
           >
           </app-button>
         </div>
       </td>
     </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns" class="hover:bg-gray-50"></tr>
   </table>

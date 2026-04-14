@@ -1,78 +1,85 @@
-<section class="info-container">
-  <div class="w-full flex justify-end p-10">
-    <svg
+<section class="info-container" role="dialog" aria-modal="true" aria-labelledby="info-modal-title">
+  <header class="w-full flex justify-end p-2 md:p-4">
+    <button
       mat-dialog-close
-      xmlns="http://www.w3.org/2000/svg"
+      [attr.aria-label]="'INFO_CONTRACT.ACCESSIBILITY.CLOSE' | translate"
       class="modal-close-btn"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="4"
-      stroke-linecap="round"
-      stroke-linejoin="round"
     >
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
-    </svg>
-  </div>
-
-  <h2 class="info-contract-title">{{ 'INFO_CONTRACT.TITLE_DETAILS' | translate }}:</h2>
-
-  <header class="info-contract-content-container">
-    <mat-dialog-content class="info-contract-content">
-      <p class="info-contract-text">
-        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.ID' | translate }}:</strong>
-        {{ data.contrato.id_contrato }}
-      </p>
-      <p class="info-contract-text">
-        <strong class="info-contract-text-title"
-          >{{ 'INFO_CONTRACT.DATE_CREATION' | translate }}:</strong
-        >
-        {{ data.contrato.fecha_creacion }}
-      </p>
-      <p class="info-contract-text">
-        <strong class="info-contract-text-title"
-          >{{ 'INFO_CONTRACT.DATE_START' | translate }}:</strong
-        >
-        {{ data.contrato.fecha_inicio }}
-      </p>
-      <p class="info-contract-text">
-        <strong class="info-contract-text-title"
-          >{{ 'INFO_CONTRACT.DATE_END' | translate }}:</strong
-        >
-        {{ data.contrato.fecha_fin || ('INFO_CONTRACT.NOT_FINALIZED' | translate) }}
-      </p>
-      <p class="info-contract-text">
-        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.STATUS' | translate }}:</strong>
-        {{ data.contrato.estado }}
-      </p>
-    </mat-dialog-content>
+      <app-close-btn></app-close-btn>
+    </button>
   </header>
 
+  <h2 id="info-modal-title" class="info-contract-title">
+    {{ 'INFO_CONTRACT.TITLE_DETAILS' | translate }}:
+  </h2>
+  <header class="info-contract-content-container">
+    <mat-dialog-content class="info-contract-content">
+      <article role="group" [attr.aria-label]="'INFO_CONTRACT.TITLE_DETAILS' | translate">
+        <p class="info-contract-text">
+          <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.ID' | translate }}:</strong>
+          {{ data.contrato.id_contrato }}
+        </p>
+        <p class="info-contract-text">
+          <strong class="info-contract-text-title"
+            >{{ 'INFO_CONTRACT.DATE_CREATION' | translate }}:</strong
+          >
+          {{ data.contrato.fecha_creacion }}
+        </p>
+        <p class="info-contract-text">
+          <strong class="info-contract-text-title"
+            >{{ 'INFO_CONTRACT.DATE_START' | translate }}:</strong
+          >
+          {{ data.contrato.fecha_inicio }}
+        </p>
+        <p class="info-contract-text">
+          <strong class="info-contract-text-title"
+            >{{ 'INFO_CONTRACT.DATE_END' | translate }}:</strong
+          >
+          {{ data.contrato.fecha_fin || ('INFO_CONTRACT.NOT_FINALIZED' | translate) }}
+        </p>
+        <p class="info-contract-text">
+          <strong class="info-contract-text-title"
+            >{{ 'INFO_CONTRACT.STATUS' | translate }}:</strong
+          >
+          {{ data.contrato.estado }}
+        </p>
+      </article>
+    </mat-dialog-content>
+  </header>
   <h2 class="info-contract-activity-title">{{ 'INFO_CONTRACT.TITLE_ACTIVITY' | translate }}:</h2>
-
   <main class="info-contract-activity-container">
     <mat-dialog-content class="info-contract-content">
-      <p class="info-contract-text">
-        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.TIME' | translate }}:</strong>
-        {{ data.contrato.hora_contratada }}
-      </p>
-      <p class="info-contract-text">
-        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.DAY' | translate }}:</strong>
-        {{ data.contrato.dia_semana_contratado }}
-      </p>
-      <p class="info-contract-text">
-        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.SERVICE' | translate }}:</strong>
-        {{ data.contrato.id_servicio_horario?.Servicio?.nombre || 'Sin servicio' }}
-      </p>
-      <p class="info-contract-text">
-        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.CLIENT' | translate }}:</strong>
-        {{ data.contrato.Cliente?.nombreDelCliente }}
-      </p>
-      <p class="info-contract-text">
-        <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.COMPANY' | translate }}:</strong>
-        {{ data.contrato.Empresa?.nombreDeLaEmpresa }}
-      </p>
+      <article role="group" [attr.aria-label]="'INFO_CONTRACT.TITLE_ACTIVITY' | translate">
+        <p class="info-contract-text">
+          <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.TIME' | translate }}:</strong>
+          {{ data.contrato.hora_contratada }}
+        </p>
+        <p class="info-contract-text">
+          <strong class="info-contract-text-title">{{ 'INFO_CONTRACT.DAY' | translate }}:</strong>
+          {{ data.contrato.dia_semana_contratado }}
+        </p>
+        <p class="info-contract-text">
+          <strong class="info-contract-text-title"
+            >{{ 'INFO_CONTRACT.SERVICE' | translate }}:</strong
+          >
+          {{
+            data.contrato.id_servicio_horario?.Servicio?.nombre ||
+              ('INFO_CONTRACT.NO_SERVICE' | translate)
+          }}
+        </p>
+        <p class="info-contract-text">
+          <strong class="info-contract-text-title"
+            >{{ 'INFO_CONTRACT.CLIENT' | translate }}:</strong
+          >
+          {{ data.contrato.Cliente?.nombreDelCliente }}
+        </p>
+        <p class="info-contract-text">
+          <strong class="info-contract-text-title"
+            >{{ 'INFO_CONTRACT.COMPANY' | translate }}:</strong
+          >
+          {{ data.contrato.Empresa?.nombreDeLaEmpresa }}
+        </p>
+      </article>
     </mat-dialog-content>
   </main>
 </section>

@@ -1,18 +1,26 @@
-<section class="w-full mb-4 px-6 pt-6">
+<nav
+  class="w-full mb-4 px-6 pt-6"
+  [attr.aria-label]="'TERMS_PAGE.ACCESSIBILITY.BACK_NAV' | translate"
+>
   <app-buttonback></app-buttonback>
-</section>
+</nav>
+
 <section class="terms-container">
   <header class="terms-header-container">
-    <h1 class="terms-title">
+    <h1 id="terms-main-title" class="terms-title">
       {{ 'TERMS_PAGE.TITLE' | translate }}
     </h1>
     <p class="terms-modification-date">
-      {{ 'TERMS_PAGE.LAST_UPDATE' | translate }}: {{ currentDate | date: 'dd/MM/yyyy' }}
+      {{ 'TERMS_PAGE.LAST_UPDATE' | translate }}:
+      <time [attr.datetime]="currentDate | date: 'yyyy-MM-dd'">
+        {{ currentDate | date: 'dd/MM/yyyy' }}
+      </time>
     </p>
   </header>
-  <main class="terms-main">
-    <section class="mb-12">
-      <h2 class="terms-subtitle">
+
+  <main class="terms-main" aria-labelledby="terms-main-title">
+    <section class="mb-12" aria-labelledby="terms-section-1-title">
+      <h2 id="terms-section-1-title" class="terms-subtitle">
         {{ 'TERMS_PAGE.SECTION_1.TITLE' | translate }}
       </h2>
 
@@ -46,14 +54,21 @@
         </div>
       </div>
     </section>
-    <section>
-      <h2 class="text-h2 text-primary mb-6 border-b border-primary/20 pb-2">
+
+    <section aria-labelledby="terms-section-2-title">
+      <h2
+        id="terms-section-2-title"
+        class="text-h2 text-primary mb-6 border-b border-primary/20 pb-2"
+      >
         {{ 'TERMS_PAGE.SECTION_2.TITLE' | translate }}
       </h2>
 
       <div class="space-y-6 text-p leading-relaxed">
-        <div class="p-4 bg-primary/5 rounded-lg border border-primary/10">
+        <div class="p-4 bg-primary/5 rounded-lg border border-primary/10" role="note">
           <p class="text-sm font-bold text-primary">
+            <span class="sr-only"
+              >{{ 'TERMS_PAGE.ACCESSIBILITY.IMPORTANT_NOTE' | translate }}:
+            </span>
             {{ 'TERMS_PAGE.SECTION_2.INTRO_BOX' | translate }}
           </p>
         </div>
@@ -69,28 +84,31 @@
           <h3 class="font-bold text-primary mb-2">
             {{ 'TERMS_PAGE.SECTION_2.SUB_2.TITLE' | translate }}
           </h3>
-          <ul class="list-disc pl-5 space-y-1 mt-2">
-            <li [innerHTML]="'TERMS_PAGE.SECTION_2.SUB_2.LIST_1' | translate"></li>
-            <li [innerHTML]="'TERMS_PAGE.SECTION_2.SUB_2.LIST_2' | translate"></li>
-            <li [innerHTML]="'TERMS_PAGE.SECTION_2.SUB_2.LIST_3' | translate"></li>
+          <ul class="list-disc pl-5 space-y-1 mt-2" role="list">
+            <li role="listitem" [innerHTML]="'TERMS_PAGE.SECTION_2.SUB_2.LIST_1' | translate"></li>
+            <li role="listitem" [innerHTML]="'TERMS_PAGE.SECTION_2.SUB_2.LIST_2' | translate"></li>
+            <li role="listitem" [innerHTML]="'TERMS_PAGE.SECTION_2.SUB_2.LIST_3' | translate"></li>
           </ul>
         </div>
+
         <div>
           <h3 class="font-bold text-primary mb-2">
             {{ 'TERMS_PAGE.SECTION_2.SUB_3.TITLE' | translate }}
           </h3>
           <p [innerHTML]="'TERMS_PAGE.SECTION_2.SUB_3.TEXT' | translate"></p>
         </div>
+
         <div>
           <h3 class="font-bold text-primary mb-2">
             {{ 'TERMS_PAGE.SECTION_2.SUB_4.TITLE' | translate }}
           </h3>
           <p>{{ 'TERMS_PAGE.SECTION_2.SUB_4.TEXT' | translate }}</p>
-          <ul class="list-disc pl-5 space-y-1 mt-2">
-            <li>{{ 'TERMS_PAGE.SECTION_2.SUB_4.LIST_1' | translate }}</li>
-            <li>{{ 'TERMS_PAGE.SECTION_2.SUB_4.LIST_2' | translate }}</li>
+          <ul class="list-disc pl-5 space-y-1 mt-2" role="list">
+            <li role="listitem">{{ 'TERMS_PAGE.SECTION_2.SUB_4.LIST_1' | translate }}</li>
+            <li role="listitem">{{ 'TERMS_PAGE.SECTION_2.SUB_4.LIST_2' | translate }}</li>
           </ul>
         </div>
+
         <div>
           <h3 class="font-bold text-primary mb-2">
             {{ 'TERMS_PAGE.SECTION_2.SUB_5.TITLE' | translate }}

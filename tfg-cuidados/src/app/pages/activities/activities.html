@@ -1,20 +1,19 @@
-<section class="button-back-container">
+<header
+  class="button-back-container"
+  [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.BACK_NAV' | translate"
+>
   <app-buttonback></app-buttonback>
-</section>
-@if (this.messageService.messageData(); as data) {
-<section class="message-noti">
-  <div [ngClass]="{
-          'text-red-500': data.tipo === 'error',
-          'text-primary': data.tipo === 'exito',
-        }" class="message-noti-text">
-    {{ data.mensaje }}
-  </div>
-</section>
-}
-<section class="activities-page-container">
-  <h1 class="activities-page-title">
+</header>
+
+<section
+  class="activities-page-container"
+  role="main"
+  [attr.aria-labelledby]="'activities-main-title'"
+>
+  <h1 id="activities-main-title" class="activities-page-title">
     {{ 'ACTIVITIES.TITLE' | translate }}
   </h1>
+
   <main class="mb-20">
     <app-activities-components
       [dataSource]="dataSource.data"

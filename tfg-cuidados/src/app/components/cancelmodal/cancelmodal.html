@@ -1,22 +1,22 @@
-<section class="cancel-modal-container">
-  <header class="w-full flex justify-end p-10">
-    <svg
+<section
+  class="cancel-modal-container"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="cancel-title"
+  aria-describedby="cancel-description"
+>
+  <header class="w-full flex justify-end p-2 md:p-4">
+    <button
       mat-dialog-close
-      xmlns="http://www.w3.org/2000/svg"
+      [attr.aria-label]="'CANCEL_MODAL.CLOSE' | translate"
       class="modal-close-btn"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="4"
-      stroke-linecap="round"
-      stroke-linejoin="round"
     >
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
-    </svg>
+      <app-close-btn></app-close-btn>
+    </button>
   </header>
+
   <div class="cancel-modal-title-container">
-    <h1 class="cancel-modal-title">
+    <h1 mat-dialog-title id="cancel-title" class="cancel-modal-title">
       @if (data.modo === 'baja') {
         {{ 'CANCEL_MODAL.BAJA.TITLE' | translate }}
       } @else if (data.modo === 'cancelContract') {
@@ -28,7 +28,8 @@
       }
     </h1>
   </div>
-  <mat-dialog-content class="cancel-modal-content">
+
+  <mat-dialog-content id="cancel-description" class="cancel-modal-content">
     <main class="cancel-modal-text">
       @if (data.modo === 'baja') {
         <div class="text-center space-y-4">
@@ -78,13 +79,19 @@
   </mat-dialog-content>
 
   <mat-dialog-actions class="cancel-modal-action-container">
-    <app-button mat-dialog-close [label]="getPrimaryLabel() | translate" variant="secondary">
+    <app-button
+      mat-dialog-close
+      [label]="getPrimaryLabel() | translate"
+      variant="secondary"
+      [attr.aria-label]="'CANCEL_MODAL.ACCESSIBILITY.KEEP' | translate"
+    >
     </app-button>
     <app-button
       (click)="toCancel()"
       [label]="getSecondaryLabel() | translate"
       variant="danger"
       class="mb-10"
+      [attr.aria-label]="'CANCEL_MODAL.ACCESSIBILITY.CONFIRM_DELETE' | translate"
     >
     </app-button>
   </mat-dialog-actions>

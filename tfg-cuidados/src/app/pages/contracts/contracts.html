@@ -1,25 +1,26 @@
-<section class="button-back-container">
+<header
+  class="button-back-container"
+  [attr.aria-label]="'CONTRACTS.ACCESSIBILITY.BACK_NAV' | translate"
+>
   <app-buttonback></app-buttonback>
-</section>
-@if (this.messageService.messageData(); as data) {
-<section class="message-noti">
-  <div [ngClass]="{
-          'text-red-500': data.tipo === 'error',
-          'text-primary': data.tipo === 'exito',
-        }" class="message-noti-text">
-    {{ data.mensaje }}
-  </div>
-</section>
-}
-<section class="contacts-container-section">
-  <h1 class="contracts-title">
+</header>
+
+
+
+<section class="contacts-container-section" role="main" aria-labelledby="contracts-page-title">
+  <h1 id="contracts-page-title" class="contracts-title">
     {{ 'CONTRACTS.TITLE' | translate }}
   </h1>
   <div class="contracts-table-container">
     <main class="contracts-table">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 w-full"
+        [attr.aria-label]="'CONTRACTS.TABLE_SUMMARY' | translate"
+      >
         <ng-container matColumnDef="ID">
-          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
+          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text" scope="col">
             {{ 'CONTRACTS.TABLE.ID' | translate }}
           </th>
           <td mat-cell *matCellDef="let contrato" class="text-label contracts-text">
@@ -28,7 +29,7 @@
         </ng-container>
 
         <ng-container matColumnDef="fecha">
-          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
+          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text" scope="col">
             {{ 'CONTRACTS.TABLE.DATE' | translate }}
           </th>
           <td mat-cell *matCellDef="let contrato" class="text-label contracts-text">
@@ -37,19 +38,29 @@
         </ng-container>
 
         <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef class="text-center"></th>
+          <th mat-header-cell *matHeaderCellDef class="text-center" scope="col">
+            <span class="sr-only">{{ 'CONTRACTS.TABLE.ACTIONS' | translate }}</span>
+          </th>
           <td mat-cell *matCellDef="let contrato" class="text-center">
-            <app-button
-              [label]="'CONTRACTS.ACTIONS.CANCEL' | translate"
-              variant="secondary"
-              (click)="cancelContract(contrato.id_contrato)"
-            ></app-button>
+            <div class="flex justify-center gap-2">
+              <app-button
+                [label]="'CONTRACTS.ACTIONS.CANCEL' | translate"
+                variant="secondary"
+                (click)="cancelContract(contrato.id_contrato)"
+                [attr.aria-label]="
+                  ('CONTRACTS.ACTIONS.CANCEL' | translate) + ' ID: ' + contrato.id_contrato
+                "
+              ></app-button>
 
-            <app-button
-              [label]="'CONTRACTS.ACTIONS.DETAILS' | translate"
-              variant="primary"
-              (click)="showDetails(contrato.id_contrato)"
-            ></app-button>
+              <app-button
+                [label]="'CONTRACTS.ACTIONS.DETAILS' | translate"
+                variant="primary"
+                (click)="showDetails(contrato.id_contrato)"
+                [attr.aria-label]="
+                  ('CONTRACTS.ACTIONS.DETAILS' | translate) + ' ID: ' + contrato.id_contrato
+                "
+              ></app-button>
+            </div>
           </td>
         </ng-container>
 
@@ -62,6 +73,7 @@
       class="mt-20"
       [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons
+      [attr.aria-label]="'CONTRACTS.PAGINATOR' | translate"
     ></mat-paginator>
   </div>
 </section>
