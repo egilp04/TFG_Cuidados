@@ -1170,7 +1170,7 @@
   }
 
   .soporte-container {
-    @apply fixed bottom-40 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
+    @apply fixed bottom-8 md:bottom-10 xl:bottom-12 2xl:bottom-24 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
   }
 
   .soporte-container-open {
