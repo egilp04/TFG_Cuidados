@@ -1,19 +1,22 @@
 <section class="service-modal-container">
-  <header class="w-full flex justify-end p-6">
-    <svg
-      mat-dialog-close
-      xmlns="http://www.w3.org/2000/svg"
+  <header class="w-full flex justify-end p-4 md:p-6">
+    <button 
+      mat-dialog-close 
+      aria-label="Cerrar ventana" 
       class="modal-close-btn"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="4"
-      stroke-linecap="round"
-      stroke-linejoin="round"
     >
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
-    </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-6 h-6" viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5" stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
   </header>
 
   <form [formGroup]="form" class="service-form-container">
