@@ -1,13 +1,17 @@
-<section class="button-back-container">
+<header
+  class="button-back-container"
+  [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.BACK_NAV' | translate"
+>
   <app-buttonback></app-buttonback>
-</section>
+</header>
 
-<section class="dashboard-container">
-  <section class="dashboard-contracts-container">
-    <h2 class="dashboard-contracts-title">
+<main class="dashboard-container" role="main">
+  <section class="dashboard-contracts-container" aria-labelledby="contracts-title">
+    <h2 id="contracts-title" class="dashboard-contracts-title">
       {{ 'DASHBOARD.TITLE_CONTRACTS' | translate }}
     </h2>
-    @defer (on idle) {
+
+    @defer (on viewport) {
       @if (activeContracts > 0 || canceledContracts > 0) {
         <div class="chart-wrapper">
           <canvas
@@ -15,14 +19,17 @@
             [data]="doughnutChartData"
             [options]="doughnutChartOptions"
             [type]="'doughnut'"
+            role="img"
+            [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.CONTRACTS_CHART_DESC' | translate"
           >
           </canvas>
         </div>
       } @else {
-        <div class="no-contracts-msg">
+        <div class="no-contracts-msg" role="status">
           {{ 'DASHBOARD.NO_CONTRACTS' | translate }}
         </div>
       }
+
       <div class="dashboard-contracts-texts-container">
         <span class="dashboard-contracts-text-total">
           {{ 'DASHBOARD.TOTAL_CONTRACTS.TOTAL' | translate }}
@@ -38,37 +45,45 @@
         </span>
       </div>
     } @placeholder {
-      <div class="no-contracts-msg">
+      <div class="no-contracts-msg" aria-live="polite">
         {{ 'DASHBOARD.CHARGING' | translate }}
       </div>
     }
   </section>
 
-  <section class="dashboard-total-users-container">
+  <section class="dashboard-total-users-container" aria-labelledby="users-title">
     <div class="dashboard-total-users">
-      <h2 class="dashboard-total-users-title">
+      <h2 id="users-title" class="dashboard-total-users-title">
         {{ 'DASHBOARD.TOTAL_USERS' | translate }}
         <span class="dashboard-total-users-text">{{ totalAppUsers }}</span>
       </h2>
     </div>
   </section>
 
-  <section class="dashboard-login-container">
-    <h2 class="dashboard-login-title">
+  <section class="dashboard-login-container" aria-labelledby="login-chart-title">
+    <h2 id="login-chart-title" class="dashboard-login-title">
       {{ 'DASHBOARD.LOGIN.TITLE' | translate }}
     </h2>
     <p class="dashboard-login-text">
       {{ 'DASHBOARD.LOGIN.SUBTITLE' | translate }}
     </p>
+
     @defer (on viewport) {
       <main class="chart-wrapper line-chart-wrapper">
-        <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'">
+        <canvas
+          baseChart
+          [data]="lineChartData"
+          [options]="lineChartOptions"
+          [type]="'line'"
+          role="img"
+          [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.LOGIN_CHART_DESC' | translate"
+        >
         </canvas>
       </main>
     } @placeholder {
-      <p class="dashboard-login-text">
+      <p class="dashboard-login-text" aria-live="polite">
         {{ 'DASHBOARD.CHARGING' | translate }}
       </p>
     }
   </section>
-</section>
+</main>

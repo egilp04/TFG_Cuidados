@@ -185,6 +185,12 @@
           type="button"
           variant="primary"
         ></app-button>
+        <app-button
+          [label]="'LOGIN_MODAL.BTN.BACK_LOGIN' | translate"
+          variant="secondary"
+          type="button"
+          (click)="modoActual = 'login'"
+        ></app-button>
       </mat-dialog-actions>
     </main>
   }

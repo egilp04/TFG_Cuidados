@@ -1,8 +1,12 @@
-<section class="button-back-container">
+<header
+  class="button-back-container"
+  [attr.aria-label]="'ADMIN_MANAGEMENT.ACCESSIBILITY.BACK_NAV' | translate"
+>
   <app-buttonback></app-buttonback>
-</section>
+</header>
+
 @if (this.messageService.messageData(); as data) {
-  <section class="message-noti">
+  <section class="message-noti" role="status" aria-live="polite">
     <div
       [ngClass]="{
         'text-red-500': data.tipo === 'error',
@@ -10,12 +14,24 @@
       }"
       class="message-noti-text"
     >
+      <span class="sr-only">
+        {{ (data.tipo === 'error' ? 'COMMON.ERROR' : 'COMMON.SUCCESS') | translate }}:
+      </span>
       {{ data.mensaje }}
     </div>
   </section>
 }
 
-<section class="mangment-admin-container">
+<section
+  class="mangment-admin-container"
+  role="main"
+  [attr.aria-label]="
+    (isUser
+      ? 'ADMIN_MANAGEMENT.ACCESSIBILITY.CLIENT_SECTION'
+      : 'ADMIN_MANAGEMENT.ACCESSIBILITY.COMPANY_SECTION'
+    ) | translate
+  "
+>
   <div class="mangment-admin-btn-container">
     <app-button
       [label]="
@@ -23,12 +39,19 @@
       "
       variant="primary"
       (click)="createNewUser()"
+      [attr.aria-label]="
+        (isUser
+          ? 'ADMIN_MANAGEMENT.ACCESSIBILITY.NEW_CLIENT_BTN'
+          : 'ADMIN_MANAGEMENT.ACCESSIBILITY.NEW_COMPANY_BTN'
+        ) | translate
+      "
     >
     </app-button>
   </div>
+
   <app-table-crud-admin
     [modo]="isUser ? 'cliente' : 'empresa'"
-    [data]="userService.usersList()"    
+    [data]="userService.usersList()"
     (deleteData)="toDeleteUser($event)"
     (modifyData)="toEditFunction($event)"
   ></app-table-crud-admin>

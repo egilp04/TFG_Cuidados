@@ -1,38 +1,88 @@
-<section class="home-container">
-  <h1 class="home-title">
+<section class="home-container" aria-labelledby="main-menu-title">
+  <h1 id="main-menu-title" class="home-title">
     {{ 'MAIN_MENU.TITLE' | translate }}
   </h1>
-  <main class="home-btn-container">
+  <main class="home-btn-container" role="main">
     @if (rol === 'cliente') {
-    <app-button [label]="'MAIN_MENU.CLIENT.SEARCH_COMPANIES' | translate" variant="primary" class="home-btn"
-      (click)="searchForBussiness()"></app-button>
-    <app-button [label]="'MAIN_MENU.CLIENT.MY_SERVICES' | translate" variant="primary" class="home-btn"
-      (click)="checkContracts()"></app-button>
+      <app-button
+        [label]="'MAIN_MENU.CLIENT.SEARCH_COMPANIES' | translate"
+        variant="primary"
+        class="home-btn"
+        (click)="searchForBussiness()"
+      >
+      </app-button>
+      <app-button
+        [label]="'MAIN_MENU.CLIENT.MY_SERVICES' | translate"
+        variant="primary"
+        class="home-btn"
+        (click)="checkContracts()"
+      >
+      </app-button>
     } @else if (rol === 'empresa') {
-    <app-button [label]="'MAIN_MENU.COMPANY.MANAGE_SERVICES' | translate" variant="primary" class="home-btn"
-      (click)="manageServices()"></app-button>
-    <app-button [label]="'MAIN_MENU.COMPANY.ALL_CONTRACTS' | translate" variant="primary" class="home-btn"
-      (click)="checkContracts()"></app-button>
+      <app-button
+        [label]="'MAIN_MENU.COMPANY.MANAGE_SERVICES' | translate"
+        variant="primary"
+        class="home-btn"
+        (click)="manageServices()"
+      >
+      </app-button>
+      <app-button
+        [label]="'MAIN_MENU.COMPANY.ALL_CONTRACTS' | translate"
+        variant="primary"
+        class="home-btn"
+        (click)="checkContracts()"
+      >
+      </app-button>
     } @else if (rol === 'administrador') {
-    <app-button [label]="'MAIN_MENU.ADMIN.DASHBOARD' | translate" variant="primary" class="home-btn"
-      (click)="checkDashboard()"></app-button>
-    <app-button [label]="'MAIN_MENU.ADMIN.MANAGE_USERS' | translate" variant="primary" class="home-btn"
-      (click)="manageUsers()"></app-button>
-    <app-button [label]="'MAIN_MENU.ADMIN.MANAGE_COMPANIES' | translate" variant="primary" class="home-btn"
-      (click)="manageBussinesses()"></app-button>
-    <app-button [label]="'MAIN_MENU.ADMIN.MANAGE_SERVICES' | translate" variant="primary" class="home-btn"
-      (click)="manageGlobalServices()"></app-button>
-    <app-button [label]="'MAIN_MENU.ADMIN.MANAGE_SCHEDULES' | translate" variant="primary" class="home-btn"
-      (click)="manageGlobalTimes()"></app-button>
+      <app-button
+        [label]="'MAIN_MENU.ADMIN.DASHBOARD' | translate"
+        variant="primary"
+        class="home-btn"
+        (click)="checkDashboard()"
+      >
+      </app-button>
+      <app-button
+        [label]="'MAIN_MENU.ADMIN.MANAGE_USERS' | translate"
+        variant="primary"
+        class="home-btn"
+        (click)="manageUsers()"
+      >
+      </app-button>
+      <app-button
+        [label]="'MAIN_MENU.ADMIN.MANAGE_COMPANIES' | translate"
+        variant="primary"
+        class="home-btn"
+        (click)="manageBussinesses()"
+      >
+      </app-button>
+      <app-button
+        [label]="'MAIN_MENU.ADMIN.MANAGE_SERVICES' | translate"
+        variant="primary"
+        class="home-btn"
+        (click)="manageGlobalServices()"
+      >
+      </app-button>
+      <app-button
+        [label]="'MAIN_MENU.ADMIN.MANAGE_SCHEDULES' | translate"
+        variant="primary"
+        class="home-btn"
+        (click)="manageGlobalTimes()"
+      >
+      </app-button>
     }
     @if (rol != 'administrador') {
-    <app-button [label]="'MAIN_MENU.COMMON.ACTIVITIES' | translate" variant="primary" class="home-btn md:mb-20"
-      (click)="programedActivities()"></app-button>
+      <app-button
+        [label]="'MAIN_MENU.COMMON.ACTIVITIES' | translate"
+        variant="primary"
+        class="home-btn md:mb-20"
+        (click)="programedActivities()"
+      >
+      </app-button>
     }
     @defer (on idle) {
-    <app-ai-assistant></app-ai-assistant>
+      <app-ai-assistant></app-ai-assistant>
     } @placeholder {
-    <div></div>
+      <div aria-hidden="true"></div>
     }
   </main>
 </section>

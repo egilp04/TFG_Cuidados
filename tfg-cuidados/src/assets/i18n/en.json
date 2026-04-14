@@ -146,14 +146,25 @@
     "TITLE": "Contracts",
     "TABLE": {
       "ID": "Contract ID",
-      "DATE": "Date"
+      "DATE": "Date",
+      "ACTIONS": "Available actions"
     },
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Go back to the previous page"
+    },
+    "TABLE_SUMMARY": "Table of completed contracts",
+    "PAGINATOR": "Select contracts page",
     "ACTIONS": {
       "CANCEL": "Cancel",
       "DETAILS": "View details"
     }
   },
   "DASHBOARD": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Go back to the previous page",
+      "CONTRACTS_CHART_DESC": "Contracts chart: shows the proportion of active versus canceled contracts.",
+      "LOGIN_CHART_DESC": "Login chart: shows the evolution of user logins over time."
+    },
     "NO_CONTRACTS": "No contracts",
     "CHARGING": "Charging Data",
     "TITLE_CONTRACTS": "Contracts",
@@ -195,6 +206,9 @@
     }
   },
   "LANDING": {
+    "ACCESSIBILITY": {
+      "REGISTER_BTN": "Open registration form for our services"
+    },
     "HERO": {
       "ALT": "Hands caring for each other",
       "TITLE": "We take care of you,",
@@ -218,6 +232,13 @@
     }
   },
   "ADMIN_MANAGEMENT": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Navigation to go back",
+      "CLIENT_SECTION": "Client management section",
+      "COMPANY_SECTION": "Company management section",
+      "NEW_CLIENT_BTN": "Register a new client in the system",
+      "NEW_COMPANY_BTN": "Register a new company in the system"
+    },
     "NEW_CLIENT": "New Client",
     "NEW_COMPANY": "New Company"
   },
@@ -242,6 +263,13 @@
     }
   },
   "MANAGEMENT_SERVICES": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Go back",
+      "SAVE_BTN": "Save service changes",
+      "ADD_BTN": "Add this new service to the system",
+      "CANCEL_BTN": "Cancel editing and clear the form",
+      "ACTIONS_COL": "Available actions"
+    },
     "TITLE": "SERVICE",
     "FORM": {
       "NAME": "Name",
@@ -273,6 +301,13 @@
     }
   },
   "MANAGEMENT_SCHEDULES": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Go back",
+      "SAVE_BTN": "Save schedule changes",
+      "ADD_BTN": "Add this new schedule to the system",
+      "CANCEL_BTN": "Cancel editing and clear the form",
+      "ACTIONS_COL": "Available actions"
+    },
     "TITLE": "SCHEDULE",
     "FORM": {
       "START_TIME": "Start Time",
@@ -316,6 +351,10 @@
     }
   },
   "MANUALS": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Button to return to the previous screen",
+      "LIST_LABEL": "List of user manuals available for download"
+    },
     "TITLE": "Manuals",
     "DOWNLOAD_BTN": "Download PDF",
     "ITEMS": {
@@ -331,6 +370,12 @@
     "USERVIDEO": "Watch video - User manual"
   },
   "MESSAGES_PAGE": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Go back",
+      "UNREAD": "Unread message",
+      "ACTIONS_COL": "Message actions",
+      "PAGINATOR": "Message pagination"
+    },
     "TITLE": "Messages",
     "NEW_MSG": "New Message",
     "SORT_LABEL": "Sort by...",
@@ -356,6 +401,9 @@
     }
   },
   "MODIFY_PROFILE": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Go back to the previous screen"
+    },
     "PLACEHOLDER": { "DESCRIPTION": "Modify descripcion" },
     "TITLE": "Modify Profile",
     "MESSAGES": {
@@ -401,6 +449,12 @@
     }
   },
   "NOTIFICATIONS": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Go back to the previous screen",
+      "UNREAD": "Unread notification",
+      "ACTIONS_COL": "Available actions",
+      "PAGINATOR": "Notification pagination"
+    },
     "ADMIN": "Open a ticker to the administrator",
     "TITLE": "Notifications",
     "TABLE": {
@@ -420,6 +474,11 @@
     }
   },
   "RECOVER_PASSWORD": {
+    "ACCESSIBILITY": {
+      "NAV": "Main navigation",
+      "HOME_BTN": "Return to the home page",
+      "SUBMIT_BTN": "Save the new password"
+    },
     "TITLE": "Reset Password",
     "DESCRIPTION": "Enter your new password to recover access.",
     "LABEL_NEW_PASS": "New Password",
@@ -438,6 +497,12 @@
   },
 
   "SEARCH_BUSINESS": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Go back to the previous screen",
+      "MAIN_SECTION": "Business search section",
+      "RESULTS_LIST": "List of found businesses",
+      "LOCATION": "Address"
+    },
     "MESSAGES": {
       "CONNECTION_ERROR": "Connection error.",
       "LOGIN_REQUIRED": "You must log in to contract services.",
@@ -460,6 +525,13 @@
     }
   },
   "SERVICES_BUSINESS": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Go back to the previous screen",
+      "MAIN_SECTION": "Business services management",
+      "NEW_BTN": "Add a new service",
+      "TABLE_LABEL": "Table of registered services",
+      "ACTIONS_COL": "Available actions"
+    },
     "BTN_NEW": "New service",
     "BTN_DELETE": "Delete",
     "BTN_MODIFY": "Modify",
@@ -563,6 +635,10 @@
   },
   "SEARCH_PLACEHOLDER": "Search...",
   "REGISTER": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Go back to the previous screen",
+      "MAIN_FORM": "Main area of the registration form"
+    },
     "PLACEHOLDER": {
       "SELECTREGION": "Choose"
     },
@@ -715,6 +791,10 @@
     "COOKIES_POLICIES": "Cookie policy"
   },
   "TERMS_PAGE": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Navigation to go back",
+      "IMPORTANT_NOTE": "Important note"
+    },
     "TITLE": "Terms and Conditions and Privacy Policy",
     "LAST_UPDATE": "Last updated",
     "SECTION_1": {
@@ -786,5 +866,9 @@
   },
   "ADMIN_SERVICE_TIME": {
     "ERROR": "Error, check the field, please"
+  },
+  "COMMON": {
+    "ERROR": "Error",
+    "SUCCESS": "Success"
   }
 }

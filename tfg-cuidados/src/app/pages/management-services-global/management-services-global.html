@@ -1,8 +1,12 @@
-<section class="button-back-container">
+<header
+  class="button-back-container"
+  [attr.aria-label]="'MANAGEMENT_SERVICES.ACCESSIBILITY.BACK_NAV' | translate"
+>
   <app-buttonback></app-buttonback>
-</section>
+</header>
+
 @if (this.messageService.messageData(); as data) {
-  <section class="message-noti">
+  <section class="message-noti" role="status" aria-live="polite">
     <div
       [ngClass]="{
         'text-red-500': data.tipo === 'error',
@@ -10,15 +14,26 @@
       }"
       class="message-noti-text"
     >
+      <span class="sr-only">
+        {{ (data.tipo === 'error' ? 'COMMON.ERROR' : 'COMMON.SUCCESS') | translate }}:
+      </span>
       {{ data.mensaje }}
     </div>
   </section>
 }
-<section class="managements-services-global-container">
-  <h1 class="management-title-services-global">
+
+<section class="managements-services-global-container" aria-labelledby="management-form-title">
+  <h1 id="management-form-title" class="management-title-services-global">
     {{ 'MANAGEMENT_SERVICES.TITLE' | translate }}
   </h1>
-  <main class="management-services-global-form">
+
+  <main
+    class="management-services-global-form"
+    role="form"
+    [attr.aria-label]="
+      (isEditing ? 'MANAGEMENT_SERVICES.FORM.SAVE' : 'MANAGEMENT_SERVICES.FORM.ADD') | translate
+    "
+  >
     <app-inputs
       name="nombre"
       [label]="'MANAGEMENT_SERVICES.FORM.NAME' | translate"
@@ -42,6 +57,7 @@
     >
     </app-inputs>
   </main>
+
   <footer class="management-services-global-form-btn">
     <app-button
       [label]="
@@ -50,6 +66,12 @@
       variant="primary"
       (click)="onSave()"
       [disabled]="isLoading()"
+      [attr.aria-label]="
+        (isEditing
+          ? 'MANAGEMENT_SERVICES.ACCESSIBILITY.SAVE_BTN'
+          : 'MANAGEMENT_SERVICES.ACCESSIBILITY.ADD_BTN'
+        ) | translate
+      "
     >
     </app-button>
 
@@ -58,50 +80,67 @@
         [label]="'MANAGEMENT_SERVICES.FORM.CANCEL' | translate"
         variant="secondary"
         (click)="resetForm()"
+        [attr.aria-label]="'MANAGEMENT_SERVICES.ACCESSIBILITY.CANCEL_BTN' | translate"
       >
       </app-button>
     }
   </footer>
 </section>
-<section class="management-services-global-table-container">
-  <h2 class="dropdown-subtitle">
+
+<section class="management-services-global-table-container" aria-labelledby="management-list-title">
+  <h2 id="management-list-title" class="dropdown-subtitle">
     {{ 'MANAGEMENT_SERVICES.LIST.TITLE' | translate }}
   </h2>
+
   <div class="w-full flex flex-col md:flex-row gap-10 p-20 items-center">
-    <label class="management-services-global-search">
+    <label class="management-services-global-search" id="search-services-label">
       {{ 'MANAGEMENT_SERVICES.LIST.SEARCH' | translate }}
     </label>
     <app-searchbar [control]="controlFilterItem" (searchEvent)="toFilter($event)"> </app-searchbar>
   </div>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 w-full">
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z2 w-full"
+    [attr.aria-label]="'MANAGEMENT_SERVICES.LIST.TITLE' | translate"
+  >
     <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text">
+      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SERVICES.TABLE.NAME' | translate }}
       </th>
       <td mat-cell *matCellDef="let serv" class="management-global-text text-label">
         {{ serv.nombre }}
       </td>
     </ng-container>
+
     <ng-container matColumnDef="tipo_servicio">
-      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text">
+      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SERVICES.TABLE.TYPE' | translate }}
       </th>
       <td mat-cell *matCellDef="let serv" class="management-global-text text-label">
         {{ serv.tipo_servicio }}
       </td>
     </ng-container>
+
     <ng-container matColumnDef="acciones">
       <th
         mat-header-cell
         *matHeaderCellDef
         class="text-label management-global-text text-center"
-      ></th>
+        scope="col"
+      >
+        <span class="sr-only">{{
+          'MANAGEMENT_SERVICES.ACCESSIBILITY.ACTIONS_COL' | translate
+        }}</span>
+      </th>
       <td mat-cell *matCellDef="let serv" class="p-4">
         <div class="management-service-global-actions">
           <app-button
             [label]="'MANAGEMENT_SERVICES.TABLE.EDIT' | translate"
             variant="primary"
             (click)="onEdit(serv)"
+            [attr.aria-label]="('MANAGEMENT_SERVICES.TABLE.EDIT' | translate) + ': ' + serv.nombre"
           >
           </app-button>
           <app-button
@@ -109,14 +148,19 @@
             variant="secondary"
             (click)="onDelete(serv.id_servicio!)"
             [disabled]="isLoading()"
+            [attr.aria-label]="
+              ('MANAGEMENT_SERVICES.TABLE.DELETE' | translate) + ': ' + serv.nombre
+            "
           >
           </app-button>
         </div>
       </td>
     </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns" class="hover:bg-gray-50"></tr>
-    <tr class="mat-row" *matNoDataRow>
+
+    <tr class="mat-row" *matNoDataRow role="status" aria-live="polite">
       <td class="mat-cell text-label management-global-text" colspan="3">
         {{ 'MANAGEMENT_SERVICES.LIST.EMPTY' | translate }}
       </td>

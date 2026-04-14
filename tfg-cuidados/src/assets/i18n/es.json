@@ -146,14 +146,26 @@
     "TITLE": "Contratos",
     "TABLE": {
       "ID": "ID del Contrato",
-      "DATE": "Fecha"
+      "DATE": "Fecha",
+      "ACTIONS": "Acciones disponibles"
     },
     "ACTIONS": {
       "CANCEL": "Cancelar",
       "DETAILS": "Ver detalles"
+    },
+    "TABLE_SUMMARY": "Tabla de contratos realizados",
+    "PAGINATOR": "Seleccionar página de contratos",
+
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Volver a la página anterior"
     }
   },
   "DASHBOARD": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Volver a la página anterior",
+      "CONTRACTS_CHART_DESC": "Gráfico de contratos: muestra la proporción de contratos activos frente a cancelados.",
+      "LOGIN_CHART_DESC": "Gráfico de accesos: muestra la evolución de los inicios de sesión en el tiempo."
+    },
     "NO_CONTRACTS": "Sin contratos",
     "CHARGING": "Cargando gráficas",
     "TITLE_CONTRACTS": "Contratos",
@@ -195,6 +207,9 @@
     }
   },
   "LANDING": {
+    "ACCESSIBILITY": {
+      "REGISTER_BTN": "Abrir formulario de registro para nuestros servicios"
+    },
     "HERO": {
       "ALT": "Manos cuidándose",
       "TITLE": "Cuidamos de ti,",
@@ -218,6 +233,13 @@
     }
   },
   "ADMIN_MANAGEMENT": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Navegación para volver atrás",
+      "CLIENT_SECTION": "Sección de gestión de clientes",
+      "COMPANY_SECTION": "Sección de gestión de empresas",
+      "NEW_CLIENT_BTN": "Registrar un nuevo cliente en el sistema",
+      "NEW_COMPANY_BTN": "Registrar una nueva empresa en el sistema"
+    },
     "NEW_CLIENT": "Nuevo Cliente",
     "NEW_COMPANY": "Nueva Empresa"
   },
@@ -242,6 +264,13 @@
     }
   },
   "MANAGEMENT_SERVICES": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Volver atrás",
+      "SAVE_BTN": "Guardar los cambios del servicio",
+      "ADD_BTN": "Añadir este nuevo servicio al sistema",
+      "CANCEL_BTN": "Cancelar la edición y limpiar el formulario",
+      "ACTIONS_COL": "Acciones disponibles"
+    },
     "TITLE": "SERVICIO",
     "FORM": {
       "NAME": "Nombre",
@@ -273,6 +302,13 @@
     }
   },
   "MANAGEMENT_SCHEDULES": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Volver atrás",
+      "SAVE_BTN": "Guardar los cambios del horario",
+      "ADD_BTN": "Añadir este nuevo horario al sistema",
+      "CANCEL_BTN": "Cancelar edición y limpiar formulario",
+      "ACTIONS_COL": "Acciones disponibles"
+    },
     "TITLE": "HORARIO",
     "FORM": {
       "START_TIME": "Hora de Inicio",
@@ -327,9 +363,19 @@
         "DESC": "Manual de buenas prácticas para cuidadores y empresas de salud."
       }
     },
-    "USERVIDEO": "Video: uso del apicativo"
+    "USERVIDEO": "Video: uso del apicativo",
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Botón para volver a la pantalla anterior",
+      "LIST_LABEL": "Lista de manuales de usuario disponibles para descarga"
+    }
   },
   "MESSAGES_PAGE": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Volver atrás",
+      "UNREAD": "Mensaje no leído",
+      "ACTIONS_COL": "Acciones del mensaje",
+      "PAGINATOR": "Paginación de mensajes"
+    },
     "TITLE": "Mensajes",
     "NEW_MSG": "Nuevo Mensaje",
     "SORT_LABEL": "Ordenar por...",
@@ -355,6 +401,12 @@
     }
   },
   "NOTIFICATIONS": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Volver a la pantalla anterior",
+      "UNREAD": "Notificación no leída",
+      "ACTIONS_COL": "Acciones disponibles",
+      "PAGINATOR": "Paginación de notificaciones"
+    },
     "ADMIN": "Abre un ticket con el administrador",
     "TITLE": "Notificaciones",
     "TABLE": {
@@ -374,6 +426,11 @@
     }
   },
   "RECOVER_PASSWORD": {
+    "ACCESSIBILITY": {
+      "NAV": "Navegación principal",
+      "HOME_BTN": "Volver a la página de inicio",
+      "SUBMIT_BTN": "Guardar la nueva contraseña"
+    },
     "TITLE": "Restablecer Contraseña",
     "DESCRIPTION": "Introduce tu nueva contraseña para recuperar el acceso.",
     "LABEL_NEW_PASS": "Nueva Contraseña",
@@ -410,9 +467,22 @@
     "BTN_CONTRACT": "Contratar",
     "LIST": {
       "EMPTY": "No se encontraron empresas con los criterios de búsqueda."
+    },
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Volver a la pantalla anterior",
+      "MAIN_SECTION": "Sección de búsqueda de empresas",
+      "RESULTS_LIST": "Lista de empresas encontradas",
+      "LOCATION": "Dirección"
     }
   },
   "SERVICES_BUSINESS": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Volver a la pantalla anterior",
+      "MAIN_SECTION": "Gestión de servicios de la empresa",
+      "NEW_BTN": "Añadir un nuevo servicio",
+      "TABLE_LABEL": "Tabla de servicios registrados",
+      "ACTIONS_COL": "Acciones disponibles"
+    },
     "BTN_NEW": "Nuevo servicio",
     "BTN_DELETE": "Eliminar",
     "BTN_MODIFY": "Modificar",
@@ -568,6 +638,10 @@
       "CIF_FORMAT": "El formato del CIF es incorrecto (Ej: B12345678)",
       "CIF_INVALID": "El CIF no es válido (dígito de control incorrecto)",
       "EMAIL_TAKEN": "Este correo electrónico ya está en uso"
+    },
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Volver a la pantalla anterior",
+      "MAIN_FORM": "Área principal del formulario de registro"
     }
   },
   "SERVICE_TIME_MODAL": {
@@ -597,6 +671,9 @@
     }
   },
   "MODIFY_PROFILE": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Volver a la pantalla anterior"
+    },
     "PLACEHOLDER": {
       "DESCRIPTION": "Descripción"
     },
@@ -706,6 +783,10 @@
     "COOKIES_POLICIES": "Política de cookies"
   },
   "TERMS_PAGE": {
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Navegación para volver atrás",
+      "IMPORTANT_NOTE": "Nota importante"
+    },
     "TITLE": "Términos y Condiciones y Política de Privacidad",
     "LAST_UPDATE": "Última actualización",
     "SECTION_1": {
@@ -777,5 +858,10 @@
   },
   "ADMIN_SERVICE_TIME": {
     "ERROR": "Error, revise que todo está relleno"
+  },
+
+  "COMMON": {
+    "ERROR": "Error",
+    "SUCCESS": "Éxito"
   }
 }
