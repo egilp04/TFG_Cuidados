@@ -1,6 +1,9 @@
-<footer class="footer-container" role="contentinfo" [attr.aria-label]="'FOOTER.ACCESSIBILITY.FOOTER_SECTION' | translate">
-  
-  <nav [attr.aria-label]="'FOOTER.ACCESSIBILITY.NAV_LABEL' | translate" class="flex flex-wrap justify-center gap-4">
+<footer
+  class="footer-container"
+  role="contentinfo"
+  [attr.aria-label]="'FOOTER.ACCESSIBILITY.FOOTER_SECTION' | translate"
+>
+  <nav [attr.aria-label]="'FOOTER.ACCESSIBILITY.NAV_LABEL' | translate" class="footer-nav">
     <a [routerLink]="homeLink()" class="footer-text">
       {{ 'FOOTER.HOME' | translate }}
     </a>
@@ -24,20 +27,23 @@
     </a>
   </nav>
 
-  <div class="flex flex-row gap-4 items-center" [attr.aria-label]="'FOOTER.ACCESSIBILITY.LANG_SELECTOR' | translate">
-    <button 
-      (click)="changeLanguage('es')" 
+  <div
+    class="flex flex-row gap-4 items-center"
+    [attr.aria-label]="'FOOTER.ACCESSIBILITY.LANG_SELECTOR' | translate"
+  >
+    <button
+      (click)="changeLanguage('es')"
       class="footer-text"
       [attr.aria-label]="'FOOTER.ACCESSIBILITY.CHANGE_ES' | translate"
       type="button"
     >
       ES
     </button>
-    
+
     <span class="footer-text" aria-hidden="true">|</span>
-    
-    <button 
-      (click)="changeLanguage('en')" 
+
+    <button
+      (click)="changeLanguage('en')"
       class="footer-text"
       [attr.aria-label]="'FOOTER.ACCESSIBILITY.CHANGE_EN' | translate"
       type="button"

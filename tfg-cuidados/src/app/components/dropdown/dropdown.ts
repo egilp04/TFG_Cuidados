@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, Output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -17,6 +17,7 @@ export class Dropdown {
 
   isOpen: boolean = false;
   selectedOption: string | null = null;
+  name = input<string>('dropdown-' + Math.random().toString(36).substring(2, 9));
 
   toggleDropdown() {
     console.log(this.options);

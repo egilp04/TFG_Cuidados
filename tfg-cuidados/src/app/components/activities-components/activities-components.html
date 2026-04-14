@@ -1,6 +1,6 @@
 <div class="activity-component-container">
-  <section 
-    class="activity-calendar-container" 
+  <section
+    class="activity-calendar-container"
     [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.CALENDAR_DESC' | translate"
   >
     <div class="flex justify-between items-center mb-8 p-10">
@@ -8,15 +8,15 @@
         {{ displayDate | date: 'MMMM yyyy' }}
       </h2>
       <div class="flex gap-2">
-        <button 
-          (click)="changeMonth(-1)" 
+        <button
+          (click)="changeMonth(-1)"
           class="activiy-month-change-btn"
           [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.PREV_MONTH' | translate"
         >
           ‹
         </button>
-        <button 
-          (click)="changeMonth(1)" 
+        <button
+          (click)="changeMonth(1)"
           class="activiy-month-change-btn"
           [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.NEXT_MONTH' | translate"
         >
@@ -38,7 +38,7 @@
         <div class="activity-days-inner-display group" role="gridcell">
           @if (dia) {
             @let eventos = getEventosDia(dia);
-            
+
             <button
               type="button"
               (click)="manejarClickDia(dia, eventos)"
@@ -47,16 +47,21 @@
                 'activity-events': eventos.length > 0,
                 'activity-no-events': eventos.length === 0,
               }"
-              [attr.aria-label]="dia + (eventos.length > 0 ? (', ' + ('ACTIVITIES.ACCESSIBILITY.HAS_EVENTS' | translate)) : '')"
+              [attr.aria-label]="
+                dia +
+                (eventos.length > 0
+                  ? ', ' + ('ACTIVITIES.ACCESSIBILITY.HAS_EVENTS' | translate)
+                  : '')
+              "
               [attr.aria-expanded]="selectedDia === dia"
             >
               {{ dia }}
             </button>
 
             @if (eventos.length > 0 && selectedDia === dia) {
-              <div 
-                class="activity-tooltip-event-container animate-tooltip" 
-                role="region" 
+              <div
+                class="activity-tooltip-event-container animate-tooltip"
+                role="region"
                 aria-live="polite"
               >
                 @for (ev of eventos; track ev.id_contrato) {
@@ -80,12 +85,11 @@
     </div>
   </section>
 
-  <section 
-    class="activity-table-container" 
+  <section
+    class="activity-table-container"
     [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.TABLE_DESC' | translate"
   >
     <table mat-table [dataSource]="dataSourceTable" class="w-full">
-      
       <ng-container matColumnDef="usuario">
         <th mat-header-cell *matHeaderCellDef class="activity-text text-label">
           {{ headerContrato() | translate }}
@@ -138,7 +142,9 @@
             [label]="'ACTIVITIES.BTN_CANCEL' | translate"
             variant="secondary"
             (onClick)="onCancel(element.id_contrato)"
-            [attr.aria-label]="('ACTIVITIES.BTN_CANCEL' | translate) + ': ' + element.nombreServicio"
+            [attr.aria-label]="
+              ('ACTIVITIES.BTN_CANCEL' | translate) + ': ' + element.nombreServicio
+            "
           ></app-button>
         </td>
       </ng-container>
@@ -148,9 +154,9 @@
     </table>
   </section>
 
-  <mat-paginator 
-    [pageSizeOptions]="[5, 10, 20]" 
-    showFirstLastButtons 
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
     class="mt-20"
     [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.SELECT_PAGE' | translate"
   >

@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './button.css',
 })
 export class ButtonComponent {
+  ariaLabel = input<string>('');
   label = input.required<string>();
   variant = input<'primary' | 'secondary' | 'danger'>('primary');
   type = input<'button' | 'submit' | 'reset'>('button');
