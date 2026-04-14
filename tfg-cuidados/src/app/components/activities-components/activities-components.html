@@ -1,50 +1,75 @@
 <div class="activity-component-container">
-  <section class="activity-calendar-container">
+  <section 
+    class="activity-calendar-container" 
+    [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.CALENDAR_DESC' | translate"
+  >
     <div class="flex justify-between items-center mb-8 p-10">
-      <h2 class="activity-calendar-title">
+      <h2 class="activity-calendar-title" aria-live="polite">
         {{ displayDate | date: 'MMMM yyyy' }}
       </h2>
       <div class="flex gap-2">
-          <button (click)="changeMonth(-1)" class="activiy-month-change-btn">‹</button>
-          <button (click)="changeMonth(1)" class="activiy-month-change-btn">›</button>
+        <button 
+          (click)="changeMonth(-1)" 
+          class="activiy-month-change-btn"
+          [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.PREV_MONTH' | translate"
+        >
+          ‹
+        </button>
+        <button 
+          (click)="changeMonth(1)" 
+          class="activiy-month-change-btn"
+          [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.NEXT_MONTH' | translate"
+        >
+          ›
+        </button>
       </div>
     </div>
-    <div class="activity-calendar-grid">
+
+    <div class="activity-calendar-grid" role="row">
       @for (wd of weekDays; track wd) {
-        <span class="activity-calendar-day">
+        <span class="activity-calendar-day" role="columnheader">
           {{ 'ACTIVITIES.DAYS.' + wd | translate }}
         </span>
       }
     </div>
-    <div class="activity-days-display">
+
+    <div class="activity-days-display" role="grid">
       @for (dia of monthDays; track $index) {
-        <div class="activity-days-inner-display group">
+        <div class="activity-days-inner-display group" role="gridcell">
           @if (dia) {
             @let eventos = getEventosDia(dia);
-            <span
+            
+            <button
+              type="button"
               (click)="manejarClickDia(dia, eventos)"
+              class="activity-events-base"
               [ngClass]="{
                 'activity-events': eventos.length > 0,
                 'activity-no-events': eventos.length === 0,
               }"
-              class="activity-events-base"
+              [attr.aria-label]="dia + (eventos.length > 0 ? (', ' + ('ACTIVITIES.ACCESSIBILITY.HAS_EVENTS' | translate)) : '')"
+              [attr.aria-expanded]="selectedDia === dia"
             >
               {{ dia }}
-            </span>
+            </button>
 
             @if (eventos.length > 0 && selectedDia === dia) {
-              <div class="activity-tooltip-event-container animate-tooltip">
+              <div 
+                class="activity-tooltip-event-container animate-tooltip" 
+                role="region" 
+                aria-live="polite"
+              >
                 @for (ev of eventos; track ev.id_contrato) {
-                  <div class="activity-tooltip-text-container">
-                    <span class="activity-tooltip-event-text text-sm lg:text-lg">{{
-                      ev.nombreServicio
-                    }}</span>
-                    <span class="activity-tooltip-event-text text-sm lg:text-lg"
-                      >{{ ev.hora_contratada }} - {{ ev.dia_semana_contratado }}</span
-                    >
-                    <span class="activity-tooltip-event-text text-sm lg:text-lg"
-                      >📍{{ ev.lugar }}</span
-                    >
+                  <div class="activity-tooltip-text-container" role="article">
+                    <span class="activity-tooltip-event-text text-sm lg:text-lg">
+                      {{ ev.nombreServicio }}
+                    </span>
+                    <span class="activity-tooltip-event-text text-sm lg:text-lg">
+                      {{ ev.hora_contratada }} - {{ ev.dia_semana_contratado }}
+                    </span>
+                    <span class="activity-tooltip-event-text text-sm lg:text-lg">
+                      📍{{ ev.lugar }}
+                    </span>
                   </div>
                 }
               </div>
@@ -55,8 +80,12 @@
     </div>
   </section>
 
-  <section class="activity-table-container">
+  <section 
+    class="activity-table-container" 
+    [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.TABLE_DESC' | translate"
+  >
     <table mat-table [dataSource]="dataSourceTable" class="w-full">
+      
       <ng-container matColumnDef="usuario">
         <th mat-header-cell *matHeaderCellDef class="activity-text text-label">
           {{ headerContrato() | translate }}
@@ -109,6 +138,7 @@
             [label]="'ACTIVITIES.BTN_CANCEL' | translate"
             variant="secondary"
             (onClick)="onCancel(element.id_contrato)"
+            [attr.aria-label]="('ACTIVITIES.BTN_CANCEL' | translate) + ': ' + element.nombreServicio"
           ></app-button>
         </td>
       </ng-container>
@@ -117,5 +147,12 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </section>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons class="mt-20"></mat-paginator>
+
+  <mat-paginator 
+    [pageSizeOptions]="[5, 10, 20]" 
+    showFirstLastButtons 
+    class="mt-20"
+    [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.SELECT_PAGE' | translate"
+  >
+  </mat-paginator>
 </div>

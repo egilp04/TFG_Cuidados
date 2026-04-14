@@ -1,11 +1,17 @@
-<section class="login-modal-container">
+<section 
+  class="login-modal-container" 
+  role="dialog" 
+  aria-modal="true" 
+  aria-labelledby="login-dialog-title"
+>
   <header class="w-full flex justify-end p-2 md:p-4">
     <button 
       mat-dialog-close 
-      aria-label="Cerrar ventana" 
+      [attr.aria-label]="'LOGIN_MODAL.ACCESSIBILITY.CLOSE' | translate" 
       class="modal-close-btn"
     >
       <svg
+        aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         class="w-full h-full" viewBox="0 0 24 24"
         fill="none"
@@ -19,7 +25,7 @@
     </button>
   </header>
 
-  <h1 mat-dialog-title class="login-modal-title">
+  <h1 mat-dialog-title id="login-dialog-title" class="login-modal-title">
     @if (modoActual === 'login') {
       {{ 'LOGIN_MODAL.TITLES.LOGIN' | translate }}
     } @else if (modoActual === 'registro') {
@@ -34,7 +40,7 @@
   </h1>
 
   @if (modoActual === 'login') {
-    <form [formGroup]="loginForm" class="login-login-form">
+    <form [formGroup]="loginForm" class="login-login-form" aria-labelledby="login-dialog-title">
       <div class="login-login-form-div">
         <mat-dialog-content class="login-form-reset">
           <app-inputs
@@ -95,7 +101,7 @@
     </form>
   }
   @if (modoActual === 'recuperar') {
-    <main class="login-recuperar-container">
+    <main class="login-recuperar-container" role="region" [attr.aria-label]="'LOGIN_MODAL.TITLES.RECOVER' | translate">
       <div class="login-login-form-div mb-6">
         <p class="login-subtitle">
           {{ 'LOGIN_MODAL.HINTS.RECOVER_DESC' | translate }}
@@ -128,7 +134,7 @@
     </main>
   }
   @if (modoActual === 'registro') {
-    <main class="login-registro-container">
+    <main class="login-registro-container" role="region" [attr.aria-label]="'LOGIN_MODAL.TITLES.REGISTER' | translate">
       <mat-dialog-actions class="login-other-actions">
         <app-button
           [label]="'LOGIN_MODAL.BTN.REG_USER' | translate"
@@ -156,7 +162,7 @@
   }
 
   @if (modoActual === 'reenviar') {
-    <main class="w-full flex flex-col items-center">
+    <main class="w-full flex flex-col items-center" role="region" [attr.aria-label]="'LOGIN_MODAL.TITLES.RESEND' | translate">
       <div class="login-login-form-div mb-6">
         <p class="login-subtitle">
           {{ 'LOGIN_MODAL.LABELS.RESEND' | translate }}
@@ -184,6 +190,8 @@
 
   @if (messageService.messageData(); as data) {
     <footer
+      role="status"
+      aria-live="polite"
       [ngClass]="{
         'text-red-500 dark:text-red-dark': data.tipo === 'error',
         'text-green-600 dark:text-green-300': data.tipo === 'exito',

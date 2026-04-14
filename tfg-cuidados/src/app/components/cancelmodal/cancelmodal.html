@@ -1,11 +1,18 @@
-<section class="cancel-modal-container">
+<section 
+  class="cancel-modal-container" 
+  role="dialog" 
+  aria-modal="true" 
+  aria-labelledby="cancel-title" 
+  aria-describedby="cancel-description"
+>
   <header class="w-full flex justify-end p-2 md:p-4">
     <button 
       mat-dialog-close 
-      aria-label="Cerrar ventana" 
+      [attr.aria-label]="'CANCEL_MODAL.CLOSE' | translate" 
       class="modal-close-btn"
     >
       <svg
+        aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         class="w-full h-full" viewBox="0 0 24 24"
         fill="none"
@@ -20,7 +27,7 @@
   </header>
   
   <div class="cancel-modal-title-container">
-    <h1 mat-dialog-title class="cancel-modal-title">
+    <h1 mat-dialog-title id="cancel-title" class="cancel-modal-title">
       @if (data.modo === 'baja') {
         {{ 'CANCEL_MODAL.BAJA.TITLE' | translate }}
       } @else if (data.modo === 'cancelContract') {
@@ -32,7 +39,8 @@
       }
     </h1>
   </div>
-  <mat-dialog-content class="cancel-modal-content">
+
+  <mat-dialog-content id="cancel-description" class="cancel-modal-content">
     <main class="cancel-modal-text">
       @if (data.modo === 'baja') {
         <div class="text-center space-y-4">
@@ -82,13 +90,19 @@
   </mat-dialog-content>
 
   <mat-dialog-actions class="cancel-modal-action-container">
-    <app-button mat-dialog-close [label]="getPrimaryLabel() | translate" variant="secondary">
+    <app-button 
+      mat-dialog-close 
+      [label]="getPrimaryLabel() | translate" 
+      variant="secondary"
+      [attr.aria-label]="'CANCEL_MODAL.ACCESSIBILITY.KEEP' | translate"
+    >
     </app-button>
     <app-button
       (click)="toCancel()"
       [label]="getSecondaryLabel() | translate"
       variant="danger"
       class="mb-10"
+      [attr.aria-label]="'CANCEL_MODAL.ACCESSIBILITY.CONFIRM_DELETE' | translate"
     >
     </app-button>
   </mat-dialog-actions>

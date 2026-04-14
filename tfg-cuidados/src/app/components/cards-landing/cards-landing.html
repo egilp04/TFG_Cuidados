@@ -1,9 +1,9 @@
-<div class="animate-cards cards-landing-container">
+<article class="animate-cards cards-landing-container" [attr.aria-labelledby]="'card-title-' + titulo()">
   <div class="cards-landing-img-container">
     <img [src]="imagen()" [alt]="titulo() | translate" class="cards-landing-img" />
   </div>
   <div class="cards-text-container">
-    <h2 class="cards-landing-title">{{ titulo() | translate }}</h2>
+    <h2 [id]="'card-title-' + titulo()" class="cards-landing-title">{{ titulo() | translate }}</h2>
     @if (cargo()) {
       <label class="cards-landing-cargo">
         {{ cargo() | translate }}
@@ -11,4 +11,4 @@
     }
     <p class="cards-landing-description">{{ descripcion() | translate }}</p>
   </div>
-</div>
+</article>

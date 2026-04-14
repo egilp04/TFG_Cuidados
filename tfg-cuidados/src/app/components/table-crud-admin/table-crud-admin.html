@@ -1,13 +1,23 @@
-<section class="table-admin-container">
+<section class="table-admin-container" [attr.aria-label]="'ADMIN_TABLE.SECTION_DESC' | translate">
   <header class="table-admin-search-container">
-    <label class="table-admin-search-title">{{ 'ADMIN_TABLE.SEARCH_LABEL' | translate }}</label>
-    <app-searchbar [control]="searchControl"> </app-searchbar>
+    <label class="table-admin-search-title" for="admin-search-input">
+      {{ 'ADMIN_TABLE.SEARCH_LABEL' | translate }}
+    </label>
+    <app-searchbar [control]="searchControl" id="admin-search-input"> </app-searchbar>
   </header>
   <div class="table-admin">
     <main class="overflow-x-auto">
-      <table mat-table [dataSource]="dataSource" class="table-admin-content">
+      <table 
+        mat-table 
+        [dataSource]="dataSource" 
+        class="table-admin-content"
+        [attr.aria-describedby]="'admin-table-summary'"
+      >
+        <caption id="admin-table-summary" class="sr-only">
+          {{ 'ADMIN_TABLE.SUMMARY' | translate }}
+        </caption>
         <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef class="table-column-name text-label">
+          <th mat-header-cell *matHeaderCellDef class="table-column-name text-label" scope="col">
             {{ 'ADMIN_TABLE.HEADER.NAME' | translate }}
           </th>
           <td mat-cell *matCellDef="let item" class="table-column-name text-label">
@@ -15,7 +25,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="apellidos">
-          <th mat-header-cell *matHeaderCellDef class="table-column-name text-label">
+          <th mat-header-cell *matHeaderCellDef class="table-column-name text-label" scope="col">
             {{ 'ADMIN_TABLE.HEADER.SURNAME' | translate }}
           </th>
           <td mat-cell *matCellDef="let item" class="p-5 table-column-name text-label">
@@ -23,33 +33,43 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef class="table-column-name text-label">Email</th>
+          <th mat-header-cell *matHeaderCellDef class="table-column-name text-label" scope="col">
+            Email
+          </th>
           <td mat-cell *matCellDef="let item" class="table-column-name text-label">
             {{ item.email }}
           </td>
         </ng-container>
         <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef></th>
+          <th mat-header-cell *matHeaderCellDef scope="col">
+            <span class="sr-only">{{ 'ADMIN_TABLE.HEADER.ACTIONS' | translate }}</span>
+          </th>
           <td mat-cell *matCellDef="let item">
             <div class="table-admin-btn-container">
               <app-button
                 [label]="'ADMIN_TABLE.BTN.DELETE' | translate"
                 variant="secondary"
                 (click)="onDeleteItem(item)"
+                [attr.aria-label]="('ADMIN_TABLE.BTN.DELETE' | translate) + ': ' + item.nombre"
               ></app-button>
               <app-button
                 [label]="'ADMIN_TABLE.BTN.MODIFY' | translate"
                 variant="primary"
                 (click)="onModifyItem(item)"
+                [attr.aria-label]="('ADMIN_TABLE.BTN.MODIFY' | translate) + ': ' + item.nombre"
               ></app-button>
             </div>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
         <tr class="mat-row" *matNoDataRow>
-          <td class="p-8 text-center" [attr.colspan]="displayedColumns.length">
+          <td 
+            class="p-8 text-center" 
+            [attr.colspan]="displayedColumns.length"
+            role="status"
+            aria-live="polite"
+          >
             <p class="table-column-name text-label">
               {{ 'ADMIN_TABLE.NO_DATA' | translate }}
             </p>

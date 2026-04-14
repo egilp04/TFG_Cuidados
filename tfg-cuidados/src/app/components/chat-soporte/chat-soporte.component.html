@@ -1,10 +1,17 @@
 @if (currentUser?.rol != 'administrador') {
-  <section class="soporte-container">
+  <section class="soporte-container" [attr.aria-label]="'SUPPORT_WIDGET.HEADER_TITLE' | translate">
+    
     @if (isOpen) {
-      <div class="soporte-container-open animate-fade-in-up">
+      <div 
+        class="soporte-container-open animate-fade-in-up"
+        role="dialog"
+        aria-labelledby="soporte-h3"
+        id="soporte-window"
+      >
         <header class="soporte-icon">
           <div class="flex items-center gap-2">
             <svg
+              aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -15,14 +22,18 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <path
-                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
-              ></path>
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
             </svg>
-            <h3 class="soporte-title">{{ 'SUPPORT_WIDGET.HEADER_TITLE' | translate }}</h3>
+            <h3 id="soporte-h3" class="soporte-title">{{ 'SUPPORT_WIDGET.HEADER_TITLE' | translate }}</h3>
           </div>
-          <button (click)="toggleChat()" class="soporte-btn-toggle" type="button">
+          <button 
+            (click)="toggleChat()" 
+            class="soporte-btn-toggle" 
+            type="button"
+            [attr.aria-label]="'SUPPORT_WIDGET.CLOSE_CHAT' | translate"
+          >
             <svg
+              aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -46,20 +57,27 @@
           </div>
 
           <div class="sorpote-form">
-            <label class="soporte-form-label">
+            <label class="soporte-form-label" for="soporte-msg-input">
               {{ 'SUPPORT_WIDGET.MESSAGE_LABEL' | translate }}
             </label>
             <textarea
+              id="soporte-msg-input"
               [(ngModel)]="newMessage"
               rows="4"
               [placeholder]="'SUPPORT_WIDGET.MESSAGE_PLACEHOLDER' | translate"
               class="soporte-text-area"
+              [attr.aria-required]="true"
             ></textarea>
           </div>
 
           @if (messageSent) {
-            <div class="soporte-sent animate-fade-in-up">
+            <div 
+              class="soporte-sent animate-fade-in-up" 
+              role="status" 
+              aria-live="polite"
+            >
               <svg
+                aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -83,12 +101,14 @@
             [disabled]="!newMessage.trim() || isSending"
             class="soporte-send-btn"
             type="button"
+            [attr.aria-busy]="isSending"
           >
             @if (isSending) {
-              <div class="soporte-sending-spinner"></div>
+              <div class="soporte-sending-spinner" aria-hidden="true"></div>
               {{ 'SUPPORT_WIDGET.SENDING_BTN' | translate }}
             } @else {
               <svg
+                aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
                 height="18"
@@ -109,9 +129,17 @@
       </div>
     }
 
-    <button (click)="toggleChat()" class="soporte-btn hover:bg-opacity-90" type="button">
+    <button 
+      (click)="toggleChat()" 
+      class="soporte-btn hover:bg-opacity-90" 
+      type="button"
+      [attr.aria-expanded]="isOpen"
+      aria-controls="soporte-window"
+      [attr.aria-label]="(isOpen ? 'SUPPORT_WIDGET.CLOSE_CHAT' : 'SUPPORT_WIDGET.OPEN_CHAT') | translate"
+    >
       @if (!isOpen) {
         <svg
+          aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="28"
           height="28"
@@ -123,12 +151,11 @@
           stroke-linejoin="round"
         >
           <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-          <path
-            d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"
-          ></path>
+          <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
         </svg>
       } @else {
         <svg
+          aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"

@@ -1,11 +1,17 @@
-<section class="service-modal-container">
+<section 
+  class="service-modal-container" 
+  role="dialog" 
+  aria-modal="true" 
+  [attr.aria-label]="(isEditing ? 'SERVICE_TIME_MODAL.ACCESSIBILITY.EDIT_TITLE' : 'SERVICE_TIME_MODAL.ACCESSIBILITY.CREATE_TITLE') | translate"
+>
   <header class="w-full flex justify-end p-2 md:p-4">
     <button 
       mat-dialog-close 
-      aria-label="Cerrar ventana" 
+      [attr.aria-label]="'SERVICE_TIME_MODAL.ACCESSIBILITY.CLOSE' | translate" 
       class="modal-close-btn"
     >
       <svg
+        aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         class="w-full h-full" viewBox="0 0 24 24"
         fill="none"
@@ -29,12 +35,17 @@
     ></app-inputs>
 
     <div class="service-select-container">
-      <label class="service-global-services">
+      <label class="service-global-services" for="id_servicio">
         {{ 'SERVICE_TIME_MODAL.LABELS.GLOBAL_SERVICE' | translate }}
       </label>
 
       <div class="relative w-full">
-        <select id="id_servicio" formControlName="id_servicio" class="register-form-select">
+        <select 
+          id="id_servicio" 
+          formControlName="id_servicio" 
+          class="register-form-select"
+          [attr.aria-invalid]="form.get('id_servicio')?.invalid && form.get('id_servicio')?.touched"
+        >
           <option value="" disabled selected class="select-option-disabled">
             {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.SELECT_SERVICE' | translate }}
           </option>
@@ -51,6 +62,7 @@
         </select>
         <div class="register-form-select-arrow">
           <svg
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
@@ -77,12 +89,17 @@
     ></app-inputs>
 
     <div class="service-select-container">
-      <label class="service-global-services">
+      <label class="service-global-services" for="id_horario">
         {{ 'SERVICE_TIME_MODAL.LABELS.AVAILABLE_SCHEDULE' | translate }}
       </label>
 
       <div class="relative w-full">
-        <select id="id_horario" formControlName="id_horario" class="register-form-select">
+        <select 
+          id="id_horario" 
+          formControlName="id_horario" 
+          class="register-form-select"
+          [attr.aria-invalid]="form.get('id_horario')?.invalid && form.get('id_horario')?.touched"
+        >
           <option value="" disabled selected class="select-option-disabled">
             {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.SELECT_TIME' | translate }}
           </option>
@@ -98,6 +115,7 @@
         </select>
         <div class="register-form-select-arrow">
           <svg
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
@@ -123,6 +141,7 @@
       variant="primary"
       [disabled]="form.invalid"
       (click)="save()"
+      [attr.aria-label]="(isEditing ? 'SERVICE_TIME_MODAL.ACCESSIBILITY.UPDATE_DESC' : 'SERVICE_TIME_MODAL.ACCESSIBILITY.CREATE_DESC') | translate"
     ></app-button>
   </footer>
 </section>
