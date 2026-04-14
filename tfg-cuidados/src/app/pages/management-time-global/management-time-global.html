@@ -5,22 +5,7 @@
   <app-buttonback></app-buttonback>
 </header>
 
-@if (this.messageService.messageData(); as data) {
-  <section class="message-noti" role="status" aria-live="polite">
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      <span class="sr-only">
-        {{ (data.tipo === 'error' ? 'COMMON.ERROR' : 'COMMON.SUCCESS') | translate }}:
-      </span>
-      {{ data.mensaje }}
-    </div>
-  </section>
-}
+
 
 <section class="managements-time-global-container" aria-labelledby="management-time-title">
   <h2 id="management-time-title" class="management-title-time">

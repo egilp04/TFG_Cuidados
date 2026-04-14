@@ -17,20 +17,6 @@
     </button>
   </header>
 
-  @if (this.messageService.messageData(); as data) {
-    <div
-      role="status"
-      aria-live="polite"
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      {{ data.mensaje }}
-    </div>
-  }
-
   <main class="message-modal-form-container">
     @if (data.modo == 'escribir') {
       <app-inputs

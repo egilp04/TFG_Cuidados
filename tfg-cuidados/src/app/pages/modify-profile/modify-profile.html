@@ -5,22 +5,6 @@
   <app-buttonback></app-buttonback>
 </header>
 
-@if (this.messageService.messageData(); as data) {
-  <section class="message-noti" role="status" aria-live="polite">
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      <span class="sr-only">
-        {{ (data.tipo === 'error' ? 'COMMON.ERROR' : 'COMMON.SUCCESS') | translate }}:
-      </span>
-      {{ data.mensaje }}
-    </div>
-  </section>
-}
 
 <section class="modify-profile-page-container" role="main" aria-labelledby="modify-profile-title">
   <h1 id="modify-profile-title" class="modify-profile-title">

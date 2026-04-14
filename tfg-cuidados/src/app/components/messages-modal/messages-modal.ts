@@ -19,7 +19,6 @@ import { MessageService } from '../../services/message-service';
 import { Inputs } from '../inputs/inputs';
 import { ButtonComponent } from '../button/button';
 import { MessagesModalData } from '../../models/Message-Modal';
-import { ComunicacionModel } from '../../models/Comunicacion';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
 
 @Component({
