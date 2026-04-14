@@ -584,7 +584,7 @@
       hover:text-accent hover:bg-black/5 dark:hover:bg-white/10
       transition-all duration-200 ease-in-out cursor-pointer 
       rounded-full
-      w-10 h-10 md:w-12 md:h-12;
+      w-8! h-8! md:w-10! md:h-10!;
   }
 
   .login-modal-title {
