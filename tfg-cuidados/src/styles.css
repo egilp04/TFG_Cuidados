@@ -56,9 +56,8 @@
   --text-label--font-family: var(--font-poppins);
   --text-label--font-weight: var(--font-weight-regular);
 
-  --text-button: 0.75rem;
+  --text-button: 1rem;
   --text-button--font-family: var(--font-poppins);
-  --text-button--font-weight: var(--font-weight-semibold);
 
   --spacing-400: 25rem;
   --spacing-300: 18.75rem;
@@ -223,7 +222,7 @@
   }
 
   .button-base {
-    @apply text-button rounded-12 transition-all duration-200 cursor-pointer flex items-center justify-center border-none px-10 py-6 md:px-15 md:py-8 lg:px-20 lg:py-10 disabled:bg-disabled h-full w-full;
+    @apply text-button rounded-12 transition-all duration-200 cursor-pointer flex items-center justify-center border-none px-12 py-8 md:px-15 md:py-10 lg:px-20 lg:py-10 disabled:bg-disabled h-full w-full;
   }
 
   .button-back {
@@ -323,7 +322,7 @@
   }
 
   .services-grid {
-    @apply h-full px-4 grid grid-cols-1 grid-rows-3 gap-10 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 py-4;
+    @apply h-full px-4 grid grid-cols-1 grid-rows-3 gap-14 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 py-4;
   }
 
   .services-card-special {
@@ -437,11 +436,11 @@
   }
 
   .manuals-container {
-    @apply flex flex-col justify-center items-center px-6 py-10 md:px-12 lg:px-24 lg:py-20 w-full;
+    @apply flex flex-col justify-center items-center px-6 py-10 md:px-12 lg:px-24 lg:py-20 w-full mb-4;
   }
 
   .manuals-download-container {
-    @apply w-full grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 mt-10 mb-14 items-stretch;
+    @apply w-full grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 mt-10 items-stretch;
   }
 
   .manuals-title {
@@ -575,13 +574,16 @@
   .service-modal-container {
     @apply p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark z-30;
   }
-
   .modal-close-btn {
+<<<<<<< update/refactorizacion
     @apply 
       flex items-center justify-center 
       p-0 bg-transparent border-none outline-none
       text-primary dark:text-surface hover:text-accent cursor-pointer 
       w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20;
+=======
+    @apply flex items-center justify-center p-0 bg-transparent border-none outline-none text-primary dark:text-surface hover:text-accent cursor-pointer w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20;
+>>>>>>> d6e3a8d28efe8259324f4911560a2c40346a7574
   }
 
   .login-modal-title {
@@ -1138,7 +1140,7 @@
   }
 
   .ia-container {
-    @apply fixed bottom-44 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
+    @apply fixed bottom-8 md:bottom-10 xl:bottom-12 2xl:bottom-24 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
   }
 
   .ia-container-open {
@@ -1174,7 +1176,7 @@
   }
 
   .soporte-container {
-    @apply fixed bottom-40 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
+    @apply fixed bottom-8 md:bottom-10 xl:bottom-12 2xl:bottom-24 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
   }
 
   .soporte-container-open {
@@ -1302,7 +1304,7 @@
   }
 
   .info-contract-text {
-    @apply dark:text-surface text-secondary text-lg;
+    @apply dark:text-surface text-secondary text-lg break-words;
   }
 
   .info-contract-text-title {
