@@ -1,20 +1,14 @@
-<section class="button-back-container">
+<section
+  class="button-back-container"
+  [attr.aria-label]="'SERVICES_BUSINESS.ACCESSIBILITY.BACK_NAV' | translate"
+>
   <app-buttonback></app-buttonback>
 </section>
-@if (this.messageService.messageData(); as data) {
-  <section class="message-noti">
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      {{ data.mensaje }}
-    </div>
-  </section>
-}
-<section class="flex flex-col p-6 gap-6">
+<section
+  class="flex flex-col p-6 gap-6"
+  role="main"
+  [attr.aria-label]="'SERVICES_BUSINESS.ACCESSIBILITY.MAIN_SECTION' | translate"
+>
   <div class="services-bss-container">
     <div class="services-new-btn-container">
       <app-button
@@ -22,13 +16,20 @@
         variant="primary"
         (click)="openModal()"
         [disabled]="isLoading()"
+        [attr.aria-label]="'SERVICES_BUSINESS.ACCESSIBILITY.NEW_BTN' | translate"
       ></app-button>
     </div>
   </div>
+
   <main class="service-table-containter">
-    <table mat-table [dataSource]="dataSource" class="w-full">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="w-full"
+      [attr.aria-label]="'SERVICES_BUSINESS.ACCESSIBILITY.TABLE_LABEL' | translate"
+    >
       <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header">
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           {{ 'SERVICES_BUSINESS.TABLE.NAME' | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="text-label service-table-text">
@@ -37,7 +38,7 @@
       </ng-container>
 
       <ng-container matColumnDef="descripcion">
-        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header">
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           {{ 'SERVICES_BUSINESS.TABLE.DESCRIPTION' | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="text-label service-table-text">
@@ -46,7 +47,7 @@
       </ng-container>
 
       <ng-container matColumnDef="precio">
-        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header">
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           {{ 'SERVICES_BUSINESS.TABLE.PRICE' | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="text-label service-table-text">
@@ -55,7 +56,7 @@
       </ng-container>
 
       <ng-container matColumnDef="tipo">
-        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header">
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           {{ 'SERVICES_BUSINESS.TABLE.TYPE' | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="text-label service-table-text">
@@ -64,7 +65,7 @@
       </ng-container>
 
       <ng-container matColumnDef="hora">
-        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header">
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           {{ 'SERVICES_BUSINESS.TABLE.TIME' | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="text-label service-table-text">
@@ -73,7 +74,7 @@
       </ng-container>
 
       <ng-container matColumnDef="dia">
-        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header">
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           {{ 'SERVICES_BUSINESS.TABLE.DAY' | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="text-label service-table-text">
@@ -82,7 +83,11 @@
       </ng-container>
 
       <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header"></th>
+        <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
+          <span class="sr-only">{{
+            'SERVICES_BUSINESS.ACCESSIBILITY.ACTIONS_COL' | translate
+          }}</span>
+        </th>
         <td mat-cell *matCellDef="let element" class="p-4">
           <div class="service-btn-container">
             <app-button
@@ -90,12 +95,18 @@
               (click)="onDelete(element.id_servicio_horario)"
               variant="secondary"
               [disabled]="isLoading()"
+              [attr.aria-label]="
+                ('SERVICES_BUSINESS.BTN_DELETE' | translate) + ': ' + element.Servicio?.nombre
+              "
             ></app-button>
             <app-button
               [label]="'SERVICES_BUSINESS.BTN_MODIFY' | translate"
               variant="primary"
               (click)="openModal(element)"
               [disabled]="isLoading()"
+              [attr.aria-label]="
+                ('SERVICES_BUSINESS.BTN_MODIFY' | translate) + ': ' + element.Servicio?.nombre
+              "
             ></app-button>
           </div>
         </td>

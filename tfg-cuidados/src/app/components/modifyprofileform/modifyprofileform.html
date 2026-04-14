@@ -1,5 +1,10 @@
-<section class="modify-form-container">
-  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="modify-profile-form">
+<section class="modify-form-container" [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.SECTION_TITLE' | translate">
+  <form 
+    [formGroup]="profileForm" 
+    (ngSubmit)="onSubmit()" 
+    class="modify-profile-form"
+    [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.FORM_NAME' | translate"
+  >
     @if (userRole != 'empresa') {
       <app-inputs
         name="usuario"
@@ -18,7 +23,6 @@
             [errorMessage]="getErrorMessage('primerApe')"
             class="flex-1"
           ></app-inputs>
-
           <app-inputs
             name="segundoApe"
             [label]="'MODIFY_PROFILE.LABELS.SURNAME2' | translate"
@@ -37,27 +41,26 @@
           [errorMessage]="getErrorMessage('nombreEmpresa')"
         ></app-inputs>
         <div class="input-area-modify-profile-container">
-          <label for="descripcion" class="input-label">
+          <label for="descripcion-modify" class="input-label">
             {{ 'MODIFY_PROFILE.LABELS.DESCRIPTION' | translate }}
           </label>
           <textarea
-            id="descripcion"
+            id="descripcion-modify"
             formControlName="descripcion"
             rows="4"
             class="input-text-area"
             [placeholder]="'MODIFY_PROFILE.PLACEHOLDER.DESCRIPTION' | translate"
+            [attr.aria-invalid]="profileForm.get('descripcion')?.invalid && profileForm.get('descripcion')?.touched"
           ></textarea>
         </div>
       </div>
     }
-
     <app-inputs
       name="telefono"
       [label]="'MODIFY_PROFILE.LABELS.PHONE' | translate"
       [control]="getCtrl('telefono')"
       [errorMessage]="getErrorMessage('telefono')"
     ></app-inputs>
-
     <app-inputs
       name="email"
       [label]="'MODIFY_PROFILE.LABELS.EMAIL' | translate"
@@ -65,7 +68,6 @@
       [control]="getCtrl('email')"
       [errorMessage]="getErrorMessage('email')"
     ></app-inputs>
-
     @if (userRole != 'administrador') {
       <app-inputs
         name="direccion"
@@ -73,14 +75,12 @@
         [control]="getCtrl('direccion')"
         [errorMessage]="getErrorMessage('direccion')"
       ></app-inputs>
-
       <app-inputs
         name="localidad"
         [label]="'MODIFY_PROFILE.LABELS.CITY' | translate"
         [control]="getCtrl('localidad')"
         [errorMessage]="getErrorMessage('localidad')"
       ></app-inputs>
-
       <div class="register-form-row">
         <app-inputs
           name="codpostal"
@@ -89,13 +89,17 @@
           [errorMessage]="getErrorMessage('codpostal')"
           class="flex-1"
         ></app-inputs>
-
         <div class="register-form-select-container">
-          <label for="comunidad" class="register-form-select-label">
+          <label for="comunidad-modify" class="register-form-select-label">
             {{ 'REGISTER.LABELS.REGION' | translate }}
           </label>
           <div class="relative w-full">
-            <select id="comunidad" formControlName="comunidad" class="register-form-select">
+            <select 
+              id="comunidad-modify" 
+              formControlName="comunidad" 
+              class="register-form-select"
+              [attr.aria-invalid]="profileForm.get('comunidad')?.invalid && profileForm.get('comunidad')?.touched"
+            >
               @for (comunidad of comunidades; track $index) {
                 <option [value]="comunidad" class="register-form-options">{{ comunidad }}</option>
               }
@@ -103,6 +107,7 @@
 
             <div class="register-form-select-arrow">
               <svg
+                aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
                 height="20"
@@ -127,14 +132,15 @@
           variant="secondary"
           type="button"
           (click)="onCancel()"
+          [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.CANCEL_CHANGES' | translate"
         >
         </app-button>
-
         <app-button
           [label]="'MODIFY_PROFILE.BTN.MODIFY' | translate"
           variant="primary"
           type="submit"
           [disabled]="profileForm.invalid"
+          [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.SAVE_CHANGES' | translate"
         >
         </app-button>
       </div>
@@ -145,6 +151,7 @@
             [label]="'MODIFY_PROFILE.BTN.UNSUBSCRIBE' | translate"
             variant="secondary"
             (click)="$event.preventDefault(); onDeleteAccount()"
+            [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.DELETE_ACCOUNT' | translate"
           >
           </app-button>
         </div>

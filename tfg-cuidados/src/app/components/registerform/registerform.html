@@ -1,5 +1,10 @@
-<section class="register-container">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+<section class="register-container" [attr.aria-label]="'REGISTER.ACCESSIBILITY.SECTION' | translate">
+  <form 
+    [formGroup]="registerForm" 
+    (ngSubmit)="onSubmit()" 
+    class="register-form"
+    [attr.aria-label]="'REGISTER.ACCESSIBILITY.FORM_NAME' | translate"
+  >
     @if (isUser) {
       <app-inputs
         name="nombre"
@@ -66,12 +71,14 @@
         ></app-inputs>
       </div>
     }
+
     <app-inputs
       name="telef"
       [label]="'REGISTER.LABELS.PHONE' | translate"
       [control]="getCtrl('telef')"
       [errorMessage]="getErrorMessage('telef')"
     ></app-inputs>
+
     <app-inputs
       name="email"
       [label]="'REGISTER.LABELS.EMAIL' | translate"
@@ -79,18 +86,21 @@
       [control]="getCtrl('email')"
       [errorMessage]="getErrorMessage('email')"
     ></app-inputs>
+
     <app-inputs
       name="direccion"
       [label]="'REGISTER.LABELS.ADDRESS' | translate"
       [control]="getCtrl('direccion')"
       [errorMessage]="getErrorMessage('direccion')"
     ></app-inputs>
+
     <app-inputs
       name="localidad"
       [label]="'REGISTER.LABELS.CITY' | translate"
       [control]="getCtrl('localidad')"
       [errorMessage]="getErrorMessage('localidad')"
     ></app-inputs>
+
     <div class="register-form-row">
       <app-inputs
         name="codpostal"
@@ -106,7 +116,12 @@
         </label>
 
         <div class="relative w-full">
-          <select id="comunidad" formControlName="comunidad" class="register-form-select">
+          <select 
+            id="comunidad" 
+            formControlName="comunidad" 
+            class="register-form-select"
+            [attr.aria-invalid]="getCtrl('comunidad').invalid && getCtrl('comunidad').touched"
+          >
             <option [ngValue]="null" disabled selected class="select-option-disabled">
               {{ 'REGISTER.PLACEHOLDER.SELECTREGION' | translate }}
             </option>
@@ -118,6 +133,7 @@
 
           <div class="register-form-select-arrow">
             <svg
+              aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -134,6 +150,7 @@
         </div>
       </div>
     </div>
+
     <div class="flex flex-row gap-6">
       <app-inputs
         name="password"
@@ -162,23 +179,31 @@
           formControlName="termsCondition"
           class="w-5 h-5 cursor-pointer"
           id="terms"
+          [attr.aria-describedby]="getErrorMessage('termsCondition') ? 'terms-error' : null"
         />
-        <label for="termsCondition" class="register-form-terms-title">
+        <label for="terms" class="register-form-terms-title">
           {{ 'REGISTER.TERMS.PART_1' | translate }}
-          <a routerLink="/terms" target="_blank" class="register-form-terms">
+          <a routerLink="/terms" target="_blank" class="register-form-terms" [attr.aria-label]="'REGISTER.ACCESSIBILITY.TERMS_LINK' | translate">
             {{ 'REGISTER.TERMS.LINK' | translate }}
           </a>
           {{ 'REGISTER.TERMS.PART_2' | translate }}
         </label>
       </div>
+      
       @if (getErrorMessage('termsCondition')) {
-        <p class="register-form-check-error">
+        <p class="register-form-check-error" id="terms-error" role="alert">
           {{ 'REGISTER.TERMS.ERROR' | translate }}
         </p>
       }
     </div>
+
     <footer class="register-form-btn-send">
-      <app-button [label]="'REGISTER.BTN' | translate" variant="primary" type="submit"></app-button>
+      <app-button 
+        [label]="'REGISTER.BTN' | translate" 
+        variant="primary" 
+        type="submit"
+        [attr.aria-label]="'REGISTER.ACCESSIBILITY.SUBMIT_BTN' | translate"
+      ></app-button>
     </footer>
   </form>
 </section>

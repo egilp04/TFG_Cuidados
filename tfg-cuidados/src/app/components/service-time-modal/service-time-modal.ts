@@ -1,6 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ServiceTimeService } from '../../services/service-time.service';
@@ -12,7 +18,8 @@ import { ButtonComponent } from '../../components/button/button';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { Servicio_HorarioModel } from '../../models/Servicio_Horario';
-import {ServiceTimeModalData} from "../../models/Service-Time"
+import { ServiceTimeModalData } from '../../models/Service-Time';
+import { CloseBtnComponent } from '../close-btn/close-btn.component';
 
 @Component({
   selector: 'app-service-time-modal',
@@ -25,6 +32,7 @@ import {ServiceTimeModalData} from "../../models/Service-Time"
     TranslateModule,
     LucideAngularModule,
     MatDialogModule,
+    CloseBtnComponent,
   ],
   templateUrl: './service-time-modal.html',
   styleUrl: './service-time-modal.css',
@@ -51,9 +59,9 @@ export class ServiceTimeModal implements OnInit {
       id_horario: this.fb.control<string>(this.data?.id_horario || '', Validators.required),
       id_empresa: this.fb.control<string>(this.data?.id_empresa || ''),
       precio: this.fb.control<string | number>(this.data?.precio || '', [
-        Validators.required, 
-        Validators.min(0), 
-        Validators.pattern(/^\d+(\.\d{1,2})?$/)
+        Validators.required,
+        Validators.min(0),
+        Validators.pattern(/^\d+(\.\d{1,2})?$/),
       ]),
       descripcion: this.fb.control<string>(this.data?.descripcion || '', [Validators.required]),
     });
@@ -68,11 +76,12 @@ export class ServiceTimeModal implements OnInit {
 
   save() {
     if (this.form.invalid) return;
-        const formPayload = this.form.getRawValue() as Servicio_HorarioModel;
-    const request = this.isEditing && this.data
-      ? this.serviceTimeService.updateServiceTime(this.data.id_servicio_horario, formPayload)
-      : this.serviceTimeService.insertServiceTime(formPayload);
-      
+    const formPayload = this.form.getRawValue() as Servicio_HorarioModel;
+    const request =
+      this.isEditing && this.data
+        ? this.serviceTimeService.updateServiceTime(this.data.id_servicio_horario, formPayload)
+        : this.serviceTimeService.insertServiceTime(formPayload);
+
     request.subscribe({
       next: () => {
         this.dialogRef.close();

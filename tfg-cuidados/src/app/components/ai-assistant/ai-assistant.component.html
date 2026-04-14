@@ -1,9 +1,15 @@
-<section class="ia-container">
+<section class="ia-container" [attr.aria-label]="'AI_ASSISTANT.HEADER_TITLE' | translate">
   @if (isOpen) {
-    <div class="ia-container-open animate-fade-in-up">
+    <div 
+      id="ia-chat-window"
+      class="ia-container-open animate-fade-in-up"
+      role="dialog"
+      aria-labelledby="ia-header-title"
+    >
       <header class="ia-icon">
         <div class="flex items-center gap-3">
           <svg
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="22"
             height="22"
@@ -20,10 +26,18 @@
             <line x1="8" y1="16" x2="8.01" y2="16"></line>
             <line x1="16" y1="16" x2="16.01" y2="16"></line>
           </svg>
-          <h3 class="font-bold text-sm">{{ 'AI_ASSISTANT.HEADER_TITLE' | translate }}</h3>
+          <h3 id="ia-header-title" class="font-bold text-sm">
+            {{ 'AI_ASSISTANT.HEADER_TITLE' | translate }}
+          </h3>
         </div>
-        <button (click)="toggleChat()" class="ia-btn-toggle">
+        
+        <button 
+          (click)="toggleChat()" 
+          class="ia-btn-toggle"
+          [attr.aria-label]="'AI_ASSISTANT.CLOSE_CHAT' | translate"
+        >
           <svg
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -39,7 +53,12 @@
           </svg>
         </button>
       </header>
-      <main class="ia-messages-container">
+
+      <main 
+        class="ia-messages-container" 
+        role="log" 
+        aria-live="polite"
+      >
         @for (msg of messages; track $index) {
           <div class="flex w-full" [ngClass]="msg.isUser ? 'justify-end' : 'justify-start'">
             <div
@@ -50,24 +69,32 @@
                   : 'bg-white border border-gray-200 text-gray-800 rounded-bl-sm'
               "
             >
-              <p class="whitespace-pre-wrap leading-relaxed text-sm md:text-base">{{ msg.text }}</p>
+              <span class="sr-only">
+                {{ (msg.isUser ? 'AI_ASSISTANT.YOU' : 'AI_ASSISTANT.ASSISTANT') | translate }}:
+              </span>
+              <p class="whitespace-pre-wrap leading-relaxed text-sm md:text-base">
+                {{ msg.text }}
+              </p>
             </div>
           </div>
         }
 
         @if (isLoading) {
-          <div class="ia-loading-container animate-fade-in-up">
+          <div class="ia-loading-container animate-fade-in-up" aria-busy="true">
             <div
               class="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm flex items-center gap-1.5"
             >
-              <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
+              <span class="sr-only">{{ 'AI_ASSISTANT.THINKING' | translate }}</span>
+              <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" aria-hidden="true"></div>
               <div
                 class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"
                 style="animation-delay: 0.15s"
+                aria-hidden="true"
               ></div>
               <div
                 class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"
                 style="animation-delay: 0.3s"
+                aria-hidden="true"
               ></div>
             </div>
           </div>
@@ -81,10 +108,17 @@
           (keyup.enter)="sendMessage()"
           [disabled]="isLoading"
           [placeholder]="'AI_ASSISTANT.INPUT_PLACEHOLDER' | translate"
+          [attr.aria-label]="'AI_ASSISTANT.INPUT_LABEL' | translate"
           class="ia-input"
         />
-        <button (click)="sendMessage()" [disabled]="!newMessage.trim() || isLoading" class="ia-btn">
+        <button 
+          (click)="sendMessage()" 
+          [disabled]="!newMessage.trim() || isLoading" 
+          class="ia-btn"
+          [attr.aria-label]="'AI_ASSISTANT.SEND_MESSAGE' | translate"
+        >
           <svg
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
@@ -106,9 +140,13 @@
   <button
     (click)="toggleChat()"
     class="w-14 h-14 bg-accent rounded-full shadow-lg flex items-center justify-center text-white hover:bg-secondary hover:scale-110 active:scale-90 transition-all duration-300 z-50"
+    [attr.aria-expanded]="isOpen"
+    aria-controls="ia-chat-window"
+    [attr.aria-label]="(isOpen ? 'AI_ASSISTANT.CLOSE_CHAT' : 'AI_ASSISTANT.OPEN_CHAT') | translate"
   >
     @if (!isOpen) {
       <svg
+        aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         width="28"
         height="28"
@@ -127,6 +165,7 @@
       </svg>
     } @else {
       <svg
+        aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"

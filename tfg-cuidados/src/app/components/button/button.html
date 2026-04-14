@@ -3,6 +3,7 @@
   [disabled]="disabled()"
   (click)="onClick.emit($event)"
   [type]="type()"
->
+  [attr.aria-label]="ariaLabel() || (label() | translate)"
+  [attr.aria-disabled]="disabled()">
   {{ label() || '' | translate }}
 </button>

@@ -3,7 +3,8 @@
   (click)="themeService.toggleTheme()"
   [ngClass]="themeService.isDarkMode() ? 'bg-btn-dark' : 'bg-disabled'"
   class="btn-toggle-dark-mode"
-  aria-label="Alternar modo oscuro"
+  [attr.aria-pressed]="themeService.isDarkMode()"
+  [attr.aria-label]="(themeService.isDarkMode() ? 'AI_ASSISTANT.THEME.DEACTIVATE' : 'AI_ASSISTANT.THEME.ACTIVATE') | translate"
 >
   <span
     [ngClass]="themeService.isDarkMode() ? 'translate-x-6.5' : 'translate-x-0'"
@@ -11,6 +12,7 @@
   >
     @if (themeService.isDarkMode()) {
       <svg
+        aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="currentColor"
@@ -24,6 +26,7 @@
 
     @if (!themeService.isDarkMode()) {
       <svg
+        aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

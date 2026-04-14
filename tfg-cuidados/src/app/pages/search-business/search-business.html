@@ -1,72 +1,114 @@
-<section class="button-back-container">
+<section
+  class="button-back-container"
+  [attr.aria-label]="'SEARCH_BUSINESS.ACCESSIBILITY.BACK_NAV' | translate"
+>
   <app-buttonback></app-buttonback>
 </section>
-@if (this.messageService.messageData(); as data) {
-<section class="message-noti">
-  <div [ngClass]="{
-          'text-red-500': data.tipo === 'error',
-          'text-primary': data.tipo === 'exito',
-        }" class="message-noti-text">
-    {{ data.mensaje }}
-  </div>
-</section>
-}
-<section class="search-main">
-  <app-searchbar [control]="controlFilterItem" (searchEvent)="applyFilter($event)" class="w-full max-w-4xl mb-10">
+
+<section
+  class="search-main"
+  role="main"
+  [attr.aria-label]="'SEARCH_BUSINESS.ACCESSIBILITY.MAIN_SECTION' | translate"
+>
+  <app-searchbar
+    [control]="controlFilterItem"
+    (searchEvent)="applyFilter($event)"
+    class="w-full max-w-4xl mb-10"
+  >
   </app-searchbar>
-  <div class="search-container">
+
+  <div
+    class="search-container"
+    role="list"
+    [attr.aria-label]="'SEARCH_BUSINESS.ACCESSIBILITY.RESULTS_LIST' | translate"
+  >
     @for (empresa of filteredBussinesses(); track empresa.id_empresa) {
-    <main class="search-card-container space-y-4">
-      <header class="search-card-header">
-        <h2 class="search-bssn-name text-h2">{{ empresa.nombre }}</h2>
-        <p class="search-card-location text-label">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-            <circle cx="12" cy="10" r="3"></circle>
-          </svg>
-          {{ empresa.direccion }}
-        </p>
-      </header>
+      <main
+        class="search-card-container space-y-4"
+        role="listitem"
+        [attr.aria-labelledby]="'business-name-' + empresa.id_empresa"
+      >
+        <header class="search-card-header">
+          <h2 [id]="'business-name-' + empresa.id_empresa" class="search-bssn-name text-h2">
+            {{ empresa.nombre }}
+          </h2>
 
-      <section>
-        <h3 class="search-description-title-section text-label">
-          {{ 'SEARCH_BUSINESS.CARD.DESCRIPTION' | translate }}
-        </h3>
-        <p class="search-description-section text-label">{{ empresa.descripcion }}</p>
-      </section>
+          <p class="search-card-location text-label">
+            <svg
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span class="sr-only">{{ 'SEARCH_BUSINESS.ACCESSIBILITY.LOCATION' | translate }}:</span>
+            {{ empresa.direccion }}
+          </p>
+        </header>
 
-      <section class="search-select-section">
-        <label class="search-description-section text-label">
-          {{ 'SEARCH_BUSINESS.CARD.SELECT_SERVICE' | translate }}
-        </label>
-        <select [(ngModel)]="empresa.seleccion" class="search-card-select">
-          <option [ngValue]="undefined" disabled selected>
-            {{ 'SEARCH_BUSINESS.CARD.CHOOSE_OPTION' | translate }}
-          </option>
+        <section>
+          <h3 class="search-description-title-section text-label">
+            {{ 'SEARCH_BUSINESS.CARD.DESCRIPTION' | translate }}
+          </h3>
+          <p class="search-description-section text-label">{{ empresa.descripcion }}</p>
+        </section>
 
-          @for (sh of empresa.Servicio_Horario; track sh.id_servicio_horario) {
-          <option [ngValue]="sh">
-            {{ sh.Servicio?.nombre }} — {{ sh.Horario?.dia_semana | titlecase }}
-            {{ sh.Horario?.hora }}
-            ({{ sh.precio | currency: 'EUR' }})
-          </option>
-          }
-        </select>
-      </section>
+        <section class="search-select-section">
+          <label
+            class="search-description-section text-label"
+            [for]="'service-select-' + empresa.id_empresa"
+          >
+            {{ 'SEARCH_BUSINESS.CARD.SELECT_SERVICE' | translate }}
+          </label>
+          <select
+            [(ngModel)]="empresa.seleccion"
+            class="search-card-select"
+            [id]="'service-select-' + empresa.id_empresa"
+          >
+            <option [ngValue]="undefined" disabled selected>
+              {{ 'SEARCH_BUSINESS.CARD.CHOOSE_OPTION' | translate }}
+            </option>
 
-      <footer class="search-card-btn-container">
-        <app-button [label]="'SEARCH_BUSINESS.BTN_MESSAGE' | translate" variant="secondary" class="flex-1"
-          (click)="sendMessage(empresa)"></app-button>
+            @for (sh of empresa.Servicio_Horario; track sh.id_servicio_horario) {
+              <option [ngValue]="sh">
+                {{ sh.Servicio?.nombre }} — {{ sh.Horario?.dia_semana | titlecase }}
+                {{ sh.Horario?.hora }}
+                ({{ sh.precio | currency: 'EUR' }})
+              </option>
+            }
+          </select>
+        </section>
 
-        <app-button [label]="'SEARCH_BUSINESS.BTN_CONTRACT' | translate" variant="primary" class="flex-1"
-          (click)="toHire(empresa)" [disabled]="!empresa.seleccion"></app-button>
-      </footer>
-    </main>
+        <footer class="search-card-btn-container">
+          <app-button
+            [label]="'SEARCH_BUSINESS.BTN_MESSAGE' | translate"
+            variant="secondary"
+            class="flex-1"
+            (click)="sendMessage(empresa)"
+            [attr.aria-label]="('SEARCH_BUSINESS.BTN_MESSAGE' | translate) + ': ' + empresa.nombre"
+          >
+          </app-button>
+
+          <app-button
+            [label]="'SEARCH_BUSINESS.BTN_CONTRACT' | translate"
+            variant="primary"
+            class="flex-1"
+            (click)="toHire(empresa)"
+            [disabled]="!empresa.seleccion"
+            [attr.aria-label]="('SEARCH_BUSINESS.BTN_CONTRACT' | translate) + ': ' + empresa.nombre"
+          >
+          </app-button>
+        </footer>
+      </main>
     } @empty {
-    <main class="search-no-bssns">
-      {{ 'SEARCH_BUSINESS.LIST.EMPTY' | translate }}
-    </main>
+      <main class="search-no-bssns" role="status" aria-live="polite">
+        {{ 'SEARCH_BUSINESS.LIST.EMPTY' | translate }}
+      </main>
     }
   </div>
 </section>

@@ -1,32 +1,21 @@
-<section class="message-modal-container">
-  <header class="w-full flex justify-end p-10">
-    <svg
+<section
+  class="message-modal-container"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-label]="
+    (data.modo === 'escribir' ? 'MESSAGES_MODAL.TITLE_WRITE' : 'MESSAGES_MODAL.TITLE_VIEW')
+      | translate
+  "
+>
+  <header class="w-full flex justify-end p-2 md:p-4">
+    <button
       mat-dialog-close
-      xmlns="http://www.w3.org/2000/svg"
+      [attr.aria-label]="'MESSAGES_MODAL.ACCESSIBILITY.CLOSE' | translate"
       class="modal-close-btn"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="4"
-      stroke-linecap="round"
-      stroke-linejoin="round"
     >
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
-    </svg>
+      <app-close-btn></app-close-btn>
+    </button>
   </header>
-
-  @if (this.messageService.messageData(); as data) {
-    <div
-      [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }"
-      class="message-noti-text"
-    >
-      {{ data.mensaje }}
-    </div>
-  }
 
   <main class="message-modal-form-container">
     @if (data.modo == 'escribir') {
@@ -69,13 +58,15 @@
     }
 
     <div class="message-modal-text-container">
-      <label class="message-modal-label">
+      <label class="message-modal-label" for="message-content">
         {{ 'MESSAGES_MODAL.LABELS.MESSAGE_CONTENT' | translate }}
       </label>
       <textarea
+        id="message-content"
         [formControl]="getCtrl('contenido')"
         class="message-modal-textarea"
         [placeholder]="'MESSAGES_MODAL.PLACEHOLDERS.WRITE_HERE' | translate"
+        [attr.aria-required]="true"
       >
       </textarea>
     </div>
@@ -88,6 +79,7 @@
           size="lg"
           [disabled]="this.messageForm.invalid"
           (onClick)="sendMessage()"
+          [attr.aria-label]="'MESSAGES_MODAL.ACCESSIBILITY.SEND_DESC' | translate"
         >
         </app-button>
       </div>

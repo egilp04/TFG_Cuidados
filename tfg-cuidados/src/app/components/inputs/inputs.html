@@ -1,5 +1,6 @@
 <section class="input-container">
   <label class="input-label" [for]="name()"> {{ label() }} </label>
+
   <main class="relative w-full">
     @if (type() === 'textarea') {
       <textarea
@@ -8,8 +9,8 @@
         [placeholder]="label()"
         [formControl]="control()"
         [ngClass]="errorMessage() ? 'input-error' : 'input-no-error'"
-        [attr.aria-invalid]="errorMessage() ? true : null"
-        [attr.aria-describedby]="errorMessage() ? label() + '-error' : null"
+        [attr.aria-invalid]="errorMessage() ? 'true' : 'false'"
+        [attr.aria-describedby]="errorMessage() ? name() + '-error' : null"
       ></textarea>
     } @else {
       <input
@@ -19,22 +20,28 @@
         [formControl]="control()"
         [type]="inputType()"
         [ngClass]="errorMessage() ? 'input-error ' : 'input-no-error'"
-        [attr.aria-invalid]="errorMessage() ? true : null"
-        [attr.aria-describedby]="errorMessage() ? label() + '-error' : null"
+        [attr.aria-invalid]="errorMessage() ? 'true' : 'false'"
+        [attr.aria-describedby]="errorMessage() ? name() + '-error' : null"
         autocomplete=""
       />
     }
 
     @if (type() === 'password') {
-      <button type="button" (click)="togglePasswordVisibility()" class="eye-passwd" tabindex="-1">
+      <button 
+        type="button" 
+        (click)="togglePasswordVisibility()" 
+        class="eye-passwd"
+        [attr.aria-label]="isPasswordVisible() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+      >
         @if (isPasswordVisible()) {
-          <lucide-icon name="eye-off" class="w-5 h-5"></lucide-icon>
+          <lucide-icon name="eye-off" class="w-5 h-5" aria-hidden="true"></lucide-icon>
         } @else {
-          <lucide-icon name="eye" class="w-5 h-5"></lucide-icon>
+          <lucide-icon name="eye" class="w-5 h-5" aria-hidden="true"></lucide-icon>
         }
       </button>
     }
   </main>
+
   <footer class="input-error-text-container">
     @if (errorMessage()) {
       <span
