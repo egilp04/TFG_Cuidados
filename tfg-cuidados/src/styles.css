@@ -223,7 +223,7 @@
   }
 
   .button-base {
-    @apply text-button rounded-12 transition-all duration-200 cursor-pointer flex items-center justify-center border-none px-10 py-8 md:px-15 md:py-10 lg:px-20 lg:py-10 disabled:bg-disabled h-full w-full;
+    @apply text-button rounded-12 transition-all duration-200 cursor-pointer flex items-center justify-center border-none px-12 py-8 md:px-15 md:py-10 lg:px-20 lg:py-10 disabled:bg-disabled h-full w-full;
   }
 
   .button-back {
@@ -1134,7 +1134,7 @@
   }
 
   .ia-container {
-    @apply fixed bottom-6 md:bottom-8 xl:bottom-12 2xl:bottom-24 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
+    @apply fixed bottom-8 md:bottom-10 xl:bottom-12 2xl:bottom-24 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
   }
 
   .ia-container-open {
@@ -1298,7 +1298,7 @@
   }
 
   .info-contract-text {
-    @apply dark:text-surface text-secondary text-lg break-all;
+    @apply dark:text-surface text-secondary text-lg break-words;
   }
 
   .info-contract-text-title {
