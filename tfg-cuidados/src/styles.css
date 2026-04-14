@@ -226,10 +226,6 @@
     @apply text-button rounded-12 transition-all duration-200 cursor-pointer flex items-center justify-center border-none px-12 py-8 md:px-15 md:py-10 lg:px-20 lg:py-10 disabled:bg-disabled h-full w-full;
   }
 
-  .button-table-contract {
-    @apply !font-normal;
-  }
-
   .button-back {
     @apply flex items-center gap-2 px-4 py-2 text-gray-500 dark:text-surface hover:text-gray-800 dark:hover:text-accent-dark transition-colors duration-200 focus:outline-none cursor-pointer;
   }
@@ -327,7 +323,7 @@
   }
 
   .services-grid {
-    @apply h-full px-4 grid grid-cols-1 grid-rows-3 gap-10 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 py-4;
+    @apply h-full px-4 grid grid-cols-1 grid-rows-3 gap-14 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 py-4;
   }
 
   .services-card-special {
@@ -581,7 +577,7 @@
   }
 
   .modal-close-btn {
-    @apply text-primary dark:text-surface cursor-pointer w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20;
+    @apply text-primary dark:text-surface cursor-pointer w-6 h-6 md:w-10 md:h-10 lg:w-12 lg:h-12;
   }
 
   .login-modal-title {
