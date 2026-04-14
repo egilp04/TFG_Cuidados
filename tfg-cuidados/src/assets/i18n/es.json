@@ -774,5 +774,8 @@
     "INPUT_PLACEHOLDER": "Pregunta algo sobre CuidaDos...",
     "INITIAL_MESSAGE": "¡Hola! Soy el asistente inteligente de CuidaDos. ¿Tienes alguna duda sobre los manuales o cómo funciona la plataforma?",
     "ERROR_MESSAGE": "Ups, he tenido un pequeño cruce de cables. ¿Puedes repetirlo?"
+  },
+  "ADMIN_SERVICE_TIME": {
+    "ERROR": "Error, revise que todo está relleno"
   }
 }
