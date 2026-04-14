@@ -569,7 +569,7 @@
   }
 
   .login-modal-container {
-    @apply p-6 flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark z-30;
+    @apply p-6 flex flex-col w-full justify-center items-center bg-surface dark:bg-surface-dark z-30;
   }
 
   .service-modal-container {
@@ -588,7 +588,7 @@
   }
 
   .login-modal-title {
-    @apply text-primary! text-h2! text-center! mb-10! dark:text-surface!;
+    @apply text-primary! text-h2! text-center! 2xl:mb-10! dark:text-surface!;
   }
 
   .login-login-form {
