@@ -123,6 +123,7 @@ export default class Dashboard implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((datos) => {
         this.lineChartData.datasets[0].data = datos;
+        console.log(this.lineChartData.datasets[0].data);
         this.updateCharts();
       });
   }

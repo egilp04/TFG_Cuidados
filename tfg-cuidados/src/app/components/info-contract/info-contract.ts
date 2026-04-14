@@ -7,10 +7,11 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
+import { CloseBtnComponent } from '../close-btn/close-btn.component';
 
 @Component({
   selector: 'app-info-contrato',
-  imports: [MatDialogContent, MatButtonModule, MatDialogModule, TranslateModule],
+  imports: [MatDialogContent, MatButtonModule, MatDialogModule, TranslateModule, CloseBtnComponent],
   templateUrl: './info-contract.html',
   styleUrl: './info-contract.css',
 })

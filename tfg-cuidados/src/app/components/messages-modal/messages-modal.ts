@@ -20,6 +20,7 @@ import { Inputs } from '../inputs/inputs';
 import { ButtonComponent } from '../button/button';
 import { MessagesModalData } from '../../models/Message-Modal';
 import { ComunicacionModel } from '../../models/Comunicacion';
+import { CloseBtnComponent } from '../close-btn/close-btn.component';
 
 @Component({
   selector: 'app-messages-modal',
@@ -31,6 +32,7 @@ import { ComunicacionModel } from '../../models/Comunicacion';
     TranslateModule,
     Inputs,
     ButtonComponent,
+    CloseBtnComponent,
   ],
   templateUrl: './messages-modal.html',
   styleUrl: './messages-modal.css',
@@ -47,7 +49,7 @@ export class MessagesModal implements OnInit {
   private destroyRef = inject(DestroyRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
-  
+
   messageForm = this.fb.group({
     emisor: this.fb.control<string>(''),
     receptor: this.fb.control<string>('', [Validators.required, Validators.email]),
@@ -104,8 +106,8 @@ export class MessagesModal implements OnInit {
             const newComunication = {
               id_emisor: idEmisor,
               id_receptor: foundUser.id_usuario,
-              asunto: this.messageForm.value.asunto ?? "",
-              contenido: this.messageForm.value.contenido ?? "",
+              asunto: this.messageForm.value.asunto ?? '',
+              contenido: this.messageForm.value.contenido ?? '',
               tipo_comunicacion: 'mensaje' as const,
               leido: false,
             };

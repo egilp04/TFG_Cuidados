@@ -1,27 +1,21 @@
-<section 
-  class="service-modal-container" 
-  role="dialog" 
-  aria-modal="true" 
-  [attr.aria-label]="(isEditing ? 'SERVICE_TIME_MODAL.ACCESSIBILITY.EDIT_TITLE' : 'SERVICE_TIME_MODAL.ACCESSIBILITY.CREATE_TITLE') | translate"
+<section
+  class="service-modal-container"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-label]="
+    (isEditing
+      ? 'SERVICE_TIME_MODAL.ACCESSIBILITY.EDIT_TITLE'
+      : 'SERVICE_TIME_MODAL.ACCESSIBILITY.CREATE_TITLE'
+    ) | translate
+  "
 >
   <header class="w-full flex justify-end p-2 md:p-4">
-    <button 
-      mat-dialog-close 
-      [attr.aria-label]="'SERVICE_TIME_MODAL.ACCESSIBILITY.CLOSE' | translate" 
+    <button
+      mat-dialog-close
+      [attr.aria-label]="'SERVICE_TIME_MODAL.ACCESSIBILITY.CLOSE' | translate"
       class="modal-close-btn"
     >
-      <svg
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-full h-full" viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.5" stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
+      <app-close-btn></app-close-btn>
     </button>
   </header>
 
@@ -40,9 +34,9 @@
       </label>
 
       <div class="relative w-full">
-        <select 
-          id="id_servicio" 
-          formControlName="id_servicio" 
+        <select
+          id="id_servicio"
+          formControlName="id_servicio"
           class="register-form-select"
           [attr.aria-invalid]="form.get('id_servicio')?.invalid && form.get('id_servicio')?.touched"
         >
@@ -94,9 +88,9 @@
       </label>
 
       <div class="relative w-full">
-        <select 
-          id="id_horario" 
-          formControlName="id_horario" 
+        <select
+          id="id_horario"
+          formControlName="id_horario"
           class="register-form-select"
           [attr.aria-invalid]="form.get('id_horario')?.invalid && form.get('id_horario')?.touched"
         >
@@ -141,7 +135,12 @@
       variant="primary"
       [disabled]="form.invalid"
       (click)="save()"
-      [attr.aria-label]="(isEditing ? 'SERVICE_TIME_MODAL.ACCESSIBILITY.UPDATE_DESC' : 'SERVICE_TIME_MODAL.ACCESSIBILITY.CREATE_DESC') | translate"
+      [attr.aria-label]="
+        (isEditing
+          ? 'SERVICE_TIME_MODAL.ACCESSIBILITY.UPDATE_DESC'
+          : 'SERVICE_TIME_MODAL.ACCESSIBILITY.CREATE_DESC'
+        ) | translate
+      "
     ></app-button>
   </footer>
 </section>

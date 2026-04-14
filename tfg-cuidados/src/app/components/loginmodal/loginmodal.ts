@@ -23,6 +23,8 @@ import { MessageService } from '../../services/message-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoginModalData } from '../../models/Login-Modal';
+import { CloseBtnComponent } from '../close-btn/close-btn.component';
+import { Cancelmodal } from "../cancelmodal/cancelmodal";
 
 @Component({
   selector: 'app-loginmodal',
@@ -36,7 +38,9 @@ import { LoginModalData } from '../../models/Login-Modal';
     ReactiveFormsModule,
     RouterLink,
     TranslateModule,
-  ],
+    CloseBtnComponent,
+    Cancelmodal
+],
   templateUrl: './loginmodal.html',
   styleUrl: './loginmodal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
