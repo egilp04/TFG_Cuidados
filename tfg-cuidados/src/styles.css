@@ -175,12 +175,11 @@
   }
 
   main {
-    @apply flex flex-col flex-1 h-full w-full overflow-hidden;
-  
+    @apply flex-1 overflow-x-hidden overflow-y-auto;  
   }
 
   .main-container{
-    @apply flex-1 overflow-x-hidden overflow-y-auto;  
+    @apply flex flex-col h-full w-full overflow-hidden;
   }
   
 
@@ -615,7 +614,7 @@
   }
 
   .login-modal-title-container{
-    @apply w-full h-auto
+    @apply w-full h-auto pb-[14px] lg:pb-[20px] flex justify-center items-center
   }
 
   .login-modal-title {
