@@ -519,7 +519,7 @@
   }
 
   .contact-form {
-    @apply w-full flex flex-col items-center gap-20 px-80 lg:gap-[3rem];
+    @apply w-full flex flex-col items-center gap-20 px-80 lg:gap-[3rem] mb-6;
   }
 
   .contact-form-divs {
@@ -710,7 +710,7 @@
   }
 
   .register-container {
-    @apply flex flex-col justify-center items-center w-full p-2 2xl:p-24;
+    @apply flex flex-col justify-center items-center w-full p-2 md:p-8 xl:p-20;
   }
 
   .register-form {
@@ -1171,7 +1171,7 @@
   }
 
   .ia-container {
-    @apply fixed bottom-44 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
+    @apply fixed bottom-10 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
   }
 
   .ia-container-open {
@@ -1207,7 +1207,7 @@
   }
 
   .soporte-container {
-    @apply fixed bottom-40 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
+    @apply fixed bottom-10 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
   }
 
   .soporte-container-open {
