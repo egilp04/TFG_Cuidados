@@ -175,11 +175,32 @@
   }
 
   main {
-    @apply flex-1 overflow-x-hidden overflow-y-auto;
+    @apply flex-1 overflow-x-hidden overflow-y-auto;  
+  
   }
+
+  .main-container{
+  @apply flex flex-col flex-1 h-full w-full overflow-hidden;
+  }
+  
+
 }
 
 @layer components {
+
+  .cdk-overlay-pane .mat-mdc-select-panel {
+    @apply bg-surface rounded-12 shadow-lg dark:bg-surface-dark;
+  }
+  
+  html.dark .cdk-overlay-pane .mat-mdc-select-panel {
+    @apply bg-surface-dark;
+  }
+  
+  html.dark .mat-mdc-header-cell {
+    @apply !border-b !border-white;
+  }
+
+  
   .table-admin {
     @apply mx-4 md:mx-12 overflow-hidden flex flex-col;
   }
@@ -593,8 +614,12 @@
       !w-[24px] !h-[24px] md:!w-[32px] md:!h-[32px] lg:!w-[40px]  lg:!h-[40px];
   }
 
+  .login-modal-title-container{
+    @apply w-full h-auto
+  }
+
   .login-modal-title {
-    @apply text-primary! text-h2! m-0! pb-4! text-center! 2xl:mb-10! dark:text-surface!;
+    @apply text-primary! text-h2! m-0! p-0! text-center! 2xl:mb-10! dark:text-surface!;
   }
 
   .login-login-form {
@@ -850,7 +875,7 @@
   }
 
   .dashboard-container {
-    @apply p-10 flex flex-col items-center w-full h-full gap-10 2xl:gap-32;
+    @apply p-10 flex flex-col justify-around items-center w-full h-full gap-10 2xl:gap-32;
   }
 
   .chart-wrapper {
@@ -958,11 +983,11 @@
   }
 
   .cancel-modal-title-container {
-    @apply h-full;
+    @apply h-full h-auto;
   }
 
   .cancel-modal-title {
-    @apply text-primary! text-h2! m-0! pb-4! text-center! 2xl:mb-10! dark:text-surface!;
+    @apply text-primary! text-h2! m-0! p-0! text-center! 2xl:mb-10! dark:text-surface!;
   }
 
   .cancel-modal-content {
@@ -1371,7 +1396,7 @@
   }
 
   .header-modal{
-    @apply w-full flex justify-end px-2 md:p-4
+    @apply w-full flex justify-end px-[10px] py-[6px] md:p-4
   }
 }
 
@@ -1407,16 +1432,4 @@
   to {
     transform: scale(1);
   }
-}
-
-.cdk-overlay-pane .mat-mdc-select-panel {
-  @apply bg-surface rounded-12 shadow-lg dark:bg-surface-dark;
-}
-
-html.dark .cdk-overlay-pane .mat-mdc-select-panel {
-  @apply bg-surface-dark;
-}
-
-html.dark .mat-mdc-header-cell {
-  @apply !border-b !border-white;
 }
