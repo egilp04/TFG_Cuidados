@@ -726,7 +726,7 @@
   }
 
   .home-btn-container {
-    @apply flex flex-col justify-around items-center w-full pt-20 h-full gap-10 overflow-auto;
+    @apply flex flex-col justify-around items-center w-full pt-20 h-full gap-10 lg:gap-[20px] overflow-auto;
   }
 
   .home-btn {
@@ -874,7 +874,7 @@
   }
 
   .dashboard-container {
-    @apply p-10 flex flex-col justify-around items-center w-full h-full gap-10 2xl:gap-32;
+    @apply flex flex-col justify-around items-center w-full gap-10 2xl:gap-32;
   }
 
   .chart-wrapper {
