@@ -1,13 +1,10 @@
-<section class="button-back-container">
+<header
+  class="button-back-container"
+  [attr.aria-label]="'REGISTER.ACCESSIBILITY.BACK_NAV' | translate"
+>
   <app-buttonback></app-buttonback>
-</section>
-@if (this.messageService.messageData(); as data) {
-<section class="message-noti">
-  <div [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
-      }" class="message-noti-text">
-    {{ data.mensaje }}
-  </div>
-</section> }
-<app-registerform [isUser]="isUser" (formSubmitted)="onRegister($event)"> </app-registerform>
+</header>
+
+<main role="main" [attr.aria-label]="'REGISTER.ACCESSIBILITY.MAIN_FORM' | translate">
+  <app-registerform [isUser]="isUser" (formSubmitted)="onRegister($event)"></app-registerform>
+</main>

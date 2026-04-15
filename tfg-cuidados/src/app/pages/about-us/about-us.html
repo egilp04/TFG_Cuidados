@@ -1,49 +1,59 @@
-<section class="header-container">
+<header class="header-container" role="banner">
   <app-buttonback></app-buttonback>
-</section>
+</header>
 
-<section class="about-container">
-  <h1 class="about-title">
+<main class="about-container" role="main" [attr.aria-labelledby]="'about-title'">
+  <h1 id="about-title" class="about-title">
     {{ 'ABOUT.TITLE' | translate }}
   </h1>
-  <p class="about-description">
-    {{ 'ABOUT.DESCRIPTION' | translate }}
-  </p>
-  <p class="about-description">
-    {{ 'ABOUT.TEAMDESCRIPTION' | translate }}
-  </p>
-  <p class="about-description">
-    {{ 'ABOUT.PROJECTDESCRIPTION' | translate }}
-  </p>
-  <ul class="about-list">
-    <li>
+
+  <section class="about-intro" [attr.aria-label]="'ABOUT.ACCESSIBILITY.INTRO' | translate">
+    <p class="about-description">
+      {{ 'ABOUT.DESCRIPTION' | translate }}
+    </p>
+    <p class="about-description">
+      {{ 'ABOUT.TEAMDESCRIPTION' | translate }}
+    </p>
+    <p class="about-description">
+      {{ 'ABOUT.PROJECTDESCRIPTION' | translate }}
+    </p>
+  </section>
+
+  <ul class="about-list" role="list">
+    <li role="listitem">
       <span class="about-list-title">{{ 'ABOUT.SCOPE.TITLE' | translate }}:</span>
       {{ 'ABOUT.SCOPE.DESC' | translate }}
-      <ul class="about-sublist">
-        <li>
-          • <span class="about-sublist-title">{{ 'ABOUT.SCOPE.SOCIAL' | translate }}:</span>
+
+      <ul class="about-sublist" role="list" [attr.aria-label]="'ABOUT.SCOPE.TITLE' | translate">
+        <li role="listitem">
+          <span class="sr-only">•</span>
+          <span class="about-sublist-title">{{ 'ABOUT.SCOPE.SOCIAL' | translate }}:</span>
           {{ 'ABOUT.SCOPE.SOCIAL_DESC' | translate }}
         </li>
-        <li>
-          •
+        <li role="listitem">
+          <span class="sr-only">•</span>
           <span class="about-sublist-title">{{ 'ABOUT.SCOPE.COMMERCIAL' | translate }}:</span>
           {{ 'ABOUT.SCOPE.COMMERCIAL_DESC' | translate }}
         </li>
       </ul>
     </li>
-    <li>
+
+    <li role="listitem">
       <span class="about-list-title">{{ 'ABOUT.VALUE.TITLE' | translate }}:</span>
       {{ 'ABOUT.VALUE.DESC' | translate }}
     </li>
-    <li>
+
+    <li role="listitem">
       <span class="about-list-title">{{ 'ABOUT.ASSISTANCE.TITLE' | translate }}:</span>
       {{ 'ABOUT.ASSISTANCE.DESC' | translate }}
     </li>
   </ul>
-  <h2 class="about-subtitle">
+
+  <h2 id="team-title" class="about-subtitle">
     {{ 'ABOUT.TEAM.TITLE' | translate }}
   </h2>
-  <footer class="about-grid">
+
+  <footer class="about-grid" role="region" [attr.aria-labelledby]="'team-title'">
     @for (item of cardsdata; track item.titulo; let i = $index) {
       <app-cards-landing
         [titulo]="item.titulo"
@@ -55,4 +65,4 @@
       </app-cards-landing>
     }
   </footer>
-</section>
+</main>

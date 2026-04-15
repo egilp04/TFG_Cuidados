@@ -4,10 +4,11 @@ import { Footer } from './components/footer/footer';
 import { Navbar } from './components/navbar/navbar';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
+import { GlobalNotificationsComponent } from './components/global-notifications/global-notifications.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Footer, Navbar],
+  imports: [RouterOutlet, Footer, Navbar, GlobalNotificationsComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
