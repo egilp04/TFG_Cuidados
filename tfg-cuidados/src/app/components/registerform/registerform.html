@@ -1,7 +1,10 @@
-<section class="register-container" [attr.aria-label]="'REGISTER.ACCESSIBILITY.SECTION' | translate">
-  <form 
-    [formGroup]="registerForm" 
-    (ngSubmit)="onSubmit()" 
+<section
+  class="register-container"
+  [attr.aria-label]="'REGISTER.ACCESSIBILITY.SECTION' | translate"
+>
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
     class="register-form"
     [attr.aria-label]="'REGISTER.ACCESSIBILITY.FORM_NAME' | translate"
   >
@@ -37,7 +40,7 @@
             type="date"
             [control]="getCtrl('fechnac')"
             [errorMessage]="getErrorMessage('fechnac')"
-            class="w-3/4"
+            class="flex-1"
           ></app-inputs>
           <app-inputs
             name="dni"
@@ -116,9 +119,9 @@
         </label>
 
         <div class="relative w-full">
-          <select 
-            id="comunidad" 
-            formControlName="comunidad" 
+          <select
+            id="comunidad"
+            formControlName="comunidad"
             class="register-form-select"
             [attr.aria-invalid]="getCtrl('comunidad').invalid && getCtrl('comunidad').touched"
           >
@@ -151,7 +154,7 @@
       </div>
     </div>
 
-    <div class="flex flex-row gap-6">
+    <div class="register-form-row">
       <app-inputs
         name="password"
         [label]="'REGISTER.LABELS.PASSWORD' | translate"
@@ -183,13 +186,18 @@
         />
         <label for="terms" class="register-form-terms-title">
           {{ 'REGISTER.TERMS.PART_1' | translate }}
-          <a routerLink="/terms" target="_blank" class="register-form-terms" [attr.aria-label]="'REGISTER.ACCESSIBILITY.TERMS_LINK' | translate">
+          <a
+            routerLink="/terms"
+            target="_blank"
+            class="register-form-terms"
+            [attr.aria-label]="'REGISTER.ACCESSIBILITY.TERMS_LINK' | translate"
+          >
             {{ 'REGISTER.TERMS.LINK' | translate }}
           </a>
           {{ 'REGISTER.TERMS.PART_2' | translate }}
         </label>
       </div>
-      
+
       @if (getErrorMessage('termsCondition')) {
         <p class="register-form-check-error" id="terms-error" role="alert">
           {{ 'REGISTER.TERMS.ERROR' | translate }}
@@ -198,9 +206,9 @@
     </div>
 
     <footer class="register-form-btn-send">
-      <app-button 
-        [label]="'REGISTER.BTN' | translate" 
-        variant="primary" 
+      <app-button
+        [label]="'REGISTER.BTN' | translate"
+        variant="primary"
         type="submit"
         [attr.aria-label]="'REGISTER.ACCESSIBILITY.SUBMIT_BTN' | translate"
       ></app-button>
