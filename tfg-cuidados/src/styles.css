@@ -718,7 +718,7 @@
   }
 
   .home-container {
-    @apply flex flex-col p-20 w-full justify-start items-center h-full;
+    @apply flex flex-col p-20 w-full justify-start items-center;
   }
 
   .home-title {
