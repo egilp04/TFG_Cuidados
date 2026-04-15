@@ -56,7 +56,7 @@
   --text-label--font-family: var(--font-poppins);
   --text-label--font-weight: var(--font-weight-regular);
 
-  --text-button: 0.75rem;
+  --text-button: 1rem;
   --text-button--font-family: var(--font-poppins);
 
   --spacing-400: 25rem;
@@ -131,7 +131,7 @@
 
   html,
   body {
-    @apply m-0 p-0 h-full;
+    @apply m-0 p-0 h-full overflow-hidden;
   }
 
   body {
@@ -170,7 +170,6 @@
     @apply text-primary dark:text-surface;
   }
 
-  /* modales */
   .mat-mdc-dialog-surface {
     @apply bg-transparent dark:border dark:border-gray-200 rounded-12;
   }
@@ -322,7 +321,7 @@
   }
 
   .services-grid {
-    @apply h-full px-4 grid grid-cols-1 grid-rows-3 gap-10 md:grid-cols-2 md:grid-rows-2 md:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 py-4;
+    @apply h-full px-4 grid grid-cols-1 grid-rows-3 gap-[32px] md:grid-cols-2 md:grid-rows-2 md:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 py-4;
   }
 
   .services-card-special {
@@ -444,7 +443,7 @@
   }
 
   .manuals-download-container {
-    @apply w-full grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 mt-10 mb-14 items-stretch;
+    @apply w-full grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 mt-10 items-stretch;
   }
 
   .manuals-title {
