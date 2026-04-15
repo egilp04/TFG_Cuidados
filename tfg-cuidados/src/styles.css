@@ -547,12 +547,10 @@
   }
 
   .input-basic {
-    @apply w-full pl-4 pr-12 py-3 border-primary dark:border-surface border-2 rounded-12 font-poppins outline-none transition-all bg-transparent appearance-none placeholder:text-gray-400 dark:text-surface dark:placeholder:text-white
+    @apply w-full pl-4 pr-[42px] py-3 border-primary dark:border-surface border-2 rounded-12 font-poppins outline-none transition-all bg-transparent appearance-none placeholder:text-gray-400 dark:text-surface dark:placeholder:text-white
     text-[16px] md:text-label
     dark:[&::-webkit-calendar-picker-indicator]:invert
-    dark:[&::-webkit-calendar-picker-indicator]:brightness-100
-    [&[type="date"]]:h-[3rem] [&[type="date"]]:block
-    [&[type="time"]]:h-[3rem] [&[type="time"]]:block;
+    dark:[&::-webkit-calendar-picker-indicator]:brightness-100;
   }
 
   .eye-passwd {
@@ -698,7 +696,7 @@
   }
 
   .register-form-row {
-    @apply flex flex-row gap-6;
+    @apply flex flex-col md:flex-row gap-6;
   }
 
   .register-form-select-arrow {
@@ -706,7 +704,7 @@
   }
 
   .register-container {
-    @apply flex flex-col justify-center items-center w-full p-2 md:p-8 xl:p-20;
+    @apply flex flex-col justify-center items-center w-full p-2 md:p-[40px] lg:p-[48px] 2xl:px-[200px];
   }
 
   .register-form {
@@ -714,7 +712,7 @@
   }
 
   .home-container {
-    @apply flex flex-col p-20 w-full justify-start items-center;
+    @apply flex flex-col h-full p-20 w-full justify-start items-center;
   }
 
   .home-title {
@@ -722,11 +720,11 @@
   }
 
   .home-btn-container {
-    @apply flex flex-col justify-around items-center w-full pt-20 h-full gap-10 lg:gap-20 overflow-auto;
+    @apply flex flex-col justify-around items-center w-full h-full gap-20 overflow-auto p-10 md:p-20 xl:p-7.5 2xl:p-25;
   }
 
   .home-btn {
-    @apply h-[3rem] w-[60%] md:h-80 lg:h-36;
+    @apply h-full w-full;
   }
 
   .activity-component-container {
@@ -818,7 +816,7 @@
   }
 
   .modify-profile-title {
-    @apply text-h1 text-center text-primary dark:text-surface my-13;
+    @apply text-h1 text-center text-primary dark:text-surface my-10;
   }
 
   .search-card-container {
@@ -862,11 +860,13 @@
   }
 
   .modify-profile-form {
-    @apply flex flex-col gap-2 w-full;
+    @apply flex flex-col gap-2 w-full max-w-300 xl:max-w-[600px];
   }
-
+  .modify-form-container {
+    @apply flex justify-center;
+  }
   .modify-profile-btn-container {
-    @apply flex flex-col gap-4 my-10 md:my-13 2xl:my-21 w-full items-center;
+    @apply flex flex-col gap-4 my-10 2xl:my-10 w-full items-center;
   }
 
   .dashboard-container {
@@ -894,7 +894,7 @@
   }
 
   .dashboard-contracts-texts-container {
-    @apply flex flex-row gap-10;
+    @apply flex flex-row gap-10 text-center;
   }
 
   .dashboard-contracts-text-total {
@@ -906,7 +906,7 @@
   }
 
   .dashboard-contracts-text-active {
-    @apply text-label text-[#3B82F6] dark:text-[#87a9e2] font-bold;
+    @apply text-label text-[#3B82F6] dark:text-[#87a9e2] font-bold flex-1;
   }
 
   .dashboard-total-users {
@@ -938,7 +938,7 @@
   }
 
   .modify-profile-page-container {
-    @apply flex flex-col w-full gap-10 justify-center z-40 p-10 lg:py-10 lg:px-120;
+    @apply flex flex-col w-full gap-[48px]  z-40 p-10 lg:py-10 lg:px-120;
   }
 
   .mangment-admin-btn-container {
@@ -978,7 +978,7 @@
   }
 
   .cancel-modal-title-container {
-    @apply h-full h-auto;
+    @apply h-auto;
   }
 
   .cancel-modal-title {
