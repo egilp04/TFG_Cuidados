@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -17,7 +17,8 @@ export class ChatSoporteComponent implements OnInit {
   private authService = inject(AuthService);
   private supabase = inject(SupabaseService).getClient();
   private http = inject(HttpClient);
-  
+  private cd = inject(ChangeDetectorRef);
+
   isOpen = false;
   newMessage = '';
   adminId: string | null = null;
@@ -63,6 +64,8 @@ export class ChatSoporteComponent implements OnInit {
         this.isSending = false;
         this.messageSent = true;
         this.newMessage = '';
+        this.cd.detectChanges();
+
         setTimeout(() => {
           this.isOpen = false;
           this.messageSent = false;
@@ -71,6 +74,7 @@ export class ChatSoporteComponent implements OnInit {
       error: (err: Error) => {
         console.error('Error al enviar el ticket:', err);
         this.isSending = false;
+        this.cd.detectChanges();
       },
     });
   }
