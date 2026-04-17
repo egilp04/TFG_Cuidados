@@ -42,7 +42,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'direcotrio-servicios',
+    path: 'services-directory',
     loadComponent: () => import('./pages/directorio-servicios/directorio-servicios.component'),
     canActivate: [authGuard],
   },

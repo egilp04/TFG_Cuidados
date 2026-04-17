@@ -5,7 +5,7 @@ export function getHomeRouteByRole(rol?: string): string {
     case 'empresa':
       return '/activities';
     case 'cliente':
-      return '/homeCliente';
+      return '/services-directory';
     default:
       return '/';
   }

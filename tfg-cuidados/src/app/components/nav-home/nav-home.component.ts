@@ -17,7 +17,7 @@ export class NavHomeComponent {
   private router = inject(Router);
 
   searchForBussiness() {
-    this.router.navigate(['/search-business']);
+    this.router.navigate(['/services-directory']);
   }
   manageServices() {
     this.router.navigate(['/admin-services']);

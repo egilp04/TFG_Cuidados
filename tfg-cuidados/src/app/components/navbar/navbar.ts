@@ -11,7 +11,7 @@ import {
 import { ButtonComponent } from '../button/button';
 import { LucideAngularModule } from 'lucide-angular';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
@@ -31,6 +31,7 @@ import { getHomeRouteByRole } from '../../core/utils/routerUtils';
     DarkModeBtnComponent,
     RouterLink,
     RouterLinkActive,
+    RouterModule,
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
@@ -42,8 +43,6 @@ export class Navbar implements OnInit {
   private comunicationService = inject(ComunicationService);
   private responsive = inject(ResponsiveSize);
   public isMenuOpen = false;
-
-  homeLink = computed(() => (this.authService.isAuthenticated() ? '/home' : '/'));
 
   constructor() {
     effect(() => {
@@ -61,6 +60,12 @@ export class Navbar implements OnInit {
 
   closeMenu() {
     this.isMenuOpen = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  get homeRoute(): string {
+    const user = this.authService.currentUser();
+    return user ? getHomeRouteByRole(user.rol) : '/';
   }
 
   backHome() {
@@ -69,6 +74,7 @@ export class Navbar implements OnInit {
     if (user) {
       const rol = user.rol;
       const route = getHomeRouteByRole(rol);
+      console.log(route);
       this.router.navigate([route]);
     } else {
       this.router.navigate(['/']);
@@ -81,7 +87,6 @@ export class Navbar implements OnInit {
   private cd = inject(ChangeDetectorRef);
 
   logout() {
-    this.closeMenu();
     this.authService
       .signOut()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -91,7 +96,6 @@ export class Navbar implements OnInit {
   }
 
   async startSession() {
-    this.closeMenu();
     const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
     const dialogRef = this.dialog.open(Loginmodal, {
       data: { modo: 'login' },
@@ -124,7 +128,6 @@ export class Navbar implements OnInit {
   }
 
   showComunications(tipo: string) {
-    this.closeMenu();
     switch (tipo) {
       case 'mensajes':
         this.router.navigate(['/messages']);
