@@ -1,0 +1,28 @@
+@reference "../../../styles.css";
+.manuals-container {
+  @apply flex flex-col justify-center items-center px-6 py-10 md:px-12 lg:px-24 lg:py-20 w-full;
+}
+
+.manuals-download-container {
+  @apply w-full grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 mt-10 items-stretch;
+}
+
+.manuals-title {
+  @apply text-h1 text-primary mt-10 mb-20 text-center dark:text-surface;
+}
+
+.manuals-cards-container {
+  @apply flex flex-col gap-20 justify-between items-center flex-1 h-full p-4;
+}
+
+.manuals-link {
+  @apply md:w-48 md:h-11 xl:h-[4rem] 2xl:h-80 2xl:w-1/3;
+}
+
+.manual-video-container {
+  @apply w-full p-10 justify-center flex flex-col gap-3 items-center;
+}
+
+.manual-video-btn {
+  @apply bg-primary dark:bg-btn-dark text-white w-1/2 dark:text-surface-dark;
+}

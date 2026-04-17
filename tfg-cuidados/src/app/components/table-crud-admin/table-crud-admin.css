@@ -1,0 +1,33 @@
+@reference "../../../styles.css";
+
+.table-admin {
+  @apply mx-4 md:mx-12 overflow-hidden flex flex-col;
+}
+
+.table-admin-content {
+  @apply w-full text-left;
+}
+
+.table-column-name {
+  @apply text-primary dark:text-surface p-5 pl-8;
+}
+
+.table-admin-btn-container {
+  @apply flex justify-end items-center gap-4 p-10;
+}
+
+.table-paginator-end {
+  @apply border-t border-gray-200;
+}
+
+.table-admin-container {
+  @apply w-full h-full flex flex-col p-4 md:p-8 gap-20;
+}
+
+.table-admin-search-container {
+  @apply w-full flex gap-4 items-center justify-end px-20;
+}
+
+.table-admin-search-title {
+  @apply text-primary text-label dark:text-surface;
+}

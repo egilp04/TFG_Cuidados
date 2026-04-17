@@ -1,0 +1,68 @@
+@reference "../../../styles.css";
+
+.dashboard-container {
+  @apply flex flex-col justify-around items-center w-full gap-10 2xl:gap-32;
+}
+
+.chart-wrapper {
+  @apply relative w-full h-62.5 block mb-10;
+}
+
+.no-contracts-msg {
+  @apply text-p text-gray-400 dark:text-surface italic flex items-center justify-center;
+}
+
+.dashboard-contracts-container {
+  @apply flex flex-col gap-22 w-full items-center;
+}
+
+.dashboard-contracts-title {
+  @apply text-h2 text-primary dark:text-surface;
+}
+
+.dashboard-contracts-canvas {
+  @apply w-full h-48 md:h-52 lg:h-64 mb-28 justify-center items-center flex flex-col gap-12;
+}
+
+.dashboard-contracts-texts-container {
+  @apply flex flex-row gap-10 text-center;
+}
+
+.dashboard-contracts-text-total {
+  @apply text-label text-secondary dark:text-surface font-bold;
+}
+
+.dashboard-contracts-text-no-active {
+  @apply text-label text-[#ca165b] dark:text-[#ed76a4] font-bold;
+}
+
+.dashboard-contracts-text-active {
+  @apply text-label text-[#3B82F6] dark:text-[#87a9e2] font-bold flex-1;
+}
+
+.dashboard-total-users {
+  @apply w-full lg:w-1/2 bg-surface border dark:bg-gray-300 border-gray-100 rounded-12 py-10 px-10 shadow-soft flex justify-center items-center;
+}
+
+.dashboard-total-users-container {
+  @apply w-full min-h-25 my-20 flex justify-center items-center;
+}
+
+.dashboard-total-users-title {
+  @apply text-h2 text-primary dark:text-secondary-dark;
+}
+
+.dashboard-total-users-text {
+  @apply font-sans font-bold ml-2;
+}
+.dashboard-login-container {
+  @apply w-full text-center;
+}
+
+.dashboard-login-title {
+  @apply text-h2 text-primary mb-2 dark:text-surface;
+}
+
+.dashboard-login-text {
+  @apply text-gray-400 mb-10 text-p dark:text-gray-50;
+}

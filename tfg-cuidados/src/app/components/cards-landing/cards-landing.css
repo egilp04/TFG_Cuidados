@@ -1,0 +1,28 @@
+@reference "../../../styles.css";
+.cards-landing-container {
+  @apply h-full bg-surface border border-nav-border dark:border-gray-200 dark:bg-surface-dark flex flex-col items-center text-center shadow-xs hover:shadow-soft transition-all duration-300;
+}
+
+.cards-landing-img-container {
+  @apply w-full shrink-0 overflow-hidden relative;
+}
+
+.cards-text-container {
+  @apply p-20 shadow-soft flex flex-col gap-2 min-h-40 lg:min-h-48 w-full flex-1;
+}
+
+.cards-landing-img {
+  @apply w-full h-full aspect-video object-cover bg-surface;
+}
+
+.cards-landing-title {
+  @apply font-fraunces text-h2 text-primary mb-10 dark:text-surface;
+}
+
+.cards-landing-cargo {
+  @apply text-secondary font-semibold uppercase text-label dark:text-surface;
+}
+
+.cards-landing-description {
+  @apply text-lg font-poppins text-secondary overflow-hidden dark:text-surface;
+}

@@ -1,0 +1,36 @@
+@reference "../../../styles.css";
+.ia-container {
+  @apply fixed bottom-10 right-4 md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
+}
+
+.ia-container-open {
+  @apply w-[calc(100vw-2rem)] md:w-88 h-125 md:h-112.5 bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden;
+}
+
+.ia-icon {
+  @apply bg-primary text-white p-4 flex justify-between items-center shadow-md shrink-0;
+}
+
+.ia-btn-toggle {
+  @apply p-1 hover:bg-white/20 rounded-full transition-colors;
+}
+
+.ia-messages-container {
+  @apply flex-1 p-4 bg-slate-50 overflow-y-auto flex flex-col gap-3;
+}
+
+.ia-loading-container {
+  @apply flex w-full justify-start;
+}
+
+.ia-new-message-container {
+  @apply p-3 bg-white border-t border-gray-100 flex gap-2 items-center shrink-0;
+}
+
+.ia-input {
+  @apply flex-1 border border-gray-300 rounded-full px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all disabled:bg-gray-50;
+}
+
+.ia-btn {
+  @apply bg-accent text-white rounded-full w-12 h-12 flex items-center justify-center hover:opacity-90 active:scale-90 transition-all disabled:opacity-50 shadow-sm;
+}

@@ -1,0 +1,31 @@
+@reference "../../../styles.css";
+.info-contract-title {
+  @apply text-secondary text-h2 p-6 mb-2 dark:text-surface;
+}
+
+.info-contract-content-container {
+  @appy flex justify-center items-center flex-col w-full px-4;
+}
+
+.info-contract-content {
+  @apply p-0! flex! flex-col! gap-4 w-full text-left max-w-lg text-primary dark:text-surface;
+}
+
+.info-contract-activity-title {
+  @apply text-secondary text-h2 p-6 mb-2 dark:text-surface;
+}
+
+.info-contract-activity-container {
+  @apply flex justify-center items-center flex-col w-full py-4;
+}
+
+.info-contract-text {
+  @apply dark:text-surface text-secondary text-lg;
+}
+
+.info-contract-text-title {
+  @apply dark:text-accent text-primary text-lg;
+}
+.info-container {
+  @apply p-10 bg-surface flex flex-col w-full justify-center gap-6 dark:bg-surface-dark items-center z-30;
+}

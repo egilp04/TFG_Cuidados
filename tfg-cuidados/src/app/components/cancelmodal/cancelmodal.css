@@ -1,0 +1,24 @@
+@reference "../../../styles.css";
+.cancel-modal-container {
+  @apply flex flex-col justify-center items-center gap-2 w-full relative md:py-20 max-h-screen dark:bg-surface-dark bg-surface z-30;
+}
+
+.cancel-modal-title-container {
+  @apply h-auto;
+}
+
+.cancel-modal-title {
+  @apply text-primary! text-h2! m-0! p-0! text-center! 2xl:mb-10! dark:text-surface!;
+}
+
+.cancel-modal-content {
+  @apply p-0! m-0! w-full;
+}
+
+.cancel-modal-text {
+  @apply py-8 px-4 text-secondary leading-relaxed dark:text-gray-50;
+}
+
+.cancel-modal-action-container {
+  @apply flex flex-col! items-center gap-6 w-full m-0! p-0!;
+}

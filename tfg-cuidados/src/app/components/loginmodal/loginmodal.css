@@ -1,0 +1,47 @@
+@reference "../../../styles.css";
+.login-modal-container {
+  @apply flex flex-col w-full justify-center items-center bg-surface dark:bg-surface-dark z-30;
+}
+
+.login-modal-title-container {
+  @apply w-full h-auto flex justify-center items-center;
+}
+
+.login-modal-title {
+  @apply text-primary! text-h2! m-0! p-0! text-center! dark:text-surface!;
+}
+.login-login-form {
+  @apply w-full flex flex-col items-center;
+}
+
+.login-login-form-div {
+  @apply flex justify-center items-center flex-col w-full;
+}
+
+.login-form-reset {
+  @apply p-0! flex! flex-col! gap-10 w-full justify-center items-center;
+}
+
+.login-login-error {
+  @apply text-red font-bold dark:text-red-dark;
+}
+
+.login-subtitle {
+  @apply text-p text-secondary mb-20 text-center px-4 dark:text-surface;
+}
+
+.login-other-actions {
+  @apply flex! flex-col! mb-10! gap-2 w-full;
+}
+
+.login-recuperar-container {
+  @apply w-full flex flex-col items-center;
+}
+
+.login-registro-container {
+  @apply w-full flex flex-col items-center;
+}
+
+.login-form-label-base {
+  @apply ml-2 transition-all duration-300 mb-4 text-center;
+}

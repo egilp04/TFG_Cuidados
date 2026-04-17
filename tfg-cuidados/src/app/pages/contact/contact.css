@@ -1,0 +1,24 @@
+@reference "../../../styles.css";
+.contact-container {
+  @apply flex flex-col w-full justify-center items-center xl:gap-20 xl:mb-[3rem] xl:px-[2rem] lg:mb-[4rem] 2xl:mb-14;
+}
+
+.contact-title {
+  @apply text-h1 text-primary mb-20 dark:text-surface;
+}
+
+.contact-form {
+  @apply w-full flex flex-col items-center gap-20 px-80 lg:gap-[3rem] mb-6;
+}
+
+.contact-form-divs {
+  @apply w-full flex flex-col;
+}
+
+.contact-form-error {
+  @apply text-label text-red-500 ml-2 dark:text-red-dark;
+}
+
+.contact-form-btn {
+  @apply mt-6 w-22 h-[2.5rem] md:w-48 md:h-11 lg:w-52 lg:h-[3rem] xl:w-2xl xl:h-[4rem] 2xl:h-80;
+}

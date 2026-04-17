@@ -1,0 +1,5 @@
+@reference "../../../styles.css";
+
+.mangment-admin-btn-container {
+  @apply flex justify-center my-4;
+}
