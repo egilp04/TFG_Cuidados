@@ -1,11 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ComunicationService } from '../../services/comunication.service';
 import { AuthService } from '../../services/auth.service';
 import { SupabaseService } from '../../services/supabase.service';
-import { ComunicacionModel } from '../../models/Comunicacion';
 import { TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-chat-soporte',
@@ -15,10 +14,10 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./chat-soporte.component.css'],
 })
 export class ChatSoporteComponent implements OnInit {
-  private comunicationService = inject(ComunicationService);
   private authService = inject(AuthService);
   private supabase = inject(SupabaseService).getClient();
-
+  private http = inject(HttpClient);
+  
   isOpen = false;
   newMessage = '';
   adminId: string | null = null;
@@ -53,32 +52,25 @@ export class ChatSoporteComponent implements OnInit {
   }
 
   sendMessage() {
-    if (!this.newMessage.trim() || !this.adminId || !this.currentUser) return;
-
+    if (!this.newMessage.trim()) return;
     this.isSending = true;
-    this.messageSent = false;
-
-    const messageToSend = {
-      tipo_comunicacion: 'mensaje' as const,
-      id_emisor: this.currentUser.id_usuario,
-      id_receptor: this.adminId,
-      asunto: 'Soporte Directo',
-      contenido: this.newMessage.trim(),
-      leido: false,
-      eliminado_por_emisor: false,
-      eliminado_por_receptor: false,
+    const payload = {
+      mensaje: this.newMessage,
+      emailUsuario: this.currentUser?.email || 'Usuario Anónimo',
     };
-
-    this.comunicationService.insertComunicacion(messageToSend).subscribe({
+    this.http.post('/api/soporte', payload).subscribe({
       next: () => {
         this.isSending = false;
         this.messageSent = true;
         this.newMessage = '';
-        this.comunicationService.refreshUsersData();
+        setTimeout(() => {
+          this.isOpen = false;
+          this.messageSent = false;
+        }, 3000);
       },
-      error: (err) => {
+      error: (err: Error) => {
+        console.error('Error al enviar el ticket:', err);
         this.isSending = false;
-        console.error('Error enviando ticket al admin:', err);
       },
     });
   }

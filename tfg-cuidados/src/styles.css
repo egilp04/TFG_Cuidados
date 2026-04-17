@@ -1218,11 +1218,11 @@
   }
 
   .soporte-container {
-    @apply fixed bottom-10 left-4 md:bottom-24 md:left-12 z-50 flex flex-col items-end gap-4;
+    @apply fixed bottom-10 left-4 md:bottom-24 md:left-12 z-50;
   }
 
   .soporte-container-open {
-    @apply w-[calc(100vw-2rem)] md:w-88 h-112.5 md:h-96 bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden;
+    @apply absolute bottom-22 left-0 w-[calc(100vw-2rem)] md:w-88 h-112.5 md:h-96 bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden origin-bottom-left;
   }
 
   .soporte-icon {
