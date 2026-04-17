@@ -24,6 +24,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoginModalData } from '../../models/Login-Modal';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
+import { getHomeRouteByRole } from '../../core/utils/routerUtils';
 
 @Component({
   selector: 'app-loginmodal',
@@ -38,7 +39,7 @@ import { CloseBtnComponent } from '../close-btn/close-btn.component';
     RouterLink,
     TranslateModule,
     CloseBtnComponent,
-],
+  ],
   templateUrl: './loginmodal.html',
   styleUrl: './loginmodal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -92,7 +93,10 @@ export class Loginmodal {
             this.dialogRef.close({ loginSuccess: true });
             this.dialog.closeAll();
             this.cd.detectChanges();
-            this.router.navigate(['/home']);
+            const user = this.authService.currentUser();
+            const rol = user?.rol;
+            const route = getHomeRouteByRole(rol);
+            this.router.navigate([route]);
           },
           error: (err) => {
             console.log('Error login:', err);

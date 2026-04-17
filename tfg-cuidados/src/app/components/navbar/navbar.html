@@ -1,9 +1,9 @@
 <nav class="nav-container" [attr.aria-label]="'NAVBAR.ACCESSIBILITY.MAIN_NAV' | translate">
   <div class="flex items-center">
-    <a 
-      (click)="backHome()" 
+    <a
+      (click)="backHome()"
       (keydown.enter)="backHome()"
-      class="cursor-pointer" 
+      class="cursor-pointer"
       tabindex="0"
       role="link"
       [attr.aria-label]="'NAVBAR.ACCESSIBILITY.GO_HOME' | translate"
@@ -16,45 +16,78 @@
     </a>
   </div>
   <div class="flex md:hidden">
-    <button 
-      (click)="toggleMenu()" 
+    <button
+      (click)="toggleMenu()"
       class="nav-menu-icon"
       [attr.aria-expanded]="isMenuOpen"
       aria-controls="main-nav-menu"
-      [attr.aria-label]="(isMenuOpen ? 'NAVBAR.ACCESSIBILITY.CLOSE_MENU' : 'NAVBAR.ACCESSIBILITY.OPEN_MENU') | translate"
+      [attr.aria-label]="
+        (isMenuOpen ? 'NAVBAR.ACCESSIBILITY.CLOSE_MENU' : 'NAVBAR.ACCESSIBILITY.OPEN_MENU')
+          | translate
+      "
     >
       <lucide-icon name="menu" class="w-4 h-20" aria-hidden="true"></lucide-icon>
     </button>
   </div>
-  <div 
+  <div
     id="main-nav-menu"
-    class="nav-menu-unified" 
-    [ngClass]="{'hidden md:flex': !isMenuOpen, 'flex': isMenuOpen}"
+    class="nav-menu-unified"
+    [ngClass]="{ 'hidden md:flex': !isMenuOpen, flex: isMenuOpen }"
   >
+    <div class="nav-common-links-container">
+      <a [routerLink]="homeLink()" class="nav-text" routerLinkActive="nav-active">
+        {{ 'NAVBAR.HOME' | translate }}
+      </a>
+      <a routerLink="/contact" class="nav-text">
+        {{ 'NAVBAR.CONTACT' | translate }}
+      </a>
+      <a routerLink="/about-us" class="nav-text">
+        {{ 'NAVBAR.ABOUT' | translate }}
+      </a>
+      <a routerLink="/manuals" class="nav-text">
+        {{ 'NAVBAR.MANUALS' | translate }}
+      </a>
+    </div>
     @if (authService.isAuthenticated()) {
       <div class="nav-authenticated-wrapper">
-        <button 
-          class="nav-icon-container" 
+        <button
+          class="nav-icon-container"
           (click)="showComunications('mensajes')"
-          [attr.aria-label]="('NAVBAR.MESSAGES' | translate) + ((countMensajes$ | async) ? ': ' + (countMensajes$ | async) + ' ' + ('NAVBAR.ACCESSIBILITY.NEW_ITEMS' | translate) : '')"
+          [attr.aria-label]="
+            ('NAVBAR.MESSAGES' | translate) +
+            ((countMensajes$ | async)
+              ? ': ' +
+                (countMensajes$ | async) +
+                ' ' +
+                ('NAVBAR.ACCESSIBILITY.NEW_ITEMS' | translate)
+              : '')
+          "
         >
           <lucide-icon name="mail" class="nav-icon-style" aria-hidden="true"></lucide-icon>
           @if (countMensajes$ | async; as countMensajes) {
             <span class="nav-badge" aria-hidden="true">{{ countMensajes }}</span>
           }
         </button>
-        <button 
-          class="nav-icon-container" 
+        <button
+          class="nav-icon-container"
           (click)="showComunications('notificaciones')"
-          [attr.aria-label]="('NAVBAR.NOTIFICATIONS' | translate) + ((countNotificaciones$ | async) ? ': ' + (countNotificaciones$ | async) + ' ' + ('NAVBAR.ACCESSIBILITY.NEW_ITEMS' | translate) : '')"
+          [attr.aria-label]="
+            ('NAVBAR.NOTIFICATIONS' | translate) +
+            ((countNotificaciones$ | async)
+              ? ': ' +
+                (countNotificaciones$ | async) +
+                ' ' +
+                ('NAVBAR.ACCESSIBILITY.NEW_ITEMS' | translate)
+              : '')
+          "
         >
           <lucide-icon name="bell" class="nav-icon-style" aria-hidden="true"></lucide-icon>
           @if (countNotificaciones$ | async; as countNotis) {
             <span class="nav-badge" aria-hidden="true">{{ countNotis }}</span>
           }
         </button>
-        <button 
-          class="nav-icon-container" 
+        <button
+          class="nav-icon-container"
           (click)="modifyProfileFunction()"
           [attr.aria-label]="'NAVBAR.PROFILE' | translate"
         >
@@ -70,12 +103,9 @@
       </div>
     } @else {
       <div class="nav-guest-wrapper">
-        <app-button
-          [label]="'NAVBAR.REGISTER' | translate"
-          variant="secondary"
-          class="w-full md:w-auto"
-          (onClick)="registerFunction()"
-        ></app-button>
+        <a class="nav-text" (click)="registerFunction()">
+          {{ 'NAVBAR.REGISTER' | translate }}
+        </a>
         <app-button
           [label]="'NAVBAR.LOGIN' | translate"
           variant="primary"
