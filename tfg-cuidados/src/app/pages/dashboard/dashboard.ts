@@ -11,7 +11,6 @@ import { ChartConfiguration, ChartData, Chart, registerables } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { CommonModule } from '@angular/common';
 import { AnalyticsService } from '../../services/analytics.service';
-import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -20,7 +19,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [BaseChartDirective, CommonModule, Buttonback, TranslateModule],
+  imports: [BaseChartDirective, CommonModule, TranslateModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })

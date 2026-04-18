@@ -38,6 +38,17 @@
           : ''
       "
     >
+    </app-inputs
+    ><app-inputs
+      name="descripcion"
+      [label]="'MANAGEMENT_SERVICES.FORM.DESCRIPTION' | translate"
+      [control]="getCtrl('descripcion')"
+      [errorMessage]="
+        getCtrl('descripcion').invalid && getCtrl('descripcion').touched
+          ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
+          : ''
+      "
+    >
     </app-inputs>
   </main>
 
@@ -71,7 +82,7 @@
 </section>
 
 <section class="management-services-global-table-container" aria-labelledby="management-list-title">
-  <h2 id="management-list-title" class=".management-service-global-subtitle">
+  <h2 id="management-list-title" class="management-service-global-subtitle">
     {{ 'MANAGEMENT_SERVICES.LIST.TITLE' | translate }}
   </h2>
 
@@ -103,6 +114,15 @@
       </th>
       <td mat-cell *matCellDef="let serv" class="management-global-text text-label">
         {{ serv.tipo_servicio }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
+        {{ 'MANAGEMENT_SERVICES.TABLE.DESCRIPTION' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let serv" class="management-global-text text-label">
+        {{ serv.descripcion }}
       </td>
     </ng-container>
 

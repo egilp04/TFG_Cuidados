@@ -68,10 +68,11 @@ export default class ManagementServicesGlobal implements OnInit {
   serviceFormular = this.fb.group({
     nombre: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
     tipo: this.fb.control<string>('', [Validators.required]),
+    descripcion: this.fb.control<string>('', [Validators.required]),
   });
 
   dataSource = new MatTableDataSource<ServicioModel>([]);
-  displayedColumns: string[] = ['nombre', 'tipo_servicio', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'tipo_servicio', 'descripcion', 'acciones'];
 
   ngOnInit() {
     this.serviceService
@@ -84,22 +85,22 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   onSave() {
-
     if (this.serviceFormular.invalid) {
       this.serviceFormular.markAllAsTouched();
       return;
     }
-    if (this.isLoading()) return
+    if (this.isLoading()) return;
 
     this.isLoading.set(true);
 
     const rawValue = this.serviceFormular.getRawValue();
     const nombre = (rawValue.nombre ?? '').trim();
     const tipo = (rawValue.tipo ?? '').trim();
+    const descripcion = (rawValue.descripcion ?? '').trim();
 
     const user = this.authService.currentUser();
     if (!user || !user.id_usuario) {
-      this.isLoading.set(false); 
+      this.isLoading.set(false);
       return;
     }
 
@@ -116,12 +117,14 @@ export default class ManagementServicesGlobal implements OnInit {
             return this.serviceService.updateService(this.currentServiceId, {
               nombre,
               tipo_servicio: tipo,
+              descripcion: descripcion,
             });
           } else {
             return this.serviceService.insertService({
               nombre,
               tipo_servicio: tipo,
               id_admin: user.id_usuario,
+              descripcion: descripcion,
             });
           }
         }),
@@ -142,7 +145,7 @@ export default class ManagementServicesGlobal implements OnInit {
         finalize(() => {
           this.isLoading.set(false);
           this.cd.markForCheck();
-        })
+        }),
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
@@ -159,6 +162,7 @@ export default class ManagementServicesGlobal implements OnInit {
     this.serviceFormular.patchValue({
       nombre: servicio.nombre,
       tipo: servicio.tipo_servicio,
+      descripcion: servicio.descripcion,
     });
   }
 
@@ -170,7 +174,7 @@ export default class ManagementServicesGlobal implements OnInit {
       data: { modo: 'eliminarAdminGlobal' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
-      maxHeight: '90vh'
+      maxHeight: '90vh',
     });
 
     dialogRef
@@ -207,7 +211,7 @@ export default class ManagementServicesGlobal implements OnInit {
         },
       });
   }
-  
+
   resetForm() {
     this.isEditing = false;
     this.currentServiceId = null;

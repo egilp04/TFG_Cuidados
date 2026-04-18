@@ -280,7 +280,8 @@
       "TYPE": "Tipo",
       "ADD": "Añadir servicio",
       "SAVE": "Guardar Cambios",
-      "CANCEL": "Cancelar"
+      "CANCEL": "Cancelar",
+      "DESCRIPTION": "Descripción"
     },
     "LIST": {
       "TITLE": "Listado de Servicios",
@@ -292,7 +293,8 @@
       "TYPE": "Tipo",
       "ACTIONS": "Acciones",
       "EDIT": "Editar",
-      "DELETE": "Eliminar"
+      "DELETE": "Eliminar",
+      "DESCRIPTION": "Descripción"
     },
     "MESSAGES": {
       "CONFIRM_DELETE": "¿Deseas eliminar este servicio?",

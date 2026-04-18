@@ -3,4 +3,5 @@ export interface ServicioModel {
   nombre: string;
   tipo_servicio: string;
   id_admin: string;
+  descripcion: string;
 }
