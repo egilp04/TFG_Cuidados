@@ -4,7 +4,7 @@
   aria-modal="true"
   aria-labelledby="login-dialog-title"
 >
-  <header class="w-full flex justify-end p-2 md:p-4">
+  <header class="header-modal">
     <button
       mat-dialog-close
       [attr.aria-label]="'LOGIN_MODAL.ACCESSIBILITY.CLOSE' | translate"
@@ -14,7 +14,8 @@
     </button>
   </header>
 
-  <h1 mat-dialog-title id="login-dialog-title" class="login-modal-title">
+  <div class="login-modal-title-container">
+     <h1 mat-dialog-title id="login-dialog-title" class="login-modal-title">
     @if (modoActual === 'login') {
       {{ 'LOGIN_MODAL.TITLES.LOGIN' | translate }}
     } @else if (modoActual === 'registro') {
@@ -26,7 +27,9 @@
     } @else {
       {{ 'LOGIN_MODAL.TITLES.NOTITLE' | translate }}
     }
-  </h1>
+  </h1> 
+  </div>
+
 
   @if (modoActual === 'login') {
     <form [formGroup]="loginForm" class="login-login-form" aria-labelledby="login-dialog-title">
