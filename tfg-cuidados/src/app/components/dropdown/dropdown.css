@@ -22,7 +22,3 @@
 .dropdown-title {
   @apply text-secondary dark:text-surface text-label;
 }
-
-.dropdown-subtitle {
-  @apply text-secondary text-h2 text-center dark:text-surface;
-}

@@ -1,9 +1,9 @@
 @reference "../../../styles.css";
 .service-modal-container {
-  @apply flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark z-30;
+  @apply flex flex-col w-full justify-center items-center p-4 bg-surface dark:bg-surface-dark z-30;
 }
 .service-select-container {
-  @apply flex flex-col gap-2 w-full;
+  @apply flex flex-col gap-1 w-full;
 }
 .service-global-services {
   @apply text-label text-primary dark:text-surface;

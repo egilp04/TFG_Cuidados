@@ -1,7 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ContractStats, EstadoContratoResponse, RegistroFechaResponse } from '../models/Analitycs-Service';
+import {
+  ContractStats,
+  EstadoContratoResponse,
+  RegistroFechaResponse,
+} from '../models/Analitycs-Service';
 
 /**
  * @description Servicio de métricas y análisis de datos para el dashboard administrativo.
@@ -12,10 +16,12 @@ import { ContractStats, EstadoContratoResponse, RegistroFechaResponse } from '..
 })
 export class AnalyticsService {
   private supabase = inject(SupabaseService).getClient();
-
   private _totalAppUsers$ = new BehaviorSubject<number>(0);
-  private _weeklyRegisters$ = new BehaviorSubject<number[]>(new Array(7).fill(0));
-    private _contractsAmountData$ = new BehaviorSubject<ContractStats>({
+  private _monthlyRegisters$ = new BehaviorSubject<{ labels: Date[]; data: number[] }>({
+    labels: [],
+    data: [],
+  });
+  private _contractsAmountData$ = new BehaviorSubject<ContractStats>({
     activos: 0,
     cancelados: 0,
   });
@@ -28,8 +34,8 @@ export class AnalyticsService {
     return this._totalAppUsers$.asObservable();
   }
 
-  fetchWeeklyRecords(): Observable<number[]> {
-    return this._weeklyRegisters$.asObservable();
+  fetchMonthlyUsersRecords(): Observable<{ labels: Date[]; data: number[] }> {
+    return this._monthlyRegisters$.asObservable();
   }
 
   getContractStats(): Observable<ContractStats> {
@@ -39,7 +45,7 @@ export class AnalyticsService {
   private async initDashboard() {
     await Promise.allSettled([
       this.chargeTotalUsers(),
-      this.chargeWeeklyRecords(),
+      this.chargeMonthlyRecords(),
       this.chargeContractsStatics(),
     ]);
     this.listenToChangesIRL();
@@ -75,25 +81,25 @@ export class AnalyticsService {
     }
   }
 
-  private async chargeWeeklyRecords() {
+  private async chargeMonthlyRecords() {
     try {
-      const haceSieteDias = new Date();
-      haceSieteDias.setDate(haceSieteDias.getDate() - 6);
-      haceSieteDias.setHours(0, 0, 0, 0);
+      const currentYear = new Date().getFullYear();
+      const primeroDeEnero = new Date(currentYear, 0, 1);
+      primeroDeEnero.setHours(0, 0, 0, 0);
 
       const { data, error } = await this.supabase
         .from('Usuario')
         .select('fecha_registro')
-        .gte('fecha_registro', haceSieteDias.toISOString());
+        .gte('fecha_registro', primeroDeEnero.toISOString());
 
       if (error) throw error;
 
       if (data) {
         const registros = data as RegistroFechaResponse[];
-        this._weeklyRegisters$.next(this.groupByDay(registros, haceSieteDias));
+        this._monthlyRegisters$.next(this.groupByCurrentYear(registros, currentYear));
       }
     } catch (e) {
-      console.error('Error cargando registros semanales:', e);
+      console.error('Error cargando registros del año en curso:', e);
     }
   }
 
@@ -108,7 +114,7 @@ export class AnalyticsService {
       .channel('admin-metrics-internal')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'Usuario' }, () => {
         this.chargeTotalUsers();
-        this.chargeWeeklyRecords();
+        this.chargeMonthlyRecords();
       })
       .on('postgres_changes', { event: '*', schema: 'public', table: 'Contrato' }, () => {
         this.chargeContractsStatics();
@@ -118,20 +124,24 @@ export class AnalyticsService {
 
   /**
    * Agregación temporal de registros.
-   * Implementa una lógica de 'Bucket Sort' (groupByDay) para distribuir
-   * las fechas de registro en un array de 7 días, facilitando su
+   * Implementa una lógica de 'Bucket Sort' (groupByCurrentYear) para distribuir
+   * las fechas de registro en un array de 12 meses, facilitando su
    * representación en gráficos lineales.
    */
-  private groupByDay(registros: RegistroFechaResponse[], fechaInicio: Date): number[] {
-    const dias = new Array(7).fill(0);
-    registros.forEach((reg) => {
-      const fechaReg = new Date(reg.fecha_registro);
-      const diffTime = fechaReg.getTime() - fechaInicio.getTime();
-      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      if (diffDays >= 0 && diffDays < 7) {
-        dias[diffDays]++;
+
+  private groupByCurrentYear(registros: RegistroFechaResponse[], year: number) {
+    const labels: Date[] = [];
+    const data: number[] = new Array(12).fill(0);
+    for (let mes = 0; mes < 12; mes++) {
+      labels.push(new Date(year, mes, 1));
+    }
+    registros.forEach((registro) => {
+      const fecha = new Date(registro.fecha_registro);
+      if (fecha.getFullYear() === year) {
+        const mesIndex = fecha.getMonth();
+        data[mesIndex]++;
       }
     });
-    return dias;
+    return { labels, data };
   }
 }

@@ -1,10 +1,10 @@
 @reference "../../../styles.css";
 .login-modal-container {
-  @apply flex flex-col w-full justify-center items-center bg-surface dark:bg-surface-dark z-30;
+  @apply flex flex-col w-full justify-center items-center bg-surface dark:bg-surface-dark z-30 p-4;
 }
 
 .login-modal-title-container {
-  @apply w-full h-auto flex justify-center items-center;
+  @apply w-full h-auto flex justify-center items-center p-2;
 }
 
 .login-modal-title {

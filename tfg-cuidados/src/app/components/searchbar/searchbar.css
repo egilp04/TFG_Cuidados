@@ -12,5 +12,5 @@
 }
 
 .search-input {
-  @apply flex p-8 md:p-10 lg:p-15 outline-none transition-all w-[90%] bg-transparent dark:placeholder:text-surface dark:text-surface;
+  @apply flex p-8 md:p-10 lg:p-15 outline-none transition-all bg-transparent dark:placeholder:text-surface dark:text-surface;
 }

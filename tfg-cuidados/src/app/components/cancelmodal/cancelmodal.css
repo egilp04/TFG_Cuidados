@@ -1,6 +1,6 @@
 @reference "../../../styles.css";
 .cancel-modal-container {
-  @apply flex flex-col justify-center items-center gap-2 w-full relative md:py-20 max-h-screen dark:bg-surface-dark bg-surface z-30;
+  @apply flex flex-col justify-center items-center p-4 w-full relative max-h-screen dark:bg-surface-dark bg-surface z-30;
 }
 
 .cancel-modal-title-container {
@@ -16,9 +16,9 @@
 }
 
 .cancel-modal-text {
-  @apply py-8 px-4 text-secondary leading-relaxed dark:text-gray-50;
+  @apply text-secondary leading-relaxed dark:text-gray-50;
 }
 
 .cancel-modal-action-container {
-  @apply flex flex-col! items-center gap-6 w-full m-0! p-0!;
+  @apply flex flex-col! items-center gap-1 w-full m-0! p-0!;
 }

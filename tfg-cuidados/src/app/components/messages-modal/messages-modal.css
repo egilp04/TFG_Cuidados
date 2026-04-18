@@ -1,18 +1,18 @@
 @reference "../../../styles.css";
 .message-modal-container {
-  @apply md:p-12 xl:p-3.5 flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark rounded-12 z-30;
+  @apply p-4 flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark rounded-12 z-30;
 }
 
 .message-modal-form-container {
-  @apply w-full flex flex-col gap-4;
+  @apply w-full flex flex-col;
 }
 
 .message-modal-text-container {
-  @apply flex flex-col border-2 border-accent rounded-2xl p-4;
+  @apply flex flex-col border-2 border-accent rounded-2xl;
 }
 
 .message-modal-label {
-  @apply text-center text-primary font-bold mb-2 uppercase text-sm dark:text-surface;
+  @apply text-center text-primary font-bold uppercase text-sm dark:text-surface;
 }
 
 .message-modal-textarea {

@@ -35,6 +35,7 @@ export default class Dashboard implements OnInit {
   public totalAppUsers = 0;
   public activeContracts = 0;
   public canceledContracts = 0;
+  private DatesToTranslate: Date[] = [];
 
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: [],
@@ -83,11 +84,25 @@ export default class Dashboard implements OnInit {
     this.translateGraphs();
     this.subcribeData();
   }
+
   private updateCharts() {
     this.cd.markForCheck();
     this.charts?.forEach((child) => {
       child.update();
     });
+  }
+
+  private actualizarEtiquetasMeses() {
+    if (this.DatesToTranslate.length === 0) return;
+
+    const idiomaActual = this.translate.currentLang || 'es';
+
+    this.lineChartData.labels = this.DatesToTranslate.map((fecha) => {
+      const mes = fecha.toLocaleString(idiomaActual, { month: 'short' });
+      return mes.charAt(0).toUpperCase() + mes.slice(1);
+    });
+
+    this.updateCharts();
   }
 
   private translateGraphs() {
@@ -96,8 +111,7 @@ export default class Dashboard implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {
         this.doughnutChartData.labels = [res.ACTIVE, res.CANCELED];
-        this.lineChartData.labels = res.DAYS;
-        this.updateCharts();
+        this.actualizarEtiquetasMeses();
       });
   }
 
@@ -109,6 +123,7 @@ export default class Dashboard implements OnInit {
         this.totalAppUsers = count;
         this.cd.markForCheck();
       });
+
     this.analyticsService
       .getContractStats()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -118,13 +133,14 @@ export default class Dashboard implements OnInit {
         this.doughnutChartData.datasets[0].data = [stats.activos, stats.cancelados];
         this.updateCharts();
       });
+
     this.analyticsService
-      .fetchWeeklyRecords()
+      .fetchMonthlyUsersRecords()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((datos) => {
-        this.lineChartData.datasets[0].data = datos;
-        console.log(this.lineChartData.datasets[0].data);
-        this.updateCharts();
+        this.lineChartData.datasets[0].data = datos.data;
+        this.DatesToTranslate = datos.labels;
+        this.actualizarEtiquetasMeses();
       });
   }
 }

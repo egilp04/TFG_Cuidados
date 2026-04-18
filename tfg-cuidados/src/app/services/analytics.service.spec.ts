@@ -14,7 +14,7 @@ describe('AnalyticsService', () => {
     };
     // Mock para chargeTotalUsers
     queryBuilder.select.and.returnValue(Promise.resolve({ count: 10, error: null }));
-    // Mock para chargeWeeklyRecords
+    // Mock para chargeMonthlyRecords
     queryBuilder.gte.and.returnValue(
       Promise.resolve({ data: [{ fecha_registro: new Date().toISOString() }], error: null }),
     );
@@ -53,7 +53,7 @@ describe('AnalyticsService', () => {
   }));
 
   it('should aggregate weekly records', fakeAsync(() => {
-    service.fetchWeeklyRecords().subscribe((data) => {
+    service.fetchMonthlyUsersRecords().subscribe((data) => {
       if (data.some((v) => v > 0)) {
         expect(data.length).toBe(7);
         expect(data.reduce((a, b) => a + b, 0)).toBeGreaterThanOrEqual(1);
