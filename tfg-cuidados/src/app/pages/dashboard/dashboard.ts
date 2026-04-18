@@ -11,7 +11,6 @@ import { ChartConfiguration, ChartData, Chart, registerables } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { CommonModule } from '@angular/common';
 import { AnalyticsService } from '../../services/analytics.service';
-import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -20,7 +19,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [BaseChartDirective, CommonModule, Buttonback, TranslateModule],
+  imports: [BaseChartDirective, CommonModule, TranslateModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -35,6 +34,7 @@ export default class Dashboard implements OnInit {
   public totalAppUsers = 0;
   public activeContracts = 0;
   public canceledContracts = 0;
+  private DatesToTranslate: Date[] = [];
 
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: [],
@@ -83,11 +83,25 @@ export default class Dashboard implements OnInit {
     this.translateGraphs();
     this.subcribeData();
   }
+
   private updateCharts() {
     this.cd.markForCheck();
     this.charts?.forEach((child) => {
       child.update();
     });
+  }
+
+  private actualizarEtiquetasMeses() {
+    if (this.DatesToTranslate.length === 0) return;
+
+    const idiomaActual = this.translate.currentLang || 'es';
+
+    this.lineChartData.labels = this.DatesToTranslate.map((fecha) => {
+      const mes = fecha.toLocaleString(idiomaActual, { month: 'short' });
+      return mes.charAt(0).toUpperCase() + mes.slice(1);
+    });
+
+    this.updateCharts();
   }
 
   private translateGraphs() {
@@ -96,8 +110,9 @@ export default class Dashboard implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {
         this.doughnutChartData.labels = [res.ACTIVE, res.CANCELED];
-        this.lineChartData.labels = res.DAYS;
-        this.updateCharts();
+        this.barChartData.datasets[0].label = res.DEMAND || 'Demanda';
+        this.barChartData.datasets[1].label = res.SUPPLY || 'Oferta';
+        this.actualizarEtiquetasMeses();
       });
   }
 
@@ -109,6 +124,7 @@ export default class Dashboard implements OnInit {
         this.totalAppUsers = count;
         this.cd.markForCheck();
       });
+
     this.analyticsService
       .getContractStats()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -118,13 +134,76 @@ export default class Dashboard implements OnInit {
         this.doughnutChartData.datasets[0].data = [stats.activos, stats.cancelados];
         this.updateCharts();
       });
+
     this.analyticsService
-      .fetchWeeklyRecords()
+      .fetchMonthlyUsersRecords()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((datos) => {
-        this.lineChartData.datasets[0].data = datos;
-        console.log(this.lineChartData.datasets[0].data);
+        this.lineChartData.datasets[0].data = datos.data;
+        this.DatesToTranslate = datos.labels;
+        this.actualizarEtiquetasMeses();
+      });
+    this.analyticsService
+      .getServicesStats()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((stats) => {
+        this.barChartData.labels = stats.labels;
+        this.barChartData.datasets[0].data = stats.demand;
+        this.barChartData.datasets[1].data = stats.supply;
+
         this.updateCharts();
       });
   }
+
+  public barChartData: ChartConfiguration<'bar'>['data'] = {
+    labels: [],
+    datasets: [
+      {
+        label: 'Demanda (Contratos)',
+        data: [],
+        backgroundColor: '#17c448',
+        borderRadius: 4,
+      },
+      {
+        label: 'Oferta (Publicados)',
+        data: [],
+        backgroundColor: '#60A5FA',
+        borderRadius: 4,
+      },
+    ],
+  };
+
+  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: '#9ca3af',
+        },
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+          color: '#9ca3af',
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)',
+        },
+      },
+      x: {
+        grid: {
+          display: true,
+          color: 'rgba(255, 255, 255, 0.1)',
+        },
+        ticks: {
+          color: '#9ca3af',
+        },
+      },
+    },
+  };
 }

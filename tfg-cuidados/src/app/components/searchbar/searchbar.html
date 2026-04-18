@@ -1,18 +1,14 @@
-<section 
-  class="search-bar-container group" 
-  role="search" 
+<section
+  class="search-bar-container group"
+  role="search"
   [attr.aria-label]="'SEARCH.ACCESSIBILITY_SECTION' | translate"
 >
   <div class="search-icon">
-    <lucide-icon 
-      [name]="'search'" 
-      class="search-icon" 
-      aria-hidden="true"
-    ></lucide-icon>
+    <lucide-icon [name]="'search'" class="search-icon" aria-hidden="true"></lucide-icon>
   </div>
 
   <input
-    type="search"
+    type="text"
     [formControl]="control"
     (input)="onInput($event)"
     [placeholder]="'SEARCH_PLACEHOLDER' | translate"

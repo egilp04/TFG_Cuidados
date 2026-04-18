@@ -1,0 +1,55 @@
+<section
+  class="directory-main"
+  role="main"
+  [attr.aria-label]="'SEARCH_BUSINESS.ACCESSIBILITY.MAIN_SECTION' | translate"
+>
+  <div class="directory-text-container">
+    <h1 id="directory-main-title" class="directory-title">{{ 'DIRECTORY.TITLE' | translate }}</h1>
+    <p id="directory-main-title" class="directory-subtitle">
+      {{ 'DIRECTORY.SUBTITLE' | translate }}
+    </p>
+  </div>
+  <div
+    class="directory-container"
+    role="list"
+    [attr.aria-label]="'SEARCH_BUSINESS.ACCESSIBILITY.RESULTS_LIST' | translate"
+  >
+    @for (service of allServices(); track service.id_servicio) {
+      <main
+        class="directory-card-container"
+        role="listitem"
+        [attr.aria-labelledby]="'service-id-' + service.id_servicio"
+      >
+        <header class="directory-card-header">
+          <h2 [id]="'service-name-' + service.nombre" class="directory-bssn-name text-h2">
+            {{ service.nombre }}
+          </h2>
+        </header>
+
+        <section>
+          <div class="w-full items-center text-center">
+            <label class="directory-description-title-section text-label">
+              {{ 'SEARCH_BUSINESS.CARD.DESCRIPTION' | translate }}
+            </label>
+          </div>
+          <p class="directory-description-section">{{ service.descripcion }}</p>
+        </section>
+
+        <footer class="directory-card-btn-container">
+          <app-button
+            [label]="'SEARCH_BUSINESS.BTN_CONTRACT' | translate"
+            variant="primary"
+            class="flex-1"
+            (click)="showOffersByService(service)"
+            [attr.aria-label]="('SEARCH_BUSINESS.BTN_CONTRACT' | translate) + ': ' + service.nombre"
+          >
+          </app-button>
+        </footer>
+      </main>
+    } @empty {
+      <main class="directory-no-bssns" role="status" aria-live="polite">
+        {{ 'SEARCH_BUSINESS.LIST.EMPTY' | translate }}
+      </main>
+    }
+  </div>
+</section>

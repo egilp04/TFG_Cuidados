@@ -22,6 +22,7 @@ import { ContratoModel } from '../../models/Contrato';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { EmpresaModel, ServicioHorarioResponse } from '../../models/Bussiness-Service';
 import { BusinessService } from '../../services/business.service';
+import { Router } from '@angular/router';
 
 export interface EmpresaUI extends EmpresaModel {
   seleccion?: ServicioHorarioResponse;
@@ -56,6 +57,19 @@ export default class SearchBusiness implements OnInit {
   public searchFilterItem = signal<string>('');
   public controlFilterItem = new FormControl('');
 
+  public idServicioSeleccionado = signal<string | null>(null);
+  private router = inject(Router);
+
+  constructor() {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as { idServicio: string };
+    if (state && state.idServicio) {
+      this.idServicioSeleccionado.set(state.idServicio);
+    } else if (history.state && history.state.idServicio) {
+      this.idServicioSeleccionado.set(history.state.idServicio);
+    }
+  }
+
   public filteredBussinesses = computed(() => {
     const filtro = this.searchFilterItem().toLowerCase().trim();
     if (!filtro) return this.allBussinesses();
@@ -64,7 +78,7 @@ export default class SearchBusiness implements OnInit {
       const sameService = emp.Servicio_Horario?.some(
         (sh: ServicioHorarioResponse) =>
           sh.Servicio?.nombre.toLowerCase().includes(filtro) ||
-          sh.Horario?.dia_semana.toLowerCase().includes(filtro)
+          sh.Horario?.dia_semana.toLowerCase().includes(filtro),
       );
 
       return sameName || sameService;
@@ -84,15 +98,24 @@ export default class SearchBusiness implements OnInit {
           console.error('Error IRL Empresas:', err);
           return this.translate.get('SEARCH_BUSINESS.MESSAGES.CONNECTION_ERROR').pipe(
             tap((msg) => this.messageService.showMessage(msg, 'error')),
-            map(() => [])
+            map(() => []),
           );
-        })
+        }),
       )
       .subscribe((data: EmpresaModel[]) => {
-        const dataConSeleccion: EmpresaUI[] = data.map((e) => ({
-          ...e,
-          seleccion: undefined,
-        }));
+        const targetId = this.idServicioSeleccionado()?.trim();
+        const dataConSeleccion: EmpresaUI[] = data
+          .map((e) => {
+            const horariosFiltrados = targetId
+              ? e.Servicio_Horario?.filter((sh) => sh.Servicio?.id_servicio === targetId)
+              : e.Servicio_Horario;
+            return {
+              ...e,
+              Servicio_Horario: horariosFiltrados,
+              seleccion: undefined,
+            };
+          })
+          .filter((e) => e.Servicio_Horario && e.Servicio_Horario.length > 0);
         this.allBussinesses.set(dataConSeleccion);
         this.cd.markForCheck();
       });
@@ -101,7 +124,7 @@ export default class SearchBusiness implements OnInit {
   applyFilter(valor: string) {
     this.searchFilterItem.set(valor);
   }
-  
+
   toHire(empresa: EmpresaUI) {
     const user = this.authService.currentUser();
     if (!user) {
@@ -127,7 +150,7 @@ export default class SearchBusiness implements OnInit {
         console.log('ID que buscas:', idSeleccionado);
         console.log(
           'IDs en tus contratos:',
-          contratos.map((c) => c.id_sh_plano)
+          contratos.map((c) => c.id_sh_plano),
         );
         const yaContratado = contratos.find((c) => {
           const coincidenIds = String(c.id_sh_plano) === String(idSeleccionado);
@@ -163,14 +186,14 @@ export default class SearchBusiness implements OnInit {
             switchMap(() =>
               this.translate
                 .get('SEARCH_BUSINESS.MESSAGES.CONTRACT_SUCCESS')
-                .pipe(map((text) => ({ type: 'exito' as const, text })))
+                .pipe(map((text) => ({ type: 'exito' as const, text }))),
             ),
             catchError((err) => {
               console.error('Error al contratar:', err);
               return this.translate
                 .get('SEARCH_BUSINESS.MESSAGES.CONTRACT_ERROR')
                 .pipe(map((text) => ({ type: 'error' as const, text })));
-            })
+            }),
           )
           .subscribe((resultado) => {
             this.messageService.showMessage(resultado.text, resultado.type);

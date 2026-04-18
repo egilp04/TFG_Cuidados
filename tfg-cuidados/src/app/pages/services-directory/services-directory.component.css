@@ -1,0 +1,59 @@
+@reference "../../../styles.css";
+.directory-card-container {
+  @apply items-center bg-surface dark:bg-secondary-dark p-20 rounded-2xl shadow-md border border-gray-200 dark:border-gray-500 flex flex-col justify-around hover:shadow-lg transition-shadow gap-12;
+}
+
+.directory-bssn-name {
+  @apply text-h2 font-bold text-primary dark:text-surface;
+}
+
+.directory-card-header {
+  @apply flex flex-col justify-center w-full items-center;
+}
+
+.directory-description-title-section {
+  @apply font-semibold text-primary text-label dark:text-surface;
+}
+
+.directory-description-section {
+  @apply text-p text-gray-600 dark:text-gray-50 line-clamp-3 p-2 break-all overflow-y-auto;
+}
+
+.directory-select-section {
+  @apply mt-4 pt-4 border-t border-gray-400 flex flex-col gap-2;
+}
+
+.description-section {
+  @apply text-p text-gray-600 dark:text-gray-50 line-clamp-3 p-2 overflow-y-auto max-h-[400px] break-words items-center;
+}
+
+.directory-card-select {
+  @apply w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm transition-all cursor-pointer;
+}
+
+.directory-card-btn-container {
+  @apply flex justify-around items-center mt-8 gap-3;
+}
+.directory-main {
+  @apply flex flex-col items-center mt-20 px-10 gap-10 lg:gap-20;
+}
+
+.directory-container {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-28 w-full p-10;
+}
+
+.directory-no-bssns {
+  @apply col-span-full text-center py-10 text-gray-500 dark:text-surface;
+}
+
+.directory-text-container {
+  @apply w-full text-center gap-2 flex flex-col;
+}
+
+.directory-title {
+  @apply text-primary text-h1 dark:text-surface;
+}
+
+.directory-subtitle {
+  @apply text-secondary dark:text-surface text-p font-semibold;
+}

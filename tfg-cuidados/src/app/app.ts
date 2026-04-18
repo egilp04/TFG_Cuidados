@@ -5,10 +5,20 @@ import { Navbar } from './components/navbar/navbar';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
 import { GlobalNotificationsComponent } from './components/global-notifications/global-notifications.component';
+import { AiAssistantComponent } from './components/ai-assistant/ai-assistant.component';
+import { AuthService } from './services/auth.service';
+import { NavHomeComponent } from './components/nav-home/nav-home.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Footer, Navbar, GlobalNotificationsComponent],
+  imports: [
+    RouterOutlet,
+    Footer,
+    Navbar,
+    GlobalNotificationsComponent,
+    AiAssistantComponent,
+    NavHomeComponent,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -16,6 +26,7 @@ export class App {
   protected readonly title = signal('tfg_app');
   public router = inject(Router);
   private translate = inject(TranslateService);
+  authService = inject(AuthService);
   private platformId = inject(PLATFORM_ID);
 
   constructor() {

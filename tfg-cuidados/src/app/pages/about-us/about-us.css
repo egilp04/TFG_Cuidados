@@ -1,0 +1,36 @@
+@reference "../../../styles.css";
+.about-container {
+  @apply flex flex-col justify-center items-center p-20 md:px-20 xl:px-24;
+}
+
+.about-title {
+  @apply text-h1 text-primary mt-10 mb-20 text-center dark:text-surface;
+}
+
+.about-description {
+  @apply text-p text-secondary mb-20 md:mt-20 md:mb-20 dark:text-surface;
+}
+
+.about-list {
+  @apply list-disc list-outside px-10 space-y-4 text-secondary text-p dark:text-surface mb-20 2xl:mb-24;
+}
+
+.about-list-title {
+  @apply font-bold text-primary dark:text-accent-dark;
+}
+
+.about-sublist {
+  @apply list-none ml-4 mt-2 space-y-2;
+}
+
+.about-sublist-title {
+  @apply font-semibold text-primary dark:text-accent-dark;
+}
+
+.about-subtitle {
+  @apply text-h2 mt-10 mb-20 2xl:mb-24 text-primary text-center dark:text-surface font-bold;
+}
+
+.about-grid {
+  @apply h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 my-20 w-full;
+}

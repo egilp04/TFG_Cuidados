@@ -1,18 +1,18 @@
-<div 
-  class="dropdown-container w-full relative" 
-  role="combobox" 
-  [attr.aria-expanded]="isOpen" 
+<div
+  class="dropdown-container w-full relative"
+  role="combobox"
+  [attr.aria-expanded]="isOpen"
   aria-haspopup="listbox"
   [attr.aria-controls]="name() + '-listbox'"
   [attr.aria-owns]="name() + '-listbox'"
 >
-  <section 
-    class="dropdown-inner-container flex items-center justify-between cursor-pointer w-full p-3 md:p-4" 
+  <section
+    class="dropdown-inner-container flex items-center justify-between cursor-pointer w-full p-3 md:p-4"
     (click)="toggleDropdown()"
     tabindex="0"
     role="button"
     [attr.aria-haspopup]="'listbox'"
-    (keydown.arrowdown)="toggleDropdown()" 
+    (keydown.arrowdown)="toggleDropdown()"
     (keyup.enter)="toggleDropdown()"
     [attr.aria-label]="label | translate"
     [id]="name() + '-trigger'"
@@ -20,7 +20,7 @@
     <span class="dropdown-title truncate mr-2">
       {{ selectedOption || label | translate }}
     </span>
-    
+
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -38,16 +38,16 @@
   </section>
 
   @if (isOpen) {
-    <section 
+    <section
       [id]="name() + '-listbox'"
-      class="dropdown-open-container options-list absolute z-50 w-full mt-1 max-h-60 overflow-y-auto shadow-lg rounded-md"
+      class="dropdown-open-container options-list absolute z-50 w-full mt-1 overflow-y-auto shadow-lg rounded-md"
       role="listbox"
       [attr.aria-labelledby]="name() + '-trigger'"
     >
       @for (option of options; track option; let i = $index) {
-        <div 
+        <div
           [id]="name() + '-option-' + i"
-          class="option-item dropdown-options p-3 md:p-4 cursor-pointer hover:bg-opacity-10 transition-colors" 
+          class="option-item dropdown-options p-3 md:p-4 cursor-pointer hover:bg-opacity-10 transition-colors"
           (click)="selectOption(option)"
           role="option"
           [attr.aria-selected]="selectedOption === option"

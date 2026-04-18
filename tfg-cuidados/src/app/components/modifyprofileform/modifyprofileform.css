@@ -1,0 +1,14 @@
+@reference "../../../styles.css";
+.modify-profile-form-container {
+  @apply flex flex-col items-center w-full;
+}
+
+.modify-profile-form {
+  @apply flex flex-col gap-2 w-full max-w-300 xl:max-w-[600px];
+}
+.modify-form-container {
+  @apply flex justify-center;
+}
+.modify-profile-btn-container {
+  @apply flex flex-col gap-4 my-10 2xl:my-10 w-full items-center;
+}

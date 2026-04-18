@@ -1,0 +1,30 @@
+@reference "../../../styles.css";
+
+.managements-services-global-container {
+  @apply flex flex-col p-20 gap-20 mt-20 max-h-screen;
+}
+.management-title-services-global {
+  @apply text-h1 text-primary text-center dark:text-surface;
+}
+
+.management-services-global-table-container {
+  @apply flex flex-col p-6 gap-4;
+}
+
+.management-services-global-form {
+  @apply w-full h-full md:px-40 gap-20 flex flex-col;
+}
+
+.management-services-global-form-btn {
+  @apply flex gap-10 justify-center items-center;
+}
+
+.management-services-global-search {
+  @apply text-label text-primary dark:text-surface;
+}
+.management-service-global-actions {
+  @apply flex justify-center items-center gap-2 p-10;
+}
+.management-service-global-subtitle {
+  @apply text-secondary text-h2 text-center dark:text-surface;
+}

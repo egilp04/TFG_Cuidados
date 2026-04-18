@@ -9,10 +9,10 @@
     </button>
   </header>
 
-  <h2 id="info-modal-title" class="info-contract-title">
+  <label id="info-modal-title" class="info-contract-activity-title">
     {{ 'INFO_CONTRACT.TITLE_DETAILS' | translate }}:
-  </h2>
-  <header class="info-contract-content-container">
+  </label>
+  <header class="info-contract-activity-container">
     <mat-dialog-content class="info-contract-content">
       <article role="group" [attr.aria-label]="'INFO_CONTRACT.TITLE_DETAILS' | translate">
         <p class="info-contract-text">
@@ -46,7 +46,9 @@
       </article>
     </mat-dialog-content>
   </header>
-  <h2 class="info-contract-activity-title">{{ 'INFO_CONTRACT.TITLE_ACTIVITY' | translate }}:</h2>
+  <label class="info-contract-activity-title"
+    >{{ 'INFO_CONTRACT.TITLE_ACTIVITY' | translate }}:</label
+  >
   <main class="info-contract-activity-container">
     <mat-dialog-content class="info-contract-content">
       <article role="group" [attr.aria-label]="'INFO_CONTRACT.TITLE_ACTIVITY' | translate">

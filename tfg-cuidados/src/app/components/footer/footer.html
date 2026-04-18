@@ -4,25 +4,13 @@
   [attr.aria-label]="'FOOTER.ACCESSIBILITY.FOOTER_SECTION' | translate"
 >
   <nav [attr.aria-label]="'FOOTER.ACCESSIBILITY.NAV_LABEL' | translate" class="footer-nav">
-    <a [routerLink]="homeLink()" class="footer-text">
-      {{ 'FOOTER.HOME' | translate }}
-    </a>
-    <a routerLink="/contact" class="footer-text">
-      {{ 'FOOTER.CONTACT' | translate }}
-    </a>
-    <a routerLink="/about-us" class="footer-text">
-      {{ 'FOOTER.ABOUT' | translate }}
-    </a>
-    <a routerLink="/manuals" class="footer-text">
-      {{ 'FOOTER.MANUALS' | translate }}
-    </a>
     <a routerLink="/terms" class="footer-text">
       {{ 'FOOTER.LEGAL_ASPECTS' | translate }}
     </a>
     <a routerLink="/terms" class="footer-text">
       {{ 'FOOTER.PRIVACY_POLICTICS' | translate }}
     </a>
-    <a routerLink="/terms" class="footer-text">
+    <a routerLink="/cookies_politics" class="footer-text">
       {{ 'FOOTER.COOKIES_POLICIES' | translate }}
     </a>
   </nav>

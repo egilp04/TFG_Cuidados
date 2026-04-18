@@ -56,25 +56,36 @@ export default class Notifications implements OnInit {
       )
       .subscribe((data: ComunicacionModel[]) => {
         this.dataSource.data = data;
-
         if (this.paginator) {
           this.dataSource.paginator = this.paginator;
+        }
+        const noLeidas = data.filter((n) => !n.leido);
+        if (noLeidas.length > 0) {
+          this.markAsRead(noLeidas);
         }
         this.cd.markForCheck();
       });
   }
 
-  markAsRead(noti: ComunicacionModel) {
-    if (!noti.leido) {
+  markAsRead(notis: ComunicacionModel | ComunicacionModel[]) {
+    const lista = Array.isArray(notis) ? notis : [notis];
+
+    lista.forEach((noti) => {
+      if (noti.leido || !noti.id_comunicacion) return;
       noti.leido = true;
-      if (noti.id_comunicacion) {
-        this.comunicationService
-          .updateComunicacion(noti.id_comunicacion, { leido: true })
-          .subscribe({
-            error: (err) => console.error('Error al marcar notificación:', err),
-          });
-      }
-    }
+      this.comunicationService
+        .updateComunicacion(noti.id_comunicacion, { leido: true })
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          error: (err) => {
+            console.error('Error al marcar notificación:', err);
+            noti.leido = false;
+            this.cd.markForCheck();
+          },
+        });
+    });
+    this.comunicationService.refreshUsersData();
+    this.cd.markForCheck();
   }
 
   deleteCommunication(mensaje: ComunicacionModel) {
