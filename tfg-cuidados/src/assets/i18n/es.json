@@ -924,5 +924,9 @@
         "TEXT": "Es posible que actualicemos la Política de Cookies de nuestro sitio web, por ello le recomendamos revisar esta política cada vez que nos visite para estar adecuadamente informado."
       }
     }
+  },
+  "DIRECTORY": {
+    "TITLE": "Catálogo de servicios",
+    "SUBTITLE": "Para contratar, selecciona un tipo de servicio y verá las empresas que lo ofrecen"
   }
 }

@@ -931,5 +931,9 @@
         "TEXT": "We may update our website's Cookie Policy, so we recommend you review this policy every time you visit us to stay properly informed."
       }
     }
+  },
+  "DIRECTORY": {
+    "TITLE": "Service Directory",
+    "SUBTITLE": "To hire a service, choose an option and you will see the business offers"
   }
 }

@@ -50,7 +50,8 @@ export class BusinessService {
         id_servicio_horario,
         precio,
         descripcion,
-        Servicio ( nombre, tipo_servicio ),
+        id_servicio,
+        Servicio ( id_servicio, nombre, tipo_servicio),
         Horario ( dia_semana, hora )
       )
     `,
@@ -62,15 +63,16 @@ export class BusinessService {
       return;
     }
 
-    console.log('Empresas con servicios cargadas:', data);
-
     if (data) {
-      const formatted: EmpresaModel[] = (data as SupabaseEmpresaJoin[]).map((emp) => ({
-        ...(emp as any),
-        nombre: emp.Usuario?.nombre || 'Empresa (Sin nombre)',
-        email: emp.Usuario?.email || '',
-        Servicio_Horario: emp.Servicio_Horario || [],
-      } as EmpresaModel));
+      const formatted: EmpresaModel[] = (data as SupabaseEmpresaJoin[]).map(
+        (emp) =>
+          ({
+            ...(emp as any),
+            nombre: emp.Usuario?.nombre || 'Empresa (Sin nombre)',
+            email: emp.Usuario?.email || '',
+            Servicio_Horario: emp.Servicio_Horario || [],
+          }) as EmpresaModel,
+      );
       this.businessesList$.next(formatted);
     }
   }

@@ -45,3 +45,15 @@
 .directory-no-bssns {
   @apply col-span-full text-center py-10 text-gray-500 dark:text-surface;
 }
+
+.directory-text-container {
+  @apply w-full text-center gap-2 flex flex-col;
+}
+
+.directory-title {
+  @apply text-primary text-h1 dark:text-surface;
+}
+
+.directory-subtitle {
+  @apply text-secondary dark:text-surface text-p font-semibold;
+}
