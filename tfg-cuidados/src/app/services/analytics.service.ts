@@ -25,6 +25,15 @@ export class AnalyticsService {
     activos: 0,
     cancelados: 0,
   });
+  private _servicesStats$ = new BehaviorSubject<{
+    labels: string[];
+    demand: number[];
+    supply: number[];
+  }>({
+    labels: [],
+    demand: [],
+    supply: [],
+  });
 
   constructor() {
     this.initDashboard();
@@ -42,11 +51,16 @@ export class AnalyticsService {
     return this._contractsAmountData$.asObservable();
   }
 
+  getServicesStats(): Observable<{ labels: string[]; demand: number[]; supply: number[] }> {
+    return this._servicesStats$.asObservable();
+  }
+
   private async initDashboard() {
     await Promise.allSettled([
       this.chargeTotalUsers(),
       this.chargeMonthlyRecords(),
       this.chargeContractsStatics(),
+      this.chargeServicesStats(),
     ]);
     this.listenToChangesIRL();
   }
@@ -118,6 +132,7 @@ export class AnalyticsService {
       })
       .on('postgres_changes', { event: '*', schema: 'public', table: 'Contrato' }, () => {
         this.chargeContractsStatics();
+        this.chargeServicesStats();
       })
       .subscribe();
   }
@@ -144,4 +159,45 @@ export class AnalyticsService {
     });
     return { labels, data };
   }
+
+  private async chargeServicesStats() {
+    try {
+      const { data, error } = await this.supabase.from('Servicio').select(`
+          nombre,
+          Servicio_Horario (
+            id_servicio_horario,
+            Contrato (id_contrato)
+          )
+        `);
+      if (error) throw error;
+      if (data) {
+        const labels: string[] = [];
+        const demand: number[] = [];
+        const supply: number[] = [];
+
+        data.forEach((servicio: any) => {
+          labels.push(servicio.nombre);
+
+          //  OFERTA: Cantidad de horarios/ofertas que tiene este servicio
+          const horarios = servicio.Servicio_Horario || [];
+          supply.push(horarios.length);
+
+          // DEMANDA: los contratos de todos los horarios de este servicio
+          let totalContratos = 0;
+          horarios.forEach((horario: any) => {
+            if (horario.Contrato) {
+              totalContratos += horario.Contrato.length;
+            }
+          });
+          demand.push(totalContratos);
+        });
+
+        this._servicesStats$.next({ labels, demand, supply });
+      }
+    } catch (e) {
+      console.error('Error cargando estadísticas de servicios:', e);
+    }
+  }
+
+
 }

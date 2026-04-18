@@ -168,6 +168,9 @@
       "CONTRACTS_CHART_DESC": "Contracts chart: shows the proportion of active versus canceled contracts.",
       "LOGIN_CHART_DESC": "Login chart: shows the evolution of user logins over time."
     },
+    "SERVICES": {
+      "TITLE": "Services demand and supply"
+    },
     "NO_CONTRACTS": "No contracts",
     "CHARGING": "Charging Data",
     "TITLE_CONTRACTS": "Contracts",
@@ -184,7 +187,9 @@
     "CHART": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
-      "DAYS": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+      "DAYS": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      "DEMAND": "Demand",
+      "SUPPLY": "Supply"
     }
   },
   "MAIN_MENU": {

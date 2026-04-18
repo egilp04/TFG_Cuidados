@@ -110,6 +110,8 @@ export default class Dashboard implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {
         this.doughnutChartData.labels = [res.ACTIVE, res.CANCELED];
+        this.barChartData.datasets[0].label = res.DEMAND || 'Demanda';
+        this.barChartData.datasets[1].label = res.SUPPLY || 'Oferta';
         this.actualizarEtiquetasMeses();
       });
   }
@@ -141,5 +143,67 @@ export default class Dashboard implements OnInit {
         this.DatesToTranslate = datos.labels;
         this.actualizarEtiquetasMeses();
       });
+    this.analyticsService
+      .getServicesStats()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((stats) => {
+        this.barChartData.labels = stats.labels;
+        this.barChartData.datasets[0].data = stats.demand;
+        this.barChartData.datasets[1].data = stats.supply;
+
+        this.updateCharts();
+      });
   }
+
+  public barChartData: ChartConfiguration<'bar'>['data'] = {
+    labels: [],
+    datasets: [
+      {
+        label: 'Demanda (Contratos)',
+        data: [],
+        backgroundColor: '#17c448',
+        borderRadius: 4,
+      },
+      {
+        label: 'Oferta (Publicados)',
+        data: [],
+        backgroundColor: '#60A5FA',
+        borderRadius: 4,
+      },
+    ],
+  };
+
+  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: '#9ca3af',
+        },
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+          color: '#9ca3af',
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)',
+        },
+      },
+      x: {
+        grid: {
+          display: true,
+          color: 'rgba(255, 255, 255, 0.1)',
+        },
+        ticks: {
+          color: '#9ca3af',
+        },
+      },
+    },
+  };
 }

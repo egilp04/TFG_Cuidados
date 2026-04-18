@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ServiceService } from '../../services/service.service';
 
 @Component({
   selector: 'app-directorio-servicios',
@@ -6,4 +7,9 @@ import { Component } from '@angular/core';
   templateUrl: './directorio-servicios.component.html',
   styleUrl: './directorio-servicios.component.css',
 })
-export default class DirectorioServiciosComponent {}
+export default class DirectorioServiciosComponent implements OnInit {
+  private serviceService = inject(ServiceService);
+  public isLoading = signal(false);
+
+  ngOnInit() {}
+}

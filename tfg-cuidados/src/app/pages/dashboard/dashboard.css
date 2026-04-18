@@ -5,7 +5,7 @@
 }
 
 .chart-wrapper {
-  @apply relative w-full h-62.5 block mb-10;
+  @apply relative w-full h-62.5 2xl:h-[30rem] block mb-4;
 }
 
 .no-contracts-msg {

@@ -44,6 +44,30 @@
     }
   </section>
 
+  <section class="dashboard-services-container" aria-labelledby="services-chart-title">
+    <h2 id="services-chart-title" class="dashboard-login-title">
+      {{ 'DASHBOARD.SERVICES.TITLE' | translate }}
+    </h2>
+
+    @defer (on viewport) {
+      <div class="chart-wrapper">
+        <canvas
+          baseChart
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [type]="'bar'"
+          role="img"
+          [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.SERVICES_CHART_DESC' | translate"
+        >
+        </canvas>
+      </div>
+    } @placeholder {
+      <p class="dashboard-login-text" aria-live="polite">
+        {{ 'DASHBOARD.CHARGING' | translate }}
+      </p>
+    }
+  </section>
+
   <section class="dashboard-total-users-container" aria-labelledby="users-title">
     <div class="dashboard-total-users">
       <h2 id="users-title" class="dashboard-total-users-title">

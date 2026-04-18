@@ -169,6 +169,9 @@
       "CONTRACTS_CHART_DESC": "Gráfico de contratos: muestra la proporción de contratos activos frente a cancelados.",
       "LOGIN_CHART_DESC": "Gráfico de accesos: muestra la evolución de los inicios de sesión en el tiempo."
     },
+    "SERVICES": {
+      "TITLE": "Oferta y demanda de servicios"
+    },
     "NO_CONTRACTS": "Sin contratos",
     "CHARGING": "Cargando gráficas",
     "TITLE_CONTRACTS": "Contratos",
@@ -185,7 +188,9 @@
     "CHART": {
       "ACTIVE": "Activos",
       "CANCELED": "Cancelados",
-      "DAYS": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"]
+      "DAYS": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
+      "DEMAND": "Demanda",
+      "SUPPLY": "Oferta"
     }
   },
   "MAIN_MENU": {
