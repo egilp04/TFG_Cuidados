@@ -23,7 +23,7 @@
   @apply text-label text-primary dark:text-surface;
 }
 .management-service-global-actions {
-  @apply flex justify-center items-center gap-2 p-10;
+  @apply flex justify-end items-center gap-2 p-10;
 }
 .management-service-global-subtitle {
   @apply text-secondary text-h2 text-center dark:text-surface;

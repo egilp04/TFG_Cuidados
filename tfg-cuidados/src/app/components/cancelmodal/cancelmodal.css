@@ -1,6 +1,6 @@
 @reference "../../../styles.css";
 .cancel-modal-container {
-  @apply flex flex-col justify-center items-center p-4 w-full relative max-h-screen dark:bg-surface-dark bg-surface z-30;
+  @apply flex flex-col justify-center items-center p-4 w-full relative max-h-screen dark:bg-surface-dark bg-surface z-30 overflow-hidden;
 }
 
 .cancel-modal-title-container {
@@ -16,7 +16,7 @@
 }
 
 .cancel-modal-text {
-  @apply text-secondary leading-relaxed dark:text-gray-50;
+  @apply text-secondary leading-relaxed dark:text-gray-50 overflow-hidden text-center;
 }
 
 .cancel-modal-action-container {

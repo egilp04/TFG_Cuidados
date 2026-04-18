@@ -1,7 +1,10 @@
-<section class="modify-form-container" [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.SECTION_TITLE' | translate">
-  <form 
-    [formGroup]="profileForm" 
-    (ngSubmit)="onSubmit()" 
+<section
+  class="modify-form-container"
+  [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.SECTION_TITLE' | translate"
+>
+  <form
+    [formGroup]="profileForm"
+    (ngSubmit)="onSubmit()"
     class="modify-profile-form"
     [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.FORM_NAME' | translate"
   >
@@ -14,8 +17,8 @@
       ></app-inputs>
     }
     @if (userRole === 'cliente') {
-      <div class="register-form-col">
-        <div class="register-form-row">
+      <div class="modify-form-col">
+        <div class="modify-form-row">
           <app-inputs
             name="primerApe"
             [label]="'MODIFY_PROFILE.LABELS.SURNAME1' | translate"
@@ -33,7 +36,7 @@
         </div>
       </div>
     } @else if (userRole === 'empresa') {
-      <div class="register-form-col">
+      <div class="modify-form-col">
         <app-inputs
           name="nombreEmpresa"
           [label]="'MODIFY_PROFILE.LABELS.COMPANY_NAME' | translate"
@@ -50,7 +53,9 @@
             rows="4"
             class="input-text-area"
             [placeholder]="'MODIFY_PROFILE.PLACEHOLDER.DESCRIPTION' | translate"
-            [attr.aria-invalid]="profileForm.get('descripcion')?.invalid && profileForm.get('descripcion')?.touched"
+            [attr.aria-invalid]="
+              profileForm.get('descripcion')?.invalid && profileForm.get('descripcion')?.touched
+            "
           ></textarea>
         </div>
       </div>
@@ -81,7 +86,7 @@
         [control]="getCtrl('localidad')"
         [errorMessage]="getErrorMessage('localidad')"
       ></app-inputs>
-      <div class="register-form-row">
+      <div class="modify-form-row">
         <app-inputs
           name="codpostal"
           [label]="'MODIFY_PROFILE.LABELS.ZIP' | translate"
@@ -89,23 +94,28 @@
           [errorMessage]="getErrorMessage('codpostal')"
           class="flex-1"
         ></app-inputs>
-        <div class="register-form-select-container">
-          <label for="comunidad-modify" class="register-form-select-label">
+
+        <div class="modify-form-select-container">
+          <label for="comunidad" class="modify-form-select-label">
             {{ 'REGISTER.LABELS.REGION' | translate }}
           </label>
           <div class="relative w-full">
-            <select 
-              id="comunidad-modify" 
-              formControlName="comunidad" 
-              class="register-form-select"
-              [attr.aria-invalid]="profileForm.get('comunidad')?.invalid && profileForm.get('comunidad')?.touched"
+            <select
+              id="comunidad"
+              formControlName="comunidad"
+              class="modify-form-select"
+              [attr.aria-invalid]="getCtrl('comunidad').invalid && getCtrl('comunidad').touched"
             >
+              <option [ngValue]="null" disabled selected class="select-option-disabled">
+                {{ 'REGISTER.PLACEHOLDER.SELECTREGION' | translate }}
+              </option>
+
               @for (comunidad of comunidades; track $index) {
-                <option [value]="comunidad" class="register-form-options">{{ comunidad }}</option>
+                <option [value]="comunidad" class="modify-form-options">{{ comunidad }}</option>
               }
             </select>
 
-            <div class="register-form-select-arrow">
+            <div class="modify-form-select-arrow">
               <svg
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
