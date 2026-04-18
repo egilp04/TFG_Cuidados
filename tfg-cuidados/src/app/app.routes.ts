@@ -43,7 +43,7 @@ export const routes: Routes = [
   },
   {
     path: 'services-directory',
-    loadComponent: () => import('./pages/directorio-servicios/directorio-servicios.component'),
+    loadComponent: () => import('./pages/services-directory/services-directory.component'),
     canActivate: [authGuard],
   },
   {
