@@ -29,7 +29,7 @@
 }
 
 .search-card-select {
-  @apply w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm transition-all cursor-pointer;
+  @apply w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none text-label transition-all cursor-pointer;
 }
 
 .search-card-btn-container {
@@ -40,7 +40,7 @@
 }
 
 .search-container {
-  @apply grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-28 w-full p-10;
+  @apply grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-20 w-full pt-10 px-10 pb-14;
 }
 
 .search-no-bssns {
