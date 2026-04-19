@@ -33,7 +33,7 @@
             {{ empresa.nombre }}
           </h2>
 
-          <p class="search-card-location text-label">
+          <p class="search-card-location">
             <svg
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
@@ -55,14 +55,11 @@
           <h3 class="search-description-title-section text-label">
             {{ 'SEARCH_BUSINESS.CARD.DESCRIPTION' | translate }}
           </h3>
-          <p class="search-description-section text-label">{{ empresa.descripcion }}</p>
+          <p class="search-description-section">{{ empresa.descripcion }}</p>
         </section>
 
         <section class="search-select-section">
-          <label
-            class="search-description-section text-label"
-            [for]="'service-select-' + empresa.id_empresa"
-          >
+          <label class="search-description-section" [for]="'service-select-' + empresa.id_empresa">
             {{ 'SEARCH_BUSINESS.CARD.SELECT_SERVICE' | translate }}
           </label>
           <select

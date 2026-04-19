@@ -24,7 +24,7 @@
 }
 
 .soporte-message-container {
-  @apply p-5 md:p-6 flex flex-col gap-4 bg-slate-50 overflow-y-auto flex-1;
+  @apply p-2 md:p-6 flex flex-col gap-4 bg-slate-50 overflow-y-auto flex-1;
 }
 
 .soporte-subtitle {
