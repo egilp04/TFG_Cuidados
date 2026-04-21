@@ -20,7 +20,7 @@ export class AuthService {
   private injector = inject(Injector);
 
   isLoading = signal<boolean>(true);
-    currentUser = signal<AuthUserModel | null>(null);
+  currentUser = signal<AuthUserModel | null>(null);
 
   isAuthenticated = computed(() => !!this.currentUser());
   userRol = computed(() => this.currentUser()?.rol || null);
@@ -79,15 +79,15 @@ export class AuthService {
             .maybeSingle(),
         ]);
 
-        let datosExtra = {};
+        let extraData = {};
         if (user.rol === 'administrador' && adm.data) {
-          datosExtra = adm.data;
+          extraData = adm.data;
         } else if (user.rol === 'empresa' && emp.data) {
-          datosExtra = emp.data;
+          extraData = emp.data;
         } else if (user.rol === 'cliente' && cli.data) {
-          datosExtra = cli.data;
+          extraData = cli.data;
         }
-                return { ...user, ...datosExtra } as AuthUserModel;
+        return { ...user, ...extraData } as AuthUserModel;
       }),
     );
   }
@@ -103,18 +103,21 @@ export class AuthService {
     );
   }
 
-  register(datos: RegisterPayload, esCliente: boolean): Observable<AuthResponse> {
-    const { emailLimpio, passwordLimpia, metaData } = this.registerDataPreparation(datos, esCliente);
+  register(data: RegisterPayload, isClient: boolean): Observable<AuthResponse> {
+    const { cleanEmail, cleanEmailPassword, metaData } = this.registerDataPreparation(
+      data,
+      isClient,
+    );
 
-    return from(this.supabase.rpc('email_exists', { email_check: emailLimpio })).pipe(
+    return from(this.supabase.rpc('email_exists', { email_check: cleanEmail })).pipe(
       switchMap(({ data: existe, error }) => {
         if (error) throw new Error('Error técnico al verificar el correo.');
         if (existe) throw new Error('Este correo electrónico ya está registrado.');
 
         return from(
           this.supabase.auth.signUp({
-            email: emailLimpio,
-            password: passwordLimpia,
+            email: cleanEmail,
+            password: cleanEmailPassword,
             options: {
               data: metaData,
               emailRedirectTo: `${window.location.origin}/home`,
@@ -125,12 +128,12 @@ export class AuthService {
       map((res: AuthResponse) => this.registerAnswerValidation(res)),
       tap((res: AuthResponse) => {
         if (res.data.user) {
-          const rolTexto = esCliente ? 'cliente' : 'empresa';
+          const rolTexto = isClient ? 'cliente' : 'empresa';
           const comunicationService = this.injector.get(ComunicationService);
           comunicationService
             .notifyAdmins(
               'Nuevo Registro',
-              `El usuario ${emailLimpio} se ha registrado como ${rolTexto}.`,
+              `El usuario ${cleanEmail} se ha registrado como ${rolTexto}.`,
             )
             .subscribe();
         }
@@ -138,8 +141,11 @@ export class AuthService {
     );
   }
 
-  registerByAdmin(datos: RegisterPayload, esCliente: boolean): Observable<AuthResponse> {
-    const { emailLimpio, passwordLimpia, metaData } = this.registerDataPreparation(datos, esCliente);
+  registerByAdmin(dta: RegisterPayload, isClient: boolean): Observable<AuthResponse> {
+    const { cleanEmail, cleanEmailPassword, metaData } = this.registerDataPreparation(
+      dta,
+      isClient,
+    );
     const tempSupabase = createClient(environment.supabaseUrl, environment.supabaseKey, {
       auth: {
         persistSession: false,
@@ -148,14 +154,14 @@ export class AuthService {
       },
     });
 
-    return from(this.supabase.rpc('email_exists', { email_check: emailLimpio })).pipe(
+    return from(this.supabase.rpc('email_exists', { email_check: cleanEmail })).pipe(
       switchMap(({ data: existe, error }) => {
         if (error) throw new Error('Error técnico al verificar el correo.');
         if (existe) throw new Error('Este correo electrónico ya está registrado.');
         return from(
           tempSupabase.auth.signUp({
-            email: emailLimpio,
-            password: passwordLimpia,
+            email: cleanEmail,
+            password: cleanEmailPassword,
             options: {
               data: { ...metaData, created_by_admin: true },
               emailRedirectTo: `${window.location.origin}/login`,
@@ -167,28 +173,28 @@ export class AuthService {
     );
   }
 
-  private registerDataPreparation(datos: RegisterPayload, esCliente: boolean): PreparacionRegistro {
-    const emailLimpio = String(datos.email).trim().toLowerCase().replace(/\s/g, '');
-    const passwordLimpia = String(datos.password).trim();
-    const rol = esCliente ? 'cliente' : 'empresa';
+  private registerDataPreparation(data: RegisterPayload, isClient: boolean): PreparacionRegistro {
+    const cleanEmail = String(data.email).trim().toLowerCase().replace(/\s/g, '');
+    const cleanEmailPassword = String(data.password).trim();
+    const rol = isClient ? 'cliente' : 'empresa';
 
     const metaData = {
       rol: rol,
-      nombre: datos.nombre ? String(datos.nombre).trim() : '',
-      telef: datos.telef ? String(datos.telef).trim() : '',
-      ape1: datos.ape1 || null,
-      ape2: datos.ape2 || null,
-      dni: datos.dni ? datos.dni.toUpperCase() : null,
-      fechnac: datos.fechnac || null,
-      direccion: datos.direccion || '',
-      localidad: datos.localidad || '',
-      codpostal: datos.codpostal || '',
-      comunidad: datos.comunidad || '',
-      cif: datos.cif ? datos.cif.toUpperCase() : null,
-      descripcion: datos.descripcion || null,
+      nombre: data.nombre ? String(data).trim() : '',
+      telef: data.telef ? String(data.telef).trim() : '',
+      ape1: data.ape1 || null,
+      ape2: data.ape2 || null,
+      dni: data.dni ? data.dni.toUpperCase() : null,
+      fechnac: data.fechnac || null,
+      direccion: data.direccion || '',
+      localidad: data.localidad || '',
+      codpostal: data.codpostal || '',
+      comunidad: data.comunidad || '',
+      cif: data.cif ? data.cif.toUpperCase() : null,
+      descripcion: data.descripcion || null,
     };
 
-    return { emailLimpio, passwordLimpia, metaData };
+    return { cleanEmail, cleanEmailPassword, metaData };
   }
 
   private registerAnswerValidation(res: AuthResponse): AuthResponse {
@@ -203,9 +209,9 @@ export class AuthService {
     this.currentUser.set(newUserData);
   }
 
-  updateAuthCredentiales(nuevoEmail?: string): Observable<UserResponse> {
+  updateAuthCredentiales(newEmail?: string): Observable<UserResponse> {
     const updateData: { email?: string } = {};
-    if (nuevoEmail) updateData.email = nuevoEmail;
+    if (newEmail) updateData.email = newEmail;
 
     return from(this.supabase.auth.updateUser(updateData)).pipe(
       map((res: UserResponse) => {
@@ -247,16 +253,18 @@ export class AuthService {
   }
 
   resendVerificationEmail(email: string): Observable<void> {
-    return from(this.supabase.auth.resend({
-      type: 'signup',
-      email: email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/`,
-      },
-    })).pipe(
+    return from(
+      this.supabase.auth.resend({
+        type: 'signup',
+        email: email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+        },
+      }),
+    ).pipe(
       map(({ error }) => {
         if (error) throw error;
-      })
+      }),
     );
   }
 

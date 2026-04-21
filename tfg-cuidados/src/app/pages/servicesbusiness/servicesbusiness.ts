@@ -17,7 +17,7 @@ import { ButtonComponent } from '../../components/button/button';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { MessageService } from '../../services/message-service';
 import { ServiceTimeService } from '../../services/service-time.service';
-import { ServicioHorarioJoined } from '../../models/Service-Time-Service';
+import { ServicetimeJoined } from '../../models/Service_Time_Service_Model';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { signal } from '@angular/core';
 import { finalize, tap } from 'rxjs';
@@ -48,7 +48,7 @@ export default class Servicesbusiness implements OnInit {
   public isLoading = signal(false);
   private responsive = inject(ResponsiveSize);
 
-  dataSource = new MatTableDataSource<ServicioHorarioJoined>([]);
+  dataSource = new MatTableDataSource<ServicetimeJoined>([]);
   displayedColumns: string[] = [
     'nombre',
     'precio',
@@ -64,19 +64,19 @@ export default class Servicesbusiness implements OnInit {
   }
 
   chargeServices() {
-    const empresaId = this.authService.currentUser()?.id_usuario;
-    if (empresaId) {
+    const businessId = this.authService.currentUser()?.id_usuario;
+    if (businessId) {
       this.serviceTimeService
-        .getServiceTimeByEmpresa(empresaId)
+        .getServiceTimeByBusiness(businessId)
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((data: ServicioHorarioJoined[]) => {
+        .subscribe((data: ServicetimeJoined[]) => {
           this.dataSource.data = data;
           this.cd.markForCheck();
         });
     }
   }
 
-  async openModal(element?: ServicioHorarioJoined) {
+  async openModal(element?: ServicetimeJoined) {
     const { ServiceTimeModal } =
       await import('../../components/service-time-modal/service-time-modal');
     const dialogRef = this.dialog.open(ServiceTimeModal, {
@@ -99,13 +99,13 @@ export default class Servicesbusiness implements OnInit {
 
   async onDelete(id: string) {
     if (this.isLoading()) return;
-    
+
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       maxHeight: '90vh',
-      data: { modo: 'eliminarServicio' },
+      data: { mode: 'eliminarServicio' },
     });
     dialogRef
       .afterClosed()
@@ -116,12 +116,14 @@ export default class Servicesbusiness implements OnInit {
           this.isLoading.set(true);
           this.cd.markForCheck();
         }),
-        switchMap(() => this.serviceTimeService.deleteServiceTime(id).pipe(
-          finalize(() => {
-            this.isLoading.set(false);
-            this.cd.markForCheck();
-          })
-        )),        
+        switchMap(() =>
+          this.serviceTimeService.deleteServiceTime(id).pipe(
+            finalize(() => {
+              this.isLoading.set(false);
+              this.cd.markForCheck();
+            }),
+          ),
+        ),
         switchMap(() =>
           this.translate
             .get('SERVICES_BUSINESS.MESSAGES.DELETE_SUCCESS')

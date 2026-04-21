@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ServicioModel } from '../../models/Servicio';
+import { ServiceModel } from '../../models/ServiceModel';
 import { ServiceService } from '../../services/service.service';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -17,12 +17,12 @@ export default class ServicesDirectoryComponent {
   private router = inject(Router);
 
   public allServices = toSignal(this.serviceService.getServicesObservable(), {
-    initialValue: [] as ServicioModel[],
+    initialValue: [] as ServiceModel[],
   });
 
-  showOffersByService(servicio: ServicioModel) {
+  showOffersByService(service: ServiceModel) {
     this.router.navigate(['/search-business'], {
-      state: { idServicio: servicio.id_servicio },
+      state: { idServicio: service.id_servicio },
     });
   }
 }

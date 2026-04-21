@@ -3,9 +3,9 @@ import { ButtonComponent } from '../../components/button/button';
 import { CardsLanding } from '../../components/cards-landing/cards-landing';
 import cardsdata from '../../../assets/data/Cards.json';
 import { MatDialog } from '@angular/material/dialog';
-import { Card } from '../../interfaces/card';
 import { TranslateModule } from '@ngx-translate/core';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { Card } from '../../interfaces/card';
 
 @Component({
   selector: 'app-landing',
@@ -21,9 +21,11 @@ export default class Landing {
 
   async openModal() {
     const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
-    this.dialog.open(Loginmodal, { data: { modo: 'registro' }, 
-    width: '100%',
-    maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-    maxHeight: '90vh'});
+    this.dialog.open(Loginmodal, {
+      data: { mode: 'registro' },
+      width: '100%',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+      maxHeight: '90vh',
+    });
   }
 }

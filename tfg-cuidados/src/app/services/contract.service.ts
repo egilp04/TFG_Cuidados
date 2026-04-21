@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { AuthService } from './auth.service';
-import { ContratoDetalle, ContratoModel, SupabaseContratoJoin } from '../models/Contrato';
+import { ContratoDetalle, Contractmodel, ContractSupabaseJoined } from '../models/ContractModel';
 import { from, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ComunicationService } from './comunication.service';
@@ -16,7 +16,7 @@ import { ComunicationService } from './comunication.service';
 export class ContractService {
   private supabase = inject(SupabaseService).getClient();
   private authService = inject(AuthService);
-    private contractsList$ = new BehaviorSubject<ContratoDetalle[]>([]);
+  private contractsList$ = new BehaviorSubject<ContratoDetalle[]>([]);
   private comunicationService = inject(ComunicationService);
 
   /**
@@ -72,10 +72,11 @@ export class ContractService {
     const { data, error } = await query.order('fecha_creacion', { ascending: false });
 
     if (!error && data) {
-      const mappedData: ContratoDetalle[] = (data as SupabaseContratoJoin[]).map((contrato) => {
+      const mappedData: ContratoDetalle[] = (data as ContractSupabaseJoined[]).map((contrato) => {
         return {
           ...(contrato as any),
-          id_sh_plano: contrato.id_servicio_horario?.id_servicio_horario || contrato.id_servicio_horario,
+          id_sh_plano:
+            contrato.id_servicio_horario?.id_servicio_horario || contrato.id_servicio_horario,
           Cliente: {
             ...contrato.Cliente,
             nombreDelCliente:
@@ -96,8 +97,8 @@ export class ContractService {
     }
   }
 
-  createContract(nuevoContrato: ContratoModel): Observable<boolean> {
-    return from(this.supabase.from('Contrato').insert(nuevoContrato)).pipe(
+  createContract(newContract: Contractmodel): Observable<boolean> {
+    return from(this.supabase.from('Contrato').insert(newContract)).pipe(
       map(({ error }) => {
         if (error) throw error;
         return true;
@@ -106,7 +107,7 @@ export class ContractService {
     );
   }
 
-  getContractsById(id: string): Observable<SupabaseContratoJoin> {
+  getContractsById(id: string): Observable<ContractSupabaseJoined> {
     return from(
       this.supabase
         .from('Contrato')
@@ -116,7 +117,7 @@ export class ContractService {
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return data as SupabaseContratoJoin;
+        return data as ContractSupabaseJoined;
       }),
       catchError((err) => throwError(() => err)),
     );
@@ -127,14 +128,14 @@ export class ContractService {
    * @post Calcula dinámicamente el mensaje de notificación basándose en quién
    * canceló (cliente o empresa) para informar a la contraparte.
    */
-  deleteContract(id: string): Observable<SupabaseContratoJoin> {
-    const fechaHoy = new Date().toISOString();
+  deleteContract(id: string): Observable<ContractSupabaseJoined> {
+    const todayDate = new Date().toISOString();
     return from(
       this.supabase
         .from('Contrato')
         .update({
           estado: 'no activo',
-          fecha_fin: fechaHoy,
+          fecha_fin: todayDate,
         })
         .eq('id_contrato', id)
         .select(this.CONTRATO_SELECT)
@@ -142,22 +143,21 @@ export class ContractService {
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return data as SupabaseContratoJoin;
+        return data as ContractSupabaseJoined;
       }),
-      tap((contratoCancelado: SupabaseContratoJoin) => {
+      tap((canceledContract: ContractSupabaseJoined) => {
         const currentUser = this.authService.currentUser();
-        if (!currentUser || !contratoCancelado) return;
+        if (!currentUser || !canceledContract) return;
 
-        const nombreServicio =
-          contratoCancelado.id_servicio_horario?.Servicio?.nombre || 'un servicio';
+        const ServiceName = canceledContract.id_servicio_horario?.Servicio?.nombre || 'Desconocido';
         let idDestino = '';
         let mensaje = '';
-        if (currentUser.id_usuario === contratoCancelado.id_cliente) {
-          idDestino = contratoCancelado.id_empresa;
-          mensaje = `El cliente ${contratoCancelado.Cliente?.Usuario?.nombre || 'Desconocido'} ha cancelado el contrato del servicio: ${nombreServicio}.`;
+        if (currentUser.id_usuario === canceledContract.id_cliente) {
+          idDestino = canceledContract.id_empresa;
+          mensaje = `El cliente ${canceledContract.Cliente?.Usuario?.nombre || 'Desconocido'} ha cancelado el contrato del servicio: ${ServiceName}.`;
         } else {
-          idDestino = contratoCancelado.id_cliente;
-          mensaje = `La empresa ${contratoCancelado.Empresa?.Usuario?.nombre || 'Desconocida'} ha cancelado el contrato del servicio: ${nombreServicio}.`;
+          idDestino = canceledContract.id_cliente;
+          mensaje = `La empresa ${canceledContract.Empresa?.Usuario?.nombre || 'Desconocida'} ha cancelado el contrato del servicio: ${ServiceName}.`;
         }
 
         this.comunicationService

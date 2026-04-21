@@ -12,7 +12,6 @@ import { ButtonComponent } from '../button/button';
 import { Inputs } from '../inputs/inputs';
 import {
   FormBuilder,
-  FormGroup,
   Validators,
   ReactiveFormsModule,
   FormControl,
@@ -57,7 +56,7 @@ export class Loginmodal {
   private router = inject(Router);
   private translate = inject(TranslateService);
 
-  modoActual: 'login' | 'registro' | 'recuperar' | 'reenviar' = 'login';
+  currentMode: 'login' | 'registro' | 'recuperar' | 'reenviar' = 'login';
 
   loginForm = this.fb.group({
     email: this.fb.control<string>('', [Validators.required, Validators.email]),
@@ -75,8 +74,8 @@ export class Loginmodal {
   }
 
   ngOnInit() {
-    if (this.data && this.data.modo) {
-      this.modoActual = this.data.modo;
+    if (this.data && this.data.mode) {
+      this.currentMode = this.data.mode;
     }
   }
 
@@ -171,7 +170,7 @@ export class Loginmodal {
           );
           setTimeout(() => {
             this.messageService.clear();
-            this.modoActual = 'login';
+            this.currentMode = 'login';
             this.cd.detectChanges();
           }, 3000);
           this.cd.markForCheck();
@@ -222,7 +221,7 @@ export class Loginmodal {
         );
         setTimeout(() => {
           this.messageService.clear();
-          this.modoActual = 'login';
+          this.currentMode = 'login';
           this.cd.detectChanges();
         }, 2000);
         this.cd.markForCheck();

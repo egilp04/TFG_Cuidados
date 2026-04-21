@@ -10,7 +10,7 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { Modifyprofileform } from '../../components/modifyprofileform/modifyprofileform';
 import { AuthUserModel } from '../../models/Auth-Service';
 import { FormSubmitEvent } from '../../models/ModifyProfileForm';
-import { UpdateProfilePayload } from '../../models/User-Service';
+import { UpdateProfilePayload } from '../../models/User_Service';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 
@@ -49,33 +49,33 @@ export default class ModifyProfilePage implements OnInit {
     }
     setTimeout(() => this.cd.detectChanges(), 0);
   }
-  
+
   doUpdateProfile(event: FormSubmitEvent) {
     const user = this.userToEdit();
-    const userLogueado = this.authService.currentUser();
+    const loggueUser = this.authService.currentUser();
     if (!user) return;
-    const nuevosDatos = event.datos as UpdateProfilePayload;
+    const newData = event.datos as UpdateProfilePayload;
     const rol = event.rol;
 
     this.userService
-      .updateProfileDirect(user.id_usuario, nuevosDatos, rol)
+      .updateProfileDirect(user.id_usuario, newData, rol)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap(() => {
-          const soyYo = user.id_usuario === userLogueado?.id_usuario;
-          const emailCambio = nuevosDatos.email !== user.email;
-          if (soyYo && emailCambio) {
-            return this.authService.updateAuthCredentiales(nuevosDatos.email);
+          const itsMyself = user.id_usuario === loggueUser?.id_usuario;
+          const emailCambio = newData.email !== user.email;
+          if (itsMyself && emailCambio) {
+            return this.authService.updateAuthCredentiales(newData.email);
           }
           return of(null);
         }),
         switchMap(() => this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_SUCCESS')),
         tap((msg) => {
           this.messageService.showMessage(msg, 'exito');
-          const soyYo = user.id_usuario === userLogueado?.id_usuario;
-          if (soyYo) {
-            const usuarioActualizado = { ...userLogueado, ...nuevosDatos } as AuthUserModel;
-            this.authService.updateUserSignal(usuarioActualizado);
+          const itsMyself = user.id_usuario === loggueUser?.id_usuario;
+          if (itsMyself) {
+            const updatedUser = { ...loggueUser, ...newData } as AuthUserModel;
+            this.authService.updateUserSignal(updatedUser);
           }
           this.cd.detectChanges();
         }),
@@ -99,7 +99,7 @@ export default class ModifyProfilePage implements OnInit {
     this.dialog
       .open(Cancelmodal, {
         width: '500px',
-        data: { modo: 'baja' },
+        data: { mode: 'baja' },
         autoFocus: false,
       })
       .afterClosed()
@@ -108,8 +108,8 @@ export default class ModifyProfilePage implements OnInit {
         filter((result) => result === true),
         switchMap(() => this.userService.deleteUser(user.id_usuario)),
         switchMap(() => {
-          const soyYo = user.id_usuario === currentUser?.id_usuario;
-          if (soyYo) {
+          const itsMyself = user.id_usuario === currentUser?.id_usuario;
+          if (itsMyself) {
             return this.authService.signOut().pipe(tap(() => this.router.navigate(['/'])));
           } else {
             this.location.back();
@@ -120,7 +120,7 @@ export default class ModifyProfilePage implements OnInit {
           console.error('Error al dar de baja:', err);
           this.messageService.showMessage('Hubo un error al eliminar el usuario', 'error');
           return of(false);
-        })
+        }),
       )
       .subscribe((exito) => {
         if (exito) {

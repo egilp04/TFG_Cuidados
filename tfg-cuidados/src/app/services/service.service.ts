@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, from, Observable, throwError, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators'; // Importar TAP
-import { ServicioModel } from '../models/Servicio';
+import { ServiceModel } from '../models/ServiceModel';
 
 /**
  * @description Gestiona el catálogo maestro de servicios disponibles en la plataforma.
@@ -15,13 +15,13 @@ export class ServiceService {
   private supabaseService = inject(SupabaseService);
   private clientSupaBase = this.supabaseService.getClient();
 
-  private servicesList$ = new BehaviorSubject<ServicioModel[]>([]);
+  private servicesList$ = new BehaviorSubject<ServiceModel[]>([]);
 
   constructor() {
     this.initRealtime();
   }
 
-  getServicesObservable(): Observable<ServicioModel[]> {
+  getServicesObservable(): Observable<ServiceModel[]> {
     this.refreshServices();
     return this.servicesList$.asObservable();
   }
@@ -42,11 +42,11 @@ export class ServiceService {
       .order('nombre', { ascending: true });
 
     if (!error) {
-      this.servicesList$.next((data ?? []) as ServicioModel[]);
+      this.servicesList$.next((data ?? []) as ServiceModel[]);
     }
   }
 
-  insertService(newServicio: ServicioModel): Observable<void> {
+  insertService(newServicio: ServiceModel): Observable<void> {
     return from(this.clientSupaBase.from('Servicio').insert(newServicio)).pipe(
       tap(() => this.refreshServices()),
       map(({ error }) => {
@@ -56,7 +56,7 @@ export class ServiceService {
     );
   }
 
-  updateService(id: string, changes: Partial<ServicioModel>): Observable<void> {
+  updateService(id: string, changes: Partial<ServiceModel>): Observable<void> {
     return from(this.clientSupaBase.from('Servicio').update(changes).eq('id_servicio', id)).pipe(
       tap(() => this.refreshServices()),
       map(({ error }) => {
@@ -76,13 +76,13 @@ export class ServiceService {
     );
   }
 
-  getServiceById(id: string): Observable<ServicioModel> {
+  getServiceById(id: string): Observable<ServiceModel> {
     return from(
       this.clientSupaBase.from('Servicio').select('*').eq('id_servicio', id).single(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return data as ServicioModel;
+        return data as ServiceModel;
       }),
       catchError((err) => throwError(() => err)),
     );

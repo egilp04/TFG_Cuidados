@@ -9,7 +9,7 @@ import { ActivitiesComponents } from '../../components/activities-components/act
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, map, switchMap } from 'rxjs';
-import { ContratoDetalle } from '../../models/Contrato';
+import { ContratoDetalle } from '../../models/ContractModel';
 import { filter } from 'rxjs';
 import { ResponsiveSize } from '../../services/responsive-size';
 
@@ -51,10 +51,10 @@ export default class Activities {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     this.dialog
       .open(Cancelmodal, {
-        data: { modo: 'cancelContract' },
+        data: { mode: 'cancelContract' },
         width: '100%',
         maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
-        maxHeight: '90vh'
+        maxHeight: '90vh',
       })
       .afterClosed()
       .pipe(
@@ -64,17 +64,17 @@ export default class Activities {
         switchMap(() =>
           this.translate
             .get('MESSAGES.SUCCESS.CANCELCONTRACT')
-            .pipe(map((msg) => ({ texto: msg, tipo: 'exito' as const }))),
+            .pipe(map((msg) => ({ texto: msg, type: 'exito' as const }))),
         ),
         catchError((err) => {
           console.error('Error al cancelar el contrato:', err);
           return this.translate
             .get('MESSAGES.ERROR.CANCELCONTRACT')
-            .pipe(map((msg) => ({ texto: msg, tipo: 'error' as const })));
+            .pipe(map((msg) => ({ texto: msg, type: 'error' as const })));
         }),
       )
-      .subscribe((resultado) => {
-        this.messageService.showMessage(resultado.texto, resultado.tipo);
+      .subscribe((res) => {
+        this.messageService.showMessage(res.texto, res.type);
       });
   }
 }

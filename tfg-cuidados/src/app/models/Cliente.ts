@@ -1,7 +1,7 @@
 export interface ClienteModel {
-  id_usuario?: string;
-  ape1: string;
-  ape2?: string;
+  id_user?: string;
+  surname1: string;
+  surname2?: string;
   dni: string;
-  direccion: string;
+  address: string;
 }

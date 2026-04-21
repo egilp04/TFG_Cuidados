@@ -32,15 +32,9 @@ export default class Register implements OnInit {
   private destroyRef = inject(DestroyRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
-  private location = inject(Location);
   private platformId = inject(PLATFORM_ID);
 
   isUser: boolean = true;
-
-  // get esAdminReal(): boolean {
-  //   const user = this.authService.currentUser();
-  //   return user?.rol === 'administrador';
-  // }
 
   ngOnInit(): void {
     this.router.events
@@ -71,11 +65,11 @@ export default class Register implements OnInit {
     if (user && !isAdmin) {
       return;
     }
-    const registro$ = isAdmin
+    const register$ = isAdmin
       ? this.authService.registerByAdmin(event.datos, event.esCliente)
       : this.authService.register(event.datos, event.esCliente);
 
-    registro$
+    register$
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap(() => this.translate.get('REGISTER.MESSAGES.SUCCESS')),

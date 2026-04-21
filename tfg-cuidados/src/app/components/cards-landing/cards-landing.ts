@@ -8,8 +8,8 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './cards-landing.css',
 })
 export class CardsLanding {
-  titulo = input.required<string>();
-  descripcion = input.required<string>();
-  imagen = input.required<string>();
-  cargo = input<string>();
+  title = input.required<string>();
+  description = input.required<string>();
+  image = input.required<string>();
+  charge = input<string>();
 }

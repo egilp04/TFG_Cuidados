@@ -26,7 +26,7 @@ export class Cancelmodal {
   private dialogRef = inject(MatDialogRef<Cancelmodal>);
 
   getPrimaryLabel() {
-    switch (this.data.modo) {
+    switch (this.data.mode) {
       case 'baja':
         return 'CANCEL_MODAL.BTN.KEEP_ACCOUNT';
       case 'cancelContract':
@@ -37,7 +37,7 @@ export class Cancelmodal {
   }
 
   getSecondaryLabel() {
-    switch (this.data.modo) {
+    switch (this.data.mode) {
       case 'baja':
         return 'CANCEL_MODAL.BTN.UNSUBSCRIBE';
       case 'cancelContract':

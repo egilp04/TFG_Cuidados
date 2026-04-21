@@ -18,13 +18,13 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { switchMap, throwError, map, catchError, of, filter, tap } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { dias_semana, tradusDia, diasValidos } from '../../core/constants/dias_semana';
+import { week_days, tranlsate_days, validDays } from '../../core/constants/dias_semana';
 import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { TimeService } from '../../services/time.service';
 import { MessageService } from '../../services/message-service';
-import { HorarioModel } from '../../models/Horario';
+import { HorarioModel } from '../../models/TimeModel';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
@@ -56,8 +56,8 @@ export default class ManagementTimeGlobal implements OnInit {
   private translate = inject(TranslateService);
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
-  public dias_semana: { valor: string; label: string }[] = dias_semana;
-  public tradus_dias: { [key: string]: string } = tradusDia;
+  public week_days: { valor: string; label: string }[] = week_days;
+  public days_translate: { [key: string]: string } = tranlsate_days;
   public isLoading = signal(false);
   private responsive = inject(ResponsiveSize);
 
@@ -98,14 +98,14 @@ export default class ManagementTimeGlobal implements OnInit {
 
     if (!user || !user.id_usuario) return;
 
-    if (!diasValidos.includes(dia.toLowerCase())) {
+    if (!validDays.includes(dia.toLowerCase())) {
       this.showMessageTraducido('MANAGEMENT_SCHEDULES.MESSAGES.INVALID_DAY', 'error');
       return;
     }
 
-    const [horasStr, minutosStr] = hora.split(':');
-    const h = parseInt(horasStr, 10);
-    const m = parseInt(minutosStr, 10);
+    const [timeStr, minutesStr] = hora.split(':');
+    const h = parseInt(timeStr, 10);
+    const m = parseInt(minutesStr, 10);
 
     if (isNaN(h) || h < 0 || h > 23) {
       this.showMessageTraducido('MANAGEMENT_SCHEDULES.MESSAGES.INVALID_TIME_RANGE', 'error');
@@ -118,10 +118,10 @@ export default class ManagementTimeGlobal implements OnInit {
 
     this.isLoading.set(true);
 
-    const idExcluir = this.isEditing && this.currentTimeId ? this.currentTimeId : undefined;
+    const excludeId = this.isEditing && this.currentTimeId ? this.currentTimeId : undefined;
 
     this.timeService
-      .existsTime(dia, hora, idExcluir)
+      .existsTime(dia, hora, excludeId)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap((existe) => {
@@ -130,7 +130,7 @@ export default class ManagementTimeGlobal implements OnInit {
           const payload: HorarioModel = {
             dia_semana: dia as any,
             hora: hora,
-            id_admin: user.id_usuario
+            id_admin: user.id_usuario,
           };
 
           return this.isEditing && this.currentTimeId
@@ -150,12 +150,14 @@ export default class ManagementTimeGlobal implements OnInit {
             msgKey = 'MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DUPLICATE';
             params = { dia, hora };
           }
-          return this.translate.get(msgKey, params).pipe(map((text) => ({ type: 'error' as const, text })));
+          return this.translate
+            .get(msgKey, params)
+            .pipe(map((text) => ({ type: 'error' as const, text })));
         }),
         finalize(() => {
           this.isLoading.set(false);
           this.cd.markForCheck();
-        })
+        }),
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
@@ -179,36 +181,43 @@ export default class ManagementTimeGlobal implements OnInit {
 
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
-      data: { modo: 'eliminarAdminGlobal' },
+      data: { mode: 'eliminarAdminGlobal' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
-      maxHeight: '90vh'
+      maxHeight: '90vh',
     });
 
-    dialogRef.afterClosed().pipe(
-      takeUntilDestroyed(this.destroyRef),
-      filter((result) => result === true),
-      tap(() => {
-        this.isLoading.set(true);
-        this.cd.markForCheck();
-      }),
-      switchMap(() =>
-        this.timeService.deleteTime(id).pipe(
-          finalize(() => {
-            this.isLoading.set(false);
-            this.cd.markForCheck();
-          }),
-          switchMap(() => this.translate.get('MANAGEMENT_GLOBAL.DELETE').pipe(
-            map((text) => ({ type: 'exito' as const, text }))
-          )),
-          catchError(() => this.translate.get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DELETE').pipe(
-            map((text) => ({ type: 'error' as const, text }))
-          ))
-        )
+    dialogRef
+      .afterClosed()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        filter((result) => result === true),
+        tap(() => {
+          this.isLoading.set(true);
+          this.cd.markForCheck();
+        }),
+        switchMap(() =>
+          this.timeService.deleteTime(id).pipe(
+            finalize(() => {
+              this.isLoading.set(false);
+              this.cd.markForCheck();
+            }),
+            switchMap(() =>
+              this.translate
+                .get('MANAGEMENT_GLOBAL.DELETE')
+                .pipe(map((text) => ({ type: 'exito' as const, text }))),
+            ),
+            catchError(() =>
+              this.translate
+                .get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DELETE')
+                .pipe(map((text) => ({ type: 'error' as const, text }))),
+            ),
+          ),
+        ),
       )
-    ).subscribe((resultado) => {
-      this.messageService.showMessage(resultado.text, resultado.type);
-    });
+      .subscribe((res) => {
+        this.messageService.showMessage(res.text, res.type);
+      });
   }
 
   resetForm() {

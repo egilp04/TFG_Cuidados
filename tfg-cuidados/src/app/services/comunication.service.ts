@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { from, Observable, throwError, BehaviorSubject, of, forkJoin } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import { ComunicacionModel } from '../models/Comunicacion';
+import { ComunicationModel } from '../models/Comunicacion';
 import { AuthService } from './auth.service';
 
 /**
@@ -19,26 +19,26 @@ export class ComunicationService {
    */
   private supabase = inject(SupabaseService).getClient();
   private authService = inject(AuthService);
-  private readonly tiposValidos = ['mensaje', 'notificacion'] as const;
-  private mensajesList$ = new BehaviorSubject<ComunicacionModel[]>([]);
-  private notificacionesList$ = new BehaviorSubject<ComunicacionModel[]>([]);
+  private readonly validtypeComunication = ['mensaje', 'notificacion'] as const;
+  private messagesList$ = new BehaviorSubject<ComunicationModel[]>([]);
+  private notificationsList$ = new BehaviorSubject<ComunicationModel[]>([]);
 
   constructor() {
     this.initRealtime();
   }
 
-  getMessagesObservable(): Observable<ComunicacionModel[]> {
-    this.refreshMensajes();
-    return this.mensajesList$.asObservable();
+  getMessagesObservable(): Observable<ComunicationModel[]> {
+    this.refreshMessages();
+    return this.messagesList$.asObservable();
   }
 
-  getNotificationsObservable(): Observable<ComunicacionModel[]> {
-    this.refreshNotificaciones();
-    return this.notificacionesList$.asObservable();
+  getNotificationsObservable(): Observable<ComunicationModel[]> {
+    this.refreshNotificacions();
+    return this.notificationsList$.asObservable();
   }
 
   getUnreadMessagesCount(): Observable<number> {
-    return this.mensajesList$.asObservable().pipe(
+    return this.messagesList$.asObservable().pipe(
       map((mensajes) => {
         const user = this.authService.currentUser();
         if (!user) return 0;
@@ -48,7 +48,7 @@ export class ComunicationService {
   }
 
   getUnreadNotificationsCount(): Observable<number> {
-    return this.notificacionesList$.asObservable().pipe(
+    return this.notificationsList$.asObservable().pipe(
       map((notificaciones) => {
         return notificaciones.filter((n) => !n.leido).length;
       }),
@@ -59,16 +59,16 @@ export class ComunicationService {
     this.supabase
       .channel('public:comunicacion')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'Comunicacion' }, () => {
-        this.refreshMensajes();
-        this.refreshNotificaciones();
+        this.refreshMessages();
+        this.refreshNotificacions();
       })
       .subscribe();
   }
 
-  private async refreshMensajes() {
+  private async refreshMessages() {
     const user = this.authService.currentUser();
     if (!user) {
-      this.mensajesList$.next([]);
+      this.messagesList$.next([]);
       return;
     }
     const { data, error } = await this.supabase
@@ -85,22 +85,22 @@ export class ComunicationService {
       .order('fecha_envio', { ascending: false });
 
     if (!error) {
-      const mensajesData = (data as ComunicacionModel[]) || [];
-      const mensajesFiltrados = mensajesData.filter((m) => {
+      const dataMessages = (data as ComunicationModel[]) || [];
+      const filteresMessages = dataMessages.filter((m) => {
         if (m.id_receptor === user.id_usuario) return !m.eliminado_por_receptor;
         if (m.id_emisor === user.id_usuario) return !m.eliminado_por_emisor;
         return true;
       });
-      this.mensajesList$.next(mensajesFiltrados);
+      this.messagesList$.next(filteresMessages);
     } else {
       console.error('Error fetching mensajes:', error);
     }
   }
 
-  private async refreshNotificaciones() {
+  private async refreshNotificacions() {
     const user = this.authService.currentUser();
     if (!user) {
-      this.notificacionesList$.next([]);
+      this.notificationsList$.next([]);
       return;
     }
     const { data, error } = await this.supabase
@@ -112,7 +112,7 @@ export class ComunicationService {
       .order('fecha_envio', { ascending: false });
 
     if (!error) {
-      this.notificacionesList$.next((data as ComunicacionModel[]) || []);
+      this.notificationsList$.next((data as ComunicationModel[]) || []);
     }
   }
 
@@ -121,19 +121,19 @@ export class ComunicationService {
    * el sistema dispara una llamada interna para generar una notificación persistente
    * al usuario receptor.
    */
-  insertComunicacion(comunicacion: Omit<ComunicacionModel, 'fecha_envio'>): Observable<void> {
-    if (!this.tiposValidos.includes(comunicacion.tipo_comunicacion as any)) {
+  insertComunication(comunication: Omit<ComunicationModel, 'fecha_envio'>): Observable<void> {
+    if (!this.validtypeComunication.includes(comunication.tipo_comunicacion as any)) {
       return throwError(() => new Error('tipo_comunicacion inválido.'));
     }
-    return from(this.supabase.from('Comunicacion').insert(comunicacion)).pipe(
+    return from(this.supabase.from('Comunicacion').insert(comunication)).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
       switchMap(() => {
-        if (comunicacion.tipo_comunicacion === 'mensaje' && comunicacion.id_receptor) {
+        if (comunication.tipo_comunicacion === 'mensaje' && comunication.id_receptor) {
           const asunto = 'Nuevo Mensaje Recibido';
           const contenido = 'Tienes un nuevo mensaje en tu bandeja de entrada.';
-          return this.sendNotification(comunicacion.id_receptor, asunto, contenido);
+          return this.sendNotification(comunication.id_receptor, asunto, contenido);
         }
         return of(void 0);
       }),
@@ -141,20 +141,20 @@ export class ComunicationService {
     );
   }
 
-  updateComunicacion(id: string, changes: Partial<ComunicacionModel>): Observable<void> {
-    const currentMensajes = this.mensajesList$.getValue();
-    const indexM = currentMensajes.findIndex((m) => m.id_comunicacion === id);
+  updateComunication(id: string, changes: Partial<ComunicationModel>): Observable<void> {
+    const currentMenssages = this.messagesList$.getValue();
+    const indexM = currentMenssages.findIndex((m) => m.id_comunicacion === id);
     if (indexM !== -1) {
-      const updatedList = [...currentMensajes];
+      const updatedList = [...currentMenssages];
       updatedList[indexM] = { ...updatedList[indexM], ...changes };
-      this.mensajesList$.next(updatedList);
+      this.messagesList$.next(updatedList);
     }
-    const currentNotis = this.notificacionesList$.getValue();
+    const currentNotis = this.notificationsList$.getValue();
     const indexN = currentNotis.findIndex((n) => n.id_comunicacion === id);
     if (indexN !== -1) {
       const updatedList = [...currentNotis];
       updatedList[indexN] = { ...updatedList[indexN], ...changes };
-      this.notificacionesList$.next(updatedList);
+      this.notificationsList$.next(updatedList);
     }
     return from(this.supabase.from('Comunicacion').update(changes).eq('id_comunicacion', id)).pipe(
       map(({ error }) => {
@@ -171,31 +171,31 @@ export class ComunicationService {
    * Dependiendo de quién ejecute la acción, marca el flag 'eliminado_por_emisor'
    * o 'eliminado_por_receptor' para mantener la integridad de la bandeja del otro usuario.
    */
-  deleteComunicacion(mensaje: ComunicacionModel): Observable<void> {
+  deleteComunicacion(messages: ComunicationModel): Observable<void> {
     const user = this.authService.currentUser();
-    if (!user || !mensaje.id_comunicacion) return of(undefined);
+    if (!user || !messages.id_comunicacion) return of(undefined);
 
-    if (mensaje.tipo_comunicacion === 'mensaje') {
-      const currentMensajes = this.mensajesList$.getValue();
-      const newMensajes = currentMensajes.filter(
-        (m) => m.id_comunicacion !== mensaje.id_comunicacion,
+    if (messages.tipo_comunicacion === 'mensaje') {
+      const currentMenssages = this.messagesList$.getValue();
+      const newMensajes = currentMenssages.filter(
+        (m) => m.id_comunicacion !== messages.id_comunicacion,
       );
-      if (currentMensajes.length !== newMensajes.length) {
-        this.mensajesList$.next(newMensajes);
+      if (currentMenssages.length !== newMensajes.length) {
+        this.messagesList$.next(newMensajes);
       }
     } else {
-      const currentNotis = this.notificacionesList$.getValue();
-      const newNotis = currentNotis.filter((n) => n.id_comunicacion !== mensaje.id_comunicacion);
+      const currentNotis = this.notificationsList$.getValue();
+      const newNotis = currentNotis.filter((n) => n.id_comunicacion !== messages.id_comunicacion);
       if (currentNotis.length !== newNotis.length) {
-        this.notificacionesList$.next(newNotis);
+        this.notificationsList$.next(newNotis);
       }
     }
 
-    let updates: Partial<ComunicacionModel> = {};
+    let updates: Partial<ComunicationModel> = {};
 
-    if (mensaje.id_emisor === user.id_usuario) {
+    if (messages.id_emisor === user.id_usuario) {
       updates = { eliminado_por_emisor: true };
-    } else if (mensaje.id_receptor === user.id_usuario) {
+    } else if (messages.id_receptor === user.id_usuario) {
       updates = { eliminado_por_receptor: true };
     } else {
       return of(undefined);
@@ -205,7 +205,7 @@ export class ComunicationService {
       this.supabase
         .from('Comunicacion')
         .update(updates)
-        .eq('id_comunicacion', mensaje.id_comunicacion),
+        .eq('id_comunicacion', messages.id_comunicacion),
     ).pipe(
       map(({ error }) => {
         if (error) throw error;
@@ -214,39 +214,34 @@ export class ComunicationService {
     );
   }
 
-  getMensajeId(idMensaje: string): Observable<ComunicacionModel> {
+  getMensajeId(idMensaje: string): Observable<ComunicationModel> {
     return from(
       this.supabase.from('Comunicacion').select('*').eq('id_comunicacion', idMensaje).single(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return data as ComunicacionModel;
+        return data as ComunicationModel;
       }),
       catchError((err) => throwError(() => err)),
     );
   }
 
-  private sendNotification(
-    idReceptor: string,
-    asunto: string,
-    contenido: string,
-  ): Observable<void> {
-
+  private sendNotification(idReceiver: string, topic: string, content: string): Observable<void> {
     const notificacion = {
       tipo_comunicacion: 'notificacion' as const,
       id_emisor: null,
-      id_receptor: idReceptor,
-      asunto: asunto,
-      contenido: contenido,
+      id_receptor: idReceiver,
+      asunto: topic,
+      contenido: content,
       leido: false,
       eliminado_por_emisor: false,
       eliminado_por_receptor: false,
     };
 
-    return this.insertComunicacion(notificacion);
+    return this.insertComunication(notificacion);
   }
 
-  notifyAdmins(asunto: string, contenido: string): Observable<void> {
+  notifyAdmins(topic: string, content: string): Observable<void> {
     return from(
       this.supabase
         .from('Usuario')
@@ -257,11 +252,11 @@ export class ComunicationService {
       switchMap(({ data }) => {
         if (!data || data.length === 0) return of(void 0);
         const adminsData = data as AdminResponse[];
-        const notificaciones = adminsData.map((admin) =>
-          this.sendNotification(admin.id_usuario, asunto, contenido),
+        const notifications = adminsData.map((admin) =>
+          this.sendNotification(admin.id_usuario, topic, content),
         );
 
-        return forkJoin(notificaciones).pipe(map(() => void 0));
+        return forkJoin(notifications).pipe(map(() => void 0));
       }),
       catchError((err) => {
         console.error('Error notificando admins', err);
@@ -270,12 +265,12 @@ export class ComunicationService {
     );
   }
 
-  notifyUsers(idUsuarioDestino: string, asunto: string, contenido: string): Observable<void> {
-    return this.sendNotification(idUsuarioDestino, asunto, contenido);
+  notifyUsers(idReceiverUser: string, topic: string, content: string): Observable<void> {
+    return this.sendNotification(idReceiverUser, topic, content);
   }
 
   refreshUsersData() {
-    this.refreshMensajes();
-    this.refreshNotificaciones();
+    this.refreshMessages();
+    this.refreshNotificacions();
   }
 }

@@ -54,12 +54,12 @@
   </h2>
 
   <footer class="about-grid" role="region" [attr.aria-labelledby]="'team-title'">
-    @for (item of cardsdata; track item.titulo; let i = $index) {
+    @for (item of cardsdata; track item.title; let i = $index) {
       <app-cards-landing
-        [titulo]="item.titulo"
-        [cargo]="item.cargo"
-        [descripcion]="item.descripcion"
-        [imagen]="item.imagen"
+        [title]="item.title"
+        [charge]="item.charge"
+        [description]="item.description"
+        [image]="item.image"
         class="animate-cards"
       >
       </app-cards-landing>

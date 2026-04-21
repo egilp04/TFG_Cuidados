@@ -96,9 +96,9 @@ export default class Dashboard implements OnInit {
 
     const idiomaActual = this.translate.currentLang || 'es';
 
-    this.lineChartData.labels = this.DatesToTranslate.map((fecha) => {
-      const mes = fecha.toLocaleString(idiomaActual, { month: 'short' });
-      return mes.charAt(0).toUpperCase() + mes.slice(1);
+    this.lineChartData.labels = this.DatesToTranslate.map((date) => {
+      const month = date.toLocaleString(idiomaActual, { month: 'short' });
+      return month.charAt(0).toUpperCase() + month.slice(1);
     });
 
     this.updateCharts();
@@ -129,9 +129,9 @@ export default class Dashboard implements OnInit {
       .getContractStats()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((stats) => {
-        this.activeContracts = stats.activos;
-        this.canceledContracts = stats.cancelados;
-        this.doughnutChartData.datasets[0].data = [stats.activos, stats.cancelados];
+        this.activeContracts = stats.activeContract;
+        this.canceledContracts = stats.cancelContract;
+        this.doughnutChartData.datasets[0].data = [stats.activeContract, stats.cancelContract];
         this.updateCharts();
       });
 

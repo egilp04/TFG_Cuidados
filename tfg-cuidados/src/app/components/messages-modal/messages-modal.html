@@ -3,7 +3,7 @@
   role="dialog"
   aria-modal="true"
   [attr.aria-label]="
-    (data.modo === 'escribir' ? 'MESSAGES_MODAL.TITLE_WRITE' : 'MESSAGES_MODAL.TITLE_VIEW')
+    (data.mode === 'escribir' ? 'MESSAGES_MODAL.TITLE_WRITE' : 'MESSAGES_MODAL.TITLE_VIEW')
       | translate
   "
 >
@@ -18,40 +18,40 @@
   </header>
 
   <main class="message-modal-form-container">
-    @if (data.modo == 'escribir') {
+    @if (data.mode == 'escribir') {
       <app-inputs
-        name="receptor"
+        name="receiver"
         [label]="'MESSAGES_MODAL.LABELS.TO' | translate"
-        [control]="getCtrl('receptor')"
+        [control]="getCtrl('receiver')"
         type="text"
       >
       </app-inputs>
       <app-inputs
-        name="asunto"
+        name="topic"
         [label]="'MESSAGES_MODAL.LABELS.SUBJECT' | translate"
-        [control]="getCtrl('asunto')"
+        [control]="getCtrl('topic')"
         type="text"
       >
       </app-inputs>
     } @else {
       <app-inputs
-        name="emisor"
+        name="sender"
         [label]="'MESSAGES_MODAL.LABELS.SENDER' | translate"
-        [control]="getCtrl('emisor')"
+        [control]="getCtrl('sender')"
         type="text"
       >
       </app-inputs>
       <app-inputs
-        name="receptor"
+        name="receiver"
         [label]="'MESSAGES_MODAL.LABELS.RECEIVER' | translate"
-        [control]="getCtrl('receptor')"
+        [control]="getCtrl('receiver')"
         type="text"
       >
       </app-inputs>
       <app-inputs
-        name="asunto"
+        name="topic"
         [label]="'MESSAGES_MODAL.LABELS.SUBJECT' | translate"
-        [control]="getCtrl('asunto')"
+        [control]="getCtrl('topic')"
         type="text"
       >
       </app-inputs>
@@ -63,7 +63,7 @@
       </label>
       <textarea
         id="message-content"
-        [formControl]="getCtrl('contenido')"
+        [formControl]="getCtrl('content')"
         class="message-modal-textarea"
         [placeholder]="'MESSAGES_MODAL.PLACEHOLDERS.WRITE_HERE' | translate"
         [attr.aria-required]="true"
@@ -71,7 +71,7 @@
       </textarea>
     </div>
 
-    @if (data.modo == 'escribir') {
+    @if (data.mode == 'escribir') {
       <div class="flex justify-center mt-4">
         <app-button
           [label]="'MESSAGES_MODAL.BTN.SEND' | translate"

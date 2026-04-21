@@ -9,7 +9,7 @@ import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, tap, map, switchMap } from 'rxjs/operators';
-import { ComunicacionModel } from '../../models/Comunicacion';
+import { ComunicationModel } from '../../models/Comunicacion';
 import { ButtonComponent } from '../../components/button/button';
 @Component({
   selector: 'app-notifications',
@@ -34,7 +34,7 @@ export default class Notifications implements OnInit {
   private cd = inject(ChangeDetectorRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
-  dataSource = new MatTableDataSource<ComunicacionModel>([]);
+  dataSource = new MatTableDataSource<ComunicationModel>([]);
   displayedColumns: string[] = ['nombre', 'notificacion', 'fecha', 'acciones'];
 
   ngOnInit() {
@@ -54,7 +54,7 @@ export default class Notifications implements OnInit {
           );
         }),
       )
-      .subscribe((data: ComunicacionModel[]) => {
+      .subscribe((data: ComunicationModel[]) => {
         this.dataSource.data = data;
         if (this.paginator) {
           this.dataSource.paginator = this.paginator;
@@ -67,14 +67,14 @@ export default class Notifications implements OnInit {
       });
   }
 
-  markAsRead(notis: ComunicacionModel | ComunicacionModel[]) {
+  markAsRead(notis: ComunicationModel | ComunicationModel[]) {
     const lista = Array.isArray(notis) ? notis : [notis];
 
     lista.forEach((noti) => {
       if (noti.leido || !noti.id_comunicacion) return;
       noti.leido = true;
       this.comunicationService
-        .updateComunicacion(noti.id_comunicacion, { leido: true })
+        .updateComunication(noti.id_comunicacion, { leido: true })
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           error: (err) => {
@@ -88,7 +88,7 @@ export default class Notifications implements OnInit {
     this.cd.markForCheck();
   }
 
-  deleteCommunication(mensaje: ComunicacionModel) {
+  deleteCommunication(mensaje: ComunicationModel) {
     this.comunicationService
       .deleteComunicacion(mensaje)
       .pipe(

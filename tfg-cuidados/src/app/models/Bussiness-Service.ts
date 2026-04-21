@@ -1,50 +1,50 @@
-export interface ServicioDetalle {
-  nombre: string;
-  tipo_servicio: string;
-  id_servicio: string;
+export interface ServiceDetail {
+  name: string;
+  type_service: string;
+  id_service: string;
 }
 
-export interface HorarioDetalle {
-  dia_semana: string;
-  hora: string;
+export interface TimeDetail {
+  week_day: string;
+  time: string;
 }
 
-export interface ServicioHorarioResponse {
-  id_servicio_horario: string;
-  precio: number;
-  descripcion?: string;
-  Servicio?: ServicioDetalle;
-  Horario?: HorarioDetalle;
+export interface ServiceTimeResponse {
+  id_service_time: string;
+  price: number;
+  description?: string;
+  Service?: ServiceDetail;
+  Time?: TimeDetail;
 }
 
-export interface SupabaseEmpresaJoin {
-  id_empresa: string;
+export interface BusinessSupabaseJoinModel {
+  id_business: string;
   cif?: string;
-  direccion?: string;
-  localidad?: string;
-  codpostal?: string;
-  comunidad?: string;
-  telef?: string;
-  descripcion?: string;
-  Usuario?: {
-    nombre: string;
+  address?: string;
+  city?: string;
+  postcode?: string;
+  comunity?: string;
+  phone?: string;
+  description?: string;
+  User_public?: {
+    name: string;
     email: string;
-    estado: boolean;
+    state: boolean;
   };
-  Servicio_Horario?: ServicioHorarioResponse[];
+  Service_Time?: ServiceTimeResponse[];
   [key: string]: unknown;
 }
 
-export interface EmpresaModel {
-  id_empresa: string;
-  nombre: string;
+export interface BusinessModel {
+  id_business: string;
+  name: string;
   email: string;
   cif?: string;
-  direccion?: string;
-  localidad?: string;
-  codpostal?: string;
-  comunidad?: string;
-  telef?: string;
-  descripcion?: string;
-  Servicio_Horario: ServicioHorarioResponse[];
+  address?: string;
+  city?: string;
+  postcode?: string;
+  comunity?: string;
+  phone?: string;
+  description?: string;
+  Service_Time: ServiceTimeResponse[];
 }

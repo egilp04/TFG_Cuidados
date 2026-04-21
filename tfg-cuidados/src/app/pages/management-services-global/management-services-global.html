@@ -18,33 +18,33 @@
     "
   >
     <app-inputs
-      name="nombre"
+      name="name"
       [label]="'MANAGEMENT_SERVICES.FORM.NAME' | translate"
-      [control]="getCtrl('nombre')"
+      [control]="getCtrl('name')"
       [errorMessage]="
-        getCtrl('nombre').invalid && getCtrl('nombre').touched
+        getCtrl('name').invalid && getCtrl('name').touched
           ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
           : ''
       "
     >
     </app-inputs>
     <app-inputs
-      name="tipo"
+      name="type"
       [label]="'MANAGEMENT_SERVICES.FORM.TYPE' | translate"
-      [control]="getCtrl('tipo')"
+      [control]="getCtrl('type')"
       [errorMessage]="
-        getCtrl('tipo').invalid && getCtrl('tipo').touched
+        getCtrl('tipo').invalid && getCtrl('type').touched
           ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
           : ''
       "
     >
     </app-inputs
     ><app-inputs
-      name="descripcion"
+      name="description"
       [label]="'MANAGEMENT_SERVICES.FORM.DESCRIPTION' | translate"
       [control]="getCtrl('descripcion')"
       [errorMessage]="
-        getCtrl('descripcion').invalid && getCtrl('descripcion').touched
+        getCtrl('description').invalid && getCtrl('description').touched
           ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
           : ''
       "
@@ -99,7 +99,7 @@
     class="mat-elevation-z2 w-full"
     [attr.aria-label]="'MANAGEMENT_SERVICES.LIST.TITLE' | translate"
   >
-    <ng-container matColumnDef="nombre">
+    <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SERVICES.TABLE.NAME' | translate }}
       </th>
@@ -108,7 +108,7 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="tipo_servicio">
+    <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SERVICES.TABLE.TYPE' | translate }}
       </th>
@@ -117,7 +117,7 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="descripcion">
+    <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SERVICES.TABLE.DESCRIPTION' | translate }}
       </th>
@@ -126,7 +126,7 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="acciones">
+    <ng-container matColumnDef="actions">
       <th
         mat-header-cell
         *matHeaderCellDef

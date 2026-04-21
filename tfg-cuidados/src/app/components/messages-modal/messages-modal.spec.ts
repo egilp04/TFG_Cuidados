@@ -58,45 +58,45 @@ describe('MessagesModal', () => {
 
   it('should patch value in ngOnInit if showMessagee', () => {
     component.data = {
-      modo: 'showMessage',
+      mode: 'showMessage',
       contenido: {
         Emisor: { nombre: 'Juan' },
         Receptor: { nombre: 'Pepe' },
         asunto: 'Hola',
-        contenido: 'Mundo',
+        content: 'Mundo',
       },
     };
     component.ngOnInit();
-    expect(component.mensajeForm.get('emisor')?.value).toBe('Juan');
-    expect(component.mensajeForm.disabled).toBe(true);
+    expect(component.messageForm.get('emisor')?.value).toBe('Juan');
+    expect(component.messageForm.disabled).toBe(true);
   });
 
-  it('should patch value in ngOnInit if escribir with receptor', () => {
-    component.data = { modo: 'escribir', receptorEmail: 'test@test.com' };
+  it('should patch value in ngOnInit if escribir with receiver', () => {
+    component.data = { mode: 'escribir', receptorEmail: 'test@test.com' };
     component.ngOnInit();
-    expect(component.mensajeForm.get('receptor')?.value).toBe('test@test.com');
-    expect(component.mensajeForm.get('receptor')?.disabled).toBe(true);
+    expect(component.messageForm.get('receiver')?.value).toBe('test@test.com');
+    expect(component.messageForm.get('receiver')?.disabled).toBe(true);
   });
 
   it('enviarMensaje should show error if no currentUser', () => {
     authServiceSpy.currentUser.and.returnValue(null);
-    component.mensajeForm.patchValue({ receptor: 'a@a.com', asunto: 'a', contenido: 'a' });
+    component.messageForm.patchValue({ receiver: 'a@a.com', topic: 'a', content: 'a' });
 
-    component.enviarMensaje();
+    component.sendMessage();
     expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'error');
   });
 
   it('enviarMensaje should success flow', () => {
     authServiceSpy.currentUser.and.returnValue({ id_usuario: 1 });
-    component.mensajeForm.patchValue({
-      receptor: 'dest@dest.com',
-      asunto: 'Test',
-      contenido: 'Contenido',
+    component.messageForm.patchValue({
+      receiver: 'dest@dest.com',
+      topic: 'Test',
+      content: 'Contenido',
     });
     userServiceSpy.getUserByEmail.and.returnValue(of({ id_usuario: 2 }));
     comunicationServiceSpy.insertComunicacion.and.returnValue(of(true));
 
-    component.enviarMensaje();
+    component.sendMessage();
 
     expect(comunicationServiceSpy.insertComunicacion).toHaveBeenCalled();
     expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'exito');
@@ -105,28 +105,28 @@ describe('MessagesModal', () => {
 
   it('enviarMensaje should handle user not found error', () => {
     authServiceSpy.currentUser.and.returnValue({ id_usuario: 1 });
-    component.mensajeForm.patchValue({
-      receptor: 'dest@dest.com',
-      asunto: 'Test',
-      contenido: 'Contenido',
+    component.messageForm.patchValue({
+      receiver: 'dest@dest.com',
+      topic: 'Test',
+      content: 'Contenido',
     });
     userServiceSpy.getUserByEmail.and.returnValue(of(null));
 
-    component.enviarMensaje();
+    component.sendMessage();
 
     expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'error');
   });
 
   it('enviarMensaje should handle generic error', () => {
     authServiceSpy.currentUser.and.returnValue({ id_usuario: 1 });
-    component.mensajeForm.patchValue({
-      receptor: 'dest@dest.com',
-      asunto: 'Test',
-      contenido: 'Contenido',
+    component.messageForm.patchValue({
+      receiver: 'dest@dest.com',
+      topic: 'Test',
+      content: 'Contenido',
     });
     userServiceSpy.getUserByEmail.and.returnValue(throwError(() => new Error('Generic')));
 
-    component.enviarMensaje();
+    component.sendMessage();
 
     expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'error');
   });

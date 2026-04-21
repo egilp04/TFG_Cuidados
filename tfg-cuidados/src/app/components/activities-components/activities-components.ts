@@ -15,8 +15,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { ButtonComponent } from '../button/button';
 import { AuthService } from '../../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { ContratoModel, FilaTablaContrato } from '../../models/Acitvities-component';
-import { ContratoDetalle } from '../../models/Contrato';
+import { Contractmodel, FilaTablaContrato } from '../../models/Acitvities-component';
+import { ContratoDetalle } from '../../models/ContractModel';
 
 @Component({
   selector: 'app-activities-components',

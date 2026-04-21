@@ -1,16 +1,17 @@
 export interface UserProfileModel {
-    email?: string;
-    telef?: string;
-    nombre?: string;
-    direccion?: string;
-    localidad?: string;
-    codpostal?: string;
-    comunidad?: string;
-    ape1?: string;
-    ape2?: string;
-    descripcion?: string;
-  }
-  export interface FormSubmitEvent {
-    datos: UserProfileModel;
-    rol: string;
-  }
+  email?: string;
+  phone?: string;
+  name?: string;
+  address?: string;
+  city?: string;
+  postcode?: string;
+  comunity?: string;
+  surname1?: string;
+  surname2?: string;
+  description?: string;
+}
+
+export interface FormSubmitEvent {
+  dts: UserProfileModel;
+  rol: string;
+}

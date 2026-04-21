@@ -1,4 +1,3 @@
-
 interface AdminResponse {
-    id_usuario: string;
-  }
+  id_user: string;
+}

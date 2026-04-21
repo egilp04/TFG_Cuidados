@@ -1,5 +1,4 @@
 export interface ToastData {
-    mensaje: string;
-    tipo: 'exito' | 'error';
-  }
-  
+  message: string;
+  type: 'exito' | 'error';
+}

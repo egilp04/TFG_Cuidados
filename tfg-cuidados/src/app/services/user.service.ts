@@ -1,14 +1,14 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { from, Observable, throwError, BehaviorSubject, of } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { from, Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import {
   RpcSuccessResponse,
   UpdateProfilePayload,
   UserEmailResponse,
   UserModel,
   UserNameResponse,
-} from '../models/User-Service';
+} from '../models/User_Service';
 /**
  * @description Servicio de administración de usuarios y perfiles.
  * Implementa una lógica de consulta dinámica para unificar la identidad (Usuario)
@@ -20,7 +20,7 @@ export class UserService {
 
   private _usersList = signal<UserModel[]>([]);
   public usersList = this._usersList.asReadonly();
-  
+
   private currentType: 'cliente' | 'empresa' = 'cliente';
 
   constructor() {
@@ -71,16 +71,17 @@ export class UserService {
     }
     if (data) {
       const flattened: UserModel[] = data.map((u: Record<string, unknown>) => {
-        const detalle = (u[tableRel] || u[tableRel.toLowerCase()] || u[`"${tableRel}"`]) as
+        const detail = (u[tableRel] || u[tableRel.toLowerCase()] || u[`"${tableRel}"`]) as
           | Record<string, unknown>
           | undefined;
         return {
           ...u,
-          ...(detalle || {}),
+          ...(detail || {}),
         } as unknown as UserModel;
       });
 
-      this._usersList.set(flattened);    }
+      this._usersList.set(flattened);
+    }
   }
 
   deleteUser(userId: string): Observable<void> {
@@ -119,26 +120,26 @@ export class UserService {
    */
   updateProfileDirect(
     userId: string,
-    datosLimpios: UpdateProfilePayload,
+    dataToSend: UpdateProfilePayload,
     rol: string,
   ): Observable<RpcSuccessResponse> {
     const bodyRPC = {
       p_user_id: userId,
       p_rol: rol,
-      p_nombre: datosLimpios.nombre,
-      p_email: datosLimpios.email,
-      p_telef: datosLimpios.telef,
-      p_ape1: datosLimpios.ape1 || null,
-      p_ape2: datosLimpios.ape2 || null,
-      p_direccion: datosLimpios.direccion || null,
-      p_localidad: datosLimpios.localidad || null,
-      p_codpostal: datosLimpios.codpostal || null,
-      p_comunidad: datosLimpios.comunidad || null,
-      p_descripcion: datosLimpios.descripcion || null,
+      p_nombre: dataToSend.nombre,
+      p_email: dataToSend.email,
+      p_telef: dataToSend.telef,
+      p_ape1: dataToSend.ape1 || null,
+      p_ape2: dataToSend.ape2 || null,
+      p_direccion: dataToSend.direccion || null,
+      p_localidad: dataToSend.localidad || null,
+      p_codpostal: dataToSend.codpostal || null,
+      p_comunidad: dataToSend.comunidad || null,
+      p_descripcion: dataToSend.descripcion || null,
     };
 
     return from(this.supabase.rpc('update_profile_complete', bodyRPC)).pipe(
-      map(({ data, error }) => {
+      map(({ error }) => {
         if (error) throw new Error(error.message);
         return { success: true };
       }),

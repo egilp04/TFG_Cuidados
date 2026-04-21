@@ -23,7 +23,7 @@ import { ButtonComponent } from '../../components/button/button';
 import { Searchbar } from '../../components/searchbar/searchbar';
 import { ServiceService } from '../../services/service.service';
 import { MessageService } from '../../services/message-service';
-import { ServicioModel } from '../../models/Servicio';
+import { ServiceModel } from '../../models/ServiceModel';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -66,13 +66,13 @@ export default class ManagementServicesGlobal implements OnInit {
   controlFilterItem = new FormControl<string>('');
 
   serviceFormular = this.fb.group({
-    nombre: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
-    tipo: this.fb.control<string>('', [Validators.required]),
-    descripcion: this.fb.control<string>('', [Validators.required]),
+    name: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
+    type: this.fb.control<string>('', [Validators.required]),
+    description: this.fb.control<string>('', [Validators.required]),
   });
 
-  dataSource = new MatTableDataSource<ServicioModel>([]);
-  displayedColumns: string[] = ['nombre', 'tipo_servicio', 'descripcion', 'acciones'];
+  dataSource = new MatTableDataSource<ServiceModel>([]);
+  displayedColumns: string[] = ['name', 'type', 'description', 'actions'];
 
   ngOnInit() {
     this.serviceService
@@ -94,9 +94,9 @@ export default class ManagementServicesGlobal implements OnInit {
     this.isLoading.set(true);
 
     const rawValue = this.serviceFormular.getRawValue();
-    const nombre = (rawValue.nombre ?? '').trim();
-    const tipo = (rawValue.tipo ?? '').trim();
-    const descripcion = (rawValue.descripcion ?? '').trim();
+    const nombre = (rawValue.name ?? '').trim();
+    const tipo = (rawValue.type ?? '').trim();
+    const descripcion = (rawValue.description ?? '').trim();
 
     const user = this.authService.currentUser();
     if (!user || !user.id_usuario) {
@@ -156,13 +156,13 @@ export default class ManagementServicesGlobal implements OnInit {
       });
   }
 
-  onEdit(servicio: ServicioModel) {
+  onEdit(servicio: ServiceModel) {
     this.isEditing = true;
     this.currentServiceId = servicio.id_servicio!;
     this.serviceFormular.patchValue({
-      nombre: servicio.nombre,
-      tipo: servicio.tipo_servicio,
-      descripcion: servicio.descripcion,
+      name: servicio.nombre,
+      type: servicio.tipo_servicio,
+      description: servicio.descripcion,
     });
   }
 
@@ -171,7 +171,7 @@ export default class ManagementServicesGlobal implements OnInit {
 
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
-      data: { modo: 'eliminarAdminGlobal' },
+      data: { mode: 'eliminarAdminGlobal' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
       maxHeight: '90vh',

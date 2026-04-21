@@ -11,7 +11,7 @@ import { ButtonComponent } from '../../components/button/button';
 import { ContractService } from '../../services/contract.service';
 import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
-import { ContratoDetalle } from '../../models/Contrato';
+import { ContratoDetalle } from '../../models/ContractModel';
 import { ResponsiveSize } from '../../services/responsive-size';
 
 @Component({
@@ -66,7 +66,7 @@ export default class Contracts implements OnInit {
   async cancelContract(id: string) {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
-      data: { modo: 'cancelContract' },
+      data: { mode: 'cancelContract' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '650px',
       maxHeight: '90vh',
@@ -104,8 +104,8 @@ export default class Contracts implements OnInit {
     const { InfoContract } = await import('../../components/info-contract/info-contract');
     const dialogConfig = {
       width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',      
-      maxHeight: '90vh'
+      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+      maxHeight: '90vh',
     };
     const contratoYaMapeado = this.dataSource.data.find((c) => c.id_contrato === id);
     if (contratoYaMapeado) {

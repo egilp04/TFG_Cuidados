@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, from, Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { HorarioModel } from '../models/Horario';
+import { HorarioModel } from '../models/TimeModel';
 
 /**
  * @description Servicio maestro de gestión de tiempos y horarios.

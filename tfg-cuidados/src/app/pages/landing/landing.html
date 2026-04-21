@@ -25,12 +25,12 @@
     </h2>
 
     <main class="services-grid" role="list" [attr.aria-label]="'LANDING.SERVICES' | translate">
-      @for (item of cardsdata; track item.titulo; let i = $index) {
+      @for (item of cardsdata; track item.title; let i = $index) {
         <app-cards-landing
           role="listitem"
-          [titulo]="item.titulo"
-          [descripcion]="item.descripcion"
-          [imagen]="item.imagen"
+          [title]="item.title"
+          [description]="item.description"
+          [image]="item.image"
           [class]="i === 2 ? 'services-card-special' : ''"
         >
         </app-cards-landing>

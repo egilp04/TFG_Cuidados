@@ -1,12 +1,12 @@
-export interface ComunicacionModel {
-  id_comunicacion?: string;
-  tipo_comunicacion: 'mensaje' | 'notificacion';
-  contenido: string;
-  leido: boolean;
-  fecha_envio: Date;
-  id_receptor?: string;
-  id_emisor?: string | null;
-  asunto: string;
-  eliminado_por_emisor?: boolean;
-  eliminado_por_receptor?: boolean;
+export interface ComunicationModel {
+  id_comunication?: string;
+  type_comunication: 'mensaje' | 'notificacion';
+  content: string;
+  read: boolean;
+  send_date: Date;
+  id_receiver?: string;
+  id_sender?: string | null;
+  topic: string;
+  deleted_by_sender?: boolean;
+  deleted_by_receiver?: boolean;
 }

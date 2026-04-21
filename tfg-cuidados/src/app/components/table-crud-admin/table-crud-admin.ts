@@ -21,7 +21,7 @@ import { Searchbar } from '../searchbar/searchbar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
-import { UserModel } from '../../models/User-Service';
+import { UserModel } from '../../models/User_Service';
 
 @Component({
   selector: 'app-table-crud-admin',
@@ -42,7 +42,7 @@ import { UserModel } from '../../models/User-Service';
 })
 export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
   private destroyRef = inject(DestroyRef);
-  @Input() modo: 'cliente' | 'empresa' = 'cliente';
+  @Input() mode: 'cliente' | 'empresa' = 'cliente';
   @Input() data: UserModel[] = [];
   @Output() deleteData = new EventEmitter<UserModel>();
   @Output() modifyData = new EventEmitter<UserModel>();
@@ -79,7 +79,7 @@ export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
 
   get displayedColumns(): string[] {
     const columnas = ['nombre'];
-    if (this.modo === 'cliente') {
+    if (this.mode === 'cliente') {
       columnas.push('apellidos');
     }
     columnas.push('email', 'acciones');

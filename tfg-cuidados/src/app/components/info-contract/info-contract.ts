@@ -17,5 +17,4 @@ import { CloseBtnComponent } from '../close-btn/close-btn.component';
 })
 export class InfoContract {
   public data = inject(MAT_DIALOG_DATA);
-  private dialogRef = inject(MatDialogRef<InfoContract>);
 }

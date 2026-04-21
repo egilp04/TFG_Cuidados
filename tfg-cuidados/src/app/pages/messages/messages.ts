@@ -3,7 +3,7 @@ import { ButtonComponent } from '../../components/button/button';
 import { Dropdown } from '../../components/dropdown/dropdown';
 import { AuthService } from '../../services/auth.service';
 import { ComunicationService } from '../../services/comunication.service';
-import { ComunicacionModel } from '../../models/Comunicacion';
+import { ComunicationModel } from '../../models/Comunicacion';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatSortModule } from '@angular/material/sort';
@@ -46,17 +46,17 @@ export default class Messages implements OnInit {
   private responsive = inject(ResponsiveSize);
 
   displayedColumns: string[] = ['Emisor', 'Receptor', 'Asunto', 'Fecha', 'acciones'];
-  dataSource = new MatTableDataSource<ComunicacionModel>([]);
+  dataSource = new MatTableDataSource<ComunicationModel>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  public filtroActual: 'recibidos' | 'enviados' = 'recibidos';
+  public currentFilter: 'recibidos' | 'enviados' = 'recibidos';
 
   ngOnInit() {
     this.subcribeToMessages();
   }
 
   toFilterFunction(tipo: 'recibidos' | 'enviados') {
-    this.filtroActual = tipo;
+    this.currentFilter = tipo;
     this.comunicationService.refreshUsersData();
   }
 
@@ -68,11 +68,11 @@ export default class Messages implements OnInit {
       .getMessagesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        map((mensajes) => {
-          if (this.filtroActual === 'recibidos') {
-            return mensajes.filter((m) => m.id_receptor === user.id_usuario);
+        map((mssg) => {
+          if (this.currentFilter === 'recibidos') {
+            return mssg.filter((m) => m.id_receptor === user.id_usuario);
           } else {
-            return mensajes.filter((m) => m.id_emisor === user.id_usuario);
+            return mssg.filter((m) => m.id_emisor === user.id_usuario);
           }
         }),
       )
@@ -88,9 +88,9 @@ export default class Messages implements OnInit {
       });
   }
 
-  sortFunction(criterio: string) {
+  sortFunction(criteria: string) {
     const data = [...this.dataSource.data];
-    switch (criterio) {
+    switch (criteria) {
       case 'MESSAGES_PAGE.SORT_OPTIONS.DATE':
         data.sort((a, b) => new Date(b.fecha_envio).getTime() - new Date(a.fecha_envio).getTime());
         break;
@@ -104,23 +104,23 @@ export default class Messages implements OnInit {
     this.dataSource.data = data;
   }
 
-  async checkMessage(mensaje: ComunicacionModel) {
+  async checkMessage(mssg: ComunicationModel) {
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
     this.dialog.open(MessagesModal, {
-      data: { modo: 'showMessage', contenido: mensaje },
+      data: { mode: 'showMessage', contenido: mssg },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       maxHeight: '90vh',
     });
     const user = this.authService.currentUser();
-    if (user && mensaje.id_receptor === user.id_usuario && !mensaje.leido) {
-      mensaje.leido = true;
+    if (user && mssg.id_receptor === user.id_usuario && !mssg.leido) {
+      mssg.leido = true;
       this.comunicationService
-        .updateComunicacion(mensaje.id_comunicacion!, { leido: true })
+        .updateComunication(mssg.id_comunicacion!, { leido: true })
         .pipe(
           takeUntilDestroyed(this.destroyRef),
           catchError((err) => {
-            mensaje.leido = false;
+            mssg.leido = false;
             console.error('Error al marcar mensaje como leído en segundo plano:', err);
             return of(null);
           }),
@@ -129,9 +129,9 @@ export default class Messages implements OnInit {
     }
   }
 
-  deleteCommunication(mensaje: ComunicacionModel) {
+  deleteCommunication(mssg: ComunicationModel) {
     this.comunicationService
-      .deleteComunicacion(mensaje)
+      .deleteComunicacion(mssg)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap(() =>
@@ -146,15 +146,15 @@ export default class Messages implements OnInit {
             .pipe(map((text) => ({ type: 'error' as const, text })));
         }),
       )
-      .subscribe((resultado) => {
-        this.messageService.showMessage(resultado.text, resultado.type);
+      .subscribe((res) => {
+        this.messageService.showMessage(res.text, res.type);
       });
   }
 
   async writeMessage() {
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
     this.dialog.open(MessagesModal, {
-      data: { modo: 'escribir' },
+      data: { mode: 'escribir' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
       maxHeight: '90vh',

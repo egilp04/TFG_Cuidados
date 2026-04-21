@@ -1,13 +1,7 @@
 import { Component, inject, OnInit, ChangeDetectorRef, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-  FormControl,
-} from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs/operators';
@@ -50,26 +44,26 @@ export class MessagesModal implements OnInit {
   private translate = inject(TranslateService);
 
   messageForm = this.fb.group({
-    emisor: this.fb.control<string>(''),
-    receptor: this.fb.control<string>('', [Validators.required, Validators.email]),
-    asunto: this.fb.control<string>('', [Validators.required]),
-    contenido: this.fb.control<string>('', [Validators.required]),
+    sender: this.fb.control<string>(''),
+    receiver: this.fb.control<string>('', [Validators.required, Validators.email]),
+    topic: this.fb.control<string>('', [Validators.required]),
+    content: this.fb.control<string>('', [Validators.required]),
   });
 
   ngOnInit() {
-    if (this.data.modo === 'showMessage' && this.data.contenido) {
+    if (this.data.mode === 'showMessage' && this.data.contenido) {
       this.messageForm.patchValue({
-        emisor: this.data.contenido.Emisor?.email,
-        receptor: this.data.contenido.Receptor?.nombre,
-        asunto: this.data.contenido.asunto || undefined,
-        contenido: this.data.contenido.contenido,
+        sender: this.data.contenido.Emisor?.email,
+        receiver: this.data.contenido.Receptor?.nombre,
+        topic: this.data.contenido.asunto || undefined,
+        content: this.data.contenido.contenido,
       });
       this.messageForm.disable();
-    } else if (this.data.modo === 'escribir' && this.data.receptorEmail) {
+    } else if (this.data.mode === 'escribir' && this.data.receptorEmail) {
       this.messageForm.patchValue({
-        receptor: this.data.receptorEmail,
+        receiver: this.data.receptorEmail,
       });
-      this.getCtrl('receptor').disable();
+      this.getCtrl('receiver').disable();
     }
   }
 
@@ -80,12 +74,12 @@ export class MessagesModal implements OnInit {
   sendMessage() {
     if (
       this.messageForm.valid ||
-      (this.data.modo === 'escribir' &&
+      (this.data.mode === 'escribir' &&
         this.getCtrl('asunto').valid &&
         this.getCtrl('contenido').valid)
     ) {
       const idEmisor = this.authService.currentUser()?.id_usuario;
-      const emailDestino = this.messageForm.getRawValue().receptor ?? '';
+      const emailDestino = this.messageForm.getRawValue().receiver ?? '';
       if (!idEmisor) {
         this.messageService.showMessage(
           this.translate.instant('MESSAGES_MODAL.FEEDBACK.ERROR_SENDER'),
@@ -104,14 +98,14 @@ export class MessagesModal implements OnInit {
             }
             const newComunication = {
               id_emisor: idEmisor,
-              id_receptor: foundUser.id_usuario,
-              asunto: this.messageForm.value.asunto ?? '',
-              contenido: this.messageForm.value.contenido ?? '',
+              id_receiver: foundUser.id_usuario,
+              asunto: this.messageForm.value.topic ?? '',
+              contenido: this.messageForm.value.content ?? '',
               tipo_comunicacion: 'mensaje' as const,
               leido: false,
             };
 
-            return this.comunicationService.insertComunicacion(newComunication);
+            return this.comunicationService.insertComunication(newComunication);
           }),
         )
         .subscribe({

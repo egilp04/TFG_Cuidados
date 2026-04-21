@@ -11,7 +11,7 @@ import { TableCrudAdmin } from '../../components/table-crud-admin/table-crud-adm
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { ButtonComponent } from '../../components/button/button';
 import { UserService } from '../../services/user.service';
-import { UserModel } from '../../models/User-Service';
+import { UserModel } from '../../models/User_Service';
 import { ResponsiveSize } from '../../services/responsive-size';
 
 @Component({
@@ -49,7 +49,7 @@ export default class ManagementAdmin implements OnInit {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
       maxHeight: '90vh',
-      data: { modo: 'eliminar' },
+      data: { mode: 'eliminar' },
     });
     dialogRef
       .afterClosed()

@@ -12,7 +12,6 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 })
 export class Footer {
   private translate = inject(TranslateService);
-  private authService = inject(AuthService);
 
   changeLanguage(lang: string) {
     this.translate.use(lang);

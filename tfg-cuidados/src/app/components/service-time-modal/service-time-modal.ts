@@ -17,8 +17,8 @@ import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { Servicio_HorarioModel } from '../../models/Servicio_Horario';
-import { ServiceTimeModalData } from '../../models/Service-Time';
+import { Service_Time_Model } from '../../models/Service_Time_Model';
+import { ServiceTimeModalData } from '../../models/Service_Time_Data_Model';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
 
 @Component({
@@ -76,7 +76,7 @@ export class ServiceTimeModal implements OnInit {
 
   save() {
     if (this.form.invalid) return;
-    const formPayload = this.form.getRawValue() as Servicio_HorarioModel;
+    const formPayload = this.form.getRawValue() as Service_Time_Model;
     const request =
       this.isEditing && this.data
         ? this.serviceTimeService.updateServiceTime(this.data.id_servicio_horario, formPayload)

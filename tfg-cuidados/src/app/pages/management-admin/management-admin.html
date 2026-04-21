@@ -5,7 +5,6 @@
   <app-buttonback></app-buttonback>
 </header>
 
-
 <section
   class="mangment-admin-container"
   role="main"
@@ -34,7 +33,7 @@
   </div>
 
   <app-table-crud-admin
-    [modo]="isUser ? 'cliente' : 'empresa'"
+    [mode]="isUser ? 'cliente' : 'empresa'"
     [data]="userService.usersList()"
     (deleteData)="toDeleteUser($event)"
     (modifyData)="toEditFunction($event)"

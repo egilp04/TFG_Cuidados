@@ -18,13 +18,13 @@ import { ButtonComponent } from '../../components/button/button';
 import { AuthService } from '../../services/auth.service';
 import { ContractService } from '../../services/contract.service';
 import { MessageService } from '../../services/message-service';
-import { ContratoModel } from '../../models/Contrato';
+import { Contractmodel } from '../../models/ContractModel';
 import { Buttonback } from '../../components/buttonback/buttonback';
-import { EmpresaModel, ServicioHorarioResponse } from '../../models/Bussiness-Service';
+import { BusinessModel, ServicioHorarioResponse } from '../../models/Bussiness-Service';
 import { BusinessService } from '../../services/business.service';
 import { Router } from '@angular/router';
 
-export interface EmpresaUI extends EmpresaModel {
+export interface EmpresaUI extends BusinessModel {
   seleccion?: ServicioHorarioResponse;
 }
 
@@ -57,16 +57,16 @@ export default class SearchBusiness implements OnInit {
   public searchFilterItem = signal<string>('');
   public controlFilterItem = new FormControl('');
 
-  public idServicioSeleccionado = signal<string | null>(null);
+  public idSelectedService = signal<string | null>(null);
   private router = inject(Router);
 
   constructor() {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state as { idServicio: string };
     if (state && state.idServicio) {
-      this.idServicioSeleccionado.set(state.idServicio);
+      this.idSelectedService.set(state.idServicio);
     } else if (history.state && history.state.idServicio) {
-      this.idServicioSeleccionado.set(history.state.idServicio);
+      this.idSelectedService.set(history.state.idServicio);
     }
   }
 
@@ -102,8 +102,8 @@ export default class SearchBusiness implements OnInit {
           );
         }),
       )
-      .subscribe((data: EmpresaModel[]) => {
-        const targetId = this.idServicioSeleccionado()?.trim();
+      .subscribe((data: BusinessModel[]) => {
+        const targetId = this.idSelectedService()?.trim();
         const dataConSeleccion: EmpresaUI[] = data
           .map((e) => {
             const horariosFiltrados = targetId
@@ -145,29 +145,28 @@ export default class SearchBusiness implements OnInit {
     this.contractService
       .getContractsObservable()
       .pipe(take(1))
-      .subscribe((contratos) => {
+      .subscribe((contacts) => {
         const idSeleccionado = seleccion.id_servicio_horario;
         console.log('ID que buscas:', idSeleccionado);
         console.log(
           'IDs en tus contratos:',
-          contratos.map((c) => c.id_sh_plano),
+          contacts.map((c) => c.id_sh_plano),
         );
-        const yaContratado = contratos.find((c) => {
-          const coincidenIds = String(c.id_sh_plano) === String(idSeleccionado);
-          const esMismoCliente = c.id_cliente === user.id_usuario;
-          const estaActivo = c.estado === 'activo';
+        const alreadyHired = contacts.find((c) => {
+          const sameIds = String(c.id_sh_plano) === String(idSeleccionado);
+          const sameClient = c.id_cliente === user.id_usuario;
+          const isActive = c.estado === 'activo';
 
-          return coincidenIds && esMismoCliente && estaActivo;
+          return sameIds && sameClient && isActive;
         });
-        console.log(yaContratado);
-        if (yaContratado) {
+        if (alreadyHired) {
           this.translate.get('SEARCH_BUSINESS.MESSAGES.ALREADY_CONTRACTED').subscribe((res) => {
             this.messageService.showMessage(res, 'error');
           });
           return;
         }
 
-        const nuevoContrato: ContratoModel = {
+        const newContract: Contractmodel = {
           estado: 'activo',
           fecha_inicio: new Date().toISOString().split('T')[0],
           fecha_fin: null,
@@ -180,7 +179,7 @@ export default class SearchBusiness implements OnInit {
         };
 
         this.contractService
-          .createContract(nuevoContrato)
+          .createContract(newContract)
           .pipe(
             takeUntilDestroyed(this.destroyRef),
             switchMap(() =>
@@ -216,7 +215,7 @@ export default class SearchBusiness implements OnInit {
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
     this.dialog.open(MessagesModal, {
       data: {
-        modo: 'escribir',
+        mode: 'escribir',
         receptorEmail: empresa.email,
         idReceptor: empresa.id_empresa,
         nombreReceptor: empresa.nombre,

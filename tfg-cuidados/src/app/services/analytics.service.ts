@@ -21,10 +21,12 @@ export class AnalyticsService {
     labels: [],
     data: [],
   });
+
   private _contractsAmountData$ = new BehaviorSubject<ContractStats>({
-    activos: 0,
-    cancelados: 0,
+    activeContract: 0,
+    cancelContract: 0,
   });
+
   private _servicesStats$ = new BehaviorSubject<{
     labels: string[];
     demand: number[];
@@ -83,10 +85,10 @@ export class AnalyticsService {
       const { data, error } = await this.supabase.from('Contrato').select('estado');
       if (error) throw error;
       if (data) {
-        const contratos = data as EstadoContratoResponse[];
+        const contracts = data as EstadoContratoResponse[];
         const stats: ContractStats = {
-          activos: contratos.filter((c) => c.estado === 'activo').length,
-          cancelados: contratos.filter((c) => c.estado === 'no activo').length,
+          activeContract: contracts.filter((c) => c.estado === 'activo').length,
+          cancelContract: contracts.filter((c) => c.estado === 'no activo').length,
         };
         this._contractsAmountData$.next(stats);
       }
@@ -98,19 +100,19 @@ export class AnalyticsService {
   private async chargeMonthlyRecords() {
     try {
       const currentYear = new Date().getFullYear();
-      const primeroDeEnero = new Date(currentYear, 0, 1);
-      primeroDeEnero.setHours(0, 0, 0, 0);
+      const januaryMonth = new Date(currentYear, 0, 1);
+      januaryMonth.setHours(0, 0, 0, 0);
 
       const { data, error } = await this.supabase
         .from('Usuario')
         .select('fecha_registro')
-        .gte('fecha_registro', primeroDeEnero.toISOString());
+        .gte('fecha_registro', januaryMonth.toISOString());
 
       if (error) throw error;
 
       if (data) {
-        const registros = data as RegistroFechaResponse[];
-        this._monthlyRegisters$.next(this.groupByCurrentYear(registros, currentYear));
+        const registerData = data as RegistroFechaResponse[];
+        this._monthlyRegisters$.next(this.groupByCurrentYear(registerData, currentYear));
       }
     } catch (e) {
       console.error('Error cargando registros del año en curso:', e);
@@ -151,9 +153,9 @@ export class AnalyticsService {
       labels.push(new Date(year, mes, 1));
     }
     registros.forEach((registro) => {
-      const fecha = new Date(registro.fecha_registro);
-      if (fecha.getFullYear() === year) {
-        const mesIndex = fecha.getMonth();
+      const date = new Date(registro.fecha_registro);
+      if (date.getFullYear() === year) {
+        const mesIndex = date.getMonth();
         data[mesIndex]++;
       }
     });
@@ -183,13 +185,13 @@ export class AnalyticsService {
           supply.push(horarios.length);
 
           // DEMANDA: los contratos de todos los horarios de este servicio
-          let totalContratos = 0;
+          let totalContract = 0;
           horarios.forEach((horario: any) => {
             if (horario.Contrato) {
-              totalContratos += horario.Contrato.length;
+              totalContract += horario.Contrato.length;
             }
           });
-          demand.push(totalContratos);
+          demand.push(totalContract);
         });
 
         this._servicesStats$.next({ labels, demand, supply });
@@ -198,6 +200,4 @@ export class AnalyticsService {
       console.error('Error cargando estadísticas de servicios:', e);
     }
   }
-
-
 }

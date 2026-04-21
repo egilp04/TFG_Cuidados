@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { EmpresaModel, SupabaseEmpresaJoin } from '../models/Bussiness-Service';
+import { BusinessModel, BusinessSupabaseJoinModel } from '../models/Bussiness-Service';
 
 /**
  * @description Servicio de consulta para la búsqueda de empresas.
@@ -12,12 +12,12 @@ import { EmpresaModel, SupabaseEmpresaJoin } from '../models/Bussiness-Service';
 export class BusinessService {
   private supabase = inject(SupabaseService).getClient();
 
-  private businessesList$ = new BehaviorSubject<EmpresaModel[]>([]);
+  private businessesList$ = new BehaviorSubject<BusinessModel[]>([]);
 
   constructor() {
     this.initRealtime();
   }
-  getBusinessesObservable(): Observable<EmpresaModel[]> {
+  getBusinessesObservable(): Observable<BusinessModel[]> {
     this.refreshBusinesses();
     return this.businessesList$.asObservable();
   }
@@ -64,14 +64,14 @@ export class BusinessService {
     }
 
     if (data) {
-      const formatted: EmpresaModel[] = (data as SupabaseEmpresaJoin[]).map(
-        (emp) =>
+      const formatted: BusinessModel[] = (data as BusinessSupabaseJoinModel[]).map(
+        (buss) =>
           ({
-            ...(emp as any),
-            nombre: emp.Usuario?.nombre || 'Empresa (Sin nombre)',
-            email: emp.Usuario?.email || '',
-            Servicio_Horario: emp.Servicio_Horario || [],
-          }) as EmpresaModel,
+            ...(buss as any),
+            nombre: buss.Usuario?.nombre || 'Empresa (Sin nombre)',
+            email: buss.Usuario?.email || '',
+            Servicio_Horario: buss.Servicio_Horario || [],
+          }) as BusinessModel,
       );
       this.businessesList$.next(formatted);
     }
