@@ -16,8 +16,12 @@ export interface ContractSupabaseJoined {
   state: string;
   id_client: string;
   id_business: string;
-  creation_date?: string;
-  end_date?: string;
+  id_service_time: string;
+  start_date: string;
+  end_date: string | null;
+  week_day_hired: string;
+  time_hired: string;
+  creation_date: string;
   Service_Time?: {
     id_service_time?: string;
     Service?: { name?: string };

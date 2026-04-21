@@ -4,9 +4,9 @@ export interface ContractStats {
 }
 
 export interface RegistroFechaResponse {
-  fecha_registro: string;
+  register_date: string;
 }
 
 export interface EstadoContratoResponse {
-  estado: 'activo' | 'no activo';
+  state: 'activo' | 'no activo';
 }

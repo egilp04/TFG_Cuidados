@@ -1,4 +1,4 @@
-import { ComunicationModel } from './Comunicacion';
+import { ComunicationModel } from './ComunicationModel';
 
 export interface MessagesModalData {
   mode: 'escribir' | 'showMessage';

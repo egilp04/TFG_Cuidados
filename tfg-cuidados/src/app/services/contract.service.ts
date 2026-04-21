@@ -1,14 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { AuthService } from './auth.service';
-import { ContratoDetalle, Contractmodel, ContractSupabaseJoined } from '../models/ContractModel';
+import { ContractDetail, ContractModel, ContractSupabaseJoined } from '../models/ContractModel';
 import { from, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ComunicationService } from './comunication.service';
 
 /**
- * @description Orquestador del ciclo de vida de los servicios contratados.
- * Maneja la lógica condicional basada en roles (Cliente/Empresa/Admin).
+ * Orchestrator for the lifecycle of hired services.
+ * Manages conditional logic based on roles (Client/Business/Admin).
  */
 @Injectable({
   providedIn: 'root',
@@ -16,25 +16,21 @@ import { ComunicationService } from './comunication.service';
 export class ContractService {
   private supabase = inject(SupabaseService).getClient();
   private authService = inject(AuthService);
-  private contractsList$ = new BehaviorSubject<ContratoDetalle[]>([]);
+  private contractsList$ = new BehaviorSubject<ContractDetail[]>([]);
   private comunicationService = inject(ComunicationService);
 
-  /**
-   * Consulta compleja con JOINs (relaciones) para recuperar datos del Servicio,
-   * Horario y metadatos de Usuario en una sola petición.
-   */
-  private readonly CONTRATO_SELECT = `
+  private readonly CONTRACT_SELECT = `
     *,
-    id_servicio_horario (
-     id_servicio_horario,
-     Servicio ( nombre )
+    id_service_time (
+     id_service_time,
+     Service ( name )
     ),
-    Cliente:Cliente!fk_contrato_cliente (
-      direccion, localidad, codpostal,
-      Usuario:Usuario!id_cliente ( nombre, email )
+    Client:Client!id_client (
+      address, city, postcode,
+      User_public:User_public!id_client ( name, email )
     ),
-    Empresa:Empresa!fk_contrato_empresa (
-      Usuario:Usuario!id_empresa ( nombre, email )
+    Business:Business!id_business (
+      User_public:User_public!id_business ( name, email )
     )
   `;
 
@@ -42,63 +38,75 @@ export class ContractService {
     this.initRealtime();
   }
 
-  getContractsObservable(): Observable<ContratoDetalle[]> {
+  /**
+   * Returns an observable with the list of active contracts.
+   */
+  getContractsObservable(): Observable<ContractDetail[]> {
     this.refreshContracts();
     return this.contractsList$.asObservable();
   }
 
+  /**
+   * Initializes real-time subscription for the Contract table.
+   */
   private initRealtime() {
     this.supabase
-      .channel('public:contrato')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'Contrato' }, () => {
+      .channel('public:contract')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'Contract' }, () => {
         this.refreshContracts();
       })
       .subscribe();
   }
 
+  /**
+   * Fetches and maps contracts based on the current user's role and permissions.
+   */
   private async refreshContracts() {
     const user = this.authService.currentUser();
     if (!user) return;
 
     let query = this.supabase
-      .from('Contrato')
-      .select(this.CONTRATO_SELECT)
-      .neq('estado', 'no activo');
+      .from('Contract')
+      .select(this.CONTRACT_SELECT)
+      .neq('state', 'no activo');
 
-    if (user.id_usuario && user.rol !== 'administrador') {
-      query = query.or(`id_cliente.eq.${user.id_usuario},id_empresa.eq.${user.id_usuario}`);
+    if (user.id_user && user.rol !== 'administrator') {
+      query = query.or(`id_client.eq.${user.id_user},id_business.eq.${user.id_user}`);
     }
 
-    const { data, error } = await query.order('fecha_creacion', { ascending: false });
+    const { data, error } = await query.order('creation_date', { ascending: false });
 
     if (!error && data) {
-      const mappedData: ContratoDetalle[] = (data as ContractSupabaseJoined[]).map((contrato) => {
-        return {
-          ...(contrato as any),
-          id_sh_plano:
-            contrato.id_servicio_horario?.id_servicio_horario || contrato.id_servicio_horario,
-          Cliente: {
-            ...contrato.Cliente,
-            nombreDelCliente:
-              contrato.Cliente?.nombre || contrato.Cliente?.Usuario?.nombre || 'Desconocido',
-          },
-          Empresa: {
-            ...contrato.Empresa,
-            nombreDeLaEmpresa:
-              contrato.Empresa?.nombre || contrato.Empresa?.Usuario?.nombre || 'Desconocida',
-          },
-          nombreServicio: contrato.id_servicio_horario?.Servicio?.nombre,
-        } as ContratoDetalle;
-      });
+      const mappedData: ContractDetail[] = (data as unknown as ContractSupabaseJoined[]).map(
+        (contract) => {
+          return {
+            ...contract,
+            id_st_flat: contract.Service_Time?.id_service_time || contract.id_service_time,
+            Client: {
+              ...contract.Client,
+              clientName: contract.Client?.name || contract.Client?.User_public?.name || 'Unknown',
+            },
+            Business: {
+              ...contract.Business,
+              businessName:
+                contract.Business?.name || contract.Business?.User_public?.name || 'Unknown',
+            },
+            serviceName: contract.Service_Time?.Service?.name,
+          } as unknown as ContractDetail;
+        },
+      );
 
       this.contractsList$.next(mappedData);
     } else {
-      console.error('Error al refrescar contratos:', error?.message);
+      console.error('Error refreshing contracts:', error?.message);
     }
   }
 
-  createContract(newContract: Contractmodel): Observable<boolean> {
-    return from(this.supabase.from('Contrato').insert(newContract)).pipe(
+  /**
+   * Inserts a new contract record into the database.
+   */
+  createContract(newContract: ContractModel): Observable<boolean> {
+    return from(this.supabase.from('Contract').insert(newContract)).pipe(
       map(({ error }) => {
         if (error) throw error;
         return true;
@@ -107,69 +115,71 @@ export class ContractService {
     );
   }
 
+  /**
+   * Retrieves a single contract by its identifier including related entities.
+   */
   getContractsById(id: string): Observable<ContractSupabaseJoined> {
     return from(
       this.supabase
-        .from('Contrato')
-        .select(this.CONTRATO_SELECT)
-        .eq('id_contrato', id)
+        .from('Contract')
+        .select(this.CONTRACT_SELECT)
+        .eq('id_contract', id)
         .maybeSingle(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return data as ContractSupabaseJoined;
+        return data as unknown as ContractSupabaseJoined;
       }),
       catchError((err) => throwError(() => err)),
     );
   }
 
   /**
-   * Realiza una cancelación de contrato (borrado lógico).
-   * @post Calcula dinámicamente el mensaje de notificación basándose en quién
-   * canceló (cliente o empresa) para informar a la contraparte.
+   * Performs a logical delete of a contract and notifies the counterparty.
    */
   deleteContract(id: string): Observable<ContractSupabaseJoined> {
     const todayDate = new Date().toISOString();
     return from(
       this.supabase
-        .from('Contrato')
+        .from('Contract')
         .update({
-          estado: 'no activo',
-          fecha_fin: todayDate,
+          state: 'no activo',
+          end_date: todayDate,
         })
-        .eq('id_contrato', id)
-        .select(this.CONTRATO_SELECT)
+        .eq('id_contract', id)
+        .select(this.CONTRACT_SELECT)
         .single(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return data as ContractSupabaseJoined;
+        return data as unknown as ContractSupabaseJoined;
       }),
       tap((canceledContract: ContractSupabaseJoined) => {
         const currentUser = this.authService.currentUser();
         if (!currentUser || !canceledContract) return;
 
-        const ServiceName = canceledContract.id_servicio_horario?.Servicio?.nombre || 'Desconocido';
-        let idDestino = '';
-        let mensaje = '';
-        if (currentUser.id_usuario === canceledContract.id_cliente) {
-          idDestino = canceledContract.id_empresa;
-          mensaje = `El cliente ${canceledContract.Cliente?.Usuario?.nombre || 'Desconocido'} ha cancelado el contrato del servicio: ${ServiceName}.`;
+        const serviceName = canceledContract.Service_Time?.Service?.name || 'Unknown';
+        let idDestination = '';
+        let message = '';
+
+        if (currentUser.id_user === canceledContract.id_client) {
+          idDestination = canceledContract.id_business;
+          message = `El cliente ${canceledContract.Client?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}.`;
         } else {
-          idDestino = canceledContract.id_cliente;
-          mensaje = `La empresa ${canceledContract.Empresa?.Usuario?.nombre || 'Desconocida'} ha cancelado el contrato del servicio: ${ServiceName}.`;
+          idDestination = canceledContract.id_client;
+          message = `La empresa ${canceledContract.Business?.User_public?.name || 'Desconocida'} ha cancelado el contrato del servicio: ${serviceName}.`;
         }
 
         this.comunicationService
-          .insertComunicacion({
-            asunto: 'Contrato Cancelado',
-            contenido: mensaje,
-            id_receptor: idDestino,
-            id_emisor: currentUser.id_usuario,
-            tipo_comunicacion: 'notificacion',
-            leido: false,
-            eliminado_por_emisor: false,
-            eliminado_por_receptor: false,
+          .insertComunication({
+            topic: 'Contrato Cancelado',
+            content: message,
+            id_receiver: idDestination,
+            id_sender: currentUser.id_user,
+            type_comunication: 'notificacion',
+            read: false,
+            deleted_by_sender: false,
+            deleted_by_receiver: false,
           })
           .subscribe();
       }),

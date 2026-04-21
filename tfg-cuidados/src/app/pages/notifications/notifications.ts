@@ -9,7 +9,7 @@ import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, tap, map, switchMap } from 'rxjs/operators';
-import { ComunicationModel } from '../../models/Comunicacion';
+import { ComunicationModel } from '../../models/ComunicationModel';
 import { ButtonComponent } from '../../components/button/button';
 @Component({
   selector: 'app-notifications',

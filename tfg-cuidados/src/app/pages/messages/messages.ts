@@ -3,7 +3,7 @@ import { ButtonComponent } from '../../components/button/button';
 import { Dropdown } from '../../components/dropdown/dropdown';
 import { AuthService } from '../../services/auth.service';
 import { ComunicationService } from '../../services/comunication.service';
-import { ComunicationModel } from '../../models/Comunicacion';
+import { ComunicationModel } from '../../models/ComunicationModel';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatSortModule } from '@angular/material/sort';

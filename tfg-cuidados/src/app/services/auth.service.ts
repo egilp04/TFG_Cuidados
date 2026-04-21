@@ -3,15 +3,14 @@ import { from, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { SupabaseService } from './supabase.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { createClient, AuthResponse, UserResponse, User } from '@supabase/supabase-js';
+import { createClient, AuthResponse, UserResponse } from '@supabase/supabase-js';
 import { ComunicationService } from './comunication.service';
 import { environment } from '../../environments/environment';
 import { AuthUserModel, PreparacionRegistro, RegisterPayload } from '../models/Auth-Service';
 
 /**
- * @description Servicio de autenticación y gestión de sesiones.
- * Implementa el patrón de persistencia de perfiles extendidos para manejar
- * roles polimórficos (Cliente, Empresa, Administrador).
+ * Service for authentication and session management.
+ * Manages extended profiles for polymorphic roles (Client, Business, Administrator).
  */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -29,6 +28,9 @@ export class AuthService {
     this.initializeAuth();
   }
 
+  /**
+   * Initializes the authentication state on service load.
+   */
   private initializeAuth() {
     this.isLoading.set(true);
     from(this.supabase.auth.getUser())
@@ -50,6 +52,10 @@ export class AuthService {
       )
       .subscribe();
   }
+
+  /**
+   * Signs in a user with email and password.
+   */
   signIn(email: string, password: string): Observable<AuthUserModel> {
     return from(this.supabase.auth.signInWithPassword({ email, password })).pipe(
       switchMap((res: AuthResponse) => {
@@ -62,28 +68,28 @@ export class AuthService {
   }
 
   /**
-   * Recuperación de perfil compuesto.
+   * Recovers a composite profile fetching data from user_public and role-specific tables.
    */
   getProfile(userId: string): Observable<AuthUserModel> {
-    return from(this.supabase.from('Usuario').select('*').eq('id_usuario', userId).single()).pipe(
+    return from(this.supabase.from('user_public').select('*').eq('id_user', userId).single()).pipe(
       switchMap(async ({ data: user, error: userErr }) => {
         if (userErr) throw userErr;
 
-        const [cli, emp, adm] = await Promise.all([
-          this.supabase.from('Cliente').select('*').eq('id_cliente', userId).maybeSingle(),
-          this.supabase.from('Empresa').select('*').eq('id_empresa', userId).maybeSingle(),
+        const [cli, bus, adm] = await Promise.all([
+          this.supabase.from('Client').select('*').eq('id_client', userId).maybeSingle(),
+          this.supabase.from('Business').select('*').eq('id_business', userId).maybeSingle(),
           this.supabase
-            .from('Administrador')
+            .from('Administrator')
             .select('*')
-            .eq('id_administrador', userId)
+            .eq('id_administrator', userId)
             .maybeSingle(),
         ]);
 
         let extraData = {};
         if (user.rol === 'administrador' && adm.data) {
           extraData = adm.data;
-        } else if (user.rol === 'empresa' && emp.data) {
-          extraData = emp.data;
+        } else if (user.rol === 'empresa' && bus.data) {
+          extraData = bus.data;
         } else if (user.rol === 'cliente' && cli.data) {
           extraData = cli.data;
         }
@@ -92,6 +98,9 @@ export class AuthService {
     );
   }
 
+  /**
+   * Signs out the current user.
+   */
   signOut(): Observable<void> {
     return from(this.supabase.auth.signOut()).pipe(
       map(({ error }) => {
@@ -103,6 +112,9 @@ export class AuthService {
     );
   }
 
+  /**
+   * Registers a new user and triggers admin notifications.
+   */
   register(data: RegisterPayload, isClient: boolean): Observable<AuthResponse> {
     const { cleanEmail, cleanEmailPassword, metaData } = this.registerDataPreparation(
       data,
@@ -141,6 +153,9 @@ export class AuthService {
     );
   }
 
+  /**
+   * Registers a new user bypasssing local session persistence (for admin use).
+   */
   registerByAdmin(dta: RegisterPayload, isClient: boolean): Observable<AuthResponse> {
     const { cleanEmail, cleanEmailPassword, metaData } = this.registerDataPreparation(
       dta,
@@ -173,6 +188,9 @@ export class AuthService {
     );
   }
 
+  /**
+   * Prepares and sanitizes registration data.
+   */
   private registerDataPreparation(data: RegisterPayload, isClient: boolean): PreparacionRegistro {
     const cleanEmail = String(data.email).trim().toLowerCase().replace(/\s/g, '');
     const cleanEmailPassword = String(data.password).trim();
@@ -180,23 +198,26 @@ export class AuthService {
 
     const metaData = {
       rol: rol,
-      nombre: data.nombre ? String(data).trim() : '',
-      telef: data.telef ? String(data.telef).trim() : '',
-      ape1: data.ape1 || null,
-      ape2: data.ape2 || null,
+      name: data.name ? String(data.name).trim() : '',
+      phone: data.phone ? String(data.phone).trim() : '',
+      surname1: data.surname1 || null,
+      surname2: data.surname2 || null,
       dni: data.dni ? data.dni.toUpperCase() : null,
-      fechnac: data.fechnac || null,
-      direccion: data.direccion || '',
-      localidad: data.localidad || '',
-      codpostal: data.codpostal || '',
-      comunidad: data.comunidad || '',
+      birthdate: data.birthdate || null,
+      address: data.address || '',
+      city: data.city || '',
+      postcode: data.postcode || '',
+      comunity: data.comunity || '',
       cif: data.cif ? data.cif.toUpperCase() : null,
-      descripcion: data.descripcion || null,
+      description: data.description || null,
     };
 
     return { cleanEmail, cleanEmailPassword, metaData };
   }
 
+  /**
+   * Validates Supabase auth response for common registration errors.
+   */
   private registerAnswerValidation(res: AuthResponse): AuthResponse {
     if (res.error) throw res.error;
     if (res.data.user && res.data.user.identities && res.data.user.identities.length === 0) {
@@ -205,10 +226,16 @@ export class AuthService {
     return res;
   }
 
+  /**
+   * Manually updates the user signal state.
+   */
   updateUserSignal(newUserData: AuthUserModel) {
     this.currentUser.set(newUserData);
   }
 
+  /**
+   * Updates auth credentials in Supabase Auth.
+   */
   updateAuthCredentiales(newEmail?: string): Observable<UserResponse> {
     const updateData: { email?: string } = {};
     if (newEmail) updateData.email = newEmail;
@@ -225,6 +252,9 @@ export class AuthService {
     );
   }
 
+  /**
+   * Requests a password recovery email.
+   */
   recoverPassword(email: string): Observable<void> {
     return from(
       this.supabase.auth.resetPasswordForEmail(email, {
@@ -238,6 +268,9 @@ export class AuthService {
     );
   }
 
+  /**
+   * Updates the user's password.
+   */
   updatePass(newPassword: string): Observable<UserResponse> {
     return from(
       this.supabase.auth.updateUser({
@@ -252,6 +285,9 @@ export class AuthService {
     );
   }
 
+  /**
+   * Resends the verification email.
+   */
   resendVerificationEmail(email: string): Observable<void> {
     return from(
       this.supabase.auth.resend({
@@ -268,8 +304,11 @@ export class AuthService {
     );
   }
 
+  /**
+   * Checks if an email exists using a stored procedure.
+   */
   checkEmailExists(email: string): Observable<boolean> {
-    const promise = this.supabase.rpc('check_user_exists', { email_busqueda: email });
+    const promise = this.supabase.rpc('check_user_exists', { email_search: email });
     return from(promise).pipe(
       map(({ data, error }) => {
         if (error) {

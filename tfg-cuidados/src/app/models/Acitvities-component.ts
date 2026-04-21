@@ -1,22 +1,22 @@
 export interface Contractmodel {
-  id_contrato: string;
-  fecha_inicio: string | Date;
-  fecha_fin?: string | Date | null;
-  dia_semana_contratado?: string;
-  hora_contratada?: string;
-  nombreServicio?: string;
-  Empresa?: {
-    nombreDeLaEmpresa?: string;
+  id_contract: string;
+  start_date: string | Date;
+  end_date?: string | Date | null;
+  week_day_hired?: string;
+  time_hired?: string;
+  serviceName?: string;
+  Business?: {
+    businessName?: string;
   };
-  Cliente?: {
-    nombreDelCliente?: string;
-    direccion?: string;
-    localidad?: string;
-    codpostal?: string;
+  Client?: {
+    clientName?: string;
+    address?: string;
+    city?: string;
+    postcode?: string;
   };
 }
 
-export interface FilaTablaContrato extends Contractmodel {
-  nombreAMostrar: string;
-  lugar: string;
+export interface ContractRowDataTable extends Contractmodel {
+  nameToShow: string;
+  place: string;
 }

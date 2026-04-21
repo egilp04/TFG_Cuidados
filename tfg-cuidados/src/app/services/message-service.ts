@@ -15,7 +15,7 @@ export class MessageService {
    * @param duration Tiempo en milisegundos (default 3s)
    */
   showMessage(text: string, type: 'exito' | 'error' = 'exito', duration: number = 3000) {
-    this.messageSignal.set({ mensaje: text, type });
+    this.messageSignal.set({ message: text, type });
     setTimeout(() => {
       this.clear();
     }, duration);

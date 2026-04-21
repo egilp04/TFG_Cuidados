@@ -95,25 +95,25 @@ describe('ComunicationService', () => {
     });
   }));
 
-  it('insertComunicacion should throw error on invalid type', fakeAsync(() => {
-    service.insertComunicacion({ tipo_comunicacion: 'invalid' } as any).subscribe({
+  it('insertComunication should throw error on invalid type', fakeAsync(() => {
+    service.insertComunication({ tipo_comunicacion: 'invalid' } as any).subscribe({
       error: (err: any) => expect(err).toBeDefined(),
     });
   }));
 
-  it('insertComunicacion (mensaje) should trigger sendNotification', fakeAsync(() => {
+  it('insertComunication (mensaje) should trigger sendNotification', fakeAsync(() => {
     spyOn(service as any, 'sendNotification').and.returnValue(of(null));
     const msg: any = { tipo_comunicacion: 'mensaje', id_receptor: 'r1' };
     queryBuilder.then = (resolve: any) => resolve({ error: null });
 
-    service.insertComunicacion(msg).subscribe();
+    service.insertComunication(msg).subscribe();
     tick();
 
     expect(supabaseMock.from).toHaveBeenCalledWith('Comunicacion');
     expect((service as any).sendNotification).toHaveBeenCalled();
   }));
 
-  it('deleteComunicacion should mark deleted_by_emisor', fakeAsync(() => {
+  it('insertComunication should mark deleted_by_emisor', fakeAsync(() => {
     const msg: any = {
       id_comunicacion: '1',
       tipo_comunicacion: 'mensaje',

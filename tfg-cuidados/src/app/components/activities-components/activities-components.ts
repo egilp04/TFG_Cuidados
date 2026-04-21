@@ -15,7 +15,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { ButtonComponent } from '../button/button';
 import { AuthService } from '../../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { Contractmodel, FilaTablaContrato } from '../../models/Acitvities-component';
+import { Contractmodel, ContractRowDataTable } from '../../models/Acitvities-component';
 import { ContratoDetalle } from '../../models/ContractModel';
 
 @Component({
@@ -39,7 +39,7 @@ export class ActivitiesComponents implements OnInit {
   @Input() dataSource: ContratoDetalle[] = [];
 
   displayedColumns: string[] = ['usuario', 'nombre', 'dia', 'hora', 'lugar', 'acciones'];
-  dataSourceTable = new MatTableDataSource<FilaTablaContrato>([]);
+  dataSourceTable = new MatTableDataSource<ContractRowDataTable>([]);
   rol = this.authService.userRol();
 
   public headerContrato = computed(() => {
@@ -50,7 +50,7 @@ export class ActivitiesComponents implements OnInit {
   public weekDays = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
   public displayDate = new Date();
   public monthDays: (number | null)[] = [];
-  public mapWithEvents: { [key: string]: FilaTablaContrato[] } = {};
+  public mapWithEvents: { [key: string]: ContractRowDataTable[] } = {};
   private daysOfWeekNames = [
     'Domingo',
     'Lunes',
@@ -152,7 +152,7 @@ export class ActivitiesComponents implements OnInit {
     this.preCalculateMonthEvents();
   }
 
-  getEventosDia(dia: number): FilaTablaContrato[] {
+  getEventosDia(dia: number): ContractRowDataTable[] {
     const key = `${this.displayDate.getFullYear()}-${this.displayDate.getMonth()}-${dia}`;
     return this.mapWithEvents[key] || [];
   }
@@ -162,7 +162,7 @@ export class ActivitiesComponents implements OnInit {
   }
 
   selectedDia: number | null = null;
-  manejarClickDia(dia: number, eventos: FilaTablaContrato[]) {
+  manejarClickDia(dia: number, eventos: ContractRowDataTable[]) {
     if (eventos.length === 0) return;
     if (this.selectedDia === dia) {
       this.selectedDia = null;

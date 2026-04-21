@@ -1,12 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, from, Observable, throwError, of } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators'; // Importar TAP
+import { map, catchError, tap } from 'rxjs/operators';
 import { ServiceModel } from '../models/ServiceModel';
 
 /**
- * @description Gestiona el catálogo maestro de servicios disponibles en la plataforma.
- * Proporciona métodos CRUD y validaciones de integridad de datos.
+ * Manages the master catalog of services available on the platform.
+ * Provides CRUD methods and data integrity validations.
  */
 @Injectable({
   providedIn: 'root',
@@ -21,33 +21,45 @@ export class ServiceService {
     this.initRealtime();
   }
 
+  /**
+   * Returns an observable with the list of all available services.
+   */
   getServicesObservable(): Observable<ServiceModel[]> {
     this.refreshServices();
     return this.servicesList$.asObservable();
   }
 
+  /**
+   * Initializes real-time synchronization for the Service table.
+   */
   private initRealtime() {
     this.clientSupaBase
-      .channel('public:Servicio')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'Servicio' }, () => {
+      .channel('public:Service')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'Service' }, () => {
         this.refreshServices();
       })
       .subscribe();
   }
 
+  /**
+   * Synchronizes the service list from the database, ordered by name.
+   */
   private async refreshServices() {
     const { data, error } = await this.clientSupaBase
-      .from('Servicio')
+      .from('Service')
       .select('*')
-      .order('nombre', { ascending: true });
+      .order('name', { ascending: true });
 
     if (!error) {
       this.servicesList$.next((data ?? []) as ServiceModel[]);
     }
   }
 
-  insertService(newServicio: ServiceModel): Observable<void> {
-    return from(this.clientSupaBase.from('Servicio').insert(newServicio)).pipe(
+  /**
+   * Inserts a new service into the catalog.
+   */
+  insertService(newService: ServiceModel): Observable<void> {
+    return from(this.clientSupaBase.from('Service').insert(newService)).pipe(
       tap(() => this.refreshServices()),
       map(({ error }) => {
         if (error) throw error;
@@ -56,8 +68,11 @@ export class ServiceService {
     );
   }
 
+  /**
+   * Updates an existing service record.
+   */
   updateService(id: string, changes: Partial<ServiceModel>): Observable<void> {
-    return from(this.clientSupaBase.from('Servicio').update(changes).eq('id_servicio', id)).pipe(
+    return from(this.clientSupaBase.from('Service').update(changes).eq('id_service', id)).pipe(
       tap(() => this.refreshServices()),
       map(({ error }) => {
         if (error) throw error;
@@ -66,8 +81,11 @@ export class ServiceService {
     );
   }
 
+  /**
+   * Deletes a service from the catalog.
+   */
   deleteService(id: string): Observable<void> {
-    return from(this.clientSupaBase.from('Servicio').delete().eq('id_servicio', id)).pipe(
+    return from(this.clientSupaBase.from('Service').delete().eq('id_service', id)).pipe(
       tap(() => this.refreshServices()),
       map(({ error }) => {
         if (error) throw error;
@@ -76,10 +94,11 @@ export class ServiceService {
     );
   }
 
+  /**
+   * Retrieves a single service by its identifier.
+   */
   getServiceById(id: string): Observable<ServiceModel> {
-    return from(
-      this.clientSupaBase.from('Servicio').select('*').eq('id_servicio', id).single(),
-    ).pipe(
+    return from(this.clientSupaBase.from('Service').select('*').eq('id_service', id).single()).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data as ServiceModel;
@@ -89,14 +108,12 @@ export class ServiceService {
   }
 
   /**
-   * Validación de duplicidad lógica.
-   * Utiliza el operador 'ilike' para asegurar que no se registren servicios con
-   * nombres similares, ignorando mayúsculas y minúsculas (Case Insensitive).
+   * Checks if a service with a specific name already exists, excluding a given ID.
    */
-  existsService(nombre: string, idExclude?: string): Observable<boolean> {
-    let query = this.clientSupaBase.from('Servicio').select('id_servicio').ilike('nombre', nombre);
+  existsService(name: string, idExclude?: string): Observable<boolean> {
+    let query = this.clientSupaBase.from('Service').select('id_service').ilike('name', name);
     if (idExclude) {
-      query = query.neq('id_servicio', idExclude);
+      query = query.neq('id_service', idExclude);
     }
 
     return from(query).pipe(

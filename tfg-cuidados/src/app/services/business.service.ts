@@ -4,62 +4,68 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { BusinessModel, BusinessSupabaseJoinModel } from '../models/Bussiness-Service';
 
 /**
- * @description Servicio de consulta para la búsqueda de empresas.
- * Realiza una agregación de datos (Empresa + Usuario + Servicio_Horario)
- * asegurando que solo se listen entidades con estado activo.
+ * Service for querying and searching businesses.
+ * Aggregates data from Business, User_public, and Service_Time tables,
+ * ensuring only active entities are listed.
  */
 @Injectable({ providedIn: 'root' })
 export class BusinessService {
   private supabase = inject(SupabaseService).getClient();
-
   private businessesList$ = new BehaviorSubject<BusinessModel[]>([]);
 
   constructor() {
     this.initRealtime();
   }
+
+  /**
+   * Returns an observable with the list of active businesses.
+   * @returns Observable<BusinessModel[]>
+   */
   getBusinessesObservable(): Observable<BusinessModel[]> {
     this.refreshBusinesses();
     return this.businessesList$.asObservable();
   }
 
   /**
-   * Configura una suscripción Realtime multi-tabla.
-   * Si cambian los datos de la Empresa o sus horarios, la vista de búsqueda
-   * se actualiza automáticamente sin recargar la página.
+   * Configures a multi-table real-time subscription.
+   * Updates the business list automatically when changes occur in Business or Service_Time tables.
    */
   private initRealtime() {
     this.supabase
-      .channel('public:empresa_full_data')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'Empresa' }, () =>
+      .channel('public:business_full_data')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'Business' }, () =>
         this.refreshBusinesses(),
       )
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'Servicio_Horario' }, () =>
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'Service_Time' }, () =>
         this.refreshBusinesses(),
       )
       .subscribe();
   }
 
+  /**
+   * Fetches active businesses including their public user profile, services, and schedules.
+   */
   private async refreshBusinesses() {
     const { data, error } = await this.supabase
-      .from('Empresa')
+      .from('Business')
       .select(
         `
       *,
-      Usuario!inner (nombre, email, estado),
-      Servicio_Horario!inner (
-        id_servicio_horario,
-        precio,
-        descripcion,
-        id_servicio,
-        Servicio ( id_servicio, nombre, tipo_servicio),
-        Horario ( dia_semana, hora )
+      User_public!inner (name, email, state),
+      Service_Time!inner (
+        id_service_time,
+        price,
+        description,
+        id_service,
+        Service ( id_service, name, type_service),
+        Time ( week_day, time )
       )
     `,
       )
-      .eq('Usuario.estado', true);
+      .eq('User_public.state', true);
 
     if (error) {
-      console.error('Error cargando empresas:', error.message);
+      console.error('Error loading businesses:', error.message);
       return;
     }
 
@@ -67,10 +73,10 @@ export class BusinessService {
       const formatted: BusinessModel[] = (data as BusinessSupabaseJoinModel[]).map(
         (buss) =>
           ({
-            ...(buss as any),
-            nombre: buss.Usuario?.nombre || 'Empresa (Sin nombre)',
-            email: buss.Usuario?.email || '',
-            Servicio_Horario: buss.Servicio_Horario || [],
+            ...buss,
+            name: buss.User_public?.name || 'Business (No name)',
+            email: buss.User_public?.email || '',
+            Service_Time: buss.Service_Time || [],
           }) as BusinessModel,
       );
       this.businessesList$.next(formatted);
