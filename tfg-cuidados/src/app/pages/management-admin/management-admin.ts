@@ -14,6 +14,9 @@ import { UserService } from '../../services/user.service';
 import { UserModel } from '../../models/User_Service';
 import { ResponsiveSize } from '../../services/responsive-size';
 
+/**
+ * Admin management page to list, edit, and delete users (clients or businesses).
+ */
 @Component({
   selector: 'app-management-admin',
   standalone: true,
@@ -28,69 +31,93 @@ export default class ManagementAdmin implements OnInit {
   private dialog = inject(MatDialog);
   private destroyRef = inject(DestroyRef);
   private translate = inject(TranslateService);
-  public isUser: boolean = true;
   private responsive = inject(ResponsiveSize);
 
+  public isClient: boolean = true;
+
   ngOnInit(): void {
-    this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
-      const tipo = params['tipo'];
-      this.chargeData(tipo === 'empresa' ? 'empresa' : 'cliente');
-    });
+    this.route.queryParams
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        const type = params['type'];
+        this.loadData(type === 'business' ? 'business' : 'client');
+      });
   }
 
-  private chargeData(tipo: 'cliente' | 'empresa'): void {
-    this.isUser = tipo === 'cliente';
-    this.userService.loadUsers(tipo);
+  /**
+   * Updates the view state and triggers the user list load from the service.
+   * @param type The type of user to manage: 'client' or 'business'.
+   */
+  private loadData(type: 'client' | 'business'): void {
+    this.isClient = type === 'client';
+    this.userService.loadUsers(type);
   }
 
-  async toDeleteUser(item: UserModel) {
+  /**
+   * Opens a confirmation modal and deletes the selected user.
+   * @param user The user record to delete.
+   */
+  async deleteUser(user: UserModel): Promise<void> {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
+    
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
       maxHeight: '90vh',
-      data: { mode: 'eliminar' },
+      data: { mode: 'delete' },
     });
+
     dialogRef
       .afterClosed()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter((result) => result === true),
         switchMap(() =>
-          this.userService.deleteUser(item.id_usuario).pipe(
+          this.userService.deleteUser(user.id_user!).pipe(
             switchMap(() =>
               this.translate
                 .get('MESSAGES.SUCCESS.DELETE_USER')
-                .pipe(map((msg) => ({ text: msg, type: 'success' as const }))),
+                .pipe(map((msg) => ({ text: msg, type: 'success' as const })))
             ),
             catchError(() =>
               this.translate
                 .get('MESSAGES.ERROR.DELETE_USER')
-                .pipe(map((msg) => ({ text: msg, type: 'error' as const }))),
-            ),
-          ),
-        ),
+                .pipe(map((msg) => ({ text: msg, type: 'error' as const })))
+            )
+          )
+        )
       )
       .subscribe({
         next: (res) => {
           this.messageService.showMessage(res.text, res.type);
           if (res.type === 'success') {
-            this.chargeData(this.isUser ? 'cliente' : 'empresa');
+            this.loadData(this.isClient ? 'client' : 'business');
           }
         },
       });
   }
 
-  toEditFunction(item: UserModel) {
-    const usuarioConRol = {
-      ...item,
-      rol: this.isUser ? 'cliente' : 'empresa',
+  /**
+   * Navigates to the profile modification page with the selected user data.
+   * @param user The user record to edit.
+   */
+  editUser(user: UserModel): void {
+    const userWithRole = {
+      ...user,
+      rol: this.isClient ? 'client' : 'business',
     };
-    this.router.navigate(['/modify-profile'], { state: { usuario: usuarioConRol } });
+    this.router.navigate(['/modify-profile'], { 
+      state: { user: userWithRole } 
+    });
   }
 
-  createNewUser() {
-    const tipo = this.isUser ? 'cliente' : 'empresa';
-    this.router.navigate(['/register'], { state: { tipo } });
+  /**
+   * Redirects to the registration page to create a new user of the current type.
+   */
+  createUser(): void {
+    const type = this.isClient ? 'client' : 'business';
+    this.router.navigate(['/register'], { 
+      state: { type } 
+    });
   }
 }

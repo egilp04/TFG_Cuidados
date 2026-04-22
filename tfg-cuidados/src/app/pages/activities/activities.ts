@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MessageService } from '../../services/message-service';
 import { CommonModule } from '@angular/common';
 import { Buttonback } from '../../components/buttonback/buttonback';
@@ -8,11 +8,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivitiesComponents } from '../../components/activities-components/activities-components';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { catchError, map, switchMap } from 'rxjs';
-import { ContratoDetalle } from '../../models/ContractModel';
-import { filter } from 'rxjs';
+import { catchError, map, switchMap, filter } from 'rxjs';
+import { ContractDetail } from '../../models/ContractModel';
 import { ResponsiveSize } from '../../services/responsive-size';
 
+/**
+ * Main activities page that manages the list of user contracts.
+ * Integrates a calendar and a table for viewing and canceling hired services.
+ */
 @Component({
   selector: 'app-activities',
   standalone: true,
@@ -20,35 +23,44 @@ import { ResponsiveSize } from '../../services/responsive-size';
   templateUrl: './activities.html',
   styleUrl: './activities.css',
 })
-export default class Activities {
+export default class Activities implements OnInit {
   public messageService = inject(MessageService);
   private contractService = inject(ContractService);
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);
-  public dataSource = new MatTableDataSource<ContratoDetalle>([]);
   private dialog = inject(MatDialog);
   private translate = inject(TranslateService);
   private responsive = inject(ResponsiveSize);
 
-  ngOnInit() {
-    this.subcribeContracts();
+  public dataSource = new MatTableDataSource<ContractDetail>([]);
+
+  ngOnInit(): void {
+    this.subscribeToContracts();
   }
 
-  private subcribeContracts() {
+  /**
+   * Subscribes to the real-time contracts stream to feed the activity views.
+   */
+  private subscribeToContracts(): void {
     this.contractService
       .getContractsObservable()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (data) => {
+        next: (data: ContractDetail[]) => {
           this.dataSource.data = data;
           this.cd.detectChanges();
         },
-        error: (error) => console.error('Error en el flujo IRL de contratos:', error),
+        error: (error: Error) => console.error('Error in contracts stream:', error),
       });
   }
 
-  async cancelContract(id: string) {
+  /**
+   * Opens a confirmation modal and cancels the hired service.
+   * @param id The unique identifier of the contract to cancel.
+   */
+  async cancelContract(id: string): Promise<void> {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
+    
     this.dialog
       .open(Cancelmodal, {
         data: { mode: 'cancelContract' },
@@ -59,22 +71,22 @@ export default class Activities {
       .afterClosed()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        filter((result) => result === true),
+        filter((result: boolean) => result === true),
         switchMap(() => this.contractService.deleteContract(id)),
         switchMap(() =>
           this.translate
-            .get('MESSAGES.SUCCESS.CANCELCONTRACT')
-            .pipe(map((msg) => ({ texto: msg, type: 'success' as const }))),
+            .get('MESSAGES.SUCCESS.CANCEL_CONTRACT')
+            .pipe(map((msg: string) => ({ text: msg, type: 'success' as const })))
         ),
-        catchError((err) => {
-          console.error('Error al cancelar el contrato:', err);
+        catchError((err: Error) => {
+          console.error('Error canceling contract:', err);
           return this.translate
-            .get('MESSAGES.ERROR.CANCELCONTRACT')
-            .pipe(map((msg) => ({ texto: msg, type: 'error' as const })));
+            .get('MESSAGES.ERROR.CANCEL_CONTRACT')
+            .pipe(map((msg: string) => ({ text: msg, type: 'error' as const })));
         }),
       )
       .subscribe((res) => {
-        this.messageService.showMessage(res.texto, res.type);
+        this.messageService.showMessage(res.text, res.type);
       });
   }
 }

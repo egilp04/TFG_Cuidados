@@ -28,21 +28,23 @@
       "
     >
     </app-inputs>
+
     <app-inputs
-      name="type"
+      name="service_type"
       [label]="'MANAGEMENT_SERVICES.FORM.TYPE' | translate"
-      [control]="getCtrl('type')"
+      [control]="getCtrl('service_type')"
       [errorMessage]="
-        getCtrl('tipo').invalid && getCtrl('type').touched
+        getCtrl('service_type').invalid && getCtrl('service_type').touched
           ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
           : ''
       "
     >
-    </app-inputs
-    ><app-inputs
+    </app-inputs>
+
+    <app-inputs
       name="description"
       [label]="'MANAGEMENT_SERVICES.FORM.DESCRIPTION' | translate"
-      [control]="getCtrl('descripcion')"
+      [control]="getCtrl('description')"
       [errorMessage]="
         getCtrl('description').invalid && getCtrl('description').touched
           ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
@@ -58,7 +60,7 @@
         (isEditing ? 'MANAGEMENT_SERVICES.FORM.SAVE' : 'MANAGEMENT_SERVICES.FORM.ADD') | translate
       "
       variant="primary"
-      (click)="onSave()"
+      (click)="saveService()"
       [disabled]="isLoading()"
       [attr.aria-label]="
         (isEditing
@@ -90,7 +92,7 @@
     <label class="management-services-global-search" id="search-services-label">
       {{ 'MANAGEMENT_SERVICES.LIST.SEARCH' | translate }}
     </label>
-    <app-searchbar [control]="controlFilterItem" (searchEvent)="toFilter($event)"> </app-searchbar>
+    <app-searchbar [control]="controlFilterItem" (searchEvent)="applyFilter($event)"> </app-searchbar>
   </div>
 
   <table
@@ -103,17 +105,17 @@
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SERVICES.TABLE.NAME' | translate }}
       </th>
-      <td mat-cell *matCellDef="let serv" class="management-global-text text-label">
-        {{ serv.nombre }}
+      <td mat-cell *matCellDef="let service" class="management-global-text text-label">
+        {{ service.name }}
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="type">
+    <ng-container matColumnDef="service_type">
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SERVICES.TABLE.TYPE' | translate }}
       </th>
-      <td mat-cell *matCellDef="let serv" class="management-global-text text-label">
-        {{ serv.tipo_servicio }}
+      <td mat-cell *matCellDef="let service" class="management-global-text text-label">
+        {{ service.service_type }}
       </td>
     </ng-container>
 
@@ -121,8 +123,8 @@
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SERVICES.TABLE.DESCRIPTION' | translate }}
       </th>
-      <td mat-cell *matCellDef="let serv" class="management-global-text text-label">
-        {{ serv.descripcion }}
+      <td mat-cell *matCellDef="let service" class="management-global-text text-label">
+        {{ service.description }}
       </td>
     </ng-container>
 
@@ -137,22 +139,22 @@
           'MANAGEMENT_SERVICES.ACCESSIBILITY.ACTIONS_COL' | translate
         }}</span>
       </th>
-      <td mat-cell *matCellDef="let serv" class="p-4">
+      <td mat-cell *matCellDef="let service" class="p-4">
         <div class="management-service-global-actions">
           <app-button
             [label]="'MANAGEMENT_SERVICES.TABLE.EDIT' | translate"
             variant="primary"
-            (click)="onEdit(serv)"
-            [attr.aria-label]="('MANAGEMENT_SERVICES.TABLE.EDIT' | translate) + ': ' + serv.nombre"
+            (click)="editService(service)"
+            [attr.aria-label]="('MANAGEMENT_SERVICES.TABLE.EDIT' | translate) + ': ' + service.name"
           >
           </app-button>
           <app-button
             [label]="'MANAGEMENT_SERVICES.TABLE.DELETE' | translate"
             variant="secondary"
-            (click)="onDelete(serv.id_servicio!)"
+            (click)="deleteService(service.id_service!)"
             [disabled]="isLoading()"
             [attr.aria-label]="
-              ('MANAGEMENT_SERVICES.TABLE.DELETE' | translate) + ': ' + serv.nombre
+              ('MANAGEMENT_SERVICES.TABLE.DELETE' | translate) + ': ' + service.name
             "
           >
           </app-button>
@@ -164,7 +166,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns" class="hover:bg-gray-50"></tr>
 
     <tr class="mat-row" *matNoDataRow role="status" aria-live="polite">
-      <td class="mat-cell text-label management-global-text" colspan="3">
+      <td class="mat-cell text-label management-global-text" colspan="4">
         {{ 'MANAGEMENT_SERVICES.LIST.EMPTY' | translate }}
       </td>
     </tr>

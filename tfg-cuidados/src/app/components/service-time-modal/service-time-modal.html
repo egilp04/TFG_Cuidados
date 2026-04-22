@@ -21,32 +21,32 @@
 
   <form [formGroup]="form" class="service-form-container">
     <app-inputs
-      name="descripcion"
+      name="description"
       [label]="'SERVICE_TIME_MODAL.LABELS.DESCRIPTION' | translate"
-      [control]="getCtrl('descripcion')"
-      [errorMessage]="getErrorMessage('descripcion')"
+      [control]="getCtrl('description')"
+      [errorMessage]="getErrorMessage('description')"
       class="w-full"
     ></app-inputs>
 
     <div class="service-select-container">
-      <label class="service-global-services" for="id_servicio">
+      <label class="service-global-services" for="id_service">
         {{ 'SERVICE_TIME_MODAL.LABELS.GLOBAL_SERVICE' | translate }}
       </label>
 
       <div class="relative w-full">
         <select
-          id="id_servicio"
-          formControlName="id_servicio"
+          id="id_service"
+          formControlName="id_service"
           class="register-form-select"
-          [attr.aria-invalid]="form.get('id_servicio')?.invalid && form.get('id_servicio')?.touched"
+          [attr.aria-invalid]="form.get('id_service')?.invalid && form.get('id_service')?.touched"
         >
           <option value="" disabled selected class="select-option-disabled">
             {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.SELECT_SERVICE' | translate }}
           </option>
 
-          @for (s of servicios$ | async; track s.id_servicio) {
-            <option [value]="s.id_servicio" class="register-form-options">
-              {{ s.nombre }} - {{ s.tipo_servicio }}
+          @for (s of services$ | async; track s.id_service) {
+            <option [value]="s.id_service" class="register-form-options">
+              {{ s.name }} - {{ s.service_type }}
             </option>
           } @empty {
             <option disabled>
@@ -74,32 +74,32 @@
     </div>
 
     <app-inputs
-      name="precio"
+      name="price"
       [label]="'SERVICE_TIME_MODAL.LABELS.PRICE' | translate"
-      [control]="getCtrl('precio')"
+      [control]="getCtrl('price')"
       placeholder="0.00"
-      [errorMessage]="getErrorMessage('precio')"
+      [errorMessage]="getErrorMessage('price')"
       class="w-full"
     ></app-inputs>
 
     <div class="service-select-container">
-      <label class="service-global-services" for="id_horario">
+      <label class="service-global-services" for="id_time">
         {{ 'SERVICE_TIME_MODAL.LABELS.AVAILABLE_SCHEDULE' | translate }}
       </label>
 
       <div class="relative w-full">
         <select
-          id="id_horario"
-          formControlName="id_horario"
+          id="id_time"
+          formControlName="id_time"
           class="register-form-select"
-          [attr.aria-invalid]="form.get('id_horario')?.invalid && form.get('id_horario')?.touched"
+          [attr.aria-invalid]="form.get('id_time')?.invalid && form.get('id_time')?.touched"
         >
           <option value="" disabled selected class="select-option-disabled">
             {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.SELECT_TIME' | translate }}
           </option>
-          @for (h of horarios$ | async; track h.id_horario) {
-            <option [value]="h.id_horario" class="register-form-options">
-              {{ h.dia_semana }} - {{ h.hora }}
+          @for (h of times$ | async; track h.id_time) {
+            <option [value]="h.id_time" class="register-form-options">
+              {{ h.week_day }} - {{ h.time }}
             </option>
           } @empty {
             <option disabled>

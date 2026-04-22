@@ -5,18 +5,18 @@ import {
   DestroyRef,
   OnInit,
   inject,
+  signal,
 } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
-  FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { switchMap, tap, throwError, map, catchError, of, filter } from 'rxjs';
+import { switchMap, tap, throwError, map, catchError, filter, finalize } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
@@ -28,9 +28,11 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
-import { finalize } from 'rxjs';
-import { signal } from '@angular/core';
 
+/**
+ * Component for global service management by administrators.
+ * Allows creating, editing, and deleting the catalog of services available in the platform.
+ */
 @Component({
   selector: 'app-management-services-global',
   standalone: true,
@@ -57,121 +59,134 @@ export default class ManagementServicesGlobal implements OnInit {
   private authService = inject(AuthService);
   private translate = inject(TranslateService);
   private dialog = inject(MatDialog);
-  public isLoading = signal(false);
   private responsive = inject(ResponsiveSize);
 
-  isEditing: boolean = false;
-  currentServiceId: string | null = null;
+  public isLoading = signal(false);
+  public isEditing = false;
+  public currentServiceId: string | null = null;
 
-  controlFilterItem = new FormControl<string>('');
+  public controlFilterItem = new FormControl<string>('');
 
-  serviceFormular = this.fb.group({
+  public serviceForm = this.fb.group({
     name: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
-    type: this.fb.control<string>('', [Validators.required]),
+    service_type: this.fb.control<string>('', [Validators.required]),
     description: this.fb.control<string>('', [Validators.required]),
   });
 
-  dataSource = new MatTableDataSource<ServiceModel>([]);
-  displayedColumns: string[] = ['name', 'type', 'description', 'actions'];
+  public dataSource = new MatTableDataSource<ServiceModel>([]);
+  public displayedColumns: string[] = ['name', 'service_type', 'description', 'actions'];
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.loadServices();
+  }
+
+  /**
+   * Subscribes to the services stream to keep the table updated.
+   */
+  private loadServices(): void {
     this.serviceService
       .getServicesObservable()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data) => {
+      .subscribe((data: ServiceModel[]) => {
         this.dataSource.data = data;
         this.cd.markForCheck();
       });
   }
 
-  onSave() {
-    if (this.serviceFormular.invalid) {
-      this.serviceFormular.markAllAsTouched();
+  /**
+   * Saves a new service or updates an existing one.
+   * Includes duplicate name validation.
+   */
+  saveService(): void {
+    if (this.serviceForm.invalid) {
+      this.serviceForm.markAllAsTouched();
       return;
     }
     if (this.isLoading()) return;
 
     this.isLoading.set(true);
 
-    const rawValue = this.serviceFormular.getRawValue();
-    const nombre = (rawValue.name ?? '').trim();
-    const tipo = (rawValue.type ?? '').trim();
-    const descripcion = (rawValue.description ?? '').trim();
+    const rawValue = this.serviceForm.getRawValue();
+    const name = (rawValue.name ?? '').trim();
+    const serviceType = (rawValue.service_type ?? '').trim();
+    const description = (rawValue.description ?? '').trim();
 
     const user = this.authService.currentUser();
-    if (!user || !user.id_usuario) {
+    if (!user?.id_user) {
       this.isLoading.set(false);
       return;
     }
 
     this.serviceService
-      .existsService(nombre, this.currentServiceId || undefined)
+      .existsService(name, this.currentServiceId || undefined)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        switchMap((existe) => {
-          if (existe) {
-            return throwError(() => ({ message: 'DUPLICADO' }));
-          }
+        switchMap((exists: boolean) => {
+          if (exists) return throwError(() => new Error('DUPLICATE_SERVICE'));
 
-          if (this.isEditing && this.currentServiceId) {
-            return this.serviceService.updateService(this.currentServiceId, {
-              nombre,
-              tipo_servicio: tipo,
-              descripcion: descripcion,
-            });
-          } else {
-            return this.serviceService.insertService({
-              nombre,
-              tipo_servicio: tipo,
-              id_admin: user.id_usuario,
-              descripcion: descripcion,
-            });
-          }
+          const payload: ServiceModel = {
+            name,
+            service_type: serviceType,
+            description,
+            id_admin: user.id_user,
+          };
+
+          return this.isEditing && this.currentServiceId
+            ? this.serviceService.updateService(this.currentServiceId, payload)
+            : this.serviceService.insertService(payload);
         }),
         switchMap(() => {
           const msgKey = this.isEditing
             ? 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_UPDATE'
             : 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_CREATE';
-          return this.translate.get(msgKey).pipe(map((text) => ({ type: 'success' as const, text })));
+          return this.translate.get(msgKey).pipe(map((text: string) => ({ type: 'success' as const, text })));
         }),
-        catchError((err) => {
-          console.error('Error detallado al guardar servicio:', err);
+        catchError((err: any) => {
+          console.error('Detailed error saving service:', err);
           let msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_GENERIC';
-          if (err.message === 'DUPLICADO' || err.code === '23505') {
+          if (err.message === 'DUPLICATE_SERVICE' || err.code === '23505') {
             msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_DUPLICATE';
           }
-          return this.translate.get(msgKey).pipe(map((text) => ({ type: 'error' as const, text })));
+          return this.translate.get(msgKey).pipe(map((text: string) => ({ type: 'error' as const, text })));
         }),
         finalize(() => {
           this.isLoading.set(false);
           this.cd.markForCheck();
-        }),
+        })
       )
-      .subscribe((resultado) => {
-        this.messageService.showMessage(resultado.text, resultado.type);
-        if (resultado.type === 'success') {
+      .subscribe((result) => {
+        this.messageService.showMessage(result.text, result.type);
+        if (result.type === 'success') {
           this.resetForm();
         }
-        this.cd.markForCheck();
       });
   }
 
-  onEdit(servicio: ServiceModel) {
+  /**
+   * Prepares the form with the selected service data for editing.
+   * @param service The service model to edit.
+   */
+  editService(service: ServiceModel): void {
     this.isEditing = true;
-    this.currentServiceId = servicio.id_servicio!;
-    this.serviceFormular.patchValue({
-      name: servicio.nombre,
-      type: servicio.tipo_servicio,
-      description: servicio.descripcion,
+    this.currentServiceId = service.id_service!;
+    this.serviceForm.patchValue({
+      name: service.name,
+      service_type: service.service_type,
+      description: service.description,
     });
+    this.cd.markForCheck();
   }
 
-  async onDelete(id: string) {
+  /**
+   * Opens a confirmation modal and deletes a service.
+   * @param id The unique identifier of the service.
+   */
+  async deleteService(id: string): Promise<void> {
     if (this.isLoading()) return;
 
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
-      data: { mode: 'eliminarAdminGlobal' },
+      data: { mode: 'deleteGlobalAdmin' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
       maxHeight: '90vh',
@@ -181,7 +196,7 @@ export default class ManagementServicesGlobal implements OnInit {
       .afterClosed()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        filter((result) => result === true),
+        filter((result: boolean) => result === true),
         tap(() => {
           this.isLoading.set(true);
           this.cd.markForCheck();
@@ -195,34 +210,43 @@ export default class ManagementServicesGlobal implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MANAGEMENT_SERVICES.MESSAGES.SUCCESS_DELETE')
-                .pipe(map((text) => ({ type: 'success' as const, text }))),
+                .pipe(map((text: string) => ({ type: 'success' as const, text })))
             ),
             catchError(() =>
               this.translate
                 .get('MANAGEMENT_SERVICES.MESSAGES.ERROR_DELETE')
-                .pipe(map((text) => ({ type: 'error' as const, text }))),
-            ),
-          ),
-        ),
+                .pipe(map((text: string) => ({ type: 'error' as const, text })))
+            )
+          )
+        )
       )
-      .subscribe({
-        next: (resultado) => {
-          this.messageService.showMessage(resultado.text, resultado.type);
-        },
+      .subscribe((result) => {
+        this.messageService.showMessage(result.text, result.type);
       });
   }
 
-  resetForm() {
+  /**
+   * Clears the form and editing state.
+   */
+  resetForm(): void {
     this.isEditing = false;
     this.currentServiceId = null;
-    this.serviceFormular.reset();
+    this.serviceForm.reset();
+    this.cd.markForCheck();
   }
 
-  toFilter(valor: string) {
-    this.dataSource.filter = valor.trim().toLowerCase();
+  /**
+   * Applies a filter to the data table.
+   * @param value Search string.
+   */
+  applyFilter(value: string): void {
+    this.dataSource.filter = value.trim().toLowerCase();
   }
 
-  getCtrl(name: string) {
-    return this.serviceFormular.get(name) as FormControl;
+  /**
+   * Helper to get form controls with type safety.
+   */
+  getCtrl(name: string): FormControl {
+    return this.serviceForm.get(name) as FormControl;
   }
 }

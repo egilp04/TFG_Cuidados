@@ -23,6 +23,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserModel } from '../../models/User_Service';
 
+/**
+ * Generic CRUD table for administrative management.
+ * Dynamically adjusts columns based on the user type (Client/Business).
+ */
 @Component({
   selector: 'app-table-crud-admin',
   standalone: true,
@@ -42,55 +46,67 @@ import { UserModel } from '../../models/User_Service';
 })
 export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
   private destroyRef = inject(DestroyRef);
-  @Input() mode: 'cliente' | 'empresa' = 'cliente';
+
+  @Input() mode: 'client' | 'business' = 'client';
   @Input() data: UserModel[] = [];
-  @Output() deleteData = new EventEmitter<UserModel>();
-  @Output() modifyData = new EventEmitter<UserModel>();
+  @Output() deleteItem = new EventEmitter<UserModel>();
+  @Output() modifyItem = new EventEmitter<UserModel>();
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  dataSource = new MatTableDataSource<UserModel>([]);
-  searchControl = new FormControl('');
+  public dataSource = new MatTableDataSource<UserModel>([]);
+  public searchControl = new FormControl('');
 
-  ngOnInit() {
-    this.searchControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((valor) => {
-      const filterValue = valor || '';
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-      if (this.dataSource.paginator) {
-        this.dataSource.paginator.firstPage();
-      }
-    });
+  ngOnInit(): void {
+    this.setupFilter();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['data'] && changes['data'].currentValue) {
       this.dataSource.data = changes['data'].currentValue;
-      if (this.searchControl.value) {
-        this.dataSource.filter = this.searchControl.value.trim().toLowerCase();
-      }
-      if (this.dataSource.paginator) {
-        this.dataSource.paginator.firstPage();
-      }
+      this.refreshTableState();
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
 
-  get displayedColumns(): string[] {
-    const columnas = ['nombre'];
-    if (this.mode === 'cliente') {
-      columnas.push('apellidos');
+  private setupFilter(): void {
+    this.searchControl.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => {
+        const filterValue = value || '';
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+        if (this.dataSource.paginator) {
+          this.dataSource.paginator.firstPage();
+        }
+      });
+  }
+
+  private refreshTableState(): void {
+    if (this.searchControl.value) {
+      this.dataSource.filter = this.searchControl.value.trim().toLowerCase();
     }
-    columnas.push('email', 'acciones');
-    return columnas;
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
-  onDeleteItem(item: UserModel) {
-    this.deleteData.emit(item);
+  get displayedColumns(): string[] {
+    const columns = ['name'];
+    if (this.mode === 'client') {
+      columns.push('surnames');
+    }
+    columns.push('email', 'actions');
+    return columns;
   }
 
-  onModifyItem(item: UserModel) {
-    this.modifyData.emit(item);
+  onDelete(item: UserModel): void {
+    this.deleteItem.emit(item);
+  }
+
+  onModify(item: UserModel): void {
+    this.modifyItem.emit(item);
   }
 }
