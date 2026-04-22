@@ -134,14 +134,14 @@
     "FORM": {
       "NAME": "Name",
       "EMAIL": "Email",
-      "SUBJECT": "Subject",
+      "topic": "topic",
       "MESSAGE": "Message",
       "SEND": "Contact Us"
     },
     "ERRORS": {
       "NAME": "Name must be at least 3 characters long.",
       "EMAIL": "Please enter a valid email address.",
-      "SUBJECT": "Subject is required (min. 6 characters).",
+      "topic": "topic is required (min. 6 characters).",
       "MESSAGE": "Message needs to be longer."
     }
   },
@@ -391,13 +391,13 @@
     "SORT_LABEL": "Sort by...",
     "SORT_OPTIONS": {
       "DATE": "Date",
-      "SUBJECT_AZ": "Subject (A-Z)",
-      "SUBJECT_ZA": "Subject (Z-A)"
+      "topic_AZ": "topic (A-Z)",
+      "topic_ZA": "topic (Z-A)"
     },
     "TABLE": {
       "SENDER": "Sender",
       "RECEIVER": "Receiver",
-      "SUBJECT": "Subject",
+      "topic": "topic",
       "DATE": "Received Date",
       "ACTIONS": "Actions",
       "BTN_DELETE": "Delete",
@@ -732,7 +732,7 @@
   "MESSAGES_MODAL": {
     "LABELS": {
       "TO": "To:",
-      "SUBJECT": "Subject:",
+      "topic": "topic:",
       "SENDER": "Sender:",
       "RECEIVER": "Receiver:",
       "MESSAGE_CONTENT": "MESSAGE"
@@ -935,5 +935,10 @@
   "DIRECTORY": {
     "TITLE": "Service Directory",
     "SUBTITLE": "To hire a service, choose an option and you will see the business offers"
-  }
+  },"INPUTS": {
+    "ACCESSIBILITY": {
+      "HIDE_PASSWORD": "Show password",
+      "SHOW_PASSWORD": "Hide password"
+    }
+}
 }

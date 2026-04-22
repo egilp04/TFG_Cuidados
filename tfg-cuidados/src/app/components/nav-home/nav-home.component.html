@@ -4,7 +4,7 @@
   </h1>
 
   <div class="secondary-nav-container" role="menubar">
-    @if (rol === 'cliente') {
+    @if (rol === 'client') {
       <app-button
         [label]="'MAIN_MENU.CLIENT.SEARCH_COMPANIES' | translate"
         variant="primary"
@@ -19,7 +19,7 @@
         (click)="checkContracts()"
       >
       </app-button>
-    } @else if (rol === 'empresa') {
+    } @else if (rol === 'business') {
       <app-button
         [label]="'MAIN_MENU.COMPANY.MANAGE_SERVICES' | translate"
         variant="primary"
@@ -34,7 +34,7 @@
         (click)="checkContracts()"
       >
       </app-button>
-    } @else if (rol === 'administrador') {
+    } @else if (rol === 'administrator') {
       <app-button
         [label]="'MAIN_MENU.ADMIN.DASHBOARD' | translate"
         variant="primary"
@@ -72,7 +72,7 @@
       </app-button>
     }
 
-    @if (rol != 'administrador') {
+    @if (rol != 'administrator') {
       <app-button
         [label]="'MAIN_MENU.COMMON.ACTIVITIES' | translate"
         variant="primary"

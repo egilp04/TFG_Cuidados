@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { from, Observable, throwError, BehaviorSubject, of, forkJoin } from 'rxjs';
+import { from, Observable, throwError, Behaviortopic, of, forkJoin } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { ComunicationModel } from '../models/ComunicationModel';
 import { AuthService } from './auth.service';
@@ -16,8 +16,8 @@ export class ComunicationService {
   private supabase = inject(SupabaseService).getClient();
   private authService = inject(AuthService);
   private readonly validTypeComunication = ['mensaje', 'notificacion'] as const;
-  private messagesList$ = new BehaviorSubject<ComunicationModel[]>([]);
-  private notificationsList$ = new BehaviorSubject<ComunicationModel[]>([]);
+  private messagesList$ = new Behaviortopic<ComunicationModel[]>([]);
+  private notificationsList$ = new Behaviortopic<ComunicationModel[]>([]);
 
   constructor() {
     this.initRealtime();

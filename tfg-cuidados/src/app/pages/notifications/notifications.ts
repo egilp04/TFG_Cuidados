@@ -11,6 +11,11 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, tap, map, switchMap } from 'rxjs/operators';
 import { ComunicationModel } from '../../models/ComunicationModel';
 import { ButtonComponent } from '../../components/button/button';
+
+/**
+ * Component responsible for displaying and managing user notifications.
+ * Handles table pagination, marking incoming messages as read, and deleting notifications.
+ */
 @Component({
   selector: 'app-notifications',
   standalone: true,
@@ -34,79 +39,97 @@ export default class Notifications implements OnInit {
   private cd = inject(ChangeDetectorRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
-  dataSource = new MatTableDataSource<ComunicationModel>([]);
-  displayedColumns: string[] = ['nombre', 'notificacion', 'fecha', 'acciones'];
 
-  ngOnInit() {
-    this.suscribirANotificaciones();
+  dataSource = new MatTableDataSource<ComunicationModel>([]);
+  displayedColumns: string[] = ['name', 'message', 'date', 'actions'];
+
+  ngOnInit(): void {
+    this.subscribeToNotifications();
   }
 
-  private suscribirANotificaciones() {
+  /**
+   * Subscribes to the real-time notifications observable and populates the data table.
+   * Automatically marks any unread notifications as read upon viewing.
+   */
+  private subscribeToNotifications(): void {
     this.comunicationService
       .getNotificationsObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        catchError((err) => {
-          console.error('Error IRL:', err);
+        catchError((err: Error) => {
+          console.error('Error loading real-time notifications:', err);
           return this.translate.get('NOTIFICATIONS.MESSAGES.CONNECTION_ERROR').pipe(
-            tap((res) => this.messageService.showMessage(res, 'error')),
+            tap((res: string) => this.messageService.showMessage(res, 'error')),
             map(() => []),
           );
         }),
       )
       .subscribe((data: ComunicationModel[]) => {
         this.dataSource.data = data;
+        
         if (this.paginator) {
           this.dataSource.paginator = this.paginator;
         }
-        const noLeidas = data.filter((n) => !n.leido);
-        if (noLeidas.length > 0) {
-          this.markAsRead(noLeidas);
+
+        const unreadNotifications = data.filter((n) => !n.is_read);
+        if (unreadNotifications.length > 0) {
+          this.markAsRead(unreadNotifications);
         }
+        
         this.cd.markForCheck();
       });
   }
 
-  markAsRead(notis: ComunicationModel | ComunicationModel[]) {
-    const lista = Array.isArray(notis) ? notis : [notis];
+  /**
+   * Updates the database to mark a single or multiple notifications as read.
+   * @param notifications A single notification model or an array of them.
+   */
+  markAsRead(notifications: ComunicationModel | ComunicationModel[]): void {
+    const notificationList = Array.isArray(notifications) ? notifications : [notifications];
 
-    lista.forEach((noti) => {
-      if (noti.leido || !noti.id_comunicacion) return;
-      noti.leido = true;
+    notificationList.forEach((notification) => {
+      if (notification.is_read || !notification.id_comunication) return;
+
+      notification.is_read = true;
       this.comunicationService
-        .updateComunication(noti.id_comunicacion, { leido: true })
+        .updateComunication(notification.id_comunication, { is_read: true })
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
-          error: (err) => {
-            console.error('Error al marcar notificación:', err);
-            noti.leido = false;
+          error: (err: Error) => {
+            console.error('Error marking notification as read:', err);
+            notification.is_read = false;
             this.cd.markForCheck();
           },
         });
     });
+
     this.comunicationService.refreshUsersData();
     this.cd.markForCheck();
   }
 
-  deleteCommunication(mensaje: ComunicationModel) {
+  /**
+   * Requests the deletion of a specific communication message.
+   * @param message The communication record to delete.
+   */
+  deleteCommunication(message: ComunicationModel): void {
     this.comunicationService
-      .deleteComunicacion(mensaje)
+      .deleteComunication(message)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap(() =>
           this.translate
             .get('NOTIFICATIONS.ALERTS.DELETE_SUCCESS')
-            .pipe(map((text) => ({ type: 'success' as const, text }))),
+            .pipe(map((text: string) => ({ type: 'success' as const, text }))),
         ),
-        catchError((err) => {
-          console.error('Error al borrar:', err);
+        catchError((err: Error) => {
+          console.error('Error deleting communication:', err);
           return this.translate
             .get('NOTIFICATIONS.ALERTS.DELETE_ERROR')
-            .pipe(map((text) => ({ type: 'error' as const, text })));
+            .pipe(map((text: string) => ({ type: 'error' as const, text })));
         }),
       )
-      .subscribe((resultado) => {
-        this.messageService.showMessage(resultado.text, resultado.type);
+      .subscribe((result) => {
+        this.messageService.showMessage(result.text, result.type);
       });
   }
 }

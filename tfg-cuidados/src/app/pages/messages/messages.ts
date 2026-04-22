@@ -14,10 +14,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
-import { switchMap, map, catchError, tap } from 'rxjs/operators';
+import { switchMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ResponsiveSize } from '../../services/responsive-size';
 
+/**
+ * Component for managing the user's communication inbox and outbox.
+ * Allows reading, sorting, filtering, deleting, and composing messages.
+ */
 @Component({
   selector: 'app-messages',
   standalone: true,
@@ -45,22 +49,29 @@ export default class Messages implements OnInit {
   public messageService = inject(MessageService);
   private responsive = inject(ResponsiveSize);
 
-  displayedColumns: string[] = ['Emisor', 'Receptor', 'Asunto', 'Fecha', 'acciones'];
-  dataSource = new MatTableDataSource<ComunicationModel>([]);
+  public displayedColumns: string[] = ['sender', 'receiver', 'topic', 'date', 'actions'];
+  public dataSource = new MatTableDataSource<ComunicationModel>([]);
+  public currentFilter: 'received' | 'sent' = 'received';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  public currentFilter: 'recibidos' | 'enviados' = 'recibidos';
 
-  ngOnInit() {
-    this.subcribeToMessages();
+  ngOnInit(): void {
+    this.subscribeToMessages();
   }
 
-  toFilterFunction(tipo: 'recibidos' | 'enviados') {
-    this.currentFilter = tipo;
+  /**
+   * Updates the active view filter and triggers a data refresh.
+   * @param type The desired view type: 'received' or 'sent' messages.
+   */
+  applyFilter(type: 'received' | 'sent'): void {
+    this.currentFilter = type;
     this.comunicationService.refreshUsersData();
   }
 
-  private subcribeToMessages() {
+  /**
+   * Subscribes to the real-time message stream and filters based on the current view mode.
+   */
+  private subscribeToMessages(): void {
     const user = this.authService.currentUser();
     if (!user) return;
 
@@ -68,96 +79,119 @@ export default class Messages implements OnInit {
       .getMessagesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        map((mssg) => {
-          if (this.currentFilter === 'recibidos') {
-            return mssg.filter((m) => m.id_receptor === user.id_usuario);
+        map((messages: ComunicationModel[]) => {
+          if (this.currentFilter === 'received') {
+            return messages.filter((m) => m.id_receiver === user.id_user);
           } else {
-            return mssg.filter((m) => m.id_emisor === user.id_usuario);
+            return messages.filter((m) => m.id_sender === user.id_user);
           }
-        }),
+        })
       )
       .subscribe({
-        next: (data) => {
+        next: (data: ComunicationModel[]) => {
           this.dataSource.data = data;
           if (this.paginator) {
             this.dataSource.paginator = this.paginator;
           }
           this.cd.markForCheck();
         },
-        error: (err) => console.error('Error en el flujo de mensajes:', err),
+        error: (err: Error) => console.error('Error in message stream:', err),
       });
   }
 
-  sortFunction(criteria: string) {
+  /**
+   * Sorts the currently loaded messages based on predefined criteria.
+   * @param criteria The translation key representing the sorting option.
+   */
+  sortMessages(criteria: string): void {
     const data = [...this.dataSource.data];
+    
     switch (criteria) {
       case 'MESSAGES_PAGE.SORT_OPTIONS.DATE':
-        data.sort((a, b) => new Date(b.fecha_envio).getTime() - new Date(a.fecha_envio).getTime());
+        data.sort((a, b) => new Date(b.send_date).getTime() - new Date(a.send_date).getTime());
         break;
-      case 'MESSAGES_PAGE.SORT_OPTIONS.SUBJECT_AZ':
-        data.sort((a, b) => (a.asunto || '').localeCompare(b.asunto || ''));
+      case 'MESSAGES_PAGE.SORT_OPTIONS.topic_AZ':
+        data.sort((a, b) => (a.topic || '').localeCompare(b.topic || ''));
         break;
-      case 'MESSAGES_PAGE.SORT_OPTIONS.SUBJECT_ZA':
-        data.sort((a, b) => (b.asunto || '').localeCompare(a.asunto || ''));
+      case 'MESSAGES_PAGE.SORT_OPTIONS.topic_ZA':
+        data.sort((a, b) => (b.topic || '').localeCompare(a.topic || ''));
         break;
     }
+    
     this.dataSource.data = data;
   }
 
-  async checkMessage(mssg: ComunicationModel) {
+  /**
+   * Opens the message in a modal for reading.
+   * Automatically marks the message as read in the database if the current user is the receiver.
+   * @param message The communication record to display.
+   */
+  async readMessage(message: ComunicationModel): Promise<void> {
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
+    
     this.dialog.open(MessagesModal, {
-      data: { mode: 'showMessage', contenido: mssg },
+      data: { mode: 'readMessage', content: message },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       maxHeight: '90vh',
     });
+
     const user = this.authService.currentUser();
-    if (user && mssg.id_receptor === user.id_usuario && !mssg.leido) {
-      mssg.leido = true;
+    
+    if (user && message.id_receiver === user.id_user && !message.is_read) {
+      message.is_read = true;
+      
       this.comunicationService
-        .updateComunication(mssg.id_comunicacion!, { leido: true })
+        .updateComunication(message.id_comunication!, { is_read: true })
         .pipe(
           takeUntilDestroyed(this.destroyRef),
-          catchError((err) => {
-            mssg.leido = false;
-            console.error('Error al marcar mensaje como leído en segundo plano:', err);
+          catchError((err: Error) => {
+            message.is_read = false;
+            console.error('Error marking message as read in background:', err);
             return of(null);
-          }),
+          })
         )
         .subscribe();
     }
   }
 
-  deleteCommunication(mssg: ComunicationModel) {
+  /**
+   * Requests the deletion of a specific message.
+   * @param message The communication record to delete.
+   */
+  deleteCommunication(message: ComunicationModel): void {
     this.comunicationService
-      .deleteComunicacion(mssg)
+      .deleteComunication(message)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap(() =>
           this.translate
             .get('MESSAGES_PAGE.ALERTS.DELETE_SUCCESS')
-            .pipe(map((text) => ({ type: 'success' as const, text }))),
+            .pipe(map((text: string) => ({ type: 'success' as const, text })))
         ),
-        catchError((err) => {
-          console.error('Error al borrar:', err);
+        catchError((err: Error) => {
+          console.error('Error deleting communication:', err);
           return this.translate
             .get('MESSAGES_PAGE.ALERTS.DELETE_ERROR')
-            .pipe(map((text) => ({ type: 'error' as const, text })));
-        }),
+            .pipe(map((text: string) => ({ type: 'error' as const, text })));
+        })
       )
       .subscribe((res) => {
         this.messageService.showMessage(res.text, res.type);
       });
   }
 
-  async writeMessage() {
+  /**
+   * Opens the modal configured for composing and sending a new message.
+   */
+  async writeMessage(): Promise<void> {
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
+    
     this.dialog.open(MessagesModal, {
-      data: { mode: 'escribir' },
+      data: { mode: 'writeMessage' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
-      maxHeight: '90vh',
+      maxHeight: '86vh',
     });
   }
 }

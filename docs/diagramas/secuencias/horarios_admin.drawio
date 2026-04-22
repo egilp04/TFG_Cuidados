@@ -107,7 +107,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="jVKMfjmTxe_pty81kDku-22" value="10. Actualiza Tabla (BehaviorSubject)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="jVKMfjmTxe_pty81kDku-4" target="jVKMfjmTxe_pty81kDku-2">
+        <mxCell id="jVKMfjmTxe_pty81kDku-22" value="10. Actualiza Tabla (Behaviortopic)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="jVKMfjmTxe_pty81kDku-4" target="jVKMfjmTxe_pty81kDku-2">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="603" y="879" />

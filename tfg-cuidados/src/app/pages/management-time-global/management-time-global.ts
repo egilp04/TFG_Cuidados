@@ -18,7 +18,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { switchMap, throwError, map, catchError, of, filter, tap } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { week_days, tranlsate_days, validDays } from '../../core/constants/dias_semana';
+import { week_days, tranlsate_days, validDays } from '../../core/constants/week_days';
 import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
 import { Buttonback } from '../../components/buttonback/buttonback';

@@ -6,16 +6,16 @@ import {
   Output,
   EventEmitter,
   SimpleChanges,
+  OnChanges,
 } from '@angular/core';
 import {
   FormBuilder,
   Validators,
   ReactiveFormsModule,
   FormControl,
-  FormGroup,
   AbstractControl,
   ValidationErrors,
-  AsyncValidatorFn
+  AsyncValidatorFn,
 } from '@angular/forms';
 import { ButtonComponent } from '../button/button';
 import { Inputs } from '../inputs/inputs';
@@ -23,12 +23,16 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
-import { comunidades } from '../../core/constants/locations';
+import { comunities } from '../../core/constants/locations';
 import { FormSubmittedEvent, RegisterFormData } from '../../models/RegisterForm';
 import { AuthService } from '../../services/auth.service';
-import { of, timer, Observable } from 'rxjs'; 
+import { of, timer, Observable } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 
+/**
+ * Component handling the dynamic registration form.
+ * Toggles fields and validations based on the selected profile type (Client or Business).
+ */
 @Component({
   selector: 'app-registerform',
   standalone: true,
@@ -44,108 +48,131 @@ import { map, switchMap, catchError } from 'rxjs/operators';
   templateUrl: './registerform.html',
   styleUrl: './registerform.css',
 })
-export class Registerform implements OnInit {
+export class Registerform implements OnInit, OnChanges {
   private fb = inject(FormBuilder);
   private translate = inject(TranslateService);
   public authService = inject(AuthService);
 
-  @Input() isUser: boolean = true;
+  @Input() isClientProfile: boolean = true;
   @Output() formSubmitted = new EventEmitter<FormSubmittedEvent>();
 
-  public comunidades: string[] = comunidades;
+  public comunities: string[] = comunities;
 
-  registerForm = this.fb.group({
-    nombre: this.fb.control<string>('', [Validators.minLength(3)]),
-    termsCondition: this.fb.control<boolean>(false, Validators.requiredTrue),
-    ape1: this.fb.control<string>(''),
-    ape2: this.fb.control<string>(''),
-    fechnac: this.fb.control<string>(''),
-    dni: this.fb.control<string>(''),
-    nombreEmpresa: this.fb.control<string>(''),
-    cif: this.fb.control<string>(''),
-    descripcion: this.fb.control<string>(''),
-    telef: this.fb.control<string>('', [Validators.required, Validators.pattern('^[0-9]{9}$')]),
-    email: this.fb.control<string>('', [Validators.required, Validators.email], [this.validatorEmailRegistered()]),
-    direccion: this.fb.control<string>('', Validators.required),
-    localidad: this.fb.control<string>('', Validators.required),
-    codpostal: this.fb.control<string>('', [Validators.required, Validators.pattern('^[0-9]{5}$')]),
-    comunidad: this.fb.control<string | null>(null, Validators.required),
-    password: this.fb.control<string>('', [
-      Validators.required,
-      Validators.minLength(6),
-      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/),
-    ]),
-    repassword: this.fb.control<string>('', [
-      Validators.required,
-      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/),
-    ]),
-  }, { validators: [this.passwordMatchValidator] });
+  registerForm = this.fb.group(
+    {
+      name: this.fb.control<string>('', [Validators.minLength(3)]),
+      termsCondition: this.fb.control<boolean>(false, Validators.requiredTrue),
+      surname1: this.fb.control<string>(''),
+      surname2: this.fb.control<string>(''),
+      birthDate: this.fb.control<string>(''),
+      dni: this.fb.control<string>(''),
+      companyName: this.fb.control<string>(''),
+      cif: this.fb.control<string>(''),
+      description: this.fb.control<string>(''),
+      phone: this.fb.control<string>('', [Validators.required, Validators.pattern('^[0-9]{9}$')]),
+      email: this.fb.control<string>(
+        '',
+        [Validators.required, Validators.email],
+        [this.validatorEmailRegistered()]
+      ),
+      address: this.fb.control<string>('', Validators.required),
+      city: this.fb.control<string>('', Validators.required),
+      postcode: this.fb.control<string>('', [
+        Validators.required,
+        Validators.pattern('^[0-9]{5}$'),
+      ]),
+      comunity: this.fb.control<string | null>(null, Validators.required),
+      password: this.fb.control<string>('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.pattern(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/
+        ),
+      ]),
+      repassword: this.fb.control<string>('', [
+        Validators.required,
+        Validators.pattern(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/
+        ),
+      ]),
+    },
+    { validators: [this.passwordMatchValidator] }
+  );
 
   ngOnInit(): void {
     this.checkValidators();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['isUser']) {
+    if (changes['isClientProfile']) {
       this.registerForm.reset();
       this.checkValidators();
     }
   }
 
-  onSubmit() {
+  /**
+   * Processes the form submission, maps data to the schema, and emits to parent.
+   */
+  onSubmit(): void {
     if (this.registerForm.valid) {
       const formValue = this.registerForm.getRawValue();
       let dataToSend: RegisterFormData;
-      if (this.isUser) {
+
+      if (this.isClientProfile) {
         dataToSend = {
-          rol: 'cliente',
+          rol: 'client',
           email: (formValue.email || '').trim(),
           password: (formValue.password || '').trim(),
-          nombre: (formValue.nombre || '').trim(),
-          ape1: (formValue.ape1 || '').trim(),
-          ape2: (formValue.ape2 || '').trim(),
+          name: (formValue.name || '').trim(),
+          surname1: (formValue.surname1 || '').trim(),
+          surname2: (formValue.surname2 || '').trim(),
           dni: (formValue.dni || '').trim(),
-          fechnac: formValue.fechnac ?? undefined,
-          telef: (formValue.telef || '').trim(),
-          direccion: (formValue.direccion || '').trim(),
-          localidad: (formValue.localidad || '').trim(),
-          codpostal: (formValue.codpostal || '').trim(),
-          comunidad: formValue.comunidad ?? undefined,
+          birth_date: formValue.birthDate ?? undefined,
+          phone: (formValue.phone || '').trim(),
+          address: (formValue.address || '').trim(),
+          city: (formValue.city || '').trim(),
+          postcode: (formValue.postcode || '').trim(),
+          comunity: formValue.comunity ?? undefined,
         };
       } else {
         dataToSend = {
-          rol: 'empresa',
+          rol: 'business',
           email: (formValue.email || '').trim(),
           password: (formValue.password || '').trim(),
-          nombre: (formValue.nombreEmpresa || '').trim(),
+          name: (formValue.companyName || '').trim(),
           cif: (formValue.cif || '').trim(),
-          descripcion: (formValue.descripcion || '').trim(),
-          telef: (formValue.telef || '').trim(),
-          direccion: (formValue.direccion || '').trim(),
-          localidad: (formValue.localidad || '').trim(),
-          codpostal: (formValue.codpostal || '').trim(),
-          comunidad: formValue.comunidad ?? undefined,
+          description: (formValue.description || '').trim(),
+          phone: (formValue.phone || '').trim(),
+          address: (formValue.address || '').trim(),
+          city: (formValue.city || '').trim(),
+          postcode: (formValue.postcode || '').trim(),
+          comunity: formValue.comunity ?? undefined,
         };
       }
-      this.formSubmitted.emit({ datos: dataToSend, esCliente: this.isUser });
+      this.formSubmitted.emit({ data: dataToSend, isClient: this.isClientProfile });
     } else {
       this.registerForm.markAllAsTouched();
     }
   }
 
+  /**
+   * Retrieves a specific form control by its name.
+   */
   getCtrl(name: string): FormControl {
     return this.registerForm.get(name) as FormControl;
   }
 
+  /**
+   * Retrieves the translated error message for a specific control.
+   */
   getErrorMessage(controlName: string): string {
     const control = this.registerForm.get(controlName);
     if (!control || (!control.touched && !control.dirty)) return '';
 
-    const errors =
-      control.errors || (controlName === 'repassword' ? this.registerForm.errors : null);
+    const errors = control.errors || (controlName === 'repassword' ? this.registerForm.errors : null);
     if (!errors) return '';
 
-    const errorMessages: { [key: string]: string } = {
+    const errorMessages: Record<string, string> = {
       required: this.translate.instant('REGISTER.ERRORS.REQUIRED'),
       email: this.translate.instant('REGISTER.ERRORS.EMAIL'),
       minlength: this.translate.instant('REGISTER.ERRORS.MIN_LENGTH', {
@@ -163,44 +190,54 @@ export class Registerform implements OnInit {
       emailTaken: this.translate.instant('REGISTER.ERRORS.EMAIL_TAKEN'),
     };
 
-    const primerError = Object.keys(errors)[0];
-    return errorMessages[primerError] || this.translate.instant('REGISTER.ERRORS.INVALID');
+    const firstError = Object.keys(errors)[0];
+    return errorMessages[firstError] || this.translate.instant('REGISTER.ERRORS.INVALID');
   }
 
+  /**
+   * Maps pattern validation errors to specific translation keys.
+   */
   private getPatternMessage(controlName: string): string {
-    const patterns: { [key: string]: string } = {
-      telef: 'REGISTER.ERRORS.PATTERN.PHONE',
-      codpostal: 'REGISTER.ERRORS.PATTERN.ZIP',
+    const patterns: Record<string, string> = {
+      phone: 'REGISTER.ERRORS.PATTERN.PHONE',
+      postcode: 'REGISTER.ERRORS.PATTERN.ZIP',
       password: 'REGISTER.ERRORS.PATTERN.PASSWORD',
     };
     const key = patterns[controlName];
     return key ? this.translate.instant(key) : this.translate.instant('REGISTER.ERRORS.INVALID');
   }
 
-  private checkValidators() {
-    const camposUser = ['ape1', 'ape2', 'fechnac', 'dni', 'nombre'];
-    const camposEmpresa = ['nombreEmpresa', 'cif', 'descripcion'];
-    if (this.isUser) {
-      this.setValidators(camposUser);
-      this.clearValidators(camposEmpresa);
+  /**
+   * Sets and clears dynamic validators based on the current profile type.
+   */
+  private checkValidators(): void {
+    const clientFields = ['surname1', 'surname2', 'birthDate', 'dni', 'name'];
+    const businessFields = ['companyName', 'cif', 'description'];
+
+    if (this.isClientProfile) {
+      this.setValidators(clientFields);
+      this.clearValidators(businessFields);
     } else {
-      this.setValidators(camposEmpresa);
-      this.clearValidators(camposUser);
+      this.setValidators(businessFields);
+      this.clearValidators(clientFields);
     }
   }
 
-  private setValidators(fields: string[]) {
+  /**
+   * Applies specific validators to a list of form fields.
+   */
+  private setValidators(fields: string[]): void {
     fields.forEach((f) => {
       const c = this.registerForm.get(f);
-      if (f === 'fechnac') {
+      if (f === 'birthDate') {
         c?.setValidators([Validators.required, this.isAdult.bind(this)]);
       } else if (f === 'dni') {
         c?.setValidators([Validators.required, this.dniValidator]);
-      } else if (f === 'nombre') {
+      } else if (f === 'name') {
         c?.setValidators([Validators.required, Validators.minLength(3)]);
       } else if (f === 'cif') {
         c?.setValidators([Validators.required, this.cifValidator]);
-      } else if (f === 'descripcion') {
+      } else if (f === 'description') {
         c?.clearValidators();
       } else {
         c?.setValidators([Validators.required]);
@@ -209,7 +246,10 @@ export class Registerform implements OnInit {
     });
   }
 
-  private clearValidators(fields: string[]) {
+  /**
+   * Clears validators from a list of form fields.
+   */
+  private clearValidators(fields: string[]): void {
     fields.forEach((f) => {
       const c = this.registerForm.get(f);
       c?.clearValidators();
@@ -217,6 +257,9 @@ export class Registerform implements OnInit {
     });
   }
 
+  /**
+   * Custom validator to ensure passwords match.
+   */
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
     const repassword = control.get('repassword');
@@ -227,53 +270,71 @@ export class Registerform implements OnInit {
     return null;
   }
 
+  /**
+   * Custom validator to ensure the user is at least 18 years old.
+   */
   isAdult(control: AbstractControl): ValidationErrors | null {
     const birthDateValue = control.value;
-    if (!birthDateValue) {
-      return null;
-    }
+    if (!birthDateValue) return null;
+
     const birthDate = new Date(birthDateValue);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
+
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
+
     if (birthDate > today) return { invalidDate: true };
     return age >= 18 ? null : { notAdult: true };
   }
 
+  /**
+   * Custom validator for Spanish DNI (National Identity Document).
+   */
   dniValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (!value) return null;
+
     const dniRegex = /^\d{8}[a-zA-Z]$/;
     if (!dniRegex.test(value)) {
       return { invalidDniFormat: true };
     }
-    const numero = parseInt(value.substring(0, 8), 10);
-    const letraInput = value.substring(8, 9).toUpperCase();
-    const letrasValidas = 'TRWAGMYFPDXBNJZSQVHLCKE';
-    const letraCalculada = letrasValidas.charAt(numero % 23);
-    if (letraInput !== letraCalculada) {
+
+    const numberPart = parseInt(value.substring(0, 8), 10);
+    const inputLetter = value.substring(8, 9).toUpperCase();
+    const validLetters = 'TRWAGMYFPDXBNJZSQVHLCKE';
+    const calculatedLetter = validLetters.charAt(numberPart % 23);
+
+    if (inputLetter !== calculatedLetter) {
       return { invalidDniLetter: true };
     }
     return null;
   }
 
+  /**
+   * Custom validator for Spanish CIF (Tax Identification Code).
+   */
   cifValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (!value) return null;
+
     const cif = value.toUpperCase();
     const cifRegex = /^([ABCDEFGHJKLMNPQRSUVW])(\d{7})([0-9A-J])$/;
+    
     if (!cifRegex.test(cif)) {
       return { invalidCifFormat: true };
     }
+
     const match = cif.match(cifRegex);
     const letter = match![1];
     const numberPart = match![2];
     const cifLastChar = match![3];
+
     let evenSum = 0;
     let oddSum = 0;
+
     for (let i = 0; i < numberPart.length; i++) {
       const n = parseInt(numberPart[i], 10);
       if (i % 2 === 0) {
@@ -284,14 +345,17 @@ export class Registerform implements OnInit {
         evenSum += n;
       }
     }
+
     const sum = evenSum + oddSum;
     const unit = sum % 10;
     const controlDigit = unit === 0 ? 0 : 10 - unit;
     const controlLetterMap = 'JABCDEFGHI';
     const controlLetter = controlLetterMap[controlDigit];
+
     const mustBeLetter = 'PQSKW'.includes(letter);
     const mustBeNumber = 'ABEH'.includes(letter);
     let isValid = false;
+
     if (mustBeLetter) {
       isValid = cifLastChar === controlLetter;
     } else if (mustBeNumber) {
@@ -299,17 +363,20 @@ export class Registerform implements OnInit {
     } else {
       isValid = cifLastChar === String(controlDigit) || cifLastChar === controlLetter;
     }
+
     return isValid ? null : { invalidCifChecksum: true };
   }
 
+  /**
+   * Async validator that checks if an email is already registered in the database.
+   */
   validatorEmailRegistered(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      if (!control.value) {
-        return of(null);
-      }
+      if (!control.value) return of(null);
+
       return timer(500).pipe(
         switchMap(() => this.authService.checkEmailExists(control.value)),
-        map((existe: boolean) => (existe ? { emailTaken: true } : null)),
+        map((exists: boolean) => (exists ? { emailTaken: true } : null)),
         catchError(() => of(null))
       );
     };

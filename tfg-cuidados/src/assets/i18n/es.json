@@ -134,14 +134,14 @@
     "FORM": {
       "NAME": "Nombre",
       "EMAIL": "Email",
-      "SUBJECT": "Motivo",
+      "topic": "Motivo",
       "MESSAGE": "Mensaje",
       "SEND": "Contactar"
     },
     "ERRORS": {
       "NAME": "El nombre debe tener al menos 3 caracteres.",
       "EMAIL": "Introduce un correo electrónico válido.",
-      "SUBJECT": "El motivo es obligatorio (mín. 6 caracteres).",
+      "topic": "El motivo es obligatorio (mín. 6 caracteres).",
       "MESSAGE": "El mensaje debe ser más extenso."
     }
   },
@@ -391,13 +391,13 @@
     "SORT_LABEL": "Ordenar por...",
     "SORT_OPTIONS": {
       "DATE": "Fecha",
-      "SUBJECT_AZ": "Asunto (A-Z)",
-      "SUBJECT_ZA": "Asunto (Z-A)"
+      "topic_AZ": "Asunto (A-Z)",
+      "topic_ZA": "Asunto (Z-A)"
     },
     "TABLE": {
       "SENDER": "Emisor",
       "RECEIVER": "Receptor",
-      "SUBJECT": "Asunto",
+      "topic": "Asunto",
       "DATE": "Fecha Recepción",
       "ACTIONS": "Acciones",
       "BTN_DELETE": "Borrar",
@@ -724,7 +724,7 @@
   "MESSAGES_MODAL": {
     "LABELS": {
       "TO": "Para:",
-      "SUBJECT": "Asunto:",
+      "topic": "Asunto:",
       "SENDER": "Emisor:",
       "RECEIVER": "Receptor:",
       "MESSAGE_CONTENT": "MENSAJE"
@@ -928,5 +928,11 @@
   "DIRECTORY": {
     "TITLE": "Catálogo de servicios",
     "SUBTITLE": "Para contratar, selecciona un tipo de servicio y verá las empresas que lo ofrecen"
+  },
+  "INPUTS": {
+    "ACCESSIBILITY": {
+      "HIDE_PASSWORD": "Ocultar contraseña",
+      "SHOW_PASSWORD": "Mostrar contraseña"
+    }
   }
 }

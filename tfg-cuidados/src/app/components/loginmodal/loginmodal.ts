@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +25,9 @@ import { LoginModalData } from '../../models/Login-Modal';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
 import { getHomeRouteByRole } from '../../core/utils/routerUtils';
 
+/**
+ * Component for handling the login, password recovery, and email verification modal.
+ */
 @Component({
   selector: 'app-loginmodal',
   standalone: true,
@@ -43,7 +46,7 @@ import { getHomeRouteByRole } from '../../core/utils/routerUtils';
   styleUrl: './loginmodal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Loginmodal {
+export class Loginmodal implements OnInit {
   public data = inject<LoginModalData | null>(MAT_DIALOG_DATA);
 
   private fb = inject(FormBuilder);
@@ -56,9 +59,9 @@ export class Loginmodal {
   private router = inject(Router);
   private translate = inject(TranslateService);
 
-  currentMode: 'login' | 'registro' | 'recuperar' | 'reenviar' = 'login';
+  public currentMode: 'login' | 'register' | 'recover' | 'resend' = 'login';
 
-  loginForm = this.fb.group({
+  public loginForm = this.fb.group({
     email: this.fb.control<string>('', [Validators.required, Validators.email]),
     password: this.fb.control<string>('', [
       Validators.required,
@@ -67,23 +70,40 @@ export class Loginmodal {
     ]),
   });
 
-  emailCtrl = new FormControl('', [Validators.required, Validators.email]);
+  public emailCtrl = new FormControl('', [Validators.required, Validators.email]);
 
+  ngOnInit(): void {
+    if (this.data && this.data.mode) {
+      const modeMapping: Record<string, 'login' | 'register' | 'recover' | 'resend'> = {
+        login: 'login',
+        registro: 'register',
+        register: 'register',
+        recuperar: 'recover',
+        recover: 'recover',
+        reenviar: 'resend',
+        resend: 'resend'
+      };
+      this.currentMode = modeMapping[this.data.mode] || 'login';
+    }
+  }
+
+  /**
+   * Retrieves a specific form control from the login form.
+   * @param name The name of the control.
+   */
   getCtrl(name: string): FormControl {
     return this.loginForm.get(name) as FormControl;
   }
 
-  ngOnInit() {
-    if (this.data && this.data.mode) {
-      this.currentMode = this.data.mode;
-    }
-  }
-
-  toEnterApp() {
+  /**
+   * Processes the authentication attempt and navigates the user based on their role.
+   */
+  toEnterApp(): void {
     if (this.loginForm.valid) {
       const rawForm = this.loginForm.getRawValue();
       const email = rawForm.email ?? '';
       const password = rawForm.password ?? '';
+      
       this.authService
         .signIn(email, password)
         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -92,13 +112,14 @@ export class Loginmodal {
             this.dialogRef.close({ loginSuccess: true });
             this.dialog.closeAll();
             this.cd.detectChanges();
+            
             const user = this.authService.currentUser();
-            const rol = user?.rol;
-            const route = getHomeRouteByRole(rol);
+            const role = user?.rol;
+            const route = getHomeRouteByRole(role);
             this.router.navigate([route]);
           },
-          error: (err) => {
-            console.log('Error login:', err);
+          error: (err: Error) => {
+            console.error('Error login:', err);
 
             if (err.message && err.message.includes('Email not confirmed')) {
               this.messageService.showMessage(
@@ -124,7 +145,10 @@ export class Loginmodal {
     }
   }
 
-  toRecoverPasswd() {
+  /**
+   * Validates the email and initiates the password recovery flow.
+   */
+  toRecoverPasswd(): void {
     if (this.emailCtrl.invalid) {
       this.messageService.showMessage(
         this.translate.instant('LOGIN_MODAL.FEEDBACK.INVALID_EMAIL'),
@@ -134,21 +158,22 @@ export class Loginmodal {
       this.cd.markForCheck();
       return;
     }
+    
     const email = this.emailCtrl.value || '';
     if (!email) return;
 
     this.authService.checkEmailExists(email).subscribe({
-      next: (existe) => {
-        if (!existe) {
+      next: (exists: boolean) => {
+        if (!exists) {
           this.messageService.showMessage(
             this.translate.instant('LOGIN_MODAL.FEEDBACK.EMAIL_NOT_FOUND'),
             'error',
           );
           return;
         }
-        this.askRecoverPasswd(email);
+        this.processPasswordRecovery(email);
       },
-      error: (err) => {
+      error: (err: Error) => {
         console.error(err);
         this.messageService.showMessage(
           this.translate.instant('LOGIN_MODAL.FEEDBACK.CONN_ERROR'),
@@ -158,7 +183,11 @@ export class Loginmodal {
     });
   }
 
-  private askRecoverPasswd(email: string) {
+  /**
+   * Calls the authentication service to send a password recovery email.
+   * @param email The target email address.
+   */
+  private processPasswordRecovery(email: string): void {
     this.authService
       .recoverPassword(email)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -175,7 +204,7 @@ export class Loginmodal {
           }, 3000);
           this.cd.markForCheck();
         },
-        error: (err) => {
+        error: (err: Error) => {
           console.error(err);
           const errorMsg = err.message || this.translate.instant('LOGIN_MODAL.FEEDBACK.CONN_ERROR');
           this.messageService.showMessage(errorMsg, 'error');
@@ -184,7 +213,10 @@ export class Loginmodal {
       });
   }
 
-  toRecoverEmail() {
+  /**
+   * Validates the email and initiates the verification email resend flow.
+   */
+  toRecoverEmail(): void {
     if (this.emailCtrl.invalid) {
       this.messageService.showMessage(
         this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'),
@@ -192,27 +224,36 @@ export class Loginmodal {
       );
       return;
     }
+    
     const email = this.emailCtrl.value || '';
     if (!email) return;
 
     this.authService.checkEmailExists(email).subscribe({
-      next: (existe) => {
-        if (!existe) {
+      next: (exists: boolean) => {
+        if (!exists) {
           this.messageService.showMessage(
             this.translate.instant('LOGIN_MODAL.FEEDBACK.EMAIL_NOT_FOUND'),
             'error',
           );
           return;
         }
-        this.askResendEmail(email);
+        this.processEmailResend(email);
       },
-      error: (err) => {
+      error: (err: Error) => {
         console.error(err);
-        this.messageService.showMessage('LOGIN_MODAL.FEEDBACK.WITH_ERROR', 'error');
+        this.messageService.showMessage(
+            this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'), 
+            'error'
+        );
       },
     });
   }
-  private askResendEmail(email: string) {
+
+  /**
+   * Calls the authentication service to resend the account verification email.
+   * @param email The target email address.
+   */
+  private processEmailResend(email: string): void {
     this.authService.resendVerificationEmail(email).subscribe({
       next: () => {
         this.messageService.showMessage(
@@ -226,7 +267,7 @@ export class Loginmodal {
         }, 2000);
         this.cd.markForCheck();
       },
-      error: (err) => {
+      error: (err: Error) => {
         console.error(err);
         this.messageService.showMessage(
           this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'),

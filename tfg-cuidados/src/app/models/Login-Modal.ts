@@ -1,3 +1,3 @@
 export interface LoginModalData {
-  mode?: 'login' | 'registro' | 'recuperar' | 'reenviar';
+  mode?: 'login' | 'register' | 'recover' | 'resend';
 }

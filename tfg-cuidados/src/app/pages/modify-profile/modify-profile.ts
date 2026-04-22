@@ -14,6 +14,10 @@ import { UpdateProfilePayload } from '../../models/User_Service';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 
+/**
+ * Component for handling user profile modifications.
+ * Supports updating profile data and deleting/unsubscribing accounts.
+ */
 @Component({
   selector: 'app-modify-profile',
   standalone: true,
@@ -32,49 +36,69 @@ export default class ModifyProfilePage implements OnInit {
   private translate = inject(TranslateService);
   private location = inject(Location);
 
-  userRole = signal<'cliente' | 'empresa' | 'administrador'>('cliente');
-  userToEdit = signal<AuthUserModel | null>(null);
+  public userRole = signal<'client' | 'business' | 'administrator'>('client');
+  public userToEdit = signal<AuthUserModel | null>(null);
 
-  ngOnInit() {
-    const state = history.state as { usuario?: AuthUserModel };
-    if (state && state.usuario) {
-      this.userToEdit.set(state.usuario);
-      this.userRole.set(state.usuario.rol);
+  ngOnInit(): void {
+    const state = history.state as { user?: AuthUserModel; usuario?: AuthUserModel };
+    const targetUser = state.user || state.usuario;
+
+    if (targetUser) {
+      this.userToEdit.set(targetUser);
+      this.userRole.set(this.normalizeRole(targetUser.rol));
     } else {
-      const user = this.authService.currentUser();
-      if (user) {
-        this.userToEdit.set(user);
-        this.userRole.set(user.rol);
+      const currentUser = this.authService.currentUser();
+      if (currentUser) {
+        this.userToEdit.set(currentUser);
+        this.userRole.set(this.normalizeRole(currentUser.rol));
       }
     }
     setTimeout(() => this.cd.detectChanges(), 0);
   }
 
-  doUpdateProfile(event: FormSubmitEvent) {
+  /**
+   * Normalizes the user role string to match the English application schema.
+   */
+  private normalizeRole(role: string | undefined): 'client' | 'business' | 'administrator' {
+    if (role === 'business') return 'business';
+    if (role === 'administrator') return 'administrator';
+    return 'client';
+  }
+
+  /**
+   * Submits the updated profile data to the backend.
+   * Updates authentication credentials if the email was changed by the currently active user.
+   * @param event The form submission event containing the new profile data.
+   */
+  doUpdateProfile(event: FormSubmitEvent): void {
     const user = this.userToEdit();
-    const loggueUser = this.authService.currentUser();
+    const loggedUser = this.authService.currentUser();
+    
     if (!user) return;
-    const newData = event.datos as UpdateProfilePayload;
-    const rol = event.rol;
+    
+    const newData = (event.data || event.datos) as UpdateProfilePayload;
+    const role = event.role || event.rol;
 
     this.userService
-      .updateProfileDirect(user.id_usuario, newData, rol)
+      .updateProfileDirect(user.id_user, newData, role)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap(() => {
-          const itsMyself = user.id_usuario === loggueUser?.id_usuario;
-          const emailCambio = newData.email !== user.email;
-          if (itsMyself && emailCambio) {
+          const isSelfUpdate = user.id_user === loggedUser?.id_user;
+          const emailChanged = newData.email !== user.email;
+          
+          if (isSelfUpdate && emailChanged) {
             return this.authService.updateAuthCredentiales(newData.email);
           }
           return of(null);
         }),
         switchMap(() => this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_SUCCESS')),
-        tap((msg) => {
+        tap((msg: string) => {
           this.messageService.showMessage(msg, 'success');
-          const itsMyself = user.id_usuario === loggueUser?.id_usuario;
-          if (itsMyself) {
-            const updatedUser = { ...loggueUser, ...newData } as AuthUserModel;
+          const isSelfUpdate = user.id_user === loggedUser?.id_user;
+          
+          if (isSelfUpdate) {
+            const updatedUser = { ...loggedUser, ...newData } as AuthUserModel;
             this.authService.updateUserSignal(updatedUser);
           }
           this.cd.detectChanges();
@@ -83,53 +107,75 @@ export default class ModifyProfilePage implements OnInit {
         tap(() => {
           this.location.back();
         }),
-        catchError((err) => {
-          console.error('Error actualizando perfil:', err);
-          this.messageService.showMessage('Error al guardar los cambios', 'error');
-          return of(null);
+        catchError((err: Error) => {
+          console.error('Error updating profile:', err);
+          return this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_ERROR').pipe(
+            tap((msg: string) => this.messageService.showMessage(msg, 'error')),
+            switchMap(() => EMPTY)
+          );
         }),
       )
       .subscribe();
   }
-  async doUserLow() {
+
+  /**
+   * Prompts the user for confirmation and deletes the account.
+   * Signs the user out if they are deleting their own account.
+   */
+  async unsubscribeUser(): Promise<void> {
     const user = this.userToEdit();
     const currentUser = this.authService.currentUser();
+    
     if (!user) return;
+    
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
+    
     this.dialog
       .open(Cancelmodal, {
         width: '500px',
-        data: { mode: 'baja' },
+        data: { mode: 'unsubscribe' },
         autoFocus: false,
       })
       .afterClosed()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter((result) => result === true),
-        switchMap(() => this.userService.deleteUser(user.id_usuario)),
+        switchMap(() => this.userService.deleteUser(user.id_user)),
         switchMap(() => {
-          const itsMyself = user.id_usuario === currentUser?.id_usuario;
-          if (itsMyself) {
-            return this.authService.signOut().pipe(tap(() => this.router.navigate(['/'])));
+          const isSelfUpdate = user.id_user === currentUser?.id_user;
+          if (isSelfUpdate) {
+            return this.authService.signOut().pipe(
+              tap(() => this.router.navigate(['/'])),
+              map(() => true)
+            );
           } else {
             this.location.back();
             return of(true);
           }
         }),
-        catchError((err) => {
-          console.error('Error al dar de baja:', err);
-          this.messageService.showMessage('Hubo un error al eliminar el usuario', 'error');
-          return of(false);
+        switchMap((success) => 
+           success 
+             ? this.translate.get('MODIFY_PROFILE.MESSAGES.DELETE_SUCCESS').pipe(map(msg => ({msg, type: 'success' as const})))
+             : EMPTY
+        ),
+        catchError((err: Error) => {
+          console.error('Error unsubscribing user:', err);
+          return this.translate.get('MODIFY_PROFILE.MESSAGES.DELETE_ERROR').pipe(
+            map(msg => ({msg, type: 'error' as const}))
+          );
         }),
       )
-      .subscribe((success) => {
-        if (success) {
-          this.messageService.showMessage('Usuario eliminado correctamente', 'success');
+      .subscribe((result) => {
+        if (result && result.msg) {
+           this.messageService.showMessage(result.msg, result.type);
         }
       });
   }
 
-  backHome() {
+  /**
+   * Navigates back to the previous view in the history stack.
+   */
+  navigateBack(): void {
     this.location.back();
   }
 }

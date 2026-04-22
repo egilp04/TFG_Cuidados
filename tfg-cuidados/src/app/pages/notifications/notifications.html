@@ -5,7 +5,6 @@
   <app-buttonback></app-buttonback>
 </header>
 
-
 <section class="notifications-container" aria-labelledby="notifications-title">
   <h1 id="notifications-title" class="notifications-title">
     {{ 'NOTIFICATIONS.TITLE' | translate }}
@@ -19,37 +18,37 @@
         class="notifications-table"
         aria-labelledby="notifications-title"
       >
-        <ng-container matColumnDef="nombre">
+        <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef class="text-label notifications-text" scope="col">
             {{ 'NOTIFICATIONS.TABLE.NAME' | translate }}
           </th>
           <td
             mat-cell
-            *matCellDef="let noti"
+            *matCellDef="let notification"
             tabindex="0"
             class="notifications-name"
             [ngClass]="{
-              'text-red-500 dark:text-red-dark': !noti.leido,
-              'text-green-600 dark:text-green-300': noti.leido,
+              'text-red-500 dark:text-red-dark': !notification.is_read,
+              'text-green-600 dark:text-green-300': notification.is_read
             }"
           >
-            @if (!noti.leido) {
+            @if (!notification.is_read) {
               <span class="sr-only">{{ 'NOTIFICATIONS.ACCESSIBILITY.UNREAD' | translate }} - </span>
             }
-            {{ noti.asunto }}
+            {{ notification.topic }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="notificacion">
+        <ng-container matColumnDef="message">
           <th mat-header-cell *matHeaderCellDef class="text-label notifications-text" scope="col">
             {{ 'NOTIFICATIONS.TABLE.CONTENT' | translate }}
           </th>
-          <td mat-cell *matCellDef="let noti" class="text-label notifications-text">
-            {{ noti.contenido }}
+          <td mat-cell *matCellDef="let notification" class="text-label notifications-text">
+            {{ notification.content }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="fecha">
+        <ng-container matColumnDef="date">
           <th
             mat-header-cell
             *matHeaderCellDef
@@ -60,25 +59,25 @@
           </th>
           <td
             mat-cell
-            *matCellDef="let noti"
+            *matCellDef="let notification"
             class="text-label notifications-text whitespace-nowrap px-4"
           >
-            {{ noti.fecha_envio | date: 'dd/MM/yyyy' }}
+            {{ notification.send_date | date: 'dd/MM/yyyy' }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="acciones">
+        <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef class="messages-page-header textlabel!" scope="col">
             <span class="sr-only">{{ 'NOTIFICATIONS.ACCESSIBILITY.ACTIONS_COL' | translate }}</span>
           </th>
-          <td mat-cell *matCellDef="let mensaje" class="p-4 text-center">
+          <td mat-cell *matCellDef="let message" class="p-4 text-center">
             <div class="flex justify-center gap-4 p-10">
               <app-button
                 [label]="'MESSAGES_PAGE.TABLE.BTN_DELETE' | translate"
                 variant="secondary"
-                (click)="deleteCommunication(mensaje)"
+                (click)="deleteCommunication(message)"
                 [attr.aria-label]="
-                  ('MESSAGES_PAGE.TABLE.BTN_DELETE' | translate) + ': ' + mensaje.asunto
+                  ('MESSAGES_PAGE.TABLE.BTN_DELETE' | translate) + ': ' + message.topic
                 "
               ></app-button>
             </div>

@@ -28,7 +28,7 @@
         <mxCell id="UqQzfqyJWqnFyLT94uQE-8" value="alt" style="shape=umlFrame;dashed=1;pointerEvents=0;dropTarget=0;strokeColor=#B3B3B3;height=20;width=30" vertex="1" parent="1">
           <mxGeometry x="443" y="251" width="968" height="479" as="geometry" />
         </mxCell>
-        <mxCell id="UqQzfqyJWqnFyLT94uQE-9" value="[Datos en Caché (BehaviorSubject)]" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="UqQzfqyJWqnFyLT94uQE-8">
+        <mxCell id="UqQzfqyJWqnFyLT94uQE-9" value="[Datos en Caché (Behaviortopic)]" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="UqQzfqyJWqnFyLT94uQE-8">
           <mxGeometry x="30" width="938" height="20" as="geometry" />
         </mxCell>
         <mxCell id="UqQzfqyJWqnFyLT94uQE-10" value="[Primera Carga / Refresco]" style="shape=line;dashed=1;whiteSpace=wrap;verticalAlign=top;labelPosition=center;verticalLabelPosition=middle;align=center;strokeColor=#B3B3B3;" vertex="1" parent="UqQzfqyJWqnFyLT94uQE-8">

@@ -19,7 +19,7 @@
         <mxCell id="Nnjqf7ZBb9psRizRdub0-4" value="Internacionalización (i18n)&#xa;Carga: /assets/i18n/*.json" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#FFF9C4;strokeColor=#FBC02D;size=15;" vertex="1" parent="layer_ui">
           <mxGeometry x="70" y="373" width="200" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Nnjqf7ZBb9psRizRdub0-5" value="Tecnologías UI:&lt;br&gt;• Angular Signals y&amp;nbsp;&lt;span style=&quot;font-size: 12px; font-style: normal;&quot;&gt;BehaviorSubjects&lt;/span&gt;&amp;nbsp;(Estado)&lt;br&gt;• Observables y RxJS (Reactividad)&lt;br&gt;• TailwindCSS (Estilos)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#BDBDBD;fontStyle=2;fontSize=11;" vertex="1" parent="layer_ui">
+        <mxCell id="Nnjqf7ZBb9psRizRdub0-5" value="Tecnologías UI:&lt;br&gt;• Angular Signals y&amp;nbsp;&lt;span style=&quot;font-size: 12px; font-style: normal;&quot;&gt;Behaviortopics&lt;/span&gt;&amp;nbsp;(Estado)&lt;br&gt;• Observables y RxJS (Reactividad)&lt;br&gt;• TailwindCSS (Estilos)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#BDBDBD;fontStyle=2;fontSize=11;" vertex="1" parent="layer_ui">
           <mxGeometry x="30" y="480" width="280" height="60" as="geometry" />
         </mxCell>
         <mxCell id="layer_logic" value="CAPA DE NEGOCIO (Servicios Inyectables)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;fontStyle=1" parent="1" vertex="1">

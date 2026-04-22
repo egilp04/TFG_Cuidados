@@ -1,4 +1,4 @@
-export const comunidades: string[] = [
+export const comunities: string[] = [
   'Andalucía',
   'Aragón',
   'Principado de Asturias',

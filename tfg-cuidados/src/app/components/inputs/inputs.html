@@ -22,7 +22,6 @@
         [ngClass]="errorMessage() ? 'input-error ' : 'input-no-error'"
         [attr.aria-invalid]="errorMessage() ? 'true' : 'false'"
         [attr.aria-describedby]="errorMessage() ? name() + '-error' : null"
-        autocomplete=""
       />
     }
 
@@ -31,7 +30,7 @@
         type="button" 
         (click)="togglePasswordVisibility()" 
         class="eye-passwd"
-        [attr.aria-label]="isPasswordVisible() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+        [attr.aria-label]="isPasswordVisible() ? ('INPUTS.ACCESSIBILITY.HIDE_PASSWORD' | translate) : ('INPUTS.ACCESSIBILITY.SHOW_PASSWORD' | translate)"
       >
         @if (isPasswordVisible()) {
           <lucide-icon name="eye-off" class="w-5 h-5" aria-hidden="true"></lucide-icon>

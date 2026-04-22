@@ -18,11 +18,11 @@
     <h1 mat-dialog-title id="login-dialog-title" class="login-modal-title">
       @if (currentMode === 'login') {
         {{ 'LOGIN_MODAL.TITLES.LOGIN' | translate }}
-      } @else if (currentMode === 'registro') {
+      } @else if (currentMode === 'register') {
         {{ 'LOGIN_MODAL.TITLES.REGISTER' | translate }}
-      } @else if (currentMode === 'recuperar') {
+      } @else if (currentMode === 'recover') {
         {{ 'LOGIN_MODAL.TITLES.RECOVER' | translate }}
-      } @else if (currentMode === 'reenviar') {
+      } @else if (currentMode === 'resend') {
         {{ 'LOGIN_MODAL.TITLES.RESEND' | translate }}
       } @else {
         {{ 'LOGIN_MODAL.TITLES.NOTITLE' | translate }}
@@ -74,24 +74,25 @@
           [label]="'LOGIN_MODAL.BTN.FORGOT' | translate"
           variant="secondary"
           type="button"
-          (click)="currentMode = 'recuperar'"
+          (click)="currentMode = 'recover'"
         ></app-button>
         <app-button
           [label]="'LOGIN_MODAL.BTN.RESEND' | translate"
           variant="secondary"
           type="button"
-          (click)="currentMode = 'reenviar'"
+          (click)="currentMode = 'resend'"
         ></app-button>
         <app-button
           [label]="'LOGIN_MODAL.BTN.REGISTER' | translate"
           variant="primary"
           type="button"
-          (click)="currentMode = 'registro'"
+          (click)="currentMode = 'register'"
         ></app-button>
       </mat-dialog-actions>
     </form>
   }
-  @if (currentMode === 'recuperar') {
+
+  @if (currentMode === 'recover') {
     <main
       class="login-recuperar-container"
       role="region"
@@ -128,7 +129,8 @@
       </mat-dialog-actions>
     </main>
   }
-  @if (currentMode === 'registro') {
+
+  @if (currentMode === 'register') {
     <main
       class="login-registro-container"
       role="region"
@@ -139,7 +141,7 @@
           [label]="'LOGIN_MODAL.BTN.REG_USER' | translate"
           variant="primary"
           [routerLink]="['/register']"
-          [state]="{ tipo: 'usuario' }"
+          [state]="{ type: 'client' }"
           mat-dialog-close
         ></app-button>
 
@@ -147,7 +149,7 @@
           [label]="'LOGIN_MODAL.BTN.REG_COMPANY' | translate"
           variant="primary"
           [routerLink]="['/register']"
-          [state]="{ tipo: 'empresa' }"
+          [state]="{ type: 'business' }"
           mat-dialog-close
         ></app-button>
 
@@ -160,7 +162,7 @@
     </main>
   }
 
-  @if (currentMode === 'reenviar') {
+  @if (currentMode === 'resend') {
     <main
       class="w-full flex flex-col items-center"
       role="region"

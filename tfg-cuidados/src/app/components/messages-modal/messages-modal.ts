@@ -15,6 +15,10 @@ import { ButtonComponent } from '../button/button';
 import { MessagesModalData } from '../../models/Message-Modal';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
 
+/**
+ * Modal component for displaying or composing messages.
+ * Handles user search by email to establish communication.
+ */
 @Component({
   selector: 'app-messages-modal',
   standalone: true,
@@ -43,91 +47,97 @@ export class MessagesModal implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
 
-  messageForm = this.fb.group({
+  public messageForm = this.fb.group({
     sender: this.fb.control<string>(''),
     receiver: this.fb.control<string>('', [Validators.required, Validators.email]),
     topic: this.fb.control<string>('', [Validators.required]),
     content: this.fb.control<string>('', [Validators.required]),
   });
 
-  ngOnInit() {
-    if (this.data.mode === 'showMessage' && this.data.contenido) {
+  ngOnInit(): void {
+    if (this.data.mode === 'readMessage' && this.data.content) {
       this.messageForm.patchValue({
-        sender: this.data.contenido.Emisor?.email,
-        receiver: this.data.contenido.Receptor?.nombre,
-        topic: this.data.contenido.asunto || undefined,
-        content: this.data.contenido.contenido,
+        sender: this.data.content.Sender?.email,
+        receiver: this.data.content.Receiver?.name || this.data.content.Receiver?.email,
+        topic: this.data.content.topic || undefined,
+        content: this.data.content.content,
       });
       this.messageForm.disable();
-    } else if (this.data.mode === 'escribir' && this.data.receptorEmail) {
+    } else if (this.data.mode === 'writeMessage' && this.data.receiverEmail) {
       this.messageForm.patchValue({
-        receiver: this.data.receptorEmail,
+        receiver: this.data.receiverEmail,
       });
       this.getCtrl('receiver').disable();
     }
   }
 
+  /**
+   * Helper to get a form control by name with type safety.
+   */
   getCtrl(name: string): FormControl {
     return this.messageForm.get(name) as FormControl;
   }
 
-  sendMessage() {
-    if (
-      this.messageForm.valid ||
-      (this.data.mode === 'escribir' &&
-        this.getCtrl('asunto').valid &&
-        this.getCtrl('contenido').valid)
-    ) {
-      const idEmisor = this.authService.currentUser()?.id_usuario;
-      const emailDestino = this.messageForm.getRawValue().receiver ?? '';
-      if (!idEmisor) {
-        this.messageService.showMessage(
-          this.translate.instant('MESSAGES_MODAL.FEEDBACK.ERROR_SENDER'),
-          'error',
-        );
-        this.cd.markForCheck();
-        return;
-      }
-      this.userService
-        .getUserByEmail(emailDestino)
-        .pipe(
-          takeUntilDestroyed(this.destroyRef),
-          switchMap((foundUser) => {
-            if (!foundUser || !foundUser.id_usuario) {
-              throw new Error('usuario_no_encontrado');
-            }
-            const newComunication = {
-              id_emisor: idEmisor,
-              id_receiver: foundUser.id_usuario,
-              asunto: this.messageForm.value.topic ?? '',
-              contenido: this.messageForm.value.content ?? '',
-              tipo_comunicacion: 'mensaje' as const,
-              leido: false,
-            };
-
-            return this.comunicationService.insertComunication(newComunication);
-          }),
-        )
-        .subscribe({
-          next: () => {
-            this.messageService.showMessage(
-              this.translate.instant('MESSAGES_MODAL.FEEDBACK.SEND_SUCCESS'),
-              'success',
-            );
-            this.dialogRef.close();
-            this.cd.markForCheck();
-          },
-          error: (err: Error) => {
-            const msg =
-              err.message === 'usuario_no_encontrado'
-                ? this.translate.instant('MESSAGES_MODAL.FEEDBACK.USER_NOT_FOUND')
-                : this.translate.instant('MESSAGES_MODAL.FEEDBACK.SEND_ERROR');
-
-            this.messageService.showMessage(msg, 'error');
-            console.error(err);
-            this.cd.markForCheck();
-          },
-        });
+  /**
+   * Orchestrates the process of finding the receiver and inserting the communication record.
+   */
+  sendMessage(): void {
+    if (this.messageForm.invalid) {
+      this.messageForm.markAllAsTouched();
+      return;
     }
+
+    const currentUserId = this.authService.currentUser()?.id_user;
+    const targetEmail = this.messageForm.getRawValue().receiver ?? '';
+
+    if (!currentUserId) {
+      this.messageService.showMessage(
+        this.translate.instant('MESSAGES_MODAL.FEEDBACK.ERROR_SENDER'),
+        'error',
+      );
+      return;
+    }
+
+    this.userService
+      .getUserByEmail(targetEmail)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        switchMap((foundUser) => {
+          if (!foundUser || !foundUser.id_user) {
+            throw new Error('user_not_found');
+          }
+
+          const newCommunication = {
+            id_sender: currentUserId,
+            id_receiver: foundUser.id_user,
+            topic: this.messageForm.value.topic ?? '',
+            content: this.messageForm.value.content ?? '',
+            communication_type: 'message' as const,
+            is_read: false,
+          };
+
+          return this.comunicationService.insertComunication(newCommunication);
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.messageService.showMessage(
+            this.translate.instant('MESSAGES_MODAL.FEEDBACK.SEND_SUCCESS'),
+            'success',
+          );
+          this.dialogRef.close();
+          this.cd.markForCheck();
+        },
+        error: (err: Error) => {
+          const msg =
+            err.message === 'user_not_found'
+              ? this.translate.instant('MESSAGES_MODAL.FEEDBACK.USER_NOT_FOUND')
+              : this.translate.instant('MESSAGES_MODAL.FEEDBACK.SEND_ERROR');
+
+          this.messageService.showMessage(msg, 'error');
+          console.error('Error sending message:', err);
+          this.cd.markForCheck();
+        },
+      });
   }
 }

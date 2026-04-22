@@ -37,7 +37,7 @@ export default class Contact {
   contactForm = this.fb.group({
     username: this.fb.control<string>('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]),
     email: this.fb.control<string>('', [Validators.required, Validators.email]),
-    subject: this.fb.control<string>('', [Validators.required, Validators.minLength(6)]),
+    topic: this.fb.control<string>('', [Validators.required, Validators.minLength(6)]),
     message: this.fb.control<string>('', [Validators.required, Validators.minLength(6)]),
   });
 
@@ -53,7 +53,7 @@ export default class Contact {
     const templateParams = {
       username: this.contactForm.value.username,
       email: this.contactForm.value.email,
-      subject: this.contactForm.value.subject,
+      topic: this.contactForm.value.topic,
       message: this.contactForm.value.message,
     };
     this.contactForm.disable();

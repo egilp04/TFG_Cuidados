@@ -132,8 +132,8 @@ describe('ComunicationService', () => {
     const adminsData = [{ id_usuario: 'admin1' }];
     queryBuilder.then = (resolve: any) => resolve({ data: adminsData, error: null });
     spyOn(service as any, 'sendNotification').and.returnValue(of(null));
-    service.notifyAdmins('Subject', 'Body').subscribe();
+    service.notifyAdmins('topic', 'Body').subscribe();
     tick();
-    expect((service as any).sendNotification).toHaveBeenCalledWith('admin1', 'Subject', 'Body');
+    expect((service as any).sendNotification).toHaveBeenCalledWith('admin1', 'topic', 'Body');
   }));
 });

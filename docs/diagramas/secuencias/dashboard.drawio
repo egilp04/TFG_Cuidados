@@ -81,7 +81,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="Wo5zy6fIxwhIsHvF_-cQ-17" value="6. Emite valores (BehaviorSubjects)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="Wo5zy6fIxwhIsHvF_-cQ-4" target="Wo5zy6fIxwhIsHvF_-cQ-2">
+        <mxCell id="Wo5zy6fIxwhIsHvF_-cQ-17" value="6. Emite valores (Behaviortopics)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="Wo5zy6fIxwhIsHvF_-cQ-4" target="Wo5zy6fIxwhIsHvF_-cQ-2">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="562" y="775" />
