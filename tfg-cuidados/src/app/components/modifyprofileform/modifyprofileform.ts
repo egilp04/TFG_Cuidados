@@ -85,7 +85,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
 
   ngOnInit(): void {
     const activeRole = this.authService.userRol();
-    this.isAdminViewer = activeRole === 'administrador';
+    this.isAdminViewer = activeRole === 'administrator';
     
     if (!this.userData) {
       this.loadProfileFormData();
@@ -100,11 +100,11 @@ export class Modifyprofileform implements OnInit, OnChanges {
     
     if (this.targetUser) {
       this.profileForm.patchValue({
-        phone: this.targetUser.phone || this.targetUser.telef,
+        phone: this.targetUser.phone,
         email: this.targetUser.email,
       });
 
-      const nameValue = this.targetUser.name || this.targetUser.nombre;
+      const nameValue = this.targetUser.name;
       
       if (this.userRole === 'business') {
         this.profileForm.patchValue({ companyName: nameValue });
@@ -114,18 +114,18 @@ export class Modifyprofileform implements OnInit, OnChanges {
 
       if (this.userRole !== 'administrator') {
         this.profileForm.patchValue({
-          address: this.targetUser.address || this.targetUser.direccion,
-          city: this.targetUser.city || this.targetUser.localidad,
-          postcode: this.targetUser.postcode || this.targetUser.codpostal,
-          comunity: this.targetUser.comunity || this.targetUser.comunidad,
+          address: this.targetUser.address,
+          city: this.targetUser.city,
+          postcode: this.targetUser.postcode,
+          comunity: this.targetUser.comunity,
         });
 
         if (this.userRole === 'business') {
           this.profileForm.patchValue({ description: this.targetUser.description || this.targetUser.descripcion || '' });
         } else {
           this.profileForm.patchValue({
-            surname1: this.targetUser.surname1 || this.targetUser.ape1,
-            surname2: this.targetUser.surname2 || this.targetUser.ape2,
+            surname1: this.targetUser.surname1,
+            surname2: this.targetUser.surname2,
           });
         }
       }

@@ -1,10 +1,10 @@
 import { ComunicationModel } from './ComunicationModel';
 
 export interface MessagesModalData {
-  mode: 'writeMessage' | 'showMessage';
+  mode: 'writeMessage' | 'readMessage';
   receiverEmail?: string;
   content?: ComunicationModel & {
     Sender?: { email?: string; name?: string };
-    Receiver?: { name: string };
+    Receiver?: {email?:string, name: string };
   };
 }
