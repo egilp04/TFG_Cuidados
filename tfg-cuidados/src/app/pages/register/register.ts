@@ -75,14 +75,14 @@ export default class Register implements OnInit {
    */
   onRegister(event: FormSubmittedEvent): void {
     const user = this.authService.currentUser();
-    const isAdmin = user?.rol === 'administrator' || user?.rol === 'administrador';
+    const isAdmin = user?.rol === 'administrator';
 
     if (user && !isAdmin) {
       return;
     }
 
-    const payloadData = event.data || event.datos;
-    const payloadIsClient = event.isClient ?? event.esCliente;
+    const payloadData = event.data;
+    const payloadIsClient = event.isClient;
 
     const register$ = isAdmin
       ? this.authService.registerByAdmin(payloadData, payloadIsClient)

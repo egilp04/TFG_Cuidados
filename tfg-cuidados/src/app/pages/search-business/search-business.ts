@@ -24,10 +24,6 @@ import { BusinessModel, ServiceTimeResponse } from '../../models/Business-Servic
 import { BusinessService } from '../../services/business.service';
 import { Router } from '@angular/router';
 
-export interface BusinessUI extends BusinessModel {
-  selection?: ServiceTimeResponse;
-}
-
 /**
  * Component for searching, filtering, and hiring business services.
  * Also allows direct messaging to business profiles.
@@ -58,7 +54,7 @@ export default class SearchBusiness implements OnInit {
   private translate = inject(TranslateService);
   private router = inject(Router);
 
-  public allBusinesses = signal<BusinessUI[]>([]);
+  public allBusinesses = signal<BusinessModel[]>([]);
   public searchFilterItem = signal<string>('');
   public controlFilterItem = new FormControl('');
   public idSelectedService = signal<string | null>(null);
@@ -116,7 +112,7 @@ export default class SearchBusiness implements OnInit {
       .subscribe((data: BusinessModel[]) => {
         const targetId = this.idSelectedService()?.trim();
         
-        const dataWithSelection: BusinessUI[] = data
+        const dataWithSelection: BusinessModel[] = data
           .map((business) => {
             const filteredTimes = targetId
               ? business.Service_Time?.filter((sh) => sh.Service?.id_service === targetId)
@@ -147,7 +143,7 @@ export default class SearchBusiness implements OnInit {
    * Prevents duplicate active contracts for the same service schedule.
    * @param business The selected business containing the user's service selection.
    */
-  toHire(business: BusinessUI) {
+  toHire(business: BusinessModel) {
     const user = this.authService.currentUser();
     if (!user) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.LOGIN_REQUIRED').subscribe((res) => {
@@ -227,7 +223,7 @@ export default class SearchBusiness implements OnInit {
    * Opens the messaging modal to send a direct message to the selected business.
    * @param business The business recipient of the message.
    */
-  async sendMessage(business: BusinessUI) {
+  async sendMessage(business: BusinessModel) {
     const user = this.authService.currentUser();
     if (!user) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.LOGIN_MSG_REQUIRED').subscribe((res) => {
