@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
-  FormGroup,
   Validators,
   ReactiveFormsModule,
   FormControl,
@@ -15,6 +14,10 @@ import { ButtonComponent } from '../../components/button/button';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { MessageService } from '../../services/message-service';
 
+/**
+ * Component for the public contact form.
+ * Uses EmailJS to send inquiries directly to the administration.
+ */
 @Component({
   selector: 'app-contact',
   standalone: true,
@@ -34,28 +37,38 @@ export default class Contact {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
 
-  contactForm = this.fb.group({
+  public contactForm = this.fb.group({
     username: this.fb.control<string>('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]),
     email: this.fb.control<string>('', [Validators.required, Validators.email]),
     topic: this.fb.control<string>('', [Validators.required, Validators.minLength(6)]),
     message: this.fb.control<string>('', [Validators.required, Validators.minLength(6)]),
   });
 
+  /**
+   * Helper to retrieve a form control by name with proper typing.
+   */
   getCtrl(name: string): FormControl {
     return this.contactForm.get(name) as FormControl;
   }
-  async toContactFunction() {
+
+  /**
+   * Validates the form and sends the email via EmailJS.
+   * Handles UI states (loading/disabled) and feedback messages.
+   */
+  async submitContactForm(): Promise<void> {
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
       return;
     }
 
+    const formValue = this.contactForm.getRawValue();
     const templateParams = {
-      username: this.contactForm.value.username,
-      email: this.contactForm.value.email,
-      topic: this.contactForm.value.topic,
-      message: this.contactForm.value.message,
+      username: formValue.username,
+      email: formValue.email,
+      topic: formValue.topic,
+      message: formValue.message,
     };
+
     this.contactForm.disable();
 
     try {
@@ -65,13 +78,14 @@ export default class Contact {
         templateParams,
         'lXKk2y0Z41TMBq3NO',
       );
-      const msg = await lastValueFrom(this.translate.get('MESSAGES.SUCCESS.CONTACT'));
-      this.messageService.showMessage(msg, 'success');
+
+      const successMsg = await lastValueFrom(this.translate.get('MESSAGES.SUCCESS.CONTACT'));
+      this.messageService.showMessage(successMsg, 'success');
       this.contactForm.reset();
     } catch (error) {
-      console.error('Error:', error);
-      const msg = await lastValueFrom(this.translate.get('MESSAGES.ERROR.CONTACT'));
-      this.messageService.showMessage(msg, 'error');
+      console.error('EmailJS Error:', error);
+      const errorMsg = await lastValueFrom(this.translate.get('MESSAGES.ERROR.CONTACT'));
+      this.messageService.showMessage(errorMsg, 'error');
     } finally {
       this.contactForm.enable();
     }

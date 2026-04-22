@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { Behaviortopic, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   ContractStats,
   EstadoContratoResponse,
@@ -16,18 +16,18 @@ import {
 })
 export class AnalyticsService {
   private supabase = inject(SupabaseService).getClient();
-  private _totalAppUsers$ = new Behaviortopic<number>(0);
-  private _monthlyRegisters$ = new Behaviortopic<{ labels: Date[]; data: number[] }>({
+  private _totalAppUsers$ = new BehaviorSubject<number>(0);
+  private _monthlyRegisters$ = new BehaviorSubject<{ labels: Date[]; data: number[] }>({
     labels: [],
     data: [],
   });
 
-  private _contractsAmountData$ = new Behaviortopic<ContractStats>({
+  private _contractsAmountData$ = new BehaviorSubject<ContractStats>({
     activeContract: 0,
     cancelContract: 0,
   });
 
-  private _servicesStats$ = new Behaviortopic<{
+  private _servicesStats$ = new BehaviorSubject<{
     labels: string[];
     demand: number[];
     supply: number[];

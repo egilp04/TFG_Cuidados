@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { Behaviortopic, from, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Service_Time_Model } from '../models/Service_Time_Model';
 import { ServiceTimeJoined } from '../models/Service_Time_Service_Model';
@@ -14,7 +14,7 @@ import { ServiceTimeJoined } from '../models/Service_Time_Service_Model';
 })
 export class ServiceTimeService {
   private supabase = inject(SupabaseService).getClient();
-  private serviceTimeList$ = new Behaviortopic<ServiceTimeJoined[]>([]);
+  private serviceTimeList$ = new BehaviorSubject<ServiceTimeJoined[]>([]);
   private currentIdBusiness: string | null = null;
 
   /**

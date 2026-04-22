@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { Behaviortopic, from, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, from, Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { TimeModel } from '../models/TimeModel';
 
@@ -15,7 +15,7 @@ export class TimeService {
   private supabaseService = inject(SupabaseService);
   private clientSupaBase = this.supabaseService.getClient();
 
-  private timesList$ = new Behaviortopic<TimeModel[]>([]);
+  private timesList$ = new BehaviorSubject<TimeModel[]>([]);
 
   constructor() {
     this.initRealtime();

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { Observable, Behaviortopic } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { BusinessModel, BusinessSupabaseJoinModel } from '../models/Bussiness-Service';
 
 /**
@@ -11,7 +11,7 @@ import { BusinessModel, BusinessSupabaseJoinModel } from '../models/Bussiness-Se
 @Injectable({ providedIn: 'root' })
 export class BusinessService {
   private supabase = inject(SupabaseService).getClient();
-  private businessesList$ = new Behaviortopic<BusinessModel[]>([]);
+  private businessesList$ = new BehaviorSubject<BusinessModel[]>([]);
 
   constructor() {
     this.initRealtime();

@@ -12,7 +12,7 @@
 
   <form
     [formGroup]="contactForm"
-    (ngSubmit)="toContactFunction()"
+    (ngSubmit)="submitContactForm()"
     class="contact-form"
     [attr.aria-label]="'CONTACT.ACCESSIBILITY.FORM_LABEL' | translate"
   >
@@ -49,7 +49,7 @@
     <div class="contact-form-divs">
       <app-inputs
         name="topic"
-        [label]="'CONTACT.FORM.topic' | translate"
+        [label]="'CONTACT.FORM.TOPIC' | translate"
         [control]="getCtrl('topic')"
         class="w-full"
         [attr.aria-invalid]="getCtrl('topic').invalid && getCtrl('topic').touched"
@@ -57,7 +57,7 @@
 
       @if (getCtrl('topic').invalid && getCtrl('topic').touched) {
         <span class="contact-form-error" role="alert">
-          {{ 'CONTACT.ERRORS.topic' | translate }}
+          {{ 'CONTACT.ERRORS.TOPIC' | translate }}
         </span>
       }
     </div>

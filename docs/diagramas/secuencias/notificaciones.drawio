@@ -97,7 +97,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="MnliGZgRFG7or_oAga0--25" value="5. Actualiza Behaviortopic" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="MnliGZgRFG7or_oAga0--6" target="MnliGZgRFG7or_oAga0--6">
+        <mxCell id="MnliGZgRFG7or_oAga0--25" value="5. Actualiza BehaviorSubject" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="MnliGZgRFG7or_oAga0--6" target="MnliGZgRFG7or_oAga0--6">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1077" y="544" />

@@ -19,32 +19,33 @@
       name="time"
       [label]="'MANAGEMENT_SCHEDULES.FORM.START_TIME' | translate"
       type="time"
-      [control]="getCtrl('hora')"
+      [control]="getCtrl('time')"
       step="1800"
       [errorMessage]="
-        getCtrl('hora').invalid && getCtrl('hora').touched
+        getCtrl('time').invalid && getCtrl('time').touched
           ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
           : ''
       "
     >
     </app-inputs>
+
     <div class="management-time-global-day-week">
-      <label for="dia-select" class="management-time-global-day-label">
+      <label for="day-select" class="management-time-global-day-label">
         {{ 'MANAGEMENT_SCHEDULES.FORM.DAY_LABEL' | translate }}
       </label>
       <div class="relative w-full">
         <select
-          id="dia-select"
-          name="dia"
-          [formControl]="getCtrl('dia')"
+          id="day-select"
+          name="day"
+          [formControl]="getCtrl('day')"
           class="management-time-global-select"
-          [attr.aria-invalid]="getCtrl('dia').invalid && getCtrl('dia').touched"
+          [attr.aria-invalid]="getCtrl('day').invalid && getCtrl('day').touched"
         >
           <option value="" disabled selected>
             {{ 'MANAGEMENT_SCHEDULES.FORM.SELECT_DAY' | translate }}
           </option>
 
-          @for (day of week_days; track day.valor) {
+          @for (day of weekDaysList; track day.valor) {
             <option [value]="day.valor" class="register-form-options">
               {{ day.label | translate }}
             </option>
@@ -60,7 +61,7 @@
         (isEditing ? 'MANAGEMENT_SCHEDULES.FORM.SAVE' : 'MANAGEMENT_SCHEDULES.FORM.ADD') | translate
       "
       variant="primary"
-      (click)="onSave()"
+      (click)="saveTime()"
       [disabled]="isLoading()"
       [attr.aria-label]="
         (isEditing
@@ -97,25 +98,25 @@
     class="mat-elevation-z2 w-full"
     [attr.aria-label]="'MANAGEMENT_SCHEDULES.LIST.TITLE' | translate"
   >
-    <ng-container matColumnDef="hora">
+    <ng-container matColumnDef="time">
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SCHEDULES.TABLE.TIME' | translate }}
       </th>
-      <td mat-cell *matCellDef="let horario" class="text-label management-global-text">
-        {{ horario.hora }}
+      <td mat-cell *matCellDef="let timeSlot" class="text-label management-global-text">
+        {{ timeSlot.time }}
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="dia">
+    <ng-container matColumnDef="day">
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SCHEDULES.TABLE.DAY' | translate }}
       </th>
-      <td mat-cell *matCellDef="let horario" class="text-label management-global-text">
-        {{ days_translate[horario.dia_semana] | translate }}
+      <td mat-cell *matCellDef="let timeSlot" class="text-label management-global-text">
+        {{ daysTranslationMap[timeSlot.week_day] | translate }}
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="acciones">
+    <ng-container matColumnDef="actions">
       <th
         mat-header-cell
         *matHeaderCellDef
@@ -126,33 +127,33 @@
           'MANAGEMENT_SCHEDULES.ACCESSIBILITY.ACTIONS_COL' | translate
         }}</span>
       </th>
-      <td mat-cell *matCellDef="let horario" class="text-label management-global-text">
+      <td mat-cell *matCellDef="let timeSlot" class="text-label management-global-text">
         <div class="management-time-global-actions">
           <app-button
             [label]="'MANAGEMENT_SCHEDULES.TABLE.EDIT' | translate"
             variant="primary"
-            (click)="onEdit(horario)"
+            (click)="editTime(timeSlot)"
             [disabled]="isLoading()"
             [attr.aria-label]="
               ('MANAGEMENT_SCHEDULES.TABLE.EDIT' | translate) +
               ': ' +
-              (days_translate[horario.dia_semana] | translate) +
+              (daysTranslationMap[timeSlot.week_day] | translate) +
               ' ' +
-              horario.hora
+              timeSlot.time
             "
           >
           </app-button>
           <app-button
             [label]="'MANAGEMENT_SCHEDULES.TABLE.DELETE' | translate"
             variant="secondary"
-            (click)="onDelete(horario.id_horario!)"
+            (click)="deleteTime(timeSlot.id_time!)"
             [disabled]="isLoading()"
             [attr.aria-label]="
               ('MANAGEMENT_SCHEDULES.TABLE.DELETE' | translate) +
               ': ' +
-              (days_translate[horario.dia_semana] | translate) +
+              (daysTranslationMap[timeSlot.week_day] | translate) +
               ' ' +
-              horario.hora
+              timeSlot.time
             "
           >
           </app-button>

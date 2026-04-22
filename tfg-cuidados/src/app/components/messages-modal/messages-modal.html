@@ -3,7 +3,7 @@
   role="dialog"
   aria-modal="true"
   [attr.aria-label]="
-    (data.mode === 'escribir' ? 'MESSAGES_MODAL.TITLE_WRITE' : 'MESSAGES_MODAL.TITLE_VIEW')
+    (data.mode === 'writeMessage' ? 'MESSAGES_MODAL.TITLE_WRITE' : 'MESSAGES_MODAL.TITLE_VIEW')
       | translate
   "
 >
@@ -18,7 +18,7 @@
   </header>
 
   <main class="message-modal-form-container">
-    @if (data.mode == 'escribir') {
+    @if (data.mode === 'writeMessage') {
       <app-inputs
         name="receiver"
         [label]="'MESSAGES_MODAL.LABELS.TO' | translate"
@@ -28,7 +28,7 @@
       </app-inputs>
       <app-inputs
         name="topic"
-        [label]="'MESSAGES_MODAL.LABELS.topic' | translate"
+        [label]="'MESSAGES_MODAL.LABELS.TOPIC' | translate"
         [control]="getCtrl('topic')"
         type="text"
       >
@@ -50,7 +50,7 @@
       </app-inputs>
       <app-inputs
         name="topic"
-        [label]="'MESSAGES_MODAL.LABELS.topic' | translate"
+        [label]="'MESSAGES_MODAL.LABELS.TOPIC' | translate"
         [control]="getCtrl('topic')"
         type="text"
       >
@@ -67,18 +67,24 @@
         class="message-modal-textarea"
         [placeholder]="'MESSAGES_MODAL.PLACEHOLDERS.WRITE_HERE' | translate"
         [attr.aria-required]="true"
+        [attr.aria-invalid]="getCtrl('content').invalid && getCtrl('content').touched"
       >
       </textarea>
+      @if (getCtrl('content').invalid && getCtrl('content').touched) {
+        <span class="text-xs text-red-500 mt-1">
+          {{ 'MESSAGES_MODAL.ERRORS.CONTENT_REQUIRED' | translate }}
+        </span>
+      }
     </div>
 
-    @if (data.mode == 'escribir') {
+    @if (data.mode === 'writeMessage') {
       <div class="flex justify-center mt-4">
         <app-button
           [label]="'MESSAGES_MODAL.BTN.SEND' | translate"
           variant="primary"
           size="lg"
-          [disabled]="this.messageForm.invalid"
-          (onClick)="sendMessage()"
+          [disabled]="messageForm.invalid"
+          (click)="sendMessage()"
           [attr.aria-label]="'MESSAGES_MODAL.ACCESSIBILITY.SEND_DESC' | translate"
         >
         </app-button>

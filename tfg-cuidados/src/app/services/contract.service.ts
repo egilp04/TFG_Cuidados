@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { AuthService } from './auth.service';
 import { ContractDetail, ContractModel, ContractSupabaseJoined } from '../models/ContractModel';
-import { from, Observable, throwError, Behaviortopic } from 'rxjs';
+import { from, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ComunicationService } from './comunication.service';
 
@@ -16,7 +16,7 @@ import { ComunicationService } from './comunication.service';
 export class ContractService {
   private supabase = inject(SupabaseService).getClient();
   private authService = inject(AuthService);
-  private contractsList$ = new Behaviortopic<ContractDetail[]>([]);
+  private contractsList$ = new BehaviorSubject<ContractDetail[]>([]);
   private comunicationService = inject(ComunicationService);
 
   private readonly CONTRACT_SELECT = `
