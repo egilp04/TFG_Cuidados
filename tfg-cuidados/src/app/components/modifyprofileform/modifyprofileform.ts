@@ -121,7 +121,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
         });
 
         if (this.userRole === 'business') {
-          this.profileForm.patchValue({ description: this.targetUser.description || this.targetUser.descripcion || '' });
+          this.profileForm.patchValue({ description: this.targetUser.description || '' });
         } else {
           this.profileForm.patchValue({
             surname1: this.targetUser.surname1,

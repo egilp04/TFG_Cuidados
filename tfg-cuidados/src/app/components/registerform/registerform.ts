@@ -127,7 +127,7 @@ export class Registerform implements OnInit, OnChanges {
           surname1: (formValue.surname1 || '').trim(),
           surname2: (formValue.surname2 || '').trim(),
           dni: (formValue.dni || '').trim(),
-          birth_date: formValue.birthDate ?? undefined,
+          birthdate: formValue.birthDate ?? undefined,
           phone: (formValue.phone || '').trim(),
           address: (formValue.address || '').trim(),
           city: (formValue.city || '').trim(),

@@ -12,6 +12,6 @@ export interface UserProfileModel {
 }
 
 export interface FormSubmitEvent {
-  dts: UserProfileModel;
+  data: UserProfileModel;
   rol: string;
 }

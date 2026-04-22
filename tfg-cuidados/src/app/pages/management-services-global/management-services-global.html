@@ -30,11 +30,11 @@
     </app-inputs>
 
     <app-inputs
-      name="service_type"
+      name="type_service"
       [label]="'MANAGEMENT_SERVICES.FORM.TYPE' | translate"
-      [control]="getCtrl('service_type')"
+      [control]="getCtrl('type_service')"
       [errorMessage]="
-        getCtrl('service_type').invalid && getCtrl('service_type').touched
+        getCtrl('type_service').invalid && getCtrl('type_service').touched
           ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
           : ''
       "
@@ -110,12 +110,12 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="service_type">
+    <ng-container matColumnDef="type_service">
       <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
         {{ 'MANAGEMENT_SERVICES.TABLE.TYPE' | translate }}
       </th>
       <td mat-cell *matCellDef="let service" class="management-global-text text-label">
-        {{ service.service_type }}
+        {{ service.type_service }}
       </td>
     </ng-container>
 

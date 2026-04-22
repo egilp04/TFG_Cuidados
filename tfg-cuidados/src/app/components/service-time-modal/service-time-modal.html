@@ -46,7 +46,7 @@
 
           @for (s of services$ | async; track s.id_service) {
             <option [value]="s.id_service" class="register-form-options">
-              {{ s.name }} - {{ s.service_type }}
+              {{ s.name }} - {{ s.type_service }}
             </option>
           } @empty {
             <option disabled>

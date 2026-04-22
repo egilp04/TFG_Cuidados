@@ -69,12 +69,12 @@ export default class ManagementServicesGlobal implements OnInit {
 
   public serviceForm = this.fb.group({
     name: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
-    service_type: this.fb.control<string>('', [Validators.required]),
+    type_service: this.fb.control<string>('', [Validators.required]),
     description: this.fb.control<string>('', [Validators.required]),
   });
 
   public dataSource = new MatTableDataSource<ServiceModel>([]);
-  public displayedColumns: string[] = ['name', 'service_type', 'description', 'actions'];
+  public displayedColumns: string[] = ['name', 'type_service', 'description', 'actions'];
 
   ngOnInit(): void {
     this.loadServices();
@@ -108,7 +108,7 @@ export default class ManagementServicesGlobal implements OnInit {
 
     const rawValue = this.serviceForm.getRawValue();
     const name = (rawValue.name ?? '').trim();
-    const serviceType = (rawValue.service_type ?? '').trim();
+    const serviceType = (rawValue.type_service ?? '').trim();
     const description = (rawValue.description ?? '').trim();
 
     const user = this.authService.currentUser();
@@ -126,7 +126,7 @@ export default class ManagementServicesGlobal implements OnInit {
 
           const payload: ServiceModel = {
             name,
-            service_type: serviceType,
+            type_service: serviceType,
             description,
             id_admin: user.id_user,
           };
@@ -171,7 +171,7 @@ export default class ManagementServicesGlobal implements OnInit {
     this.currentServiceId = service.id_service!;
     this.serviceForm.patchValue({
       name: service.name,
-      service_type: service.service_type,
+      type_service: service.type_service,
       description: service.description,
     });
     this.cd.markForCheck();

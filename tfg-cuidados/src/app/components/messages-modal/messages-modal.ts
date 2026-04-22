@@ -112,8 +112,8 @@ export class MessagesModal implements OnInit {
             id_receiver: foundUser.id_user,
             topic: this.messageForm.value.topic ?? '',
             content: this.messageForm.value.content ?? '',
-            communication_type: 'message' as const,
-            is_read: false,
+            type_comunication: 'message' as const, 
+            read: false,                        
           };
 
           return this.comunicationService.insertComunication(newCommunication);
