@@ -10,4 +10,3 @@ export function getHomeRouteByRole(rol?: string): string {
       return '/';
   }
 }
-
