@@ -3,10 +3,11 @@ import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, from, Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { TimeModel } from '../models/TimeModel';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
- * Master service for time and schedule management.
- * Implements integrity validations to avoid scheduling collisions.
+ * Servicio maestro para la gestión de horarios y programación.
+ * Implementa validaciones de integridad para evitar colisiones de horarios.
  */
 @Injectable({
   providedIn: 'root',
@@ -17,12 +18,14 @@ export class TimeService {
 
   private timesList$ = new BehaviorSubject<TimeModel[]>([]);
 
+  private translate = inject(TranslateService);
+
   constructor() {
     this.initRealtime();
   }
 
   /**
-   * Returns an observable with the list of managed schedules.
+   * Retorna un observable con la lista de horarios gestionados.
    */
   getTimesObservable(): Observable<TimeModel[]> {
     this.refreshTimes();
@@ -30,7 +33,7 @@ export class TimeService {
   }
 
   /**
-   * Configures real-time listening for the Time table.
+   * Configura la escucha en tiempo real de la tabla Time.
    */
   private initRealtime() {
     this.clientSupaBase
@@ -42,7 +45,7 @@ export class TimeService {
   }
 
   /**
-   * Retrieves schedules organized by week day and time from the server.
+   * Recupera horarios organizados por día de la semana y hora desde el servidor.
    */
   private async refreshTimes() {
     const { data, error } = await this.clientSupaBase
@@ -57,43 +60,45 @@ export class TimeService {
   }
 
   /**
-   * Inserts a new schedule record into the catalog.
+   * Inserta un nuevo registro de horario en el catálogo.
    */
   insertTime(newTime: TimeModel): Observable<void> {
     return from(this.clientSupaBase.from('Time').insert(newTime)).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
-      catchError((err) => throwError(() => new Error(err.message || 'Error inserting time'))),
+      catchError((err) => throwError(() => new Error(err.message || 'Error al insertar horario'))),
     );
   }
 
   /**
-   * Deletes a specific schedule record by its unique identifier.
+   * Elimina un registro de horario específico por su identificador único.
    */
   deleteTime(id: string): Observable<void> {
     return from(this.clientSupaBase.from('Time').delete().eq('id_time', id)).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
-      catchError((err) => throwError(() => new Error(err.message || 'Error deleting time'))),
+      catchError((err) => throwError(() => new Error(err.message || 'Error al eliminar horario'))),
     );
   }
 
   /**
-   * Updates an existing schedule record with new values.
+   * Actualiza un registro de horario existente con nuevos valores.
    */
   updateTime(id: string, changes: Partial<TimeModel>): Observable<void> {
     return from(this.clientSupaBase.from('Time').update(changes).eq('id_time', id)).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
-      catchError((err) => throwError(() => new Error(err.message || 'Error updating time'))),
+      catchError((err) =>
+        throwError(() => new Error(err.message || 'Error al actualizar horario')),
+      ),
     );
   }
 
   /**
-   * Checks for logical uniqueness of a time slot (day and hour combination).
+   * Verifica la singularidad lógica de una franja horaria (combinación de día y hora).
    */
   existsTime(day: string, time: string, idToExclude?: string): Observable<boolean> {
     let query = this.clientSupaBase

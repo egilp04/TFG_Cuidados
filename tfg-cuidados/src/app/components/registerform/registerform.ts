@@ -30,8 +30,8 @@ import { of, timer, Observable } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 
 /**
- * Component handling the dynamic registration form.
- * Toggles fields and validations based on the selected profile type (Client or Business).
+ * Componente que maneja el formulario de registro dinámico.
+ * Alterna campos y validaciones basándose en el tipo de perfil seleccionado (Cliente o Negocio).
  */
 @Component({
   selector: 'app-registerform',
@@ -73,7 +73,7 @@ export class Registerform implements OnInit, OnChanges {
       email: this.fb.control<string>(
         '',
         [Validators.required, Validators.email],
-        [this.validatorEmailRegistered()]
+        [this.validatorEmailRegistered()],
       ),
       address: this.fb.control<string>('', Validators.required),
       city: this.fb.control<string>('', Validators.required),
@@ -86,17 +86,17 @@ export class Registerform implements OnInit, OnChanges {
         Validators.required,
         Validators.minLength(6),
         Validators.pattern(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/,
         ),
       ]),
       repassword: this.fb.control<string>('', [
         Validators.required,
         Validators.pattern(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/,
         ),
       ]),
     },
-    { validators: [this.passwordMatchValidator] }
+    { validators: [this.passwordMatchValidator] },
   );
 
   ngOnInit(): void {
@@ -111,7 +111,7 @@ export class Registerform implements OnInit, OnChanges {
   }
 
   /**
-   * Processes the form submission, maps data to the schema, and emits to parent.
+   * Procesa el envío del formulario, mapea datos al esquema y emite al padre.
    */
   onSubmit(): void {
     if (this.registerForm.valid) {
@@ -156,20 +156,21 @@ export class Registerform implements OnInit, OnChanges {
   }
 
   /**
-   * Retrieves a specific form control by its name.
+   * Obtiene un control de formulario específico por su nombre.
    */
   getCtrl(name: string): FormControl {
     return this.registerForm.get(name) as FormControl;
   }
 
   /**
-   * Retrieves the translated error message for a specific control.
+   * Obtiene el mensaje de error traducido para un control específico.
    */
   getErrorMessage(controlName: string): string {
     const control = this.registerForm.get(controlName);
     if (!control || (!control.touched && !control.dirty)) return '';
 
-    const errors = control.errors || (controlName === 'repassword' ? this.registerForm.errors : null);
+    const errors =
+      control.errors || (controlName === 'repassword' ? this.registerForm.errors : null);
     if (!errors) return '';
 
     const errorMessages: Record<string, string> = {
@@ -195,7 +196,7 @@ export class Registerform implements OnInit, OnChanges {
   }
 
   /**
-   * Maps pattern validation errors to specific translation keys.
+   * Mapea errores de validación de patrón a claves de traducción específicas.
    */
   private getPatternMessage(controlName: string): string {
     const patterns: Record<string, string> = {
@@ -208,7 +209,7 @@ export class Registerform implements OnInit, OnChanges {
   }
 
   /**
-   * Sets and clears dynamic validators based on the current profile type.
+   * Establece y borra validadores dinámicamente basándose en el tipo de perfil actual.
    */
   private checkValidators(): void {
     const clientFields = ['surname1', 'surname2', 'birthDate', 'dni', 'name'];
@@ -224,7 +225,7 @@ export class Registerform implements OnInit, OnChanges {
   }
 
   /**
-   * Applies specific validators to a list of form fields.
+   * Aplica validadores específicos a una lista de campos de formulario.
    */
   private setValidators(fields: string[]): void {
     fields.forEach((f) => {
@@ -247,7 +248,7 @@ export class Registerform implements OnInit, OnChanges {
   }
 
   /**
-   * Clears validators from a list of form fields.
+   * Borra validadores de una lista de campos de formulario.
    */
   private clearValidators(fields: string[]): void {
     fields.forEach((f) => {
@@ -258,7 +259,7 @@ export class Registerform implements OnInit, OnChanges {
   }
 
   /**
-   * Custom validator to ensure passwords match.
+   * Validador personalizado para asegurar que las contraseñas coincidan.
    */
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
@@ -271,7 +272,7 @@ export class Registerform implements OnInit, OnChanges {
   }
 
   /**
-   * Custom validator to ensure the user is at least 18 years old.
+   * Validador personalizado para asegurar que el usuario tenga al menos 18 años de edad.
    */
   isAdult(control: AbstractControl): ValidationErrors | null {
     const birthDateValue = control.value;
@@ -291,7 +292,7 @@ export class Registerform implements OnInit, OnChanges {
   }
 
   /**
-   * Custom validator for Spanish DNI (National Identity Document).
+   * Validador personalizado para documento de identidad nacional español (DNI).
    */
   dniValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
@@ -314,7 +315,7 @@ export class Registerform implements OnInit, OnChanges {
   }
 
   /**
-   * Custom validator for Spanish CIF (Tax Identification Code).
+   * Validador personalizado para código de identificación fiscal español (CIF).
    */
   cifValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
@@ -322,7 +323,7 @@ export class Registerform implements OnInit, OnChanges {
 
     const cif = value.toUpperCase();
     const cifRegex = /^([ABCDEFGHJKLMNPQRSUVW])(\d{7})([0-9A-J])$/;
-    
+
     if (!cifRegex.test(cif)) {
       return { invalidCifFormat: true };
     }
@@ -368,7 +369,7 @@ export class Registerform implements OnInit, OnChanges {
   }
 
   /**
-   * Async validator that checks if an email is already registered in the database.
+   * Validador asincrónico que verifica si un correo ya está registrado en la base de datos.
    */
   validatorEmailRegistered(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
@@ -377,7 +378,7 @@ export class Registerform implements OnInit, OnChanges {
       return timer(500).pipe(
         switchMap(() => this.authService.checkEmailExists(control.value)),
         map((exists: boolean) => (exists ? { emailTaken: true } : null)),
-        catchError(() => of(null))
+        catchError(() => of(null)),
       );
     };
   }

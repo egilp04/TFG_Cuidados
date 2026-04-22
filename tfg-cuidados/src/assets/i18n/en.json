@@ -935,10 +935,37 @@
   "DIRECTORY": {
     "TITLE": "Service Directory",
     "SUBTITLE": "To hire a service, choose an option and you will see the business offers"
-  },"INPUTS": {
+  },
+  "INPUTS": {
     "ACCESSIBILITY": {
       "HIDE_PASSWORD": "Show password",
       "SHOW_PASSWORD": "Hide password"
     }
-}
+  },
+  "ERRORS": {
+    "ROLES": {
+      "CLIENT": "client",
+      "BUSINESS": "business"
+    },
+    "AUTH": {
+      "ERRORS": {
+        "EMAIL_ALREADY_REGISTERED": "This email is already registered on the platform.",
+        "INVALID_LOGIN_CREDENTIALS": "The login credentials are incorrect.",
+        "USER_NOT_FOUND": "User not found in the system.",
+        "EMAIL_TAKEN": "This email is already taken.",
+        "TECHNICAL_ERROR": "Technical error while verifying the email.",
+        "EMAIL_EXISTS": "This email is already registered.",
+        "EMAIL_VALIDATION": "There was an error while trying to validate the email."
+      }
+    },
+    "NOTIFICATIONS": {
+      "ADMIN": {
+        "NEW_REGISTER_TITLE": "New Registration in CuidaDos",
+        "NEW_REGISTER_BODY": "User {{email}} has registered as {{rol}}."
+      }
+    },
+    "COMUNICATION": {
+      "INVALID_TYPE": "Invalid communication type"
+    }
+  }
 }

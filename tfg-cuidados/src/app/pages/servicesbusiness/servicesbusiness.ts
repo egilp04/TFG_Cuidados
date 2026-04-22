@@ -22,7 +22,7 @@ import { ServiceTimeJoined } from '../../models/Service_Time_Service_Model';
 import { ResponsiveSize } from '../../services/responsive-size';
 
 /**
- * Component for managing the service and time offerings of a business.
+ * Componente para gestionar las ofertas de servicios y horarios de un negocio.
  */
 @Component({
   selector: 'app-management-servicetime',
@@ -48,19 +48,11 @@ export default class Servicesbusiness implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
   private responsive = inject(ResponsiveSize);
-  
+
   public isLoading = signal(false);
 
   dataSource = new MatTableDataSource<ServiceTimeJoined>([]);
-  displayedColumns: string[] = [
-    'name',
-    'price',
-    'type',
-    'time',
-    'day',
-    'description',
-    'actions',
-  ];
+  displayedColumns: string[] = ['name', 'price', 'type', 'time', 'day', 'description', 'actions'];
 
   ngOnInit() {
     this.loadServices();
@@ -80,11 +72,12 @@ export default class Servicesbusiness implements OnInit {
   }
 
   async openModal(element?: ServiceTimeJoined) {
-    const { ServiceTimeModal } = await import('../../components/service-time-modal/service-time-modal');
+    const { ServiceTimeModal } =
+      await import('../../components/service-time-modal/service-time-modal');
     const dialogRef = this.dialog.open(ServiceTimeModal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-      maxHeight: '86vh',
+      maxHeight: '90vh',
       data: element || null,
     });
 
@@ -106,7 +99,7 @@ export default class Servicesbusiness implements OnInit {
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-      maxHeight: '86vh',
+      maxHeight: '90vh',
       data: { mode: 'deleteService' },
     });
 
@@ -133,7 +126,7 @@ export default class Servicesbusiness implements OnInit {
             .pipe(map((text) => ({ type: 'success' as const, text }))),
         ),
         catchError((err) => {
-          console.error('Error deleting service time:', err);
+          console.error('Error eliminando tiempo de servicio:', err);
           return this.translate
             .get('SERVICES_BUSINESS.MESSAGES.DELETE_ERROR')
             .pipe(map((text) => ({ type: 'error' as const, text })));

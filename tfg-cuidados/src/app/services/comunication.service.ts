@@ -4,10 +4,11 @@ import { from, Observable, throwError, BehaviorSubject, of, forkJoin } from 'rxj
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { ComunicationModel } from '../models/ComunicationModel';
 import { AuthService } from './auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
- * Central communication service. Handles the bidirectional flow of messages
- * and system notifications using reactive programming.
+ * Servicio de comunicación central. Gestiona el flujo bidireccional de mensajes
+ * y notificaciones del sistema utilizando programación reactiva.
  */
 @Injectable({
   providedIn: 'root',
@@ -18,13 +19,14 @@ export class ComunicationService {
   private readonly validTypeComunication = ['mensaje', 'notificacion'] as const;
   private messagesList$ = new BehaviorSubject<ComunicationModel[]>([]);
   private notificationsList$ = new BehaviorSubject<ComunicationModel[]>([]);
+  private translate = inject(TranslateService);
 
   constructor() {
     this.initRealtime();
   }
 
   /**
-   * Returns an observable of the current user's messages.
+   * Retorna un observable de los mensajes del usuario actual.
    */
   getMessagesObservable(): Observable<ComunicationModel[]> {
     this.refreshMessages();
@@ -32,7 +34,7 @@ export class ComunicationService {
   }
 
   /**
-   * Returns an observable of the current user's notifications.
+   * Retorna un observable de las notificaciones del usuario actual.
    */
   getNotificationsObservable(): Observable<ComunicationModel[]> {
     this.refreshNotificacions();
@@ -40,7 +42,7 @@ export class ComunicationService {
   }
 
   /**
-   * Calculates the number of unread messages for the current user.
+   * Calcula el número de mensajes no leídos del usuario actual.
    */
   getUnreadMessagesCount(): Observable<number> {
     return this.messagesList$.asObservable().pipe(
@@ -53,7 +55,7 @@ export class ComunicationService {
   }
 
   /**
-   * Calculates the number of unread notifications for the current user.
+   * Calcula el número de notificaciones no leídas del usuario actual.
    */
   getUnreadNotificationsCount(): Observable<number> {
     return this.notificationsList$.asObservable().pipe(
@@ -64,7 +66,7 @@ export class ComunicationService {
   }
 
   /**
-   * Initializes real-time listening for the Comunication table.
+   * Inicializa la escucha en tiempo real de la tabla Comunication.
    */
   private initRealtime() {
     this.supabase
@@ -77,7 +79,7 @@ export class ComunicationService {
   }
 
   /**
-   * Synchronizes the message list from the database.
+   * Sincroniza la lista de mensajes desde la base de datos.
    */
   private async refreshMessages() {
     const user = this.authService.currentUser();
@@ -107,12 +109,12 @@ export class ComunicationService {
       });
       this.messagesList$.next(filteredMessages);
     } else {
-      console.error('Error fetching messages:', error);
+      console.error('Error al obtener mensajes:', error);
     }
   }
 
   /**
-   * Synchronizes the notification list from the database.
+   * Sincroniza la lista de notificaciones desde la base de datos.
    */
   private async refreshNotificacions() {
     const user = this.authService.currentUser();
@@ -134,11 +136,13 @@ export class ComunicationService {
   }
 
   /**
-   * Inserts a new communication record and generates a notification if it's a message.
+   * Inserta un nuevo registro de comunicación y genera una notificación si es un mensaje.
    */
   insertComunication(comunication: Omit<ComunicationModel, 'send_date'>): Observable<void> {
     if (!this.validTypeComunication.includes(comunication.type_comunication as any)) {
-      return throwError(() => new Error('Invalid type_comunication.'));
+      return throwError(
+        () => new Error(this.translate.instant('ERRORS.COMUNICATION.INVALID_TYPE')),
+      );
     }
     return from(this.supabase.from('Comunication').insert(comunication)).pipe(
       map(({ error }) => {
@@ -157,7 +161,7 @@ export class ComunicationService {
   }
 
   /**
-   * Updates an existing communication record.
+   * Actualiza un registro de comunicación existente.
    */
   updateComunication(id: string, changes: Partial<ComunicationModel>): Observable<void> {
     const currentMessages = this.messagesList$.getValue();
@@ -183,7 +187,7 @@ export class ComunicationService {
   }
 
   /**
-   * Performs a logical delete of a communication based on the active user role (sender/receiver).
+   * Realiza una eliminación lógica de una comunicación basada en el rol del usuario activo (remitente/destinatario).
    */
   deleteComunication(message: ComunicationModel): Observable<void> {
     const user = this.authService.currentUser();
@@ -229,7 +233,7 @@ export class ComunicationService {
   }
 
   /**
-   * Retrieves a single communication record by its unique identifier.
+   * Recupera un único registro de comunicación por su identificador único.
    */
   getMensajeId(idMessage: string): Observable<ComunicationModel> {
     return from(
@@ -244,7 +248,7 @@ export class ComunicationService {
   }
 
   /**
-   * Creates and inserts a notification record.
+   * Crea e inserta un registro de notificación.
    */
   private sendNotification(idReceiver: string, topic: string, content: string): Observable<void> {
     const notification = {
@@ -262,7 +266,7 @@ export class ComunicationService {
   }
 
   /**
-   * Sends a notification to all active administrators.
+   * Envía una notificación a todos los administradores activos.
    */
   notifyAdmins(topic: string, content: string): Observable<void> {
     return from(
@@ -287,21 +291,21 @@ export class ComunicationService {
         return forkJoin(notifications).pipe(map(() => void 0));
       }),
       catchError((err) => {
-        console.error('Error notifying admins', err);
+        console.error('Error al notificar administradores', err);
         return of(void 0);
       }),
     );
   }
 
   /**
-   * Sends a notification to a specific user.
+   * Envía una notificación a un usuario específico.
    */
   notifyUsers(idReceiverUser: string, topic: string, content: string): Observable<void> {
     return this.sendNotification(idReceiverUser, topic, content);
   }
 
   /**
-   * Force refreshes message and notification data.
+   * Actualiza forzadamente los datos de mensajes y notificaciones.
    */
   refreshUsersData() {
     this.refreshMessages();

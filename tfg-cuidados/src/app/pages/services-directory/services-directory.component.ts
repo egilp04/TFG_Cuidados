@@ -7,8 +7,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../components/button/button';
 
 /**
- * Component for displaying the directory of available services.
- * Allows users to navigate to businesses offering a specific service.
+ * Componente para mostrar el directorio de servicios disponibles.
+ * Permite a los usuarios navegar a negocios que ofrecen un servicio específico.
  */
 @Component({
   selector: 'app-services-directory',
@@ -26,8 +26,8 @@ export default class ServicesDirectoryComponent {
   });
 
   /**
-   * Navigates to the business search view filtered by the selected service.
-   * @param service The service model selected by the user.
+   * Navega a la vista de búsqueda de negocios filtrada por el servicio seleccionado.
+   * @param service El modelo de servicio seleccionado por el usuario.
    */
   showOffersByService(service: ServiceModel): void {
     this.router.navigate(['/search-business'], {

@@ -15,8 +15,8 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 
 /**
- * Component for handling user profile modifications.
- * Supports updating profile data and deleting/unsubscribing accounts.
+ * Componente para manejar las modificaciones del perfil de usuario.
+ * Soporta actualizar datos de perfil y eliminar/desuscribir cuentas.
  */
 @Component({
   selector: 'app-modify-profile',
@@ -57,7 +57,7 @@ export default class ModifyProfilePage implements OnInit {
   }
 
   /**
-   * Normalizes the user role string to match the English application schema.
+   * Normaliza la cadena de rol de usuario para que coincida con el esquema de aplicación en inglés.
    */
   private normalizeRole(role: string | undefined): 'client' | 'business' | 'administrator' {
     if (role === 'business') return 'business';
@@ -66,9 +66,9 @@ export default class ModifyProfilePage implements OnInit {
   }
 
   /**
-   * Submits the updated profile data to the backend.
-   * Updates authentication credentials if the email was changed by the currently active user.
-   * @param event The form submission event containing the new profile data.
+   * Envía los datos de perfil actualizados al servidor.
+   * Actualiza las credenciales de autenticación si el correo fue cambiado por el usuario actualmente activo.
+   * @param event El evento de envío del formulario que contiene los nuevos datos de perfil.
    */
   doUpdateProfile(event: FormSubmitEvent): void {
     const user = this.userToEdit();
@@ -108,7 +108,7 @@ export default class ModifyProfilePage implements OnInit {
           this.location.back();
         }),
         catchError((err: Error) => {
-          console.error('Error updating profile:', err);
+          console.error('Error actualizando perfil:', err);
           return this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_ERROR').pipe(
             tap((msg: string) => this.messageService.showMessage(msg, 'error')),
             switchMap(() => EMPTY),
@@ -119,8 +119,8 @@ export default class ModifyProfilePage implements OnInit {
   }
 
   /**
-   * Prompts the user for confirmation and deletes the account.
-   * Signs the user out if they are deleting their own account.
+   * Solicita confirmación del usuario y elimina la cuenta.
+   * Cierra la sesión del usuario si está eliminando su propia cuenta.
    */
   async unsubscribeUser(): Promise<void> {
     const user = this.userToEdit();
@@ -161,7 +161,7 @@ export default class ModifyProfilePage implements OnInit {
             : EMPTY,
         ),
         catchError((err: Error) => {
-          console.error('Error unsubscribing user:', err);
+          console.error('Error desuscribiendo usuario:', err);
           return this.translate
             .get('MODIFY_PROFILE.MESSAGES.DELETE_ERROR')
             .pipe(map((msg) => ({ msg, type: 'error' as const })));
@@ -175,7 +175,7 @@ export default class ModifyProfilePage implements OnInit {
   }
 
   /**
-   * Navigates back to the previous view in the history stack.
+   * Navega hacia atrás en el historial de navegación.
    */
   navigateBack(): void {
     this.location.back();

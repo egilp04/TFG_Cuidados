@@ -16,8 +16,8 @@ import { MessagesModalData } from '../../models/Message-Modal';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
 
 /**
- * Modal component for displaying or composing messages.
- * Handles user search by email to establish communication.
+ * Componente modal para mostrar o redactar mensajes.
+ * Maneja la búsqueda de usuarios por correo electrónico para establecer comunicación.
  */
 @Component({
   selector: 'app-messages-modal',
@@ -72,14 +72,14 @@ export class MessagesModal implements OnInit {
   }
 
   /**
-   * Helper to get a form control by name with type safety.
+   * Auxiliar para obtener un control de formulario por nombre con seguridad de tipo.
    */
   getCtrl(name: string): FormControl {
     return this.messageForm.get(name) as FormControl;
   }
 
   /**
-   * Orchestrates the process of finding the receiver and inserting the communication record.
+   * Orquesta el proceso de buscar el receptor e insertar el registro de comunicación.
    */
   sendMessage(): void {
     if (this.messageForm.invalid) {
@@ -112,8 +112,8 @@ export class MessagesModal implements OnInit {
             id_receiver: foundUser.id_user,
             topic: this.messageForm.value.topic ?? '',
             content: this.messageForm.value.content ?? '',
-            type_comunication: 'message' as const, 
-            read: false,                        
+            type_comunication: 'message' as const,
+            read: false,
           };
 
           return this.comunicationService.insertComunication(newCommunication);
@@ -135,7 +135,7 @@ export class MessagesModal implements OnInit {
               : this.translate.instant('MESSAGES_MODAL.FEEDBACK.SEND_ERROR');
 
           this.messageService.showMessage(msg, 'error');
-          console.error('Error sending message:', err);
+          console.error('Error enviando mensaje:', err);
           this.cd.markForCheck();
         },
       });

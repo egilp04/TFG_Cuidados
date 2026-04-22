@@ -19,8 +19,8 @@ import { EMPTY } from 'rxjs';
 import { FormSubmittedEvent } from '../../models/RegisterForm';
 
 /**
- * Component handling the user registration flow.
- * Supports both self-registration and administrator-driven account creation.
+ * Componente que maneja el flujo de registro de usuario.
+ * Soporta tanto auto-registro como creación de cuentas impulsada por administrador.
  */
 @Component({
   selector: 'app-register',
@@ -44,23 +44,23 @@ export default class Register implements OnInit {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => {
         this.determineProfileType();
       });
-      
+
     this.determineProfileType();
   }
 
   /**
-   * Evaluates the routing state to determine if the user is registering as a Client or Business.
+   * Evalúa el estado de enrutamiento para determinar si el usuario se registra como Cliente o Negocio.
    */
   private determineProfileType(): void {
     if (isPlatformBrowser(this.platformId)) {
       const state = history.state as { type?: string; tipo?: string };
       const profileType = state.type || state.tipo;
-      
+
       if (profileType) {
         this.isClientProfile = profileType !== 'business' && profileType !== 'empresa';
         this.cd.detectChanges();
@@ -69,9 +69,9 @@ export default class Register implements OnInit {
   }
 
   /**
-   * Processes the registration form submission.
-   * Delegates to specific authentication methods based on the active user's role.
-   * @param event Payload containing form data and profile type flag.
+   * Procesa el envío del formulario de registro.
+   * Delega a métodos de autenticación específicos según el rol del usuario activo.
+   * @param event Carga útil que contiene datos del formulario y bandera de tipo de perfil.
    */
   onRegister(event: FormSubmittedEvent): void {
     const user = this.authService.currentUser();
@@ -108,22 +108,23 @@ export default class Register implements OnInit {
         catchError((err: Error) => {
           console.error(err);
           const errorMessage = err.message || '';
-          const isEmailError = errorMessage === 'EMAIL_EXISTS' || 
-                               errorMessage.includes('registered') || 
-                               errorMessage.includes('registrado');
-                               
-          const key = isEmailError 
-            ? 'REGISTER.MESSAGES.ERROR_EMAIL' 
+          const isEmailError =
+            errorMessage === 'EMAIL_EXISTS' ||
+            errorMessage.includes('registered') ||
+            errorMessage.includes('registrado');
+
+          const key = isEmailError
+            ? 'REGISTER.MESSAGES.ERROR_EMAIL'
             : 'REGISTER.MESSAGES.ERROR_GENERIC';
-            
+
           return this.translate.get(key).pipe(
             tap((msg: string) => {
               this.messageService.showMessage(msg, 'error');
               this.cd.detectChanges();
             }),
-            switchMap(() => EMPTY)
+            switchMap(() => EMPTY),
           );
-        })
+        }),
       )
       .subscribe();
   }

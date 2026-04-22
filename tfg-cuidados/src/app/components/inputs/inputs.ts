@@ -5,9 +5,9 @@ import { LucideAngularModule } from 'lucide-angular';
 import { TranslateModule } from '@ngx-translate/core';
 
 /**
- * Reusable UI component for form inputs.
- * Supports text, email, password, date, time, and textarea types.
- * Includes built-in password visibility toggling and error message handling.
+ * Componente de interfaz de usuario reutilizable para entradas de formulario.
+ * Soporta tipos text, email, password, date, time y textarea.
+ * Incluye alternancia integrada de visibilidad de contraseña y manejo de mensajes de error.
  */
 @Component({
   selector: 'app-inputs',
@@ -22,7 +22,7 @@ export class Inputs {
   name = input.required<string>();
   control = input.required<FormControl>();
   errorMessage = input<string>('');
-  
+
   isPasswordVisible = signal(false);
 
   inputType = computed(() => {
@@ -33,7 +33,7 @@ export class Inputs {
   });
 
   /**
-   * Toggles the visibility state of the password field.
+   * Alterna el estado de visibilidad del campo de contraseña.
    */
   togglePasswordVisibility(): void {
     this.isPasswordVisible.update((value) => !value);

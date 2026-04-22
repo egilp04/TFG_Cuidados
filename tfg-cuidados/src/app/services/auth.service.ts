@@ -7,16 +7,18 @@ import { createClient, AuthResponse, UserResponse } from '@supabase/supabase-js'
 import { ComunicationService } from './comunication.service';
 import { environment } from '../../environments/environment';
 import { AuthUserModel, PreparacionRegistro, RegisterPayload } from '../models/Auth-Service';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
- * Service for authentication and session management.
- * Manages extended profiles for polymorphic roles (Client, Business, Administrator).
+ * Servicio de autenticación y gestión de sesiones.
+ * Gestiona perfiles extendidos para roles polimórficos (Cliente, Negocio, Administrador).
  */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private supabase = inject(SupabaseService).getClient();
   private destroyRef = inject(DestroyRef);
   private injector = inject(Injector);
+  private translate = inject(TranslateService);
 
   isLoading = signal<boolean>(true);
   currentUser = signal<AuthUserModel | null>(null);
@@ -29,7 +31,7 @@ export class AuthService {
   }
 
   /**
-   * Initializes the authentication state on service load.
+   * Inicializa el estado de autenticación al cargar el servicio.
    */
   private initializeAuth() {
     this.isLoading.set(true);
@@ -54,13 +56,19 @@ export class AuthService {
   }
 
   /**
-   * Signs in a user with email and password.
+   * Inicia sesión en un usuario con correo electrónico y contraseña.
    */
   signIn(email: string, password: string): Observable<AuthUserModel> {
     return from(this.supabase.auth.signInWithPassword({ email, password })).pipe(
       switchMap((res: AuthResponse) => {
-        if (res.error) throw res.error;
-        if (!res.data.user) throw new Error('Usuario no encontrado');
+        if (res.error) {
+          const errorKey = res.error.message.toUpperCase().replace(/\s+/g, '_');
+          throw new Error(this.translate.instant(`ERRORS.AUTH.ERRORS.${errorKey}`));
+        }
+
+        if (!res.data.user) {
+          throw new Error(this.translate.instant('ERRORS.AUTH.ERRORS.USER_NOT_FOUND'));
+        }
         return this.getProfile(res.data.user.id);
       }),
       tap((user: AuthUserModel) => this.currentUser.set(user)),
@@ -68,7 +76,7 @@ export class AuthService {
   }
 
   /**
-   * Recovers a composite profile fetching data from User_public and role-specific tables.
+   * Recupera un perfil compuesto obteniendo datos de User_public y tablas específicas del rol.
    */
   getProfile(userId: string): Observable<AuthUserModel> {
     return from(this.supabase.from('User_public').select('*').eq('id_user', userId).single()).pipe(
@@ -99,7 +107,7 @@ export class AuthService {
   }
 
   /**
-   * Signs out the current user.
+   * Cierra la sesión del usuario actual.
    */
   signOut(): Observable<void> {
     return from(this.supabase.auth.signOut()).pipe(
@@ -113,7 +121,7 @@ export class AuthService {
   }
 
   /**
-   * Registers a new user and triggers admin notifications.
+   * Registra un nuevo usuario y desencadena notificaciones de administrador.
    */
   register(data: RegisterPayload, isClient: boolean): Observable<AuthResponse> {
     const { cleanEmail, cleanEmailPassword, metaData } = this.registerDataPreparation(
@@ -123,9 +131,9 @@ export class AuthService {
 
     return from(this.supabase.rpc('email_exists', { email_check: cleanEmail })).pipe(
       switchMap(({ data: existe, error }) => {
-        if (error) throw new Error('Error técnico al verificar el correo.');
-        if (existe) throw new Error('Este correo electrónico ya está registrado.');
-
+        if (error) throw new Error(this.translate.instant('ERRORS.AUTH.ERRORS.TECHNICAL_ERROR'));
+        if (existe)
+          throw new Error(this.translate.instant('ERRORS.AUTH.ERRORS.EMAIL_ALREADY_REGISTERED'));
         return from(
           this.supabase.auth.signUp({
             email: cleanEmail,
@@ -140,25 +148,28 @@ export class AuthService {
       map((res: AuthResponse) => this.registerAnswerValidation(res)),
       tap((res: AuthResponse) => {
         if (res.data.user) {
-          const rolTexto = isClient ? 'client' : 'business';
+          const rolKey = isClient ? 'ERRORS.ROLES.CLIENT' : 'ERRORS.ROLES.BUSINESS';
+          const rolTexto = this.translate.instant(rolKey);
+          const asunto = this.translate.instant('ERRORS.NOTIFICATIONS.ADMIN.NEW_REGISTER_TITLE');
+          const mensaje = this.translate.instant('ERRORS.NOTIFICATIONS.ADMIN.NEW_REGISTER_BODY', {
+            email: cleanEmail,
+            rol: rolTexto,
+          });
+
           const comunicationService = this.injector.get(ComunicationService);
-          comunicationService
-            .notifyAdmins(
-              'Nuevo Registro',
-              `El usuario ${cleanEmail} se ha registrado como ${rolTexto}.`,
-            )
-            .subscribe();
+          comunicationService.notifyAdmins(asunto, mensaje).subscribe();
         }
       }),
     );
   }
 
   /**
-   * Registers a new user bypasssing local session persistence (for admin use).
+   * Registra un nuevo usuario omitiendo la persistencia de sesión local (para uso administrativo).
    */
-  registerByAdmin(dta: RegisterPayload, isClient: boolean): Observable<AuthResponse> {
+
+  registerByAdmin(data: RegisterPayload, isClient: boolean): Observable<AuthResponse> {
     const { cleanEmail, cleanEmailPassword, metaData } = this.registerDataPreparation(
-      dta,
+      data,
       isClient,
     );
     const tempSupabase = createClient(environment.supabaseUrl, environment.supabaseKey, {
@@ -168,11 +179,14 @@ export class AuthService {
         detectSessionInUrl: false,
       },
     });
-
     return from(this.supabase.rpc('email_exists', { email_check: cleanEmail })).pipe(
       switchMap(({ data: existe, error }) => {
-        if (error) throw new Error('Error técnico al verificar el correo.');
-        if (existe) throw new Error('Este correo electrónico ya está registrado.');
+        if (error) {
+          throw new Error(this.translate.instant('AUTH.ERROR.TECHNICAL_ERROR'));
+        }
+        if (existe) {
+          throw new Error(this.translate.instant('AUTH.ERROR.EMAIL_ALREADY_REGISTERED'));
+        }
         return from(
           tempSupabase.auth.signUp({
             email: cleanEmail,
@@ -189,7 +203,7 @@ export class AuthService {
   }
 
   /**
-   * Prepares and sanitizes registration data.
+   * Prepara y desinfecta los datos de registro.
    */
   private registerDataPreparation(data: RegisterPayload, isClient: boolean): PreparacionRegistro {
     const cleanEmail = String(data.email).trim().toLowerCase().replace(/\s/g, '');
@@ -216,25 +230,25 @@ export class AuthService {
   }
 
   /**
-   * Validates Supabase auth response for common registration errors.
+   * Valida la respuesta de autenticación de Supabase para errores de registro comunes.
    */
   private registerAnswerValidation(res: AuthResponse): AuthResponse {
     if (res.error) throw res.error;
     if (res.data.user && res.data.user.identities && res.data.user.identities.length === 0) {
-      throw new Error('Este correo electrónico ya está registrado.');
+      throw new Error(this.translate.instant('ERRORS.AUTH.ERRORS.EMAIL_ALREADY_REGISTERED'));
     }
     return res;
   }
 
   /**
-   * Manually updates the user signal state.
+   * Actualiza manualmente el estado de la señal del usuario.
    */
   updateUserSignal(newUserData: AuthUserModel) {
     this.currentUser.set(newUserData);
   }
 
   /**
-   * Updates auth credentials in Supabase Auth.
+   * Actualiza credenciales de autenticación en Supabase Auth.
    */
   updateAuthCredentiales(newEmail?: string): Observable<UserResponse> {
     const updateData: { email?: string } = {};
@@ -253,7 +267,7 @@ export class AuthService {
   }
 
   /**
-   * Requests a password recovery email.
+   * Solicita un correo de recuperación de contraseña.
    */
   recoverPassword(email: string): Observable<void> {
     return from(
@@ -269,7 +283,7 @@ export class AuthService {
   }
 
   /**
-   * Updates the user's password.
+   * Actualiza la contraseña del usuario.
    */
   updatePass(newPassword: string): Observable<UserResponse> {
     return from(
@@ -286,7 +300,7 @@ export class AuthService {
   }
 
   /**
-   * Resends the verification email.
+   * Reenvía el correo de verificación.
    */
   resendVerificationEmail(email: string): Observable<void> {
     return from(
@@ -305,7 +319,7 @@ export class AuthService {
   }
 
   /**
-   * Checks if an email exists using a stored procedure.
+   * Verifica si un correo existe usando un procedimiento almacenado.
    */
   checkEmailExists(email: string): Observable<boolean> {
     const promise = this.supabase.rpc('check_user_exists', { email_search: email });

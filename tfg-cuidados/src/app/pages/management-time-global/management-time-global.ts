@@ -25,8 +25,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
 
 /**
- * Component for global time and schedule management by administrators.
- * Handles the creation, update, and deletion of time slots available in the system.
+ * Componente para la gestión global de horarios por administradores.
+ * Maneja la creación, actualización y eliminación de franjas horarias disponibles en el sistema.
  */
 @Component({
   selector: 'app-management-time-global',
@@ -75,7 +75,7 @@ export default class ManagementTimeGlobal implements OnInit {
   }
 
   /**
-   * Subscribes to the global times stream to populate the management table.
+   * Se suscribe al flujo global de horarios para llenar la tabla de gestión.
    */
   private loadTimes(): void {
     this.timeService
@@ -88,8 +88,8 @@ export default class ManagementTimeGlobal implements OnInit {
   }
 
   /**
-   * Processes the form submission to either create a new time slot or update an existing one.
-   * Performs validation for duplicate entries and time ranges.
+   * Procesa el envío del formulario para crear una nueva franja horaria o actualizar una existente.
+   * Realiza validación de entradas duplicadas y rangos de horarios.
    */
   saveTime(): void {
     if (this.timeForm.invalid) {
@@ -181,8 +181,8 @@ export default class ManagementTimeGlobal implements OnInit {
   }
 
   /**
-   * Prepares the form for editing an existing time slot.
-   * @param timeSlot The time record to be edited.
+   * Prepara el formulario para editar una franja horaria existente.
+   * @param timeSlot El registro de tiempo a editar.
    */
   editTime(timeSlot: TimeModel): void {
     this.isEditing = true;
@@ -195,8 +195,8 @@ export default class ManagementTimeGlobal implements OnInit {
   }
 
   /**
-   * Opens a confirmation modal and deletes the specified time slot.
-   * @param id The unique identifier of the time record.
+   * Abre una modal de confirmación y elimina la franja horaria especificada.
+   * @param id El identificador único del registro de tiempo.
    */
   async deleteTime(id: string): Promise<void> {
     if (this.isLoading()) return;
@@ -243,7 +243,7 @@ export default class ManagementTimeGlobal implements OnInit {
   }
 
   /**
-   * Resets the form state and clears any editing context.
+   * Reinicia el estado del formulario y limpia cualquier contexto de edición.
    */
   resetForm(): void {
     this.isEditing = false;
@@ -256,7 +256,7 @@ export default class ManagementTimeGlobal implements OnInit {
   }
 
   /**
-   * Fetches a translated message and displays it via the message service.
+   * Obtiene un mensaje traducido y lo muestra a través del servicio de mensajes.
    */
   private showTranslatedMessage(key: string, type: 'error' | 'success'): void {
     this.translate.get(key).subscribe((res: string) => {
@@ -265,7 +265,7 @@ export default class ManagementTimeGlobal implements OnInit {
   }
 
   /**
-   * Utility method to get form controls.
+   * Método auxiliar para obtener controles de formulario.
    */
   getCtrl(name: string): FormControl {
     return this.timeForm.get(name) as FormControl;

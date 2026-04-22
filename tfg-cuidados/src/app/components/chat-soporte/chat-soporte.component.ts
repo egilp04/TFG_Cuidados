@@ -7,8 +7,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 
 /**
- * Component for the floating support chat widget.
- * Allows clients and businesses to send support tickets directly to administrators.
+ * Componente para el widget de chat de soporte flotante.
+ * Permite a clientes y negocios enviar tickets de soporte directamente a administradores.
  */
 @Component({
   selector: 'app-chat-soporte',
@@ -50,7 +50,7 @@ export class ChatSoporteComponent implements OnInit {
   }
 
   /**
-   * Toggles the visibility of the support chat window.
+   * Alterna la visibilidad de la ventana de chat de soporte.
    */
   toggleChat(): void {
     this.isOpen = !this.isOpen;
@@ -60,16 +60,16 @@ export class ChatSoporteComponent implements OnInit {
   }
 
   /**
-   * Sends the user's message to the backend support API.
+   * Envía el mensaje del usuario a la API de soporte del servidor.
    */
   sendMessage(): void {
     if (!this.newMessage.trim()) return;
-    
+
     this.isSending = true;
-    
+
     const payload = {
       message: this.newMessage,
-      userEmail: this.currentUser?.email || 'Anonymous User',
+      userEmail: this.currentUser?.email || 'Usuario Anónimo',
     };
 
     this.http.post('/api/support', payload).subscribe({
@@ -86,7 +86,7 @@ export class ChatSoporteComponent implements OnInit {
         }, 3000);
       },
       error: (err: Error) => {
-        console.error('Error sending support ticket:', err);
+        console.error('Error enviando ticket de soporte:', err);
         this.isSending = false;
         this.cd.detectChanges();
       },

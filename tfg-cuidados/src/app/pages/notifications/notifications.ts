@@ -13,8 +13,8 @@ import { ComunicationModel } from '../../models/ComunicationModel';
 import { ButtonComponent } from '../../components/button/button';
 
 /**
- * Component responsible for displaying and managing user notifications.
- * Handles table pagination, marking incoming messages as read, and deleting notifications.
+ * Componente responsable de mostrar y gestionar las notificaciones del usuario.
+ * Maneja paginación de tabla, marca mensajes entrantes como leídos y elimina notificaciones.
  */
 @Component({
   selector: 'app-notifications',
@@ -48,8 +48,8 @@ export default class Notifications implements OnInit {
   }
 
   /**
-   * Subscribes to the real-time notifications observable and populates the data table.
-   * Automatically marks any unread notifications as read upon viewing.
+   * Se suscribe al observable en tiempo real de notificaciones y puebla la tabla de datos.
+   * Marca automáticamente cualquier notificación no leída como leída al verla.
    */
   private subscribeToNotifications(): void {
     this.comunicationService
@@ -57,7 +57,7 @@ export default class Notifications implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         catchError((err: Error) => {
-          console.error('Error loading real-time notifications:', err);
+          console.error('Error cargando notificaciones en tiempo real:', err);
           return this.translate.get('NOTIFICATIONS.MESSAGES.CONNECTION_ERROR').pipe(
             tap((res: string) => this.messageService.showMessage(res, 'error')),
             map(() => []),
@@ -66,7 +66,7 @@ export default class Notifications implements OnInit {
       )
       .subscribe((data: ComunicationModel[]) => {
         this.dataSource.data = data;
-        
+
         if (this.paginator) {
           this.dataSource.paginator = this.paginator;
         }
@@ -75,14 +75,14 @@ export default class Notifications implements OnInit {
         if (unreadNotifications.length > 0) {
           this.markAsRead(unreadNotifications);
         }
-        
+
         this.cd.markForCheck();
       });
   }
 
   /**
-   * Updates the database to mark a single or multiple notifications as read.
-   * @param notifications A single notification model or an array of them.
+   * Actualiza la base de datos para marcar una o varias notificaciones como leídas.
+   * @param notifications Un modelo de notificación individual o un array de ellos.
    */
   markAsRead(notifications: ComunicationModel | ComunicationModel[]): void {
     const notificationList = Array.isArray(notifications) ? notifications : [notifications];
@@ -96,7 +96,7 @@ export default class Notifications implements OnInit {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           error: (err: Error) => {
-            console.error('Error marking notification as read:', err);
+            console.error('Error marcando notificación como leída:', err);
             notification.read = false;
             this.cd.markForCheck();
           },
@@ -108,8 +108,8 @@ export default class Notifications implements OnInit {
   }
 
   /**
-   * Requests the deletion of a specific communication message.
-   * @param message The communication record to delete.
+   * Solicita la eliminación de un mensaje de comunicación específico.
+   * @param message El registro de comunicación a eliminar.
    */
   deleteCommunication(message: ComunicationModel): void {
     this.comunicationService
@@ -122,7 +122,7 @@ export default class Notifications implements OnInit {
             .pipe(map((text: string) => ({ type: 'success' as const, text }))),
         ),
         catchError((err: Error) => {
-          console.error('Error deleting communication:', err);
+          console.error('Error eliminando comunicación:', err);
           return this.translate
             .get('NOTIFICATIONS.ALERTS.DELETE_ERROR')
             .pipe(map((text: string) => ({ type: 'error' as const, text })));

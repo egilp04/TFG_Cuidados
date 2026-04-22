@@ -13,8 +13,8 @@ import { ContractDetail } from '../../models/ContractModel';
 import { ResponsiveSize } from '../../services/responsive-size';
 
 /**
- * Main activities page that manages the list of user contracts.
- * Integrates a calendar and a table for viewing and canceling hired services.
+ * Página principal de actividades que gestiona la lista de contratos del usuario.
+ * Integra un calendario y una tabla para ver y cancelar servicios contratados.
  */
 @Component({
   selector: 'app-activities',
@@ -39,7 +39,7 @@ export default class Activities implements OnInit {
   }
 
   /**
-   * Subscribes to the real-time contracts stream to feed the activity views.
+   * Se suscribe al flujo en tiempo real de contratos para alimentar las vistas de actividad.
    */
   private subscribeToContracts(): void {
     this.contractService
@@ -50,13 +50,13 @@ export default class Activities implements OnInit {
           this.dataSource.data = data;
           this.cd.detectChanges();
         },
-        error: (error: Error) => console.error('Error in contracts stream:', error),
+        error: (error: Error) => console.error('Error en flujo de contratos:', error),
       });
   }
 
   /**
-   * Opens a confirmation modal and cancels the hired service.
-   * @param id The unique identifier of the contract to cancel.
+   * Abre una modal de confirmación y cancela el servicio contratado.
+   * @param id El identificador único del contrato a cancelar.
    */
   async cancelContract(id: string): Promise<void> {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
@@ -79,7 +79,7 @@ export default class Activities implements OnInit {
             .pipe(map((msg: string) => ({ text: msg, type: 'success' as const }))),
         ),
         catchError((err: Error) => {
-          console.error('Error canceling contract:', err);
+          console.error('Error cancelando contrato:', err);
           return this.translate
             .get('MESSAGES.ERROR.CANCEL_CONTRACT')
             .pipe(map((msg: string) => ({ text: msg, type: 'error' as const })));

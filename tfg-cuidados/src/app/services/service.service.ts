@@ -5,8 +5,8 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { ServiceModel } from '../models/ServiceModel';
 
 /**
- * Manages the master catalog of services available on the platform.
- * Provides CRUD methods and data integrity validations.
+ * Gestiona el catálogo maestro de servicios disponibles en la plataforma.
+ * Proporciona métodos CRUD y validaciones de integridad de datos.
  */
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class ServiceService {
   }
 
   /**
-   * Returns an observable with the list of all available services.
+   * Retorna un observable con la lista de todos los servicios disponibles.
    */
   getServicesObservable(): Observable<ServiceModel[]> {
     this.refreshServices();
@@ -30,7 +30,7 @@ export class ServiceService {
   }
 
   /**
-   * Initializes real-time synchronization for the Service table.
+   * Inicializa la sincronización en tiempo real de la tabla Service.
    */
   private initRealtime() {
     this.clientSupaBase
@@ -42,7 +42,7 @@ export class ServiceService {
   }
 
   /**
-   * Synchronizes the service list from the database, ordered by name.
+   * Sincroniza la lista de servicios desde la base de datos, ordenados por nombre.
    */
   private async refreshServices() {
     const { data, error } = await this.clientSupaBase
@@ -56,7 +56,7 @@ export class ServiceService {
   }
 
   /**
-   * Inserts a new service into the catalog.
+   * Inserta un nuevo servicio en el catálogo.
    */
   insertService(newService: ServiceModel): Observable<void> {
     return from(this.clientSupaBase.from('Service').insert(newService)).pipe(
@@ -69,7 +69,7 @@ export class ServiceService {
   }
 
   /**
-   * Updates an existing service record.
+   * Actualiza un registro de servicio existente.
    */
   updateService(id: string, changes: Partial<ServiceModel>): Observable<void> {
     return from(this.clientSupaBase.from('Service').update(changes).eq('id_service', id)).pipe(
@@ -82,7 +82,7 @@ export class ServiceService {
   }
 
   /**
-   * Deletes a service from the catalog.
+   * Elimina un servicio del catálogo.
    */
   deleteService(id: string): Observable<void> {
     return from(this.clientSupaBase.from('Service').delete().eq('id_service', id)).pipe(
@@ -95,7 +95,7 @@ export class ServiceService {
   }
 
   /**
-   * Retrieves a single service by its identifier.
+   * Recupera un servicio individual por su identificador.
    */
   getServiceById(id: string): Observable<ServiceModel> {
     return from(this.clientSupaBase.from('Service').select('*').eq('id_service', id).single()).pipe(
@@ -108,7 +108,7 @@ export class ServiceService {
   }
 
   /**
-   * Checks if a service with a specific name already exists, excluding a given ID.
+   * Verifica si un servicio con un nombre específico ya existe, excluyendo un ID dado.
    */
   existsService(name: string, idExclude?: string): Observable<boolean> {
     let query = this.clientSupaBase.from('Service').select('id_service').ilike('name', name);

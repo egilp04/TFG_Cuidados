@@ -1,11 +1,6 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { switchMap, tap, delay, catchError } from 'rxjs/operators';
@@ -17,18 +12,12 @@ import { EMPTY } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
- * Component for handling the password recovery and reset flow.
+ * Componente para manejar el flujo de recuperación y restablecimiento de contraseña.
  */
 @Component({
   selector: 'app-recover-password',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    Inputs,
-    ButtonComponent,
-    TranslateModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, Inputs, ButtonComponent, TranslateModule],
   templateUrl: './recover-password.html',
   styleUrl: './recover-password.css',
 })
@@ -44,29 +33,31 @@ export default class RecoverPasswordPage {
     password: this.fb.control<string>('', [
       Validators.required,
       Validators.minLength(6),
-      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/),
+      Validators.pattern(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/,
+      ),
     ]),
   });
 
   /**
-   * Retrieves a form control by its name.
-   * @param name The name of the control.
+   * Recupera un control de formulario por su nombre.
+   * @param name El nombre del control.
    */
   getCtrl(name: string): FormControl {
     return this.recoverForm.get(name) as FormControl;
   }
 
   /**
-   * Resolves the appropriate translation key for the first active validation error.
-   * @param controlName The name of the control to validate.
+   * Resuelve la clave de traducción apropiada para el primer error de validación activo.
+   * @param controlName El nombre del control a validar.
    */
   getErrorMessage(controlName: string): string {
     const control = this.recoverForm.get(controlName);
     if (!control || !control.touched || !control.errors) return '';
-    
+
     const errors = control.errors;
     const firstError = Object.keys(errors)[0];
-    
+
     const errorKeys: Record<string, string> = {
       required: 'RECOVER_PASSWORD.ERRORS.REQUIRED',
       minlength: 'RECOVER_PASSWORD.ERRORS.MIN_LENGTH',
@@ -78,7 +69,7 @@ export default class RecoverPasswordPage {
   }
 
   /**
-   * Submits the new password and handles the update flow.
+   * Envía la nueva contraseña y maneja el flujo de actualización.
    */
   onSubmit(): void {
     if (this.recoverForm.invalid) {
@@ -106,13 +97,13 @@ export default class RecoverPasswordPage {
             switchMap(() => EMPTY),
           );
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
   }
 
   /**
-   * Cancels the process, signs out the user, and navigates back to the home page.
+   * Cancela el proceso, cierra la sesión del usuario y navega a la página de inicio.
    */
   goHome(): void {
     this.authService

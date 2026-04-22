@@ -21,7 +21,7 @@ import { ServiceTimeModalData } from '../../models/Service_Time_Data_Model';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
 
 /**
- * Modal component to create or edit the relationship between a service, a time slot, and a business.
+ * Componente modal para crear o editar la relación entre un servicio, una franja horaria y un negocio.
  */
 @Component({
   selector: 'app-service-time-modal',
@@ -57,7 +57,7 @@ export class ServiceTimeModal implements OnInit {
 
   constructor() {
     this.isEditing = !!this.data;
-    
+
     this.form = this.fb.group({
       id_service: this.fb.control<string>(this.data?.id_service || '', Validators.required),
       id_time: this.fb.control<string>(this.data?.id_time || '', Validators.required),
@@ -79,7 +79,7 @@ export class ServiceTimeModal implements OnInit {
   }
 
   /**
-   * Submits the form data to insert or update a ServiceTime record.
+   * Envía los datos del formulario para insertar o actualizar un registro de ServiceTime.
    */
   save(): void {
     if (this.form.invalid) {
@@ -88,13 +88,14 @@ export class ServiceTimeModal implements OnInit {
     }
 
     const formPayload = this.form.getRawValue() as Service_Time_Model;
-    const request$ = (this.isEditing && this.data)
+    const request$ =
+      this.isEditing && this.data
         ? this.serviceTimeService.updateServiceTime(this.data.id_service_time, formPayload)
         : this.serviceTimeService.insertServiceTime(formPayload);
 
     request$.subscribe({
       next: () => this.dialogRef.close(true),
-      error: (err: Error) => console.error('Error saving service-time relation:', err),
+      error: (err: Error) => console.error('Error guardando relación de servicio-tiempo:', err),
     });
   }
 
@@ -118,7 +119,9 @@ export class ServiceTimeModal implements OnInit {
     };
 
     const firstError = Object.keys(errors)[0];
-    return errorMessages[firstError] || this.translate.instant('SERVICE_TIME_MODAL.ERRORS.INVALID_FIELD');
+    return (
+      errorMessages[firstError] || this.translate.instant('SERVICE_TIME_MODAL.ERRORS.INVALID_FIELD')
+    );
   }
 
   private getPatternMessage(controlName: string): string {

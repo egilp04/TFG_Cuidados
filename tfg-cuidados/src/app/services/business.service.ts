@@ -4,11 +4,10 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { BusinessSupabaseJoinModel } from '../models/Bussiness-Service';
 import { BusinessModel } from '../models/BusinessModel';
 
-
 /**
- * Service for querying and searching businesses.
- * Aggregates data from Business, User_public, and Service_Time tables,
- * ensuring only active entities are listed.
+ * Servicio para consultar y buscar negocios.
+ * Agrega datos de las tablas Business, User_public y Service_Time,
+ * asegurando que solo se listen entidades activas.
  */
 @Injectable({ providedIn: 'root' })
 export class BusinessService {
@@ -20,7 +19,7 @@ export class BusinessService {
   }
 
   /**
-   * Returns an observable with the list of active businesses.
+   * Retorna un observable con la lista de negocios activos.
    * @returns Observable<BusinessModel[]>
    */
   getBusinessesObservable(): Observable<BusinessModel[]> {
@@ -29,8 +28,8 @@ export class BusinessService {
   }
 
   /**
-   * Configures a multi-table real-time subscription.
-   * Updates the business list automatically when changes occur in Business or Service_Time tables.
+   * Configura una suscripción en tiempo real multi-tabla.
+   * Actualiza la lista de negocios automáticamente cuando ocurren cambios en las tablas Business o Service_Time.
    */
   private initRealtime() {
     this.supabase
@@ -45,7 +44,7 @@ export class BusinessService {
   }
 
   /**
-   * Fetches active businesses including their public user profile, services, and schedules.
+   * Obtiene negocios activos incluyendo su perfil de usuario público, servicios y horarios.
    */
   private async refreshBusinesses() {
     const { data, error } = await this.supabase
@@ -67,7 +66,7 @@ export class BusinessService {
       .eq('User_public.state', true);
 
     if (error) {
-      console.error('Error loading businesses:', error.message);
+      console.error('Error al cargar negocios:', error.message);
       return;
     }
 
@@ -76,7 +75,7 @@ export class BusinessService {
         (buss) =>
           ({
             ...buss,
-            name: buss.User_public?.name || 'Business (No name)',
+            name: buss.User_public?.name || 'Negocio (Sin nombre)',
             email: buss.User_public?.email || '',
             Service_Time: buss.Service_Time || [],
           }) as BusinessModel,

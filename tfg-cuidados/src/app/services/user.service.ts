@@ -9,10 +9,11 @@ import {
   UserModel,
   UserNameResponse,
 } from '../models/User_Service';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
- * User and profile administration service.
- * Manages identity unification (User_public) with role specialization (Client or Business).
+ * Servicio de administración de usuarios y perfiles.
+ * Gestiona la unificación de identidad (User_public) con especialización de rol (Cliente o Negocio).
  */
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -21,6 +22,8 @@ export class UserService {
   private _usersList = signal<UserModel[]>([]);
   public usersList = this._usersList.asReadonly();
 
+  private translate = inject(TranslateService);
+
   private currentType: 'client' | 'business' = 'client';
 
   constructor() {
@@ -28,8 +31,8 @@ export class UserService {
   }
 
   /**
-   * Sets the user type and triggers a refresh of the list.
-   * @param tipo The type of user to load ('cliente' or 'empresa').
+   * Establece el tipo de usuario y desencadena una actualización de la lista.
+   * @param tipo El tipo de usuario a cargar ('cliente' o 'empresa').
    */
   loadUsers(tipo: 'client' | 'business'): void {
     this.currentType = tipo;
@@ -38,8 +41,8 @@ export class UserService {
   }
 
   /**
-   * Multi-channel subscription for real-time updates.
-   * Monitors User_public, Client, and Business tables.
+   * Suscripción multi-canal para actualizaciones en tiempo real.
+   * Monitorea las tablas User_public, Client y Business.
    */
   private initRealtime() {
     this.supabase
@@ -57,7 +60,7 @@ export class UserService {
   }
 
   /**
-   * Executes a relational query with dynamic filtering to fetch full user profiles.
+   * Ejecuta una consulta relacional con filtrado dinámico para obtener perfiles de usuario completos.
    */
   private async refreshUsers() {
     const tableRel = this.currentType === 'client' ? 'Client' : 'Business';
@@ -67,7 +70,7 @@ export class UserService {
       .eq('state', true);
 
     if (error) {
-      console.error(`ERROR loading ${tableRel}:`, error);
+      console.error(`ERROR al cargar ${tableRel}:`, error);
       return;
     }
 
@@ -85,8 +88,8 @@ export class UserService {
   }
 
   /**
-   * Invokes a database RPC to perform a full user deletion.
-   * @param userId Unique identifier of the user to delete.
+   * Invoca un RPC de base de datos para realizar una eliminación completa del usuario.
+   * @param userId Identificador único del usuario a eliminar.
    */
   deleteUser(userId: string): Observable<void> {
     return from(this.supabase.rpc('eliminar_usuario_total', { id_a_borrar: userId })).pipe(
@@ -98,9 +101,9 @@ export class UserService {
   }
 
   /**
-   * Verifies if an email is unique in the system, excluding a specific user ID.
-   * @param email Email to verify.
-   * @param userId User identifier to exclude from the check.
+   * Verifica si un correo es único en el sistema, excluyendo un ID de usuario específico.
+   * @param email Correo a verificar.
+   * @param userId Identificador del usuario a excluir de la verificación.
    */
   verifyUniqEmail(email: string, userId: string): Observable<boolean> {
     return from(
@@ -112,15 +115,17 @@ export class UserService {
         .maybeSingle(),
     ).pipe(
       map(({ data }) => !data),
-      catchError(() => throwError(() => new Error('Error validating email'))),
+      catchError(() =>
+        throwError(() => new Error(this.translate.instant('ERRORS.AUTH.ERRORS.EMAIL_VALIDATION'))),
+      ),
     );
   }
 
   /**
-   * Updates a profile using a database stored procedure for atomic transactions.
-   * @param userId Unique identifier of the user.
-   * @param dataToSend Payload containing profile updates.
-   * @param rol Role of the user being updated.
+   * Actualiza un perfil usando un procedimiento almacenado de base de datos para transacciones atómicas.
+   * @param userId Identificador único del usuario.
+   * @param dataToSend Carga útil que contiene actualizaciones de perfil.
+   * @param rol Rol del usuario que se actualiza.
    */
   updateProfileDirect(
     userId: string,
@@ -152,8 +157,8 @@ export class UserService {
   }
 
   /**
-   * Retrieves specific user details based on an email address.
-   * @param email Email to search for.
+   * Recupera detalles de un usuario específico basado en una dirección de correo electrónico.
+   * @param email Correo a buscar.
    */
   getUserByEmail(email: string): Observable<UserEmailResponse> {
     return from(
@@ -172,8 +177,8 @@ export class UserService {
   }
 
   /**
-   * Retrieves the name of a user by their unique identifier.
-   * @param id User identifier.
+   * Recupera el nombre de un usuario por su identificador único.
+   * @param id Identificador del usuario.
    */
   getUserById(id: string): Observable<UserNameResponse> {
     return from(

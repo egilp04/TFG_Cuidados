@@ -25,8 +25,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
 
 /**
- * Component for global service management by administrators.
- * Allows creating, editing, and deleting the catalog of services available in the platform.
+ * Componente para la gestión global de servicios por administradores.
+ * Permite crear, editar y eliminar el catálogo de servicios disponibles en la plataforma.
  */
 @Component({
   selector: 'app-management-services-global',
@@ -76,7 +76,7 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   /**
-   * Subscribes to the services stream to keep the table updated.
+   * Se suscribe al flujo de servicios para mantener la tabla actualizada.
    */
   private loadServices(): void {
     this.serviceService
@@ -89,8 +89,8 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   /**
-   * Saves a new service or updates an existing one.
-   * Includes duplicate name validation.
+   * Guarda un nuevo servicio o actualiza uno existente.
+   * Incluye validación de nombres duplicados.
    */
   saveService(): void {
     if (this.serviceForm.invalid) {
@@ -139,7 +139,7 @@ export default class ManagementServicesGlobal implements OnInit {
             .pipe(map((text: string) => ({ type: 'success' as const, text })));
         }),
         catchError((err: any) => {
-          console.error('Detailed error saving service:', err);
+          console.error('Error detallado guardando servicio:', err);
           let msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_GENERIC';
           if (err.message === 'DUPLICATE_SERVICE' || err.code === '23505') {
             msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_DUPLICATE';
@@ -162,8 +162,8 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   /**
-   * Prepares the form with the selected service data for editing.
-   * @param service The service model to edit.
+   * Prepara el formulario con los datos del servicio seleccionado para edición.
+   * @param service El modelo de servicio a editar.
    */
   editService(service: ServiceModel): void {
     this.isEditing = true;
@@ -177,8 +177,8 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   /**
-   * Opens a confirmation modal and deletes a service.
-   * @param id The unique identifier of the service.
+   * Abre una modal de confirmación y elimina un servicio.
+   * @param id El identificador único del servicio.
    */
   async deleteService(id: string): Promise<void> {
     if (this.isLoading()) return;
@@ -225,7 +225,7 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   /**
-   * Clears the form and editing state.
+   * Limpia el formulario y el estado de edición.
    */
   resetForm(): void {
     this.isEditing = false;
@@ -235,15 +235,15 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   /**
-   * Applies a filter to the data table.
-   * @param value Search string.
+   * Aplica un filtro a la tabla de datos.
+   * @param value Cadena de búsqueda.
    */
   applyFilter(value: string): void {
     this.dataSource.filter = value.trim().toLowerCase();
   }
 
   /**
-   * Helper to get form controls with type safety.
+   * Auxiliar para obtener controles de formulario con seguridad de tipo.
    */
   getCtrl(name: string): FormControl {
     return this.serviceForm.get(name) as FormControl;

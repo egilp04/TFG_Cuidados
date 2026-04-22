@@ -10,12 +10,7 @@ import {
 } from '@angular/material/dialog';
 import { ButtonComponent } from '../button/button';
 import { Inputs } from '../inputs/inputs';
-import {
-  FormBuilder,
-  Validators,
-  ReactiveFormsModule,
-  FormControl,
-} from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MessageService } from '../../services/message-service';
@@ -26,7 +21,7 @@ import { CloseBtnComponent } from '../close-btn/close-btn.component';
 import { getHomeRouteByRole } from '../../core/utils/routerUtils';
 
 /**
- * Component for handling the login, password recovery, and email verification modal.
+ * Componente para manejar la modal de inicio de sesión, recuperación de contraseña y verificación de correo.
  */
 @Component({
   selector: 'app-loginmodal',
@@ -81,29 +76,29 @@ export class Loginmodal implements OnInit {
         recuperar: 'recover',
         recover: 'recover',
         reenviar: 'resend',
-        resend: 'resend'
+        resend: 'resend',
       };
       this.currentMode = modeMapping[this.data.mode] || 'login';
     }
   }
 
   /**
-   * Retrieves a specific form control from the login form.
-   * @param name The name of the control.
+   * Obtiene un control de formulario específico del formulario de inicio de sesión.
+   * @param name El nombre del control.
    */
   getCtrl(name: string): FormControl {
     return this.loginForm.get(name) as FormControl;
   }
 
   /**
-   * Processes the authentication attempt and navigates the user based on their role.
+   * Procesa el intento de autenticación y navega al usuario según su rol.
    */
   toEnterApp(): void {
     if (this.loginForm.valid) {
       const rawForm = this.loginForm.getRawValue();
       const email = rawForm.email ?? '';
       const password = rawForm.password ?? '';
-      
+
       this.authService
         .signIn(email, password)
         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -112,14 +107,14 @@ export class Loginmodal implements OnInit {
             this.dialogRef.close({ loginSuccess: true });
             this.dialog.closeAll();
             this.cd.detectChanges();
-            
+
             const user = this.authService.currentUser();
             const role = user?.rol;
             const route = getHomeRouteByRole(role);
             this.router.navigate([route]);
           },
           error: (err: Error) => {
-            console.error('Error login:', err);
+            console.error('Error al iniciar sesión:', err);
 
             if (err.message && err.message.includes('Email not confirmed')) {
               this.messageService.showMessage(
@@ -146,7 +141,7 @@ export class Loginmodal implements OnInit {
   }
 
   /**
-   * Validates the email and initiates the password recovery flow.
+   * Valida el correo e inicia el flujo de recuperación de contraseña.
    */
   toRecoverPasswd(): void {
     if (this.emailCtrl.invalid) {
@@ -158,7 +153,7 @@ export class Loginmodal implements OnInit {
       this.cd.markForCheck();
       return;
     }
-    
+
     const email = this.emailCtrl.value || '';
     if (!email) return;
 
@@ -184,8 +179,8 @@ export class Loginmodal implements OnInit {
   }
 
   /**
-   * Calls the authentication service to send a password recovery email.
-   * @param email The target email address.
+   * Llama al servicio de autenticación para enviar un correo de recuperación de contraseña.
+   * @param email La dirección de correo electrónico de destino.
    */
   private processPasswordRecovery(email: string): void {
     this.authService
@@ -214,7 +209,7 @@ export class Loginmodal implements OnInit {
   }
 
   /**
-   * Validates the email and initiates the verification email resend flow.
+   * Valida el correo e inicia el flujo de reenvío de correo de verificación.
    */
   toRecoverEmail(): void {
     if (this.emailCtrl.invalid) {
@@ -224,7 +219,7 @@ export class Loginmodal implements OnInit {
       );
       return;
     }
-    
+
     const email = this.emailCtrl.value || '';
     if (!email) return;
 
@@ -242,16 +237,16 @@ export class Loginmodal implements OnInit {
       error: (err: Error) => {
         console.error(err);
         this.messageService.showMessage(
-            this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'), 
-            'error'
+          this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'),
+          'error',
         );
       },
     });
   }
 
   /**
-   * Calls the authentication service to resend the account verification email.
-   * @param email The target email address.
+   * Llama al servicio de autenticación para reenviar el correo de verificación de cuenta.
+   * @param email La dirección de correo electrónico de destino.
    */
   private processEmailResend(email: string): void {
     this.authService.resendVerificationEmail(email).subscribe({

@@ -17,8 +17,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 Chart.register(...registerables);
 
 /**
- * Dashboard component for administrators.
- * Displays visual metrics for users, contracts, and service performance.
+ * Componente de panel de administrador.
+ * Muestra métricas visuales de usuarios, contratos y rendimiento de servicios.
  */
 @Component({
   selector: 'app-dashboard',
@@ -40,7 +40,7 @@ export default class Dashboard implements OnInit {
   public canceledContractsCount = 0;
   private timelineDates: Date[] = [];
 
-  // --- Chart Data Configurations ---
+  // --- Configuraciones de datos de gráficos ---
 
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: [],
@@ -72,13 +72,13 @@ export default class Dashboard implements OnInit {
     labels: [],
     datasets: [
       {
-        label: '', // Populated via translation
+        label: '', // Poblado vía traducción
         data: [],
         backgroundColor: '#17c448',
         borderRadius: 4,
       },
       {
-        label: '', // Populated via translation
+        label: '', // Poblado vía traducción
         data: [],
         backgroundColor: '#60A5FA',
         borderRadius: 4,
@@ -86,7 +86,7 @@ export default class Dashboard implements OnInit {
     ],
   };
 
-  // --- Chart Options ---
+  // --- Opciones de gráficos ---
 
   public doughnutOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: true,
@@ -130,7 +130,7 @@ export default class Dashboard implements OnInit {
   }
 
   /**
-   * Manually triggers an update for all charts in the view.
+   * Dispara manualmente una actualización para todos los gráficos en la vista.
    */
   private triggerChartsUpdate(): void {
     this.cd.markForCheck();
@@ -138,7 +138,7 @@ export default class Dashboard implements OnInit {
   }
 
   /**
-   * Updates the month labels for the line chart based on the current language.
+   * Actualiza las etiquetas de meses para el gráfico de línea según el idioma actual.
    */
   private updateMonthLabels(): void {
     if (this.timelineDates.length === 0) return;
@@ -154,7 +154,7 @@ export default class Dashboard implements OnInit {
   }
 
   /**
-   * Listens to translation changes to update chart labels dynamically.
+   * Escucha cambios de traducción para actualizar dinámicamente las etiquetas de gráficos.
    */
   private translateCharts(): void {
     this.translate
@@ -162,24 +162,26 @@ export default class Dashboard implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {
         this.doughnutChartData.labels = [res.ACTIVE, res.CANCELED];
-        this.barChartData.datasets[0].label = res.DEMAND || 'Demand';
-        this.barChartData.datasets[1].label = res.SUPPLY || 'Supply';
+        this.barChartData.datasets[0].label = res.DEMAND || 'Demanda';
+        this.barChartData.datasets[1].label = res.SUPPLY || 'Oferta';
         this.updateMonthLabels();
       });
   }
 
   /**
-   * Subscribes to the analytics service observables to populate metrics.
+   * Se suscribe a los observables del servicio de análisis para poblar las métricas.
    */
   private subscribeToAnalytics(): void {
-    this.analyticsService.getUsuariosCount()
+    this.analyticsService
+      .getUsuariosCount()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((count) => {
         this.totalUsersCount = count;
         this.cd.markForCheck();
       });
 
-    this.analyticsService.getContractStats()
+    this.analyticsService
+      .getContractStats()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((stats) => {
         this.activeContractsCount = stats.activeContract;
@@ -188,7 +190,8 @@ export default class Dashboard implements OnInit {
         this.triggerChartsUpdate();
       });
 
-    this.analyticsService.fetchMonthlyUsersRecords()
+    this.analyticsService
+      .fetchMonthlyUsersRecords()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((records) => {
         this.lineChartData.datasets[0].data = records.data;
@@ -196,7 +199,8 @@ export default class Dashboard implements OnInit {
         this.updateMonthLabels();
       });
 
-    this.analyticsService.getServicesStats()
+    this.analyticsService
+      .getServicesStats()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((stats) => {
         this.barChartData.labels = stats.labels;

@@ -20,7 +20,7 @@ import { ContractRowDataTable } from '../../models/Acitvities-component';
 import { ContractDetail } from '../../models/ContractModel';
 
 /**
- * Child component that renders a monthly calendar and a data table of hired services.
+ * Componente hijo que renderiza un calendario mensual y una tabla de datos de servicios contratados.
  */
 @Component({
   selector: 'app-activities-components',
@@ -57,9 +57,7 @@ export class ActivitiesComponents implements OnInit, OnChanges {
   public monthDays: (number | null)[] = [];
   public eventsMap: Record<string, ContractRowDataTable[]> = {};
 
-  private weekDayNames = [
-    'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'
-  ];
+  private weekDayNames = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
 
   ngOnInit(): void {
     this.refreshActivityData();
@@ -77,30 +75,37 @@ export class ActivitiesComponents implements OnInit, OnChanges {
     this.calculateMonthEvents();
   }
 
+  /**
+   * Actualiza la fuente de datos de la tabla mapeando contratos con información de ubicación.
+   */
   private updateTableDataSource(): void {
     if (!this.dataSource || this.dataSource.length === 0) {
       this.tableDataSource.data = [];
       return;
     }
-  
+
     const mappedData = this.dataSource.map((contract) => {
       let nameToShow: string | undefined;
       if (this.userRole === 'client') nameToShow = contract.Business?.businessName;
       if (this.userRole === 'business') nameToShow = contract.Client?.clientName;
-      
-      const place = contract.Client 
+
+      const place = contract.Client
         ? `${contract.Client.address}, ${contract.Client.city}, ${contract.Client.postcode}`
         : 'SL';
-        return {
+      return {
         ...contract,
         nameToShow: nameToShow || 'N/A',
         place: place,
       } as ContractRowDataTable;
     });
-  
+
     this.tableDataSource.data = mappedData;
   }
 
+  /**
+   * Calcula qué eventos (contratos) ocurren en cada día del mes mostrado.
+   * Filtra por rango de fechas y día de la semana contratado.
+   */
   private calculateMonthEvents(): void {
     this.eventsMap = {};
     const processedData = this.tableDataSource.data;
@@ -119,11 +124,7 @@ export class ActivitiesComponents implements OnInit, OnChanges {
         const dayIdx = currentDate.getDay() === 0 ? 6 : currentDate.getDay() - 1;
         const dayName = this.weekDayNames[dayIdx];
 
-        if (
-          currentDate >= startDate &&
-          currentDate <= endDate &&
-          targetDay === dayName
-        ) {
+        if (currentDate >= startDate && currentDate <= endDate && targetDay === dayName) {
           const key = `${year}-${month}-${d}`;
           if (!this.eventsMap[key]) this.eventsMap[key] = [];
           this.eventsMap[key].push(contract);
@@ -132,6 +133,10 @@ export class ActivitiesComponents implements OnInit, OnChanges {
     });
   }
 
+  /**
+   * Genera la matriz de días para un calendario mensual.
+   * Rellena días previos del mes anterior como nulos.
+   */
   public generateCalendar(): void {
     const year = this.displayDate.getFullYear();
     const month = this.displayDate.getMonth();
@@ -145,26 +150,43 @@ export class ActivitiesComponents implements OnInit, OnChanges {
     this.monthDays = days;
   }
 
+  /**
+   * Navega hacia adelante o atrás en el mes.
+   * @param delta Número de meses a cambiar (+1 o -1).
+   */
   public changeMonth(delta: number): void {
     this.displayDate = new Date(
       this.displayDate.getFullYear(),
       this.displayDate.getMonth() + delta,
-      1
+      1,
     );
     this.refreshActivityData();
   }
 
+  /**
+   * Obtiene los eventos programados para un día específico.
+   * @param day El número del día del mes.
+   */
   public getDayEvents(day: number): ContractRowDataTable[] {
     const key = `${this.displayDate.getFullYear()}-${this.displayDate.getMonth()}-${day}`;
     return this.eventsMap[key] || [];
   }
 
+  /**
+   * Emite un evento de cancelación de contrato.
+   * @param id El identificador del contrato.
+   */
   public onCancel(id: string): void {
     this.onCancelContract.emit(id);
   }
 
   public selectedDay: number | null = null;
 
+  /**
+   * Alterna la selección de un día para mostrar/ocultar detalles de eventos.
+   * @param day El número del día seleccionado.
+   * @param events Los eventos que ocurren ese día.
+   */
   public handleDayClick(day: number, events: ContractRowDataTable[]): void {
     if (events.length === 0) return;
     this.selectedDay = this.selectedDay === day ? null : day;

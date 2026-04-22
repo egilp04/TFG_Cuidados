@@ -8,8 +8,8 @@ import {
 } from '../models/Analitycs-Service';
 
 /**
- * Service for metrics and data analysis for the administrative dashboard.
- * Handles temporal aggregation and statistical logic.
+ * Servicio para métricas y análisis de datos del panel de administración.
+ * Gestiona la agregación temporal y lógica estadística.
  */
 @Injectable({
   providedIn: 'root',
@@ -42,35 +42,35 @@ export class AnalyticsService {
   }
 
   /**
-   * Returns an observable with the total count of users in the application.
+   * Retorna un observable con el recuento total de usuarios en la aplicación.
    */
   getUsuariosCount(): Observable<number> {
     return this._totalAppUsers$.asObservable();
   }
 
   /**
-   * Returns an observable with registration data grouped by month.
+   * Retorna un observable con datos de registros agrupados por mes.
    */
   fetchMonthlyUsersRecords(): Observable<{ labels: Date[]; data: number[] }> {
     return this._monthlyRegisters$.asObservable();
   }
 
   /**
-   * Returns an observable with global contract statistics.
+   * Retorna un observable con estadísticas globales de contratos.
    */
   getContractStats(): Observable<ContractStats> {
     return this._contractsAmountData$.asObservable();
   }
 
   /**
-   * Returns an observable with supply and demand statistics per service.
+   * Retorna un observable con estadísticas de oferta y demanda por servicio.
    */
   getServicesStats(): Observable<{ labels: string[]; demand: number[]; supply: number[] }> {
     return this._servicesStats$.asObservable();
   }
 
   /**
-   * Initializes the dashboard by performing parallel data fetching.
+   * Inicializa el panel realizando obtención de datos en paralelo.
    */
   private async initDashboard() {
     await Promise.allSettled([
@@ -83,7 +83,7 @@ export class AnalyticsService {
   }
 
   /**
-   * Fetches the total number of users from the User_public table.
+   * Obtiene el número total de usuarios de la tabla User_public.
    */
   private async chargeTotalUsers() {
     try {
@@ -94,12 +94,12 @@ export class AnalyticsService {
       if (error) throw error;
       this._totalAppUsers$.next(count || 0);
     } catch (e) {
-      console.error('Error loading total users:', e);
+      console.error('Error al cargar usuarios totales:', e);
     }
   }
 
   /**
-   * Calculates contract statistics based on their state.
+   * Calcula estadísticas de contratos basadas en su estado.
    */
   private async chargeContractsStatics() {
     try {
@@ -114,12 +114,12 @@ export class AnalyticsService {
         this._contractsAmountData$.next(stats);
       }
     } catch (e) {
-      console.error('Error loading contract statistics:', e);
+      console.error('Error al cargar estadísticas de contratos:', e);
     }
   }
 
   /**
-   * Fetches user registration dates for the current year.
+   * Obtiene fechas de registro de usuarios para el año actual.
    */
   private async chargeMonthlyRecords() {
     try {
@@ -139,12 +139,12 @@ export class AnalyticsService {
         this._monthlyRegisters$.next(this.groupByCurrentYear(registerData, currentYear));
       }
     } catch (e) {
-      console.error('Error loading records for the current year:', e);
+      console.error('Error al cargar registros del año actual:', e);
     }
   }
 
   /**
-   * Sets up real-time monitoring for user and contract tables.
+   * Establece monitoreo en tiempo real para las tablas de usuarios y contratos.
    */
   private listenToChangesIRL() {
     this.supabase
@@ -161,7 +161,7 @@ export class AnalyticsService {
   }
 
   /**
-   * Groups registration dates into monthly buckets for the specified year.
+   * Agrupa fechas de registro en buckets mensuales para el año especificado.
    */
   private groupByCurrentYear(registros: RegistroFechaResponse[], year: number) {
     const labels: Date[] = [];
@@ -180,7 +180,7 @@ export class AnalyticsService {
   }
 
   /**
-   * Aggregates supply and demand data per service.
+   * Agrega datos de oferta y demanda por servicio.
    */
   private async chargeServicesStats() {
     try {
@@ -225,7 +225,7 @@ export class AnalyticsService {
         this._servicesStats$.next({ labels, demand, supply });
       }
     } catch (e) {
-      console.error('Error loading service statistics:', e);
+      console.error('Error al cargar estadísticas de servicios:', e);
     }
   }
 }

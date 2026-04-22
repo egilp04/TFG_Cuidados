@@ -7,8 +7,8 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { ComunicationService } from './comunication.service';
 
 /**
- * Orchestrator for the lifecycle of hired services.
- * Manages conditional logic based on roles (Client/Business/Admin).
+ * Orquestador del ciclo de vida de servicios contratados.
+ * Gestiona lógica condicional basada en roles (Cliente/Negocio/Administrador).
  */
 @Injectable({
   providedIn: 'root',
@@ -39,7 +39,7 @@ export class ContractService {
   }
 
   /**
-   * Returns an observable with the list of active contracts.
+   * Retorna un observable con la lista de contratos activos.
    */
   getContractsObservable(): Observable<ContractDetail[]> {
     this.refreshContracts();
@@ -47,7 +47,7 @@ export class ContractService {
   }
 
   /**
-   * Initializes real-time subscription for the Contract table.
+   * Inicializa la suscripción en tiempo real de la tabla Contract.
    */
   private initRealtime() {
     this.supabase
@@ -59,7 +59,7 @@ export class ContractService {
   }
 
   /**
-   * Fetches and maps contracts based on the current user's role and permissions.
+   * Obtiene y mapea contratos basados en el rol y permisos del usuario actual.
    */
   private async refreshContracts() {
     const user = this.authService.currentUser();
@@ -84,12 +84,13 @@ export class ContractService {
             id_st_flat: contract.Service_Time?.id_service_time || contract.id_service_time,
             Client: {
               ...contract.Client,
-              clientName: contract.Client?.name || contract.Client?.User_public?.name || 'Unknown',
+              clientName:
+                contract.Client?.name || contract.Client?.User_public?.name || 'Desconocido',
             },
             Business: {
               ...contract.Business,
               businessName:
-                contract.Business?.name || contract.Business?.User_public?.name || 'Unknown',
+                contract.Business?.name || contract.Business?.User_public?.name || 'Desconocido',
             },
             serviceName: contract.Service_Time?.Service?.name,
           } as unknown as ContractDetail;
@@ -98,12 +99,12 @@ export class ContractService {
 
       this.contractsList$.next(mappedData);
     } else {
-      console.error('Error refreshing contracts:', error?.message);
+      console.error('Error al actualizar contratos:', error?.message);
     }
   }
 
   /**
-   * Inserts a new contract record into the database.
+   * Inserta un nuevo registro de contrato en la base de datos.
    */
   createContract(newContract: ContractModel): Observable<boolean> {
     return from(this.supabase.from('Contract').insert(newContract)).pipe(
@@ -116,7 +117,7 @@ export class ContractService {
   }
 
   /**
-   * Retrieves a single contract by its identifier including related entities.
+   * Recupera un contrato individual por su identificador incluyendo entidades relacionadas.
    */
   getContractsById(id: string): Observable<ContractSupabaseJoined> {
     return from(
@@ -135,7 +136,7 @@ export class ContractService {
   }
 
   /**
-   * Performs a logical delete of a contract and notifies the counterparty.
+   * Realiza una eliminación lógica de un contrato y notifica a la contraparte.
    */
   deleteContract(id: string): Observable<ContractSupabaseJoined> {
     const todayDate = new Date().toISOString();
@@ -158,7 +159,7 @@ export class ContractService {
         const currentUser = this.authService.currentUser();
         if (!currentUser || !canceledContract) return;
 
-        const serviceName = canceledContract.Service_Time?.Service?.name || 'Unknown';
+        const serviceName = canceledContract.Service_Time?.Service?.name || 'Desconocido';
         let idDestination = '';
         let message = '';
 

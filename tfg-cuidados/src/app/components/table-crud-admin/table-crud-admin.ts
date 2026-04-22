@@ -24,8 +24,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserModel } from '../../models/User_Service';
 
 /**
- * Generic CRUD table for administrative management.
- * Dynamically adjusts columns based on the user type (Client/Business).
+ * Tabla CRUD genérica para gestión administrativa.
+ * Ajusta dinámicamente las columnas basándose en el tipo de usuario (Cliente/Negocio).
  */
 @Component({
   selector: 'app-table-crud-admin',
@@ -72,18 +72,22 @@ export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  /**
+   * Configura el filtro de búsqueda en tiempo real para la tabla.
+   */
   private setupFilter(): void {
-    this.searchControl.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => {
-        const filterValue = value || '';
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-        if (this.dataSource.paginator) {
-          this.dataSource.paginator.firstPage();
-        }
-      });
+    this.searchControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+      const filterValue = value || '';
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+    });
   }
 
+  /**
+   * Actualiza el estado de la tabla y aplica el filtro de búsqueda si está activo.
+   */
   private refreshTableState(): void {
     if (this.searchControl.value) {
       this.dataSource.filter = this.searchControl.value.trim().toLowerCase();
@@ -102,10 +106,18 @@ export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
     return columns;
   }
 
+  /**
+   * Emite un evento de eliminación para el elemento especificado.
+   * @param item El modelo de usuario a eliminar.
+   */
   onDelete(item: UserModel): void {
     this.deleteItem.emit(item);
   }
 
+  /**
+   * Emite un evento de modificación para el elemento especificado.
+   * @param item El modelo de usuario a modificar.
+   */
   onModify(item: UserModel): void {
     this.modifyItem.emit(item);
   }

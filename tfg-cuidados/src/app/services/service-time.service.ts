@@ -6,8 +6,8 @@ import { Service_Time_Model } from '../models/Service_Time_Model';
 import { ServiceTimeJoined } from '../models/Service_Time_Service_Model';
 
 /**
- * Service responsible for managing the availability of services.
- * Implements the link logic between 'Service' and 'Time' entities.
+ * Servicio responsable de gestionar la disponibilidad de servicios.
+ * Implementa la lógica de vinculación entre entidades 'Service' y 'Time'.
  */
 @Injectable({
   providedIn: 'root',
@@ -18,8 +18,8 @@ export class ServiceTimeService {
   private currentIdBusiness: string | null = null;
 
   /**
-   * Retrieves the list of available times for a specific business and initializes real-time sync.
-   * @param businessId Unique identifier of the business.
+   * Recupera la lista de horarios disponibles para un negocio específico e inicializa sincronización en tiempo real.
+   * @param businessId Identificador único del negocio.
    */
   getServiceTimeByBusiness(businessId: string): Observable<ServiceTimeJoined[]> {
     this.currentIdBusiness = businessId;
@@ -29,7 +29,7 @@ export class ServiceTimeService {
   }
 
   /**
-   * Configures a selective synchronization system filtered by business ID.
+   * Configura un sistema de sincronización selectiva filtrado por ID de negocio.
    */
   private initRealtimeSubscription(businessId: string) {
     this.supabase.removeAllChannels();
@@ -51,7 +51,7 @@ export class ServiceTimeService {
   }
 
   /**
-   * Fetches the commercial offer of a business using relational joins with Service and Time tables.
+   * Obtiene la oferta comercial de un negocio utilizando uniones relacionales con las tablas Service y Time.
    */
   private async refreshList(businessId: string) {
     const { data, error } = await this.supabase
@@ -69,12 +69,12 @@ export class ServiceTimeService {
     if (!error) {
       this.serviceTimeList$.next((data as unknown as ServiceTimeJoined[]) || []);
     } else {
-      console.error('Error refreshing list:', error);
+      console.error('Error al actualizar la lista:', error);
     }
   }
 
   /**
-   * Inserts a new service-time availability record.
+   * Inserta un nuevo registro de disponibilidad servicio-horario.
    */
   insertServiceTime(newEntry: Service_Time_Model): Observable<void> {
     return from(this.supabase.from('Service_Time').insert(newEntry)).pipe(
@@ -89,7 +89,7 @@ export class ServiceTimeService {
   }
 
   /**
-   * Updates an existing service-time availability record.
+   * Actualiza un registro existente de disponibilidad servicio-horario.
    */
   updateServiceTime(id: string, changes: Partial<Service_Time_Model>): Observable<void> {
     return from(this.supabase.from('Service_Time').update(changes).eq('id_service_time', id)).pipe(
@@ -104,7 +104,7 @@ export class ServiceTimeService {
   }
 
   /**
-   * Deletes a service-time availability record from the database.
+   * Elimina un registro de disponibilidad servicio-horario de la base de datos.
    */
   deleteServiceTime(id: string): Observable<void> {
     return from(this.supabase.from('Service_Time').delete().eq('id_service_time', id)).pipe(

@@ -934,5 +934,29 @@
       "HIDE_PASSWORD": "Ocultar contraseña",
       "SHOW_PASSWORD": "Mostrar contraseña"
     }
+  },
+  "ERRORS": {
+    "ROLES": {
+      "CLIENT": "cliente",
+      "BUSINESS": "empresa"
+    },
+    "AUTH": {
+      "ERRORS": {
+        "EMAIL_ALREADY_REGISTERED": "Este correo electrónico ya está registrado en la plataforma.",
+        "INVALID_LOGIN_CREDENTIALS": "Las credenciales de acceso son incorrectas.",
+        "USER_NOT_FOUND": "Usuario no encontrado en el sistema.",
+        "EMAIL_TAKEN": "Este correo electrónico ya está registrado.",
+        "TECHNICAL_ERROR": "Error técnico al verificar el correo.",
+        "EMAIL_EXISTS": "Este correo electrónico ya está registrado.",
+        "EMAIL_VALIDATION": "Hay un error validando el email, inténtalo más tarde."
+      }
+    },
+    "NOTIFICATIONS": {
+      "ADMIN": {
+        "NEW_REGISTER_TITLE": "Nuevo Registro en CuidaDos",
+        "NEW_REGISTER_BODY": "El usuario {{email}} se ha registrado como {{rol}}."
+      }
+    },
+    "COMUNICATION": { "INVALID_TYPE": "Tipo de comunicacion inválida" }
   }
 }

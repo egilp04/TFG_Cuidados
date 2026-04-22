@@ -15,7 +15,7 @@ import { UserModel } from '../../models/User_Service';
 import { ResponsiveSize } from '../../services/responsive-size';
 
 /**
- * Admin management page to list, edit, and delete users (clients or businesses).
+ * Página de gestión de administrador para listar, editar y eliminar usuarios (clientes o negocios).
  */
 @Component({
   selector: 'app-management-admin',
@@ -43,8 +43,8 @@ export default class ManagementAdmin implements OnInit {
   }
 
   /**
-   * Updates the view state and triggers the user list load from the service.
-   * @param type The type of user to manage: 'client' or 'business'.
+   * Actualiza el estado de la vista e inicia la carga de la lista de usuarios desde el servicio.
+   * @param type El tipo de usuario a gestionar: 'client' o 'business'.
    */
   private loadData(type: 'client' | 'business'): void {
     this.isClient = type === 'client';
@@ -52,8 +52,8 @@ export default class ManagementAdmin implements OnInit {
   }
 
   /**
-   * Opens a confirmation modal and deletes the selected user.
-   * @param user The user record to delete.
+   * Abre una modal de confirmación y elimina el usuario seleccionado.
+   * @param user El registro de usuario a eliminar.
    */
   async deleteUser(user: UserModel): Promise<void> {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
@@ -96,8 +96,8 @@ export default class ManagementAdmin implements OnInit {
   }
 
   /**
-   * Navigates to the profile modification page with the selected user data.
-   * @param user The user record to edit.
+   * Navega a la página de modificación de perfil con los datos del usuario seleccionado.
+   * @param user El registro de usuario a editar.
    */
   editUser(user: UserModel): void {
     const userWithRole = {
@@ -110,7 +110,7 @@ export default class ManagementAdmin implements OnInit {
   }
 
   /**
-   * Redirects to the registration page to create a new user of the current type.
+   * Redirige a la página de registro para crear un nuevo usuario del tipo actual.
    */
   createUser(): void {
     const type = this.isClient ? 'client' : 'business';

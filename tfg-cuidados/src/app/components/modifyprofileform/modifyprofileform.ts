@@ -10,12 +10,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import {
-  ReactiveFormsModule,
-  FormBuilder,
-  Validators,
-  FormControl,
-} from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ButtonComponent } from '../button/button';
 import { Inputs } from '../inputs/inputs';
 import { AuthService } from '../../services/auth.service';
@@ -25,8 +20,8 @@ import { LucideAngularModule } from 'lucide-angular';
 import { UserProfileModel, FormSubmitEvent } from '../../models/ModifyProfileForm';
 
 /**
- * Component providing a dynamic form to edit user profiles.
- * Adapts its fields and validations based on the user's role (Client, Business, or Admin).
+ * Componente que proporciona un formulario dinámico para editar perfiles de usuario.
+ * Adapta sus campos y validaciones basándose en el rol del usuario (Cliente, Negocio o Administrador).
  */
 @Component({
   selector: 'app-modifyprofileform',
@@ -86,18 +81,18 @@ export class Modifyprofileform implements OnInit, OnChanges {
   ngOnInit(): void {
     const activeRole = this.authService.userRol();
     this.isAdminViewer = activeRole === 'administrator';
-    
+
     if (!this.userData) {
       this.loadProfileFormData();
     }
   }
 
   /**
-   * Loads the user's data into the reactive form based on their profile type.
+   * Carga los datos del usuario en el formulario reactivo basándose en su tipo de perfil.
    */
   private loadProfileFormData(): void {
     this.targetUser = this.userData || (this.authService.currentUser() as UserProfileModel);
-    
+
     if (this.targetUser) {
       this.profileForm.patchValue({
         phone: this.targetUser.phone,
@@ -105,7 +100,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
       });
 
       const nameValue = this.targetUser.name;
-      
+
       if (this.userRole === 'business') {
         this.profileForm.patchValue({ companyName: nameValue });
       } else {
@@ -130,13 +125,13 @@ export class Modifyprofileform implements OnInit, OnChanges {
         }
       }
     }
-    
+
     this.checkValidators();
     this.cd.detectChanges();
   }
 
   /**
-   * Resets and recalculates which fields are mandatory based on the profile role.
+   * Reinicia y recalcula qué campos son obligatorios basándose en el rol del perfil.
    */
   private checkValidators(): void {
     Object.keys(this.profileForm.controls).forEach((key) => {
@@ -145,16 +140,16 @@ export class Modifyprofileform implements OnInit, OnChanges {
     });
 
     this.setValidators(['email', 'phone']);
-    
+
     if (this.userRole === 'business') {
       this.setValidators(['companyName']);
     } else {
       this.setValidators(['userName']);
     }
-    
+
     if (this.userRole !== 'administrator') {
       this.setValidators(['address', 'city', 'postcode', 'comunity']);
-      
+
       if (this.userRole === 'client') {
         this.setValidators(['surname1', 'surname2']);
       }
@@ -162,41 +157,41 @@ export class Modifyprofileform implements OnInit, OnChanges {
   }
 
   /**
-   * Applies specific validation rules to an array of form control names.
-   * @param fields Array of form control names to validate.
+   * Aplica reglas de validación específicas a un array de nombres de controles de formulario.
+   * @param fields Array de nombres de controles de formulario a validar.
    */
   private setValidators(fields: string[]): void {
     fields.forEach((f) => {
       const control = this.profileForm.get(f);
       const validators = [Validators.required];
-      
+
       if (f === 'phone') validators.push(Validators.pattern('^[0-9]{9}$'));
       if (f === 'postcode') validators.push(Validators.pattern('^[0-9]{5}$'));
       if (f === 'email') validators.push(Validators.email);
       if (f === 'userName') validators.push(Validators.minLength(3));
-      
+
       control?.setValidators(validators);
       control?.updateValueAndValidity();
     });
   }
 
   /**
-   * Retrieves a form control instance by its name.
+   * Obtiene una instancia de control de formulario por su nombre.
    */
   getCtrl(name: string): FormControl {
     return this.profileForm.get(name) as FormControl;
   }
 
   /**
-   * Computes the translated error message for a specific form control.
+   * Computa el mensaje de error traducido para un control de formulario específico.
    */
   getErrorMessage(controlName: string): string {
     const control = this.profileForm.get(controlName);
     if (!control || !control.touched) return '';
-    
+
     const errors = control.errors;
     if (!errors) return '';
-    
+
     const errorMessages: Record<string, string> = {
       required: this.translate.instant('MODIFY_PROFILE.ERRORS.REQUIRED'),
       email: this.translate.instant('MODIFY_PROFILE.ERRORS.EMAIL'),
@@ -205,13 +200,13 @@ export class Modifyprofileform implements OnInit, OnChanges {
       }),
       pattern: this.translate.instant('MODIFY_PROFILE.ERRORS.PATTERN'),
     };
-    
+
     const firstError = Object.keys(errors)[0];
     return errorMessages[firstError] || this.translate.instant('MODIFY_PROFILE.ERRORS.INVALID');
   }
 
   /**
-   * Validates the form and emits the structured data to the parent component.
+   * Valida el formulario y emite los datos estructurados al componente padre.
    */
   onSubmit(): void {
     if (this.profileForm.valid) {
@@ -220,7 +215,8 @@ export class Modifyprofileform implements OnInit, OnChanges {
       const databasePayload: UserProfileModel = {
         email: formValue.email ?? undefined,
         phone: formValue.phone ?? undefined,
-        name: (this.userRole === 'business' ? formValue.companyName : formValue.userName) ?? undefined
+        name:
+          (this.userRole === 'business' ? formValue.companyName : formValue.userName) ?? undefined,
       };
 
       if (this.userRole !== 'administrator') {
@@ -236,7 +232,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
           databasePayload.description = formValue.description ?? undefined;
         }
       }
-      
+
       this.formSubmitted.emit({ data: databasePayload, rol: this.userRole });
     } else {
       this.profileForm.markAllAsTouched();
@@ -244,14 +240,14 @@ export class Modifyprofileform implements OnInit, OnChanges {
   }
 
   /**
-   * Emits an event to signal cancellation of the profile update.
+   * Emite un evento para señalar la cancelación de la actualización de perfil.
    */
   onCancel(): void {
     this.cancelRequested.emit();
   }
 
   /**
-   * Emits an event to signal a request to delete the account.
+   * Emite un evento para señalar una solicitud de eliminar la cuenta.
    */
   onDeleteAccount(): void {
     this.deleteRequested.emit();
