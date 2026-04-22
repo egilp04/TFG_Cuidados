@@ -185,7 +185,7 @@ export class ComunicationService {
   /**
    * Performs a logical delete of a communication based on the active user role (sender/receiver).
    */
-  deleteComunicacion(message: ComunicationModel): Observable<void> {
+  deleteComunication(message: ComunicationModel): Observable<void> {
     const user = this.authService.currentUser();
     if (!user || !message.id_comunication) return of(undefined);
 

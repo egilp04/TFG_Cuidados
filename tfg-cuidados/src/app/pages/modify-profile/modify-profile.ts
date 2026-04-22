@@ -76,8 +76,8 @@ export default class ModifyProfilePage implements OnInit {
     
     if (!user) return;
     
-    const newData = (event.data || event.datos) as UpdateProfilePayload;
-    const role = event.role || event.rol;
+    const newData = (event.data) as UpdateProfilePayload;
+    const role = event.rol;
 
     this.userService
       .updateProfileDirect(user.id_user, newData, role)

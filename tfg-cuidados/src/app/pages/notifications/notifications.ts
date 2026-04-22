@@ -71,7 +71,7 @@ export default class Notifications implements OnInit {
           this.dataSource.paginator = this.paginator;
         }
 
-        const unreadNotifications = data.filter((n) => !n.is_read);
+        const unreadNotifications = data.filter((n) => !n.read);
         if (unreadNotifications.length > 0) {
           this.markAsRead(unreadNotifications);
         }
@@ -88,16 +88,16 @@ export default class Notifications implements OnInit {
     const notificationList = Array.isArray(notifications) ? notifications : [notifications];
 
     notificationList.forEach((notification) => {
-      if (notification.is_read || !notification.id_comunication) return;
+      if (notification.read || !notification.id_comunication) return;
 
-      notification.is_read = true;
+      notification.read = true;
       this.comunicationService
-        .updateComunication(notification.id_comunication, { is_read: true })
+        .updateComunication(notification.id_comunication, { read: true })
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           error: (err: Error) => {
             console.error('Error marking notification as read:', err);
-            notification.is_read = false;
+            notification.read = false;
             this.cd.markForCheck();
           },
         });

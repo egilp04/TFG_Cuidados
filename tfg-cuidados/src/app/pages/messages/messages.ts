@@ -138,15 +138,15 @@ export default class Messages implements OnInit {
 
     const user = this.authService.currentUser();
     
-    if (user && message.id_receiver === user.id_user && !message.is_read) {
-      message.is_read = true;
+    if (user && message.id_receiver === user.id_user && !message.read) {
+      message.read = true;
       
       this.comunicationService
-        .updateComunication(message.id_comunication!, { is_read: true })
+        .updateComunication(message.id_comunication!, { read: true })
         .pipe(
           takeUntilDestroyed(this.destroyRef),
           catchError((err: Error) => {
-            message.is_read = false;
+            message.read = false;
             console.error('Error marking message as read in background:', err);
             return of(null);
           })

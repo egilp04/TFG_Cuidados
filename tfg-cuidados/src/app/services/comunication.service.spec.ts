@@ -122,7 +122,7 @@ describe('ComunicationService', () => {
     };
     (service as any).mensajesList$.next([msg]);
 
-    service.deleteComunicacion(msg).subscribe();
+    service.deleteComunication(msg).subscribe();
     tick();
 
     expect(supabaseMock.from().update).toHaveBeenCalledWith({ eliminado_por_emisor: true });

@@ -327,7 +327,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="1i5N55A6d2sMEcH_wK6w-69" value="3. deleteComunicacion(id)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="1i5N55A6d2sMEcH_wK6w-59" target="1i5N55A6d2sMEcH_wK6w-61">
+        <mxCell id="1i5N55A6d2sMEcH_wK6w-69" value="3. deleteComunication(id)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="1i5N55A6d2sMEcH_wK6w-59" target="1i5N55A6d2sMEcH_wK6w-61">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="534" y="2574" />
