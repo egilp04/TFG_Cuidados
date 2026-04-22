@@ -149,7 +149,7 @@ describe('Loginmodal', () => {
 
     component.toRecoverPasswd();
 
-    expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'sucess');
+    expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'success');
     tick(3000);
     expect(messageServiceSpy.clear).toHaveBeenCalled();
     expect(component.modeActual).toBe('login');
@@ -200,7 +200,7 @@ describe('Loginmodal', () => {
 
     component.toRecoverEmail;
 
-    expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'sucess');
+    expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'success');
     tick(2000);
     expect(messageServiceSpy.clear).toHaveBeenCalled();
     expect(component.modeActual).toBe('login');

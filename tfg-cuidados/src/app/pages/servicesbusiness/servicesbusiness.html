@@ -28,61 +28,61 @@
       class="w-full"
       [attr.aria-label]="'SERVICES_BUSINESS.ACCESSIBILITY.TABLE_LABEL' | translate"
     >
-      <ng-container matColumnDef="nombre">
+      <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           {{ 'SERVICES_BUSINESS.TABLE.NAME' | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="text-label service-table-text">
-          {{ element.Servicio?.nombre }}
+          {{ element.Service?.name }}
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="descripcion">
+      <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           {{ 'SERVICES_BUSINESS.TABLE.DESCRIPTION' | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="text-label service-table-text">
-          {{ element.descripcion }}
+          {{ element.description }}
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="precio">
+      <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           {{ 'SERVICES_BUSINESS.TABLE.PRICE' | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="text-label service-table-text">
-          {{ element.precio }}€
+          {{ element.price }}€
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="tipo">
+      <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           {{ 'SERVICES_BUSINESS.TABLE.TYPE' | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="text-label service-table-text">
-          {{ element.Servicio?.tipo_servicio }}
+          {{ element.Service?.type_service }}
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="hora">
+      <ng-container matColumnDef="time">
         <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           {{ 'SERVICES_BUSINESS.TABLE.TIME' | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="text-label service-table-text">
-          {{ element.Horario?.hora }}
+          {{ element.Time?.time }}
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="dia">
+      <ng-container matColumnDef="day">
         <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           {{ 'SERVICES_BUSINESS.TABLE.DAY' | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="text-label service-table-text">
-          {{ element.Horario?.dia_semana }}
+          {{ element.Time?.week_day }}
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="acciones">
+      <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef class="text-label service-table-header" scope="col">
           <span class="sr-only">{{
             'SERVICES_BUSINESS.ACCESSIBILITY.ACTIONS_COL' | translate
@@ -92,11 +92,11 @@
           <div class="service-btn-container">
             <app-button
               [label]="'SERVICES_BUSINESS.BTN_DELETE' | translate"
-              (click)="onDelete(element.id_servicio_horario)"
+              (click)="onDelete(element.id_service_time)"
               variant="secondary"
               [disabled]="isLoading()"
               [attr.aria-label]="
-                ('SERVICES_BUSINESS.BTN_DELETE' | translate) + ': ' + element.Servicio?.nombre
+                ('SERVICES_BUSINESS.BTN_DELETE' | translate) + ': ' + element.Service?.name
               "
             ></app-button>
             <app-button
@@ -105,7 +105,7 @@
               (click)="openModal(element)"
               [disabled]="isLoading()"
               [attr.aria-label]="
-                ('SERVICES_BUSINESS.BTN_MODIFY' | translate) + ': ' + element.Servicio?.nombre
+                ('SERVICES_BUSINESS.BTN_MODIFY' | translate) + ': ' + element.Service?.name
               "
             ></app-button>
           </div>

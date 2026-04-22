@@ -14,15 +14,15 @@
     role="list"
     [attr.aria-label]="'SEARCH_BUSINESS.ACCESSIBILITY.RESULTS_LIST' | translate"
   >
-    @for (service of allServices(); track service.id_servicio) {
+    @for (service of allServices(); track service.id_service) {
       <main
         class="directory-card-container"
         role="listitem"
-        [attr.aria-labelledby]="'service-id-' + service.id_servicio"
+        [attr.aria-labelledby]="'service-id-' + service.id_service"
       >
         <header class="directory-card-header">
-          <h2 [id]="'service-name-' + service.nombre" class="directory-bssn-name text-h2">
-            {{ service.nombre }}
+          <h2 [id]="'service-name-' + service.name" class="directory-bssn-name text-h2">
+            {{ service.name }}
           </h2>
         </header>
 
@@ -32,7 +32,7 @@
               {{ 'SEARCH_BUSINESS.CARD.DESCRIPTION' | translate }}
             </label>
           </div>
-          <p class="directory-description-section">{{ service.descripcion }}</p>
+          <p class="directory-description-section">{{ service.description }}</p>
         </section>
 
         <footer class="directory-card-btn-container">
@@ -41,7 +41,7 @@
             variant="primary"
             class="flex-1"
             (click)="showOffersByService(service)"
-            [attr.aria-label]="('SEARCH_BUSINESS.BTN_CONTRACT' | translate) + ': ' + service.nombre"
+            [attr.aria-label]="('SEARCH_BUSINESS.BTN_CONTRACT' | translate) + ': ' + service.name"
           >
           </app-button>
         </footer>

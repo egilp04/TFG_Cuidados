@@ -22,10 +22,10 @@ export default class Landing {
   async openModal() {
     const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
     this.dialog.open(Loginmodal, {
-      data: { mode: 'registro' },
+      data: { mode: 'register' },
       width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-      maxHeight: '90vh',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+      maxHeight: '80vh',
     });
   }
 }

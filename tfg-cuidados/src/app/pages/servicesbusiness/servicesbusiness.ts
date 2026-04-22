@@ -5,23 +5,25 @@ import {
   DestroyRef,
   OnInit,
   inject,
+  signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { switchMap, filter, map, catchError } from 'rxjs/operators';
+import { switchMap, filter, map, catchError, finalize, tap } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { ButtonComponent } from '../../components/button/button';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { MessageService } from '../../services/message-service';
 import { ServiceTimeService } from '../../services/service-time.service';
-import { ServicetimeJoined } from '../../models/Service_Time_Service_Model';
+import { ServiceTimeJoined } from '../../models/Service_Time_Joined';
 import { ResponsiveSize } from '../../services/responsive-size';
-import { signal } from '@angular/core';
-import { finalize, tap } from 'rxjs';
 
+/**
+ * Component for managing the service and time offerings of a business.
+ */
 @Component({
   selector: 'app-management-servicetime',
   standalone: true,
@@ -45,44 +47,44 @@ export default class Servicesbusiness implements OnInit {
   private cd = inject(ChangeDetectorRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
-  public isLoading = signal(false);
   private responsive = inject(ResponsiveSize);
+  
+  public isLoading = signal(false);
 
-  dataSource = new MatTableDataSource<ServicetimeJoined>([]);
+  dataSource = new MatTableDataSource<ServiceTimeJoined>([]);
   displayedColumns: string[] = [
-    'nombre',
-    'precio',
-    'tipo',
-    'hora',
-    'dia',
-    'descripcion',
-    'acciones',
+    'name',
+    'price',
+    'type',
+    'time',
+    'day',
+    'description',
+    'actions',
   ];
 
   ngOnInit() {
-    this.chargeServices();
+    this.loadServices();
   }
 
-  chargeServices() {
-    const businessId = this.authService.currentUser()?.id_usuario;
+  loadServices() {
+    const businessId = this.authService.currentUser()?.id_user;
     if (businessId) {
       this.serviceTimeService
         .getServiceTimeByBusiness(businessId)
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((data: ServicetimeJoined[]) => {
+        .subscribe((data: ServiceTimeJoined[]) => {
           this.dataSource.data = data;
           this.cd.markForCheck();
         });
     }
   }
 
-  async openModal(element?: ServicetimeJoined) {
-    const { ServiceTimeModal } =
-      await import('../../components/service-time-modal/service-time-modal');
+  async openModal(element?: ServiceTimeJoined) {
+    const { ServiceTimeModal } = await import('../../components/service-time-modal/service-time-modal');
     const dialogRef = this.dialog.open(ServiceTimeModal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-      maxHeight: '90vh',
+      maxHeight: '86vh',
       data: element || null,
     });
 
@@ -93,7 +95,7 @@ export default class Servicesbusiness implements OnInit {
         filter((result) => result === true),
       )
       .subscribe(() => {
-        this.chargeServices();
+        this.loadServices();
       });
   }
 
@@ -104,9 +106,10 @@ export default class Servicesbusiness implements OnInit {
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-      maxHeight: '90vh',
-      data: { mode: 'eliminarServicio' },
+      maxHeight: '86vh',
+      data: { mode: 'deleteService' },
     });
+
     dialogRef
       .afterClosed()
       .pipe(
@@ -127,10 +130,10 @@ export default class Servicesbusiness implements OnInit {
         switchMap(() =>
           this.translate
             .get('SERVICES_BUSINESS.MESSAGES.DELETE_SUCCESS')
-            .pipe(map((text) => ({ type: 'sucess' as const, text }))),
+            .pipe(map((text) => ({ type: 'success' as const, text }))),
         ),
         catchError((err) => {
-          console.error('Error al cancelar:', err);
+          console.error('Error deleting service time:', err);
           return this.translate
             .get('SERVICES_BUSINESS.MESSAGES.DELETE_ERROR')
             .pipe(map((text) => ({ type: 'error' as const, text })));
@@ -138,8 +141,8 @@ export default class Servicesbusiness implements OnInit {
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
-        if (resultado.type === 'sucess') {
-          this.chargeServices();
+        if (resultado.type === 'success') {
+          this.loadServices();
         }
         this.cd.markForCheck();
       });

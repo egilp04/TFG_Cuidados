@@ -22,15 +22,15 @@
     role="list"
     [attr.aria-label]="'SEARCH_BUSINESS.ACCESSIBILITY.RESULTS_LIST' | translate"
   >
-    @for (empresa of filteredBussinesses(); track empresa.id_empresa) {
+    @for (business of filteredBusinesses(); track business.id_business) {
       <main
         class="search-card-container space-y-4"
         role="listitem"
-        [attr.aria-labelledby]="'business-name-' + empresa.id_empresa"
+        [attr.aria-labelledby]="'business-name-' + business.id_business"
       >
         <header class="search-card-header">
-          <h2 [id]="'business-name-' + empresa.id_empresa" class="search-bssn-name text-h2">
-            {{ empresa.nombre }}
+          <h2 [id]="'business-name-' + business.id_business" class="search-bssn-name text-h2">
+            {{ business.name }}
           </h2>
 
           <p class="search-card-location">
@@ -47,7 +47,7 @@
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
             <span class="sr-only">{{ 'SEARCH_BUSINESS.ACCESSIBILITY.LOCATION' | translate }}:</span>
-            {{ empresa.direccion }}
+            {{ business.address }}
           </p>
         </header>
 
@@ -55,27 +55,27 @@
           <h3 class="search-description-title-section text-label">
             {{ 'SEARCH_BUSINESS.CARD.DESCRIPTION' | translate }}
           </h3>
-          <p class="search-description-section">{{ empresa.descripcion }}</p>
+          <p class="search-description-section">{{ business.description }}</p>
         </section>
 
         <section class="search-select-section">
-          <label class="search-description-section" [for]="'service-select-' + empresa.id_empresa">
+          <label class="search-description-section" [for]="'service-select-' + business.id_business">
             {{ 'SEARCH_BUSINESS.CARD.SELECT_SERVICE' | translate }}
           </label>
           <select
-            [(ngModel)]="empresa.seleccion"
+            [(ngModel)]="business.selection"
             class="search-card-select"
-            [id]="'service-select-' + empresa.id_empresa"
+            [id]="'service-select-' + business.id_business"
           >
             <option [ngValue]="undefined" disabled selected>
               {{ 'SEARCH_BUSINESS.CARD.CHOOSE_OPTION' | translate }}
             </option>
 
-            @for (sh of empresa.Servicio_Horario; track sh.id_servicio_horario) {
+            @for (sh of business.Service_Time; track sh.id_service_time) {
               <option [ngValue]="sh">
-                {{ sh.Servicio?.nombre }} — {{ sh.Horario?.dia_semana | titlecase }}
-                {{ sh.Horario?.hora }}
-                ({{ sh.precio | currency: 'EUR' }})
+                {{ sh.Service?.name }} — {{ sh.Time?.week_day | titlecase }}
+                {{ sh.Time?.time }}
+                ({{ sh.price | currency: 'EUR' }})
               </option>
             }
           </select>
@@ -86,8 +86,8 @@
             [label]="'SEARCH_BUSINESS.BTN_MESSAGE' | translate"
             variant="secondary"
             class="flex-1"
-            (click)="sendMessage(empresa)"
-            [attr.aria-label]="('SEARCH_BUSINESS.BTN_MESSAGE' | translate) + ': ' + empresa.nombre"
+            (click)="sendMessage(business)"
+            [attr.aria-label]="('SEARCH_BUSINESS.BTN_MESSAGE' | translate) + ': ' + business.name"
           >
           </app-button>
 
@@ -95,9 +95,9 @@
             [label]="'SEARCH_BUSINESS.BTN_CONTRACT' | translate"
             variant="primary"
             class="flex-1"
-            (click)="toHire(empresa)"
-            [disabled]="!empresa.seleccion"
-            [attr.aria-label]="('SEARCH_BUSINESS.BTN_CONTRACT' | translate) + ': ' + empresa.nombre"
+            (click)="toHire(business)"
+            [disabled]="!business.selection"
+            [attr.aria-label]="('SEARCH_BUSINESS.BTN_CONTRACT' | translate) + ': ' + business.name"
           >
           </app-button>
         </footer>

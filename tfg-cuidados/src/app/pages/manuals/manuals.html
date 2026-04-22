@@ -52,7 +52,7 @@
   </section>
 </main>
 
-@if (authService.isAuthenticated() && rol != 'administrador') {
+@if (authService.isAuthenticated() && rol != 'administrator') {
   @defer (on idle) {
     <app-chat-soporte></app-chat-soporte>
   }

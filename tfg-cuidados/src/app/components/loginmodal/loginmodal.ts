@@ -166,7 +166,7 @@ export class Loginmodal {
         next: () => {
           this.messageService.showMessage(
             this.translate.instant('LOGIN_MODAL.FEEDBACK.LINK_SENT'),
-            'sucess',
+            'success',
           );
           setTimeout(() => {
             this.messageService.clear();
@@ -217,7 +217,7 @@ export class Loginmodal {
       next: () => {
         this.messageService.showMessage(
           this.translate.instant('LOGIN_MODAL.FEEDBACK.NO_ERROR'),
-          'sucess',
+          'success',
         );
         setTimeout(() => {
           this.messageService.clear();

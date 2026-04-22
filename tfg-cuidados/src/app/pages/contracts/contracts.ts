@@ -82,7 +82,7 @@ export default class Contracts implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MESSAGES.SUCCESS.CANCELCONTRACT')
-                .pipe(map((msg) => ({ text: msg, type: 'sucess' as const }))),
+                .pipe(map((msg) => ({ text: msg, type: 'success' as const }))),
             ),
             catchError((err) => {
               console.error('Error al cancelar:', err);

@@ -137,7 +137,7 @@ export default class Messages implements OnInit {
         switchMap(() =>
           this.translate
             .get('MESSAGES_PAGE.ALERTS.DELETE_SUCCESS')
-            .pipe(map((text) => ({ type: 'sucess' as const, text }))),
+            .pipe(map((text) => ({ type: 'success' as const, text }))),
         ),
         catchError((err) => {
           console.error('Error al borrar:', err);

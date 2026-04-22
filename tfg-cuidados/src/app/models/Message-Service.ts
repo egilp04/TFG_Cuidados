@@ -1,4 +1,4 @@
 export interface ToastData {
   message: string;
-  type: 'sucess' | 'error';
+  type: 'success' | 'error';
 }

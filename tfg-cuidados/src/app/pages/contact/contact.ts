@@ -66,7 +66,7 @@ export default class Contact {
         'lXKk2y0Z41TMBq3NO',
       );
       const msg = await lastValueFrom(this.translate.get('MESSAGES.SUCCESS.CONTACT'));
-      this.messageService.showMessage(msg, 'sucess');
+      this.messageService.showMessage(msg, 'success');
       this.contactForm.reset();
     } catch (error) {
       console.error('Error:', error);

@@ -18,16 +18,20 @@ import { ButtonComponent } from '../../components/button/button';
 import { AuthService } from '../../services/auth.service';
 import { ContractService } from '../../services/contract.service';
 import { MessageService } from '../../services/message-service';
-import { Contractmodel } from '../../models/ContractModel';
+import { ContractModel } from '../../models/ContractModel';
 import { Buttonback } from '../../components/buttonback/buttonback';
-import { BusinessModel, ServicioHorarioResponse } from '../../models/Bussiness-Service';
+import { BusinessModel, ServiceTimeResponse } from '../../models/Business-Service';
 import { BusinessService } from '../../services/business.service';
 import { Router } from '@angular/router';
 
-export interface EmpresaUI extends BusinessModel {
-  seleccion?: ServicioHorarioResponse;
+export interface BusinessUI extends BusinessModel {
+  selection?: ServiceTimeResponse;
 }
 
+/**
+ * Component for searching, filtering, and hiring business services.
+ * Also allows direct messaging to business profiles.
+ */
 @Component({
   selector: 'app-verempresas',
   standalone: true,
@@ -52,33 +56,37 @@ export default class SearchBusiness implements OnInit {
   private destroyRef = inject(DestroyRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
+  private router = inject(Router);
 
-  public allBussinesses = signal<EmpresaUI[]>([]);
+  public allBusinesses = signal<BusinessUI[]>([]);
   public searchFilterItem = signal<string>('');
   public controlFilterItem = new FormControl('');
-
   public idSelectedService = signal<string | null>(null);
-  private router = inject(Router);
 
   constructor() {
     const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras.state as { idServicio: string };
-    if (state && state.idServicio) {
-      this.idSelectedService.set(state.idServicio);
-    } else if (history.state && history.state.idServicio) {
-      this.idSelectedService.set(history.state.idServicio);
+    const state = navigation?.extras.state as { idService: string };
+    
+    if (state && state.idService) {
+      this.idSelectedService.set(state.idService);
+    } else if (history.state && history.state.idService) {
+      this.idSelectedService.set(history.state.idService);
     }
   }
 
-  public filteredBussinesses = computed(() => {
-    const filtro = this.searchFilterItem().toLowerCase().trim();
-    if (!filtro) return this.allBussinesses();
-    return this.allBussinesses().filter((emp) => {
-      const sameName = emp.nombre.toLowerCase().includes(filtro);
-      const sameService = emp.Servicio_Horario?.some(
-        (sh: ServicioHorarioResponse) =>
-          sh.Servicio?.nombre.toLowerCase().includes(filtro) ||
-          sh.Horario?.dia_semana.toLowerCase().includes(filtro),
+  /**
+   * Dynamically filters the list of businesses based on search input matching business name, service name, or day.
+   */
+  public filteredBusinesses = computed(() => {
+    const filterText = this.searchFilterItem().toLowerCase().trim();
+    if (!filterText) return this.allBusinesses();
+    
+    return this.allBusinesses().filter((business) => {
+      const sameName = business.name.toLowerCase().includes(filterText);
+      const sameService = business.Service_Time?.some(
+        (sh: ServiceTimeResponse) =>
+          sh.Service?.name.toLowerCase().includes(filterText) ||
+          sh.Time?.week_day.toLowerCase().includes(filterText),
       );
 
       return sameName || sameService;
@@ -86,16 +94,19 @@ export default class SearchBusiness implements OnInit {
   });
 
   ngOnInit() {
-    this.chargeBussinessRealTime();
+    this.loadBusinessesRealTime();
   }
 
-  chargeBussinessRealTime() {
+  /**
+   * Initializes real-time subscription for businesses and their offered service times.
+   */
+  loadBusinessesRealTime() {
     this.businessService
       .getBusinessesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         catchError((err) => {
-          console.error('Error IRL Empresas:', err);
+          console.error('Error loading real-time businesses:', err);
           return this.translate.get('SEARCH_BUSINESS.MESSAGES.CONNECTION_ERROR').pipe(
             tap((msg) => this.messageService.showMessage(msg, 'error')),
             map(() => []),
@@ -104,28 +115,39 @@ export default class SearchBusiness implements OnInit {
       )
       .subscribe((data: BusinessModel[]) => {
         const targetId = this.idSelectedService()?.trim();
-        const dataConSeleccion: EmpresaUI[] = data
-          .map((e) => {
-            const horariosFiltrados = targetId
-              ? e.Servicio_Horario?.filter((sh) => sh.Servicio?.id_servicio === targetId)
-              : e.Servicio_Horario;
+        
+        const dataWithSelection: BusinessUI[] = data
+          .map((business) => {
+            const filteredTimes = targetId
+              ? business.Service_Time?.filter((sh) => sh.Service?.id_service === targetId)
+              : business.Service_Time;
             return {
-              ...e,
-              Servicio_Horario: horariosFiltrados,
-              seleccion: undefined,
+              ...business,
+              Service_Time: filteredTimes,
+              selection: undefined,
             };
           })
-          .filter((e) => e.Servicio_Horario && e.Servicio_Horario.length > 0);
-        this.allBussinesses.set(dataConSeleccion);
+          .filter((business) => business.Service_Time && business.Service_Time.length > 0);
+          
+        this.allBusinesses.set(dataWithSelection);
         this.cd.markForCheck();
       });
   }
 
-  applyFilter(valor: string) {
-    this.searchFilterItem.set(valor);
+  /**
+   * Updates the search filter signal.
+   * @param value The text value to filter by.
+   */
+  applyFilter(value: string) {
+    this.searchFilterItem.set(value);
   }
 
-  toHire(empresa: EmpresaUI) {
+  /**
+   * Processes the hiring of a service from a specific business.
+   * Prevents duplicate active contracts for the same service schedule.
+   * @param business The selected business containing the user's service selection.
+   */
+  toHire(business: BusinessUI) {
     const user = this.authService.currentUser();
     if (!user) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.LOGIN_REQUIRED').subscribe((res) => {
@@ -134,8 +156,8 @@ export default class SearchBusiness implements OnInit {
       return;
     }
 
-    const seleccion = empresa.seleccion;
-    if (!seleccion) {
+    const selection = business.selection;
+    if (!selection) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.SELECT_SERVICE').subscribe((res) => {
         this.messageService.showMessage(res, 'error');
       });
@@ -145,20 +167,17 @@ export default class SearchBusiness implements OnInit {
     this.contractService
       .getContractsObservable()
       .pipe(take(1))
-      .subscribe((contacts) => {
-        const idSeleccionado = seleccion.id_servicio_horario;
-        console.log('ID que buscas:', idSeleccionado);
-        console.log(
-          'IDs en tus contratos:',
-          contacts.map((c) => c.id_sh_plano),
-        );
-        const alreadyHired = contacts.find((c) => {
-          const sameIds = String(c.id_sh_plano) === String(idSeleccionado);
-          const sameClient = c.id_cliente === user.id_usuario;
-          const isActive = c.estado === 'active';
+      .subscribe((contracts) => {
+        const selectedId = selection.id_service_time;
+        
+        const alreadyHired = contracts.find((contract) => {
+          const sameIds = String(contract.id_st_flat) === String(selectedId);
+          const sameClient = contract.id_client === user.id_user;
+          const isActive = contract.state === 'active';
 
           return sameIds && sameClient && isActive;
         });
+
         if (alreadyHired) {
           this.translate.get('SEARCH_BUSINESS.MESSAGES.ALREADY_CONTRACTED').subscribe((res) => {
             this.messageService.showMessage(res, 'error');
@@ -166,16 +185,16 @@ export default class SearchBusiness implements OnInit {
           return;
         }
 
-        const newContract: Contractmodel = {
-          estado: 'active',
-          fecha_inicio: new Date().toISOString().split('T')[0],
-          fecha_fin: null,
-          dia_semana_contratado: seleccion.Horario?.dia_semana || '',
-          hora_contratada: seleccion.Horario?.hora || '',
-          fecha_creacion: new Date().toISOString(),
-          id_servicio_horario: seleccion.id_servicio_horario,
-          id_cliente: user.id_usuario,
-          id_empresa: empresa.id_empresa,
+        const newContract: ContractModel = {
+          state: 'active',
+          start_date: new Date().toISOString().split('T')[0],
+          end_date: null,
+          week_day_hired: selection.Time?.week_day || '',
+          time_hired: selection.Time?.time || '',
+          creation_date: new Date().toISOString(),
+          id_service_time: selection.id_service_time,
+          id_client: user.id_user,
+          id_business: business.id_business,
         };
 
         this.contractService
@@ -185,10 +204,10 @@ export default class SearchBusiness implements OnInit {
             switchMap(() =>
               this.translate
                 .get('SEARCH_BUSINESS.MESSAGES.CONTRACT_SUCCESS')
-                .pipe(map((text) => ({ type: 'sucess' as const, text }))),
+                .pipe(map((text) => ({ type: 'success' as const, text }))),
             ),
             catchError((err) => {
-              console.error('Error al contratar:', err);
+              console.error('Error hiring service:', err);
               return this.translate
                 .get('SEARCH_BUSINESS.MESSAGES.CONTRACT_ERROR')
                 .pipe(map((text) => ({ type: 'error' as const, text })));
@@ -196,15 +215,19 @@ export default class SearchBusiness implements OnInit {
           )
           .subscribe((resultado) => {
             this.messageService.showMessage(resultado.text, resultado.type);
-            if (resultado.type === 'sucess') {
-              empresa.seleccion = undefined;
+            if (resultado.type === 'success') {
+              business.selection = undefined;
             }
             this.cd.markForCheck();
           });
       });
   }
 
-  async sendMessage(empresa: EmpresaUI) {
+  /**
+   * Opens the messaging modal to send a direct message to the selected business.
+   * @param business The business recipient of the message.
+   */
+  async sendMessage(business: BusinessUI) {
     const user = this.authService.currentUser();
     if (!user) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.LOGIN_MSG_REQUIRED').subscribe((res) => {
@@ -215,10 +238,8 @@ export default class SearchBusiness implements OnInit {
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
     this.dialog.open(MessagesModal, {
       data: {
-        mode: 'escribir',
-        receptorEmail: empresa.email,
-        idReceptor: empresa.id_empresa,
-        nombreReceptor: empresa.nombre,
+        mode: 'writeMessage',
+        receiverEmail: business.email,
       },
       width: '500px',
     });

@@ -141,7 +141,7 @@ export default class ManagementTimeGlobal implements OnInit {
           const msgKey = this.isEditing
             ? 'MANAGEMENT_SCHEDULES.MESSAGES.SUCCESS_UPDATE'
             : 'MANAGEMENT_SCHEDULES.MESSAGES.SUCCESS_CREATE';
-          return this.translate.get(msgKey).pipe(map((text) => ({ type: 'sucess' as const, text })));
+          return this.translate.get(msgKey).pipe(map((text) => ({ type: 'success' as const, text })));
         }),
         catchError((err) => {
           let msgKey = 'MANAGEMENT_SCHEDULES.MESSAGES.ERROR_GENERIC';
@@ -161,7 +161,7 @@ export default class ManagementTimeGlobal implements OnInit {
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
-        if (resultado.type === 'sucess') {
+        if (resultado.type === 'success') {
           this.resetForm();
         }
       });
@@ -205,7 +205,7 @@ export default class ManagementTimeGlobal implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MANAGEMENT_GLOBAL.DELETE')
-                .pipe(map((text) => ({ type: 'sucess' as const, text }))),
+                .pipe(map((text) => ({ type: 'success' as const, text }))),
             ),
             catchError(() =>
               this.translate
@@ -227,7 +227,7 @@ export default class ManagementTimeGlobal implements OnInit {
     this.timeFormular.get('dia')?.setValue('');
     this.cd.markForCheck();
   }
-  private showMessageTraducido(key: string, type: 'error' | 'sucess') {
+  private showMessageTraducido(key: string, type: 'error' | 'success') {
     this.translate.get(key).subscribe((res) => {
       this.messageService.showMessage(res, type);
     });

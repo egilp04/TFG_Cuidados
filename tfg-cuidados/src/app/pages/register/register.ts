@@ -74,7 +74,7 @@ export default class Register implements OnInit {
         takeUntilDestroyed(this.destroyRef),
         switchMap(() => this.translate.get('REGISTER.MESSAGES.SUCCESS')),
         tap((msg) => {
-          this.messageService.showMessage(msg, 'sucess');
+          this.messageService.showMessage(msg, 'success');
           this.cd.detectChanges();
         }),
         delay(2000),

@@ -61,7 +61,7 @@ export default class ManagementAdmin implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MESSAGES.SUCCESS.DELETE_USER')
-                .pipe(map((msg) => ({ text: msg, type: 'sucess' as const }))),
+                .pipe(map((msg) => ({ text: msg, type: 'success' as const }))),
             ),
             catchError(() =>
               this.translate
@@ -74,7 +74,7 @@ export default class ManagementAdmin implements OnInit {
       .subscribe({
         next: (res) => {
           this.messageService.showMessage(res.text, res.type);
-          if (res.type === 'sucess') {
+          if (res.type === 'success') {
             this.chargeData(this.isUser ? 'cliente' : 'empresa');
           }
         },
