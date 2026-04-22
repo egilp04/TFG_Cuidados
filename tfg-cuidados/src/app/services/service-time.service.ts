@@ -3,7 +3,7 @@ import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Service_Time_Model } from '../models/Service_Time_Model';
-import { ServiceTimeJoined } from '../../models/Service_Time_Service_Model';
+import { ServiceTimeJoined } from '../models/Service_Time_Service_Model';
 
 /**
  * Service responsible for managing the availability of services.

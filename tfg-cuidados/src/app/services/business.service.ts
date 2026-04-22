@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BusinessSupabaseJoinModel } from '../models/Bussiness-Service';
-import { BusinessModel } from '../../models/BusinessModel';
+import { BusinessModel } from '../models/BusinessModel';
 
 
 /**
