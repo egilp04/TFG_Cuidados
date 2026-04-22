@@ -134,14 +134,14 @@
     "FORM": {
       "NAME": "Nombre",
       "EMAIL": "Email",
-      "topic": "Motivo",
+      "TOPIC": "Motivo",
       "MESSAGE": "Mensaje",
       "SEND": "Contactar"
     },
     "ERRORS": {
       "NAME": "El nombre debe tener al menos 3 caracteres.",
       "EMAIL": "Introduce un correo electrónico válido.",
-      "topic": "El motivo es obligatorio (mín. 6 caracteres).",
+      "TOPIC": "El motivo es obligatorio (mín. 6 caracteres).",
       "MESSAGE": "El mensaje debe ser más extenso."
     }
   },

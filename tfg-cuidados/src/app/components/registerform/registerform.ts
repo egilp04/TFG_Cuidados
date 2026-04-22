@@ -167,37 +167,47 @@ export class Registerform implements OnInit, OnChanges {
    */
   getErrorMessage(controlName: string): string {
     const control = this.registerForm.get(controlName);
+
+    // 1. Si el control no existe o no ha sido tocado, no mostramos error
     if (!control || (!control.touched && !control.dirty)) return '';
 
     const errors =
       control.errors || (controlName === 'repassword' ? this.registerForm.errors : null);
+
+    // 2. Si no hay errores, salimos
     if (!errors) return '';
 
-    const errorMessages: Record<string, string> = {
-      required: this.translate.instant('REGISTER.ERRORS.REQUIRED'),
-      email: this.translate.instant('REGISTER.ERRORS.EMAIL'),
-      minlength: this.translate.instant('REGISTER.ERRORS.MIN_LENGTH', {
-        value: errors['minlength']?.requiredLength,
-      }),
-      requiredTrue: this.translate.instant('REGISTER.ERRORS.TERMS_REQUIRED'),
-      mismatch: this.translate.instant('REGISTER.ERRORS.MISMATCH'),
-      pattern: this.getPatternMessage(controlName),
-      notAdult: this.translate.instant('REGISTER.ERRORS.NOT_ADULT'),
-      invalidDniFormat: this.translate.instant('REGISTER.ERRORS.DNI_FORMAT'),
-      invalidDniLetter: this.translate.instant('REGISTER.ERRORS.DNI_LETTER'),
-      invalidDate: this.translate.instant('REGISTER.ERRORS.FECHNACINVALID'),
-      invalidCifFormat: this.translate.instant('REGISTER.ERRORS.CIF_FORMAT'),
-      invalidCifChecksum: this.translate.instant('REGISTER.ERRORS.CIF_INVALID'),
-      emailTaken: this.translate.instant('REGISTER.ERRORS.EMAIL_TAKEN'),
-    };
-
     const firstError = Object.keys(errors)[0];
-    return errorMessages[firstError] || this.translate.instant('REGISTER.ERRORS.INVALID');
+    const keyMap: Record<string, string> = {
+      required: 'REGISTER.ERRORS.REQUIRED',
+      email: 'REGISTER.ERRORS.EMAIL',
+      requiredTrue: 'REGISTER.ERRORS.TERMS_REQUIRED',
+      mismatch: 'REGISTER.ERRORS.MISMATCH',
+      notAdult: 'REGISTER.ERRORS.NOT_ADULT',
+      invalidDniFormat: 'REGISTER.ERRORS.DNI_FORMAT',
+      invalidDniLetter: 'REGISTER.ERRORS.DNI_LETTER',
+      invalidDate: 'REGISTER.ERRORS.FECHNACINVALID',
+      invalidCifFormat: 'REGISTER.ERRORS.CIF_FORMAT',
+      invalidCifChecksum: 'REGISTER.ERRORS.CIF_INVALID',
+      emailTaken: 'REGISTER.ERRORS.EMAIL_TAKEN',
+    };
+    if (firstError === 'minlength') {
+      return this.translate.instant('REGISTER.ERRORS.MIN_LENGTH', {
+        value: errors['minlength']?.requiredLength,
+      });
+    }
+    if (firstError === 'pattern') {
+      return this.getPatternMessage(controlName);
+    }
+    const translationKey = keyMap[firstError] || 'REGISTER.ERRORS.INVALID';
+
+    console.log('Idioma actual:', this.translate.currentLang);
+    console.log('Traducción instantánea:', this.translate.instant(translationKey));
+    console.log(translationKey);
+
+    return this.translate.instant(translationKey);
   }
 
-  /**
-   * Mapea errores de validación de patrón a claves de traducción específicas.
-   */
   private getPatternMessage(controlName: string): string {
     const patterns: Record<string, string> = {
       phone: 'REGISTER.ERRORS.PATTERN.PHONE',
@@ -374,7 +384,6 @@ export class Registerform implements OnInit, OnChanges {
   validatorEmailRegistered(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       if (!control.value) return of(null);
-
       return timer(500).pipe(
         switchMap(() => this.authService.checkEmailExists(control.value)),
         map((exists: boolean) => (exists ? { emailTaken: true } : null)),

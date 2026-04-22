@@ -134,14 +134,14 @@
     "FORM": {
       "NAME": "Name",
       "EMAIL": "Email",
-      "topic": "topic",
+      "TOPIC": "topic",
       "MESSAGE": "Message",
       "SEND": "Contact Us"
     },
     "ERRORS": {
       "NAME": "Name must be at least 3 characters long.",
       "EMAIL": "Please enter a valid email address.",
-      "topic": "topic is required (min. 6 characters).",
+      "TOPIC": "topic is required (min. 6 characters).",
       "MESSAGE": "Message needs to be longer."
     }
   },
@@ -693,15 +693,15 @@
         "PHONE": "Must have 9 digits",
         "ZIP": "Invalid Zip Code (5 digits)",
         "PASSWORD": "Must contain letters, numbers and special chars (min. 6)"
-      }
-    },
-    "NOT_ADULT": "You must be at least 18 years old",
-    "DNI_FORMAT": "The DNI must have 8 digits and 1 letter",
-    "DNI_LETTER": "The DNI letter is incorrect",
-    "FECHNACINVALID": "Invalid date of birth",
-    "CIF_FORMAT": "Invalid CIF format (Ex: B12345678)",
-    "CIF_INVALID": "The CIF is invalid (incorrect control digit)",
-    "EMAIL_TAKEN": "This email is already in use"
+      },
+      "EMAIL_TAKEN": "This email is already in use",
+      "NOT_ADULT": "You must be at least 18 years old",
+      "DNI_FORMAT": "The DNI must have 8 digits and 1 letter",
+      "DNI_LETTER": "The DNI letter is incorrect",
+      "FECHNACINVALID": "Invalid date of birth",
+      "CIF_FORMAT": "Invalid CIF format (Ex: B12345678)",
+      "CIF_INVALID": "The CIF is invalid (incorrect control digit)"
+    }
   },
   "SERVICE_TIME_MODAL": {
     "LABELS": {

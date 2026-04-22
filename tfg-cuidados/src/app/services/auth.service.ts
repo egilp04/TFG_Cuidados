@@ -140,7 +140,7 @@ export class AuthService {
             password: cleanEmailPassword,
             options: {
               data: metaData,
-              emailRedirectTo: `${window.location.origin}/home`,
+              emailRedirectTo: `${window.location.origin}/`,
             },
           }),
         );
