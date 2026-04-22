@@ -99,7 +99,7 @@ describe('MessagesModal', () => {
     component.sendMessage();
 
     expect(comunicationServiceSpy.insertComunicacion).toHaveBeenCalled();
-    expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'exito');
+    expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'sucess');
     expect(dialogRefSpy.close).toHaveBeenCalled();
   });
 

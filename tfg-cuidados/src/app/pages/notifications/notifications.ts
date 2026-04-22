@@ -96,7 +96,7 @@ export default class Notifications implements OnInit {
         switchMap(() =>
           this.translate
             .get('NOTIFICATIONS.ALERTS.DELETE_SUCCESS')
-            .pipe(map((text) => ({ type: 'exito' as const, text }))),
+            .pipe(map((text) => ({ type: 'sucess' as const, text }))),
         ),
         catchError((err) => {
           console.error('Error al borrar:', err);

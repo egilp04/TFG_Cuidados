@@ -1,7 +1,7 @@
 import { ComunicationModel } from './ComunicationModel';
 
 export interface MessagesModalData {
-  mode: 'escribir' | 'showMessage';
+  mode: 'writeMessage' | 'showMessage';
   receiverEmail?: string;
   content?: ComunicationModel & {
     Sender?: { email?: string; name?: string };

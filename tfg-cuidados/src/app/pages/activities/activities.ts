@@ -64,7 +64,7 @@ export default class Activities {
         switchMap(() =>
           this.translate
             .get('MESSAGES.SUCCESS.CANCELCONTRACT')
-            .pipe(map((msg) => ({ texto: msg, type: 'exito' as const }))),
+            .pipe(map((msg) => ({ texto: msg, type: 'sucess' as const }))),
         ),
         catchError((err) => {
           console.error('Error al cancelar el contrato:', err);

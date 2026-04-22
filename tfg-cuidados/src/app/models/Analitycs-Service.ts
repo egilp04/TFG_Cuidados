@@ -8,5 +8,5 @@ export interface RegistroFechaResponse {
 }
 
 export interface EstadoContratoResponse {
-  state: 'activo' | 'no activo';
+  state: 'active' | 'no active';
 }

@@ -77,7 +77,7 @@ export default class RecoverPasswordPage {
       .updatePass(newPass)
       .pipe(
         switchMap(() => this.translate.get('RECOVER_PASSWORD.TOAST.SUCCESS')),
-        tap((msg) => this.messageService.showMessage(msg, 'exito')),
+        tap((msg) => this.messageService.showMessage(msg, 'sucess')),
         delay(2000),
         switchMap(() => this.authService.signOut()),
         tap(() => this.router.navigate(['/'])),

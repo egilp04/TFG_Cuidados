@@ -1,6 +1,6 @@
 export interface ComunicationModel {
   id_comunication?: string;
-  type_comunication: 'mensaje' | 'notificacion';
+  type_comunication: 'message' | 'notification';
   content: string;
   read: boolean;
   send_date: Date;

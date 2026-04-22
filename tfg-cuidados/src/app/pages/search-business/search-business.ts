@@ -155,7 +155,7 @@ export default class SearchBusiness implements OnInit {
         const alreadyHired = contacts.find((c) => {
           const sameIds = String(c.id_sh_plano) === String(idSeleccionado);
           const sameClient = c.id_cliente === user.id_usuario;
-          const isActive = c.estado === 'activo';
+          const isActive = c.estado === 'active';
 
           return sameIds && sameClient && isActive;
         });
@@ -167,7 +167,7 @@ export default class SearchBusiness implements OnInit {
         }
 
         const newContract: Contractmodel = {
-          estado: 'activo',
+          estado: 'active',
           fecha_inicio: new Date().toISOString().split('T')[0],
           fecha_fin: null,
           dia_semana_contratado: seleccion.Horario?.dia_semana || '',
@@ -185,7 +185,7 @@ export default class SearchBusiness implements OnInit {
             switchMap(() =>
               this.translate
                 .get('SEARCH_BUSINESS.MESSAGES.CONTRACT_SUCCESS')
-                .pipe(map((text) => ({ type: 'exito' as const, text }))),
+                .pipe(map((text) => ({ type: 'sucess' as const, text }))),
             ),
             catchError((err) => {
               console.error('Error al contratar:', err);
@@ -196,7 +196,7 @@ export default class SearchBusiness implements OnInit {
           )
           .subscribe((resultado) => {
             this.messageService.showMessage(resultado.text, resultado.type);
-            if (resultado.type === 'exito') {
+            if (resultado.type === 'sucess') {
               empresa.seleccion = undefined;
             }
             this.cd.markForCheck();

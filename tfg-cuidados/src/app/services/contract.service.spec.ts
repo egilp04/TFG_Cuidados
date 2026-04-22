@@ -124,7 +124,7 @@ describe('ContractService', () => {
     tick();
 
     expect(queryBuilder.update).toHaveBeenCalledWith(
-      jasmine.objectContaining({ estado: 'no activo' }),
+      jasmine.objectContaining({ estado: 'no active' }),
     );
     expect(comunicationServiceSpy.insertComunicacion).toHaveBeenCalled();
   }));

@@ -12,8 +12,8 @@ describe('MessageService', () => {
   });
 
   it('should show message and clear after timeout', fakeAsync(() => {
-    service.showMessage('Test', 'exito', 1000);
-    expect(service.messageData()).toEqual({ mensaje: 'Test', tipo: 'exito' });
+    service.showMessage('Test', 'sucess', 1000);
+    expect(service.messageData()).toEqual({ mensaje: 'Test', tipo: 'sucess' });
 
     tick(1000);
     expect(service.messageData()).toBeNull();

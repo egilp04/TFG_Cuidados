@@ -71,7 +71,7 @@ export default class ModifyProfilePage implements OnInit {
         }),
         switchMap(() => this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_SUCCESS')),
         tap((msg) => {
-          this.messageService.showMessage(msg, 'exito');
+          this.messageService.showMessage(msg, 'sucess');
           const itsMyself = user.id_usuario === loggueUser?.id_usuario;
           if (itsMyself) {
             const updatedUser = { ...loggueUser, ...newData } as AuthUserModel;
@@ -122,9 +122,9 @@ export default class ModifyProfilePage implements OnInit {
           return of(false);
         }),
       )
-      .subscribe((exito) => {
-        if (exito) {
-          this.messageService.showMessage('Usuario eliminado correctamente', 'exito');
+      .subscribe((sucess) => {
+        if (sucess) {
+          this.messageService.showMessage('Usuario eliminado correctamente', 'sucess');
         }
       });
   }

@@ -127,7 +127,7 @@ export default class Servicesbusiness implements OnInit {
         switchMap(() =>
           this.translate
             .get('SERVICES_BUSINESS.MESSAGES.DELETE_SUCCESS')
-            .pipe(map((text) => ({ type: 'exito' as const, text }))),
+            .pipe(map((text) => ({ type: 'sucess' as const, text }))),
         ),
         catchError((err) => {
           console.error('Error al cancelar:', err);
@@ -138,7 +138,7 @@ export default class Servicesbusiness implements OnInit {
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
-        if (resultado.type === 'exito') {
+        if (resultado.type === 'sucess') {
           this.chargeServices();
         }
         this.cd.markForCheck();

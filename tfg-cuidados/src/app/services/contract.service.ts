@@ -68,7 +68,7 @@ export class ContractService {
     let query = this.supabase
       .from('Contract')
       .select(this.CONTRACT_SELECT)
-      .neq('state', 'no activo');
+      .neq('state', 'no active');
 
     if (user.id_user && user.rol !== 'administrator') {
       query = query.or(`id_client.eq.${user.id_user},id_business.eq.${user.id_user}`);
@@ -143,7 +143,7 @@ export class ContractService {
       this.supabase
         .from('Contract')
         .update({
-          state: 'no activo',
+          state: 'no active',
           end_date: todayDate,
         })
         .eq('id_contract', id)

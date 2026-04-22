@@ -86,11 +86,11 @@ export class AuthService {
         ]);
 
         let extraData = {};
-        if (user.rol === 'administrador' && adm.data) {
+        if (user.rol === 'administrator' && adm.data) {
           extraData = adm.data;
-        } else if (user.rol === 'empresa' && bus.data) {
+        } else if (user.rol === 'business' && bus.data) {
           extraData = bus.data;
-        } else if (user.rol === 'cliente' && cli.data) {
+        } else if (user.rol === 'client' && cli.data) {
           extraData = cli.data;
         }
         return { ...user, ...extraData } as AuthUserModel;
@@ -140,7 +140,7 @@ export class AuthService {
       map((res: AuthResponse) => this.registerAnswerValidation(res)),
       tap((res: AuthResponse) => {
         if (res.data.user) {
-          const rolTexto = isClient ? 'cliente' : 'empresa';
+          const rolTexto = isClient ? 'client' : 'business';
           const comunicationService = this.injector.get(ComunicationService);
           comunicationService
             .notifyAdmins(
@@ -194,7 +194,7 @@ export class AuthService {
   private registerDataPreparation(data: RegisterPayload, isClient: boolean): PreparacionRegistro {
     const cleanEmail = String(data.email).trim().toLowerCase().replace(/\s/g, '');
     const cleanEmailPassword = String(data.password).trim();
-    const rol = isClient ? 'cliente' : 'empresa';
+    const rol = isClient ? 'client' : 'business';
 
     const metaData = {
       rol: rol,

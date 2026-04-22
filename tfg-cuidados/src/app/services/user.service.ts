@@ -21,7 +21,7 @@ export class UserService {
   private _usersList = signal<UserModel[]>([]);
   public usersList = this._usersList.asReadonly();
 
-  private currentType: 'cliente' | 'empresa' = 'cliente';
+  private currentType: 'client' | 'business' = 'client';
 
   constructor() {
     this.initRealtime();
@@ -31,7 +31,7 @@ export class UserService {
    * Sets the user type and triggers a refresh of the list.
    * @param tipo The type of user to load ('cliente' or 'empresa').
    */
-  loadUsers(tipo: 'cliente' | 'empresa'): void {
+  loadUsers(tipo: 'client' | 'business'): void {
     this.currentType = tipo;
     this._usersList.set([]);
     this.refreshUsers();
@@ -60,7 +60,7 @@ export class UserService {
    * Executes a relational query with dynamic filtering to fetch full user profiles.
    */
   private async refreshUsers() {
-    const tableRel = this.currentType === 'cliente' ? 'Client' : 'Business';
+    const tableRel = this.currentType === 'client' ? 'Client' : 'Business';
     const { data, error } = await this.supabase
       .from('user_public')
       .select(`*, ${tableRel}!inner(*)`)
@@ -142,7 +142,7 @@ export class UserService {
       p_description: dataToSend.description || null,
     };
 
-    return from(this.supabase.rpc('update_profile_complete', bodyRPC)).pipe(
+    return from(this.supabase.rpc('update_user_profile', bodyRPC)).pipe(
       map(({ error }) => {
         if (error) throw new Error(error.message);
         return { success: true };

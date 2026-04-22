@@ -108,8 +108,8 @@ export class AnalyticsService {
       if (data) {
         const contracts = data as EstadoContratoResponse[];
         const stats: ContractStats = {
-          activeContract: contracts.filter((c) => c.state === 'activo').length,
-          cancelContract: contracts.filter((c) => c.state === 'no activo').length,
+          activeContract: contracts.filter((c) => c.state === 'active').length,
+          cancelContract: contracts.filter((c) => c.state === 'no active').length,
         };
         this._contractsAmountData$.next(stats);
       }

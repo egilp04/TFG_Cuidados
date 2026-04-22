@@ -1,6 +1,6 @@
 export interface ContractModel {
   id_contract?: string;
-  state: 'activo' | 'no activo';
+  state: 'active' | 'no active';
   start_date: string;
   end_date: string | null;
   week_day_hired: string;

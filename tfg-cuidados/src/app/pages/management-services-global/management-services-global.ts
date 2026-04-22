@@ -132,7 +132,7 @@ export default class ManagementServicesGlobal implements OnInit {
           const msgKey = this.isEditing
             ? 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_UPDATE'
             : 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_CREATE';
-          return this.translate.get(msgKey).pipe(map((text) => ({ type: 'exito' as const, text })));
+          return this.translate.get(msgKey).pipe(map((text) => ({ type: 'sucess' as const, text })));
         }),
         catchError((err) => {
           console.error('Error detallado al guardar servicio:', err);
@@ -149,7 +149,7 @@ export default class ManagementServicesGlobal implements OnInit {
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
-        if (resultado.type === 'exito') {
+        if (resultado.type === 'sucess') {
           this.resetForm();
         }
         this.cd.markForCheck();
@@ -195,7 +195,7 @@ export default class ManagementServicesGlobal implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MANAGEMENT_SERVICES.MESSAGES.SUCCESS_DELETE')
-                .pipe(map((text) => ({ type: 'exito' as const, text }))),
+                .pipe(map((text) => ({ type: 'sucess' as const, text }))),
             ),
             catchError(() =>
               this.translate

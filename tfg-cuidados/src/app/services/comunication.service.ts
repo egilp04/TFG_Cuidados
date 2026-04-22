@@ -94,7 +94,7 @@ export class ComunicationService {
       Receiver:User_public!id_receiver (name, email)
     `,
       )
-      .eq('type_comunication', 'mensaje')
+      .eq('type_comunication', 'message')
       .or(`id_receiver.eq.${user.id_user},id_sender.eq.${user.id_user}`)
       .order('send_date', { ascending: false });
 
@@ -123,7 +123,7 @@ export class ComunicationService {
     const { data, error } = await this.supabase
       .from('Comunication')
       .select('*')
-      .eq('type_comunication', 'notificacion')
+      .eq('type_comunication', 'notification')
       .eq('id_receiver', user.id_user)
       .eq('deleted_by_receiver', false)
       .order('send_date', { ascending: false });
@@ -145,7 +145,7 @@ export class ComunicationService {
         if (error) throw error;
       }),
       switchMap(() => {
-        if (comunication.type_comunication === 'mensaje' && comunication.id_receiver) {
+        if (comunication.type_comunication === 'message' && comunication.id_receiver) {
           const topic = 'Nuevo Mensaje Recibido';
           const content = 'Tienes un nuevo mensaje en tu bandeja de entrada.';
           return this.sendNotification(comunication.id_receiver, topic, content);
@@ -189,7 +189,7 @@ export class ComunicationService {
     const user = this.authService.currentUser();
     if (!user || !message.id_comunication) return of(undefined);
 
-    if (message.type_comunication === 'mensaje') {
+    if (message.type_comunication === 'message') {
       const currentMessages = this.messagesList$.getValue();
       const newMessages = currentMessages.filter(
         (m) => m.id_comunication !== message.id_comunication,
@@ -248,7 +248,7 @@ export class ComunicationService {
    */
   private sendNotification(idReceiver: string, topic: string, content: string): Observable<void> {
     const notification = {
-      type_comunication: 'notificacion' as const,
+      type_comunication: 'notification' as const,
       id_sender: null,
       id_receiver: idReceiver,
       topic: topic,
@@ -269,7 +269,7 @@ export class ComunicationService {
       this.supabase
         .from('user_public')
         .select('id_user')
-        .eq('rol', 'administrador')
+        .eq('rol', 'administrator')
         .eq('state', true),
     ).pipe(
       switchMap(({ data }) => {

@@ -112,7 +112,7 @@ export class MessagesModal implements OnInit {
           next: () => {
             this.messageService.showMessage(
               this.translate.instant('MESSAGES_MODAL.FEEDBACK.SEND_SUCCESS'),
-              'exito',
+              'sucess',
             );
             this.dialogRef.close();
             this.cd.markForCheck();
