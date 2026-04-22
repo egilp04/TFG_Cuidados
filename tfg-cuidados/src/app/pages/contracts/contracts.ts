@@ -125,30 +125,42 @@ export default class Contracts implements OnInit {
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
       maxHeight: '90vh',
     };
-
-    const cachedContract = this.dataSource.data.find((c) => c.id_contract === id);
-
+      const cachedContract = this.dataSource.data.find((c) => c.id_contract === id);
+  
     if (cachedContract) {
-      this.dialog.open(InfoContract, {
-        ...dialogConfig,
-        data: { contract: cachedContract },
-      });
-    } else {
-      this.contractService.getContractsById(id).subscribe({
-        next: (contract: ContractDetail) => {
-          this.dialog.open(InfoContract, {
-            ...dialogConfig,
-            data: { contract },
-          });
-        },
-        error: (err: Error) => {
-          console.error('Error fetching contract details:', err);
-          this.messageService.showMessage(
-            this.translate.instant('CONTRACTS.MESSAGES.FETCH_ERROR'),
-            'error',
-          );
-        },
-      });
+      this.dialog.open(InfoContract, { ...dialogConfig, data: { contract: cachedContract } });
+      return;
     }
+      this.contractService.getContractsById(id).pipe(
+      takeUntilDestroyed(this.destroyRef),
+      map((raw: any): ContractDetail => {
+        return {
+          ...raw,
+          id_contract: raw.id_contract,
+          serviceName: raw.Service_Time?.Service?.name || 'No Service',
+          Client: {
+            address: raw.Client?.address,
+            city: raw.Client?.city,
+            postcode: raw.Client?.postcode,
+            clientName: raw.Client?.User_public?.name || raw.Client?.name || 'Unknown Client'
+          },
+          Business: {
+            businessName: raw.Business?.User_public?.name || raw.Business?.name || 'Unknown Business'
+          }
+        };
+      })
+    ).subscribe({
+      next: (mappedContract) => {
+        this.dialog.open(InfoContract, {
+          ...dialogConfig,
+          data: { contract: mappedContract },
+        });
+      },
+      error: (err) => {
+        console.error('Error fetching contract details:', err);
+        this.messageService.showMessage('Could not load contract details', 'error');
+      }
+    });
   }
+
 }

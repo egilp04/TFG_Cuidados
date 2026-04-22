@@ -17,6 +17,6 @@ export interface RegisterFormData {
 }
 
 export interface FormSubmittedEvent {
-  dts: RegisterFormData;
+  data: RegisterFormData;
   isClient: boolean;
 }

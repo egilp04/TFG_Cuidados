@@ -237,7 +237,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
         }
       }
       
-      this.formSubmitted.emit({ data: databasePayload, role: this.userRole });
+      this.formSubmitted.emit({ data: databasePayload, rol: this.userRole });
     } else {
       this.profileForm.markAllAsTouched();
     }
