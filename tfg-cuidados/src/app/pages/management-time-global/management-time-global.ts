@@ -7,12 +7,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
@@ -125,7 +120,7 @@ export default class ManagementTimeGlobal implements OnInit {
       this.showTranslatedMessage('MANAGEMENT_SCHEDULES.MESSAGES.INVALID_TIME_RANGE', 'error');
       return;
     }
-    
+
     if (m !== 0 && m !== 30) {
       this.showTranslatedMessage('MANAGEMENT_SCHEDULES.MESSAGES.INVALID_MINUTES', 'error');
       return;
@@ -155,17 +150,19 @@ export default class ManagementTimeGlobal implements OnInit {
           const msgKey = this.isEditing
             ? 'MANAGEMENT_SCHEDULES.MESSAGES.SUCCESS_UPDATE'
             : 'MANAGEMENT_SCHEDULES.MESSAGES.SUCCESS_CREATE';
-          return this.translate.get(msgKey).pipe(map((text: string) => ({ type: 'success' as const, text })));
+          return this.translate
+            .get(msgKey)
+            .pipe(map((text: string) => ({ type: 'success' as const, text })));
         }),
         catchError((err: Error) => {
           let msgKey = 'MANAGEMENT_SCHEDULES.MESSAGES.ERROR_GENERIC';
           let params = {};
-          
+
           if (err.message === 'DUPLICATE_TIME') {
             msgKey = 'MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DUPLICATE';
             params = { day: dayValue, time: timeValue };
           }
-          
+
           return this.translate
             .get(msgKey, params)
             .pipe(map((text: string) => ({ type: 'error' as const, text })));
@@ -173,7 +170,7 @@ export default class ManagementTimeGlobal implements OnInit {
         finalize(() => {
           this.isLoading.set(false);
           this.cd.markForCheck();
-        })
+        }),
       )
       .subscribe((result) => {
         this.messageService.showMessage(result.text, result.type);
@@ -208,7 +205,7 @@ export default class ManagementTimeGlobal implements OnInit {
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { mode: 'deleteGlobalAdmin' },
       width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       maxHeight: '90vh',
     });
 
@@ -230,15 +227,15 @@ export default class ManagementTimeGlobal implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MANAGEMENT_GLOBAL.DELETE_SUCCESS')
-                .pipe(map((text: string) => ({ type: 'success' as const, text })))
+                .pipe(map((text: string) => ({ type: 'success' as const, text }))),
             ),
             catchError(() =>
               this.translate
                 .get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DELETE')
-                .pipe(map((text: string) => ({ type: 'error' as const, text })))
-            )
-          )
-        )
+                .pipe(map((text: string) => ({ type: 'error' as const, text }))),
+            ),
+          ),
+        ),
       )
       .subscribe((res) => {
         this.messageService.showMessage(res.text, res.type);
@@ -253,7 +250,7 @@ export default class ManagementTimeGlobal implements OnInit {
     this.currentTimeId = null;
     this.timeForm.reset({
       time: '',
-      day: ''
+      day: '',
     });
     this.cd.markForCheck();
   }

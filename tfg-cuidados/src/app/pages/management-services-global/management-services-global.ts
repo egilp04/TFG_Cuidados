@@ -7,12 +7,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
@@ -139,7 +134,9 @@ export default class ManagementServicesGlobal implements OnInit {
           const msgKey = this.isEditing
             ? 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_UPDATE'
             : 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_CREATE';
-          return this.translate.get(msgKey).pipe(map((text: string) => ({ type: 'success' as const, text })));
+          return this.translate
+            .get(msgKey)
+            .pipe(map((text: string) => ({ type: 'success' as const, text })));
         }),
         catchError((err: any) => {
           console.error('Detailed error saving service:', err);
@@ -147,12 +144,14 @@ export default class ManagementServicesGlobal implements OnInit {
           if (err.message === 'DUPLICATE_SERVICE' || err.code === '23505') {
             msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_DUPLICATE';
           }
-          return this.translate.get(msgKey).pipe(map((text: string) => ({ type: 'error' as const, text })));
+          return this.translate
+            .get(msgKey)
+            .pipe(map((text: string) => ({ type: 'error' as const, text })));
         }),
         finalize(() => {
           this.isLoading.set(false);
           this.cd.markForCheck();
-        })
+        }),
       )
       .subscribe((result) => {
         this.messageService.showMessage(result.text, result.type);
@@ -188,7 +187,7 @@ export default class ManagementServicesGlobal implements OnInit {
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { mode: 'deleteGlobalAdmin' },
       width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       maxHeight: '90vh',
     });
 
@@ -210,15 +209,15 @@ export default class ManagementServicesGlobal implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MANAGEMENT_SERVICES.MESSAGES.SUCCESS_DELETE')
-                .pipe(map((text: string) => ({ type: 'success' as const, text })))
+                .pipe(map((text: string) => ({ type: 'success' as const, text }))),
             ),
             catchError(() =>
               this.translate
                 .get('MANAGEMENT_SERVICES.MESSAGES.ERROR_DELETE')
-                .pipe(map((text: string) => ({ type: 'error' as const, text })))
-            )
-          )
-        )
+                .pipe(map((text: string) => ({ type: 'error' as const, text }))),
+            ),
+          ),
+        ),
       )
       .subscribe((result) => {
         this.messageService.showMessage(result.text, result.type);

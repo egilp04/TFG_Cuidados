@@ -76,11 +76,11 @@ export default class Contracts implements OnInit {
    */
   async cancelContract(id: string): Promise<void> {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
-    
+
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { mode: 'cancelContract' },
       width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '650px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       maxHeight: '90vh',
     });
 
@@ -94,7 +94,7 @@ export default class Contracts implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MESSAGES.SUCCESS.CANCEL_CONTRACT')
-                .pipe(map((msg: string) => ({ text: msg, type: 'success' as const })))
+                .pipe(map((msg: string) => ({ text: msg, type: 'success' as const }))),
             ),
             catchError((err: Error) => {
               console.error('Cancellation error:', err);
@@ -119,48 +119,51 @@ export default class Contracts implements OnInit {
    */
   async showDetails(id: string): Promise<void> {
     const { InfoContract } = await import('../../components/info-contract/info-contract');
-    
+
     const dialogConfig = {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
       maxHeight: '90vh',
     };
-      const cachedContract = this.dataSource.data.find((c) => c.id_contract === id);
-  
+    const cachedContract = this.dataSource.data.find((c) => c.id_contract === id);
+
     if (cachedContract) {
       this.dialog.open(InfoContract, { ...dialogConfig, data: { contract: cachedContract } });
       return;
     }
-      this.contractService.getContractsById(id).pipe(
-      takeUntilDestroyed(this.destroyRef),
-      map((raw: any): ContractDetail => {
-        return {
-          ...raw,
-          id_contract: raw.id_contract,
-          serviceName: raw.Service_Time?.Service?.name || 'No Service',
-          Client: {
-            address: raw.Client?.address,
-            city: raw.Client?.city,
-            postcode: raw.Client?.postcode,
-            clientName: raw.Client?.User_public?.name || raw.Client?.name || 'Unknown Client'
-          },
-          Business: {
-            businessName: raw.Business?.User_public?.name || raw.Business?.name || 'Unknown Business'
-          }
-        };
-      })
-    ).subscribe({
-      next: (mappedContract) => {
-        this.dialog.open(InfoContract, {
-          ...dialogConfig,
-          data: { contract: mappedContract },
-        });
-      },
-      error: (err) => {
-        console.error('Error fetching contract details:', err);
-        this.messageService.showMessage('Could not load contract details', 'error');
-      }
-    });
+    this.contractService
+      .getContractsById(id)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        map((raw: any): ContractDetail => {
+          return {
+            ...raw,
+            id_contract: raw.id_contract,
+            serviceName: raw.Service_Time?.Service?.name || 'No Service',
+            Client: {
+              address: raw.Client?.address,
+              city: raw.Client?.city,
+              postcode: raw.Client?.postcode,
+              clientName: raw.Client?.User_public?.name || raw.Client?.name || 'Unknown Client',
+            },
+            Business: {
+              businessName:
+                raw.Business?.User_public?.name || raw.Business?.name || 'Unknown Business',
+            },
+          };
+        }),
+      )
+      .subscribe({
+        next: (mappedContract) => {
+          this.dialog.open(InfoContract, {
+            ...dialogConfig,
+            data: { contract: mappedContract },
+          });
+        },
+        error: (err) => {
+          console.error('Error fetching contract details:', err);
+          this.messageService.showMessage('Could not load contract details', 'error');
+        },
+      });
   }
-
 }

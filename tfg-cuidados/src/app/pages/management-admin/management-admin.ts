@@ -36,12 +36,10 @@ export default class ManagementAdmin implements OnInit {
   public isClient: boolean = true;
 
   ngOnInit(): void {
-    this.route.queryParams
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((params) => {
-        const type = params['type'];
-        this.loadData(type === 'business' ? 'business' : 'client');
-      });
+    this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+      const type = params['type'];
+      this.loadData(type === 'business' ? 'business' : 'client');
+    });
   }
 
   /**
@@ -59,10 +57,10 @@ export default class ManagementAdmin implements OnInit {
    */
   async deleteUser(user: UserModel): Promise<void> {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
-    
+
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       maxHeight: '90vh',
       data: { mode: 'delete' },
     });
@@ -77,15 +75,15 @@ export default class ManagementAdmin implements OnInit {
             switchMap(() =>
               this.translate
                 .get('MESSAGES.SUCCESS.DELETE_USER')
-                .pipe(map((msg) => ({ text: msg, type: 'success' as const })))
+                .pipe(map((msg) => ({ text: msg, type: 'success' as const }))),
             ),
             catchError(() =>
               this.translate
                 .get('MESSAGES.ERROR.DELETE_USER')
-                .pipe(map((msg) => ({ text: msg, type: 'error' as const })))
-            )
-          )
-        )
+                .pipe(map((msg) => ({ text: msg, type: 'error' as const }))),
+            ),
+          ),
+        ),
       )
       .subscribe({
         next: (res) => {
@@ -106,8 +104,8 @@ export default class ManagementAdmin implements OnInit {
       ...user,
       rol: this.isClient ? 'client' : 'business',
     };
-    this.router.navigate(['/modify-profile'], { 
-      state: { user: userWithRole } 
+    this.router.navigate(['/modify-profile'], {
+      state: { user: userWithRole },
     });
   }
 
@@ -116,8 +114,8 @@ export default class ManagementAdmin implements OnInit {
    */
   createUser(): void {
     const type = this.isClient ? 'client' : 'business';
-    this.router.navigate(['/register'], { 
-      state: { type } 
+    this.router.navigate(['/register'], {
+      state: { type },
     });
   }
 }

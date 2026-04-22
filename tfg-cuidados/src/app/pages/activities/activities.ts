@@ -60,12 +60,12 @@ export default class Activities implements OnInit {
    */
   async cancelContract(id: string): Promise<void> {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
-    
+
     this.dialog
       .open(Cancelmodal, {
         data: { mode: 'cancelContract' },
         width: '100%',
-        maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+        maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
         maxHeight: '90vh',
       })
       .afterClosed()
@@ -76,7 +76,7 @@ export default class Activities implements OnInit {
         switchMap(() =>
           this.translate
             .get('MESSAGES.SUCCESS.CANCEL_CONTRACT')
-            .pipe(map((msg: string) => ({ text: msg, type: 'success' as const })))
+            .pipe(map((msg: string) => ({ text: msg, type: 'success' as const }))),
         ),
         catchError((err: Error) => {
           console.error('Error canceling contract:', err);

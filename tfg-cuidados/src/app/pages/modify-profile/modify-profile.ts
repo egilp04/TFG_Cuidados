@@ -73,10 +73,10 @@ export default class ModifyProfilePage implements OnInit {
   doUpdateProfile(event: FormSubmitEvent): void {
     const user = this.userToEdit();
     const loggedUser = this.authService.currentUser();
-    
+
     if (!user) return;
-    
-    const newData = (event.data) as UpdateProfilePayload;
+
+    const newData = event.data as UpdateProfilePayload;
     const role = event.rol;
 
     this.userService
@@ -86,7 +86,7 @@ export default class ModifyProfilePage implements OnInit {
         switchMap(() => {
           const isSelfUpdate = user.id_user === loggedUser?.id_user;
           const emailChanged = newData.email !== user.email;
-          
+
           if (isSelfUpdate && emailChanged) {
             return this.authService.updateAuthCredentiales(newData.email);
           }
@@ -96,7 +96,7 @@ export default class ModifyProfilePage implements OnInit {
         tap((msg: string) => {
           this.messageService.showMessage(msg, 'success');
           const isSelfUpdate = user.id_user === loggedUser?.id_user;
-          
+
           if (isSelfUpdate) {
             const updatedUser = { ...loggedUser, ...newData } as AuthUserModel;
             this.authService.updateUserSignal(updatedUser);
@@ -111,7 +111,7 @@ export default class ModifyProfilePage implements OnInit {
           console.error('Error updating profile:', err);
           return this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_ERROR').pipe(
             tap((msg: string) => this.messageService.showMessage(msg, 'error')),
-            switchMap(() => EMPTY)
+            switchMap(() => EMPTY),
           );
         }),
       )
@@ -125,14 +125,14 @@ export default class ModifyProfilePage implements OnInit {
   async unsubscribeUser(): Promise<void> {
     const user = this.userToEdit();
     const currentUser = this.authService.currentUser();
-    
+
     if (!user) return;
-    
+
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
-    
+
     this.dialog
       .open(Cancelmodal, {
-        width: '500px',
+        width: '600px',
         data: { mode: 'unsubscribe' },
         autoFocus: false,
       })
@@ -146,28 +146,30 @@ export default class ModifyProfilePage implements OnInit {
           if (isSelfUpdate) {
             return this.authService.signOut().pipe(
               tap(() => this.router.navigate(['/'])),
-              map(() => true)
+              map(() => true),
             );
           } else {
             this.location.back();
             return of(true);
           }
         }),
-        switchMap((success) => 
-           success 
-             ? this.translate.get('MODIFY_PROFILE.MESSAGES.DELETE_SUCCESS').pipe(map(msg => ({msg, type: 'success' as const})))
-             : EMPTY
+        switchMap((success) =>
+          success
+            ? this.translate
+                .get('MODIFY_PROFILE.MESSAGES.DELETE_SUCCESS')
+                .pipe(map((msg) => ({ msg, type: 'success' as const })))
+            : EMPTY,
         ),
         catchError((err: Error) => {
           console.error('Error unsubscribing user:', err);
-          return this.translate.get('MODIFY_PROFILE.MESSAGES.DELETE_ERROR').pipe(
-            map(msg => ({msg, type: 'error' as const}))
-          );
+          return this.translate
+            .get('MODIFY_PROFILE.MESSAGES.DELETE_ERROR')
+            .pipe(map((msg) => ({ msg, type: 'error' as const })));
         }),
       )
       .subscribe((result) => {
         if (result && result.msg) {
-           this.messageService.showMessage(result.msg, result.type);
+          this.messageService.showMessage(result.msg, result.type);
         }
       });
   }
