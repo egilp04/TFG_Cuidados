@@ -73,7 +73,7 @@
                       {{ ev.time_hired }} - {{ ev.week_day_hired }}
                     </span>
                     <span class="activity-tooltip-event-text text-xs lg:text-sm italic">
-                      📍 {{ ev.location }}
+                      📍 {{ ev.place }}
                     </span>
                   </div>
                 }
@@ -95,7 +95,7 @@
           {{ contractHeader() | translate }}
         </th>
         <td mat-cell *matCellDef="let contract" class="activity-text-secondary text-label">
-          {{ contract.displayName }}
+          {{ contract.nameToShow }}
         </td>
       </ng-container>
 
@@ -131,7 +131,7 @@
           {{ 'ACTIVITIES.TABLE.LOCATION' | translate }}
         </th>
         <td mat-cell *matCellDef="let contract" class="activity-text-secondary text-label">
-          {{ contract.location }}
+          {{ contract.place }}
         </td>
       </ng-container>
 

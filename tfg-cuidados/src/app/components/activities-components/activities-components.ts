@@ -82,23 +82,22 @@ export class ActivitiesComponents implements OnInit, OnChanges {
       this.tableDataSource.data = [];
       return;
     }
-
+  
     const mappedData = this.dataSource.map((contract) => {
-      let displayName: string | undefined;
-      if (this.userRole === 'client') displayName = contract.Business?.businessName;
-      if (this.userRole === 'business') displayName = contract.Client?.clientName;
-
-      const location = contract.Client
+      let nameToShow: string | undefined;
+      if (this.userRole === 'client') nameToShow = contract.Business?.businessName;
+      if (this.userRole === 'business') nameToShow = contract.Client?.clientName;
+      
+      const place = contract.Client 
         ? `${contract.Client.address}, ${contract.Client.city}, ${contract.Client.postcode}`
         : 'SL';
-
-      return {
+        return {
         ...contract,
-        displayName: displayName || 'N/A',
-        location: location,
+        nameToShow: nameToShow || 'N/A',
+        place: place,
       } as ContractRowDataTable;
     });
-
+  
     this.tableDataSource.data = mappedData;
   }
 

@@ -17,11 +17,11 @@
 
   <div class="cancel-modal-title-container">
     <h1 mat-dialog-title id="cancel-title" class="cancel-modal-title">
-      @if (data.modo === 'unsubscribe') {
+      @if (data.mode === 'unsubscribe') {
         {{ 'CANCEL_MODAL.BAJA.TITLE' | translate }}
-      } @else if (data.modo === 'cancelContract') {
+      } @else if (data.mode === 'cancelContract') {
         {{ 'CANCEL_MODAL.CONTRACT.TITLE' | translate }}
-      } @else if (data.modo === 'deleteService') {
+      } @else if (data.mode === 'deleteService') {
         {{ 'CANCEL_MODAL.SERVICE.TITLE' | translate }}
       } @else {
         {{ 'CANCEL_MODAL.GENERIC.TITLE' | translate }}
@@ -31,12 +31,12 @@
 
   <mat-dialog-content id="cancel-description" class="cancel-modal-content">
     <main class="cancel-modal-text">
-      @if (data.modo === 'unsubscribe') {
+      @if (data.mode === 'unsubscribe') {
         <div class="text-center space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.BAJA.DESC_1' | translate }}</p>
           <p class="text-p">{{ 'CANCEL_MODAL.BAJA.DESC_2' | translate }}</p>
         </div>
-      } @else if (data.modo === 'cancelContract') {
+      } @else if (data.mode === 'cancelContract') {
         <div class="space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.CONTRACT.DESC_1' | translate }}</p>
           <ul class="list-disc pl-5 space-y-3">
@@ -46,7 +46,7 @@
           </ul>
           <p class="text-p">{{ 'CANCEL_MODAL.CONTRACT.NOTE' | translate }}</p>
         </div>
-      } @else if (data.modo === 'deleteService') {
+      } @else if (data.mode === 'deleteService') {
         <div class="space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.SERVICE.DESC_1' | translate }}</p>
           <p class="text-p">{{ 'CANCEL_MODAL.SERVICE.SUBTITLE' | translate }}</p>
@@ -61,7 +61,7 @@
             {{ 'CANCEL_MODAL.SERVICE.IMPORTANT_DESC' | translate }}
           </p>
         </div>
-      } @else if (data.modo === 'deleteAdminGlobal') {
+      } @else if (data.mode === 'deleteAdminGlobal') {
         <div class="space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.ADMIN_GLOBAL_DELETE' | translate }}</p>
         </div>
