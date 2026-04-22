@@ -176,7 +176,7 @@ export class ContractService {
             content: message,
             id_receiver: idDestination,
             id_sender: currentUser.id_user,
-            type_comunication: 'notificacion',
+            type_comunication: 'notification',
             read: false,
             deleted_by_sender: false,
             deleted_by_receiver: false,

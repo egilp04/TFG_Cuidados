@@ -25,8 +25,8 @@ import { BusinessService } from '../../services/business.service';
 import { Router } from '@angular/router';
 
 /**
- * Component for searching, filtering, and hiring business services.
- * Also allows direct messaging to business profiles.
+ * Component for searching and hiring business services.
+ * Uses independent state for UI selections to keep models pure.
  */
 @Component({
   selector: 'app-verempresas',
@@ -55,37 +55,39 @@ export default class SearchBusiness implements OnInit {
   private router = inject(Router);
 
   public allBusinesses = signal<BusinessModel[]>([]);
-  public searchFilterItem = signal<string>('');
-  public controlFilterItem = new FormControl('');
-  public idSelectedService = signal<string | null>(null);
+    public searchFilter = signal<string>('');
+  public filterControl = new FormControl('');
+  public initialServiceId = signal<string | null>(null);
+
+  /** * NEW: Independent state for selections. 
+   * Key: business ID, Value: the selected ServiceTime object.
+   */
+  public selections = signal<Record<string, ServiceTimeResponse>>({});
 
   constructor() {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state as { idService: string };
     
-    if (state && state.idService) {
-      this.idSelectedService.set(state.idService);
-    } else if (history.state && history.state.idService) {
-      this.idSelectedService.set(history.state.idService);
+    if (state?.idService) {
+      this.initialServiceId.set(state.idService);
+    } else if (history.state?.idService) {
+      this.initialServiceId.set(history.state.idService);
     }
   }
 
-  /**
-   * Dynamically filters the list of businesses based on search input matching business name, service name, or day.
-   */
   public filteredBusinesses = computed(() => {
-    const filterText = this.searchFilterItem().toLowerCase().trim();
+    const filterText = this.searchFilter().toLowerCase().trim();
     if (!filterText) return this.allBusinesses();
     
     return this.allBusinesses().filter((business) => {
-      const sameName = business.name.toLowerCase().includes(filterText);
-      const sameService = business.Service_Time?.some(
+      const matchName = business.name.toLowerCase().includes(filterText);
+      const matchService = business.Service_Time?.some(
         (sh: ServiceTimeResponse) =>
           sh.Service?.name.toLowerCase().includes(filterText) ||
           sh.Time?.week_day.toLowerCase().includes(filterText),
       );
 
-      return sameName || sameService;
+      return matchName || matchService;
     });
   });
 
@@ -93,16 +95,13 @@ export default class SearchBusiness implements OnInit {
     this.loadBusinessesRealTime();
   }
 
-  /**
-   * Initializes real-time subscription for businesses and their offered service times.
-   */
   loadBusinessesRealTime() {
     this.businessService
       .getBusinessesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         catchError((err) => {
-          console.error('Error loading real-time businesses:', err);
+          console.error('Real-time Businesses Error:', err);
           return this.translate.get('SEARCH_BUSINESS.MESSAGES.CONNECTION_ERROR').pipe(
             tap((msg) => this.messageService.showMessage(msg, 'error')),
             map(() => []),
@@ -110,9 +109,9 @@ export default class SearchBusiness implements OnInit {
         }),
       )
       .subscribe((data: BusinessModel[]) => {
-        const targetId = this.idSelectedService()?.trim();
+        const targetId = this.initialServiceId()?.trim();
         
-        const dataWithSelection: BusinessModel[] = data
+        const processedData: BusinessModel[] = data
           .map((business) => {
             const filteredTimes = targetId
               ? business.Service_Time?.filter((sh) => sh.Service?.id_service === targetId)
@@ -120,29 +119,27 @@ export default class SearchBusiness implements OnInit {
             return {
               ...business,
               Service_Time: filteredTimes,
-              selection: undefined,
             };
           })
           .filter((business) => business.Service_Time && business.Service_Time.length > 0);
           
-        this.allBusinesses.set(dataWithSelection);
+        this.allBusinesses.set(processedData);
         this.cd.markForCheck();
       });
   }
 
-  /**
-   * Updates the search filter signal.
-   * @param value The text value to filter by.
-   */
-  applyFilter(value: string) {
-    this.searchFilterItem.set(value);
+  updateSelection(businessId: string, selection: ServiceTimeResponse) {
+    this.selections.update(prev => ({
+      ...prev,
+      [businessId]: selection
+    }));
   }
 
-  /**
-   * Processes the hiring of a service from a specific business.
-   * Prevents duplicate active contracts for the same service schedule.
-   * @param business The selected business containing the user's service selection.
-   */
+  applyFilter(value: string) {
+    this.searchFilter.set(value);
+  }
+
+
   toHire(business: BusinessModel) {
     const user = this.authService.currentUser();
     if (!user) {
@@ -151,8 +148,8 @@ export default class SearchBusiness implements OnInit {
       });
       return;
     }
+    const selection = this.selections()[business.id_business];
 
-    const selection = business.selection;
     if (!selection) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.SELECT_SERVICE').subscribe((res) => {
         this.messageService.showMessage(res, 'error');
@@ -164,17 +161,17 @@ export default class SearchBusiness implements OnInit {
       .getContractsObservable()
       .pipe(take(1))
       .subscribe((contracts) => {
-        const selectedId = selection.id_service_time;
+        const selectedTimeId = selection.id_service_time;
         
-        const alreadyHired = contracts.find((contract) => {
-          const sameIds = String(contract.id_st_flat) === String(selectedId);
-          const sameClient = contract.id_client === user.id_user;
-          const isActive = contract.state === 'active';
+        const isAlreadyHired = contracts.find((c) => {
+          const sameId = String(c.id_service_time) === String(selectedTimeId);
+          const sameClient = c.id_client === user.id_user;
+          const isActive = c.state === 'active';
 
-          return sameIds && sameClient && isActive;
+          return sameId && sameClient && isActive;
         });
 
-        if (alreadyHired) {
+        if (isAlreadyHired) {
           this.translate.get('SEARCH_BUSINESS.MESSAGES.ALREADY_CONTRACTED').subscribe((res) => {
             this.messageService.showMessage(res, 'error');
           });
@@ -203,26 +200,26 @@ export default class SearchBusiness implements OnInit {
                 .pipe(map((text) => ({ type: 'success' as const, text }))),
             ),
             catchError((err) => {
-              console.error('Error hiring service:', err);
+              console.error('Hiring Error:', err);
               return this.translate
                 .get('SEARCH_BUSINESS.MESSAGES.CONTRACT_ERROR')
                 .pipe(map((text) => ({ type: 'error' as const, text })));
             }),
           )
-          .subscribe((resultado) => {
-            this.messageService.showMessage(resultado.text, resultado.type);
-            if (resultado.type === 'success') {
-              business.selection = undefined;
+          .subscribe((result) => {
+            this.messageService.showMessage(result.text, result.type);
+            if (result.type === 'success') {
+              this.selections.update(prev => {
+                const updated = { ...prev };
+                delete updated[business.id_business];
+                return updated;
+              });
             }
             this.cd.markForCheck();
           });
       });
   }
 
-  /**
-   * Opens the messaging modal to send a direct message to the selected business.
-   * @param business The business recipient of the message.
-   */
   async sendMessage(business: BusinessModel) {
     const user = this.authService.currentUser();
     if (!user) {
@@ -231,11 +228,14 @@ export default class SearchBusiness implements OnInit {
       });
       return;
     }
+    
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
     this.dialog.open(MessagesModal, {
       data: {
         mode: 'writeMessage',
         receiverEmail: business.email,
+        receiverId: business.id_business,
+        receiverName: business.name,
       },
       width: '500px',
     });

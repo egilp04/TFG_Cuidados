@@ -1,3 +1,5 @@
+import { ServiceTimeResponse } from './Business-Service';
+
 export interface BusinessModel {
   id_business: string;
   name: string;
