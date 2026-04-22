@@ -18,7 +18,7 @@ import { ButtonComponent } from '../../components/button/button';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { MessageService } from '../../services/message-service';
 import { ServiceTimeService } from '../../services/service-time.service';
-import { ServiceTimeJoined } from '../../models/Service_Time_Joined';
+import { ServiceTimeJoined } from '../../models/Service_Time_Service_Model';
 import { ResponsiveSize } from '../../services/responsive-size';
 
 /**

@@ -20,7 +20,8 @@ import { ContractService } from '../../services/contract.service';
 import { MessageService } from '../../services/message-service';
 import { ContractModel } from '../../models/ContractModel';
 import { Buttonback } from '../../components/buttonback/buttonback';
-import { BusinessModel, ServiceTimeResponse } from '../../models/Business-Service';
+import { ServiceTimeResponse } from '../../models/Bussiness-Service';
+import { BusinessModel } from '../../models/BusinessModel';
 import { BusinessService } from '../../services/business.service';
 import { Router } from '@angular/router';
 
@@ -114,7 +115,7 @@ export default class SearchBusiness implements OnInit {
         const processedData: BusinessModel[] = data
           .map((business) => {
             const filteredTimes = targetId
-              ? business.Service_Time?.filter((sh) => sh.Service?.id_service === targetId)
+              ? business.Service_Time?.filter((sh: ServiceTimeResponse) => sh.Service?.id_service === targetId)
               : business.Service_Time;
             return {
               ...business,
