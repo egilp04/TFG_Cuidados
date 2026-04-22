@@ -12,7 +12,7 @@ import {
 
 /**
  * User and profile administration service.
- * Manages identity unification (user_public) with role specialization (Client or Business).
+ * Manages identity unification (User_public) with role specialization (Client or Business).
  */
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -39,12 +39,12 @@ export class UserService {
 
   /**
    * Multi-channel subscription for real-time updates.
-   * Monitors user_public, Client, and Business tables.
+   * Monitors User_public, Client, and Business tables.
    */
   private initRealtime() {
     this.supabase
       .channel('admin-users-channel')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'user_public' }, () =>
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'User_public' }, () =>
         this.refreshUsers(),
       )
       .on('postgres_changes', { event: '*', schema: 'public', table: 'Client' }, () =>
@@ -62,7 +62,7 @@ export class UserService {
   private async refreshUsers() {
     const tableRel = this.currentType === 'client' ? 'Client' : 'Business';
     const { data, error } = await this.supabase
-      .from('user_public')
+      .from('User_public')
       .select(`*, ${tableRel}!inner(*)`)
       .eq('state', true);
 
@@ -105,7 +105,7 @@ export class UserService {
   verifyUniqEmail(email: string, userId: string): Observable<boolean> {
     return from(
       this.supabase
-        .from('user_public')
+        .from('User_public')
         .select('id_user')
         .eq('email', email)
         .neq('id_user', userId)
@@ -158,7 +158,7 @@ export class UserService {
   getUserByEmail(email: string): Observable<UserEmailResponse> {
     return from(
       this.supabase
-        .from('user_public')
+        .from('User_public')
         .select('id_user, name, email')
         .eq('email', email)
         .maybeSingle(),
@@ -177,7 +177,7 @@ export class UserService {
    */
   getUserById(id: string): Observable<UserNameResponse> {
     return from(
-      this.supabase.from('user_public').select('name').eq('id_user', id).maybeSingle(),
+      this.supabase.from('User_public').select('name').eq('id_user', id).maybeSingle(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;

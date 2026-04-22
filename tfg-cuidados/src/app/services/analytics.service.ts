@@ -83,12 +83,12 @@ export class AnalyticsService {
   }
 
   /**
-   * Fetches the total number of users from the user_public table.
+   * Fetches the total number of users from the User_public table.
    */
   private async chargeTotalUsers() {
     try {
       const { count, error } = await this.supabase
-        .from('user_public')
+        .from('User_public')
         .select('*', { count: 'exact', head: true });
 
       if (error) throw error;
@@ -128,7 +128,7 @@ export class AnalyticsService {
       januaryMonth.setHours(0, 0, 0, 0);
 
       const { data, error } = await this.supabase
-        .from('user_public')
+        .from('User_public')
         .select('register_date')
         .gte('register_date', januaryMonth.toISOString());
 
@@ -149,7 +149,7 @@ export class AnalyticsService {
   private listenToChangesIRL() {
     this.supabase
       .channel('admin-metrics-internal')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'user_public' }, () => {
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'User_public' }, () => {
         this.chargeTotalUsers();
         this.chargeMonthlyRecords();
       })

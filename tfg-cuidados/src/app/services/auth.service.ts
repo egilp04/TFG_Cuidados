@@ -68,10 +68,10 @@ export class AuthService {
   }
 
   /**
-   * Recovers a composite profile fetching data from user_public and role-specific tables.
+   * Recovers a composite profile fetching data from User_public and role-specific tables.
    */
   getProfile(userId: string): Observable<AuthUserModel> {
-    return from(this.supabase.from('user_public').select('*').eq('id_user', userId).single()).pipe(
+    return from(this.supabase.from('User_public').select('*').eq('id_user', userId).single()).pipe(
       switchMap(async ({ data: user, error: userErr }) => {
         if (userErr) throw userErr;
 

@@ -37,7 +37,7 @@ export class ChatSoporteComponent implements OnInit {
     }
 
     const { data } = await this.supabase
-      .from('user_public')
+      .from('User_public')
       .select('id_user')
       .eq('rol', 'administrator')
       .eq('state', true)
