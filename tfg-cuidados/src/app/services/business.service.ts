@@ -1,7 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { BusinessModel, BusinessSupabaseJoinModel } from '../models/Bussiness-Service';
+import { BusinessSupabaseJoinModel } from '../models/Bussiness-Service';
+import { BusinessModel } from '../../models/BusinessModel';
+
 
 /**
  * Service for querying and searching businesses.
