@@ -16,7 +16,7 @@
 }
 
 .nav-authenticated-wrapper {
-  @apply flex flex-col justify-center items-center gap-6 w-full md:flex-row md:gap-10 md:w-auto;
+  @apply flex flex-col justify-center items-center gap-[1rem] w-full md:flex-row md:gap-10 md:w-auto;
 }
 
 .nav-common-links-container {
