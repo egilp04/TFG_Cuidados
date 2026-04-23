@@ -32,7 +32,7 @@
             {{ 'CONTRACTS.TABLE.DATE' | translate }}
           </th>
           <td mat-cell *matCellDef="let contract" class="text-label contracts-text">
-            {{ contract.created_at | date: 'dd/MM/yyyy' }}
+            {{ contract.creadion_date | date: 'dd/MM/yyyy' }}
           </td>
         </ng-container>
 
@@ -41,7 +41,7 @@
             <span class="sr-only">{{ 'CONTRACTS.TABLE.ACTIONS' | translate }}</span>
           </th>
           <td mat-cell *matCellDef="let contract" class="text-center">
-            <div class="flex justify-center gap-2 p-2">
+            <div class="flex justify-end gap-2 p-2">
               <app-button
                 [label]="'CONTRACTS.ACTIONS.CANCEL' | translate"
                 variant="secondary"

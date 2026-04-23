@@ -110,12 +110,12 @@
   "ACTIVITIES": {
     "TITLE": "Actividades",
     "DAYS": {
-      "SU": "Do",
-      "MO": "Lu",
-      "TU": "Ma",
-      "WE": "Mi",
-      "TH": "Ju",
-      "FR": "Vi",
+      "DO": "Do",
+      "LU": "Lu",
+      "MA": "Ma",
+      "MI": "Mi",
+      "JU": "Ju",
+      "VI": "Vi",
       "SA": "Sá"
     },
     "TABLE": {
