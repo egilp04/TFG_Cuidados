@@ -11,13 +11,17 @@ import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
-import { CommonModule, Location, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { filter, switchMap, tap, delay, catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { FormSubmittedEvent } from '../../models/RegisterForm';
 
+/**
+ * Componente que maneja el flujo de registro de usuario.
+ * Soporta tanto auto-registro como creación de cuentas impulsada por administrador.
+ */
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -32,80 +36,99 @@ export default class Register implements OnInit {
   private destroyRef = inject(DestroyRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
-  private location = inject(Location);
   private platformId = inject(PLATFORM_ID);
 
-  isUser: boolean = true;
-
-  // get esAdminReal(): boolean {
-  //   const user = this.authService.currentUser();
-  //   return user?.rol === 'administrador';
-  // }
+  public isClientProfile: boolean = true;
 
   ngOnInit(): void {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => {
-        this.showTypeUser();
+        this.determineProfileType();
       });
-    this.showTypeUser();
+
+    this.determineProfileType();
   }
 
-  private showTypeUser(): void {
+  /**
+   * Evalúa el estado de enrutamiento para determinar si el usuario se registra como Cliente o Negocio.
+   */
+  private determineProfileType(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const state = history.state as { tipo?: string };
-      if (state && state.tipo) {
-        this.isUser = state.tipo !== 'empresa';
+      const state = history.state as { type?: string; tipo?: string };
+      const profileType = state.type || state.tipo;
+
+      if (profileType) {
+        this.isClientProfile = profileType !== 'business' && profileType !== 'empresa';
         this.cd.detectChanges();
       }
     }
   }
 
-  onRegister(event: FormSubmittedEvent) {
+  /**
+   * Procesa el envío del formulario de registro.
+   * Delega a métodos de autenticación específicos según el rol del usuario activo.
+   * @param event Carga útil que contiene datos del formulario y bandera de tipo de perfil.
+   */
+  onRegister(event: FormSubmittedEvent): void {
     const user = this.authService.currentUser();
-    const isAdmin = user?.rol === 'administrador';
+    const isAdmin = user?.rol === 'administrator';
 
     if (user && !isAdmin) {
       return;
     }
-    const registro$ = isAdmin
-      ? this.authService.registerByAdmin(event.datos, event.esCliente)
-      : this.authService.register(event.datos, event.esCliente);
 
-    registro$
+    const payloadData = event.data;
+    const payloadIsClient = event.isClient;
+
+    const register$ = isAdmin
+      ? this.authService.registerByAdmin(payloadData, payloadIsClient)
+      : this.authService.register(payloadData, payloadIsClient);
+
+    const successTranslationKey = isAdmin
+      ? 'REGISTER.MESSAGES.SUCCESS_ADMIN'
+      : 'REGISTER.MESSAGES.SUCCESS';
+
+    register$
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        switchMap(() => this.translate.get('REGISTER.MESSAGES.SUCCESS')),
-        tap((msg) => {
-          this.messageService.showMessage(msg, 'exito');
+        switchMap(() => this.translate.get(successTranslationKey)),
+        tap((msg: string) => {
+          this.messageService.showMessage(msg, 'success');
           this.cd.detectChanges();
         }),
         delay(2000),
         tap(() => {
           if (isAdmin) {
-            const tipoPestana = event.esCliente ? 'cliente' : 'empresa';
-            this.router.navigate(['/admin-gestion'], { queryParams: { tipo: tipoPestana } });
+            const tabType = payloadIsClient ? 'client' : 'business';
+            this.router.navigate(['/admin-gestion'], { queryParams: { type: tabType } });
           } else {
             this.router.navigate(['/login']);
           }
         }),
-        catchError((err) => {
+        catchError((err: Error) => {
           console.error(err);
-          const key =
-            err.message === 'EMAIL_EXISTS' || err.message?.includes('registered') || err.message?.includes('registrado')
-              ? 'REGISTER.MESSAGES.ERROR_EMAIL'
-              : 'REGISTER.MESSAGES.ERROR_GENERIC';
+          const errorMessage = err.message || '';
+          const isEmailError =
+            errorMessage === 'EMAIL_EXISTS' ||
+            errorMessage.includes('registered') ||
+            errorMessage.includes('registrado');
+
+          const key = isEmailError
+            ? 'REGISTER.MESSAGES.ERROR_EMAIL'
+            : 'REGISTER.MESSAGES.ERROR_GENERIC';
+
           return this.translate.get(key).pipe(
-            tap((msg) => {
+            tap((msg: string) => {
               this.messageService.showMessage(msg, 'error');
               this.cd.detectChanges();
             }),
-            switchMap(() => EMPTY)
+            switchMap(() => EMPTY),
           );
-        })
+        }),
       )
       .subscribe();
   }

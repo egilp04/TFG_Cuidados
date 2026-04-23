@@ -10,10 +10,14 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { Modifyprofileform } from '../../components/modifyprofileform/modifyprofileform';
 import { AuthUserModel } from '../../models/Auth-Service';
 import { FormSubmitEvent } from '../../models/ModifyProfileForm';
-import { UpdateProfilePayload } from '../../models/User-Service';
+import { UpdateProfilePayload } from '../../models/User_Service';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 
+/**
+ * Componente para manejar las modificaciones del perfil de usuario.
+ * Soporta actualizar datos de perfil y eliminar/desuscribir cuentas.
+ */
 @Component({
   selector: 'app-modify-profile',
   standalone: true,
@@ -32,50 +36,70 @@ export default class ModifyProfilePage implements OnInit {
   private translate = inject(TranslateService);
   private location = inject(Location);
 
-  userRole = signal<'cliente' | 'empresa' | 'administrador'>('cliente');
-  userToEdit = signal<AuthUserModel | null>(null);
+  public userRole = signal<'client' | 'business' | 'administrator'>('client');
+  public userToEdit = signal<AuthUserModel | null>(null);
 
-  ngOnInit() {
-    const state = history.state as { usuario?: AuthUserModel };
-    if (state && state.usuario) {
-      this.userToEdit.set(state.usuario);
-      this.userRole.set(state.usuario.rol);
+  ngOnInit(): void {
+    const state = history.state as { user?: AuthUserModel; usuario?: AuthUserModel };
+    const targetUser = state.user || state.usuario;
+
+    if (targetUser) {
+      this.userToEdit.set(targetUser);
+      this.userRole.set(this.normalizeRole(targetUser.rol));
     } else {
-      const user = this.authService.currentUser();
-      if (user) {
-        this.userToEdit.set(user);
-        this.userRole.set(user.rol);
+      const currentUser = this.authService.currentUser();
+      if (currentUser) {
+        this.userToEdit.set(currentUser);
+        this.userRole.set(this.normalizeRole(currentUser.rol));
       }
     }
     setTimeout(() => this.cd.detectChanges(), 0);
   }
-  
-  doUpdateProfile(event: FormSubmitEvent) {
+
+  /**
+   * Normaliza la cadena de rol de usuario para que coincida con el esquema de aplicación en inglés.
+   */
+  private normalizeRole(role: string | undefined): 'client' | 'business' | 'administrator' {
+    if (role === 'business') return 'business';
+    if (role === 'administrator') return 'administrator';
+    return 'client';
+  }
+
+  /**
+   * Envía los datos de perfil actualizados al servidor.
+   * Actualiza las credenciales de autenticación si el correo fue cambiado por el usuario actualmente activo.
+   * @param event El evento de envío del formulario que contiene los nuevos datos de perfil.
+   */
+  doUpdateProfile(event: FormSubmitEvent): void {
     const user = this.userToEdit();
-    const userLogueado = this.authService.currentUser();
+    const loggedUser = this.authService.currentUser();
+
     if (!user) return;
-    const nuevosDatos = event.datos as UpdateProfilePayload;
-    const rol = event.rol;
+
+    const newData = event.data as UpdateProfilePayload;
+    const role = event.rol;
 
     this.userService
-      .updateProfileDirect(user.id_usuario, nuevosDatos, rol)
+      .updateProfileDirect(user.id_user, newData, role)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap(() => {
-          const soyYo = user.id_usuario === userLogueado?.id_usuario;
-          const emailCambio = nuevosDatos.email !== user.email;
-          if (soyYo && emailCambio) {
-            return this.authService.updateAuthCredentiales(nuevosDatos.email);
+          const isSelfUpdate = user.id_user === loggedUser?.id_user;
+          const emailChanged = newData.email !== user.email;
+
+          if (isSelfUpdate && emailChanged) {
+            return this.authService.updateAuthCredentiales(newData.email);
           }
           return of(null);
         }),
         switchMap(() => this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_SUCCESS')),
-        tap((msg) => {
-          this.messageService.showMessage(msg, 'exito');
-          const soyYo = user.id_usuario === userLogueado?.id_usuario;
-          if (soyYo) {
-            const usuarioActualizado = { ...userLogueado, ...nuevosDatos } as AuthUserModel;
-            this.authService.updateUserSignal(usuarioActualizado);
+        tap((msg: string) => {
+          this.messageService.showMessage(msg, 'success');
+          const isSelfUpdate = user.id_user === loggedUser?.id_user;
+
+          if (isSelfUpdate) {
+            const updatedUser = { ...loggedUser, ...newData } as AuthUserModel;
+            this.authService.updateUserSignal(updatedUser);
           }
           this.cd.detectChanges();
         }),
@@ -83,53 +107,77 @@ export default class ModifyProfilePage implements OnInit {
         tap(() => {
           this.location.back();
         }),
-        catchError((err) => {
+        catchError((err: Error) => {
           console.error('Error actualizando perfil:', err);
-          this.messageService.showMessage('Error al guardar los cambios', 'error');
-          return of(null);
+          return this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_ERROR').pipe(
+            tap((msg: string) => this.messageService.showMessage(msg, 'error')),
+            switchMap(() => EMPTY),
+          );
         }),
       )
       .subscribe();
   }
-  async doUserLow() {
+
+  /**
+   * Solicita confirmación del usuario y elimina la cuenta.
+   * Cierra la sesión del usuario si está eliminando su propia cuenta.
+   */
+  async unsubscribeUser(): Promise<void> {
     const user = this.userToEdit();
     const currentUser = this.authService.currentUser();
+
     if (!user) return;
+
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
+
     this.dialog
       .open(Cancelmodal, {
-        width: '500px',
-        data: { modo: 'baja' },
+        width: '600px',
+        data: { mode: 'unsubscribe' },
         autoFocus: false,
       })
       .afterClosed()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter((result) => result === true),
-        switchMap(() => this.userService.deleteUser(user.id_usuario)),
+        switchMap(() => this.userService.deleteUser(user.id_user)),
         switchMap(() => {
-          const soyYo = user.id_usuario === currentUser?.id_usuario;
-          if (soyYo) {
-            return this.authService.signOut().pipe(tap(() => this.router.navigate(['/'])));
+          const isSelfUpdate = user.id_user === currentUser?.id_user;
+          if (isSelfUpdate) {
+            return this.authService.signOut().pipe(
+              tap(() => this.router.navigate(['/'])),
+              map(() => true),
+            );
           } else {
             this.location.back();
             return of(true);
           }
         }),
-        catchError((err) => {
-          console.error('Error al dar de baja:', err);
-          this.messageService.showMessage('Hubo un error al eliminar el usuario', 'error');
-          return of(false);
-        })
+        switchMap((success) =>
+          success
+            ? this.translate
+                .get('MODIFY_PROFILE.MESSAGES.DELETE_SUCCESS')
+                .pipe(map((msg) => ({ msg, type: 'success' as const })))
+            : EMPTY,
+        ),
+        catchError((err: Error) => {
+          console.error('Error desuscribiendo usuario:', err);
+          return this.translate
+            .get('MODIFY_PROFILE.MESSAGES.DELETE_ERROR')
+            .pipe(map((msg) => ({ msg, type: 'error' as const })));
+        }),
       )
-      .subscribe((exito) => {
-        if (exito) {
-          this.messageService.showMessage('Usuario eliminado correctamente', 'exito');
+      .subscribe((result) => {
+        if (result && result.msg) {
+          this.messageService.showMessage(result.msg, result.type);
         }
       });
   }
 
-  backHome() {
+  /**
+   * Navega hacia atrás en el historial de navegación.
+   */
+  navigateBack(): void {
     this.location.back();
   }
 }

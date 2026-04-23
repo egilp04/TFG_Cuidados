@@ -1,4 +1,4 @@
-export const dias_semana = [
+export const week_days = [
   { valor: 'lunes', label: 'MANAGEMENT_SCHEDULES.DAYS.MONDAY' },
   { valor: 'martes', label: 'MANAGEMENT_SCHEDULES.DAYS.TUESDAY' },
   { valor: 'miercoles', label: 'MANAGEMENT_SCHEDULES.DAYS.WEDNESDAY' },
@@ -8,7 +8,7 @@ export const dias_semana = [
   { valor: 'domingo', label: 'MANAGEMENT_SCHEDULES.DAYS.SUNDAY' },
 ];
 
-export const tradusDia: { [key: string]: string } = {
+export const tranlsate_days: { [key: string]: string } = {
   lunes: 'MANAGEMENT_SCHEDULES.DAYS.MONDAY',
   martes: 'MANAGEMENT_SCHEDULES.DAYS.TUESDAY',
   miercoles: 'MANAGEMENT_SCHEDULES.DAYS.WEDNESDAY',
@@ -18,6 +18,4 @@ export const tradusDia: { [key: string]: string } = {
   domingo: 'MANAGEMENT_SCHEDULES.DAYS.SUNDAY',
 };
 
-
-export const diasValidos = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
- 
+export const validDays = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];

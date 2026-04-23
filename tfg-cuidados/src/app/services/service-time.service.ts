@@ -2,116 +2,120 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
-import { Servicio_HorarioModel } from '../models/Servicio_Horario';
-import { ServicioHorarioJoined } from '../models/Service-Time-Service';
+import { Service_Time_Model } from '../models/Service_Time_Model';
+import { ServiceTimeJoined } from '../models/Service_Time_Service_Model';
 
 /**
- * @description Servicio encargado de gestionar la disponibilidad horaria de los servicios.
- * Implementa una lógica de vinculación entre la entidad 'Servicio' y la entidad 'Horario'.
+ * Servicio responsable de gestionar la disponibilidad de servicios.
+ * Implementa la lógica de vinculación entre entidades 'Service' y 'Time'.
  */
 @Injectable({
   providedIn: 'root',
 })
 export class ServiceTimeService {
   private supabase = inject(SupabaseService).getClient();
+  private serviceTimeList$ = new BehaviorSubject<ServiceTimeJoined[]>([]);
+  private currentIdBusiness: string | null = null;
 
-  private serviceTimeList$ = new BehaviorSubject<ServicioHorarioJoined[]>([]);
-  private currentIdEmpresa: string | null = null;
-
-  getServiceTimeByEmpresa(idEmpresa: string): Observable<ServicioHorarioJoined[]> {
-    this.currentIdEmpresa = idEmpresa;
-    this.initRealtimeSubscription(idEmpresa);
-    this.refreshList(idEmpresa);
+  /**
+   * Recupera la lista de horarios disponibles para un negocio específico e inicializa sincronización en tiempo real.
+   * @param businessId Identificador único del negocio.
+   */
+  getServiceTimeByBusiness(businessId: string): Observable<ServiceTimeJoined[]> {
+    this.currentIdBusiness = businessId;
+    this.initRealtimeSubscription(businessId);
+    this.refreshList(businessId);
     return this.serviceTimeList$.asObservable();
   }
 
   /**
-   * Sistema de sincronización selectiva.
-   * A diferencia de otros servicios, utiliza canales filtrados por 'id_empresa' para
-   * optimizar el tráfico de red y asegurar que los cambios solo afecten a la
-   * entidad correspondiente en tiempo real.
+   * Configura un sistema de sincronización selectiva filtrado por ID de negocio.
    */
-  private initRealtimeSubscription(idEmpresa: string) {
+  private initRealtimeSubscription(businessId: string) {
     this.supabase.removeAllChannels();
     this.supabase
-      .channel(`public:Servicio_Horario:${idEmpresa}`)
+      .channel(`public:Service_Time:${businessId}`)
       .on(
         'postgres_changes',
         {
           event: '*',
           schema: 'public',
-          table: 'Servicio_Horario',
-          filter: `id_empresa=eq.${idEmpresa}`,
+          table: 'Service_Time',
+          filter: `id_business=eq.${businessId}`,
         },
         () => {
-          console.log('⚡ Evento Realtime detectado: actualizando lista...');
-          this.refreshList(idEmpresa);
+          this.refreshList(businessId);
         },
       )
       .subscribe();
   }
 
   /**
-   * Recupera la oferta comercial de una empresa mediante un JOIN relacional.
-   * Proporciona datos planos que incluyen el nombre del servicio, tipo, hora y día,
-   * facilitando su representación en componentes de tablas y tarjetas.
+   * Obtiene la oferta comercial de un negocio utilizando uniones relacionales con las tablas Service y Time.
    */
-  private async refreshList(idEmpresa: string) {
+  private async refreshList(businessId: string) {
     const { data, error } = await this.supabase
-      .from('Servicio_Horario')
+      .from('Service_Time')
       .select(
         `
         *,
-        Servicio:id_servicio ( nombre, tipo_servicio),
-        Horario:id_horario ( hora, dia_semana )
+        Service:id_service ( name, type_service),
+        Time:id_time ( week_day, time )
       `,
       )
-      .eq('id_empresa', idEmpresa)
-      .order('id_servicio_horario', { ascending: false });
+      .eq('id_business', businessId)
+      .order('id_service_time', { ascending: false });
 
     if (!error) {
-      this.serviceTimeList$.next((data as ServicioHorarioJoined[]) || []);
+      this.serviceTimeList$.next((data as unknown as ServiceTimeJoined[]) || []);
     } else {
-      console.error('Error refrescando lista:', error);
+      console.error('Error al actualizar la lista:', error);
     }
   }
 
-  insertServiceTime(newEntry: Servicio_HorarioModel): Observable<void> {
-    return from(this.supabase.from('Servicio_Horario').insert(newEntry)).pipe(
+  /**
+   * Inserta un nuevo registro de disponibilidad servicio-horario.
+   */
+  insertServiceTime(newEntry: Service_Time_Model): Observable<void> {
+    return from(this.supabase.from('Service_Time').insert(newEntry)).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
       tap(() => {
-        if (this.currentIdEmpresa) this.refreshList(this.currentIdEmpresa);
+        if (this.currentIdBusiness) this.refreshList(this.currentIdBusiness);
       }),
       catchError((err) => throwError(() => err)),
     );
   }
 
-  updateServiceTime(id: string, changes: Partial<Servicio_HorarioModel>): Observable<void> {
-    return from(
-      this.supabase.from('Servicio_Horario').update(changes).eq('id_servicio_horario', id),
-    ).pipe(
+  /**
+   * Actualiza un registro existente de disponibilidad servicio-horario.
+   */
+  updateServiceTime(id: string, changes: Partial<Service_Time_Model>): Observable<void> {
+    return from(this.supabase.from('Service_Time').update(changes).eq('id_service_time', id)).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
       tap(() => {
-        if (this.currentIdEmpresa) this.refreshList(this.currentIdEmpresa);
+        if (this.currentIdBusiness) this.refreshList(this.currentIdBusiness);
       }),
       catchError((err) => throwError(() => err)),
     );
   }
 
+  /**
+   * Elimina un registro de disponibilidad servicio-horario de la base de datos.
+   */
   deleteServiceTime(id: string): Observable<void> {
-    return from(this.supabase.from('Servicio_Horario').delete().eq('id_servicio_horario', id)).pipe(
+    return from(this.supabase.from('Service_Time').delete().eq('id_service_time', id)).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
       tap(() => {
         const currentList = this.serviceTimeList$.getValue();
-        const filtered = currentList.filter((item) => item.id_servicio_horario !== id);
+        const filtered = currentList.filter((item) => item.id_service_time !== id);
         this.serviceTimeList$.next(filtered);
-        if (this.currentIdEmpresa) this.refreshList(this.currentIdEmpresa);
+        if (this.currentIdBusiness) this.refreshList(this.currentIdBusiness);
       }),
       catchError((err) => throwError(() => err)),
     );

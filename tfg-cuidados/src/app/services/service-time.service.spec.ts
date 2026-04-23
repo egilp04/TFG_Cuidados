@@ -58,8 +58,8 @@ describe('ServiceTimeService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('getServiceTimeByEmpresa should init session', fakeAsync(() => {
-    service.getServiceTimeByEmpresa('emp1').subscribe();
+  it('getServiceTimeByBusiness should init session', fakeAsync(() => {
+    service.getServiceTimeByBusiness('emp1').subscribe();
     tick();
     expect(supabaseMock.channel).toHaveBeenCalledWith('public:Servicio_Horario:emp1');
   }));

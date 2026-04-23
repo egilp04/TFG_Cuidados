@@ -1,0 +1,40 @@
+@reference "../../../styles.css";
+
+.landing-container {
+  @apply flex flex-col justify-center items-center w-full;
+}
+
+.hero-section {
+  @apply relative w-full h-300 md:h-[50svh] 2xl:h-[600px] overflow-hidden flex items-end justify-center pb-12 md:pb-20;
+}
+
+.hero-image {
+  @apply absolute inset-0 w-full h-full object-cover -z-10;
+}
+
+.hero-text-container {
+  @apply text-center;
+}
+
+.hero-title {
+  @apply text-h2 text-primary font-bold;
+}
+
+.hero-subtitle {
+  @apply italic;
+}
+.services-section {
+  @apply w-full overflow-hidden flex flex-col items-center justify-center;
+}
+
+.services-title {
+  @apply text-center text-h1 text-primary dark:text-surface m-20 lg:m-[2rem] 2xl:m-[2.5rem] uppercase;
+}
+
+.services-grid {
+  @apply h-full px-4 grid grid-cols-1 grid-rows-3 gap-[32px] md:grid-cols-2 md:grid-rows-2 md:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 py-4;
+}
+
+.services-card-special {
+  @apply md:row-span-2 md:self-center lg:row-span-1 lg:self-auto;
+}

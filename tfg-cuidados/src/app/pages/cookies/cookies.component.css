@@ -1,0 +1,24 @@
+@reference "../../../styles.css";
+.cookies-container {
+  @apply flex flex-col items-center justify-center w-full px-6 pb-20;
+}
+
+.cookies-header-container {
+  @apply max-w-4xl w-full text-center mb-14 2xl:mb-22;
+}
+
+.cookies-main {
+  @apply max-w-4xl w-full bg-surface dark:bg-gray-100 border border-primary/10 rounded-2xl p-8 md:p-12 shadow-sm text-secondary;
+}
+
+.cookies-title {
+  @apply text-h1 text-primary font-poppins mb-4 dark:text-surface;
+}
+
+.cookies-modification-date {
+  @apply text-label text-gray-500 dark:text-gray-200;
+}
+
+.cookies-subtitle {
+  @apply text-h2 text-primary mb-6 border-b border-primary/20 pb-2;
+}

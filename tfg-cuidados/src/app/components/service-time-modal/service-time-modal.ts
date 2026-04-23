@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -7,8 +7,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { ServiceTimeService } from '../../services/service-time.service';
 import { ServiceService } from '../../services/service.service';
 import { TimeService } from '../../services/time.service';
@@ -17,10 +16,13 @@ import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { Servicio_HorarioModel } from '../../models/Servicio_Horario';
-import { ServiceTimeModalData } from '../../models/Service-Time';
+import { Service_Time_Model } from '../../models/Service_Time_Model';
+import { ServiceTimeModalData } from '../../models/Service_Time_Data_Model';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
 
+/**
+ * Componente modal para crear o editar la relación entre un servicio, una franja horaria y un negocio.
+ */
 @Component({
   selector: 'app-service-time-modal',
   standalone: true,
@@ -36,6 +38,7 @@ import { CloseBtnComponent } from '../close-btn/close-btn.component';
   ],
   templateUrl: './service-time-modal.html',
   styleUrl: './service-time-modal.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServiceTimeModal implements OnInit {
   public dialogRef = inject(MatDialogRef<ServiceTimeModal>);
@@ -46,47 +49,53 @@ export class ServiceTimeModal implements OnInit {
   private authService = inject(AuthService);
   private translate = inject(TranslateService);
 
-  servicios$ = inject(ServiceService).getServicesObservable();
-  horarios$ = inject(TimeService).getTimesObservable();
+  public services$ = inject(ServiceService).getServicesObservable();
+  public times$ = inject(TimeService).getTimesObservable();
 
-  form: FormGroup;
-  isEditing: boolean = false;
+  public form: FormGroup;
+  public isEditing: boolean = false;
 
   constructor() {
     this.isEditing = !!this.data;
+
     this.form = this.fb.group({
-      id_servicio: this.fb.control<string>(this.data?.id_servicio || '', Validators.required),
-      id_horario: this.fb.control<string>(this.data?.id_horario || '', Validators.required),
-      id_empresa: this.fb.control<string>(this.data?.id_empresa || ''),
-      precio: this.fb.control<string | number>(this.data?.precio || '', [
+      id_service: this.fb.control<string>(this.data?.id_service || '', Validators.required),
+      id_time: this.fb.control<string>(this.data?.id_time || '', Validators.required),
+      id_business: this.fb.control<string>(this.data?.id_business || ''),
+      price: this.fb.control<string | number>(this.data?.price || '', [
         Validators.required,
         Validators.min(0),
         Validators.pattern(/^\d+(\.\d{1,2})?$/),
       ]),
-      descripcion: this.fb.control<string>(this.data?.descripcion || '', [Validators.required]),
+      description: this.fb.control<string>(this.data?.description || '', [Validators.required]),
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (!this.isEditing) {
-      const empresaId = this.authService.currentUser()?.id_usuario;
-      this.form.patchValue({ id_empresa: empresaId });
+      const businessId = this.authService.currentUser()?.id_user;
+      this.form.patchValue({ id_business: businessId });
     }
   }
 
-  save() {
-    if (this.form.invalid) return;
-    const formPayload = this.form.getRawValue() as Servicio_HorarioModel;
-    const request =
+  /**
+   * Envía los datos del formulario para insertar o actualizar un registro de ServiceTime.
+   */
+  save(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const formPayload = this.form.getRawValue() as Service_Time_Model;
+    const request$ =
       this.isEditing && this.data
-        ? this.serviceTimeService.updateServiceTime(this.data.id_servicio_horario, formPayload)
+        ? this.serviceTimeService.updateServiceTime(this.data.id_service_time, formPayload)
         : this.serviceTimeService.insertServiceTime(formPayload);
 
-    request.subscribe({
-      next: () => {
-        this.dialogRef.close();
-      },
-      error: (err) => console.error('Error al guardar:', err),
+    request$.subscribe({
+      next: () => this.dialogRef.close(true),
+      error: (err: Error) => console.error('Error guardando relación de servicio-tiempo:', err),
     });
   }
 
@@ -100,7 +109,8 @@ export class ServiceTimeModal implements OnInit {
 
     const errors = control.errors;
     if (!errors) return '';
-    const errorMessages: { [key: string]: string } = {
+
+    const errorMessages: Record<string, string> = {
       required: this.translate.instant('SERVICE_TIME_MODAL.ERRORS.REQUIRED'),
       min: this.translate.instant('SERVICE_TIME_MODAL.ERRORS.MIN_VALUE', {
         value: errors['min']?.min,
@@ -108,15 +118,14 @@ export class ServiceTimeModal implements OnInit {
       pattern: this.getPatternMessage(controlName),
     };
 
-    const primerError = Object.keys(errors)[0];
+    const firstError = Object.keys(errors)[0];
     return (
-      errorMessages[primerError] ||
-      this.translate.instant('SERVICE_TIME_MODAL.ERRORS.INVALID_FIELD')
+      errorMessages[firstError] || this.translate.instant('SERVICE_TIME_MODAL.ERRORS.INVALID_FIELD')
     );
   }
 
   private getPatternMessage(controlName: string): string {
-    if (controlName === 'precio') {
+    if (controlName === 'price') {
       return this.translate.instant('SERVICE_TIME_MODAL.ERRORS.INVALID_PRICE');
     }
     return this.translate.instant('SERVICE_TIME_MODAL.ERRORS.INVALID_FORMAT');

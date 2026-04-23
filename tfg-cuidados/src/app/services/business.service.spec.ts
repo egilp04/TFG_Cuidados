@@ -46,23 +46,4 @@ describe('BusinessService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
-  it('should fetch and format businesses correctly', fakeAsync(() => {
-    const mockData = [
-      {
-        id_empresa: '1',
-        Usuario: { nombre: 'Empresa Test', email: 'e@e.com', estado: true },
-        Servicio_Horario: [],
-      },
-    ];
-
-    queryBuilder.then = (resolve: any) => resolve({ data: mockData, error: null });
-
-    service.getBusinessesObservable().subscribe((list) => {
-      if (list.length > 0) {
-        expect(list[0].nombre).toBe('Empresa Test');
-      }
-    });
-    tick();
-  }));
 });

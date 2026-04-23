@@ -1,0 +1,19 @@
+@reference "../../../styles.css";
+
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99999 !important;
+  pointer-events: none;
+}
+
+.message-noti {
+  @apply absolute top-20 left-1/2 -translate-x-1/2 flex flex-col items-center;
+  pointer-events: none;
+}
+
+.message-noti-text {
+  @apply text-lg font-medium mb-6 transition-all duration-300 bg-white px-4 py-2 rounded-lg shadow-sm;
+}

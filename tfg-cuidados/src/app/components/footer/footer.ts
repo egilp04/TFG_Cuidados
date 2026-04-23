@@ -12,9 +12,6 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 })
 export class Footer {
   private translate = inject(TranslateService);
-  private authService = inject(AuthService);
-
-  homeLink = computed(() => (this.authService.isAuthenticated() ? '/home' : '/'));
 
   changeLanguage(lang: string) {
     this.translate.use(lang);

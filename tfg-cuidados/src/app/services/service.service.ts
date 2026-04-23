@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, from, Observable, throwError, of } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators'; // Importar TAP
-import { ServicioModel } from '../models/Servicio';
+import { map, catchError, tap } from 'rxjs/operators';
+import { ServiceModel } from '../models/ServiceModel';
 
 /**
- * @description Gestiona el catálogo maestro de servicios disponibles en la plataforma.
+ * Gestiona el catálogo maestro de servicios disponibles en la plataforma.
  * Proporciona métodos CRUD y validaciones de integridad de datos.
  */
 @Injectable({
@@ -15,88 +15,105 @@ export class ServiceService {
   private supabaseService = inject(SupabaseService);
   private clientSupaBase = this.supabaseService.getClient();
 
-  private servicesList$ = new BehaviorSubject<ServicioModel[]>([]);
+  private servicesList$ = new BehaviorSubject<ServiceModel[]>([]);
 
   constructor() {
     this.initRealtime();
   }
 
-  getServicesObservable(): Observable<ServicioModel[]> {
+  /**
+   * Retorna un observable con la lista de todos los servicios disponibles.
+   */
+  getServicesObservable(): Observable<ServiceModel[]> {
     this.refreshServices();
     return this.servicesList$.asObservable();
   }
 
+  /**
+   * Inicializa la sincronización en tiempo real de la tabla Service.
+   */
   private initRealtime() {
     this.clientSupaBase
-      .channel('public:Servicio')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'Servicio' }, () => {
+      .channel('public:Service')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'Service' }, () => {
         this.refreshServices();
       })
       .subscribe();
   }
 
+  /**
+   * Sincroniza la lista de servicios desde la base de datos, ordenados por nombre.
+   */
   private async refreshServices() {
     const { data, error } = await this.clientSupaBase
-      .from('Servicio')
+      .from('Service')
       .select('*')
-      .order('nombre', { ascending: true });
+      .order('name', { ascending: true });
 
     if (!error) {
-      this.servicesList$.next((data ?? []) as ServicioModel[]);
+      this.servicesList$.next((data ?? []) as ServiceModel[]);
     }
   }
 
-  insertService(newServicio: ServicioModel): Observable<void> {
-    return from(this.clientSupaBase.from('Servicio').insert(newServicio)).pipe(
+  /**
+   * Inserta un nuevo servicio en el catálogo.
+   */
+  insertService(newService: ServiceModel): Observable<void> {
+    return from(this.clientSupaBase.from('Service').insert(newService)).pipe(
       tap(() => this.refreshServices()),
       map(({ error }) => {
         if (error) throw error;
-      }),
-      catchError((err) => throwError(() => err)),
-    );
-  }
-
-  updateService(id: string, changes: Partial<ServicioModel>): Observable<void> {
-    return from(this.clientSupaBase.from('Servicio').update(changes).eq('id_servicio', id)).pipe(
-      tap(() => this.refreshServices()),
-      map(({ error }) => {
-        if (error) throw error;
-      }),
-      catchError((err) => throwError(() => err)),
-    );
-  }
-
-  deleteService(id: string): Observable<void> {
-    return from(this.clientSupaBase.from('Servicio').delete().eq('id_servicio', id)).pipe(
-      tap(() => this.refreshServices()),
-      map(({ error }) => {
-        if (error) throw error;
-      }),
-      catchError((err) => throwError(() => err)),
-    );
-  }
-
-  getServiceById(id: string): Observable<ServicioModel> {
-    return from(
-      this.clientSupaBase.from('Servicio').select('*').eq('id_servicio', id).single(),
-    ).pipe(
-      map(({ data, error }) => {
-        if (error) throw error;
-        return data as ServicioModel;
       }),
       catchError((err) => throwError(() => err)),
     );
   }
 
   /**
-   * Validación de duplicidad lógica.
-   * Utiliza el operador 'ilike' para asegurar que no se registren servicios con
-   * nombres similares, ignorando mayúsculas y minúsculas (Case Insensitive).
+   * Actualiza un registro de servicio existente.
    */
-  existsService(nombre: string, idExclude?: string): Observable<boolean> {
-    let query = this.clientSupaBase.from('Servicio').select('id_servicio').ilike('nombre', nombre);
+  updateService(id: string, changes: Partial<ServiceModel>): Observable<void> {
+    return from(this.clientSupaBase.from('Service').update(changes).eq('id_service', id)).pipe(
+      tap(() => this.refreshServices()),
+      map(({ error }) => {
+        if (error) throw error;
+      }),
+      catchError((err) => throwError(() => err)),
+    );
+  }
+
+  /**
+   * Elimina un servicio del catálogo.
+   */
+  deleteService(id: string): Observable<void> {
+    return from(this.clientSupaBase.from('Service').delete().eq('id_service', id)).pipe(
+      tap(() => this.refreshServices()),
+      map(({ error }) => {
+        if (error) throw error;
+      }),
+      catchError((err) => throwError(() => err)),
+    );
+  }
+
+  /**
+   * Recupera un servicio individual por su identificador.
+   */
+  getServiceById(id: string): Observable<ServiceModel> {
+    return from(this.clientSupaBase.from('Service').select('*').eq('id_service', id).single()).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+        return data as ServiceModel;
+      }),
+      catchError((err) => throwError(() => err)),
+    );
+  }
+
+  /**
+   * Verifica si un servicio con un nombre específico ya existe, excluyendo un ID dado.
+   */
+  existsService(name: string, idExclude?: string): Observable<boolean> {
+    let query = this.clientSupaBase.from('Service').select('id_service').ilike('name', name);
     if (idExclude) {
-      query = query.neq('id_servicio', idExclude);
+      query = query.neq('id_service', idExclude);
     }
 
     return from(query).pipe(

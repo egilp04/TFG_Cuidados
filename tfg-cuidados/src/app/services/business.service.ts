@@ -1,76 +1,85 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { EmpresaModel, SupabaseEmpresaJoin } from '../models/Bussiness-Service';
+import { BusinessSupabaseJoinModel } from '../models/Bussiness-Service';
+import { BusinessModel } from '../models/BusinessModel';
 
 /**
- * @description Servicio de consulta para la búsqueda de empresas.
- * Realiza una agregación de datos (Empresa + Usuario + Servicio_Horario)
- * asegurando que solo se listen entidades con estado activo.
+ * Servicio para consultar y buscar negocios.
+ * Agrega datos de las tablas Business, User_public y Service_Time,
+ * asegurando que solo se listen entidades activas.
  */
 @Injectable({ providedIn: 'root' })
 export class BusinessService {
   private supabase = inject(SupabaseService).getClient();
-
-  private businessesList$ = new BehaviorSubject<EmpresaModel[]>([]);
+  private businessesList$ = new BehaviorSubject<BusinessModel[]>([]);
 
   constructor() {
     this.initRealtime();
   }
-  getBusinessesObservable(): Observable<EmpresaModel[]> {
+
+  /**
+   * Retorna un observable con la lista de negocios activos.
+   * @returns Observable<BusinessModel[]>
+   */
+  getBusinessesObservable(): Observable<BusinessModel[]> {
     this.refreshBusinesses();
     return this.businessesList$.asObservable();
   }
 
   /**
-   * Configura una suscripción Realtime multi-tabla.
-   * Si cambian los datos de la Empresa o sus horarios, la vista de búsqueda
-   * se actualiza automáticamente sin recargar la página.
+   * Configura una suscripción en tiempo real multi-tabla.
+   * Actualiza la lista de negocios automáticamente cuando ocurren cambios en las tablas Business o Service_Time.
    */
   private initRealtime() {
     this.supabase
-      .channel('public:empresa_full_data')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'Empresa' }, () =>
+      .channel('public:business_full_data')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'Business' }, () =>
         this.refreshBusinesses(),
       )
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'Servicio_Horario' }, () =>
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'Service_Time' }, () =>
         this.refreshBusinesses(),
       )
       .subscribe();
   }
 
+  /**
+   * Obtiene negocios activos incluyendo su perfil de usuario público, servicios y horarios.
+   */
   private async refreshBusinesses() {
     const { data, error } = await this.supabase
-      .from('Empresa')
+      .from('Business')
       .select(
         `
       *,
-      Usuario!inner (nombre, email, estado),
-      Servicio_Horario!inner (
-        id_servicio_horario,
-        precio,
-        descripcion,
-        Servicio ( nombre, tipo_servicio ),
-        Horario ( dia_semana, hora )
+      User_public!inner (name, email, state),
+      Service_Time!inner (
+        id_service_time,
+        price,
+        description,
+        id_service,
+        Service ( id_service, name, type_service),
+        Time ( week_day, time )
       )
     `,
       )
-      .eq('Usuario.estado', true);
+      .eq('User_public.state', true);
 
     if (error) {
-      console.error('Error cargando empresas:', error.message);
+      console.error('Error al cargar negocios:', error.message);
       return;
     }
 
-    console.log('Empresas con servicios cargadas:', data);
-
     if (data) {
-      const formatted: EmpresaModel[] = (data as SupabaseEmpresaJoin[]).map((emp) => ({
-        ...(emp as any),
-        nombre: emp.Usuario?.nombre || 'Empresa (Sin nombre)',
-        email: emp.Usuario?.email || '',
-        Servicio_Horario: emp.Servicio_Horario || [],
-      } as EmpresaModel));
+      const formatted: BusinessModel[] = (data as BusinessSupabaseJoinModel[]).map(
+        (buss) =>
+          ({
+            ...buss,
+            name: buss.User_public?.name || 'Negocio (Sin nombre)',
+            email: buss.User_public?.email || '',
+            Service_Time: buss.Service_Time || [],
+          }) as BusinessModel,
+      );
       this.businessesList$.next(formatted);
     }
   }

@@ -1,0 +1,68 @@
+@reference "../../../styles.css";
+.activity-component-container {
+  @apply flex flex-col gap-6 p-6 w-full;
+}
+
+.activity-calendar-container {
+  @apply rounded-12 p-8 border shadow-md dark:border-2 dark:border-surface;
+}
+
+.activity-calendar-title {
+  @apply text-h2 text-primary capitalize dark:text-surface;
+}
+
+.activiy-month-change-btn {
+  @apply p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 text-label dark:text-surface;
+}
+
+.activity-calendar-grid {
+  @apply grid grid-cols-7 mb-4;
+}
+
+.activity-calendar-day {
+  @apply text-center text-label font-semibold text-primary dark:text-surface uppercase tracking-widest;
+}
+
+.activity-days-display {
+  @apply grid grid-cols-7;
+}
+
+.activity-days-inner-display {
+  @apply relative flex justify-center items-center w-full h-full;
+}
+
+.activity-no-events {
+  @apply text-primary bg-surface dark:text-surface dark:bg-surface-dark;
+}
+
+.activity-events {
+  @apply bg-primary! dark:bg-surface! dark:text-primary! text-surface! cursor-pointer;
+}
+
+.activity-events-base {
+  @apply w-20 h-20 2xl:w-[3rem] 2xl:h-[3rem] text-label text-sm font-bold flex items-center justify-center bg-transparent border-none p-0 m-0 cursor-pointer rounded-full transition-all outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+}
+
+.activity-tooltip-event-container {
+  @apply absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 w-[7rem] bg-secondary p-2 rounded-12 shadow-2xl max-h-32 overflow-y-auto lg:w-[9rem] lg:p-3 2xl:w-64;
+}
+
+.activity-tooltip-event-text {
+  @apply text-surface;
+}
+
+.activity-tooltip-text-container {
+  @apply py-1 flex flex-col gap-0.5;
+}
+
+.activity-table-container {
+  @apply overflow-auto mt-20;
+}
+
+.activity-text {
+  @apply text-primary dark:text-surface;
+}
+
+.activity-text-secondary {
+  @apply text-secondary dark:text-accent;
+}

@@ -17,11 +17,11 @@
 
   <div class="cancel-modal-title-container">
     <h1 mat-dialog-title id="cancel-title" class="cancel-modal-title">
-      @if (data.modo === 'baja') {
+      @if (data.mode === 'unsubscribe') {
         {{ 'CANCEL_MODAL.BAJA.TITLE' | translate }}
-      } @else if (data.modo === 'cancelContract') {
+      } @else if (data.mode === 'cancelContract') {
         {{ 'CANCEL_MODAL.CONTRACT.TITLE' | translate }}
-      } @else if (data.modo === 'eliminarServicio') {
+      } @else if (data.mode === 'deleteService') {
         {{ 'CANCEL_MODAL.SERVICE.TITLE' | translate }}
       } @else {
         {{ 'CANCEL_MODAL.GENERIC.TITLE' | translate }}
@@ -31,26 +31,26 @@
 
   <mat-dialog-content id="cancel-description" class="cancel-modal-content">
     <main class="cancel-modal-text">
-      @if (data.modo === 'baja') {
+      @if (data.mode === 'unsubscribe') {
         <div class="text-center space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.BAJA.DESC_1' | translate }}</p>
           <p class="text-p">{{ 'CANCEL_MODAL.BAJA.DESC_2' | translate }}</p>
         </div>
-      } @else if (data.modo === 'cancelContract') {
+      } @else if (data.mode === 'cancelContract') {
         <div class="space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.CONTRACT.DESC_1' | translate }}</p>
-          <ul class="list-disc pl-5 space-y-3">
+          <ol class="list-disc list-inside pl-5 space-y-3">
             <li [innerHTML]="'CANCEL_MODAL.CONTRACT.LIST.RECORD' | translate" class="text-p"></li>
             <li [innerHTML]="'CANCEL_MODAL.CONTRACT.LIST.COMM' | translate" class="text-p"></li>
             <li [innerHTML]="'CANCEL_MODAL.CONTRACT.LIST.NOTIFY' | translate" class="text-p"></li>
-          </ul>
+          </ol>
           <p class="text-p">{{ 'CANCEL_MODAL.CONTRACT.NOTE' | translate }}</p>
         </div>
-      } @else if (data.modo === 'eliminarServicio') {
+      } @else if (data.mode === 'deleteService') {
         <div class="space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.SERVICE.DESC_1' | translate }}</p>
           <p class="text-p">{{ 'CANCEL_MODAL.SERVICE.SUBTITLE' | translate }}</p>
-          <ol class="list-decimal pl-5 space-y-3 text-label">
+          <ol class="list-decimal list-inside text-left">
             <li [innerHTML]="'CANCEL_MODAL.SERVICE.LIST.CESSATION' | translate"></li>
             <li [innerHTML]="'CANCEL_MODAL.SERVICE.LIST.VISIBILITY' | translate"></li>
           </ol>
@@ -61,14 +61,14 @@
             {{ 'CANCEL_MODAL.SERVICE.IMPORTANT_DESC' | translate }}
           </p>
         </div>
-      } @else if (data.modo === 'eliminarAdminGlobal') {
+      } @else if (data.mode === 'deleteAdminGlobal') {
         <div class="space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.ADMIN_GLOBAL_DELETE' | translate }}</p>
         </div>
       } @else {
-        <div class="space-y-4">
+        <div>
           <p class="font-bold text-p">{{ 'CANCEL_MODAL.GENERIC.SUBTITLE' | translate }}</p>
-          <ol class="list-decimal pl-5 space-y-4 text-label">
+          <ol class="list-decimal list-inside pl-5 text-label">
             <li>{{ 'CANCEL_MODAL.GENERIC.LIST.PROFILE' | translate }}</li>
             <li>{{ 'CANCEL_MODAL.GENERIC.LIST.CONTRACTS' | translate }}</li>
           </ol>

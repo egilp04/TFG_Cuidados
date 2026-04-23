@@ -1,0 +1,24 @@
+@reference "../../../styles.css";
+.dropdown-container {
+  @apply relative z-20 w-full sm:w-fit;
+}
+
+.dropdown-icon {
+  @apply h-4 w-4 transition-transform duration-300 text-primary dark:text-surface;
+}
+
+.dropdown-options {
+  @apply p-3 hover:border-accent cursor-pointer text-primary dark:text-surface text-label transition-colors focus:border-primary first:rounded-t-12 last:rounded-b-12 border-t-0 border-l-2 border-r-2 border-b-0 first:border-t-2 last:border-b-2 border-disabled;
+}
+
+.dropdown-open-container {
+  @apply w-full mt-2 bg-surface dark:bg-surface-dark rounded-12 overflow-hidden absolute z-50 shadow-xl border border-gray-200 dark:border-gray-700;
+}
+
+.dropdown-inner-container {
+  @apply flex justify-between items-center p-2 gap-2 rounded-12 border-2 cursor-pointer transition-all border-disabled hover:border-accent focus:border-primary w-full;
+}
+
+.dropdown-title {
+  @apply text-secondary dark:text-surface text-label;
+}

@@ -1,9 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { ButtonComponent } from '../button/button';
 import { LucideAngularModule } from 'lucide-angular';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,7 +18,7 @@ import { ComunicationService } from '../../services/comunication.service';
 import { DarkModeBtnComponent } from '../dark-mode-btn/dark-mode-btn.component';
 import { filter } from 'rxjs';
 import { ResponsiveSize } from '../../services/responsive-size';
-
+import { getHomeRouteByRole } from '../../core/utils/routerUtils';
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -21,6 +28,9 @@ import { ResponsiveSize } from '../../services/responsive-size';
     LucideAngularModule,
     TranslateModule,
     DarkModeBtnComponent,
+    RouterLink,
+    RouterLinkActive,
+    RouterModule,
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
@@ -31,7 +41,6 @@ export class Navbar implements OnInit {
   private destroyRef = inject(DestroyRef);
   private comunicationService = inject(ComunicationService);
   private responsive = inject(ResponsiveSize);
-
   public isMenuOpen = false;
 
   constructor() {
@@ -43,23 +52,32 @@ export class Navbar implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
   closeMenu() {
     this.isMenuOpen = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  get homeRoute(): string {
+    const user = this.authService.currentUser();
+    return user ? getHomeRouteByRole(user.rol) : '/';
   }
 
   backHome() {
     this.closeMenu();
     const user = this.authService.currentUser();
     if (user) {
-      this.router.navigate(['/home']);
+      const rol = user.rol;
+      const route = getHomeRouteByRole(rol);
+      this.router.navigate([route]);
     } else {
-      this.router.navigate(['/landing']);
+      this.router.navigate(['/']);
     }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -67,7 +85,6 @@ export class Navbar implements OnInit {
   private cd = inject(ChangeDetectorRef);
 
   logout() {
-    this.closeMenu();
     this.authService
       .signOut()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -77,20 +94,19 @@ export class Navbar implements OnInit {
   }
 
   async startSession() {
-    this.closeMenu();
     const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
     const dialogRef = this.dialog.open(Loginmodal, {
-      data: { modo: 'login' },
+      data: { mode: 'login' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-      maxHeight: '90vh'
+      maxHeight: '80vh',
     });
 
     dialogRef
       .afterClosed()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        filter((result) => result && result.loginSuccess === true)
+        filter((result) => result && result.loginSuccess === true),
       )
       .subscribe(() => {
         this.comunicationService.refreshUsersData();
@@ -101,7 +117,7 @@ export class Navbar implements OnInit {
   async registerFunction() {
     this.closeMenu();
     const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
-    this.dialog.open(Loginmodal, { data: { modo: 'registro' }, width: '500px' });
+    this.dialog.open(Loginmodal, { data: { mode: 'register' }, width: '500px' });
   }
 
   modifyProfileFunction() {
@@ -109,14 +125,13 @@ export class Navbar implements OnInit {
     this.router.navigate(['/modify-profile']);
   }
 
-  showComunications(tipo: string) {
-    this.closeMenu();
-    switch (tipo) {
-      case 'mensajes':
+  showComunications(type: string) {
+    switch (type) {
+      case 'messages':
         this.router.navigate(['/messages']);
 
         return;
-      case 'notificaciones':
+      case 'notifications':
         this.router.navigate(['/notifications']);
 
         return;

@@ -1,0 +1,12 @@
+@reference "../../../styles.css";
+.footer-nav {
+  @apply flex flex-col md:flex-row w-full items-center  md:justify-around gap-1 flex-1;
+}
+
+.footer-container {
+  @apply flex flex-col items-center justify-between md:flex-row py-20 px-4 bg-primary dark:bg-app-dark gap-1;
+}
+
+.footer-text {
+  @apply text-label text-surface hover:text-accent transition-colors cursor-pointer;
+}

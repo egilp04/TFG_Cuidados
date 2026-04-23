@@ -1,5 +1,5 @@
 describe('Envío de mensaje: Cliente-Empresa', () => {
-  const msgSubject = 'Consulta de Servicio TFG';
+  const msgtopic = 'Consulta de Servicio TFG';
   const msgContent = 'Hola, estoy interesado en reservar una actividad.';
   const emailEmpresaDestino = 'empresacypress@test.com';
 
@@ -25,7 +25,7 @@ describe('Envío de mensaje: Cliente-Empresa', () => {
 
     cy.get('app-inputs[name="receptor"] input').clear().type(emailEmpresaDestino, { force: true });
 
-    cy.get('app-inputs[name="asunto"] input').type(msgSubject, { force: true });
+    cy.get('app-inputs[name="asunto"] input').type(msgtopic, { force: true });
 
     cy.get('textarea').type(msgContent, { force: true });
 

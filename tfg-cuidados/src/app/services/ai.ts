@@ -36,6 +36,12 @@ export class AiService {
     REGLAS DE RESPUESTA: sé muy conciso (1 o 2 párrafos máximo), amable y profesional.
   `;
 
+  /**
+   * Envía un mensaje al asistente virtual y devuelve la respuesta.
+   * @param userMessage El mensaje del usuario.
+   * @param lang El idioma de la respuesta ('es' o 'en').
+   * @returns Una promesa con la respuesta del asistente.
+   */
   askAssistant(userMessage: string, lang: string = 'es'): Promise<string> {
     const idiomaSeleccionado = lang === 'en' ? 'ENGLISH' : 'ESPAÑOL';
     const mensajeCompleto = `${this.CONTEXTO_CUIDADOS}\n\nREGLA OBLIGATORIA: Responde en ${idiomaSeleccionado}.\n\nUsuario dice: ${userMessage}`;
@@ -84,5 +90,4 @@ export class AiService {
     );
   }
 }
-
 //Consulta de los modelos disponibles: https://generativelanguage.googleapis.com/v1beta/models?key=

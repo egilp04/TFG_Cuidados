@@ -1,0 +1,20 @@
+@reference "../../../styles.css";
+.secondary-navbar {
+  @apply w-full bg-surface dark:bg-surface-dark border-b border-primary/20 dark:border-white/20 py-4 px-4 md:px-10;
+}
+
+.secondary-nav-container {
+  @apply flex flex-row items-center gap-4 overflow-x-auto w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:justify-between;
+}
+
+.nav-btn {
+  @apply w-auto shrink-0;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
