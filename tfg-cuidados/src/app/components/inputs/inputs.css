@@ -35,7 +35,7 @@
 }
 
 .input-error {
-  @apply border-red dark:border-red-dark;
+  @apply border-red dark:border-red-dark text-center;
 }
 
 .input-no-error {

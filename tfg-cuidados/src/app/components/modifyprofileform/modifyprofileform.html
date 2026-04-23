@@ -86,7 +86,7 @@
         [errorMessage]="getErrorMessage('city')"
       ></app-inputs>
       
-      <div class="register-form-row">
+      <div class="modify-form-row">
         <app-inputs
           name="postcode"
           [label]="'MODIFY_PROFILE.LABELS.ZIP' | translate"
@@ -95,23 +95,23 @@
           class="flex-1"
         ></app-inputs>
         
-        <div class="register-form-select-container">
-          <label for="comunity-modify" class="register-form-select-label">
+        <div class="modify-form-select-container">
+          <label for="comunity-modify" class="modify-form-select-label">
             {{ 'REGISTER.LABELS.REGION' | translate }}
           </label>
           <div class="relative w-full">
             <select 
               id="comunity-modify" 
               formControlName="comunity" 
-              class="register-form-select"
+              class="modify-form-select"
               [attr.aria-invalid]="profileForm.get('comunity')?.invalid && profileForm.get('comunity')?.touched"
             >
               @for (comunity of comunities; track $index) {
-                <option [value]="comunity" class="register-form-options">{{ comunity }}</option>
+                <option [value]="comunity" class="modify-form-options">{{ comunity }}</option>
               }
             </select>
 
-            <div class="register-form-select-arrow">
+            <div class="modify-form-select-arrow">
               <svg
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
