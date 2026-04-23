@@ -32,6 +32,10 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'landing',
+    loadComponent: () => import('./pages/landing/landing'),
+  },
+  {
     path: 'contract',
     loadComponent: () => import('./pages/contracts/contracts'),
     canActivate: [authGuard],

@@ -77,7 +77,8 @@ export class MessagesModal implements OnInit {
   private loadActiveUsers(): void {
     const currentUserEmail = this.authService.currentUser()?.email;
     if (!currentUserEmail) return;
-    this.userService.getActiveUsersEmails(currentUserEmail)
+    this.userService
+      .getActiveUsersEmails(currentUserEmail)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (emails) => {
@@ -86,7 +87,7 @@ export class MessagesModal implements OnInit {
         },
         error: (err) => {
           console.error('No se pudieron cargar los destinatarios', err);
-        }
+        },
       });
   }
 

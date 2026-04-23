@@ -17,7 +17,7 @@
     </button>
   </header>
 
-  <main class="message-modal-form-container">
+  <main class="message-modal-form-container" [formGroup]="messageForm">
     @if (data.mode === 'writeMessage') {
       <div class="messages-form-select-container">
         <label for="receiver" class="messages-form-select-label">

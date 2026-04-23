@@ -12,7 +12,7 @@
 }
 
 .messages-page-btn-container {
-  @apply flex flex-col md:flex-row justify-between w-full gap-4 px-10 my-14;
+  @apply flex flex-col md:flex-row items-center justify-between w-full gap-4 px-10 my-14;
 }
 
 .messages-btn-new-message {
