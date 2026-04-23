@@ -1,7 +1,10 @@
-<section class="modify-form-container" [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.SECTION_TITLE' | translate">
-  <form 
-    [formGroup]="profileForm" 
-    (ngSubmit)="onSubmit()" 
+<section
+  class="modify-form-container"
+  [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.SECTION_TITLE' | translate"
+>
+  <form
+    [formGroup]="profileForm"
+    (ngSubmit)="onSubmit()"
     class="modify-profile-form"
     [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.FORM_NAME' | translate"
   >
@@ -51,7 +54,9 @@
             rows="4"
             class="input-text-area"
             [placeholder]="'MODIFY_PROFILE.PLACEHOLDER.DESCRIPTION' | translate"
-            [attr.aria-invalid]="profileForm.get('description')?.invalid && profileForm.get('description')?.touched"
+            [attr.aria-invalid]="
+              profileForm.get('description')?.invalid && profileForm.get('description')?.touched
+            "
           ></textarea>
         </div>
       </div>
@@ -63,7 +68,7 @@
       [control]="getCtrl('phone')"
       [errorMessage]="getErrorMessage('phone')"
     ></app-inputs>
-    
+
     <app-inputs
       name="email"
       [label]="'MODIFY_PROFILE.LABELS.EMAIL' | translate"
@@ -85,7 +90,7 @@
         [control]="getCtrl('city')"
         [errorMessage]="getErrorMessage('city')"
       ></app-inputs>
-      
+
       <div class="modify-form-row">
         <app-inputs
           name="postcode"
@@ -94,17 +99,19 @@
           [errorMessage]="getErrorMessage('postcode')"
           class="flex-1"
         ></app-inputs>
-        
+
         <div class="modify-form-select-container">
           <label for="comunity-modify" class="modify-form-select-label">
             {{ 'REGISTER.LABELS.REGION' | translate }}
           </label>
           <div class="relative w-full">
-            <select 
-              id="comunity-modify" 
-              formControlName="comunity" 
+            <select
+              id="comunity-modify"
+              formControlName="comunity"
               class="modify-form-select"
-              [attr.aria-invalid]="profileForm.get('comunity')?.invalid && profileForm.get('comunity')?.touched"
+              [attr.aria-invalid]="
+                profileForm.get('comunity')?.invalid && profileForm.get('comunity')?.touched
+              "
             >
               @for (comunity of comunities; track $index) {
                 <option [value]="comunity" class="modify-form-options">{{ comunity }}</option>

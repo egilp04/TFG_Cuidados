@@ -226,7 +226,7 @@ export default class ManagementTimeGlobal implements OnInit {
             }),
             switchMap(() =>
               this.translate
-                .get('MANAGEMENT_GLOBAL.DELETE_SUCCESS')
+                .get('MANAGEMENT_GLOBAL.DELETE')
                 .pipe(map((text: string) => ({ type: 'success' as const, text }))),
             ),
             catchError(() =>

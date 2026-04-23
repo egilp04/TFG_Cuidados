@@ -17,7 +17,7 @@
 }
 
 .dashboard-contracts-container {
-  @apply flex flex-col gap-22 w-full items-center py-10;
+  @apply flex flex-col gap-22 w-full items-center py-20;
 }
 
 .dashboard-contracts-title {
@@ -71,6 +71,6 @@
   @apply text-gray-400 mb-10 text-p dark:text-gray-50;
 }
 
-.dashboard-services-container{
+.dashboard-services-container {
   @apply flex flex-col justify-center items-center;
 }

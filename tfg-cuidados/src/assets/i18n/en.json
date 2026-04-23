@@ -187,15 +187,7 @@
     "CHART": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
-      "DAYS": [
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thu",
-        "Fri",
-        "Sat",
-        "Sun"
-      ],
+      "DAYS": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       "DEMAND": "Demand",
       "SUPPLY": "Supply"
     }
@@ -643,7 +635,7 @@
     "SEARCH_LABEL": "Search by name or email",
     "HEADER": {
       "NAME": "Name",
-      "SURNAME": "Surnames", 
+      "SURNAME": "Surnames",
       "EMAIL": "Email"
     },
     "BTN": {
@@ -665,7 +657,8 @@
     "MESSAGES": {
       "SUCCESS": "Registration successful! Please check your email.",
       "ERROR_EMAIL": "This email is already registered.",
-      "ERROR_GENERIC": "Error connecting to the server."
+      "ERROR_GENERIC": "Error connecting to the server.",
+      "SUCCESS_ADMIN": "Registration successful! You can go back to the user panel"
     },
     "LABELS": {
       "USERNAME": "Username",

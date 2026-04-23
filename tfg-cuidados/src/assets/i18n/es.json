@@ -600,7 +600,8 @@
     "MESSAGES": {
       "SUCCESS": "¡Registro realizado con éxito! Revisa tu email.",
       "ERROR_EMAIL": "El correo electrónico ya está registrado.",
-      "ERROR_GENERIC": "Error, inténtalo de nuevo."
+      "ERROR_GENERIC": "Error, inténtalo de nuevo.",
+      "SUCCESS_ADMIN": "Registro realizado con éxito, ya puedes regresar al panel"
     },
     "PLACEHOLDER": {
       "SELECTREGION": "Escoja una"

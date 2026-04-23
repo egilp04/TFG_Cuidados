@@ -167,14 +167,10 @@ export class Registerform implements OnInit, OnChanges {
    */
   getErrorMessage(controlName: string): string {
     const control = this.registerForm.get(controlName);
-
-    // 1. Si el control no existe o no ha sido tocado, no mostramos error
     if (!control || (!control.touched && !control.dirty)) return '';
 
     const errors =
       control.errors || (controlName === 'repassword' ? this.registerForm.errors : null);
-
-    // 2. Si no hay errores, salimos
     if (!errors) return '';
 
     const firstError = Object.keys(errors)[0];
@@ -248,8 +244,6 @@ export class Registerform implements OnInit, OnChanges {
         c?.setValidators([Validators.required, Validators.minLength(3)]);
       } else if (f === 'cif') {
         c?.setValidators([Validators.required, this.cifValidator]);
-      } else if (f === 'description') {
-        c?.clearValidators();
       } else {
         c?.setValidators([Validators.required]);
       }

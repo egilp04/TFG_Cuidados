@@ -88,10 +88,14 @@ export default class Register implements OnInit {
       ? this.authService.registerByAdmin(payloadData, payloadIsClient)
       : this.authService.register(payloadData, payloadIsClient);
 
+    const successTranslationKey = isAdmin
+      ? 'REGISTER.MESSAGES.SUCCESS_ADMIN'
+      : 'REGISTER.MESSAGES.SUCCESS';
+
     register$
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        switchMap(() => this.translate.get('REGISTER.MESSAGES.SUCCESS')),
+        switchMap(() => this.translate.get(successTranslationKey)),
         tap((msg: string) => {
           this.messageService.showMessage(msg, 'success');
           this.cd.detectChanges();

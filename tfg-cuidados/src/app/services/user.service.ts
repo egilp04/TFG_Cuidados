@@ -134,7 +134,7 @@ export class UserService {
   ): Observable<RpcSuccessResponse> {
     const bodyRPC = {
       p_user_id: userId,
-      p_rol: rol,
+      p_role: rol,
       p_name: dataToSend.name,
       p_email: dataToSend.email,
       p_phone: dataToSend.phone,
@@ -192,26 +192,26 @@ export class UserService {
     );
   }
 
-/**
- * Obtiene la lista de correos electrónicos de todos los usuarios activos,
- * excluyendo el correo del usuario proporcionado.
- * @param currentEmail El email del usuario logueado para excluirlo de la lista.
- */
-getActiveUsersEmails(currentEmail: string): Observable<string[]> {
-  return from(
-    this.supabase
-      .from('User_public')
-      .select('email')
-      .eq('state', true)
-      .neq('email', currentEmail)
-  ).pipe(
-    map(({ data, error }) => {
-      if (error) {
-        console.error('Error al obtener correos:', error);
-        return [];
-      }
-      return (data || []).map(user => user.email);
-    })
-  );
-}
+  /**
+   * Obtiene la lista de correos electrónicos de todos los usuarios activos,
+   * excluyendo el correo del usuario proporcionado.
+   * @param currentEmail El email del usuario logueado para excluirlo de la lista.
+   */
+  getActiveUsersEmails(currentEmail: string): Observable<string[]> {
+    return from(
+      this.supabase
+        .from('User_public')
+        .select('email')
+        .eq('state', true)
+        .neq('email', currentEmail),
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) {
+          console.error('Error al obtener correos:', error);
+          return [];
+        }
+        return (data || []).map((user) => user.email);
+      }),
+    );
+  }
 }

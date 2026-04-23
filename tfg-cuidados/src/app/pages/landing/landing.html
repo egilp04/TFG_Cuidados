@@ -1,18 +1,24 @@
 <section class="landing-container" role="main">
   @if (authService.isLoading()) {
-    <div class="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-b from-white to-blue-50/50">
+    <div class="min-h-screen w-full flex flex-col items-center justify-center">
       <div class="relative flex justify-center items-center">
-        <div class="absolute h-24 w-24 rounded-full bg-blue-400 opacity-20 animate-ping"></div>
-        <div class="relative h-24 w-24 rounded-full border-4 border-solid border-blue-100 border-t-blue-600 animate-spin"></div>
-        <div class="absolute h-6 w-6 rounded-full bg-blue-600 animate-pulse shadow-lg shadow-blue-500/50"></div>
+        <div
+          class="absolute h-24 w-24 rounded-full bg-primary dark:bg-surface opacity-20 animate-ping"
+        ></div>
+        <div
+          class="relative h-24 w-24 rounded-full border-4 border-solid bg-primary dark:bg-surface animate-spin"
+        ></div>
+        <div
+          class="absolute h-6 w-6 rounded-full bg-primary dark:bg-surface animate-pulse shadow-lg shadow-blue-500/50"
+        ></div>
       </div>
-      <p class="mt-8 text-blue-800/60 font-semibold tracking-widest uppercase text-sm animate-pulse">
+      <p
+        class="mt-8 text-blue-800/60 font-semibold tracking-widest uppercase text-sm animate-pulse"
+      >
         {{ 'GENERAL.LOADING' | translate }}
       </p>
-      
     </div>
-} @else {
-
+  } @else {
     <section class="hero-section" aria-labelledby="hero-main-title">
       <picture>
         <source srcset="assets/img/hero/hero-2xl-laptop.webp" media="(min-width: 2561px)" />
@@ -32,12 +38,12 @@
         </h1>
       </div>
     </section>
-  
+
     <section class="services-section" aria-labelledby="services-main-title">
       <h2 id="services-main-title" class="services-title">
         {{ 'LANDING.SERVICES' | translate }}
       </h2>
-  
+
       <main class="services-grid" role="list" [attr.aria-label]="'LANDING.SERVICES' | translate">
         @for (item of cardsdata; track item.title; let i = $index) {
           <app-cards-landing
@@ -50,7 +56,7 @@
           </app-cards-landing>
         }
       </main>
-  
+
       <footer class="register-btn">
         <app-button
           [label]="'LANDING.REGISTER' | translate"
@@ -61,5 +67,5 @@
         ></app-button>
       </footer>
     </section>
-}
+  }
 </section>

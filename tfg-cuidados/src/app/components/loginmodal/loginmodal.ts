@@ -104,15 +104,19 @@ export class Loginmodal implements OnInit {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: () => {
-            this.dialogRef.close({ loginSuccess: true });
-            this.dialog.closeAll();
-            this.cd.detectChanges();
-
             const user = this.authService.currentUser();
             const role = user?.rol;
             const route = getHomeRouteByRole(role);
-            console.log(route)
-            this.router.navigate([route]);
+            console.log('Navegando a la ruta de inicio:', route);
+            this.router.navigate([route]).then((navigated) => {
+              if (navigated) {
+                this.dialogRef.close({ loginSuccess: true });
+                this.dialog.closeAll();
+                this.cd.detectChanges();
+              } else {
+                console.warn('La navegación fue cancelada o falló.');
+              }
+            });
           },
           error: (err: Error) => {
             console.error('Error al iniciar sesión:', err);
