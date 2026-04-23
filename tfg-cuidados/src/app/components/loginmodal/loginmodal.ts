@@ -157,7 +157,7 @@ export class Loginmodal implements OnInit {
     const email = this.emailCtrl.value || '';
     if (!email) return;
 
-    this.authService.checkEmailExists(email).subscribe({
+    this.authService.check_user_email_active(email).subscribe({
       next: (exists: boolean) => {
         if (!exists) {
           this.messageService.showMessage(

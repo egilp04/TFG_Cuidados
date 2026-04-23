@@ -334,4 +334,22 @@ export class AuthService {
       catchError(() => of(false)),
     );
   }
+
+
+ /**
+   * Verifica si un correo existe y el usuario esta activo (state=true) usando un procedimiento almacenado.
+   */
+  check_user_email_active(email: string): Observable<boolean> {
+    const promise = this.supabase.rpc('check_user_email_active', { email_search: email });
+    return from(promise).pipe(
+      map(({ data, error }) => {
+        if (error) {
+          console.error('Error verificando email:', error);
+          return false;
+        }
+        return data as boolean;
+      }),
+      catchError(() => of(false)),
+    );
+  }
 }
