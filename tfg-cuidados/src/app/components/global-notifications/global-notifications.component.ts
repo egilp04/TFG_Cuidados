@@ -15,12 +15,12 @@ export class GlobalNotificationsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     document.body.appendChild(this.el.nativeElement);
 
-    el.style.position = 'fixed';
-    el.style.top = '0';
-    el.style.left = '0';
-    el.style.width = '100%';
-    el.style.zIndex = '999999';
-    el.style.pointerEvents = 'none';
+    this.el.style.position = 'fixed';
+    this.el.style.top = '0';
+    this.el.style.left = '0';
+    this.el.style.width = '100%';
+    this.el.style.zIndex = '999999';
+    this.el.style.pointerEvents = 'none';
   }
   ngOnDestroy() {
     this.el.nativeElement.remove();
