@@ -127,29 +127,21 @@ export class AuthService {
    * Registra un nuevo usuario y desencadena notificaciones de administrador.
    */
   register(data: RegisterPayload, isClient: boolean): Observable<AuthResponse> {
-    const { cleanEmail, cleanEmailPassword, metaData } = this.registerDataPreparation(
-      data,
-      isClient,
-    );
-
+    const { cleanEmail, cleanEmailPassword, metaData } = this.registerDataPreparation(data, isClient);
+  
     return from(this.supabase.rpc('email_exists', { email_check: cleanEmail })).pipe(
       switchMap(({ data: existe, error }) => {
         if (error) throw new Error(this.translate.instant('ERRORS.AUTH.ERRORS.TECHNICAL_ERROR'));
-        if (existe)
-          throw new Error(this.translate.instant('ERRORS.AUTH.ERRORS.EMAIL_ALREADY_REGISTERED'));
-        return from(
-          this.supabase.auth.signUp({
-            email: cleanEmail,
-            password: cleanEmailPassword,
-            options: {
-              data: metaData,
-              emailRedirectTo: `${window.location.origin}/`,
-            },
-          }),
-        );
+        if (existe) throw new Error(this.translate.instant('ERRORS.AUTH.ERRORS.EMAIL_ALREADY_REGISTERED'));
+        
+        return from(this.supabase.auth.signUp({
+          email: cleanEmail,
+          password: cleanEmailPassword,
+          options: { data: metaData, emailRedirectTo: `${window.location.origin}/` },
+        }));
       }),
       map((res: AuthResponse) => this.registerAnswerValidation(res)),
-      tap((res: AuthResponse) => {
+      switchMap((res: AuthResponse) => {
         if (res.data.user) {
           const rolKey = isClient ? 'ERRORS.ROLES.CLIENT' : 'ERRORS.ROLES.BUSINESS';
           const rolTexto = this.translate.instant(rolKey);
@@ -158,11 +150,14 @@ export class AuthService {
             email: cleanEmail,
             rol: rolTexto,
           });
-
+  
           const comunicationService = this.injector.get(ComunicationService);
-          comunicationService.notifyAdmins(topic, message).subscribe();
+          return comunicationService.notifyAdmins(topic, message).pipe(
+            map(() => res)
+          );
         }
-      }),
+        return of(res);
+      })
     );
   }
 
