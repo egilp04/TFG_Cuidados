@@ -22,8 +22,6 @@
         {{ 'LOGIN_MODAL.TITLES.REGISTER' | translate }}
       } @else if (currentMode === 'recover') {
         {{ 'LOGIN_MODAL.TITLES.RECOVER' | translate }}
-      } @else if (currentMode === 'resend') {
-        {{ 'LOGIN_MODAL.TITLES.RESEND' | translate }}
       } @else {
         {{ 'LOGIN_MODAL.TITLES.NOTITLE' | translate }}
       }
@@ -80,12 +78,6 @@
           variant="secondary"
           type="button"
           (click)="currentMode = 'recover'"
-        ></app-button>
-        <app-button
-          [label]="'LOGIN_MODAL.BTN.RESEND' | translate"
-          variant="secondary"
-          type="button"
-          (click)="currentMode = 'resend'"
         ></app-button>
         <app-button
           [label]="'LOGIN_MODAL.BTN.REGISTER' | translate"
