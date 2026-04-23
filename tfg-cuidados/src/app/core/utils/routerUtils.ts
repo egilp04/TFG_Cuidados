@@ -2,11 +2,11 @@ export function getHomeRouteByRole(rol?: string): string {
 
   console.log(rol)
   switch (rol) {
-    case 'administrador':
+    case 'administrator':
       return '/dashboard';
-    case 'empresa':
+    case 'business':
       return '/activities';
-    case 'cliente':
+    case 'client':
       return '/services-directory';
     default:
       return '/';
