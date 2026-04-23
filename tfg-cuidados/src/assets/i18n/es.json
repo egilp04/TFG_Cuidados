@@ -959,5 +959,8 @@
       }
     },
     "COMUNICATION": { "INVALID_TYPE": "Tipo de comunicacion inválida" }
+  },
+  "GENERAL": {
+    "LOADING": "Cargando..."
   }
 }

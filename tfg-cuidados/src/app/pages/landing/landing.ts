@@ -34,7 +34,6 @@ export default class Landing {
       }
     });
   }
-
   async openModal() {
     const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
     this.dialog.open(Loginmodal, {

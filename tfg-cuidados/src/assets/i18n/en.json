@@ -977,5 +977,8 @@
     "COMUNICATION": {
       "INVALID_TYPE": "Invalid communication type"
     }
+  },
+  "GENERAL": {
+    "LOADING": "Charging..."
   }
 }
