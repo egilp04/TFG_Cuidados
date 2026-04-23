@@ -360,7 +360,7 @@
       "SUCCESS_CREATE": "Schedule created successfully",
       "SUCCESS_UPDATE": "Schedule updated successfully",
       "SUCCESS_DELETE": "Schedule deleted",
-      "ERROR_DUPLICATE": "A schedule already exists for {{dia}} at {{hora}}",
+      "ERROR_DUPLICATE": "A schedule already exists for {{day}} at {{time}}",
       "ERROR_GENERIC": "Error processing the request",
       "ERROR_DELETE": "Error con el borrado"
     },
@@ -643,7 +643,8 @@
     "SEARCH_LABEL": "Search by name or email",
     "HEADER": {
       "NAME": "Name",
-      "SURNAME": "Surnames"
+      "SURNAME": "Surnames", 
+      "EMAIL": "Email"
     },
     "BTN": {
       "DELETE": "Delete",

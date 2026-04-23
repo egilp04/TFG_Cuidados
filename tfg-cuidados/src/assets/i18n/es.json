@@ -356,7 +356,7 @@
       "SUCCESS_CREATE": "Horario creado correctamente",
       "SUCCESS_UPDATE": "Horario actualizado correctamente",
       "SUCCESS_DELETE": "Horario eliminado",
-      "ERROR_DUPLICATE": "Ya existe un horario para {{dia}} a las {{hora}}",
+      "ERROR_DUPLICATE": "Ya existe un horario para {{day}} a las {{time}}",
       "ERROR_GENERIC": "Error al procesar la solicitud"
     }
   },
@@ -585,7 +585,8 @@
     "SEARCH_LABEL": "Buscar por nombre o email",
     "HEADER": {
       "NAME": "Nombre",
-      "SURNAME": "Apellidos"
+      "SURNAME": "Apellidos",
+      "EMAIL": "Email"
     },
     "BTN": {
       "DELETE": "Eliminar",

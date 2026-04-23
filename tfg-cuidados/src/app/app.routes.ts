@@ -62,7 +62,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'admin-gestion',
+    path: 'admin-management',
     loadComponent: () => import('./pages/management-admin/management-admin'),
     canActivate: [authGuard],
   },

@@ -27,11 +27,11 @@ export class NavHomeComponent {
   }
 
   manageBussinesses() {
-    this.router.navigate(['/admin-gestion'], { queryParams: { tipo: 'business' } });
+    this.router.navigate(['/admin-management'], { queryParams: { type: 'business' } });
   }
 
   manageUsers() {
-    this.router.navigate(['/admin-gestion'], { queryParams: { tipo: 'client' } });
+    this.router.navigate(['/admin-management'], { queryParams: { type: 'client' } });
   }
 
   checkDashboard() {
