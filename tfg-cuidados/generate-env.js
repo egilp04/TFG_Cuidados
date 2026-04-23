@@ -24,5 +24,3 @@ fs.writeFileSync(
   "./src/environments/environment.development.ts",
   envDevConfigFile,
 );
-
-console.log("✅ Archivos de entorno generados dinámicamente con éxito.");

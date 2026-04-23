@@ -5,7 +5,6 @@
   <app-buttonback></app-buttonback>
 </header>
 
-
 <section class="modify-profile-page-container" role="main" aria-labelledby="modify-profile-title">
   <h1 id="modify-profile-title" class="modify-profile-title">
     {{ 'MODIFY_PROFILE.TITLE' | translate }}
@@ -15,8 +14,8 @@
     [userRole]="userRole()"
     [userData]="userToEdit()"
     (formSubmitted)="doUpdateProfile($event)"
-    (deleteRequested)="doUserLow()"
-    (cancelRequested)="backHome()"
+    (deleteRequested)="unsubscribeUser()"
+    (cancelRequested)="navigateBack()"
   >
   </app-modifyprofileform>
 </section>

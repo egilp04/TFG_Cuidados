@@ -16,7 +16,7 @@
 }
 
 .cancel-modal-text {
-  @apply text-secondary leading-relaxed dark:text-gray-50 overflow-hidden text-center;
+  @apply text-secondary leading-relaxed dark:text-gray-50 overflow-hidden p-[20px];
 }
 
 .cancel-modal-action-container {

@@ -4,7 +4,7 @@
 }
 
 .modify-profile-form {
-  @apply flex flex-col gap-2 w-full max-w-300 xl:max-w-[600px];
+  @apply flex flex-col gap-2 w-full max-w-400 xl:max-w-[800px];
 }
 .modify-form-container {
   @apply flex justify-center;
@@ -12,62 +12,29 @@
 .modify-profile-btn-container {
   @apply flex flex-col gap-4 my-10 2xl:my-10 w-full items-center;
 }
-
-.modify-form-check-error {
-  @apply text-red-500 text-label mt-1 dark:text-red-dark;
-}
-
-.modify-form-btn-send {
-  @apply flex w-full justify-center items-center m-20;
-}
-
-.modify-form-terms-title {
-  @apply text-primary text-label dark:text-surface;
-}
-
-.modify-form-terms {
-  @apply text-accent text-label cursor-pointer hover:underline;
-}
-
-.modify-form-check-container {
-  @apply flex flex-col justify-center items-center gap-2;
-}
-
-.modify-form-check-inner-container {
-  @apply flex flex-row justify-center items-center gap-10 p-6;
-}
-
 .modify-form-select-label {
   @apply text-label text-primary font-medium dark:text-surface;
+}
+.modify-form-row {
+  @apply flex flex-col md:flex-row gap-6;
 }
 
 .modify-form-options {
   @apply text-primary;
 }
-
+.modify-form-select {
+  @apply text-primary dark:text-surface appearance-none bg-transparent w-full px-4 py-3 md:px-5 border-primary dark:border-surface border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer;
+}
 .modify-form-select-container {
   @apply flex flex-col gap-2 w-full flex-1;
 }
-
-.modify-form-select {
-  @apply text-primary dark:text-surface appearance-none bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary dark:border-surface border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer;
-}
-
-.modify-form-col {
-  @apply flex flex-col gap-6;
-}
-
-.modify-form-row {
-  @apply flex flex-col md:flex-row gap-6;
-}
-
 .modify-form-select-arrow {
   @apply absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary dark:text-white flex items-center;
 }
-.modify-container {
-  @apply flex flex-col justify-center items-center w-full p-2 md:p-[40px] lg:p-[48px] 2xl:px-50;
-}
 
-.modify-form {
-  @apply flex flex-col gap-8 w-full;
+.input-area-modify-profile-container {
+  @apply flex flex-col gap-2 w-full;
+}
+.input-text-area {
+  @apply w-full pl-4 py-3 pr-14 md:pl-5 md:py-4 border-primary dark:border-surface border-2 rounded-12 font-poppins text-label outline-none transition-all bg-transparent h-120 xl:h-150 resize-none text-primary dark:text-surface dark:placeholder:text-surface;
 }

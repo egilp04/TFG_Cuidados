@@ -20,5 +20,5 @@
 }
 
 .contact-form-btn {
-  @apply mt-6 w-22 h-[2.5rem] md:w-48 md:h-11 lg:w-52 lg:h-[3rem] xl:w-2xl xl:h-[4rem] 2xl:h-80;
+  @apply flex items-center justify-center  w-full p-10;
 }

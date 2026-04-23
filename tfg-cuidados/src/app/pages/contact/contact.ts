@@ -1,12 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-  FormControl,
-} from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { lastValueFrom } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import emailjs from '@emailjs/browser';
@@ -15,6 +9,10 @@ import { ButtonComponent } from '../../components/button/button';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { MessageService } from '../../services/message-service';
 
+/**
+ * Componente para el formulario de contacto público.
+ * Utiliza EmailJS para enviar consultas directamente a la administración.
+ */
 @Component({
   selector: 'app-contact',
   standalone: true,
@@ -34,28 +32,42 @@ export default class Contact {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
 
-  contactForm = this.fb.group({
-    username: this.fb.control<string>('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]),
+  public contactForm = this.fb.group({
+    username: this.fb.control<string>('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(100),
+    ]),
     email: this.fb.control<string>('', [Validators.required, Validators.email]),
-    subject: this.fb.control<string>('', [Validators.required, Validators.minLength(6)]),
+    topic: this.fb.control<string>('', [Validators.required, Validators.minLength(6)]),
     message: this.fb.control<string>('', [Validators.required, Validators.minLength(6)]),
   });
 
+  /**
+   * Auxiliar para recuperar un control de formulario por nombre con tipado adecuado.
+   */
   getCtrl(name: string): FormControl {
     return this.contactForm.get(name) as FormControl;
   }
-  async toContactFunction() {
+
+  /**
+   * Valida el formulario y envía el correo a través de EmailJS.
+   * Maneja estados de interfaz (carga/deshabilitado) y mensajes de retroalimentación.
+   */
+  async submitContactForm(): Promise<void> {
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
       return;
     }
 
+    const formValue = this.contactForm.getRawValue();
     const templateParams = {
-      username: this.contactForm.value.username,
-      email: this.contactForm.value.email,
-      subject: this.contactForm.value.subject,
-      message: this.contactForm.value.message,
+      username: formValue.username,
+      email: formValue.email,
+      topic: formValue.topic,
+      message: formValue.message,
     };
+
     this.contactForm.disable();
 
     try {
@@ -65,13 +77,14 @@ export default class Contact {
         templateParams,
         'lXKk2y0Z41TMBq3NO',
       );
-      const msg = await lastValueFrom(this.translate.get('MESSAGES.SUCCESS.CONTACT'));
-      this.messageService.showMessage(msg, 'exito');
+
+      const successMsg = await lastValueFrom(this.translate.get('MESSAGES.SUCCESS.CONTACT'));
+      this.messageService.showMessage(successMsg, 'success');
       this.contactForm.reset();
     } catch (error) {
-      console.error('Error:', error);
-      const msg = await lastValueFrom(this.translate.get('MESSAGES.ERROR.CONTACT'));
-      this.messageService.showMessage(msg, 'error');
+      console.error('Error de EmailJS:', error);
+      const errorMsg = await lastValueFrom(this.translate.get('MESSAGES.ERROR.CONTACT'));
+      this.messageService.showMessage(errorMsg, 'error');
     } finally {
       this.contactForm.enable();
     }

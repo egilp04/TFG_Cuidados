@@ -5,12 +5,12 @@
     </h2>
 
     @defer (on viewport) {
-      @if (activeContracts > 0 || canceledContracts > 0) {
+      @if (activeContractsCount > 0 || canceledContractsCount > 0) {
         <div class="chart-wrapper">
           <canvas
             baseChart
             [data]="doughnutChartData"
-            [options]="doughnutChartOptions"
+            [options]="doughnutOptions"
             [type]="'doughnut'"
             role="img"
             [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.CONTRACTS_CHART_DESC' | translate"
@@ -26,15 +26,15 @@
       <div class="dashboard-contracts-texts-container">
         <span class="dashboard-contracts-text-total">
           {{ 'DASHBOARD.TOTAL_CONTRACTS.TOTAL' | translate }}
-          {{ activeContracts + canceledContracts }}
+          {{ activeContractsCount + canceledContractsCount }}
         </span>
         <span class="dashboard-contracts-text-active">
           {{ 'DASHBOARD.TOTAL_CONTRACTS.ACTIVE' | translate }}
-          {{ activeContracts }}
+          {{ activeContractsCount }}
         </span>
         <span class="dashboard-contracts-text-no-active">
           {{ 'DASHBOARD.TOTAL_CONTRACTS.NO_ACTIVE' | translate }}
-          {{ canceledContracts }}
+          {{ canceledContractsCount }}
         </span>
       </div>
     } @placeholder {
@@ -50,11 +50,11 @@
     </h2>
 
     @defer (on viewport) {
-      <div class="chart-wrapper">
+      <div class="chart-wrapper-services">
         <canvas
           baseChart
           [data]="barChartData"
-          [options]="barChartOptions"
+          [options]="barOptions"
           [type]="'bar'"
           role="img"
           [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.SERVICES_CHART_DESC' | translate"
@@ -72,7 +72,7 @@
     <div class="dashboard-total-users">
       <h2 id="users-title" class="dashboard-total-users-title">
         {{ 'DASHBOARD.TOTAL_USERS' | translate }}
-        <span class="dashboard-total-users-text">{{ totalAppUsers }}</span>
+        <span class="dashboard-total-users-text">{{ totalUsersCount }}</span>
       </h2>
     </div>
   </section>
@@ -90,7 +90,7 @@
         <canvas
           baseChart
           [data]="lineChartData"
-          [options]="lineChartOptions"
+          [options]="lineOptions"
           [type]="'line'"
           role="img"
           [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.LOGIN_CHART_DESC' | translate"

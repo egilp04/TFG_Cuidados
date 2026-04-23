@@ -10,22 +10,19 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import {
-  ReactiveFormsModule,
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-} from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ButtonComponent } from '../button/button';
 import { Inputs } from '../inputs/inputs';
 import { AuthService } from '../../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { comunidades } from '../../core/constants/locations';
+import { comunities } from '../../core/constants/locations';
 import { LucideAngularModule } from 'lucide-angular';
 import { UserProfileModel, FormSubmitEvent } from '../../models/ModifyProfileForm';
 
-
+/**
+ * Componente que proporciona un formulario dinámico para editar perfiles de usuario.
+ * Adapta sus campos y validaciones basándose en el rol del usuario (Cliente, Negocio o Administrador).
+ */
 @Component({
   selector: 'app-modifyprofileform',
   standalone: true,
@@ -46,10 +43,10 @@ export class Modifyprofileform implements OnInit, OnChanges {
   private authService = inject(AuthService);
   private translate = inject(TranslateService);
 
-  public comunidades: string[] = comunidades;
+  public comunities: string[] = comunities;
 
   @Input() userData: UserProfileModel | null = null;
-  @Input() userRole: 'cliente' | 'empresa' | 'administrador' = 'cliente';
+  @Input() userRole: 'client' | 'business' | 'administrator' = 'client';
 
   @Output() formSubmitted = new EventEmitter<FormSubmitEvent>();
   @Output() deleteRequested = new EventEmitter<void>();
@@ -58,22 +55,23 @@ export class Modifyprofileform implements OnInit, OnChanges {
   private targetUser: UserProfileModel | null = null;
   public isAdminViewer: boolean = false;
 
-  profileForm = this.fb.group({
-    usuario: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
-    primerApe: this.fb.control<string>(''),
-    segundoApe: this.fb.control<string>(''),
-    nombreEmpresa: this.fb.control<string>(''),
-    telefono: this.fb.control<string>('', [Validators.required, Validators.pattern('^[0-9]{9}$')]),
+  public profileForm = this.fb.group({
+    userName: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
+    surname1: this.fb.control<string>(''),
+    surname2: this.fb.control<string>(''),
+    companyName: this.fb.control<string>(''),
+    phone: this.fb.control<string>('', [Validators.required, Validators.pattern('^[0-9]{9}$')]),
     email: this.fb.control<string>('', [Validators.required, Validators.email]),
-    direccion: this.fb.control<string>(''),
-    localidad: this.fb.control<string>(''),
-    codpostal: this.fb.control<string>(''),
-    comunidad: this.fb.control<string | null>(null),
-    descripcion: this.fb.control<string>(''),
+    address: this.fb.control<string>(''),
+    city: this.fb.control<string>(''),
+    postcode: this.fb.control<string>(''),
+    comunity: this.fb.control<string | null>(null),
+    description: this.fb.control<string>(''),
   });
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userData'] && this.userData) {
-      this.chargeProfileFormData();
+      this.loadProfileFormData();
     }
     if (changes['userRole']) {
       this.checkValidators();
@@ -81,87 +79,120 @@ export class Modifyprofileform implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.isAdminViewer = this.authService.userRol() === 'administrador';
+    const activeRole = this.authService.userRol();
+    this.isAdminViewer = activeRole === 'administrator';
+
     if (!this.userData) {
-      this.chargeProfileFormData();
+      this.loadProfileFormData();
     }
   }
 
-  private chargeProfileFormData() {
-    this.targetUser = this.userData || this.authService.currentUser() as UserProfileModel;
+  /**
+   * Carga los datos del usuario en el formulario reactivo basándose en su tipo de perfil.
+   */
+  private loadProfileFormData(): void {
+    this.targetUser = this.userData || (this.authService.currentUser() as UserProfileModel);
+
     if (this.targetUser) {
       this.profileForm.patchValue({
-        telefono: this.targetUser.telef,
+        phone: this.targetUser.phone,
         email: this.targetUser.email,
       });
-      if (this.userRole === 'empresa') {
-        this.profileForm.patchValue({ nombreEmpresa: this.targetUser.nombre });
+
+      const nameValue = this.targetUser.name;
+
+      if (this.userRole === 'business') {
+        this.profileForm.patchValue({ companyName: nameValue });
       } else {
-        this.profileForm.patchValue({ usuario: this.targetUser.nombre });
+        this.profileForm.patchValue({ userName: nameValue });
       }
-      if (this.userRole !== 'administrador') {
+
+      if (this.userRole !== 'administrator') {
         this.profileForm.patchValue({
-          direccion: this.targetUser.direccion,
-          localidad: this.targetUser.localidad,
-          codpostal: this.targetUser.codpostal,
-          comunidad: this.targetUser.comunidad,
+          address: this.targetUser.address,
+          city: this.targetUser.city,
+          postcode: this.targetUser.postcode,
+          comunity: this.targetUser.comunity,
         });
-        if (this.userRole === 'empresa') {
-          this.profileForm.patchValue({ descripcion: this.targetUser.descripcion || '' });
+
+        if (this.userRole === 'business') {
+          this.profileForm.patchValue({ description: this.targetUser.description || '' });
         } else {
           this.profileForm.patchValue({
-            primerApe: this.targetUser.ape1,
-            segundoApe: this.targetUser.ape2,
+            surname1: this.targetUser.surname1,
+            surname2: this.targetUser.surname2,
           });
         }
       }
     }
+
     this.checkValidators();
     this.cd.detectChanges();
   }
 
-  private checkValidators() {
+  /**
+   * Reinicia y recalcula qué campos son obligatorios basándose en el rol del perfil.
+   */
+  private checkValidators(): void {
     Object.keys(this.profileForm.controls).forEach((key) => {
       this.profileForm.get(key)?.clearValidators();
       this.profileForm.get(key)?.updateValueAndValidity();
     });
-    this.setValidators(['email', 'telefono']);
-    if (this.userRole === 'empresa') {
-      this.setValidators(['nombreEmpresa']);
+
+    this.setValidators(['email', 'phone']);
+
+    if (this.userRole === 'business') {
+      this.setValidators(['companyName']);
     } else {
-      this.setValidators(['usuario']);
+      this.setValidators(['userName']);
     }
-    if (this.userRole !== 'administrador') {
-      this.setValidators(['direccion', 'localidad', 'codpostal', 'comunidad']);
-      if (this.userRole === 'cliente') {
-        this.setValidators(['primerApe', 'segundoApe']);
+
+    if (this.userRole !== 'administrator') {
+      this.setValidators(['address', 'city', 'postcode', 'comunity']);
+
+      if (this.userRole === 'client') {
+        this.setValidators(['surname1', 'surname2']);
       }
     }
   }
 
-  private setValidators(fields: string[]) {
+  /**
+   * Aplica reglas de validación específicas a un array de nombres de controles de formulario.
+   * @param fields Array de nombres de controles de formulario a validar.
+   */
+  private setValidators(fields: string[]): void {
     fields.forEach((f) => {
       const control = this.profileForm.get(f);
       const validators = [Validators.required];
-      if (f === 'telefono') validators.push(Validators.pattern('^[0-9]{9}$'));
-      if (f === 'codpostal') validators.push(Validators.pattern('^[0-9]{5}$'));
+
+      if (f === 'phone') validators.push(Validators.pattern('^[0-9]{9}$'));
+      if (f === 'postcode') validators.push(Validators.pattern('^[0-9]{5}$'));
       if (f === 'email') validators.push(Validators.email);
-      if (f === 'usuario') validators.push(Validators.minLength(3));
+      if (f === 'userName') validators.push(Validators.minLength(3));
+
       control?.setValidators(validators);
       control?.updateValueAndValidity();
     });
   }
 
+  /**
+   * Obtiene una instancia de control de formulario por su nombre.
+   */
   getCtrl(name: string): FormControl {
     return this.profileForm.get(name) as FormControl;
   }
 
+  /**
+   * Computa el mensaje de error traducido para un control de formulario específico.
+   */
   getErrorMessage(controlName: string): string {
     const control = this.profileForm.get(controlName);
     if (!control || !control.touched) return '';
+
     const errors = control.errors;
     if (!errors) return '';
-    const errorMessages: { [key: string]: string } = {
+
+    const errorMessages: Record<string, string> = {
       required: this.translate.instant('MODIFY_PROFILE.ERRORS.REQUIRED'),
       email: this.translate.instant('MODIFY_PROFILE.ERRORS.EMAIL'),
       minlength: this.translate.instant('MODIFY_PROFILE.ERRORS.MIN_LENGTH', {
@@ -169,44 +200,56 @@ export class Modifyprofileform implements OnInit, OnChanges {
       }),
       pattern: this.translate.instant('MODIFY_PROFILE.ERRORS.PATTERN'),
     };
-    const primerError = Object.keys(errors)[0];
-    return errorMessages[primerError] || this.translate.instant('MODIFY_PROFILE.ERRORS.INVALID');
+
+    const firstError = Object.keys(errors)[0];
+    return errorMessages[firstError] || this.translate.instant('MODIFY_PROFILE.ERRORS.INVALID');
   }
 
-  onSubmit() {
+  /**
+   * Valida el formulario y emite los datos estructurados al componente padre.
+   */
+  onSubmit(): void {
     if (this.profileForm.valid) {
       const formValue = this.profileForm.getRawValue();
 
-      const datosParaBBDD: UserProfileModel = {
+      const databasePayload: UserProfileModel = {
         email: formValue.email ?? undefined,
-        telef: formValue.telefono ?? undefined,
-        nombre: (this.userRole === 'empresa' ? formValue.nombreEmpresa : formValue.usuario) ?? undefined
+        phone: formValue.phone ?? undefined,
+        name:
+          (this.userRole === 'business' ? formValue.companyName : formValue.userName) ?? undefined,
       };
 
-      if (this.userRole !== 'administrador') {
-        datosParaBBDD.direccion = formValue.direccion ?? undefined;
-        datosParaBBDD.localidad = formValue.localidad ?? undefined;
-        datosParaBBDD.codpostal = formValue.codpostal ?? undefined;
-        datosParaBBDD.comunidad = formValue.comunidad ?? undefined;
+      if (this.userRole !== 'administrator') {
+        databasePayload.address = formValue.address ?? undefined;
+        databasePayload.city = formValue.city ?? undefined;
+        databasePayload.postcode = formValue.postcode ?? undefined;
+        databasePayload.comunity = formValue.comunity ?? undefined;
 
-        if (this.userRole === 'cliente') {
-          datosParaBBDD.ape1 = formValue.primerApe ?? undefined;
-          datosParaBBDD.ape2 = formValue.segundoApe ?? undefined;
-        } else if (this.userRole === 'empresa') {
-          datosParaBBDD.descripcion = formValue.descripcion ?? undefined;
+        if (this.userRole === 'client') {
+          databasePayload.surname1 = formValue.surname1 ?? undefined;
+          databasePayload.surname2 = formValue.surname2 ?? undefined;
+        } else if (this.userRole === 'business') {
+          databasePayload.description = formValue.description ?? undefined;
         }
       }
-      this.formSubmitted.emit({ datos: datosParaBBDD, rol: this.userRole });
+
+      this.formSubmitted.emit({ data: databasePayload, rol: this.userRole });
     } else {
       this.profileForm.markAllAsTouched();
     }
   }
 
-  onCancel() {
+  /**
+   * Emite un evento para señalar la cancelación de la actualización de perfil.
+   */
+  onCancel(): void {
     this.cancelRequested.emit();
   }
 
-  onDeleteAccount() {
+  /**
+   * Emite un evento para señalar una solicitud de eliminar la cuenta.
+   */
+  onDeleteAccount(): void {
     this.deleteRequested.emit();
   }
 }

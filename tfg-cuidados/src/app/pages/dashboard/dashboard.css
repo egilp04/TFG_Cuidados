@@ -8,12 +8,16 @@
   @apply relative w-full h-62.5 2xl:h-[30rem] block mb-4;
 }
 
+.chart-wrapper-services {
+  @apply relative w-full h-[250px] 2xl:h-[30rem] block mb-4 min-w-0 max-w-full;
+}
+
 .no-contracts-msg {
   @apply text-p text-gray-400 dark:text-surface italic flex items-center justify-center;
 }
 
 .dashboard-contracts-container {
-  @apply flex flex-col gap-22 w-full items-center;
+  @apply flex flex-col gap-22 w-full items-center py-20;
 }
 
 .dashboard-contracts-title {
@@ -65,4 +69,8 @@
 
 .dashboard-login-text {
   @apply text-gray-400 mb-10 text-p dark:text-gray-50;
+}
+
+.dashboard-services-container {
+  @apply flex flex-col justify-center items-center;
 }

@@ -1,53 +1,53 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
   <diagram name="Página-1" id="bml8raTGom1ynN2Ektb9">
-    <mxGraphModel dx="2345" dy="1129" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-39" value="Admin" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;align=center;size=65;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-39" value="Admin" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;align=center;size=65;" parent="1" vertex="1">
           <mxGeometry x="20" y="20" width="35" height="1425" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-40" value="ManagementServicesGlobal" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-40" value="ManagementServicesGlobal" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" parent="1" vertex="1">
           <mxGeometry x="335" y="20" width="216" height="1425" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-41" value="FormGroup" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-41" value="FormGroup" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" parent="1" vertex="1">
           <mxGeometry x="652" y="20" width="150" height="1425" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-42" value="ServiceService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-42" value="ServiceService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" parent="1" vertex="1">
           <mxGeometry x="852" y="20" width="150" height="1425" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-43" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-42">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-43" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" parent="66TAc1KO0bZAJ7Fk6LUh-42" vertex="1">
           <mxGeometry x="70" y="1010" width="10" height="172" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-44" value="Supabase DB" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-44" value="Supabase DB" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" parent="1" vertex="1">
           <mxGeometry x="1202" y="20" width="150" height="1425" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-45" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-44">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-45" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" parent="66TAc1KO0bZAJ7Fk6LUh-44" vertex="1">
           <mxGeometry x="70" y="1064" width="10" height="54" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-46" value="alt" style="shape=umlFrame;dashed=1;pointerEvents=0;dropTarget=0;strokeColor=#B3B3B3;height=20;width=30" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-46" value="alt" style="shape=umlFrame;dashed=1;pointerEvents=0;dropTarget=0;strokeColor=#B3B3B3;height=20;width=30" parent="1" vertex="1">
           <mxGeometry x="432" y="629" width="856" height="209" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-47" value="[Nombre ha cambiado]" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-46">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-47" value="[Nombre ha cambiado]" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;" parent="66TAc1KO0bZAJ7Fk6LUh-46" vertex="1">
           <mxGeometry x="30" width="826" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-48" value="alt" style="shape=umlFrame;dashed=1;pointerEvents=0;dropTarget=0;strokeColor=#B3B3B3;height=20;width=30" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-48" value="alt" style="shape=umlFrame;dashed=1;pointerEvents=0;dropTarget=0;strokeColor=#B3B3B3;height=20;width=30" parent="1" vertex="1">
           <mxGeometry x="84" y="848" width="1208" height="502" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-49" value="[Nombre Duplicado]" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-48">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-49" value="[Nombre Duplicado]" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;" parent="66TAc1KO0bZAJ7Fk6LUh-48" vertex="1">
           <mxGeometry x="30" width="1178" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-50" value="[Datos Válidos]" style="shape=line;dashed=1;whiteSpace=wrap;verticalAlign=top;labelPosition=center;verticalLabelPosition=middle;align=center;strokeColor=#B3B3B3;" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-48">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-50" value="[Datos Válidos]" style="shape=line;dashed=1;whiteSpace=wrap;verticalAlign=top;labelPosition=center;verticalLabelPosition=middle;align=center;strokeColor=#B3B3B3;" parent="66TAc1KO0bZAJ7Fk6LUh-48" vertex="1">
           <mxGeometry y="106" width="1208" height="3" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-51" value="1. Clic en botón &quot;Editar&quot; (Lápiz)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-39" target="66TAc1KO0bZAJ7Fk6LUh-40">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-51" value="1. Clic en botón &quot;Editar&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-39" target="66TAc1KO0bZAJ7Fk6LUh-40" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="278" y="177" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-52" value="2. onEdit(servicio)" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-40">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-52" value="2. onEdit(servicio)" style="curved=1;endArrow=block;rounded=0;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-40" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="494" y="231" />
@@ -55,7 +55,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-53" value="3. isEditing = true" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-40">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-53" value="3. isEditing = true" style="curved=1;endArrow=block;rounded=0;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-40" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="494" y="315" />
@@ -63,91 +63,92 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-54" value="4. patchValue({ nombre, tipo })" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-41">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-54" value="4. patchValue({ name, type})" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-41" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="594" y="399" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-55" value="Formulario relleno" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-41" target="66TAc1KO0bZAJ7Fk6LUh-40">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-55" value="Formulario relleno" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-41" target="66TAc1KO0bZAJ7Fk6LUh-40" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="597" y="453" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-56" value="5. Muestra Modal/Form con datos" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-39">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-56" value="5. Muestra Modal/Form con datos" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-39" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="281" y="507" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-57" value="6. Modifica nombre y pulsa &quot;Actualizar&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-39" target="66TAc1KO0bZAJ7Fk6LUh-40">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-57" value="6. Modifica nombre y pulsa &quot;Actualizar&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-39" target="66TAc1KO0bZAJ7Fk6LUh-40" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="278" y="609" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-58" value="7. existsService(nuevoNombre)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-42">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-58" value="7. existsService(newName)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-42" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="694" y="710" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-59" value="8. SELECT count(*) ..." style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-42" target="66TAc1KO0bZAJ7Fk6LUh-44">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-59" value="8. SELECT count(*) ..." style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-42" target="66TAc1KO0bZAJ7Fk6LUh-44" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1111" y="764" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-60" value="Retorna (True/False)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-44" target="66TAc1KO0bZAJ7Fk6LUh-42">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-60" value="Retorna (True/False)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-44" target="66TAc1KO0bZAJ7Fk6LUh-42" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1114" y="818" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-61" value="Error &quot;Ya existe&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-42" target="66TAc1KO0bZAJ7Fk6LUh-40">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-61" value="Error &quot;Ya existe&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-42" target="66TAc1KO0bZAJ7Fk6LUh-40" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="697" y="929" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-62" value="9. updateService(id, cambios)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-43">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-62" value="9. updateService(id, chamges)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-43" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="694" y="1030" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-63" value="10. UPDATE Servicio SET ... WHERE id=..." style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-43" target="66TAc1KO0bZAJ7Fk6LUh-45">
-          <mxGeometry relative="1" as="geometry">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-63" value="10. UPDATE Service SET ... WHERE id=..." style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-43" target="66TAc1KO0bZAJ7Fk6LUh-45" edge="1">
+          <mxGeometry x="-0.0118" y="4" relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1113" y="1084" />
             </Array>
+            <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-64" value="11. OK" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-45" target="66TAc1KO0bZAJ7Fk6LUh-43">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-64" value="11. OK" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-45" target="66TAc1KO0bZAJ7Fk6LUh-43" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1114" y="1138" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-65" value="12. Observable Success" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-43" target="66TAc1KO0bZAJ7Fk6LUh-40">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-65" value="12. Observable Success" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-43" target="66TAc1KO0bZAJ7Fk6LUh-40" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="695" y="1192" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-66" value="13. resetForm() (Vuelve a modo Crear)" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-40">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-66" value="13. resetForm() (Vuelve a modo Crear)" style="curved=1;endArrow=block;rounded=0;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-40" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="494" y="1246" />
@@ -155,145 +156,145 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-67" value="14. Feedback &quot;Servicio Actualizado&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-39">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-67" value="14. Feedback &quot;Servicio Actualizado&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-40" target="66TAc1KO0bZAJ7Fk6LUh-39" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="281" y="1330" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-68" value="FASE 1: CARGAR DATOS EN FORMULARIO" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-68" value="FASE 1: CARGAR DATOS EN FORMULARIO" style="fillColor=#ffff88;strokeColor=#9E916F;" parent="1" vertex="1">
           <mxGeometry x="418" y="95" width="884" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-69" value="FASE 2: GUARDAR CAMBIOS" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-69" value="FASE 2: GUARDAR CAMBIOS" style="fillColor=#ffff88;strokeColor=#9E916F;" parent="1" vertex="1">
           <mxGeometry x="418" y="527" width="884" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-70" value="Admin" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;align=center;size=65;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-70" value="Admin" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;align=center;size=65;" parent="1" vertex="1">
           <mxGeometry x="20" y="1470" width="35" height="1604" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-71" value="ManagementServicesGlobal" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-71" value="ManagementServicesGlobal" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" parent="1" vertex="1">
           <mxGeometry x="312" y="1470" width="216" height="1604" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-72" value="ServiceService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-72" value="ServiceService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" parent="1" vertex="1">
           <mxGeometry x="653" y="1470" width="150" height="1604" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-73" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-72">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-73" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" parent="66TAc1KO0bZAJ7Fk6LUh-72" vertex="1">
           <mxGeometry x="70" y="211" width="10" height="694" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-74" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-72">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-74" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" parent="66TAc1KO0bZAJ7Fk6LUh-72" vertex="1">
           <mxGeometry x="70" y="1337" width="10" height="172" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-75" value="MatDialog (CancelModal)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-75" value="MatDialog (CancelModal)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" parent="1" vertex="1">
           <mxGeometry x="853" y="1470" width="200" height="1604" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-76" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-75">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-76" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" parent="66TAc1KO0bZAJ7Fk6LUh-75" vertex="1">
           <mxGeometry x="95" y="1175" width="10" height="118" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-77" value="Supabase DB" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-77" value="Supabase DB" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" parent="1" vertex="1">
           <mxGeometry x="1103" y="1470" width="150" height="1604" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-78" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-77">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-78" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" parent="66TAc1KO0bZAJ7Fk6LUh-77" vertex="1">
           <mxGeometry x="70" y="265" width="10" height="54" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-79" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-77">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-79" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" parent="66TAc1KO0bZAJ7Fk6LUh-77" vertex="1">
           <mxGeometry x="70" y="1391" width="10" height="54" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-80" value="alt" style="shape=umlFrame;dashed=1;pointerEvents=0;dropTarget=0;strokeColor=#B3B3B3;height=20;width=30" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-80" value="alt" style="shape=umlFrame;dashed=1;pointerEvents=0;dropTarget=0;strokeColor=#B3B3B3;height=20;width=30" parent="1" vertex="1">
           <mxGeometry x="409" y="2011" width="334" height="202" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-81" value="[Es Nuevo]" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-80">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-81" value="[Es Nuevo]" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;" parent="66TAc1KO0bZAJ7Fk6LUh-80" vertex="1">
           <mxGeometry x="30" width="304" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-82" value="[Es Edición]" style="shape=line;dashed=1;whiteSpace=wrap;verticalAlign=top;labelPosition=center;verticalLabelPosition=middle;align=center;strokeColor=#B3B3B3;" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-80">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-82" value="[Es Edición]" style="shape=line;dashed=1;whiteSpace=wrap;verticalAlign=top;labelPosition=center;verticalLabelPosition=middle;align=center;strokeColor=#B3B3B3;" parent="66TAc1KO0bZAJ7Fk6LUh-80" vertex="1">
           <mxGeometry y="106" width="334" height="3" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-83" value="alt" style="shape=umlFrame;dashed=1;pointerEvents=0;dropTarget=0;strokeColor=#B3B3B3;height=20;width=30" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-83" value="alt" style="shape=umlFrame;dashed=1;pointerEvents=0;dropTarget=0;strokeColor=#B3B3B3;height=20;width=30" parent="1" vertex="1">
           <mxGeometry x="84" y="1809" width="1105" height="690" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-84" value="[Ya existe]" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-83">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-84" value="[Ya existe]" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;" parent="66TAc1KO0bZAJ7Fk6LUh-83" vertex="1">
           <mxGeometry x="30" width="1075" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-85" value="[Nombre válido]" style="shape=line;dashed=1;whiteSpace=wrap;verticalAlign=top;labelPosition=center;verticalLabelPosition=middle;align=center;strokeColor=#B3B3B3;" vertex="1" parent="66TAc1KO0bZAJ7Fk6LUh-83">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-85" value="[Nombre válido]" style="shape=line;dashed=1;whiteSpace=wrap;verticalAlign=top;labelPosition=center;verticalLabelPosition=middle;align=center;strokeColor=#B3B3B3;" parent="66TAc1KO0bZAJ7Fk6LUh-83" vertex="1">
           <mxGeometry y="160" width="1105" height="3" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-86" value="1. Rellena nombre y pulsa &quot;Guardar&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-70" target="66TAc1KO0bZAJ7Fk6LUh-71">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-86" value="1. Rellena nombre y pulsa &quot;Guardar&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-70" target="66TAc1KO0bZAJ7Fk6LUh-71" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="266" y="1627" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-87" value="2. existsService(nombre)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-73">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-87" value="2. existsService(name)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-73" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="583" y="1681" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-88" value="3. SELECT count(*) WHERE nombre ilike &#39;X&#39;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-73" target="66TAc1KO0bZAJ7Fk6LUh-78">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-88" value="3. SELECT count(*) WHERE nombre ilike &#39;X&#39;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-73" target="66TAc1KO0bZAJ7Fk6LUh-78" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="964" y="1735" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-89" value="4. Retorna (True/False)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-78" target="66TAc1KO0bZAJ7Fk6LUh-73">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-89" value="4. Retorna (True/False)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-78" target="66TAc1KO0bZAJ7Fk6LUh-73" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="965" y="1789" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-90" value="Error: &quot;El servicio ya existe&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-73" target="66TAc1KO0bZAJ7Fk6LUh-71">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-90" value="Error: &quot;El servicio ya existe&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-73" target="66TAc1KO0bZAJ7Fk6LUh-71" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="584" y="1890" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-91" value="Muestra mensaje de error" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-70">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-91" value="Muestra mensaje de error" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-70" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="269" y="1944" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-92" value="5a. insertService(data)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-73">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-92" value="5a. insertService(data)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-73" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="581" y="2092" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-93" value="5b. updateService(id, data)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-73">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-93" value="5b. updateService(id, data)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-73" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="581" y="2193" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-94" value="6. INSERT / UPDATE en tabla &#39;Servicio&#39;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-73" target="66TAc1KO0bZAJ7Fk6LUh-77">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-94" value="6. INSERT / UPDATE en tabla &#39;Service&#39;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-73" target="66TAc1KO0bZAJ7Fk6LUh-77" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="964" y="2257" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-95" value="7. OK" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-77" target="66TAc1KO0bZAJ7Fk6LUh-73">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-95" value="7. OK" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-77" target="66TAc1KO0bZAJ7Fk6LUh-73" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="967" y="2311" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-96" value="8. Éxito" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-73" target="66TAc1KO0bZAJ7Fk6LUh-71">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-96" value="8. Éxito" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-73" target="66TAc1KO0bZAJ7Fk6LUh-71" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="584" y="2365" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-97" value="9. Limpia formulario" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-71">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-97" value="9. Limpia formulario" style="curved=1;endArrow=block;rounded=0;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-71" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="471" y="2419" />
@@ -301,66 +302,66 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-98" value="10. Clic en &quot;Eliminar&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-70" target="66TAc1KO0bZAJ7Fk6LUh-71">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-98" value="10. Clic en &quot;Eliminar&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-70" target="66TAc1KO0bZAJ7Fk6LUh-71" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="266" y="2591" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-99" value="11. open(CancelModal, &#39;eliminarAdminGlobal&#39;)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-76">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-99" value="11. open(CancelModal, &#39;eliminarAdminGlobal&#39;)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-76" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="695" y="2645" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-100" value="12. Confirma acción" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-70" target="66TAc1KO0bZAJ7Fk6LUh-76">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-100" value="12. Confirma acción" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-70" target="66TAc1KO0bZAJ7Fk6LUh-76" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="531" y="2699" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-101" value="13. Retorna TRUE" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-76" target="66TAc1KO0bZAJ7Fk6LUh-71">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-101" value="13. Retorna TRUE" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-76" target="66TAc1KO0bZAJ7Fk6LUh-71" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="696" y="2753" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-102" value="14. deleteService(id)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-74">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-102" value="14. deleteService(id)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-71" target="66TAc1KO0bZAJ7Fk6LUh-74" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="583" y="2807" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-103" value="15. DELETE FROM Servicio..." style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-74" target="66TAc1KO0bZAJ7Fk6LUh-79">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-103" value="15. DELETE FROM Servicio..." style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-74" target="66TAc1KO0bZAJ7Fk6LUh-79" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="964" y="2861" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-104" value="16. OK" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-79" target="66TAc1KO0bZAJ7Fk6LUh-74">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-104" value="16. OK" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-79" target="66TAc1KO0bZAJ7Fk6LUh-74" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="965" y="2915" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-105" value="17. Feedback &quot;Servicio eliminado&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-74" target="66TAc1KO0bZAJ7Fk6LUh-71">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-105" value="17. Feedback &quot;Servicio eliminado&quot;" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="66TAc1KO0bZAJ7Fk6LUh-74" target="66TAc1KO0bZAJ7Fk6LUh-71" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="584" y="2969" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-106" value="CASO 1: GUARDAR SERVICIO (Nuevo/Edición)" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-106" value="CASO 1: GUARDAR SERVICIO (Nuevo/Edición)" style="fillColor=#ffff88;strokeColor=#9E916F;" parent="1" vertex="1">
           <mxGeometry x="70" y="1545" width="1133" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-107" value="CASO 2: ELIMINAR SERVICIO" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+        <mxCell id="66TAc1KO0bZAJ7Fk6LUh-107" value="CASO 2: ELIMINAR SERVICIO" style="fillColor=#ffff88;strokeColor=#9E916F;" parent="1" vertex="1">
           <mxGeometry x="70" y="2509" width="1133" height="48" as="geometry" />
         </mxCell>
       </root>

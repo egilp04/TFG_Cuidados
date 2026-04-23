@@ -1,4 +1,4 @@
-@if (currentUser?.rol != 'administrador') {
+@if (currentUser?.rol !== 'administrator') {
   <section class="soporte-container" [attr.aria-label]="'SUPPORT_WIDGET.HEADER_TITLE' | translate">
     
     @if (isOpen) {

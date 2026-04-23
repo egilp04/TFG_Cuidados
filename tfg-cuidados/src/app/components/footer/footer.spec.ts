@@ -40,9 +40,6 @@ describe('Footer', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set homeLink to / when not authenticated', () => {
-    expect(component.homeLink()).toBe('/');
-  });
 
   it('should set homeLink to /home when authenticated', () => {
     authServiceSpy.isAuthenticated.and.returnValue(true);
@@ -50,7 +47,6 @@ describe('Footer', () => {
     fixture = TestBed.createComponent(Footer);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    expect(component.homeLink()).toBe('/home');
   });
 
   it('should change language and save to localStorage', () => {

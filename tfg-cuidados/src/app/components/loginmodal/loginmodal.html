@@ -15,24 +15,28 @@
   </header>
 
   <div class="login-modal-title-container">
-     <h1 mat-dialog-title id="login-dialog-title" class="login-modal-title">
-    @if (modoActual === 'login') {
-      {{ 'LOGIN_MODAL.TITLES.LOGIN' | translate }}
-    } @else if (modoActual === 'registro') {
-      {{ 'LOGIN_MODAL.TITLES.REGISTER' | translate }}
-    } @else if (modoActual === 'recuperar') {
-      {{ 'LOGIN_MODAL.TITLES.RECOVER' | translate }}
-    } @else if (modoActual === 'reenviar') {
-      {{ 'LOGIN_MODAL.TITLES.RESEND' | translate }}
-    } @else {
-      {{ 'LOGIN_MODAL.TITLES.NOTITLE' | translate }}
-    }
-  </h1> 
+    <h1 mat-dialog-title id="login-dialog-title" class="login-modal-title">
+      @if (currentMode === 'login') {
+        {{ 'LOGIN_MODAL.TITLES.LOGIN' | translate }}
+      } @else if (currentMode === 'register') {
+        {{ 'LOGIN_MODAL.TITLES.REGISTER' | translate }}
+      } @else if (currentMode === 'recover') {
+        {{ 'LOGIN_MODAL.TITLES.RECOVER' | translate }}
+      } @else if (currentMode === 'resend') {
+        {{ 'LOGIN_MODAL.TITLES.RESEND' | translate }}
+      } @else {
+        {{ 'LOGIN_MODAL.TITLES.NOTITLE' | translate }}
+      }
+    </h1>
   </div>
 
-
-  @if (modoActual === 'login') {
-    <form [formGroup]="loginForm" class="login-login-form" aria-labelledby="login-dialog-title">
+  @if (currentMode === 'login') {
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="toEnterApp()"
+      class="login-login-form"
+      aria-labelledby="login-dialog-title"
+    >
       <div class="login-login-form-div">
         <mat-dialog-content class="login-form-reset">
           <app-inputs
@@ -68,31 +72,32 @@
           [label]="'LOGIN_MODAL.BTN.ENTER' | translate"
           variant="primary"
           type="submit"
-          (click)="toEnterApp()"
-          [disabled]="loginForm.invalid"
+          [disabled]="loginForm.invalid || isLoading"
         ></app-button>
+
         <app-button
           [label]="'LOGIN_MODAL.BTN.FORGOT' | translate"
           variant="secondary"
           type="button"
-          (click)="modoActual = 'recuperar'"
+          (click)="currentMode = 'recover'"
         ></app-button>
         <app-button
           [label]="'LOGIN_MODAL.BTN.RESEND' | translate"
           variant="secondary"
           type="button"
-          (click)="modoActual = 'reenviar'"
+          (click)="currentMode = 'resend'"
         ></app-button>
         <app-button
           [label]="'LOGIN_MODAL.BTN.REGISTER' | translate"
           variant="primary"
           type="button"
-          (click)="modoActual = 'registro'"
+          (click)="currentMode = 'register'"
         ></app-button>
       </mat-dialog-actions>
     </form>
   }
-  @if (modoActual === 'recuperar') {
+
+  @if (currentMode === 'recover') {
     <main
       class="login-recuperar-container"
       role="region"
@@ -124,12 +129,13 @@
           [label]="'LOGIN_MODAL.BTN.BACK_LOGIN' | translate"
           variant="secondary"
           type="button"
-          (click)="modoActual = 'login'"
+          (click)="currentMode = 'login'"
         ></app-button>
       </mat-dialog-actions>
     </main>
   }
-  @if (modoActual === 'registro') {
+
+  @if (currentMode === 'register') {
     <main
       class="login-registro-container"
       role="region"
@@ -140,75 +146,41 @@
           [label]="'LOGIN_MODAL.BTN.REG_USER' | translate"
           variant="primary"
           [routerLink]="['/register']"
-          [state]="{ tipo: 'usuario' }"
+          [state]="{ type: 'client' }"
           mat-dialog-close
         ></app-button>
 
         <app-button
-          [label]="'LOGIN_MODAL.BTN.REG_COMPANY' | translate"
+          [label]="'LOGIN_MODAL.BTN.REG_BUSINESS' | translate"
           variant="primary"
           [routerLink]="['/register']"
-          [state]="{ tipo: 'empresa' }"
+          [state]="{ type: 'business' }"
           mat-dialog-close
         ></app-button>
 
         <app-button
           [label]="'LOGIN_MODAL.BTN.HAVE_ACCOUNT' | translate"
           variant="secondary"
-          (click)="modoActual = 'login'"
-        ></app-button>
-      </mat-dialog-actions>
-    </main>
-  }
-
-  @if (modoActual === 'reenviar') {
-    <main
-      class="w-full flex flex-col items-center"
-      role="region"
-      [attr.aria-label]="'LOGIN_MODAL.TITLES.RESEND' | translate"
-    >
-      <div class="login-login-form-div mb-6">
-        <p class="login-subtitle">
-          {{ 'LOGIN_MODAL.LABELS.RESEND' | translate }}
-        </p>
-        <mat-dialog-content class="login-form-reset">
-          <app-inputs
-            name="emailresend"
-            [label]="'LOGIN_MODAL.LABELS.EMAIL' | translate"
-            [control]="emailCtrl"
-          >
-          </app-inputs>
-        </mat-dialog-content>
-      </div>
-
-      <mat-dialog-actions class="login-other-actions">
-        <app-button
-          (click)="toRecoverEmail()"
-          [label]="'LOGIN_MODAL.BTN.SEND_LINK' | translate"
-          type="button"
-          variant="primary"
-        ></app-button>
-        <app-button
-          [label]="'LOGIN_MODAL.BTN.BACK_LOGIN' | translate"
-          variant="secondary"
-          type="button"
-          (click)="modoActual = 'login'"
+          (click)="currentMode = 'login'"
         ></app-button>
       </mat-dialog-actions>
     </main>
   }
 
   @if (messageService.messageData(); as data) {
-    <footer
-      role="status"
-      aria-live="polite"
-      [ngClass]="{
-        'text-red-500 dark:text-red-dark': data.tipo === 'error',
-        'text-green-600 dark:text-green-300': data.tipo === 'exito',
-      }"
-      class="login-form-label-base text-label"
-    >
-      {{ data.mensaje }}
-    </footer>
+    <section class="message-noti" role="status" aria-live="polite">
+      <div
+        [ngClass]="{
+          'text-red-500': data.type === 'error',
+          'text-primary': data.type === 'success',
+        }"
+        class="message-noti-text"
+      >
+        <span class="sr-only">
+          {{ (data.type === 'error' ? 'COMMON.ERROR' : 'COMMON.SUCCESS') | translate }}:
+        </span>
+        {{ data.message }}
+      </div>
+    </section>
   }
 </section>

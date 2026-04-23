@@ -10,15 +10,15 @@ export class MessageService {
 
   /**
    * Muestra un mensaje temporal en pantalla
-   * @param texto Contenido del mensaje
-   * @param tipo Estilo visual (exito, error o info)
-   * @param duracion Tiempo en milisegundos (default 3s)
+   * @param text Contenido del mensaje
+   * @param type Estilo visual (success, error o info)
+   * @param duration Tiempo en milisegundos (default 3s)
    */
-  showMessage(texto: string, tipo: 'exito' | 'error' = 'exito', duracion: number = 3000) {
-    this.messageSignal.set({ mensaje: texto, tipo });
+  showMessage(text: string, type: 'success' | 'error' = 'success', duration: number = 3000) {
+    this.messageSignal.set({ message: text, type });
     setTimeout(() => {
       this.clear();
-    }, duracion);
+    }, duration);
   }
   clear() {
     this.messageSignal.set(null);

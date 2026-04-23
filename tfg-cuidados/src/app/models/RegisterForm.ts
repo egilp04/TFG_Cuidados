@@ -1,22 +1,22 @@
 export interface RegisterFormData {
-    rol: 'cliente' | 'empresa';
-    email: string;
-    password?: string;
-    nombre?: string;
-    telef?: string;
-    direccion?: string;
-    localidad?: string;
-    codpostal?: string;
-    comunidad?: string;
-    ape1?: string;
-    ape2?: string;
-    dni?: string;
-    fechnac?: string;
-    cif?: string;
-    descripcion?: string;
-  }
-  
-  export interface FormSubmittedEvent {
-    datos: RegisterFormData;
-    esCliente: boolean;
-  }
+  rol: 'client' | 'business';
+  email: string;
+  password?: string;
+  name?: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  postcode?: string;
+  comunity?: string;
+  surname1?: string;
+  surname2?: string;
+  dni?: string;
+  birthdate?: string;
+  cif?: string;
+  description?: string;
+}
+
+export interface FormSubmittedEvent {
+  data: RegisterFormData;
+  isClient: boolean;
+}

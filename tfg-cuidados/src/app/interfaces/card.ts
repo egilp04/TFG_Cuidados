@@ -1,7 +1,7 @@
 export interface Card {
-  titulo: string;
-  descripcion: string;
-  imagen: string;
-  cargo?: string;
-  archivo?: string;
+  title: string;
+  description: string;
+  image: string;
+  charge?: string;
+  data?: string;
 }

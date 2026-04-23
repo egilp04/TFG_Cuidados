@@ -11,9 +11,13 @@ import { ButtonComponent } from '../../components/button/button';
 import { ContractService } from '../../services/contract.service';
 import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
-import { ContratoDetalle } from '../../models/Contrato';
+import { ContractDetail } from '../../models/ContractModel';
 import { ResponsiveSize } from '../../services/responsive-size';
 
+/**
+ * Componente para listar y gestionar contratos de usuario.
+ * Permite ver detalles y solicitar cancelaciones a través de un flujo seguro.
+ */
 @Component({
   selector: 'app-contracts',
   standalone: true,
@@ -40,35 +44,44 @@ export default class Contracts implements OnInit {
   private translate = inject(TranslateService);
   private responsive = inject(ResponsiveSize);
 
-  displayedColumns: string[] = ['ID', 'fecha', 'acciones'];
-  dataSource = new MatTableDataSource<ContratoDetalle>([]);
+  public displayedColumns: string[] = ['id', 'date', 'actions'];
+  public dataSource = new MatTableDataSource<ContractDetail>([]);
 
-  ngOnInit() {
-    this.subcribeContracts();
+  ngOnInit(): void {
+    this.subscribeToContracts();
   }
 
-  private subcribeContracts() {
+  /**
+   * Se suscribe al flujo en tiempo real de contratos e inicializa los datos de la tabla.
+   */
+  private subscribeToContracts(): void {
     this.contractService
       .getContractsObservable()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (data) => {
+        next: (data: ContractDetail[]) => {
           this.dataSource.data = data;
           if (this.paginator) {
             this.dataSource.paginator = this.paginator;
           }
           this.cd.markForCheck();
         },
-        error: (error) => console.error('Error en el flujo IRL de contratos:', error),
+        error: (error: Error) =>
+          console.error('Error en flujo en tiempo real de contratos:', error),
       });
   }
 
-  async cancelContract(id: string) {
+  /**
+   * Abre una modal de confirmación e inicia el proceso de cancelación del contrato.
+   * @param id El identificador único del contrato.
+   */
+  async cancelContract(id: string): Promise<void> {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
+
     const dialogRef = this.dialog.open(Cancelmodal, {
-      data: { modo: 'cancelContract' },
+      data: { mode: 'cancelContract' },
       width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '650px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       maxHeight: '90vh',
     });
 
@@ -76,19 +89,19 @@ export default class Contracts implements OnInit {
       .afterClosed()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        filter((result) => result === true),
+        filter((result: boolean) => result === true),
         switchMap(() =>
           this.contractService.deleteContract(id).pipe(
             switchMap(() =>
               this.translate
                 .get('MESSAGES.SUCCESS.CANCELCONTRACT')
-                .pipe(map((msg) => ({ text: msg, type: 'exito' as const }))),
+                .pipe(map((msg: string) => ({ text: msg, type: 'success' as const }))),
             ),
-            catchError((err) => {
-              console.error('Error al cancelar:', err);
+            catchError((err: Error) => {
+              console.error('Error en cancelación:', err);
               return this.translate
                 .get('MESSAGES.ERROR.CANCELCONTRACT')
-                .pipe(map((msg) => ({ text: msg, type: 'error' as const })));
+                .pipe(map((msg: string) => ({ text: msg, type: 'error' as const })));
             }),
           ),
         ),
@@ -100,35 +113,61 @@ export default class Contracts implements OnInit {
       });
   }
 
-  async showDetails(id: string) {
+  /**
+   * Abre una modal de información mostrando los detalles completos de un contrato.
+   * Utiliza datos en caché si están disponibles, de lo contrario obtiene del servidor.
+   * @param id El identificador único del contrato.
+   */
+  async showDetails(id: string): Promise<void> {
     const { InfoContract } = await import('../../components/info-contract/info-contract');
+
     const dialogConfig = {
       width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',      
-      maxHeight: '90vh'
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+      maxHeight: '90vh',
     };
-    const contratoYaMapeado = this.dataSource.data.find((c) => c.id_contrato === id);
-    if (contratoYaMapeado) {
-      this.dialog.open(InfoContract, {
-        ...dialogConfig,
-        data: { contrato: contratoYaMapeado },
-      });
-    } else {
-      this.contractService.getContractsById(id).subscribe({
-        next: (contrato) => {
+    const cachedContract = this.dataSource.data.find((c) => c.id_contract === id);
+    if (cachedContract) {
+      this.dialog.open(InfoContract, { ...dialogConfig, data: { contract: cachedContract } });
+      return;
+    }
+    this.contractService
+      .getContractsById(id)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        map((raw: any): ContractDetail => {
+          return {
+            ...raw,
+            id_contract: raw.id_contract,
+            serviceName: raw.Service_Time?.Service?.name || 'Sin servicio',
+            Client: {
+              address: raw.Client?.address,
+              city: raw.Client?.city,
+              postcode: raw.Client?.postcode,
+              clientName:
+                raw.Client?.User_public?.name || raw.Client?.name || 'Cliente desconocido',
+            },
+            Business: {
+              businessName:
+                raw.Business?.User_public?.name || raw.Business?.name || 'Negocio desconocido',
+            },
+          };
+        }),
+      )
+      .subscribe({
+        next: (mappedContract) => {
           this.dialog.open(InfoContract, {
             ...dialogConfig,
-            data: { contrato: contrato },
+            data: { contract: mappedContract },
           });
         },
         error: (err) => {
-          console.error('Error al obtener el contrato:', err);
+          console.error('Error obteniendo detalles del contrato:', err);
           this.messageService.showMessage(
             'No se pudieron cargar los detalles del contrato',
             'error',
           );
         },
       });
-    }
   }
 }

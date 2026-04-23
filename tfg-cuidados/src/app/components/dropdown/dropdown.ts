@@ -20,8 +20,6 @@ export class Dropdown {
   name = input<string>('dropdown-' + Math.random().toString(36).substring(2, 9));
 
   toggleDropdown() {
-    console.log(this.options);
-
     this.isOpen = !this.isOpen;
   }
 

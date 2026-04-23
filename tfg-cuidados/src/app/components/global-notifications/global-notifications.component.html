@@ -2,15 +2,15 @@
   <section class="message-noti" role="status" aria-live="polite">
     <div
       [ngClass]="{
-        'text-red-500': data.tipo === 'error',
-        'text-primary': data.tipo === 'exito',
+        'text-red-500': data.type === 'error',
+        'text-primary': data.type === 'success',
       }"
       class="message-noti-text"
     >
       <span class="sr-only">
-        {{ (data.tipo === 'error' ? 'COMMON.ERROR' : 'COMMON.SUCCESS') | translate }}:
+        {{ (data.type === 'error' ? 'COMMON.ERROR' : 'COMMON.SUCCESS') | translate }}:
       </span>
-      {{ data.mensaje }}
+      {{ data.message }}
     </div>
   </section>
 }

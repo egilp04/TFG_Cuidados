@@ -9,7 +9,7 @@
 }
 
 .info-contract-activity-container {
-  @apply flex justify-center items-center flex-col w-full;
+  @apply flex justify-center items-center flex-col w-full mb-2;
 }
 
 .info-contract-text {

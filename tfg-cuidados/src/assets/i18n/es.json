@@ -26,7 +26,7 @@
   "CALENDAR": {
     "TITLE": "Calendario de Actividades",
     "HEADER": {
-      "COMPANY": "Empresa",
+      "BUSINESS": "Empresa",
       "CLIENT": "Cliente",
       "USER": "Usuario"
     },
@@ -110,16 +110,16 @@
   "ACTIVITIES": {
     "TITLE": "Actividades",
     "DAYS": {
-      "SU": "Do",
-      "MO": "Lu",
-      "TU": "Ma",
-      "WE": "Mi",
-      "TH": "Ju",
-      "FR": "Vi",
+      "DO": "Do",
+      "LU": "Lu",
+      "MA": "Ma",
+      "MI": "Mi",
+      "JU": "Ju",
+      "VI": "Vi",
       "SA": "Sá"
     },
     "TABLE": {
-      "HEADER_COMPANY": "Empresa",
+      "HEADER_BUSINESS": "Empresa",
       "HEADER_CLIENT": "Cliente",
       "HEADER_USER": "Usuario",
       "NAME": "Nombre Servicio",
@@ -134,14 +134,14 @@
     "FORM": {
       "NAME": "Nombre",
       "EMAIL": "Email",
-      "SUBJECT": "Motivo",
+      "TOPIC": "Motivo",
       "MESSAGE": "Mensaje",
       "SEND": "Contactar"
     },
     "ERRORS": {
       "NAME": "El nombre debe tener al menos 3 caracteres.",
       "EMAIL": "Introduce un correo electrónico válido.",
-      "SUBJECT": "El motivo es obligatorio (mín. 6 caracteres).",
+      "TOPIC": "El motivo es obligatorio (mín. 6 caracteres).",
       "MESSAGE": "El mensaje debe ser más extenso."
     }
   },
@@ -183,7 +183,7 @@
     "TOTAL_USERS": "Usuarios totales actuales:",
     "LOGIN": {
       "TITLE": "LOGIN",
-      "SUBTITLE": "Usuarios que se han registrado en la aplicación esta la semana"
+      "SUBTITLE": "Usuarios registrados en la aplicación este año"
     },
     "CHART": {
       "ACTIVE": "Activos",
@@ -199,7 +199,7 @@
       "SEARCH_COMPANIES": "Buscar Empresas",
       "MY_SERVICES": "Servicios Contratados"
     },
-    "COMPANY": {
+    "BUSINESS": {
       "MANAGE_SERVICES": "Gestionar servicios",
       "ALL_CONTRACTS": "Ver todos los contratos"
     },
@@ -244,12 +244,12 @@
     "ACCESSIBILITY": {
       "BACK_NAV": "Navegación para volver atrás",
       "CLIENT_SECTION": "Sección de gestión de clientes",
-      "COMPANY_SECTION": "Sección de gestión de empresas",
+      "BUSINESS_SECTION": "Sección de gestión de empresas",
       "NEW_CLIENT_BTN": "Registrar un nuevo cliente en el sistema",
-      "NEW_COMPANY_BTN": "Registrar una nueva empresa en el sistema"
+      "NEW_BUSINESS_BTN": "Registrar una nueva empresa en el sistema"
     },
     "NEW_CLIENT": "Nuevo Cliente",
-    "NEW_COMPANY": "Nueva Empresa"
+    "NEW_BUSINESS": "Nueva Empresa"
   },
   "MESSAGES": {
     "SUCCESS": {
@@ -356,7 +356,7 @@
       "SUCCESS_CREATE": "Horario creado correctamente",
       "SUCCESS_UPDATE": "Horario actualizado correctamente",
       "SUCCESS_DELETE": "Horario eliminado",
-      "ERROR_DUPLICATE": "Ya existe un horario para {{dia}} a las {{hora}}",
+      "ERROR_DUPLICATE": "Ya existe un horario para {{day}} a las {{time}}",
       "ERROR_GENERIC": "Error al procesar la solicitud"
     }
   },
@@ -391,13 +391,13 @@
     "SORT_LABEL": "Ordenar por...",
     "SORT_OPTIONS": {
       "DATE": "Fecha",
-      "SUBJECT_AZ": "Asunto (A-Z)",
-      "SUBJECT_ZA": "Asunto (Z-A)"
+      "topic_AZ": "Asunto (A-Z)",
+      "topic_ZA": "Asunto (Z-A)"
     },
     "TABLE": {
       "SENDER": "Emisor",
       "RECEIVER": "Receptor",
-      "SUBJECT": "Asunto",
+      "topic": "Asunto",
       "DATE": "Fecha Recepción",
       "ACTIONS": "Acciones",
       "BTN_DELETE": "Borrar",
@@ -578,14 +578,16 @@
     "DAY": "Día de la semana contratado",
     "SERVICE": "Nombre del servicio",
     "CLIENT": "Nombre del contratante (Cliente)",
-    "COMPANY": "Nombre del contratado (Empresa)",
-    "BTN_CANCEL": "Cancelar"
+    "BUSINESS": "Nombre del contratado (Empresa)",
+    "BTN_CANCEL": "Cancelar",
+    "NO_SERVICE": "Desconocido"
   },
   "ADMIN_TABLE": {
     "SEARCH_LABEL": "Buscar por nombre o email",
     "HEADER": {
       "NAME": "Nombre",
-      "SURNAME": "Apellidos"
+      "SURNAME": "Apellidos",
+      "EMAIL": "Email"
     },
     "BTN": {
       "DELETE": "Eliminar",
@@ -599,7 +601,8 @@
     "MESSAGES": {
       "SUCCESS": "¡Registro realizado con éxito! Revisa tu email.",
       "ERROR_EMAIL": "El correo electrónico ya está registrado.",
-      "ERROR_GENERIC": "Error, inténtalo de nuevo."
+      "ERROR_GENERIC": "Error, inténtalo de nuevo.",
+      "SUCCESS_ADMIN": "Registro realizado con éxito, ya puedes regresar al panel"
     },
     "PLACEHOLDER": {
       "SELECTREGION": "Escoja una"
@@ -610,7 +613,7 @@
       "SURNAME2": "Segundo Apellido",
       "BIRTHDATE": "Fecha de nacimiento",
       "DNI": "DNI",
-      "COMPANY_NAME": "Nombre de la empresa",
+      "BUSINESS_NAME": "Nombre de la empresa",
       "CIF": "CIF",
       "PHONE": "Teléfono",
       "EMAIL": "Email",
@@ -699,7 +702,7 @@
       "USERNAME": "Nombre de usuario",
       "SURNAME1": "Primer Apellido",
       "SURNAME2": "Segundo Apellido",
-      "COMPANY_NAME": "Nombre de la empresa",
+      "BUSINESS_NAME": "Nombre de la empresa",
       "PHONE": "Teléfono",
       "EMAIL": "Email",
       "ADDRESS": "Dirección",
@@ -724,13 +727,14 @@
   "MESSAGES_MODAL": {
     "LABELS": {
       "TO": "Para:",
-      "SUBJECT": "Asunto:",
+      "TOPIC": "Asunto:",
       "SENDER": "Emisor:",
       "RECEIVER": "Receptor:",
       "MESSAGE_CONTENT": "MENSAJE"
     },
     "PLACEHOLDERS": {
-      "WRITE_HERE": "Escribe aquí el mensaje..."
+      "WRITE_HERE": "Escribe aquí el mensaje...",
+      "SELECT_RECEIVER": "Selecciona un receptor"
     },
     "BTN": {
       "SEND": "Enviar"
@@ -765,7 +769,7 @@
       "FORGOT": "He olvidado mi contraseña",
       "REGISTER": "Registrar",
       "REG_USER": "Registrarse como usuario",
-      "REG_COMPANY": "Registrarse como empresa",
+      "REG_BUSINESS": "Registrarse como empresa",
       "HAVE_ACCOUNT": "Ya tengo cuenta",
       "SEND_LINK": "Enviar enlace",
       "BACK_LOGIN": "Volver al inicio de sesión",
@@ -928,5 +932,38 @@
   "DIRECTORY": {
     "TITLE": "Catálogo de servicios",
     "SUBTITLE": "Para contratar, selecciona un tipo de servicio y verá las empresas que lo ofrecen"
+  },
+  "INPUTS": {
+    "ACCESSIBILITY": {
+      "HIDE_PASSWORD": "Ocultar contraseña",
+      "SHOW_PASSWORD": "Mostrar contraseña"
+    }
+  },
+  "ERRORS": {
+    "ROLES": {
+      "CLIENT": "cliente",
+      "BUSINESS": "empresa"
+    },
+    "AUTH": {
+      "ERRORS": {
+        "EMAIL_ALREADY_REGISTERED": "Este correo electrónico ya está registrado en la plataforma.",
+        "INVALID_LOGIN_CREDENTIALS": "Las credenciales de acceso son incorrectas.",
+        "USER_NOT_FOUND": "Usuario no encontrado en el sistema.",
+        "EMAIL_TAKEN": "Este correo electrónico ya está registrado.",
+        "TECHNICAL_ERROR": "Error técnico al verificar el correo.",
+        "EMAIL_EXISTS": "Este correo electrónico ya está registrado.",
+        "EMAIL_VALIDATION": "Hay un error validando el email, inténtalo más tarde."
+      }
+    },
+    "NOTIFICATIONS": {
+      "ADMIN": {
+        "NEW_REGISTER_TITLE": "Nuevo Registro en CuidaDos",
+        "NEW_REGISTER_BODY": "El usuario {{email}} se ha registrado como {{rol}}."
+      }
+    },
+    "COMUNICATION": { "INVALID_TYPE": "Tipo de comunicacion inválida" }
+  },
+  "GENERAL": {
+    "LOADING": "Cargando..."
   }
 }

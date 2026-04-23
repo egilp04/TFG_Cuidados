@@ -1,7 +1,4 @@
-<header
-  class="button-back-container"
-  [attr.aria-label]="'MANAGEMENT_SERVICES.ACCESSIBILITY.BACK_NAV' | translate"
->
+<header class="button-back-container" [attr.aria-label]="'MANAGEMENT_SERVICES.ACCESSIBILITY.BACK_NAV' | translate">
   <app-buttonback></app-buttonback>
 </header>
 
@@ -10,73 +7,49 @@
     {{ 'MANAGEMENT_SERVICES.TITLE' | translate }}
   </h1>
 
-  <main
-    class="management-services-global-form"
-    role="form"
-    [attr.aria-label]="
+  <main class="management-services-global-form" role="form" [attr.aria-label]="
       (isEditing ? 'MANAGEMENT_SERVICES.FORM.SAVE' : 'MANAGEMENT_SERVICES.FORM.ADD') | translate
-    "
-  >
-    <app-inputs
-      name="nombre"
-      [label]="'MANAGEMENT_SERVICES.FORM.NAME' | translate"
-      [control]="getCtrl('nombre')"
+    ">
+    <app-inputs name="name" [label]="'MANAGEMENT_SERVICES.FORM.NAME' | translate" [control]="getCtrl('name')"
       [errorMessage]="
-        getCtrl('nombre').invalid && getCtrl('nombre').touched
+        getCtrl('name').invalid && getCtrl('name').touched
           ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
           : ''
-      "
-    >
+      ">
     </app-inputs>
-    <app-inputs
-      name="tipo"
-      [label]="'MANAGEMENT_SERVICES.FORM.TYPE' | translate"
-      [control]="getCtrl('tipo')"
-      [errorMessage]="
-        getCtrl('tipo').invalid && getCtrl('tipo').touched
+
+    <app-inputs name="type_service" [label]="'MANAGEMENT_SERVICES.FORM.TYPE' | translate"
+      [control]="getCtrl('type_service')" [errorMessage]="
+        getCtrl('type_service').invalid && getCtrl('type_service').touched
           ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
           : ''
-      "
-    >
-    </app-inputs
-    ><app-inputs
-      name="descripcion"
-      [label]="'MANAGEMENT_SERVICES.FORM.DESCRIPTION' | translate"
-      [control]="getCtrl('descripcion')"
-      [errorMessage]="
-        getCtrl('descripcion').invalid && getCtrl('descripcion').touched
+      ">
+    </app-inputs>
+
+    <app-inputs name="description" [label]="'MANAGEMENT_SERVICES.FORM.DESCRIPTION' | translate"
+      [control]="getCtrl('description')" [errorMessage]="
+        getCtrl('description').invalid && getCtrl('description').touched
           ? ('ADMIN_SERVICE_TIME.ERROR' | translate)
           : ''
-      "
-    >
+      ">
     </app-inputs>
   </main>
 
   <footer class="management-services-global-form-btn">
-    <app-button
-      [label]="
+    <app-button [label]="
         (isEditing ? 'MANAGEMENT_SERVICES.FORM.SAVE' : 'MANAGEMENT_SERVICES.FORM.ADD') | translate
-      "
-      variant="primary"
-      (click)="onSave()"
-      [disabled]="isLoading()"
-      [attr.aria-label]="
+      " variant="primary" (click)="saveService()" [disabled]="isLoading()" [attr.aria-label]="
         (isEditing
           ? 'MANAGEMENT_SERVICES.ACCESSIBILITY.SAVE_BTN'
           : 'MANAGEMENT_SERVICES.ACCESSIBILITY.ADD_BTN'
         ) | translate
-      "
-    >
+      ">
     </app-button>
 
     @if (isEditing) {
-      <app-button
-        [label]="'MANAGEMENT_SERVICES.FORM.CANCEL' | translate"
-        variant="secondary"
-        (click)="resetForm()"
-        [attr.aria-label]="'MANAGEMENT_SERVICES.ACCESSIBILITY.CANCEL_BTN' | translate"
-      >
-      </app-button>
+    <app-button [label]="'MANAGEMENT_SERVICES.FORM.CANCEL' | translate" variant="secondary" (click)="resetForm()"
+      [attr.aria-label]="'MANAGEMENT_SERVICES.ACCESSIBILITY.CANCEL_BTN' | translate">
+    </app-button>
     }
   </footer>
 </section>
@@ -90,83 +63,68 @@
     <label class="management-services-global-search" id="search-services-label">
       {{ 'MANAGEMENT_SERVICES.LIST.SEARCH' | translate }}
     </label>
-    <app-searchbar [control]="controlFilterItem" (searchEvent)="toFilter($event)"> </app-searchbar>
+    <app-searchbar [control]="controlFilterItem" (searchEvent)="applyFilter($event)"> </app-searchbar>
   </div>
 
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    class="mat-elevation-z2 w-full"
-    [attr.aria-label]="'MANAGEMENT_SERVICES.LIST.TITLE' | translate"
-  >
-    <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
-        {{ 'MANAGEMENT_SERVICES.TABLE.NAME' | translate }}
-      </th>
-      <td mat-cell *matCellDef="let serv" class="management-global-text text-label">
-        {{ serv.nombre }}
-      </td>
-    </ng-container>
+  <main class="overflow-x-auto">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 w-full"
+      [attr.aria-label]="'MANAGEMENT_SERVICES.LIST.TITLE' | translate">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
+          {{ 'MANAGEMENT_SERVICES.TABLE.NAME' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let service" class="management-global-text text-label">
+          {{ service.name }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="tipo_servicio">
-      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
-        {{ 'MANAGEMENT_SERVICES.TABLE.TYPE' | translate }}
-      </th>
-      <td mat-cell *matCellDef="let serv" class="management-global-text text-label">
-        {{ serv.tipo_servicio }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="type_service">
+        <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
+          {{ 'MANAGEMENT_SERVICES.TABLE.TYPE' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let service" class="management-global-text text-label">
+          {{ service.type_service }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="descripcion">
-      <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
-        {{ 'MANAGEMENT_SERVICES.TABLE.DESCRIPTION' | translate }}
-      </th>
-      <td mat-cell *matCellDef="let serv" class="management-global-text text-label">
-        {{ serv.descripcion }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef class="text-label management-global-text" scope="col">
+          {{ 'MANAGEMENT_SERVICES.TABLE.DESCRIPTION' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let service" class="management-global-text text-label">
+          {{ service.description }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="acciones">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        class="text-label management-global-text text-center"
-        scope="col"
-      >
-        <span class="sr-only">{{
-          'MANAGEMENT_SERVICES.ACCESSIBILITY.ACTIONS_COL' | translate
-        }}</span>
-      </th>
-      <td mat-cell *matCellDef="let serv" class="p-4">
-        <div class="management-service-global-actions">
-          <app-button
-            [label]="'MANAGEMENT_SERVICES.TABLE.EDIT' | translate"
-            variant="primary"
-            (click)="onEdit(serv)"
-            [attr.aria-label]="('MANAGEMENT_SERVICES.TABLE.EDIT' | translate) + ': ' + serv.nombre"
-          >
-          </app-button>
-          <app-button
-            [label]="'MANAGEMENT_SERVICES.TABLE.DELETE' | translate"
-            variant="secondary"
-            (click)="onDelete(serv.id_servicio!)"
-            [disabled]="isLoading()"
-            [attr.aria-label]="
-              ('MANAGEMENT_SERVICES.TABLE.DELETE' | translate) + ': ' + serv.nombre
-            "
-          >
-          </app-button>
-        </div>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="text-label management-global-text text-center" scope="col">
+          <span class="sr-only">{{
+            'MANAGEMENT_SERVICES.ACCESSIBILITY.ACTIONS_COL' | translate
+            }}</span>
+        </th>
+        <td mat-cell *matCellDef="let service" class="p-4">
+          <div class="management-service-global-actions">
+            <app-button [label]="'MANAGEMENT_SERVICES.TABLE.EDIT' | translate" variant="primary"
+              (click)="editService(service)"
+              [attr.aria-label]="('MANAGEMENT_SERVICES.TABLE.EDIT' | translate) + ': ' + service.name">
+            </app-button>
+            <app-button [label]="'MANAGEMENT_SERVICES.TABLE.DELETE' | translate" variant="secondary"
+              (click)="deleteService(service.id_service!)" [disabled]="isLoading()" [attr.aria-label]="
+              ('MANAGEMENT_SERVICES.TABLE.DELETE' | translate) + ': ' + service.name
+            ">
+            </app-button>
+          </div>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns" class="hover:bg-gray-50"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="hover:bg-gray-50"></tr>
 
-    <tr class="mat-row" *matNoDataRow role="status" aria-live="polite">
-      <td class="mat-cell text-label management-global-text" colspan="3">
-        {{ 'MANAGEMENT_SERVICES.LIST.EMPTY' | translate }}
-      </td>
-    </tr>
-  </table>
+      <tr class="mat-row" *matNoDataRow role="status" aria-live="polite">
+        <td class="mat-cell text-label management-global-text" colspan="4">
+          {{ 'MANAGEMENT_SERVICES.LIST.EMPTY' | translate }}
+        </td>
+      </tr>
+    </table>
+  </main>
 </section>

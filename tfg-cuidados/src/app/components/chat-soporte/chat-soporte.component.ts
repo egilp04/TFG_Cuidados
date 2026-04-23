@@ -6,6 +6,10 @@ import { SupabaseService } from '../../services/supabase.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 
+/**
+ * Componente para el widget de chat de soporte flotante.
+ * Permite a clientes y negocios enviar tickets de soporte directamente a administradores.
+ */
 @Component({
   selector: 'app-chat-soporte',
   standalone: true,
@@ -19,47 +23,56 @@ export class ChatSoporteComponent implements OnInit {
   private http = inject(HttpClient);
   private cd = inject(ChangeDetectorRef);
 
-  isOpen = false;
-  newMessage = '';
-  adminId: string | null = null;
-  currentUser = this.authService.currentUser();
+  public isOpen = false;
+  public newMessage = '';
+  public adminId: string | null = null;
+  public currentUser = this.authService.currentUser();
 
-  isSending = false;
-  messageSent = false;
+  public isSending = false;
+  public messageSent = false;
 
-  async ngOnInit() {
-    if (this.currentUser?.rol === 'administrador') {
+  async ngOnInit(): Promise<void> {
+    if (this.currentUser?.rol === 'administrator') {
       return;
     }
 
     const { data } = await this.supabase
-      .from('Usuario')
-      .select('id_usuario')
-      .eq('rol', 'administrador')
-      .eq('estado', true)
+      .from('User_public')
+      .select('id_user')
+      .eq('rol', 'administrator')
+      .eq('state', true)
       .limit(1)
       .single();
 
     if (data) {
-      this.adminId = data.id_usuario;
+      this.adminId = data.id_user;
     }
   }
 
-  toggleChat() {
+  /**
+   * Alterna la visibilidad de la ventana de chat de soporte.
+   */
+  toggleChat(): void {
     this.isOpen = !this.isOpen;
     if (!this.isOpen) {
       this.messageSent = false;
     }
   }
 
-  sendMessage() {
+  /**
+   * Envía el mensaje del usuario a la API de soporte del servidor.
+   */
+  sendMessage(): void {
     if (!this.newMessage.trim()) return;
+
     this.isSending = true;
+
     const payload = {
-      mensaje: this.newMessage,
-      emailUsuario: this.currentUser?.email || 'Usuario Anónimo',
+      message: this.newMessage,
+      userEmail: this.currentUser?.email || 'Usuario Anónimo',
     };
-    this.http.post('/api/soporte', payload).subscribe({
+
+    this.http.post('/api/support', payload).subscribe({
       next: () => {
         this.isSending = false;
         this.messageSent = true;
@@ -69,10 +82,11 @@ export class ChatSoporteComponent implements OnInit {
         setTimeout(() => {
           this.isOpen = false;
           this.messageSent = false;
+          this.cd.detectChanges();
         }, 3000);
       },
       error: (err: Error) => {
-        console.error('Error al enviar el ticket:', err);
+        console.error('Error enviando ticket de soporte:', err);
         this.isSending = false;
         this.cd.detectChanges();
       },

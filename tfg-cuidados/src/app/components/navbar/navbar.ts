@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
-  computed,
   DestroyRef,
   effect,
   inject,
@@ -74,7 +73,6 @@ export class Navbar implements OnInit {
     if (user) {
       const rol = user.rol;
       const route = getHomeRouteByRole(rol);
-      console.log(route);
       this.router.navigate([route]);
     } else {
       this.router.navigate(['/']);
@@ -98,10 +96,10 @@ export class Navbar implements OnInit {
   async startSession() {
     const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
     const dialogRef = this.dialog.open(Loginmodal, {
-      data: { modo: 'login' },
+      data: { mode: 'login' },
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-      maxHeight: '90vh',
+      maxHeight: '80vh',
     });
 
     dialogRef
@@ -119,7 +117,7 @@ export class Navbar implements OnInit {
   async registerFunction() {
     this.closeMenu();
     const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
-    this.dialog.open(Loginmodal, { data: { modo: 'registro' }, width: '500px' });
+    this.dialog.open(Loginmodal, { data: { mode: 'register' }, width: '500px' });
   }
 
   modifyProfileFunction() {
@@ -127,13 +125,13 @@ export class Navbar implements OnInit {
     this.router.navigate(['/modify-profile']);
   }
 
-  showComunications(tipo: string) {
-    switch (tipo) {
-      case 'mensajes':
+  showComunications(type: string) {
+    switch (type) {
+      case 'messages':
         this.router.navigate(['/messages']);
 
         return;
-      case 'notificaciones':
+      case 'notifications':
         this.router.navigate(['/notifications']);
 
         return;

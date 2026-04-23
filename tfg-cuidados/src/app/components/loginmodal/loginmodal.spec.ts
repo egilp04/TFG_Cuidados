@@ -34,7 +34,7 @@ describe('Loginmodal', () => {
   const mockMessageService = {
     showMessage: jasmine.createSpy('showMessage'),
     clear: jasmine.createSpy('clear'),
-    messageData: jasmine.createSpy('messageData').and.returnValue({ tipo: '', mensaje: '' }),
+    messageData: jasmine.createSpy('messageData').and.returnValue({ type: '', mensaje: '' }),
   };
 
   const mockRouter = { navigate: jasmine.createSpy('navigate') };
@@ -48,7 +48,7 @@ describe('Loginmodal', () => {
         LucideAngularModule.pick({ Eye, EyeOff }),
       ],
       providers: [
-        { provide: MAT_DIALOG_DATA, useValue: { modo: 'login' } },
+        { provide: MAT_DIALOG_DATA, useValue: { mode: 'login' } },
         { provide: MatDialogRef, useValue: mockDialogRef },
         // Aunque lo pongamos aquí, a veces el standalone lo ignora...
         { provide: MatDialog, useValue: mockMatDialog },
@@ -81,9 +81,9 @@ describe('Loginmodal', () => {
   });
 
   it('should init with provided mode', () => {
-    component.data = { modo: 'registro' };
+    component.data = { mode: 'registro' };
     component.ngOnInit();
-    expect(component.modoActual).toBe('registro');
+    expect(component.modeActual).toBe('registro');
   });
 
   it('toEnterApp should show error if form invalid', () => {
@@ -149,10 +149,10 @@ describe('Loginmodal', () => {
 
     component.toRecoverPasswd();
 
-    expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'exito');
+    expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'success');
     tick(3000);
     expect(messageServiceSpy.clear).toHaveBeenCalled();
-    expect(component.modoActual).toBe('login');
+    expect(component.modeActual).toBe('login');
   }));
 
   it('toRecoverPasswd should handle error from supabase', () => {
@@ -200,10 +200,10 @@ describe('Loginmodal', () => {
 
     component.toRecoverEmail;
 
-    expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'exito');
+    expect(messageServiceSpy.showMessage).toHaveBeenCalledWith(jasmine.any(String), 'success');
     tick(2000);
     expect(messageServiceSpy.clear).toHaveBeenCalled();
-    expect(component.modoActual).toBe('login');
+    expect(component.modeActual).toBe('login');
   }));
 
   it('toRecoverEmailandle service error', () => {

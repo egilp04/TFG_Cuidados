@@ -1,13 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ServicioModel } from '../../models/Servicio';
+import { ServiceModel } from '../../models/ServiceModel';
 import { ServiceService } from '../../services/service.service';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../components/button/button';
 
+/**
+ * Componente para mostrar el directorio de servicios disponibles.
+ * Permite a los usuarios navegar a negocios que ofrecen un servicio específico.
+ */
 @Component({
   selector: 'app-services-directory',
+  standalone: true,
   imports: [TranslateModule, ButtonComponent],
   templateUrl: './services-directory.component.html',
   styleUrl: './services-directory.component.css',
@@ -17,12 +22,16 @@ export default class ServicesDirectoryComponent {
   private router = inject(Router);
 
   public allServices = toSignal(this.serviceService.getServicesObservable(), {
-    initialValue: [] as ServicioModel[],
+    initialValue: [] as ServiceModel[],
   });
 
-  showOffersByService(servicio: ServicioModel) {
+  /**
+   * Navega a la vista de búsqueda de negocios filtrada por el servicio seleccionado.
+   * @param service El modelo de servicio seleccionado por el usuario.
+   */
+  showOffersByService(service: ServiceModel): void {
     this.router.navigate(['/search-business'], {
-      state: { idServicio: servicio.id_servicio },
+      state: { idService: service.id_service },
     });
   }
 }

@@ -8,38 +8,38 @@
     class="register-form"
     [attr.aria-label]="'REGISTER.ACCESSIBILITY.FORM_NAME' | translate"
   >
-    @if (isUser) {
+    @if (isClientProfile) {
       <app-inputs
-        name="nombre"
+        name="name"
         [label]="'REGISTER.LABELS.USERNAME' | translate"
-        [control]="getCtrl('nombre')"
-        [errorMessage]="getErrorMessage('nombre')"
+        [control]="getCtrl('name')"
+        [errorMessage]="getErrorMessage('name')"
       ></app-inputs>
       <div class="register-form-col">
         <div class="register-form-row">
           <app-inputs
-            name="ape1"
+            name="surname1"
             [label]="'REGISTER.LABELS.SURNAME1' | translate"
-            [control]="getCtrl('ape1')"
-            [errorMessage]="getErrorMessage('ape1')"
+            [control]="getCtrl('surname1')"
+            [errorMessage]="getErrorMessage('surname1')"
             class="flex-1"
           ></app-inputs>
 
           <app-inputs
-            name="ape2"
+            name="surname2"
             [label]="'REGISTER.LABELS.SURNAME2' | translate"
-            [control]="getCtrl('ape2')"
-            [errorMessage]="getErrorMessage('ape2')"
+            [control]="getCtrl('surname2')"
+            [errorMessage]="getErrorMessage('surname2')"
             class="flex-1"
           ></app-inputs>
         </div>
         <div class="register-form-row">
           <app-inputs
-            name="fechnac"
+            name="birthDate"
             [label]="'REGISTER.LABELS.BIRTHDATE' | translate"
             type="date"
-            [control]="getCtrl('fechnac')"
-            [errorMessage]="getErrorMessage('fechnac')"
+            [control]="getCtrl('birthDate')"
+            [errorMessage]="getErrorMessage('birthDate')"
             class="flex-1"
           ></app-inputs>
           <app-inputs
@@ -54,10 +54,10 @@
     } @else {
       <div class="register-form-col">
         <app-inputs
-          name="nombreEmpresa"
-          [label]="'REGISTER.LABELS.COMPANY_NAME' | translate"
-          [control]="getCtrl('nombreEmpresa')"
-          [errorMessage]="getErrorMessage('nombreEmpresa')"
+          name="companyName"
+          [label]="'REGISTER.LABELS.BUSINESS_NAME' | translate"
+          [control]="getCtrl('companyName')"
+          [errorMessage]="getErrorMessage('companyName')"
         ></app-inputs>
         <app-inputs
           name="cif"
@@ -66,20 +66,20 @@
           [errorMessage]="getErrorMessage('cif')"
         ></app-inputs>
         <app-inputs
-          name="descripcion"
+          name="description"
           [label]="'REGISTER.LABELS.DESCRIPTION' | translate"
           type="textarea"
-          [control]="getCtrl('descripcion')"
-          [errorMessage]="getErrorMessage('descripcion')"
+          [control]="getCtrl('description')"
+          [errorMessage]="getErrorMessage('description')"
         ></app-inputs>
       </div>
     }
 
     <app-inputs
-      name="telef"
+      name="phone"
       [label]="'REGISTER.LABELS.PHONE' | translate"
-      [control]="getCtrl('telef')"
-      [errorMessage]="getErrorMessage('telef')"
+      [control]="getCtrl('phone')"
+      [errorMessage]="getErrorMessage('phone')"
     ></app-inputs>
 
     <app-inputs
@@ -91,46 +91,46 @@
     ></app-inputs>
 
     <app-inputs
-      name="direccion"
+      name="address"
       [label]="'REGISTER.LABELS.ADDRESS' | translate"
-      [control]="getCtrl('direccion')"
-      [errorMessage]="getErrorMessage('direccion')"
+      [control]="getCtrl('address')"
+      [errorMessage]="getErrorMessage('address')"
     ></app-inputs>
 
     <app-inputs
-      name="localidad"
+      name="city"
       [label]="'REGISTER.LABELS.CITY' | translate"
-      [control]="getCtrl('localidad')"
-      [errorMessage]="getErrorMessage('localidad')"
+      [control]="getCtrl('city')"
+      [errorMessage]="getErrorMessage('city')"
     ></app-inputs>
 
     <div class="register-form-row">
       <app-inputs
-        name="codpostal"
+        name="postcode"
         [label]="'REGISTER.LABELS.ZIP' | translate"
-        [control]="getCtrl('codpostal')"
-        [errorMessage]="getErrorMessage('codpostal')"
+        [control]="getCtrl('postcode')"
+        [errorMessage]="getErrorMessage('postcode')"
         class="flex-1"
       ></app-inputs>
 
       <div class="register-form-select-container">
-        <label for="comunidad" class="register-form-select-label">
+        <label for="comunity" class="register-form-select-label">
           {{ 'REGISTER.LABELS.REGION' | translate }}
         </label>
 
         <div class="relative w-full">
           <select
-            id="comunidad"
-            formControlName="comunidad"
+            id="comunity"
+            formControlName="comunity"
             class="register-form-select"
-            [attr.aria-invalid]="getCtrl('comunidad').invalid && getCtrl('comunidad').touched"
+            [attr.aria-invalid]="getCtrl('comunity').invalid && getCtrl('comunity').touched"
           >
             <option [ngValue]="null" disabled selected class="select-option-disabled">
               {{ 'REGISTER.PLACEHOLDER.SELECTREGION' | translate }}
             </option>
 
-            @for (comunidad of comunidades; track $index) {
-              <option [value]="comunidad" class="register-form-options">{{ comunidad }}</option>
+            @for (comunity of comunities; track $index) {
+              <option [value]="comunity" class="register-form-options">{{ comunity }}</option>
             }
           </select>
 

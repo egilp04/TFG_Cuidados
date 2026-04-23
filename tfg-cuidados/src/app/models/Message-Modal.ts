@@ -1,10 +1,10 @@
-import { ComunicacionModel } from "./Comunicacion";
+import { ComunicationModel } from './ComunicationModel';
 
 export interface MessagesModalData {
-  modo: 'escribir' | 'showMessage';
-  receptorEmail?: string;
-  contenido?: ComunicacionModel & {
-    Emisor?: { email: string };
-    Receptor?: { nombre: string };
+  mode: 'writeMessage' | 'readMessage';
+  receiverEmail?: string;
+  content?: ComunicationModel & {
+    Sender?: { email?: string; name?: string };
+    Receiver?: {email?:string, name: string };
   };
 }

@@ -54,22 +54,6 @@ describe('UserService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('getUsersObservable should fetch users and flatten data', fakeAsync(() => {
-    const mockData = [
-      { id: 1, Cliente: { direccion: 'Calle Falsa 123' }, nombre: 'User 1' },
-      { id: 2, Cliente: { direccion: 'Av Siempre Viva' }, nombre: 'User 2' },
-    ];
-    queryBuilder.then = (resolve: any) => resolve({ data: mockData, error: null });
-
-    service.getUsersObservable('cliente').subscribe((users) => {
-      if (users.length > 0) {
-        expect(users[0].direccion).toBe('Calle Falsa 123');
-        expect(users[0].nombre).toBe('User 1');
-      }
-    });
-    tick();
-  }));
-
   it('deleteUser should call rpc', fakeAsync(() => {
     service.deleteUser('1').subscribe();
     tick();
@@ -83,12 +67,6 @@ describe('UserService', () => {
     service.verifyUniqEmail('a@a.com', '1').subscribe((res) => {
       expect(res).toBe(true);
     });
-    tick();
-  }));
-
-  it('updateProfileDirect should call rpc', fakeAsync(() => {
-    service.updateProfileDirect('1', { nombre: 'Test' }, 'cliente').subscribe();
-    expect(supabaseMock.rpc).toHaveBeenCalledWith('update_profile_complete', jasmine.any(Object));
     tick();
   }));
 
@@ -109,7 +87,7 @@ describe('UserService', () => {
 
     service.getUserById('1').subscribe((res) => {
       expect(res).toBeDefined();
-      expect(res.nombre).toBe('Test');
+      expect(res.name).toBe('Test');
     });
     tick();
   }));

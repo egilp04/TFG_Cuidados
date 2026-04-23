@@ -1,14 +1,14 @@
-describe('Contratos - Verificación de Estados Activos', () => {
+describe('Contratos - Verificación de Estados actives', () => {
   const emailCliente = 'clientecypress@test.com';
   const passCliente = '13122000Teddy13@';
 
-  const contratoActivo = {
-    id_contrato: 'activo-123',
-    estado: 'activo',
+  const contratoactive = {
+    id_contrato: 'active-123',
+    estado: 'active',
     fecha_creacion: new Date().toISOString(),
     id_servicio_horario: {
       id_servicio_horario: 'sh-1',
-      Servicio: { nombre: 'Servicio Activo' },
+      Servicio: { nombre: 'Servicio active' },
     },
     Empresa: { Usuario: { nombre: 'Empresa A' } },
     Cliente: { Usuario: { nombre: 'Cliente A' } },
@@ -19,7 +19,7 @@ describe('Contratos - Verificación de Estados Activos', () => {
 
     cy.intercept('GET', '**/rest/v1/Contrato**', {
       statusCode: 200,
-      body: [contratoActivo],
+      body: [contratoactive],
     }).as('getContratos');
 
     cy.intercept('PATCH', '**/rest/v1/Contrato**', {
