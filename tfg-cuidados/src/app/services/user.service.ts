@@ -143,7 +143,7 @@ export class UserService {
       p_address: dataToSend.address || null,
       p_city: dataToSend.city || null,
       p_postcode: dataToSend.postcode || null,
-      p_comunity: dataToSend.comunity || null,
+      p_community: dataToSend.comunity || null,
       p_description: dataToSend.description || null,
     };
 
