@@ -26,7 +26,7 @@
   "CALENDAR": {
     "TITLE": "Activities Calendar",
     "HEADER": {
-      "COMPANY": "Company",
+      "BUSINESS": "Company",
       "CLIENT": "Client",
       "USER": "User"
     },
@@ -119,7 +119,7 @@
       "SA": "Sat"
     },
     "TABLE": {
-      "HEADER_COMPANY": "Company",
+      "HEADER_BUSINESS": "Company",
       "HEADER_CLIENT": "Client",
       "HEADER_USER": "User",
       "NAME": "Service Name",
@@ -206,7 +206,7 @@
       "SEARCH_COMPANIES": "Search Companies",
       "MY_SERVICES": "Contracted Services"
     },
-    "COMPANY": {
+    "BUSINESS": {
       "MANAGE_SERVICES": "Manage Services",
       "ALL_CONTRACTS": "View All Contracts"
     },
@@ -251,12 +251,12 @@
     "ACCESSIBILITY": {
       "BACK_NAV": "Navigation to go back",
       "CLIENT_SECTION": "Client management section",
-      "COMPANY_SECTION": "Company management section",
+      "BUSINESS_SECTION": "Company management section",
       "NEW_CLIENT_BTN": "Register a new client in the system",
-      "NEW_COMPANY_BTN": "Register a new company in the system"
+      "NEW_BUSINESS_BTN": "Register a new company in the system"
     },
     "NEW_CLIENT": "New Client",
-    "NEW_COMPANY": "New Company"
+    "NEW_BUSINESS": "New Company"
   },
   "MESSAGES": {
     "SUCCESS": {
@@ -436,7 +436,7 @@
       "USERNAME": "Username",
       "SURNAME1": "First Surname",
       "SURNAME2": "Second Surname",
-      "COMPANY_NAME": "Company Name",
+      "BUSINESS_NAME": "Company Name",
       "PHONE": "Phone",
       "EMAIL": "Email",
       "ADDRESS": "Address",
@@ -636,7 +636,7 @@
     "DAY": "Contracted Day",
     "SERVICE": "Service Name",
     "CLIENT": "Client Name",
-    "COMPANY": "Company Name",
+    "BUSINESS": "Company Name",
     "BTN_CANCEL": "Cancel"
   },
   "ADMIN_TABLE": {
@@ -673,7 +673,7 @@
       "SURNAME2": "Second Surname",
       "BIRTHDATE": "Birthdate",
       "DNI": "ID Card / DNI",
-      "COMPANY_NAME": "Company Name",
+      "BUSINESS_NAME": "Company Name",
       "CIF": "Tax ID / CIF",
       "PHONE": "Phone",
       "EMAIL": "Email",
@@ -784,7 +784,7 @@
       "FORGOT": "I forgot my password",
       "REGISTER": "Register",
       "REG_USER": "Register as User",
-      "REG_COMPANY": "Register as Company",
+      "REG_BUSINESS": "Register as Company",
       "HAVE_ACCOUNT": "I have an account",
       "SEND_LINK": "Send link",
       "BACK_LOGIN": "Back to login",

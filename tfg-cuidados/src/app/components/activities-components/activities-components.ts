@@ -47,7 +47,7 @@ export class ActivitiesComponents implements OnInit, OnChanges {
   public userRole = this.authService.userRol();
 
   public contractHeader = computed(() => {
-    if (this.userRole === 'client') return 'ACTIVITIES.TABLE.HEADER_COMPANY';
+    if (this.userRole === 'client') return 'ACTIVITIES.TABLE.HEADER_BUSINESS';
     if (this.userRole === 'business') return 'ACTIVITIES.TABLE.HEADER_CLIENT';
     return 'ACTIVITIES.TABLE.HEADER_USER';
   });

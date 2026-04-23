@@ -26,7 +26,7 @@
   "CALENDAR": {
     "TITLE": "Calendario de Actividades",
     "HEADER": {
-      "COMPANY": "Empresa",
+      "BUSINESS": "Empresa",
       "CLIENT": "Cliente",
       "USER": "Usuario"
     },
@@ -119,7 +119,7 @@
       "SA": "Sá"
     },
     "TABLE": {
-      "HEADER_COMPANY": "Empresa",
+      "HEADER_BUSINESS": "Empresa",
       "HEADER_CLIENT": "Cliente",
       "HEADER_USER": "Usuario",
       "NAME": "Nombre Servicio",
@@ -199,7 +199,7 @@
       "SEARCH_COMPANIES": "Buscar Empresas",
       "MY_SERVICES": "Servicios Contratados"
     },
-    "COMPANY": {
+    "BUSINESS": {
       "MANAGE_SERVICES": "Gestionar servicios",
       "ALL_CONTRACTS": "Ver todos los contratos"
     },
@@ -244,12 +244,12 @@
     "ACCESSIBILITY": {
       "BACK_NAV": "Navegación para volver atrás",
       "CLIENT_SECTION": "Sección de gestión de clientes",
-      "COMPANY_SECTION": "Sección de gestión de empresas",
+      "BUSINESS_SECTION": "Sección de gestión de empresas",
       "NEW_CLIENT_BTN": "Registrar un nuevo cliente en el sistema",
-      "NEW_COMPANY_BTN": "Registrar una nueva empresa en el sistema"
+      "NEW_BUSINESS_BTN": "Registrar una nueva empresa en el sistema"
     },
     "NEW_CLIENT": "Nuevo Cliente",
-    "NEW_COMPANY": "Nueva Empresa"
+    "NEW_BUSINESS": "Nueva Empresa"
   },
   "MESSAGES": {
     "SUCCESS": {
@@ -578,7 +578,7 @@
     "DAY": "Día de la semana contratado",
     "SERVICE": "Nombre del servicio",
     "CLIENT": "Nombre del contratante (Cliente)",
-    "COMPANY": "Nombre del contratado (Empresa)",
+    "BUSINESS": "Nombre del contratado (Empresa)",
     "BTN_CANCEL": "Cancelar"
   },
   "ADMIN_TABLE": {
@@ -611,7 +611,7 @@
       "SURNAME2": "Segundo Apellido",
       "BIRTHDATE": "Fecha de nacimiento",
       "DNI": "DNI",
-      "COMPANY_NAME": "Nombre de la empresa",
+      "BUSINESS_NAME": "Nombre de la empresa",
       "CIF": "CIF",
       "PHONE": "Teléfono",
       "EMAIL": "Email",
@@ -700,7 +700,7 @@
       "USERNAME": "Nombre de usuario",
       "SURNAME1": "Primer Apellido",
       "SURNAME2": "Segundo Apellido",
-      "COMPANY_NAME": "Nombre de la empresa",
+      "BUSINESS_NAME": "Nombre de la empresa",
       "PHONE": "Teléfono",
       "EMAIL": "Email",
       "ADDRESS": "Dirección",
@@ -767,7 +767,7 @@
       "FORGOT": "He olvidado mi contraseña",
       "REGISTER": "Registrar",
       "REG_USER": "Registrarse como usuario",
-      "REG_COMPANY": "Registrarse como empresa",
+      "REG_BUSINESS": "Registrarse como empresa",
       "HAVE_ACCOUNT": "Ya tengo cuenta",
       "SEND_LINK": "Enviar enlace",
       "BACK_LOGIN": "Volver al inicio de sesión",
