@@ -15,20 +15,17 @@
       <label for="receiver" class="messages-form-select-label">
         {{ 'MESSAGES_MODAL.LABELS.RECEIVER' | translate }}
       </label>
-
       <div class="relative w-full">
         <select id="receiver" formControlName="receiver" class="messages-form-select"
           [attr.aria-invalid]="getCtrl('receiver').invalid && getCtrl('receiver').touched">
-          <option [ngValue]="null" disabled selected class="select-option-disabled">
+          <option [value]="" disabled selected class="select-option-disabled">
             {{ 'MESSAGES_MODAL.PLACEHOLDERS.SELECT_RECEIVER' | translate }}
           </option>
-
           @for (receiver of receivers; track $index) { 
             <option [value]="receiver" class="messages-form-options">{{
             receiver }}</option>
           }
         </select>
-
         <div class="messages-form-select-arrow">
           <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
