@@ -730,7 +730,8 @@
       "MESSAGE_CONTENT": "MENSAJE"
     },
     "PLACEHOLDERS": {
-      "WRITE_HERE": "Escribe aquí el mensaje..."
+      "WRITE_HERE": "Escribe aquí el mensaje...",
+      "SELECT_RECEIVER": "Selecciona un receptor"
     },
     "BTN": {
       "SEND": "Enviar"

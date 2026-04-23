@@ -129,8 +129,8 @@
               {{ 'REGISTER.PLACEHOLDER.SELECTREGION' | translate }}
             </option>
 
-            @for (comunidad of comunities; track $index) {
-              <option [value]="comunidad" class="register-form-options">{{ comunidad }}</option>
+            @for (comunity of comunities; track $index) {
+              <option [value]="comunity" class="register-form-options">{{ comunity }}</option>
             }
           </select>
 

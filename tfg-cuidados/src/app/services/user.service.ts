@@ -191,4 +191,27 @@ export class UserService {
       catchError((err) => throwError(() => err)),
     );
   }
+
+/**
+ * Obtiene la lista de correos electrónicos de todos los usuarios activos,
+ * excluyendo el correo del usuario proporcionado.
+ * @param currentEmail El email del usuario logueado para excluirlo de la lista.
+ */
+getActiveUsersEmails(currentEmail: string): Observable<string[]> {
+  return from(
+    this.supabase
+      .from('User_public')
+      .select('email')
+      .eq('state', true)
+      .neq('email', currentEmail)
+  ).pipe(
+    map(({ data, error }) => {
+      if (error) {
+        console.error('Error al obtener correos:', error);
+        return [];
+      }
+      return (data || []).map(user => user.email);
+    })
+  );
+}
 }

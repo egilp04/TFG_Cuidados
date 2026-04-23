@@ -36,6 +36,7 @@ import { CloseBtnComponent } from '../close-btn/close-btn.component';
 })
 export class MessagesModal implements OnInit {
   public data = inject<MessagesModalData>(MAT_DIALOG_DATA);
+  receivers: string[] = [];
 
   private dialogRef = inject(MatDialogRef<MessagesModal>);
   private fb = inject(FormBuilder);
@@ -69,6 +70,24 @@ export class MessagesModal implements OnInit {
       });
       this.getCtrl('receiver').disable();
     }
+
+    this.loadActiveUsers();
+  }
+
+  private loadActiveUsers(): void {
+    const currentUserEmail = this.authService.currentUser()?.email;
+    if (!currentUserEmail) return;
+    this.userService.getActiveUsersEmails(currentUserEmail)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (emails) => {
+          this.receivers = emails;
+          this.cd.markForCheck();
+        },
+        error: (err) => {
+          console.error('No se pudieron cargar los destinatarios', err);
+        }
+      });
   }
 
   /**

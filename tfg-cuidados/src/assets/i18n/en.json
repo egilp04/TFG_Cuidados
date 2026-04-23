@@ -187,7 +187,15 @@
     "CHART": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
-      "DAYS": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      "DAYS": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun"
+      ],
       "DEMAND": "Demand",
       "SUPPLY": "Supply"
     }
@@ -414,7 +422,9 @@
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back to the previous screen"
     },
-    "PLACEHOLDER": { "DESCRIPTION": "Modify descripcion" },
+    "PLACEHOLDER": {
+      "DESCRIPTION": "Modify descripcion"
+    },
     "TITLE": "Modify Profile",
     "MESSAGES": {
       "EMAIL_USED": "Email already in use",
@@ -505,7 +515,6 @@
     },
     "HOME": "Start"
   },
-
   "SEARCH_BUSINESS": {
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back to the previous screen",
@@ -738,7 +747,8 @@
       "MESSAGE_CONTENT": "MESSAGE"
     },
     "PLACEHOLDERS": {
-      "WRITE_HERE": "Write your message here..."
+      "WRITE_HERE": "Write your message here...",
+      "SELECT_RECEIVER": "Select a receiver"
     },
     "BTN": {
       "SEND": "Send"
