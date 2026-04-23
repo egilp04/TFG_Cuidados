@@ -31,7 +31,12 @@
   </div>
 
   @if (currentMode === 'login') {
-    <form [formGroup]="loginForm" class="login-login-form" aria-labelledby="login-dialog-title">
+    <form 
+      [formGroup]="loginForm" 
+      (ngSubmit)="toEnterApp()" 
+      class="login-login-form" 
+      aria-labelledby="login-dialog-title"
+    >
       <div class="login-login-form-div">
         <mat-dialog-content class="login-form-reset">
           <app-inputs
@@ -45,7 +50,7 @@
             "
           >
           </app-inputs>
-
+  
           <app-inputs
             name="password"
             [label]="'LOGIN_MODAL.LABELS.PASSWORD' | translate"
@@ -61,15 +66,15 @@
           ></app-inputs>
         </mat-dialog-content>
       </div>
-
+  
       <mat-dialog-actions class="login-other-actions">
         <app-button
           [label]="'LOGIN_MODAL.BTN.ENTER' | translate"
           variant="primary"
           type="submit"
-          (click)="toEnterApp()"
           [disabled]="loginForm.invalid"
         ></app-button>
+        
         <app-button
           [label]="'LOGIN_MODAL.BTN.FORGOT' | translate"
           variant="secondary"
