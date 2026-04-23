@@ -150,14 +150,14 @@ export class AuthService {
         if (res.data.user) {
           const rolKey = isClient ? 'ERRORS.ROLES.CLIENT' : 'ERRORS.ROLES.BUSINESS';
           const rolTexto = this.translate.instant(rolKey);
-          const asunto = this.translate.instant('ERRORS.NOTIFICATIONS.ADMIN.NEW_REGISTER_TITLE');
-          const mensaje = this.translate.instant('ERRORS.NOTIFICATIONS.ADMIN.NEW_REGISTER_BODY', {
+          const topic = this.translate.instant('ERRORS.NOTIFICATIONS.ADMIN.NEW_REGISTER_TITLE');
+          const message = this.translate.instant('ERRORS.NOTIFICATIONS.ADMIN.NEW_REGISTER_BODY', {
             email: cleanEmail,
             rol: rolTexto,
           });
 
           const comunicationService = this.injector.get(ComunicationService);
-          comunicationService.notifyAdmins(asunto, mensaje).subscribe();
+          comunicationService.notifyAdmins(topic, message).subscribe();
         }
       }),
     );
