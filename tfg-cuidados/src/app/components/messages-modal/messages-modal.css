@@ -19,9 +19,6 @@
   @apply w-full min-h-120 outline-none resize-none text-primary dark:text-surface dark:placeholder:text-surface;
 }
 
-
-
-
 .messages-form-select-label {
   @apply text-label text-primary font-medium dark:text-surface;
 }

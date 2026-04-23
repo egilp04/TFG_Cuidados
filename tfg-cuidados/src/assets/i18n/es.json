@@ -725,7 +725,7 @@
   "MESSAGES_MODAL": {
     "LABELS": {
       "TO": "Para:",
-      "topic": "Asunto:",
+      "TOPIC": "Asunto:",
       "SENDER": "Emisor:",
       "RECEIVER": "Receptor:",
       "MESSAGE_CONTENT": "MENSAJE"

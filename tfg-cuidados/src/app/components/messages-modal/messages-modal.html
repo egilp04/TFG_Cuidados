@@ -11,13 +11,6 @@
 
   <main class="message-modal-form-container">
     @if (data.mode === 'writeMessage') {
-    <!-- <app-inputs
-        name="receiver"
-        [label]="'MESSAGES_MODAL.LABELS.TO' | translate"
-        [control]="getCtrl('receiver')"
-        type="text"
-      >
-      </app-inputs> -->
     <div class="messages-form-select-container">
       <label for="receiver" class="messages-form-select-label">
         {{ 'MESSAGES_MODAL.LABELS.RECEIVER' | translate }}
@@ -64,16 +57,17 @@
       <label class="message-modal-label" for="message-content">
         {{ 'MESSAGES_MODAL.LABELS.MESSAGE_CONTENT' | translate }}
       </label>
-      <textarea id="message-content" [formControl]="getCtrl('content')" class="message-modal-textarea"
-        [placeholder]="'MESSAGES_MODAL.PLACEHOLDERS.WRITE_HERE' | translate" [attr.aria-required]="true"
-        [attr.aria-invalid]="getCtrl('content').invalid && getCtrl('content').touched">
+    
+      <textarea 
+        id="message-content" 
+        [formControl]="getCtrl('content')" 
+        class="message-modal-textarea transition-colors"
+        [placeholder]="'MESSAGES_MODAL.PLACEHOLDERS.WRITE_HERE' | translate" 
+        [attr.aria-required]="true"
+        [attr.aria-invalid]="getCtrl('content').invalid && getCtrl('content').touched"
+        [class.border-red-500]="getCtrl('content').invalid && getCtrl('content').touched"
+      >
       </textarea>
-      @if (getCtrl('content').invalid && getCtrl('content').touched) {
-      <span class="text-xs text-red-500 mt-1">
-        {{ 'MESSAGES_MODAL.ERRORS.CONTENT_REQUIRED' | translate }}
-      </span>
-      }
-    </div>
 
     @if (data.mode === 'writeMessage') {
     <div class="flex justify-center mt-4">

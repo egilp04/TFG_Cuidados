@@ -37,7 +37,7 @@
         <select
           id="id_service"
           formControlName="id_service"
-          class="register-form-select"
+          class="service-form-select"
           [attr.aria-invalid]="form.get('id_service')?.invalid && form.get('id_service')?.touched"
         >
           <option value="" disabled selected class="select-option-disabled">
@@ -45,7 +45,7 @@
           </option>
 
           @for (s of services$ | async; track s.id_service) {
-            <option [value]="s.id_service" class="register-form-options">
+            <option [value]="s.id_service" class="service-form-options">
               {{ s.name }} - {{ s.type_service }}
             </option>
           } @empty {
@@ -54,7 +54,7 @@
             </option>
           }
         </select>
-        <div class="register-form-select-arrow">
+        <div class="service-form-select-arrow">
           <svg
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"

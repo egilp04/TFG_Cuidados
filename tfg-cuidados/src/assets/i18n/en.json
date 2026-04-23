@@ -742,7 +742,7 @@
   "MESSAGES_MODAL": {
     "LABELS": {
       "TO": "To:",
-      "topic": "topic:",
+      "TOPIC": "topic:",
       "SENDER": "Sender:",
       "RECEIVER": "Receiver:",
       "MESSAGE_CONTENT": "MESSAGE"
