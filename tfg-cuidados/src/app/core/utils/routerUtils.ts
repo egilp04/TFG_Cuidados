@@ -1,4 +1,6 @@
 export function getHomeRouteByRole(rol?: string): string {
+
+  console.log(rol)
   switch (rol) {
     case 'administrador':
       return '/dashboard';
