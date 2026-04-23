@@ -31,11 +31,15 @@
 }
 
 .input-error-text-container {
-  @apply w-full max-w-sm mx-auto;
+  @apply w-full mx-auto flex justify-center;
+}
+
+.input-error-text-container span{
+  @apply w-full mx-auto max-w-sm;
 }
 
 .input-error {
-  @apply border-red dark:border-red-dark text-center;
+  @apply border-red dark:border-red-dark;
 }
 
 .input-no-error {
