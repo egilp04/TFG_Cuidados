@@ -142,7 +142,7 @@ export class AuthService {
           this.supabase.auth.signUp({
             email: cleanEmail,
             password: cleanEmailPassword,
-            options: { data: metaData, emailRedirectTo: `${window.location.origin}/` },
+            options: { data: metaData, emailRedirectTo: `${window.location.origin}/landing` },
           }),
         );
       }),

@@ -653,7 +653,7 @@
       "MAIN_FORM": "Main area of the registration form"
     },
     "PLACEHOLDER": {
-      "SELECTREGION": "Choose"
+      "SELECTREGION": "Choose a community"
     },
     "MESSAGES": {
       "SUCCESS": "Registration successful! Please check your email.",

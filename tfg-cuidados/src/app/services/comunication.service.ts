@@ -16,7 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ComunicationService {
   private supabase = inject(SupabaseService).getClient();
   private authService = inject(AuthService);
-  private readonly validTypeComunication = ['mensaje', 'notificacion'] as const;
+  private readonly validTypeComunication = ['message', 'notification'] as const;
   private messagesList$ = new BehaviorSubject<ComunicationModel[]>([]);
   private notificationsList$ = new BehaviorSubject<ComunicationModel[]>([]);
   private translate = inject(TranslateService);
