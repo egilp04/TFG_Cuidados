@@ -111,6 +111,7 @@ export class Loginmodal implements OnInit {
             const user = this.authService.currentUser();
             const role = user?.rol;
             const route = getHomeRouteByRole(role);
+            console.log(route)
             this.router.navigate([route]);
           },
           error: (err: Error) => {

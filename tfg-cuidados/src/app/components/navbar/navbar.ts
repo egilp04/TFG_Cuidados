@@ -64,6 +64,7 @@ export class Navbar implements OnInit {
 
   get homeRoute(): string {
     const user = this.authService.currentUser();
+    console.log(getHomeRouteByRole(user.rol))
     return user ? getHomeRouteByRole(user.rol) : '/';
   }
 
