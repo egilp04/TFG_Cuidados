@@ -1,5 +1,5 @@
 import { Injectable, inject, signal, computed, DestroyRef, Injector } from '@angular/core';
-import { from, Observable, of, throwError } from 'rxjs';
+import { from, Observable, of, throwError, timer, zip } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { SupabaseService } from './supabase.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -35,14 +35,17 @@ export class AuthService {
    */
   private initializeAuth() {
     this.isLoading.set(true);
-    from(this.supabase.auth.getUser())
+      const minWaitTime$ = timer(1500);
+      const authRequest$ = from(this.supabase.auth.getUser()).pipe(
+      switchMap((res: UserResponse) => {
+        const user = res.data?.user;
+        return user ? this.getProfile(user.id) : of(null);
+      })
+    );
+    zip(authRequest$, minWaitTime$)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        switchMap((res: UserResponse) => {
-          const user = res.data?.user;
-          return user ? this.getProfile(user.id) : of(null);
-        }),
-        tap((userProfile: AuthUserModel | null) => {
+        tap(([userProfile, _]) => {
           this.currentUser.set(userProfile);
           this.isLoading.set(false);
         }),
@@ -50,7 +53,7 @@ export class AuthService {
           this.isLoading.set(false);
           this.currentUser.set(null);
           return of(null);
-        }),
+        })
       )
       .subscribe();
   }
