@@ -4,7 +4,7 @@
 }
 
 .modify-profile-form {
-  @apply flex flex-col gap-2 w-full max-w-300 xl:max-w-[600px];
+  @apply flex flex-col gap-2 w-full max-w-400 xl:max-w-[800px];
 }
 .modify-form-container {
   @apply flex justify-center;
@@ -23,7 +23,7 @@
   @apply text-primary;
 }
 .modify-form-select {
-  @apply text-primary dark:text-surface appearance-none bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary dark:border-surface border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer;
+  @apply text-primary dark:text-surface appearance-none bg-transparent w-full px-4 py-3 md:px-5 border-primary dark:border-surface border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer;
 }
 .modify-form-select-container {
   @apply flex flex-col gap-2 w-full flex-1;
