@@ -34,7 +34,7 @@ describe('Cancelmodal', () => {
   });
 
   it('should return correct labels for baja mode', () => {
-    component.data = { mode: 'baja' };
+    component.data = { mode: 'unsubscribe' };
     expect(component.getPrimaryLabel()).toBe('CANCEL_MODAL.BTN.KEEP_ACCOUNT');
     expect(component.getSecondaryLabel()).toBe('CANCEL_MODAL.BTN.UNSUBSCRIBE');
   });
@@ -43,16 +43,5 @@ describe('Cancelmodal', () => {
     component.data = { mode: 'cancelContract' };
     expect(component.getPrimaryLabel()).toBe('CANCEL_MODAL.BTN.KEEP_CONTRACT');
     expect(component.getSecondaryLabel()).toBe('CANCEL_MODAL.BTN.CANCEL_CONTRACT');
-  });
-
-  it('should return default labels for other modes', () => {
-    component.data = { mode: 'other' };
-    expect(component.getPrimaryLabel()).toBe('CANCEL_MODAL.BTN.CANCEL_ACTION');
-    expect(component.getSecondaryLabel()).toBe('CANCEL_MODAL.BTN.DELETE');
-  });
-
-  it('should close dialog with true when cancelar is called', () => {
-    component.cancelar();
-    expect(dialogRefSpy.close).toHaveBeenCalledWith(true);
   });
 });

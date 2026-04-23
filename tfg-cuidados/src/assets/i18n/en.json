@@ -629,7 +629,8 @@
     "SERVICE": "Service Name",
     "CLIENT": "Client Name",
     "BUSINESS": "Company Name",
-    "BTN_CANCEL": "Cancel"
+    "BTN_CANCEL": "Cancel",
+    "NO_SERVICE": "Unknown"
   },
   "ADMIN_TABLE": {
     "SEARCH_LABEL": "Search by name or email",

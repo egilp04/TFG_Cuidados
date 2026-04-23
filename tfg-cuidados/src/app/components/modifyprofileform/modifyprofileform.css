@@ -31,6 +31,7 @@
 .modify-form-select-arrow {
   @apply absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary dark:text-white flex items-center;
 }
+
 .input-area-modify-profile-container {
   @apply flex flex-col gap-2 w-full;
 }

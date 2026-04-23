@@ -75,13 +75,13 @@ export default class Activities implements OnInit {
         switchMap(() => this.contractService.deleteContract(id)),
         switchMap(() =>
           this.translate
-            .get('MESSAGES.SUCCESS.CANCEL_CONTRACT')
+            .get('MESSAGES.SUCCESS.CANCELCONTRACT')
             .pipe(map((msg: string) => ({ text: msg, type: 'success' as const }))),
         ),
         catchError((err: Error) => {
           console.error('Error cancelando contrato:', err);
           return this.translate
-            .get('MESSAGES.ERROR.CANCEL_CONTRACT')
+            .get('MESSAGES.ERROR.CANCELCONTRACT')
             .pipe(map((msg: string) => ({ text: msg, type: 'error' as const })));
         }),
       )

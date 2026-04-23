@@ -579,7 +579,8 @@
     "SERVICE": "Nombre del servicio",
     "CLIENT": "Nombre del contratante (Cliente)",
     "BUSINESS": "Nombre del contratado (Empresa)",
-    "BTN_CANCEL": "Cancelar"
+    "BTN_CANCEL": "Cancelar",
+    "NO_SERVICE": "Desconocido"
   },
   "ADMIN_TABLE": {
     "SEARCH_LABEL": "Buscar por nombre o email",

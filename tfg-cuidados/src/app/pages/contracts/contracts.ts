@@ -94,13 +94,13 @@ export default class Contracts implements OnInit {
           this.contractService.deleteContract(id).pipe(
             switchMap(() =>
               this.translate
-                .get('MESSAGES.SUCCESS.CANCEL_CONTRACT')
+                .get('MESSAGES.SUCCESS.CANCELCONTRACT')
                 .pipe(map((msg: string) => ({ text: msg, type: 'success' as const }))),
             ),
             catchError((err: Error) => {
               console.error('Error en cancelación:', err);
               return this.translate
-                .get('MESSAGES.ERROR.CANCEL_CONTRACT')
+                .get('MESSAGES.ERROR.CANCELCONTRACT')
                 .pipe(map((msg: string) => ({ text: msg, type: 'error' as const })));
             }),
           ),
@@ -127,7 +127,6 @@ export default class Contracts implements OnInit {
       maxHeight: '90vh',
     };
     const cachedContract = this.dataSource.data.find((c) => c.id_contract === id);
-
     if (cachedContract) {
       this.dialog.open(InfoContract, { ...dialogConfig, data: { contract: cachedContract } });
       return;

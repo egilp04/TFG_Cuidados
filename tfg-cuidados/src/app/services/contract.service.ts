@@ -77,8 +77,10 @@ export class ContractService {
     const { data, error } = await query.order('creation_date', { ascending: false });
 
     if (!error && data) {
+      console.log('DATOS CRUDOS DE SUPABASE:', JSON.stringify(data[0], null, 2));
       const mappedData: ContractDetail[] = (data as unknown as ContractSupabaseJoined[]).map(
         (contract) => {
+          const stData = contract.id_service_time as any;
           return {
             ...contract,
             id_st_flat: contract.Service_Time?.id_service_time || contract.id_service_time,
@@ -92,7 +94,7 @@ export class ContractService {
               businessName:
                 contract.Business?.name || contract.Business?.User_public?.name || 'Desconocido',
             },
-            serviceName: contract.Service_Time?.Service?.name,
+            serviceName: stData?.Service?.name,
           } as unknown as ContractDetail;
         },
       );

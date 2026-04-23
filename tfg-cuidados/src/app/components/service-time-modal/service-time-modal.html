@@ -91,14 +91,14 @@
         <select
           id="id_time"
           formControlName="id_time"
-          class="register-form-select"
+          class="service-form-select"
           [attr.aria-invalid]="form.get('id_time')?.invalid && form.get('id_time')?.touched"
         >
           <option value="" disabled selected class="select-option-disabled">
             {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.SELECT_TIME' | translate }}
           </option>
           @for (h of times$ | async; track h.id_time) {
-            <option [value]="h.id_time" class="register-form-options">
+            <option [value]="h.id_time" class="service-form-options">
               {{ h.week_day }} - {{ h.time }}
             </option>
           } @empty {
@@ -107,7 +107,7 @@
             </option>
           }
         </select>
-        <div class="register-form-select-arrow">
+        <div class="service-form-select-arrow">
           <svg
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"

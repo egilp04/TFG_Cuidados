@@ -98,7 +98,7 @@ export default class Servicesbusiness implements OnInit {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '700px',
       maxHeight: '90vh',
       data: { mode: 'deleteService' },
     });
