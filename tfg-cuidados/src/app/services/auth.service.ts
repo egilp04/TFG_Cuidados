@@ -35,12 +35,12 @@ export class AuthService {
    */
   private initializeAuth() {
     this.isLoading.set(true);
-      const minWaitTime$ = timer(1500);
-      const authRequest$ = from(this.supabase.auth.getUser()).pipe(
+    const minWaitTime$ = timer(1500);
+    const authRequest$ = from(this.supabase.auth.getUser()).pipe(
       switchMap((res: UserResponse) => {
         const user = res.data?.user;
         return user ? this.getProfile(user.id) : of(null);
-      })
+      }),
     );
     zip(authRequest$, minWaitTime$)
       .pipe(
@@ -53,7 +53,7 @@ export class AuthService {
           this.isLoading.set(false);
           this.currentUser.set(null);
           return of(null);
-        })
+        }),
       )
       .subscribe();
   }
@@ -127,18 +127,24 @@ export class AuthService {
    * Registra un nuevo usuario y desencadena notificaciones de administrador.
    */
   register(data: RegisterPayload, isClient: boolean): Observable<AuthResponse> {
-    const { cleanEmail, cleanEmailPassword, metaData } = this.registerDataPreparation(data, isClient);
-  
+    const { cleanEmail, cleanEmailPassword, metaData } = this.registerDataPreparation(
+      data,
+      isClient,
+    );
+
     return from(this.supabase.rpc('email_exists', { email_check: cleanEmail })).pipe(
       switchMap(({ data: existe, error }) => {
         if (error) throw new Error(this.translate.instant('ERRORS.AUTH.ERRORS.TECHNICAL_ERROR'));
-        if (existe) throw new Error(this.translate.instant('ERRORS.AUTH.ERRORS.EMAIL_ALREADY_REGISTERED'));
-        
-        return from(this.supabase.auth.signUp({
-          email: cleanEmail,
-          password: cleanEmailPassword,
-          options: { data: metaData, emailRedirectTo: `${window.location.origin}/` },
-        }));
+        if (existe)
+          throw new Error(this.translate.instant('ERRORS.AUTH.ERRORS.EMAIL_ALREADY_REGISTERED'));
+
+        return from(
+          this.supabase.auth.signUp({
+            email: cleanEmail,
+            password: cleanEmailPassword,
+            options: { data: metaData, emailRedirectTo: `${window.location.origin}/` },
+          }),
+        );
       }),
       map((res: AuthResponse) => this.registerAnswerValidation(res)),
       switchMap((res: AuthResponse) => {
@@ -150,14 +156,12 @@ export class AuthService {
             email: cleanEmail,
             rol: rolTexto,
           });
-  
+
           const comunicationService = this.injector.get(ComunicationService);
-          return comunicationService.notifyAdmins(topic, message).pipe(
-            map(() => res)
-          );
+          return comunicationService.notifyAdmins(topic, message).pipe(map(() => res));
         }
         return of(res);
-      })
+      }),
     );
   }
 
@@ -298,25 +302,6 @@ export class AuthService {
   }
 
   /**
-   * Reenvía el correo de verificación.
-   */
-  resendVerificationEmail(email: string): Observable<void> {
-    return from(
-      this.supabase.auth.resend({
-        type: 'signup',
-        email: email,
-        options: {
-          emailRedirectTo: `${window.location.origin}/`,
-        },
-      }),
-    ).pipe(
-      map(({ error }) => {
-        if (error) throw error;
-      }),
-    );
-  }
-
-  /**
    * Verifica si un correo existe usando un procedimiento almacenado.
    */
   checkEmailExists(email: string): Observable<boolean> {
@@ -333,8 +318,7 @@ export class AuthService {
     );
   }
 
-
- /**
+  /**
    * Verifica si un correo existe y el usuario esta activo (state=true) usando un procedimiento almacenado.
    */
   check_user_email_active(email: string): Observable<boolean> {

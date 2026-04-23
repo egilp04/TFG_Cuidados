@@ -19,6 +19,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoginModalData } from '../../models/Login-Modal';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
 import { getHomeRouteByRole } from '../../core/utils/routerUtils';
+import { GlobalNotificationsComponent } from '../global-notifications/global-notifications.component';
 
 /**
  * Componente para manejar la modal de inicio de sesión, recuperación de contraseña y verificación de correo.
@@ -214,70 +215,5 @@ export class Loginmodal implements OnInit {
           this.cd.markForCheck();
         },
       });
-  }
-
-  /**
-   * Valida el correo e inicia el flujo de reenvío de correo de verificación.
-   */
-  toRecoverEmail(): void {
-    if (this.emailCtrl.invalid) {
-      this.messageService.showMessage(
-        this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'),
-        'error',
-      );
-      return;
-    }
-
-    const email = this.emailCtrl.value || '';
-    if (!email) return;
-
-    this.authService.checkEmailExists(email).subscribe({
-      next: (exists: boolean) => {
-        if (!exists) {
-          this.messageService.showMessage(
-            this.translate.instant('LOGIN_MODAL.FEEDBACK.EMAIL_NOT_FOUND'),
-            'error',
-          );
-          return;
-        }
-        this.processEmailResend(email);
-      },
-      error: (err: Error) => {
-        console.error(err);
-        this.messageService.showMessage(
-          this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'),
-          'error',
-        );
-      },
-    });
-  }
-
-  /**
-   * Llama al servicio de autenticación para reenviar el correo de verificación de cuenta.
-   * @param email La dirección de correo electrónico de destino.
-   */
-  private processEmailResend(email: string): void {
-    this.authService.resendVerificationEmail(email).subscribe({
-      next: () => {
-        this.messageService.showMessage(
-          this.translate.instant('LOGIN_MODAL.FEEDBACK.NO_ERROR'),
-          'success',
-        );
-        setTimeout(() => {
-          this.messageService.clear();
-          this.currentMode = 'login';
-          this.cd.detectChanges();
-        }, 2000);
-        this.cd.markForCheck();
-      },
-      error: (err: Error) => {
-        console.error(err);
-        this.messageService.showMessage(
-          this.translate.instant('LOGIN_MODAL.FEEDBACK.WITH_ERROR'),
-          'error',
-        );
-        this.cd.markForCheck();
-      },
-    });
   }
 }
