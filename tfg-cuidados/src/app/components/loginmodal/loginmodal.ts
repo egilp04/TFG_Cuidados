@@ -93,8 +93,14 @@ export class Loginmodal implements OnInit {
   /**
    * Procesa el intento de autenticación y navega al usuario según su rol.
    */
+  // Añade esta variable al principio de tu clase, donde tienes tus otras variables
+  isLoading = false;
+
   toEnterApp(): void {
     if (this.loginForm.valid) {
+      this.isLoading = true;
+      this.cd.markForCheck();
+
       const rawForm = this.loginForm.getRawValue();
       const email = rawForm.email ?? '';
       const password = rawForm.password ?? '';
@@ -107,18 +113,15 @@ export class Loginmodal implements OnInit {
             const user = this.authService.currentUser();
             const role = user?.rol;
             const route = getHomeRouteByRole(role);
-            console.log('Navegando a la ruta de inicio:', route);
-            this.router.navigate([route]).then((navigated) => {
-              if (navigated) {
-                this.dialogRef.close({ loginSuccess: true });
-                this.dialog.closeAll();
-                this.cd.detectChanges();
-              } else {
-                console.warn('La navegación fue cancelada o falló.');
-              }
-            });
+            this.dialogRef.close({ loginSuccess: true });
+            this.dialog.closeAll();
+            setTimeout(() => {
+              this.router.navigate([route]);
+            }, 100);
           },
           error: (err: Error) => {
+            this.isLoading = false;
+
             console.error('Error al iniciar sesión:', err);
 
             if (err.message && err.message.includes('Email not confirmed')) {

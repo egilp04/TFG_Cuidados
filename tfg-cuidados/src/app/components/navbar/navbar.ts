@@ -64,7 +64,6 @@ export class Navbar implements OnInit {
 
   get homeRoute(): string {
     const user = this.authService.currentUser();
-    console.log(getHomeRouteByRole(user?.rol))
     return user ? getHomeRouteByRole(user.rol) : '/';
   }
 
@@ -74,7 +73,6 @@ export class Navbar implements OnInit {
     if (user) {
       const rol = user.rol;
       const route = getHomeRouteByRole(rol);
-      console.log(route);
       this.router.navigate([route]);
     } else {
       this.router.navigate(['/']);

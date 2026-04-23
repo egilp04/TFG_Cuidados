@@ -77,7 +77,6 @@ export class ContractService {
     const { data, error } = await query.order('creation_date', { ascending: false });
 
     if (!error && data) {
-      console.log('DATOS CRUDOS DE SUPABASE:', JSON.stringify(data[0], null, 2));
       const mappedData: ContractDetail[] = (data as unknown as ContractSupabaseJoined[]).map(
         (contract) => {
           const stData = contract.id_service_time as any;

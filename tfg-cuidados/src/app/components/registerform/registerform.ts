@@ -196,11 +196,6 @@ export class Registerform implements OnInit, OnChanges {
       return this.getPatternMessage(controlName);
     }
     const translationKey = keyMap[firstError] || 'REGISTER.ERRORS.INVALID';
-
-    console.log('Idioma actual:', this.translate.currentLang);
-    console.log('Traducción instantánea:', this.translate.instant(translationKey));
-    console.log(translationKey);
-
     return this.translate.instant(translationKey);
   }
 
