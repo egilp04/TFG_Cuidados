@@ -82,7 +82,7 @@ export class ContractService {
           const stData = contract.id_service_time as any;
           return {
             ...contract,
-            id_st_flat: contract.Service_Time?.id_service_time || contract.id_service_time,
+            id_st_flat: stData?.id_service_time || contract.id_service_time,
             Client: {
               ...contract.Client,
               clientName:
@@ -113,6 +113,7 @@ export class ContractService {
         if (error) throw error;
         return true;
       }),
+      tap(() => this.refreshContracts()),
       catchError((err) => throwError(() => err)),
     );
   }
@@ -159,8 +160,8 @@ export class ContractService {
       tap((canceledContract: ContractSupabaseJoined) => {
         const currentUser = this.authService.currentUser();
         if (!currentUser || !canceledContract) return;
-
-        const serviceName = canceledContract.Service_Time?.Service?.name || 'Desconocido';
+        const stData = canceledContract.id_service_time as any;
+        const serviceName = stData?.Service?.name || 'Desconocido';
         let idDestination = '';
         let message = '';
 

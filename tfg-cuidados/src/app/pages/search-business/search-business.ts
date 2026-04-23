@@ -166,11 +166,14 @@ export default class SearchBusiness implements OnInit {
       .subscribe((contracts) => {
         const selectedTimeId = selection.id_service_time;
 
-        console.log('llega aqui');
-
         const isAlreadyHired = contracts.find((c: any) => {
-          const idRealContrato =
-            c.id_st_flat || c.id_service_time?.id_service_time || c.id_service_time;
+          let idRealContrato = c.id_service_time;
+          if (idRealContrato && typeof idRealContrato === 'object') {
+            idRealContrato = idRealContrato.id_service_time;
+          }
+          if (!idRealContrato && c.id_st_flat) {
+            idRealContrato = c.id_st_flat;
+          }
           const sameId = String(idRealContrato) === String(selectedTimeId);
           console.log(sameId);
           console.log(idRealContrato);
