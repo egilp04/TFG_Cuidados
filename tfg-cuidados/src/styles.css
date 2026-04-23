@@ -343,6 +343,9 @@
   }
 }
 
+app-root {
+  display: contents !important;
+}
 .cdk-overlay-container,
 .cdk-overlay-backdrop,
 .cdk-global-overlay-wrapper,
