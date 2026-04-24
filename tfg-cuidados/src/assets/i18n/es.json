@@ -351,7 +351,8 @@
       "DELETE": "Eliminar"
     },
     "LIST": {
-      "TITLE": "Lista de horarios"
+      "TITLE": "Lista de horarios",
+      "EMPTY": "Sin horarios encontrados"
     },
     "MESSAGES": {
       "FILL_FIELDS": "Rellene todos los campos correctamente.",

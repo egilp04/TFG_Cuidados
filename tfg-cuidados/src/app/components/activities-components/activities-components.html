@@ -153,7 +153,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell p-10 text-center activity-text text-label" [attr.colspan]="displayedColumns.length">
+        <td class="mat-cell p-10 text-center! activity-text text-label" [attr.colspan]="displayedColumns.length">
           {{ 'ACTIVITIES.NO_DATA' | translate }}
         </td>
       </tr>

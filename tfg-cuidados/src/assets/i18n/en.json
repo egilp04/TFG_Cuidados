@@ -363,7 +363,8 @@
       "ERROR_DELETE": "Error con el borrado"
     },
     "LIST": {
-      "TITLE": "Time list"
+      "TITLE": "Time list", 
+      "EMPTY": "Time list empty"
     }
   },
   "MANUALS": {

@@ -1,10 +1,5 @@
-import { 
-  Component, 
-  effect, 
-  inject, 
-  ChangeDetectorRef, 
-  OnInit
-} from '@angular/core';import { ButtonComponent } from '../../components/button/button';
+import { Component, effect, inject } from '@angular/core';
+import { ButtonComponent } from '../../components/button/button';
 import { CardsLanding } from '../../components/cards-landing/cards-landing';
 import cardsdata from '../../../assets/data/Cards.json';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,43 +17,21 @@ import { getHomeRouteByRole } from '../../core/utils/routerUtils';
   templateUrl: './landing.html',
   styleUrl: './landing.css',
 })
-export default class Landing implements OnInit{
+export default class Landing {
   public cardsdata: Card[] = cardsdata;
   private dialog = inject(MatDialog);
   private responsive = inject(ResponsiveSize);
-
   public authService = inject(AuthService);
   private router = inject(Router);
-
-  public isLoading = true;
-
-  private cd = inject(ChangeDetectorRef);
-  private safetyTimer: any;
 
   constructor() {
     effect(() => {
       const user = this.authService.currentUser();
-      if (user !== undefined) {
-        if (this.safetyTimer) clearTimeout(this.safetyTimer);
-        if (user) {
-          const route = getHomeRouteByRole(user.rol);
-          this.router.navigate([route]);
-        } else {
-          this.isLoading = false;
-          this.cd.detectChanges();
-        }
+      if (user) {
+        const route = getHomeRouteByRole(user.rol);
+        this.router.navigate([route]);
       }
     });
-  }
-
-  ngOnInit(): void {
-    this.safetyTimer = setTimeout(() => {
-      if (this.isLoading) {
-        this.isLoading = false;
-        this.cd.detectChanges();
-        console.log("Plan B: Timeout alcanzado, mostrando landing.");
-      }
-    }, 1500);
   }
 
   async openModal() {
