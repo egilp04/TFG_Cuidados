@@ -15,7 +15,7 @@ export class ServiceService {
   private supabaseService = inject(SupabaseService);
   private clientSupaBase = this.supabaseService.getClient();
 
-  private servicesList$ = new BehaviorSubject<ServiceModel[]>([]);
+  private servicesList$ = new BehaviorSubject<ServiceModel[] | null>(null);
 
   constructor() {
     this.initRealtime();
@@ -24,7 +24,7 @@ export class ServiceService {
   /**
    * Retorna un observable con la lista de todos los servicios disponibles.
    */
-  getServicesObservable(): Observable<ServiceModel[]> {
+  getServicesObservable(): Observable<ServiceModel[] | null> {
     this.refreshServices();
     return this.servicesList$.asObservable();
   }
@@ -49,9 +49,11 @@ export class ServiceService {
       .from('Service')
       .select('*')
       .order('name', { ascending: true });
-
+  
     if (!error) {
       this.servicesList$.next((data ?? []) as ServiceModel[]);
+    } else {
+      this.servicesList$.next([]);
     }
   }
 

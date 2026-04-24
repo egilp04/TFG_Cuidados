@@ -55,13 +55,12 @@ export default class SearchBusiness implements OnInit {
   private translate = inject(TranslateService);
   private router = inject(Router);
 
-  public allBusinesses = signal<BusinessModel[]>([]);
+  public allBusinesses = signal<BusinessModel[] | undefined>(undefined);
+  
   public searchFilter = signal<string>('');
   public filterControl = new FormControl('');
   public initialServiceId = signal<string | null>(null);
   public selections = signal<Record<string, ServiceTimeResponse>>({});
-
-  isLoading = true;
 
   constructor() {
     const navigation = this.router.getCurrentNavigation();
@@ -75,6 +74,10 @@ export default class SearchBusiness implements OnInit {
   }
 
   public filteredBusinesses = computed(() => {
+    
+    const businesses = this.allBusinesses();
+    if (!businesses) return [];
+
     const filterText = this.searchFilter().toLowerCase().trim();
     if (!filterText) return this.allBusinesses();
 
@@ -95,22 +98,20 @@ export default class SearchBusiness implements OnInit {
   }
 
   loadBusinessesRealTime() {
-    this.isLoading = true;
-
     this.businessService
       .getBusinessesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
+        tap(data => { if (data.length === 0) return; }),
         catchError((err) => {
           console.error('Error en tiempo real de Negocios:', err);
-          return this.translate.get('SEARCH_BUSINESS.MESSAGES.CONNECTION_ERROR').pipe(
-            tap((msg) => this.messageService.showMessage(msg, 'error')),
-            map(() => []),
-          );
+          this.translate.get('SEARCH_BUSINESS.MESSAGES.CONNECTION_ERROR').subscribe(msg => {
+            this.messageService.showMessage(msg, 'error');
+          });
+          return of([]);
         }),
       )
       .subscribe((data: BusinessModel[]) => {
-        this.isLoading = false;
         const targetId = this.initialServiceId()?.trim();
         const processedData: BusinessModel[] = data
           .map((business) => {
@@ -125,7 +126,6 @@ export default class SearchBusiness implements OnInit {
             };
           })
           .filter((business) => business.Service_Time && business.Service_Time.length > 0);
-
         this.allBusinesses.set(processedData);
         this.cd.markForCheck();
       });
@@ -248,6 +248,7 @@ export default class SearchBusiness implements OnInit {
         receiverEmail: business.email,
         receiverId: business.id_business,
         receiverName: business.name,
+        direct:true
       },
       width: '500px',
     });

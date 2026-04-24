@@ -28,9 +28,9 @@ export default class ServicesDirectoryComponent {
         return of([]); 
       })
     ),
-    { initialValue: undefined }
+    { initialValue: null }
   );
-  
+
   /**
    * Navega a la vista de búsqueda de negocios filtrada por el servicio seleccionado.
    * @param service El modelo de servicio seleccionado por el usuario.
