@@ -24,6 +24,7 @@ import { ServiceTimeResponse } from '../../models/Bussiness-Service';
 import { BusinessModel } from '../../models/BusinessModel';
 import { BusinessService } from '../../services/business.service';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 /**
  * Componente para buscar y contratar servicios de negocios.
@@ -79,8 +80,9 @@ export default class SearchBusiness implements OnInit {
     if (!businesses) return [];
 
     const filterText = this.searchFilter().toLowerCase().trim();
-    if (!filterText) return this.allBusinesses();
+    if (!filterText) return businesses;
 
+    
     return this.allBusinesses().filter((business) => {
       const matchName = business.name.toLowerCase().includes(filterText);
       const matchService = business.Service_Time?.some(

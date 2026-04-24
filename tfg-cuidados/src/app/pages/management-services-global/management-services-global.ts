@@ -81,7 +81,8 @@ export default class ManagementServicesGlobal implements OnInit {
   private loadServices(): void {
     this.serviceService
       .getServicesObservable()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed(this.destroyRef),
+      filter(data => data !== null))
       .subscribe((data: ServiceModel[]) => {
         this.dataSource.data = data;
         this.cd.markForCheck();
