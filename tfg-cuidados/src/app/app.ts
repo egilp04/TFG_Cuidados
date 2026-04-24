@@ -54,7 +54,6 @@ export class App {
   onContainerScroll(event: Event) {
     const element = event.target as HTMLElement;
     const scrollPosition = element.scrollTop;
-    console.log('Scroll del Div:', scrollPosition);
         this.showScrollBtn = scrollPosition > 100;
   }  
 

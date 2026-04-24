@@ -40,6 +40,8 @@ export default class Notifications implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
 
+  isLoading = true;
+
   dataSource = new MatTableDataSource<ComunicationModel>([]);
   displayedColumns: string[] = ['name', 'message', 'date', 'actions'];
 
@@ -52,6 +54,8 @@ export default class Notifications implements OnInit {
    * Marca automáticamente cualquier notificación no leída como leída al verla.
    */
   private subscribeToNotifications(): void {
+    this.isLoading = true;
+
     this.comunicationService
       .getNotificationsObservable()
       .pipe(
@@ -65,6 +69,7 @@ export default class Notifications implements OnInit {
         }),
       )
       .subscribe((data: ComunicationModel[]) => {
+        this.isLoading = false;
         this.dataSource.data = data;
 
         if (this.paginator) {

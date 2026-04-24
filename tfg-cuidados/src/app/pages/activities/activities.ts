@@ -32,6 +32,8 @@ export default class Activities implements OnInit {
   private translate = inject(TranslateService);
   private responsive = inject(ResponsiveSize);
 
+  public isLoading = true;
+
   public dataSource = new MatTableDataSource<ContractDetail>([]);
 
   ngOnInit(): void {
@@ -42,16 +44,23 @@ export default class Activities implements OnInit {
    * Se suscribe al flujo en tiempo real de contratos para alimentar las vistas de actividad.
    */
   private subscribeToContracts(): void {
+    this.isLoading = true;
+
     this.contractService
       .getContractsObservable()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data: ContractDetail[]) => {
           this.dataSource.data = data;
+          this.isLoading = false;
           this.cd.detectChanges();
         },
-        error: (error: Error) => console.error('Error en flujo de contratos:', error),
-      });
+        error: (error: Error) => {
+          console.error('Error en flujo de contratos:', error);
+          this.isLoading = false;
+          this.cd.detectChanges();
+        },      
+    });
   }
 
   /**

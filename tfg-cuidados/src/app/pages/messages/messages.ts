@@ -53,6 +53,8 @@ export default class Messages implements OnInit {
   public dataSource = new MatTableDataSource<ComunicationModel>([]);
   public currentFilter: 'received' | 'sent' = 'received';
 
+  isLoading = true;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit(): void {
@@ -90,15 +92,17 @@ export default class Messages implements OnInit {
       .subscribe({
         next: (data: ComunicationModel[]) => {
           this.dataSource.data = data;
-          console.log("data soruce", this.dataSource)
-          console.log("datos del datasource data",this.dataSource.data)
-
+          this.isLoading = false;
           if (this.paginator) {
             this.dataSource.paginator = this.paginator;
           }
           this.cd.markForCheck();
         },
-        error: (err: Error) => console.error('Error en flujo de mensajes:', err),
+        error: (err: Error) => {
+          console.error('Error en flujo de mensajes:', err);
+          this.isLoading = false;
+          this.cd.markForCheck();
+        },     
       });
   }
 

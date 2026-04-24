@@ -15,9 +15,13 @@
   </h1>
 
   <main class="mb-20">
+  @if(isLoading){
+    <p>Cargando datos</p>
+  }@else{
     <app-activities-components
-      [dataSource]="dataSource.data"
-      (onCancelContract)="cancelContract($event)"
-    ></app-activities-components>
+    [dataSource]="dataSource.data"
+    (onCancelContract)="cancelContract($event)"
+  ></app-activities-components>
+  }
   </main>
 </section>

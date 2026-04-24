@@ -47,6 +47,8 @@ export default class Contracts implements OnInit {
   public displayedColumns: string[] = ['id', 'date', 'actions'];
   public dataSource = new MatTableDataSource<ContractDetail>([]);
 
+  isLoading = true
+
   ngOnInit(): void {
     this.subscribeToContracts();
   }
@@ -55,19 +57,26 @@ export default class Contracts implements OnInit {
    * Se suscribe al flujo en tiempo real de contratos e inicializa los datos de la tabla.
    */
   private subscribeToContracts(): void {
+    this.isLoading = true;
+
     this.contractService
       .getContractsObservable()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data: ContractDetail[]) => {
           this.dataSource.data = data;
+          this.isLoading = false;
+
           if (this.paginator) {
             this.dataSource.paginator = this.paginator;
           }
           this.cd.markForCheck();
         },
-        error: (error: Error) =>
-          console.error('Error en flujo en tiempo real de contratos:', error),
+       error: (error: Error) => {
+          console.error('Error en flujo en tiempo real de contratos:', error);
+          this.isLoading = false; 
+          this.cd.markForCheck();
+        }
       });
   }
 
