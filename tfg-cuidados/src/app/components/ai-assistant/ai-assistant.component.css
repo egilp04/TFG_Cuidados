@@ -1,6 +1,6 @@
 @reference "../../../styles.css";
 .ia-container {
-  @apply fixed bottom-10 right-4 2xl:right-[3.2rem] md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
+  @apply fixed bottom-14 right-4 2xl:right-[3.2rem] md:bottom-24 md:right-12 z-50 flex flex-col items-end gap-4;
 }
 
 .ia-container-open {
