@@ -75,26 +75,23 @@ export default class SearchBusiness implements OnInit {
   }
 
   public filteredBusinesses = computed(() => {
-    
     const businesses = this.allBusinesses();
-    if (!businesses) return [];
-
+      if (!businesses) return [];
     const filterText = this.searchFilter().toLowerCase().trim();
-    if (!filterText) return businesses;
-
-    
-    return this.allBusinesses().filter((business) => {
+        if (!filterText) return businesses;
+  
+    return businesses.filter((business) => {
       const matchName = business.name.toLowerCase().includes(filterText);
       const matchService = business.Service_Time?.some(
         (sh: ServiceTimeResponse) =>
           sh.Service?.name.toLowerCase().includes(filterText) ||
           sh.Time?.week_day.toLowerCase().includes(filterText),
       );
-
+  
       return matchName || matchService;
     });
   });
-
+  
   ngOnInit() {
     this.loadBusinessesRealTime();
   }
