@@ -100,7 +100,7 @@ export default class SearchBusiness implements OnInit {
       .getBusinessesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        delay(2000),
+        delay(1000),
         filter((data): data is BusinessModel[] => data !== null && data !== undefined),
         catchError((err) => {
           console.error('Error en tiempo real de Negocios:', err);
