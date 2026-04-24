@@ -28,20 +28,27 @@ export default class Landing {
   public isLoading = true;
 
   constructor() {
+    const safetyTimer = setTimeout(() => {
+      this.isLoading = false;
+      this.cd.markForCheck();
+    }, 500);
+  
     effect(() => {
       const user = this.authService.currentUser();
-
-      if (user) {
-        const route = getHomeRouteByRole(user.rol);
-        this.router.navigate([route]);
-      }
-      else{
-        setTimeout(() => {
+      
+      if (user !== undefined) {
+        clearTimeout(safetyTimer);
+        if (user) {
+          const route = getHomeRouteByRole(user.rol);
+          this.router.navigate([route]);
+        } else {
           this.isLoading = false;
-        }, 500);
+          this.cd.markForCheck();
+        }
       }
     });
   }
+
   async openModal() {
     const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
     this.dialog.open(Loginmodal, {
