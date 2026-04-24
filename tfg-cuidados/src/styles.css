@@ -179,7 +179,7 @@
   }
 
   .main-container {
-    @apply flex flex-col h-full w-full overflow-x-hidden overflow-y-auto;
+    @apply flex flex-col min-h-screen w-full overflow-x-hidden;
   }
 }
 

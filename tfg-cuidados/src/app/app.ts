@@ -51,8 +51,11 @@ export class App {
 
   showScrollBtn = false;
   @HostListener('window:scroll', [])
+  
   onWindowScroll() {
-    this.showScrollBtn = window.scrollY > 400;
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+    console.log('Scroll detectado:', scrollPosition);
+    this.showScrollBtn = window.scrollY > 300;
   }
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });

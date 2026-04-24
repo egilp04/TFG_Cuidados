@@ -48,5 +48,5 @@
 }
 
 .nav-lang-text {
-  @apply text-label text-surface hover:text-accent transition-colors cursor-pointer;
+  @apply text-label text-primary dark:text-surface hover:text-accent transition-colors cursor-pointer;
 }
