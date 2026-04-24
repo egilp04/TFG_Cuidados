@@ -109,6 +109,7 @@
   },
   "ACTIVITIES": {
     "TITLE": "Actividades",
+    "NO_DATA": "Sin datos",
     "DAYS": {
       "DO": "Do",
       "LU": "Lu",
@@ -147,6 +148,7 @@
   },
   "CONTRACTS": {
     "TITLE": "Contratos",
+    "NO_DATA": "No sin datos",
     "TABLE": {
       "ID": "ID del Contrato",
       "DATE": "Fecha",
@@ -242,6 +244,7 @@
     }
   },
   "ADMIN_MANAGEMENT": {
+    "NO_DATA": "Sin datos",
     "ACCESSIBILITY": {
       "BACK_NAV": "Navegación para volver atrás",
       "CLIENT_SECTION": "Sección de gestión de clientes",
@@ -273,6 +276,7 @@
     }
   },
   "MANAGEMENT_SERVICES": {
+    "NO_DATA": "Sin datos",
     "ACCESSIBILITY": {
       "BACK_NAV": "Volver atrás",
       "SAVE_BTN": "Guardar los cambios del servicio",
@@ -313,6 +317,7 @@
     }
   },
   "MANAGEMENT_SCHEDULES": {
+    "NO_DATA": "Sin datos",
     "ACCESSIBILITY": {
       "BACK_NAV": "Volver atrás",
       "SAVE_BTN": "Guardar los cambios del horario",
@@ -387,7 +392,8 @@
       "ACTIONS_COL": "Acciones del mensaje",
       "PAGINATOR": "Paginación de mensajes"
     },
-    "TITLE": "Mensajes",
+    "TITLE": "Mensajes",    
+    "NO_DATA": "Sin datos",
     "NEW_MSG": "Nuevo Mensaje",
     "SORT_LABEL": "Ordenar por...",
     "SORT_OPTIONS": {
@@ -419,7 +425,8 @@
       "PAGINATOR": "Paginación de notificaciones"
     },
     "ADMIN": "Abre un ticket con el administrador",
-    "TITLE": "Notificaciones",
+    "TITLE": "Notificaciones",    
+    "NO_DATA":"Sin datos",
     "TABLE": {
       "NAME": "Nombre",
       "CONTENT": "Notificación",
@@ -487,6 +494,7 @@
     }
   },
   "SERVICES_BUSINESS": {
+    "NO_DATA": "Sin datos",
     "ACCESSIBILITY": {
       "BACK_NAV": "Volver a la pantalla anterior",
       "MAIN_SECTION": "Gestión de servicios de la empresa",

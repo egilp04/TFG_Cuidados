@@ -109,6 +109,7 @@
   },
   "ACTIVITIES": {
     "TITLE": "Activities",
+    "NO_DATA": "No data",
     "DAYS": {
       "DO": "Sun",
       "LU": "Mon",
@@ -147,6 +148,7 @@
   },
   "CONTRACTS": {
     "TITLE": "Contracts",
+    "NO_DATA": "No data",
     "TABLE": {
       "ID": "Contract ID",
       "DATE": "Date",
@@ -241,6 +243,7 @@
     }
   },
   "ADMIN_MANAGEMENT": {
+    "NO_DATA": "No data",
     "ACCESSIBILITY": {
       "BACK_NAV": "Navigation to go back",
       "CLIENT_SECTION": "Client management section",
@@ -272,6 +275,7 @@
     }
   },
   "MANAGEMENT_SERVICES": {
+    "NO_DATA": "No data",
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back",
       "SAVE_BTN": "Save service changes",
@@ -311,7 +315,8 @@
       "ERROR_DELETE": "Error deleting"
     }
   },
-  "MANAGEMENT_SCHEDULES": {
+  "MANAGEMENT_SCHEDULES": {    
+    "NO_DATA": "No data",
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back",
       "SAVE_BTN": "Save schedule changes",
@@ -380,7 +385,9 @@
     },
     "USERVIDEO": "Watch video - User manual"
   },
-  "MESSAGES_PAGE": {
+  "MESSAGES_PAGE": { 
+  "SENT": "Sent",
+  "RECEIVED": "Received",
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back",
       "UNREAD": "Unread message",
@@ -388,6 +395,7 @@
       "PAGINATOR": "Message pagination"
     },
     "TITLE": "Messages",
+    "NO_DATA": "No data",
     "NEW_MSG": "New Message",
     "SORT_LABEL": "Sort by...",
     "SORT_OPTIONS": {
@@ -470,6 +478,7 @@
     },
     "ADMIN": "Open a ticker to the administrator",
     "TITLE": "Notifications",
+    "NO_DATA":"No data",
     "TABLE": {
       "NAME": "Name",
       "CONTENT": "Notification",
@@ -537,6 +546,7 @@
     }
   },
   "SERVICES_BUSINESS": {
+    "NO_DATA": "No data",
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back to the previous screen",
       "MAIN_SECTION": "Business services management",

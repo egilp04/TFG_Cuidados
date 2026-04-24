@@ -90,6 +90,9 @@ export default class Messages implements OnInit {
       .subscribe({
         next: (data: ComunicationModel[]) => {
           this.dataSource.data = data;
+          console.log("data soruce", this.dataSource)
+          console.log("datos del datasource data",this.dataSource.data)
+
           if (this.paginator) {
             this.dataSource.paginator = this.paginator;
           }
