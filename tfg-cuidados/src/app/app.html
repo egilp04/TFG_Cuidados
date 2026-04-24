@@ -1,4 +1,5 @@
-<div class="main-container">
+<div class="main-container" (scroll)="onContainerScroll($event)">
+  
   @if (!router.url.includes('recover-password')) {
     <app-navbar class="flex-none"></app-navbar>
     @if (this.authService.isAuthenticated()) {

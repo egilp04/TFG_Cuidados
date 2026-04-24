@@ -50,14 +50,21 @@ export class App {
 
 
   showScrollBtn = false;
-  @HostListener('window:scroll', [])
-  
-  onWindowScroll() {
-    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
-    console.log('Scroll detectado:', scrollPosition);
-    this.showScrollBtn = window.scrollY > 300;
-  }
+ 
+  onContainerScroll(event: Event) {
+    const element = event.target as HTMLElement;
+    const scrollPosition = element.scrollTop;
+    console.log('Scroll del Div:', scrollPosition);
+        this.showScrollBtn = scrollPosition > 200;
+  }  
+
   scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const container = document.querySelector('.main-container');
+    if (container) {
+      container.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   }
 }
