@@ -172,7 +172,8 @@
     "SERVICES": {
       "TITLE": "Oferta y demanda de servicios"
     },
-    "NO_CONTRACTS": "Sin contratos",
+    "NO_CONTRACTS": "Sin contratos",    
+    "NO_DATA": "Sin datos",
     "CHARGING": "Cargando gráficas",
     "TITLE_CONTRACTS": "Contratos",
     "TOTAL_CONTRACTS": {

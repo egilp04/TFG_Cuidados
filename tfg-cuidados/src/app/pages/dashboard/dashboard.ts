@@ -72,21 +72,19 @@ export default class Dashboard implements OnInit {
     labels: [],
     datasets: [
       {
-        label: '', // Poblado vía traducción
+        label: '',
         data: [],
         backgroundColor: '#17c448',
         borderRadius: 4,
       },
       {
-        label: '', // Poblado vía traducción
+        label: '',
         data: [],
         backgroundColor: '#60A5FA',
         borderRadius: 4,
       },
     ],
   };
-
-  // --- Opciones de gráficos ---
 
   public doughnutOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: true,
