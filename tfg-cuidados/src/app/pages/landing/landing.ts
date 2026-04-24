@@ -25,12 +25,20 @@ export default class Landing {
   public authService = inject(AuthService);
   private router = inject(Router);
 
+  public isLoading = true;
+
   constructor() {
     effect(() => {
       const user = this.authService.currentUser();
+
       if (user) {
         const route = getHomeRouteByRole(user.rol);
         this.router.navigate([route]);
+      }
+      else{
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 500);
       }
     });
   }
