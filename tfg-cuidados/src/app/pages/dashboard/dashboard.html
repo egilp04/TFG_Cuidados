@@ -44,30 +44,27 @@
     }
   </section>
 
-  <section class="dashboard-login-container" aria-labelledby="login-chart-title">
-    <h2 id="login-chart-title" class="dashboard-login-title">
-      {{ 'DASHBOARD.LOGIN.TITLE' | translate }}
+  <section class="dashboard-services-container" aria-labelledby="services-chart-title">
+    <h2 id="services-chart-title" class="dashboard-login-title">
+      {{ 'DASHBOARD.SERVICES.TITLE' | translate }}
     </h2>
-    <p class="dashboard-login-text">
-      {{ 'DASHBOARD.LOGIN.SUBTITLE' | translate }}
-    </p>
 
     @defer (on viewport) {
-      @if (lineChartData.datasets[0].data && lineChartData.datasets[0].data.length > 0) {
-        <main class="chart-wrapper line-chart-wrapper">
+      @if (barChartData.labels && barChartData.labels.length > 0) {
+        <div class="chart-wrapper-services">
           <canvas
             baseChart
-            [data]="lineChartData"
-            [options]="lineOptions"
-            [type]="'line'"
+            [data]="barChartData"
+            [options]="barOptions"
+            [type]="'bar'"
             role="img"
-            [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.LOGIN_CHART_DESC' | translate"
+            [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.SERVICES_CHART_DESC' | translate"
           >
           </canvas>
-        </main>
+        </div>
       } @else {
         <div class="no-contracts-msg" role="status">
-           {{ 'DASHBOARD.NO_DATA' | translate }}
+          {{ 'DASHBOARD.NO_DATA' | translate }}
         </div>
       }
     } @placeholder {
