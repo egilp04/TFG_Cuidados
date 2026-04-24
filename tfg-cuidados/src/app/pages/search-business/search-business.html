@@ -10,7 +10,6 @@
     [attr.aria-label]="'SEARCH_BUSINESS.ACCESSIBILITY.RESULTS_LIST' | translate">
 
     @if (allBusinesses() === undefined) {
-      
       @for (item of [1,2,3,4]; track item) {
         <main class="search-card-container space-y-4 animate-pulse" role="listitem">
           <header class="search-card-header">

@@ -25,7 +25,7 @@ import { BusinessModel } from '../../models/BusinessModel';
 import { BusinessService } from '../../services/business.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-
+import { filter } from 'rxjs/operators';
 /**
  * Componente para buscar y contratar servicios de negocios.
  * Utiliza estado independiente para selecciones de interfaz de usuario para mantener los modelos puros.
@@ -91,7 +91,7 @@ export default class SearchBusiness implements OnInit {
       return matchName || matchService;
     });
   });
-  
+
   ngOnInit() {
     this.loadBusinessesRealTime();
   }
@@ -101,7 +101,7 @@ export default class SearchBusiness implements OnInit {
       .getBusinessesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        tap(data => { if (data.length === 0) return; }),
+        filter(data => data !== null),
         catchError((err) => {
           console.error('Error en tiempo real de Negocios:', err);
           this.translate.get('SEARCH_BUSINESS.MESSAGES.CONNECTION_ERROR').subscribe(msg => {
