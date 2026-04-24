@@ -59,12 +59,9 @@ export default class SearchBusiness implements OnInit {
   public searchFilter = signal<string>('');
   public filterControl = new FormControl('');
   public initialServiceId = signal<string | null>(null);
-
-  /**
-   * NUEVO: Estado independiente para selecciones.
-   * Clave: ID del negocio, Valor: el objeto ServiceTime seleccionado.
-   */
   public selections = signal<Record<string, ServiceTimeResponse>>({});
+
+  isLoading = true;
 
   constructor() {
     const navigation = this.router.getCurrentNavigation();
@@ -98,6 +95,8 @@ export default class SearchBusiness implements OnInit {
   }
 
   loadBusinessesRealTime() {
+    this.isLoading = true;
+
     this.businessService
       .getBusinessesObservable()
       .pipe(
@@ -111,8 +110,8 @@ export default class SearchBusiness implements OnInit {
         }),
       )
       .subscribe((data: BusinessModel[]) => {
+        this.isLoading = false;
         const targetId = this.initialServiceId()?.trim();
-
         const processedData: BusinessModel[] = data
           .map((business) => {
             const filteredTimes = targetId
