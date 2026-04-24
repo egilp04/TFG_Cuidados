@@ -9,7 +9,7 @@
 
   <div class="contracts-table-container">
     <main class="contracts-table">
-    @if(lisLoading){
+    @if(isLoading){
       <p>Cargando datos</p>
     }@else{
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full"

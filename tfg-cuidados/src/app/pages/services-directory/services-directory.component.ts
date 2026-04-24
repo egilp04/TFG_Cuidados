@@ -5,7 +5,7 @@ import { ServiceService } from '../../services/service.service';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../components/button/button';
-
+import { tap, catchError, of } from 'rxjs';
 /**
  * Componente para mostrar el directorio de servicios disponibles.
  * Permite a los usuarios navegar a negocios que ofrecen un servicio específico.
