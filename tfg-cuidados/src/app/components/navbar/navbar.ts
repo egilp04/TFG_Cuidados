@@ -13,7 +13,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TranslateModule } from '@ngx-translate/core';
 import { ComunicationService } from '../../services/comunication.service';
 import { DarkModeBtnComponent } from '../dark-mode-btn/dark-mode-btn.component';
 import { filter } from 'rxjs';

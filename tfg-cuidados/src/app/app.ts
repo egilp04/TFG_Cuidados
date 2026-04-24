@@ -52,7 +52,7 @@ export class App {
   showScrollBtn = false;
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    this.showButton = window.scrollY > 400;
+    this.showScrollBtn = window.scrollY > 400;
   }
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
