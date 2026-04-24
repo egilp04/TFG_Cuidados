@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { switchMap, catchError, map, tap, take } from 'rxjs/operators';
+import { switchMap, catchError, map, tap, take, delay,  filter} from 'rxjs/operators';
 import { Searchbar } from '../../components/searchbar/searchbar';
 import { ButtonComponent } from '../../components/button/button';
 import { AuthService } from '../../services/auth.service';
@@ -25,7 +25,6 @@ import { BusinessModel } from '../../models/BusinessModel';
 import { BusinessService } from '../../services/business.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { filter } from 'rxjs/operators';
 /**
  * Componente para buscar y contratar servicios de negocios.
  * Utiliza estado independiente para selecciones de interfaz de usuario para mantener los modelos puros.
@@ -102,7 +101,7 @@ export default class SearchBusiness implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         delay(2000),
-        filter(data => data !== null),
+        filter((data): data is BusinessModel[] => data !== null && data !== undefined),
         catchError((err) => {
           console.error('Error en tiempo real de Negocios:', err);
           this.translate.get('SEARCH_BUSINESS.MESSAGES.CONNECTION_ERROR').subscribe(msg => {
