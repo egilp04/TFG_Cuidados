@@ -148,7 +148,7 @@
   },
   "CONTRACTS": {
     "TITLE": "Contratos",
-    "NO_DATA": "No sin datos",
+    "NO_DATA": "Sin datos",
     "TABLE": {
       "ID": "ID del Contrato",
       "DATE": "Fecha",

@@ -21,20 +21,16 @@ export default class ServicesDirectoryComponent {
   private serviceService = inject(ServiceService);
   private router = inject(Router);
 
-  public isLoading = true;
-
   public allServices = toSignal(
     this.serviceService.getServicesObservable().pipe(
-      tap(() => this.isLoading = false),
       catchError((error) => {
         console.error('Error cargando el directorio:', error);
-        this.isLoading = false;
-        return of([]);
+        return of([]); 
       })
     ),
-    { initialValue: [] as ServiceModel[] }
+    { initialValue: undefined }
   );
-
+  
   /**
    * Navega a la vista de búsqueda de negocios filtrada por el servicio seleccionado.
    * @param service El modelo de servicio seleccionado por el usuario.

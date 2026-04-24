@@ -9,7 +9,8 @@
   <div class="directory-container" role="list"
     [attr.aria-label]="'SEARCH_BUSINESS.ACCESSIBILITY.RESULTS_LIST' | translate">
 
-    @if (isLoading) {
+    @if (allServices() === undefined) {
+    
     @for (item of [1,2,3,4,5,6]; track item) {
     <main class="directory-card-container animate-pulse" role="listitem">
       <header class="directory-card-header">
