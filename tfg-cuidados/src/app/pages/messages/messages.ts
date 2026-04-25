@@ -17,6 +17,7 @@ import { MessageService } from '../../services/message-service';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
 
 /**
  * Componente para gestionar la bandeja de entrada y salida de comunicaciones del usuario.
@@ -34,6 +35,7 @@ import { ResponsiveSize } from '../../services/responsive-size';
     CommonModule,
     Buttonback,
     TranslateModule,
+    TableSkeletonComponent,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: PaginacionEs }],
   templateUrl: './messages.html',
@@ -52,6 +54,8 @@ export default class Messages implements OnInit {
   public displayedColumns: string[] = ['sender', 'receiver', 'topic', 'date', 'actions'];
   public dataSource = new MatTableDataSource<ComunicationModel>([]);
   public currentFilter: 'received' | 'sent' = 'received';
+
+  isLoading = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -90,12 +94,17 @@ export default class Messages implements OnInit {
       .subscribe({
         next: (data: ComunicationModel[]) => {
           this.dataSource.data = data;
+          this.isLoading = false;
           if (this.paginator) {
             this.dataSource.paginator = this.paginator;
           }
           this.cd.markForCheck();
         },
-        error: (err: Error) => console.error('Error en flujo de mensajes:', err),
+        error: (err: Error) => {
+          console.error('Error en flujo de mensajes:', err);
+          this.isLoading = false;
+          this.cd.markForCheck();
+        },
       });
   }
 

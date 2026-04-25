@@ -34,14 +34,14 @@
     <app-button
       (click)="applyFilter('received')"
       variant="primary"
-      [label]="'MESSAGES.RECEIVED' | translate"
+      [label]="'MESSAGES_PAGE.RECEIVED' | translate"
     >
     </app-button>
 
     <app-button
       variant="primary"
       (click)="applyFilter('sent')"
-      [label]="'MESSAGES.SENT' | translate"
+      [label]="'MESSAGES_PAGE.SENT' | translate"
     >
     </app-button>
 
@@ -50,7 +50,7 @@
       [options]="[
         'MESSAGES_PAGE.SORT_OPTIONS.DATE',
         'MESSAGES_PAGE.SORT_OPTIONS.topic_AZ',
-        'MESSAGES_PAGE.SORT_OPTIONS.topic_ZA'
+        'MESSAGES_PAGE.SORT_OPTIONS.topic_ZA',
       ]"
       (onSelect)="sortMessages($event)"
     ></app-dropdown>
@@ -64,119 +64,140 @@
         {{ 'MESSAGES.TITLE.SENT' | translate }}
       }
     </h2>
-
     <main class="overflow-auto">
-      <table
-        mat-table
-        [dataSource]="dataSource"
-        class="w-full"
-        aria-labelledby="messages-table-title"
-      >
-        <ng-container matColumnDef="sender">
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-            class="messages-page-header text-label!"
-            scope="col"
-          >
-            {{ 'MESSAGES_PAGE.TABLE.SENDER' | translate }}
-          </th>
-          <td mat-cell *matCellDef="let message" class="messages-page-content text-label!">
-            @if (!message.read && message.id_receiver === authService.currentUser()?.id_user) {
-              <span class="sr-only">{{ 'MESSAGES_PAGE.ACCESSIBILITY.UNREAD' | translate }} - </span>
-            }
-            {{ message.Sender?.email || 'Desconocido' }}
-          </td>
-        </ng-container>
+      @if (isLoading) {
+        <app-table-skeleton></app-table-skeleton>
+      } @else {
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          class="w-full"
+          aria-labelledby="messages-table-title"
+        >
+          <ng-container matColumnDef="sender">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="messages-page-header text-label!"
+              scope="col"
+            >
+              {{ 'MESSAGES_PAGE.TABLE.SENDER' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let message" class="messages-page-content text-label!">
+              @if (!message.read && message.id_receiver === authService.currentUser()?.id_user) {
+                <span class="sr-only"
+                  >{{ 'MESSAGES_PAGE.ACCESSIBILITY.UNREAD' | translate }} -
+                </span>
+              }
+              {{ message.Sender?.email || 'Desconocido' }}
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="receiver">
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-            class="messages-page-header text-label!"
-            scope="col"
-          >
-            {{ 'MESSAGES_PAGE.TABLE.RECEIVER' | translate }}
-          </th>
-          <td mat-cell *matCellDef="let message" class="messages-page-content text-label!">
-            {{ message.Receiver?.name || 'Desconocido' }}
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="receiver">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="messages-page-header text-label!"
+              scope="col"
+            >
+              {{ 'MESSAGES_PAGE.TABLE.RECEIVER' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let message" class="messages-page-content text-label!">
+              {{ message.Receiver?.name || 'Desconocido' }}
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="topic">
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-            class="messages-page-header text-label!"
-            scope="col"
-          >
-            {{ 'MESSAGES_PAGE.TABLE.topic' | translate }}
-          </th>
-          <td mat-cell *matCellDef="let message" class="messages-page-content text-label!">
-            {{ message.topic }}
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="topic">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="messages-page-header text-label!"
+              scope="col"
+            >
+              {{ 'MESSAGES_PAGE.TABLE.topic' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let message" class="messages-page-content text-label!">
+              {{ message.topic }}
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="date">
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-            class="messages-page-header text-label!"
-            scope="col"
-          >
-            {{ 'MESSAGES_PAGE.TABLE.DATE' | translate }}
-          </th>
-          <td mat-cell *matCellDef="let message" class="messages-page-content text-label!">
-            {{ message.send_date | date: 'dd/MM/yyyy' }}
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="date">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="messages-page-header text-label!"
+              scope="col"
+            >
+              {{ 'MESSAGES_PAGE.TABLE.DATE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let message" class="messages-page-content text-label!">
+              {{ message.send_date | date: 'dd/MM/yyyy' }}
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef class="messages-page-header textlabel!" scope="col">
-            <span class="sr-only">{{ 'MESSAGES_PAGE.ACCESSIBILITY.ACTIONS_COL' | translate }}</span>
-          </th>
-          <td mat-cell *matCellDef="let message" class="p-4 text-center">
-            <div class="flex justify-center gap-4 p-10">
-              <app-button
-                [label]="'MESSAGES_PAGE.TABLE.BTN_DELETE' | translate"
-                variant="secondary"
-                (click)="deleteCommunication(message)"
-                [attr.aria-label]="
-                  ('MESSAGES_PAGE.TABLE.BTN_DELETE' | translate) + ': ' + message.topic
-                "
-              ></app-button>
-              <app-button
-                [label]="'MESSAGES_PAGE.TABLE.BTN_VIEW' | translate"
-                variant="primary"
-                (click)="readMessage(message)"
-                [attr.aria-label]="
-                  ('MESSAGES_PAGE.TABLE.BTN_VIEW' | translate) + ': ' + message.topic
-                "
-              ></app-button>
-            </div>
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="actions">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="messages-page-header textlabel!"
+              scope="col"
+            >
+              <span class="sr-only">{{
+                'MESSAGES_PAGE.ACCESSIBILITY.ACTIONS_COL' | translate
+              }}</span>
+            </th>
+            <td mat-cell *matCellDef="let message" class="p-4 text-center">
+              <div class="flex justify-center gap-4 p-10">
+                <app-button
+                  [label]="'MESSAGES_PAGE.TABLE.BTN_DELETE' | translate"
+                  variant="secondary"
+                  (click)="deleteCommunication(message)"
+                  [attr.aria-label]="
+                    ('MESSAGES_PAGE.TABLE.BTN_DELETE' | translate) + ': ' + message.topic
+                  "
+                ></app-button>
+                <app-button
+                  [label]="'MESSAGES_PAGE.TABLE.BTN_VIEW' | translate"
+                  variant="primary"
+                  (click)="readMessage(message)"
+                  [attr.aria-label]="
+                    ('MESSAGES_PAGE.TABLE.BTN_VIEW' | translate) + ': ' + message.topic
+                  "
+                ></app-button>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            [ngClass]="{
+              '[&>*]:!text-red-500 dark:[&>*]:!text-red-dark font-bold':
+                !row.read && row.id_receiver === authService.currentUser()?.id_user,
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              '[&>*]:!text-primary dark:[&>*]:!text-surface': row.read,
+            }"
+          ></tr>
 
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns"
-          [ngClass]="{
-            '[&>*]:!text-red-500 dark:[&>*]:!text-red-dark font-bold':
-              !row.read && row.id_receiver === authService.currentUser()?.id_user,
-
-            '[&>*]:!text-primary dark:[&>*]:!text-surface': row.read
-          }"
-        ></tr>
-      </table>
+          <tr class="mat-row" *matNoDataRow>
+            <td
+              class="mat-cell p-10 text-center! messages-page-content text-label!"
+              [attr.colspan]="displayedColumns.length"
+            >
+              {{ 'MESSAGES_PAGE.NO_DATA' | translate }}
+            </td>
+          </tr>
+        </table>
+      }
     </main>
-    <mat-paginator
-      [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons
-      class="mt-10 border-none!"
-      [attr.aria-label]="'MESSAGES_PAGE.ACCESSIBILITY.PAGINATOR' | translate"
-    >
-    </mat-paginator>
+    @if (!isLoading && dataSource.data.length > 0) {
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        class="mt-10 border-none!"
+        [attr.aria-label]="'MESSAGES_PAGE.ACCESSIBILITY.PAGINATOR' | translate"
+      >
+      </mat-paginator>
+    }
   </div>
 </section>

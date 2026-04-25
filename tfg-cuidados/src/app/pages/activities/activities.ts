@@ -11,6 +11,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, map, switchMap, filter } from 'rxjs';
 import { ContractDetail } from '../../models/ContractModel';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
 
 /**
  * Página principal de actividades que gestiona la lista de contratos del usuario.
@@ -19,7 +20,13 @@ import { ResponsiveSize } from '../../services/responsive-size';
 @Component({
   selector: 'app-activities',
   standalone: true,
-  imports: [CommonModule, Buttonback, ActivitiesComponents, TranslateModule],
+  imports: [
+    CommonModule,
+    Buttonback,
+    ActivitiesComponents,
+    TranslateModule,
+    TableSkeletonComponent,
+  ],
   templateUrl: './activities.html',
   styleUrl: './activities.css',
 })
@@ -32,6 +39,8 @@ export default class Activities implements OnInit {
   private translate = inject(TranslateService);
   private responsive = inject(ResponsiveSize);
 
+  public isLoading = true;
+
   public dataSource = new MatTableDataSource<ContractDetail>([]);
 
   ngOnInit(): void {
@@ -42,15 +51,22 @@ export default class Activities implements OnInit {
    * Se suscribe al flujo en tiempo real de contratos para alimentar las vistas de actividad.
    */
   private subscribeToContracts(): void {
+    this.isLoading = true;
+
     this.contractService
       .getContractsObservable()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data: ContractDetail[]) => {
           this.dataSource.data = data;
+          this.isLoading = false;
           this.cd.detectChanges();
         },
-        error: (error: Error) => console.error('Error en flujo de contratos:', error),
+        error: (error: Error) => {
+          console.error('Error en flujo de contratos:', error);
+          this.isLoading = false;
+          this.cd.detectChanges();
+        },
       });
   }
 

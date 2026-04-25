@@ -1,0 +1,61 @@
+<div class="flex flex-col items-center gap-3">
+  <div class="relative w-24 h-24 xl:w-32 xl:h-32">
+    <span
+      class="absolute inset-0 rounded-full border border-primary dark:border-accent animate-ping opacity-60"
+    ></span>
+    <span
+      class="absolute inset-0 rounded-full border border-primary dark:border-accent animate-ping opacity-40 [animation-delay:1s]"
+    ></span>
+
+    <svg
+      class="absolute inset-0 w-full h-full animate-spin"
+      style="animation-duration: 2s; animation-timing-function: linear"
+      viewBox="0 0 100 100"
+    >
+      <circle
+        cx="50"
+        cy="50"
+        r="46"
+        fill="none"
+        class="stroke-disabled/30 dark:stroke-surface"
+        stroke-width="4"
+      ></circle>
+      <circle
+        cx="50"
+        cy="50"
+        r="46"
+        fill="none"
+        class="stroke-primary dark:stroke-surface"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-dasharray="200 80"
+      ></circle>
+    </svg>
+
+    <svg
+      class="absolute inset-0 w-full h-full opacity-35 animation-heart-spin-reverse"
+      viewBox="0 0 100 100"
+    >
+      <circle
+        cx="50"
+        cy="50"
+        r="34"
+        fill="none"
+        class="stroke-accent"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-dasharray="100 110"
+      ></circle>
+    </svg>
+
+    <div class="absolute inset-0 m-auto w-[40%] h-[40%] flex items-center justify-center">
+      <svg class="w-full h-full animation-heartbeat origin-center" viewBox="0 0 36 34">
+        <path
+          d="M18 31.5C18 31.5 2 21 2 10.5C2 5.8 5.8 2 10.5 2C13.5 2 16.2 3.6 18 6C19.8 3.6 22.5 2 25.5 2C30.2 2 34 5.8 34 10.5C34 21 18 31.5 18 31.5Z"
+          class="fill-primary dark:fill-surface stroke-secondary dark:stroke-accent"
+          stroke-width="1"
+        ></path>
+      </svg>
+    </div>
+  </div>
+</div>

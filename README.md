@@ -267,7 +267,7 @@ A continuación, se detallan los hitos alcanzados durante el proceso:
 | 10.03.26         | **Pruebas en Entorno Local**          | Configuración del entorno de desarrollo local. Ejecución de pruebas funcionales y técnicas. Corrección de errores antes del despliegue en producción. |
 | 17.0.3.26         | **Pruebas de Despliegue en Vercel**   | Despliegue del aplicativo en Vercel como entorno de producción. Verificación del correcto funcionamiento del sistema. Validación final del proyecto. |
 
-Notas del seguimiento
+**Notas del seguimiento**. 
 Cada sesión siguió la estructura: resumen de avances, demo funcional, bloqueo/riesgos y tareas para la siguiente semana.
 
 

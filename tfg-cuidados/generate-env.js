@@ -1,6 +1,4 @@
 const fs = require("fs");
-
-// Vercel inyectará aquí las variables secretas que configuraste en su web
 const envConfigFile = `export const environment = {
   production: true,
   supabaseUrl: '${process.env.supabaseUrl || process.env.SUPABASE_URL}',
@@ -16,8 +14,6 @@ const envDevConfigFile = `export const environment = {
   geminiApiKey: '${process.env.geminiApiKey || process.env.GEMINI_API_KEY}'
 };
 `;
-
-// Creamos la carpeta y los archivos físicamente en el servidor de Vercel
 fs.mkdirSync("./src/environments", { recursive: true });
 fs.writeFileSync("./src/environments/environment.ts", envConfigFile);
 fs.writeFileSync(

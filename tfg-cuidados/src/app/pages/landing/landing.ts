@@ -21,7 +21,6 @@ export default class Landing {
   public cardsdata: Card[] = cardsdata;
   private dialog = inject(MatDialog);
   private responsive = inject(ResponsiveSize);
-
   public authService = inject(AuthService);
   private router = inject(Router);
 
@@ -34,6 +33,7 @@ export default class Landing {
       }
     });
   }
+
   async openModal() {
     const { Loginmodal } = await import('../../components/loginmodal/loginmodal');
     this.dialog.open(Loginmodal, {

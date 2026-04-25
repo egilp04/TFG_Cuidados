@@ -72,26 +72,28 @@
 
         <tr class="mat-row" *matNoDataRow>
           <td 
-            class="p-8 text-center" 
+            class="p-8 text-center text-label" 
             [attr.colspan]="displayedColumns.length"
             role="status"
             aria-live="polite"
           >
-            <p class="table-column-name text-label">
+            <p class="table-column-name text-center! text-label">
               {{ 'ADMIN_TABLE.NO_DATA' | translate }}
             </p>
           </td>
         </tr>
       </table>
     </main>
-
-    <mat-paginator
-      [pageSizeOptions]="[5, 10, 20]"
-      [pageSize]="10"
-      showFirstLastButtons
-      [attr.aria-label]="'ADMIN_TABLE.PAGINATOR_LABEL' | translate"
-      class="table-paginator-end"
-    >
-    </mat-paginator>
+    
+    @if (dataSource.data.length > 0) {
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        [pageSize]="10"
+        showFirstLastButtons
+        [attr.aria-label]="'ADMIN_TABLE.PAGINATOR_LABEL' | translate"
+        class="table-paginator-end mt-4"
+      >
+      </mat-paginator>
+    }
   </div>
 </section>
