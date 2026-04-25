@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });
   }
-  const { message, userEmail } = req.body;
+  const { message, userEmail, username } = req.body;
   const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
   const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
   if (!TELEGRAM_TOKEN || !CHAT_ID) {
@@ -23,11 +23,12 @@ export default async function handler(req, res) {
     );
 
   const userToSendMessage = escapeHTML(userEmail || 'Usuario Anónimo');
-  const messageSent = escapeHTML(message || '');
+  const messageSent = escapeHTML(username || '');
+  const userNameToSend = escapeHTML(message || '');
 
   const textoHTML =
     `<b>NUEVO TICKET DE SOPORTE</b>\n\n` +
-    `<b>Usuario:</b> ${userToSendMessage}\n` +
+    `<b>Usuario:</b> ${userNameToSend}\n` +
     `<b>Email:</b> <code>${userToSendMessage}</code>\n` +
     `<b>💬 Mensaje:</b>\n${messageSent}`;
 
