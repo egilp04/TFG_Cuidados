@@ -1,0 +1,9 @@
+@reference "../../../styles.css";
+
+.modify-profile-title {
+  @apply text-h1 text-center text-primary dark:text-surface my-10;
+}
+
+.modify-profile-page-container {
+  @apply flex flex-col w-full gap-[48px]  z-40 p-10 lg:py-10 lg:px-120;
+}

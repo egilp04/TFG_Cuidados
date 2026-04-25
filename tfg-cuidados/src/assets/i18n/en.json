@@ -9,7 +9,10 @@
     "PROFILE": "Profile",
     "LOGIN": "Log In",
     "LOGOUT": "Log Out",
-    "REGISTER": "Register"
+    "REGISTER": "Register",
+    "ABOUT": "About us",
+    "CONTACT": "Contact",
+    "MANUALS": "Manuals"
   },
   "HOME": {
     "WELCOME": "Welcome",
@@ -23,7 +26,7 @@
   "CALENDAR": {
     "TITLE": "Activities Calendar",
     "HEADER": {
-      "COMPANY": "Company",
+      "BUSINESS": "Company",
       "CLIENT": "Client",
       "USER": "User"
     },
@@ -107,16 +110,16 @@
   "ACTIVITIES": {
     "TITLE": "Activities",
     "DAYS": {
-      "SU": "Sun",
-      "MO": "Mon",
-      "TU": "Tue",
-      "WE": "Wed",
-      "TH": "Thu",
-      "FR": "Fri",
+      "DO": "Sun",
+      "LU": "Mon",
+      "MA": "Tue",
+      "MI": "Wed",
+      "JU": "Thu",
+      "VI": "Fri",
       "SA": "Sat"
     },
     "TABLE": {
-      "HEADER_COMPANY": "Company",
+      "HEADER_BUSINESS": "Company",
       "HEADER_CLIENT": "Client",
       "HEADER_USER": "User",
       "NAME": "Service Name",
@@ -131,14 +134,14 @@
     "FORM": {
       "NAME": "Name",
       "EMAIL": "Email",
-      "SUBJECT": "Subject",
+      "TOPIC": "topic",
       "MESSAGE": "Message",
       "SEND": "Contact Us"
     },
     "ERRORS": {
       "NAME": "Name must be at least 3 characters long.",
       "EMAIL": "Please enter a valid email address.",
-      "SUBJECT": "Subject is required (min. 6 characters).",
+      "TOPIC": "topic is required (min. 6 characters).",
       "MESSAGE": "Message needs to be longer."
     }
   },
@@ -165,6 +168,9 @@
       "CONTRACTS_CHART_DESC": "Contracts chart: shows the proportion of active versus canceled contracts.",
       "LOGIN_CHART_DESC": "Login chart: shows the evolution of user logins over time."
     },
+    "SERVICES": {
+      "TITLE": "Services demand and supply"
+    },
     "NO_CONTRACTS": "No contracts",
     "CHARGING": "Charging Data",
     "TITLE_CONTRACTS": "Contracts",
@@ -176,12 +182,14 @@
     "TOTAL_USERS": "Current Total Users:",
     "LOGIN": {
       "TITLE": "LOGIN",
-      "SUBTITLE": "Users registering the app this week"
+      "SUBTITLE": "Users who have been registered this year"
     },
     "CHART": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
-      "DAYS": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+      "DAYS": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      "DEMAND": "Demand",
+      "SUPPLY": "Supply"
     }
   },
   "MAIN_MENU": {
@@ -190,7 +198,7 @@
       "SEARCH_COMPANIES": "Search Companies",
       "MY_SERVICES": "Contracted Services"
     },
-    "COMPANY": {
+    "BUSINESS": {
       "MANAGE_SERVICES": "Manage Services",
       "ALL_CONTRACTS": "View All Contracts"
     },
@@ -235,12 +243,12 @@
     "ACCESSIBILITY": {
       "BACK_NAV": "Navigation to go back",
       "CLIENT_SECTION": "Client management section",
-      "COMPANY_SECTION": "Company management section",
+      "BUSINESS_SECTION": "Company management section",
       "NEW_CLIENT_BTN": "Register a new client in the system",
-      "NEW_COMPANY_BTN": "Register a new company in the system"
+      "NEW_BUSINESS_BTN": "Register a new company in the system"
     },
     "NEW_CLIENT": "New Client",
-    "NEW_COMPANY": "New Company"
+    "NEW_BUSINESS": "New Company"
   },
   "MESSAGES": {
     "SUCCESS": {
@@ -276,7 +284,8 @@
       "TYPE": "Type",
       "ADD": "Add Service",
       "SAVE": "Save Changes",
-      "CANCEL": "Cancel"
+      "CANCEL": "Cancel",
+      "DESCRIPTION": "Description"
     },
     "LIST": {
       "TITLE": "Services List",
@@ -288,7 +297,8 @@
       "TYPE": "Type",
       "ACTIONS": "Actions",
       "EDIT": "Edit",
-      "DELETE": "Delete"
+      "DELETE": "Delete",
+      "DESCRIPTION": "Description"
     },
     "MESSAGES": {
       "CONFIRM_DELETE": "Do you want to delete this service?",
@@ -342,7 +352,7 @@
       "SUCCESS_CREATE": "Schedule created successfully",
       "SUCCESS_UPDATE": "Schedule updated successfully",
       "SUCCESS_DELETE": "Schedule deleted",
-      "ERROR_DUPLICATE": "A schedule already exists for {{dia}} at {{hora}}",
+      "ERROR_DUPLICATE": "A schedule already exists for {{day}} at {{time}}",
       "ERROR_GENERIC": "Error processing the request",
       "ERROR_DELETE": "Error con el borrado"
     },
@@ -381,13 +391,13 @@
     "SORT_LABEL": "Sort by...",
     "SORT_OPTIONS": {
       "DATE": "Date",
-      "SUBJECT_AZ": "Subject (A-Z)",
-      "SUBJECT_ZA": "Subject (Z-A)"
+      "topic_AZ": "topic (A-Z)",
+      "topic_ZA": "topic (Z-A)"
     },
     "TABLE": {
       "SENDER": "Sender",
       "RECEIVER": "Receiver",
-      "SUBJECT": "Subject",
+      "topic": "topic",
       "DATE": "Received Date",
       "ACTIONS": "Actions",
       "BTN_DELETE": "Delete",
@@ -404,7 +414,9 @@
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back to the previous screen"
     },
-    "PLACEHOLDER": { "DESCRIPTION": "Modify descripcion" },
+    "PLACEHOLDER": {
+      "DESCRIPTION": "Modify descripcion"
+    },
     "TITLE": "Modify Profile",
     "MESSAGES": {
       "EMAIL_USED": "Email already in use",
@@ -416,7 +428,7 @@
       "USERNAME": "Username",
       "SURNAME1": "First Surname",
       "SURNAME2": "Second Surname",
-      "COMPANY_NAME": "Company Name",
+      "BUSINESS_NAME": "Company Name",
       "PHONE": "Phone",
       "EMAIL": "Email",
       "ADDRESS": "Address",
@@ -495,7 +507,6 @@
     },
     "HOME": "Start"
   },
-
   "SEARCH_BUSINESS": {
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back to the previous screen",
@@ -617,14 +628,16 @@
     "DAY": "Contracted Day",
     "SERVICE": "Service Name",
     "CLIENT": "Client Name",
-    "COMPANY": "Company Name",
-    "BTN_CANCEL": "Cancel"
+    "BUSINESS": "Company Name",
+    "BTN_CANCEL": "Cancel",
+    "NO_SERVICE": "Unknown"
   },
   "ADMIN_TABLE": {
     "SEARCH_LABEL": "Search by name or email",
     "HEADER": {
       "NAME": "Name",
-      "SURNAME": "Surnames"
+      "SURNAME": "Surnames",
+      "EMAIL": "Email"
     },
     "BTN": {
       "DELETE": "Delete",
@@ -633,19 +646,20 @@
     "NO_DATA": "No records found.",
     "PAGINATOR_LABEL": "Select user page"
   },
-  "SEARCH_PLACEHOLDER": "Search...",
+  "SEARCH_PLACEHOLDER": "Search by name...",
   "REGISTER": {
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back to the previous screen",
       "MAIN_FORM": "Main area of the registration form"
     },
     "PLACEHOLDER": {
-      "SELECTREGION": "Choose"
+      "SELECTREGION": "Choose a community"
     },
     "MESSAGES": {
       "SUCCESS": "Registration successful! Please check your email.",
       "ERROR_EMAIL": "This email is already registered.",
-      "ERROR_GENERIC": "Error connecting to the server."
+      "ERROR_GENERIC": "Error connecting to the server.",
+      "SUCCESS_ADMIN": "Registration successful! You can go back to the user panel"
     },
     "LABELS": {
       "USERNAME": "Username",
@@ -653,7 +667,7 @@
       "SURNAME2": "Second Surname",
       "BIRTHDATE": "Birthdate",
       "DNI": "ID Card / DNI",
-      "COMPANY_NAME": "Company Name",
+      "BUSINESS_NAME": "Company Name",
       "CIF": "Tax ID / CIF",
       "PHONE": "Phone",
       "EMAIL": "Email",
@@ -683,15 +697,15 @@
         "PHONE": "Must have 9 digits",
         "ZIP": "Invalid Zip Code (5 digits)",
         "PASSWORD": "Must contain letters, numbers and special chars (min. 6)"
-      }
-    },
-    "NOT_ADULT": "You must be at least 18 years old",
-    "DNI_FORMAT": "The DNI must have 8 digits and 1 letter",
-    "DNI_LETTER": "The DNI letter is incorrect",
-    "FECHNACINVALID": "Invalid date of birth",
-    "CIF_FORMAT": "Invalid CIF format (Ex: B12345678)",
-    "CIF_INVALID": "The CIF is invalid (incorrect control digit)",
-    "EMAIL_TAKEN": "This email is already in use"
+      },
+      "EMAIL_TAKEN": "This email is already in use",
+      "NOT_ADULT": "You must be at least 18 years old",
+      "DNI_FORMAT": "The DNI must have 8 digits and 1 letter",
+      "DNI_LETTER": "The DNI letter is incorrect",
+      "FECHNACINVALID": "Invalid date of birth",
+      "CIF_FORMAT": "Invalid CIF format (Ex: B12345678)",
+      "CIF_INVALID": "The CIF is invalid (incorrect control digit)"
+    }
   },
   "SERVICE_TIME_MODAL": {
     "LABELS": {
@@ -722,13 +736,14 @@
   "MESSAGES_MODAL": {
     "LABELS": {
       "TO": "To:",
-      "SUBJECT": "Subject:",
+      "TOPIC": "topic:",
       "SENDER": "Sender:",
       "RECEIVER": "Receiver:",
       "MESSAGE_CONTENT": "MESSAGE"
     },
     "PLACEHOLDERS": {
-      "WRITE_HERE": "Write your message here..."
+      "WRITE_HERE": "Write your message here...",
+      "SELECT_RECEIVER": "Select a receiver"
     },
     "BTN": {
       "SEND": "Send"
@@ -763,7 +778,7 @@
       "FORGOT": "I forgot my password",
       "REGISTER": "Register",
       "REG_USER": "Register as User",
-      "REG_COMPANY": "Register as Company",
+      "REG_BUSINESS": "Register as Company",
       "HAVE_ACCOUNT": "I have an account",
       "SEND_LINK": "Send link",
       "BACK_LOGIN": "Back to login",
@@ -782,10 +797,6 @@
     }
   },
   "FOOTER": {
-    "HOME": "Home",
-    "ABOUT": "About us",
-    "CONTACT": "Contact",
-    "MANUALS": "Manuals",
     "LEGAL_ASPECTS": "Legal data",
     "PRIVACY_POLICTICS": "Privacy polity",
     "COOKIES_POLICIES": "Cookie policy"
@@ -870,5 +881,99 @@
   "COMMON": {
     "ERROR": "Error",
     "SUCCESS": "Success"
+  },
+  "COOKIES_PAGE": {
+    "TITLE": "Cookies Policy",
+    "LAST_UPDATE": "Last updated",
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Go back to the previous page",
+      "IMPORTANT_NOTE": "Important note"
+    },
+    "SECTION_1": {
+      "TITLE": "1. What are cookies and what are they used for?",
+      "SUB_1": {
+        "TITLE": "1.1 Definition of a Cookie",
+        "TEXT": "A cookie is a small text file that is stored in your browser when you visit our website. Its main purpose is to remember information about your visit to make navigation easier."
+      },
+      "SUB_2": {
+        "TITLE": "1.2 Types of cookies we use",
+        "TEXT": "We use first-party cookies (managed by us) and third-party cookies (managed by service providers such as Google Analytics)."
+      },
+      "SUB_3": {
+        "TITLE": "1.3 Purpose of the cookies",
+        "TEXT": "We use <strong>technical</strong> cookies (necessary for the website to function), <strong>analytical</strong> cookies (to measure traffic), and <strong>preference</strong> cookies (to remember your settings)."
+      },
+      "SUB_4": {
+        "TITLE": "1.4 Consent",
+        "TEXT": "By continuing to browse our website, you agree to the use of cookies described in this policy under the conditions stated herein."
+      }
+    },
+    "SECTION_2": {
+      "TITLE": "2. Cookie management and configuration",
+      "INTRO_BOX": "You have the right to manage, modify, or revoke your consent to the use of cookies at any time through your browser settings.",
+      "SUB_1": {
+        "TITLE": "2.1 How to disable cookies",
+        "TEXT": "You can restrict, block, or delete cookies from this website using your browser settings. The <em>Help</em> function of your browser will show you how to do this."
+      },
+      "SUB_2": {
+        "TITLE": "2.2 Links to major browsers",
+        "LIST_1": "<strong>Google Chrome:</strong> Settings > Privacy and security > Cookies.",
+        "LIST_2": "<strong>Mozilla Firefox:</strong> Options > Privacy & Security > Cookies and site data.",
+        "LIST_3": "<strong>Safari:</strong> Preferences > Privacy > Block all cookies."
+      },
+      "SUB_3": {
+        "TITLE": "2.3 Consequences of disabling cookies",
+        "TEXT": "If you decide to disable cookies, some website features may not function properly, such as keeping you logged in or saving your preferences."
+      },
+      "SUB_4": {
+        "TITLE": "2.4 Third-party cookies",
+        "TEXT": "Please note that if you accept third-party cookies, you must delete them from your browser options or from the system offered by the third party. The main services we use are:",
+        "LIST_1": "Google Analytics (Web traffic analysis).",
+        "LIST_2": "Stripe (Secure payment management)."
+      },
+      "SUB_5": {
+        "TITLE": "2.5 Updates to this policy",
+        "TEXT": "We may update our website's Cookie Policy, so we recommend you review this policy every time you visit us to stay properly informed."
+      }
+    }
+  },
+  "DIRECTORY": {
+    "TITLE": "Service Directory",
+    "SUBTITLE": "To hire a service, choose an option and you will see the business offers"
+  },
+  "INPUTS": {
+    "ACCESSIBILITY": {
+      "HIDE_PASSWORD": "Show password",
+      "SHOW_PASSWORD": "Hide password"
+    }
+  },
+  "ERRORS": {
+    "ROLES": {
+      "CLIENT": "client",
+      "BUSINESS": "business"
+    },
+    "AUTH": {
+      "ERRORS": {
+        "EMAIL_ALREADY_REGISTERED": "This email is already registered on the platform.",
+        "INVALID_LOGIN_CREDENTIALS": "The login credentials are incorrect.",
+        "USER_NOT_FOUND": "User not found in the system.",
+        "EMAIL_TAKEN": "This email is already taken.",
+        "TECHNICAL_ERROR": "Technical error while verifying the email.",
+        "EMAIL_EXISTS": "This email is already registered.",
+        "EMAIL_VALIDATION": "There was an error while trying to validate the email."
+      }
+    },
+    "NOTIFICATIONS": {
+      "ADMIN": {
+        "NEW_REGISTER_TITLE": "New Registration in CuidaDos",
+        "NEW_REGISTER_BODY": "User {{email}} has registered as {{rol}}."
+      }
+    },
+    "COMUNICATION": {
+      "INVALID_TYPE": "Invalid communication type"
+    }
+  },
+  "GENERAL": {
+    "LOADING": "Charging..."
   }
 }

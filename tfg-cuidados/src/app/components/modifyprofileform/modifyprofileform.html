@@ -1,66 +1,74 @@
-<section class="modify-form-container" [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.SECTION_TITLE' | translate">
-  <form 
-    [formGroup]="profileForm" 
-    (ngSubmit)="onSubmit()" 
+<section
+  class="modify-form-container"
+  [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.SECTION_TITLE' | translate"
+>
+  <form
+    [formGroup]="profileForm"
+    (ngSubmit)="onSubmit()"
     class="modify-profile-form"
     [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.FORM_NAME' | translate"
   >
-    @if (userRole != 'empresa') {
+    @if (userRole !== 'business') {
       <app-inputs
-        name="usuario"
+        name="userName"
         [label]="'MODIFY_PROFILE.LABELS.USERNAME' | translate"
-        [control]="getCtrl('usuario')"
-        [errorMessage]="getErrorMessage('usuario')"
+        [control]="getCtrl('userName')"
+        [errorMessage]="getErrorMessage('userName')"
       ></app-inputs>
     }
-    @if (userRole === 'cliente') {
+
+    @if (userRole === 'client') {
       <div class="register-form-col">
         <div class="register-form-row">
           <app-inputs
-            name="primerApe"
+            name="surname1"
             [label]="'MODIFY_PROFILE.LABELS.SURNAME1' | translate"
-            [control]="getCtrl('primerApe')"
-            [errorMessage]="getErrorMessage('primerApe')"
+            [control]="getCtrl('surname1')"
+            [errorMessage]="getErrorMessage('surname1')"
             class="flex-1"
           ></app-inputs>
           <app-inputs
-            name="segundoApe"
+            name="surname2"
             [label]="'MODIFY_PROFILE.LABELS.SURNAME2' | translate"
-            [control]="getCtrl('segundoApe')"
-            [errorMessage]="getErrorMessage('segundoApe')"
+            [control]="getCtrl('surname2')"
+            [errorMessage]="getErrorMessage('surname2')"
             class="flex-1"
           ></app-inputs>
         </div>
       </div>
-    } @else if (userRole === 'empresa') {
+    } @else if (userRole === 'business') {
       <div class="register-form-col">
         <app-inputs
-          name="nombreEmpresa"
-          [label]="'MODIFY_PROFILE.LABELS.COMPANY_NAME' | translate"
-          [control]="getCtrl('nombreEmpresa')"
-          [errorMessage]="getErrorMessage('nombreEmpresa')"
+          name="companyName"
+          [label]="'MODIFY_PROFILE.LABELS.BUSINESS_NAME' | translate"
+          [control]="getCtrl('companyName')"
+          [errorMessage]="getErrorMessage('companyName')"
         ></app-inputs>
         <div class="input-area-modify-profile-container">
-          <label for="descripcion-modify" class="input-label">
+          <label for="description-modify" class="input-label">
             {{ 'MODIFY_PROFILE.LABELS.DESCRIPTION' | translate }}
           </label>
           <textarea
-            id="descripcion-modify"
-            formControlName="descripcion"
+            id="description-modify"
+            formControlName="description"
             rows="4"
             class="input-text-area"
             [placeholder]="'MODIFY_PROFILE.PLACEHOLDER.DESCRIPTION' | translate"
-            [attr.aria-invalid]="profileForm.get('descripcion')?.invalid && profileForm.get('descripcion')?.touched"
+            [attr.aria-invalid]="
+              profileForm.get('description')?.invalid && profileForm.get('description')?.touched
+            "
           ></textarea>
         </div>
       </div>
     }
+
     <app-inputs
-      name="telefono"
+      name="phone"
       [label]="'MODIFY_PROFILE.LABELS.PHONE' | translate"
-      [control]="getCtrl('telefono')"
-      [errorMessage]="getErrorMessage('telefono')"
+      [control]="getCtrl('phone')"
+      [errorMessage]="getErrorMessage('phone')"
     ></app-inputs>
+
     <app-inputs
       name="email"
       [label]="'MODIFY_PROFILE.LABELS.EMAIL' | translate"
@@ -68,44 +76,49 @@
       [control]="getCtrl('email')"
       [errorMessage]="getErrorMessage('email')"
     ></app-inputs>
-    @if (userRole != 'administrador') {
+
+    @if (userRole !== 'administrator') {
       <app-inputs
-        name="direccion"
+        name="address"
         [label]="'MODIFY_PROFILE.LABELS.ADDRESS' | translate"
-        [control]="getCtrl('direccion')"
-        [errorMessage]="getErrorMessage('direccion')"
+        [control]="getCtrl('address')"
+        [errorMessage]="getErrorMessage('address')"
       ></app-inputs>
       <app-inputs
-        name="localidad"
+        name="city"
         [label]="'MODIFY_PROFILE.LABELS.CITY' | translate"
-        [control]="getCtrl('localidad')"
-        [errorMessage]="getErrorMessage('localidad')"
+        [control]="getCtrl('city')"
+        [errorMessage]="getErrorMessage('city')"
       ></app-inputs>
-      <div class="register-form-row">
+
+      <div class="modify-form-row">
         <app-inputs
-          name="codpostal"
+          name="postcode"
           [label]="'MODIFY_PROFILE.LABELS.ZIP' | translate"
-          [control]="getCtrl('codpostal')"
-          [errorMessage]="getErrorMessage('codpostal')"
+          [control]="getCtrl('postcode')"
+          [errorMessage]="getErrorMessage('postcode')"
           class="flex-1"
         ></app-inputs>
-        <div class="register-form-select-container">
-          <label for="comunidad-modify" class="register-form-select-label">
+
+        <div class="modify-form-select-container">
+          <label for="comunity-modify" class="modify-form-select-label">
             {{ 'REGISTER.LABELS.REGION' | translate }}
           </label>
           <div class="relative w-full">
-            <select 
-              id="comunidad-modify" 
-              formControlName="comunidad" 
-              class="register-form-select"
-              [attr.aria-invalid]="profileForm.get('comunidad')?.invalid && profileForm.get('comunidad')?.touched"
+            <select
+              id="comunity-modify"
+              formControlName="comunity"
+              class="modify-form-select"
+              [attr.aria-invalid]="
+                profileForm.get('comunity')?.invalid && profileForm.get('comunity')?.touched
+              "
             >
-              @for (comunidad of comunidades; track $index) {
-                <option [value]="comunidad" class="register-form-options">{{ comunidad }}</option>
+              @for (comunity of comunities; track $index) {
+                <option [value]="comunity" class="modify-form-options">{{ comunity }}</option>
               }
             </select>
 
-            <div class="register-form-select-arrow">
+            <div class="modify-form-select-arrow">
               <svg
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,6 +138,7 @@
         </div>
       </div>
     }
+
     <footer class="modify-profile-btn-container">
       <div class="flex flex-row gap-4 w-full justify-center">
         <app-button

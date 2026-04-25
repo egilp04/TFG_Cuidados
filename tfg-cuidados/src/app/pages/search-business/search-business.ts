@@ -18,15 +18,17 @@ import { ButtonComponent } from '../../components/button/button';
 import { AuthService } from '../../services/auth.service';
 import { ContractService } from '../../services/contract.service';
 import { MessageService } from '../../services/message-service';
-import { ContratoModel } from '../../models/Contrato';
+import { ContractModel } from '../../models/ContractModel';
 import { Buttonback } from '../../components/buttonback/buttonback';
-import { EmpresaModel, ServicioHorarioResponse } from '../../models/Bussiness-Service';
+import { ServiceTimeResponse } from '../../models/Bussiness-Service';
+import { BusinessModel } from '../../models/BusinessModel';
 import { BusinessService } from '../../services/business.service';
+import { Router } from '@angular/router';
 
-export interface EmpresaUI extends EmpresaModel {
-  seleccion?: ServicioHorarioResponse;
-}
-
+/**
+ * Componente para buscar y contratar servicios de negocios.
+ * Utiliza estado independiente para selecciones de interfaz de usuario para mantener los modelos puros.
+ */
 @Component({
   selector: 'app-verempresas',
   standalone: true,
@@ -51,58 +53,97 @@ export default class SearchBusiness implements OnInit {
   private destroyRef = inject(DestroyRef);
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
+  private router = inject(Router);
 
-  public allBussinesses = signal<EmpresaUI[]>([]);
-  public searchFilterItem = signal<string>('');
-  public controlFilterItem = new FormControl('');
+  public allBusinesses = signal<BusinessModel[]>([]);
+  public searchFilter = signal<string>('');
+  public filterControl = new FormControl('');
+  public initialServiceId = signal<string | null>(null);
 
-  public filteredBussinesses = computed(() => {
-    const filtro = this.searchFilterItem().toLowerCase().trim();
-    if (!filtro) return this.allBussinesses();
-    return this.allBussinesses().filter((emp) => {
-      const sameName = emp.nombre.toLowerCase().includes(filtro);
-      const sameService = emp.Servicio_Horario?.some(
-        (sh: ServicioHorarioResponse) =>
-          sh.Servicio?.nombre.toLowerCase().includes(filtro) ||
-          sh.Horario?.dia_semana.toLowerCase().includes(filtro)
+  /**
+   * NUEVO: Estado independiente para selecciones.
+   * Clave: ID del negocio, Valor: el objeto ServiceTime seleccionado.
+   */
+  public selections = signal<Record<string, ServiceTimeResponse>>({});
+
+  constructor() {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as { idService: string };
+
+    if (state?.idService) {
+      this.initialServiceId.set(state.idService);
+    } else if (history.state?.idService) {
+      this.initialServiceId.set(history.state.idService);
+    }
+  }
+
+  public filteredBusinesses = computed(() => {
+    const filterText = this.searchFilter().toLowerCase().trim();
+    if (!filterText) return this.allBusinesses();
+
+    return this.allBusinesses().filter((business) => {
+      const matchName = business.name.toLowerCase().includes(filterText);
+      const matchService = business.Service_Time?.some(
+        (sh: ServiceTimeResponse) =>
+          sh.Service?.name.toLowerCase().includes(filterText) ||
+          sh.Time?.week_day.toLowerCase().includes(filterText),
       );
 
-      return sameName || sameService;
+      return matchName || matchService;
     });
   });
 
   ngOnInit() {
-    this.chargeBussinessRealTime();
+    this.loadBusinessesRealTime();
   }
 
-  chargeBussinessRealTime() {
+  loadBusinessesRealTime() {
     this.businessService
       .getBusinessesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         catchError((err) => {
-          console.error('Error IRL Empresas:', err);
+          console.error('Error en tiempo real de Negocios:', err);
           return this.translate.get('SEARCH_BUSINESS.MESSAGES.CONNECTION_ERROR').pipe(
             tap((msg) => this.messageService.showMessage(msg, 'error')),
-            map(() => [])
+            map(() => []),
           );
-        })
+        }),
       )
-      .subscribe((data: EmpresaModel[]) => {
-        const dataConSeleccion: EmpresaUI[] = data.map((e) => ({
-          ...e,
-          seleccion: undefined,
-        }));
-        this.allBussinesses.set(dataConSeleccion);
+      .subscribe((data: BusinessModel[]) => {
+        const targetId = this.initialServiceId()?.trim();
+
+        const processedData: BusinessModel[] = data
+          .map((business) => {
+            const filteredTimes = targetId
+              ? business.Service_Time?.filter(
+                  (sh: ServiceTimeResponse) => sh.Service?.id_service === targetId,
+                )
+              : business.Service_Time;
+            return {
+              ...business,
+              Service_Time: filteredTimes,
+            };
+          })
+          .filter((business) => business.Service_Time && business.Service_Time.length > 0);
+
+        this.allBusinesses.set(processedData);
         this.cd.markForCheck();
       });
   }
 
-  applyFilter(valor: string) {
-    this.searchFilterItem.set(valor);
+  updateSelection(businessId: string, selection: ServiceTimeResponse) {
+    this.selections.update((prev) => ({
+      ...prev,
+      [businessId]: selection,
+    }));
   }
-  
-  toHire(empresa: EmpresaUI) {
+
+  applyFilter(value: string) {
+    this.searchFilter.set(value);
+  }
+
+  toHire(business: BusinessModel) {
     const user = this.authService.currentUser();
     if (!user) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.LOGIN_REQUIRED').subscribe((res) => {
@@ -110,9 +151,9 @@ export default class SearchBusiness implements OnInit {
       });
       return;
     }
+    const selection = this.selections()[business.id_business];
 
-    const seleccion = empresa.seleccion;
-    if (!seleccion) {
+    if (!selection) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.SELECT_SERVICE').subscribe((res) => {
         this.messageService.showMessage(res, 'error');
       });
@@ -122,67 +163,77 @@ export default class SearchBusiness implements OnInit {
     this.contractService
       .getContractsObservable()
       .pipe(take(1))
-      .subscribe((contratos) => {
-        const idSeleccionado = seleccion.id_servicio_horario;
-        console.log('ID que buscas:', idSeleccionado);
-        console.log(
-          'IDs en tus contratos:',
-          contratos.map((c) => c.id_sh_plano)
-        );
-        const yaContratado = contratos.find((c) => {
-          const coincidenIds = String(c.id_sh_plano) === String(idSeleccionado);
-          const esMismoCliente = c.id_cliente === user.id_usuario;
-          const estaActivo = c.estado === 'activo';
+      .subscribe((contracts) => {
+        const selectedTimeId = selection.id_service_time;
 
-          return coincidenIds && esMismoCliente && estaActivo;
+        const isAlreadyHired = contracts.find((c: any) => {
+          let idRealContrato = c.id_service_time;
+          if (idRealContrato && typeof idRealContrato === 'object') {
+            idRealContrato = idRealContrato.id_service_time;
+          }
+          if (!idRealContrato && c.id_st_flat) {
+            idRealContrato = c.id_st_flat;
+          }
+          const sameId = String(idRealContrato) === String(selectedTimeId);
+          console.log(sameId);
+          console.log(idRealContrato);
+          console.log(selectedTimeId);
+
+          const sameClient = c.id_client === user.id_user;
+          const isActive = c.state === 'active';
+          return sameId && sameClient && isActive;
         });
-        console.log(yaContratado);
-        if (yaContratado) {
+
+        if (isAlreadyHired) {
           this.translate.get('SEARCH_BUSINESS.MESSAGES.ALREADY_CONTRACTED').subscribe((res) => {
             this.messageService.showMessage(res, 'error');
           });
           return;
         }
 
-        const nuevoContrato: ContratoModel = {
-          estado: 'activo',
-          fecha_inicio: new Date().toISOString().split('T')[0],
-          fecha_fin: null,
-          dia_semana_contratado: seleccion.Horario?.dia_semana || '',
-          hora_contratada: seleccion.Horario?.hora || '',
-          fecha_creacion: new Date().toISOString(),
-          id_servicio_horario: seleccion.id_servicio_horario,
-          id_cliente: user.id_usuario,
-          id_empresa: empresa.id_empresa,
+        const newContract: ContractModel = {
+          state: 'active',
+          start_date: new Date().toISOString().split('T')[0],
+          end_date: null,
+          week_day_hired: selection.Time?.week_day || '',
+          time_hired: selection.Time?.time || '',
+          creation_date: new Date().toISOString(),
+          id_service_time: selection.id_service_time,
+          id_client: user.id_user,
+          id_business: business.id_business,
         };
 
         this.contractService
-          .createContract(nuevoContrato)
+          .createContract(newContract)
           .pipe(
             takeUntilDestroyed(this.destroyRef),
             switchMap(() =>
               this.translate
                 .get('SEARCH_BUSINESS.MESSAGES.CONTRACT_SUCCESS')
-                .pipe(map((text) => ({ type: 'exito' as const, text })))
+                .pipe(map((text) => ({ type: 'success' as const, text }))),
             ),
             catchError((err) => {
-              console.error('Error al contratar:', err);
+              console.error('Error de contratación:', err);
               return this.translate
                 .get('SEARCH_BUSINESS.MESSAGES.CONTRACT_ERROR')
                 .pipe(map((text) => ({ type: 'error' as const, text })));
-            })
+            }),
           )
-          .subscribe((resultado) => {
-            this.messageService.showMessage(resultado.text, resultado.type);
-            if (resultado.type === 'exito') {
-              empresa.seleccion = undefined;
+          .subscribe((result) => {
+            this.messageService.showMessage(result.text, result.type);
+            if (result.type === 'success') {
+              this.selections.update((prev) => {
+                const updated = { ...prev };
+                delete updated[business.id_business];
+                return updated;
+              });
             }
             this.cd.markForCheck();
           });
       });
   }
 
-  async sendMessage(empresa: EmpresaUI) {
+  async sendMessage(business: BusinessModel) {
     const user = this.authService.currentUser();
     if (!user) {
       this.translate.get('SEARCH_BUSINESS.MESSAGES.LOGIN_MSG_REQUIRED').subscribe((res) => {
@@ -190,13 +241,14 @@ export default class SearchBusiness implements OnInit {
       });
       return;
     }
+
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
     this.dialog.open(MessagesModal, {
       data: {
-        modo: 'escribir',
-        receptorEmail: empresa.email,
-        idReceptor: empresa.id_empresa,
-        nombreReceptor: empresa.nombre,
+        mode: 'writeMessage',
+        receiverEmail: business.email,
+        receiverId: business.id_business,
+        receiverName: business.name,
       },
       width: '500px',
     });

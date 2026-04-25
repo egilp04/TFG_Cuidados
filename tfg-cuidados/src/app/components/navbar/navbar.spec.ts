@@ -102,18 +102,18 @@ describe('Navbar', () => {
   it('should open register dialog', () => {
     component.registrarse();
     expect(dialogSpy.open).toHaveBeenCalledWith(jasmine.any(Function), {
-      data: { modo: 'registro' },
+      data: { mode: 'registro' },
       width: '500px',
     });
   });
 
   it('should navigate to messages when type is mensajes', () => {
-    component.showComunications('mensajes');
+    component.showComunications('messages');
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/messages']);
   });
 
   it('should navigate to notifications when type is notificaciones', () => {
-    component.showComunications('notificaciones');
+    component.showComunications('notifications');
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/notifications']);
   });
 

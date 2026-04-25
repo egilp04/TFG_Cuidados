@@ -5,8 +5,6 @@
   <app-buttonback></app-buttonback>
 </header>
 
-
-
 <section class="contact-container" role="main" aria-labelledby="contact-page-title">
   <h1 id="contact-page-title" class="contact-title">
     {{ 'CONTACT.TITLE' | translate }}
@@ -14,7 +12,7 @@
 
   <form
     [formGroup]="contactForm"
-    (ngSubmit)="toContactFunction()"
+    (ngSubmit)="submitContactForm()"
     class="contact-form"
     [attr.aria-label]="'CONTACT.ACCESSIBILITY.FORM_LABEL' | translate"
   >
@@ -50,16 +48,16 @@
 
     <div class="contact-form-divs">
       <app-inputs
-        name="subject"
-        [label]="'CONTACT.FORM.SUBJECT' | translate"
-        [control]="getCtrl('subject')"
+        name="topic"
+        [label]="'CONTACT.FORM.TOPIC' | translate"
+        [control]="getCtrl('topic')"
         class="w-full"
-        [attr.aria-invalid]="getCtrl('subject').invalid && getCtrl('subject').touched"
+        [attr.aria-invalid]="getCtrl('topic').invalid && getCtrl('topic').touched"
       ></app-inputs>
 
-      @if (getCtrl('subject').invalid && getCtrl('subject').touched) {
+      @if (getCtrl('topic').invalid && getCtrl('topic').touched) {
         <span class="contact-form-error" role="alert">
-          {{ 'CONTACT.ERRORS.SUBJECT' | translate }}
+          {{ 'CONTACT.ERRORS.TOPIC' | translate }}
         </span>
       }
     </div>

@@ -1,0 +1,8 @@
+@reference "../../../styles.css";
+.activities-page-container {
+  @apply flex flex-col w-full px-20;
+}
+
+.activities-page-title {
+  @apply text-h1 text-primary text-center mb-20 dark:text-surface;
+}

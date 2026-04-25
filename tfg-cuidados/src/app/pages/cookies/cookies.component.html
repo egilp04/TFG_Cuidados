@@ -1,0 +1,121 @@
+<nav
+  class="w-full mb-4 px-6 pt-6"
+  [attr.aria-label]="'COOKIES_PAGE.ACCESSIBILITY.BACK_NAV' | translate"
+>
+  <app-buttonback></app-buttonback>
+</nav>
+
+<section class="cookies-container">
+  <header class="cookies-header-container">
+    <h1 id="cookies-main-title" class="cookies-title">
+      {{ 'COOKIES_PAGE.TITLE' | translate }}
+    </h1>
+    <p class="cookies-modification-date">
+      {{ 'COOKIES_PAGE.LAST_UPDATE' | translate }}:
+      <time [attr.datetime]="currentDate | date: 'yyyy-MM-dd'">
+        {{ currentDate | date: 'dd/MM/yyyy' }}
+      </time>
+    </p>
+  </header>
+
+  <main class="cookies-main" aria-labelledby="cookies-main-title">
+    <section class="mb-12" aria-labelledby="cookies-section-1-title">
+      <h2 id="cookies-section-1-title" class="cookies-subtitle">
+        {{ 'COOKIES_PAGE.SECTION_1.TITLE' | translate }}
+      </h2>
+
+      <div class="space-y-6 text-p leading-relaxed">
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'COOKIES_PAGE.SECTION_1.SUB_1.TITLE' | translate }}
+          </h3>
+          <p [innerHTML]="'COOKIES_PAGE.SECTION_1.SUB_1.TEXT' | translate"></p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'COOKIES_PAGE.SECTION_1.SUB_2.TITLE' | translate }}
+          </h3>
+          <p>{{ 'COOKIES_PAGE.SECTION_1.SUB_2.TEXT' | translate }}</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'COOKIES_PAGE.SECTION_1.SUB_3.TITLE' | translate }}
+          </h3>
+          <p [innerHTML]="'COOKIES_PAGE.SECTION_1.SUB_3.TEXT' | translate"></p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'COOKIES_PAGE.SECTION_1.SUB_4.TITLE' | translate }}
+          </h3>
+          <p>{{ 'COOKIES_PAGE.SECTION_1.SUB_4.TEXT' | translate }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="cookies-section-2-title">
+      <h2
+        id="cookies-section-2-title"
+        class="text-h2 text-primary mb-6 border-b border-primary/20 pb-2"
+      >
+        {{ 'COOKIES_PAGE.SECTION_2.TITLE' | translate }}
+      </h2>
+
+      <div class="space-y-6 text-p leading-relaxed">
+        <div class="p-4 bg-primary/5 rounded-lg border border-primary/10" role="note">
+          <p class="text-sm font-bold text-primary">
+            <span class="sr-only"
+              >{{ 'COOKIES_PAGE.ACCESSIBILITY.IMPORTANT_NOTE' | translate }}:
+            </span>
+            {{ 'COOKIES_PAGE.SECTION_2.INTRO_BOX' | translate }}
+          </p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'COOKIES_PAGE.SECTION_2.SUB_1.TITLE' | translate }}
+          </h3>
+          <p [innerHTML]="'COOKIES_PAGE.SECTION_2.SUB_1.TEXT' | translate"></p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'COOKIES_PAGE.SECTION_2.SUB_2.TITLE' | translate }}
+          </h3>
+          <ul class="list-disc pl-5 space-y-1 mt-2" role="list">
+            <li role="listitem" [innerHTML]="'COOKIES_PAGE.SECTION_2.SUB_2.LIST_1' | translate"></li>
+            <li role="listitem" [innerHTML]="'COOKIES_PAGE.SECTION_2.SUB_2.LIST_2' | translate"></li>
+            <li role="listitem" [innerHTML]="'COOKIES_PAGE.SECTION_2.SUB_2.LIST_3' | translate"></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'COOKIES_PAGE.SECTION_2.SUB_3.TITLE' | translate }}
+          </h3>
+          <p [innerHTML]="'COOKIES_PAGE.SECTION_2.SUB_3.TEXT' | translate"></p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'COOKIES_PAGE.SECTION_2.SUB_4.TITLE' | translate }}
+          </h3>
+          <p>{{ 'COOKIES_PAGE.SECTION_2.SUB_4.TEXT' | translate }}</p>
+          <ul class="list-disc pl-5 space-y-1 mt-2" role="list">
+            <li role="listitem">{{ 'COOKIES_PAGE.SECTION_2.SUB_4.LIST_1' | translate }}</li>
+            <li role="listitem">{{ 'COOKIES_PAGE.SECTION_2.SUB_4.LIST_2' | translate }}</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-primary mb-2">
+            {{ 'COOKIES_PAGE.SECTION_2.SUB_5.TITLE' | translate }}
+          </h3>
+          <p>{{ 'COOKIES_PAGE.SECTION_2.SUB_5.TEXT' | translate }}</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</section>

@@ -11,10 +11,10 @@ export class ThemeMode {
   }
 
   private initTheme() {
-    const themeGuardado = localStorage.getItem('theme');
+    const themeInStorage = localStorage.getItem('theme');
     if (
-      themeGuardado === 'dark' ||
-      (!themeGuardado && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      themeInStorage === 'dark' ||
+      (!themeInStorage && window.matchMedia('(prefers-color-scheme: dark)').matches)
     ) {
       this.isDarkMode.set(true);
       document.documentElement.classList.add('dark');
@@ -25,7 +25,7 @@ export class ThemeMode {
   }
 
   toggleTheme() {
-    this.isDarkMode.update((estadoAnterior) => !estadoAnterior);
+    this.isDarkMode.update((previousState) => !previousState);
     if (this.isDarkMode()) {
       document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');

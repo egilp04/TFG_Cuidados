@@ -1,0 +1,27 @@
+@reference "../../../styles.css";
+.notifications-name {
+  @apply cursor-pointer font-bold transition-colors duration-500! text-label;
+}
+
+.notifications-container {
+  @apply flex flex-col items-center px-10 gap-10 lg:gap-20;
+}
+
+.notifications-table-container {
+  @apply flex flex-col p-10 w-full max-w-6xl bg-surface rounded-2xl shadow-md border border-disabled! dark:bg-surface-dark mb-20;
+}
+
+.notifications-table-container-inner {
+  @apply w-full overflow-x-auto pb-2;
+}
+
+.notifications-table {
+  @apply w-full min-w-125 md:min-w-full;
+}
+
+.notifications-text {
+  @apply text-primary dark:text-surface;
+}
+.notifications-title {
+  @apply text-h1 text-primary text-center dark:text-surface mb-20;
+}

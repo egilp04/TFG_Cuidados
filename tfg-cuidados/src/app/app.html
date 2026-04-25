@@ -2,11 +2,19 @@
   @if (!router.url.includes('recover-password')) {
     <app-navbar class="flex-none"></app-navbar>
   }
+  @if (this.authService.isAuthenticated() && !router.url.includes('recover-password')) {
+    <app-nav-home></app-nav-home>
+  }
   <main>
-    <app-global-notifications></app-global-notifications>
     <router-outlet></router-outlet>
   </main>
   @if (!router.url.includes('recover-password')) {
-    <app-footer class="flex-none"></app-footer>
+    <app-footer></app-footer>
+  }
+  @defer (on idle) {
+    <app-ai-assistant></app-ai-assistant>
+  } @placeholder {
+    <div aria-hidden="true"></div>
   }
 </div>
+<app-global-notifications></app-global-notifications>

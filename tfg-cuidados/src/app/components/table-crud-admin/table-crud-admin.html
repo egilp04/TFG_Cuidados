@@ -5,6 +5,7 @@
     </label>
     <app-searchbar [control]="searchControl" id="admin-search-input"> </app-searchbar>
   </header>
+
   <div class="table-admin">
     <main class="overflow-x-auto">
       <table 
@@ -16,31 +17,35 @@
         <caption id="admin-table-summary" class="sr-only">
           {{ 'ADMIN_TABLE.SUMMARY' | translate }}
         </caption>
-        <ng-container matColumnDef="nombre">
+
+        <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef class="table-column-name text-label" scope="col">
             {{ 'ADMIN_TABLE.HEADER.NAME' | translate }}
           </th>
           <td mat-cell *matCellDef="let item" class="table-column-name text-label">
-            {{ item.nombre }}
+            {{ item.name }}
           </td>
         </ng-container>
-        <ng-container matColumnDef="apellidos">
+
+        <ng-container matColumnDef="surnames">
           <th mat-header-cell *matHeaderCellDef class="table-column-name text-label" scope="col">
             {{ 'ADMIN_TABLE.HEADER.SURNAME' | translate }}
           </th>
           <td mat-cell *matCellDef="let item" class="p-5 table-column-name text-label">
-            {{ item.ape1 }} {{ item.ape2 }}
+            {{ item.surname1 }} {{ item.surname2 }}
           </td>
         </ng-container>
+
         <ng-container matColumnDef="email">
           <th mat-header-cell *matHeaderCellDef class="table-column-name text-label" scope="col">
-            Email
+            {{ 'ADMIN_TABLE.HEADER.EMAIL' | translate }}
           </th>
           <td mat-cell *matCellDef="let item" class="table-column-name text-label">
             {{ item.email }}
           </td>
         </ng-container>
-        <ng-container matColumnDef="acciones">
+
+        <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef scope="col">
             <span class="sr-only">{{ 'ADMIN_TABLE.HEADER.ACTIONS' | translate }}</span>
           </th>
@@ -49,20 +54,22 @@
               <app-button
                 [label]="'ADMIN_TABLE.BTN.DELETE' | translate"
                 variant="secondary"
-                (click)="onDeleteItem(item)"
-                [attr.aria-label]="('ADMIN_TABLE.BTN.DELETE' | translate) + ': ' + item.nombre"
+                (click)="onDelete(item)"
+                [attr.aria-label]="('ADMIN_TABLE.BTN.DELETE' | translate) + ': ' + item.name"
               ></app-button>
               <app-button
                 [label]="'ADMIN_TABLE.BTN.MODIFY' | translate"
                 variant="primary"
-                (click)="onModifyItem(item)"
-                [attr.aria-label]="('ADMIN_TABLE.BTN.MODIFY' | translate) + ': ' + item.nombre"
+                (click)="onModify(item)"
+                [attr.aria-label]="('ADMIN_TABLE.BTN.MODIFY' | translate) + ': ' + item.name"
               ></app-button>
             </div>
           </td>
         </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
         <tr class="mat-row" *matNoDataRow>
           <td 
             class="p-8 text-center" 
@@ -77,6 +84,7 @@
         </tr>
       </table>
     </main>
+
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"
       [pageSize]="10"

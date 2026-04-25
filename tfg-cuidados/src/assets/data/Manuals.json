@@ -1,14 +1,14 @@
 [
   {
-    "titulo": "MANUALS.ITEMS.START.TITLE",
-    "descripcion": "MANUALS.ITEMS.START.DESC",
-    "imagen": "assets/img/manuals/manual_inicio.webp",
-    "archivo": "assets/manuals/manualInicio.pdf"
+    "title": "MANUALS.ITEMS.START.TITLE",
+    "description": "MANUALS.ITEMS.START.DESC",
+    "image": "assets/img/manuals/manual_inicio.webp",
+    "data": "assets/manuals/manualInicio.pdf"
   },
   {
-    "titulo": "MANUALS.ITEMS.PROTOCOL.TITLE",
-    "descripcion": "MANUALS.ITEMS.PROTOCOL.DESC",
-    "imagen": "assets/img/manuals/manual_protocolo.webp",
-    "archivo": "assets/manuals/manualProfesional.pdf"
+    "title": "MANUALS.ITEMS.PROTOCOL.TITLE",
+    "description": "MANUALS.ITEMS.PROTOCOL.DESC",
+    "image": "assets/img/manuals/manual_protocolo.webp",
+    "data": "assets/manuals/manualProfesional.pdf"
   }
 ]

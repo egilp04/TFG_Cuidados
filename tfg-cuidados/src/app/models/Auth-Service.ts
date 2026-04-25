@@ -1,41 +1,41 @@
 export interface RegisterPayload {
   email: string;
   password?: string;
-  nombre?: string;
-  telef?: string;
-  ape1?: string;
-  ape2?: string;
+  name?: string;
+  phone?: string;
+  surname1?: string;
+  surname2?: string;
   dni?: string;
-  fechnac?: string | Date;
-  direccion?: string;
-  localidad?: string;
-  codpostal?: string;
-  comunidad?: string;
+  birthdate?: string | Date;
+  address?: string;
+  city?: string;
+  postcode?: string;
+  comunity?: string;
   cif?: string;
-  descripcion?: string;
+  description?: string;
 }
 
 export interface AuthUserModel {
-  id_usuario: string;
-  rol: 'cliente' | 'empresa' | 'administrador';
-  estado: boolean;
+  id_user: string;
+  rol: 'client' | 'business' | 'administrator';
+  state: boolean;
   email: string;
-  nombre?: string;
-  telef?: string;
-  ape1?: string;
-  ape2?: string;
+  name?: string;
+  phone?: string;
+  surname1?: string;
+  surname2?: string;
   dni?: string;
-  fechnac?: string;
-  direccion?: string;
-  localidad?: string;
-  codpostal?: string;
-  comunidad?: string;
+  birthdate?: string;
+  address?: string;
+  city?: string;
+  portcode?: string;
+  comunity?: string;
   cif?: string;
-  descripcion?: string;
+  description?: string;
 }
 
 export interface PreparacionRegistro {
-  emailLimpio: string;
-  passwordLimpia: string;
+  cleanEmail: string;
+  cleanEmailPassword: string;
   metaData: Record<string, any>;
 }

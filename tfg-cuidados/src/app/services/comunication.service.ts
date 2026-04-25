@@ -2,138 +2,157 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { from, Observable, throwError, BehaviorSubject, of, forkJoin } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import { ComunicacionModel } from '../models/Comunicacion';
+import { ComunicationModel } from '../models/ComunicationModel';
 import { AuthService } from './auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
- * @description Servicio central de comunicaciones. Gestiona el flujo bidireccional
- * de mensajes y notificaciones del sistema utilizando programación reactiva (RxJS).
+ * Servicio de comunicación central. Gestiona el flujo bidireccional de mensajes
+ * y notificaciones del sistema utilizando programación reactiva.
  */
 @Injectable({
   providedIn: 'root',
 })
 export class ComunicationService {
-  /**
-   * BehaviorSubjects que actúan como "Single Source of Truth" para la interfaz.
-   * Permiten que múltiples componentes consuman los mismos datos en tiempo real.
-   */
   private supabase = inject(SupabaseService).getClient();
   private authService = inject(AuthService);
-  private readonly tiposValidos = ['mensaje', 'notificacion'] as const;
-  private mensajesList$ = new BehaviorSubject<ComunicacionModel[]>([]);
-  private notificacionesList$ = new BehaviorSubject<ComunicacionModel[]>([]);
+  private readonly validTypeComunication = ['message', 'notification'] as const;
+  private messagesList$ = new BehaviorSubject<ComunicationModel[]>([]);
+  private notificationsList$ = new BehaviorSubject<ComunicationModel[]>([]);
+  private translate = inject(TranslateService);
 
   constructor() {
     this.initRealtime();
   }
 
-  getMessagesObservable(): Observable<ComunicacionModel[]> {
-    this.refreshMensajes();
-    return this.mensajesList$.asObservable();
+  /**
+   * Retorna un observable de los mensajes del usuario actual.
+   */
+  getMessagesObservable(): Observable<ComunicationModel[]> {
+    this.refreshMessages();
+    return this.messagesList$.asObservable();
   }
 
-  getNotificationsObservable(): Observable<ComunicacionModel[]> {
-    this.refreshNotificaciones();
-    return this.notificacionesList$.asObservable();
+  /**
+   * Retorna un observable de las notificaciones del usuario actual.
+   */
+  getNotificationsObservable(): Observable<ComunicationModel[]> {
+    this.refreshNotificacions();
+    return this.notificationsList$.asObservable();
   }
 
+  /**
+   * Calcula el número de mensajes no leídos del usuario actual.
+   */
   getUnreadMessagesCount(): Observable<number> {
-    return this.mensajesList$.asObservable().pipe(
-      map((mensajes) => {
+    return this.messagesList$.asObservable().pipe(
+      map((messages) => {
         const user = this.authService.currentUser();
         if (!user) return 0;
-        return mensajes.filter((m) => !m.leido && m.id_receptor === user.id_usuario).length;
+        return messages.filter((m) => !m.read && m.id_receiver === user.id_user).length;
       }),
     );
   }
 
+  /**
+   * Calcula el número de notificaciones no leídas del usuario actual.
+   */
   getUnreadNotificationsCount(): Observable<number> {
-    return this.notificacionesList$.asObservable().pipe(
-      map((notificaciones) => {
-        return notificaciones.filter((n) => !n.leido).length;
+    return this.notificationsList$.asObservable().pipe(
+      map((notifications) => {
+        return notifications.filter((n) => !n.read).length;
       }),
     );
   }
 
+  /**
+   * Inicializa la escucha en tiempo real de la tabla Comunication.
+   */
   private initRealtime() {
     this.supabase
-      .channel('public:comunicacion')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'Comunicacion' }, () => {
-        this.refreshMensajes();
-        this.refreshNotificaciones();
+      .channel('public:comunication')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'Comunication' }, () => {
+        this.refreshMessages();
+        this.refreshNotificacions();
       })
       .subscribe();
   }
 
-  private async refreshMensajes() {
+  /**
+   * Sincroniza la lista de mensajes desde la base de datos.
+   */
+  private async refreshMessages() {
     const user = this.authService.currentUser();
     if (!user) {
-      this.mensajesList$.next([]);
+      this.messagesList$.next([]);
       return;
     }
     const { data, error } = await this.supabase
-      .from('Comunicacion')
+      .from('Comunication')
       .select(
         `
       *,
-      Emisor:Usuario!fk_comunicacion_emisor (email),
-      Receptor:Usuario!fk_comunicacion_receptor (nombre, email)
+      Sender:User_public!id_sender (email),
+      Receiver:User_public!id_receiver (name, email)
     `,
       )
-      .eq('tipo_comunicacion', 'mensaje')
-      .or(`id_receptor.eq.${user.id_usuario},id_emisor.eq.${user.id_usuario}`)
-      .order('fecha_envio', { ascending: false });
+      .eq('type_comunication', 'message')
+      .or(`id_receiver.eq.${user.id_user},id_sender.eq.${user.id_user}`)
+      .order('send_date', { ascending: false });
 
     if (!error) {
-      const mensajesData = (data as ComunicacionModel[]) || [];
-      const mensajesFiltrados = mensajesData.filter((m) => {
-        if (m.id_receptor === user.id_usuario) return !m.eliminado_por_receptor;
-        if (m.id_emisor === user.id_usuario) return !m.eliminado_por_emisor;
+      const dataMessages = (data as ComunicationModel[]) || [];
+      const filteredMessages = dataMessages.filter((m) => {
+        if (m.id_receiver === user.id_user) return !m.deleted_by_receiver;
+        if (m.id_sender === user.id_user) return !m.deleted_by_sender;
         return true;
       });
-      this.mensajesList$.next(mensajesFiltrados);
+      this.messagesList$.next(filteredMessages);
     } else {
-      console.error('Error fetching mensajes:', error);
-    }
-  }
-
-  private async refreshNotificaciones() {
-    const user = this.authService.currentUser();
-    if (!user) {
-      this.notificacionesList$.next([]);
-      return;
-    }
-    const { data, error } = await this.supabase
-      .from('Comunicacion')
-      .select('*')
-      .eq('tipo_comunicacion', 'notificacion')
-      .eq('id_receptor', user.id_usuario)
-      .eq('eliminado_por_receptor', false)
-      .order('fecha_envio', { ascending: false });
-
-    if (!error) {
-      this.notificacionesList$.next((data as ComunicacionModel[]) || []);
+      console.error('Error al obtener mensajes:', error);
     }
   }
 
   /**
-   * Lógica de interceptación: Tras insertar un registro de tipo 'mensaje',
-   * el sistema dispara una llamada interna para generar una notificación persistente
-   * al usuario receptor.
+   * Sincroniza la lista de notificaciones desde la base de datos.
    */
-  insertComunicacion(comunicacion: Omit<ComunicacionModel, 'fecha_envio'>): Observable<void> {
-    if (!this.tiposValidos.includes(comunicacion.tipo_comunicacion as any)) {
-      return throwError(() => new Error('tipo_comunicacion inválido.'));
+  private async refreshNotificacions() {
+    const user = this.authService.currentUser();
+    if (!user) {
+      this.notificationsList$.next([]);
+      return;
     }
-    return from(this.supabase.from('Comunicacion').insert(comunicacion)).pipe(
+    const { data, error } = await this.supabase
+      .from('Comunication')
+      .select('*')
+      .eq('type_comunication', 'notification')
+      .eq('id_receiver', user.id_user)
+      .eq('deleted_by_receiver', false)
+      .order('send_date', { ascending: false });
+
+    if (!error) {
+      this.notificationsList$.next((data as ComunicationModel[]) || []);
+    }
+  }
+
+  /**
+   * Inserta un nuevo registro de comunicación y genera una notificación si es un mensaje.
+   */
+  insertComunication(comunication: Omit<ComunicationModel, 'send_date'>): Observable<void> {
+    if (!this.validTypeComunication.includes(comunication.type_comunication as any)) {
+      return throwError(
+        () => new Error(this.translate.instant('ERRORS.COMUNICATION.INVALID_TYPE')),
+      );
+    }
+    return from(this.supabase.from('Comunication').insert(comunication)).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
       switchMap(() => {
-        if (comunicacion.tipo_comunicacion === 'mensaje' && comunicacion.id_receptor) {
-          const asunto = 'Nuevo Mensaje Recibido';
-          const contenido = 'Tienes un nuevo mensaje en tu bandeja de entrada.';
-          return this.sendNotification(comunicacion.id_receptor, asunto, contenido);
+        if (comunication.type_comunication === 'message' && comunication.id_receiver) {
+          const topic = 'Nuevo Mensaje Recibido';
+          const content = 'Tienes un nuevo mensaje en tu bandeja de entrada.';
+          return this.sendNotification(comunication.id_receiver, topic, content);
         }
         return of(void 0);
       }),
@@ -141,71 +160,70 @@ export class ComunicationService {
     );
   }
 
-  updateComunicacion(id: string, changes: Partial<ComunicacionModel>): Observable<void> {
-    const currentMensajes = this.mensajesList$.getValue();
-    const indexM = currentMensajes.findIndex((m) => m.id_comunicacion === id);
+  /**
+   * Actualiza un registro de comunicación existente.
+   */
+  updateComunication(id: string, changes: Partial<ComunicationModel>): Observable<void> {
+    const currentMessages = this.messagesList$.getValue();
+    const indexM = currentMessages.findIndex((m) => m.id_comunication === id);
     if (indexM !== -1) {
-      const updatedList = [...currentMensajes];
+      const updatedList = [...currentMessages];
       updatedList[indexM] = { ...updatedList[indexM], ...changes };
-      this.mensajesList$.next(updatedList);
+      this.messagesList$.next(updatedList);
     }
-    const currentNotis = this.notificacionesList$.getValue();
-    const indexN = currentNotis.findIndex((n) => n.id_comunicacion === id);
+    const currentNotis = this.notificationsList$.getValue();
+    const indexN = currentNotis.findIndex((n) => n.id_comunication === id);
     if (indexN !== -1) {
       const updatedList = [...currentNotis];
       updatedList[indexN] = { ...updatedList[indexN], ...changes };
-      this.notificacionesList$.next(updatedList);
+      this.notificationsList$.next(updatedList);
     }
-    return from(this.supabase.from('Comunicacion').update(changes).eq('id_comunicacion', id)).pipe(
+    return from(this.supabase.from('Comunication').update(changes).eq('id_comunication', id)).pipe(
       map(({ error }) => {
-        if (error) {
-          throw error;
-        }
+        if (error) throw error;
       }),
       catchError((err) => throwError(() => err)),
     );
   }
 
   /**
-   * Implementa un borrado lógico de comunicaciones.
-   * Dependiendo de quién ejecute la acción, marca el flag 'eliminado_por_emisor'
-   * o 'eliminado_por_receptor' para mantener la integridad de la bandeja del otro usuario.
+   * Realiza una eliminación lógica de una comunicación basada en el rol del usuario activo (remitente/destinatario).
    */
-  deleteComunicacion(mensaje: ComunicacionModel): Observable<void> {
+  deleteComunication(message: ComunicationModel): Observable<void> {
     const user = this.authService.currentUser();
-    if (!user || !mensaje.id_comunicacion) return of(undefined);
+    if (!user || !message.id_comunication) return of(undefined);
 
-    if (mensaje.tipo_comunicacion === 'mensaje') {
-      const currentMensajes = this.mensajesList$.getValue();
-      const newMensajes = currentMensajes.filter(
-        (m) => m.id_comunicacion !== mensaje.id_comunicacion,
+    if (message.type_comunication === 'message') {
+      const currentMessages = this.messagesList$.getValue();
+      const newMessages = currentMessages.filter(
+        (m) => m.id_comunication !== message.id_comunication,
       );
-      if (currentMensajes.length !== newMensajes.length) {
-        this.mensajesList$.next(newMensajes);
+      if (currentMessages.length !== newMessages.length) {
+        this.messagesList$.next(newMessages);
       }
     } else {
-      const currentNotis = this.notificacionesList$.getValue();
-      const newNotis = currentNotis.filter((n) => n.id_comunicacion !== mensaje.id_comunicacion);
+      const currentNotis = this.notificationsList$.getValue();
+      const newNotis = currentNotis.filter((n) => n.id_comunication !== message.id_comunication);
       if (currentNotis.length !== newNotis.length) {
-        this.notificacionesList$.next(newNotis);
+        this.notificationsList$.next(newNotis);
       }
     }
 
-    let updates: Partial<ComunicacionModel> = {};
+    let updates: Partial<ComunicationModel> = {};
 
-    if (mensaje.id_emisor === user.id_usuario) {
-      updates = { eliminado_por_emisor: true };
-    } else if (mensaje.id_receptor === user.id_usuario) {
-      updates = { eliminado_por_receptor: true };
+    if (message.id_sender === user.id_user) {
+      updates = { deleted_by_sender: true };
+    } else if (message.id_receiver === user.id_user) {
+      updates = { deleted_by_receiver: true };
     } else {
       return of(undefined);
     }
 
     return from(
       this.supabase
-        .from('Comunicacion')
+        .from('Comunication')
         .update(updates)
-        .eq('id_comunicacion', mensaje.id_comunicacion),
+        .eq('id_comunication', message.id_comunication),
     ).pipe(
       map(({ error }) => {
         if (error) throw error;
@@ -214,68 +232,83 @@ export class ComunicationService {
     );
   }
 
-  getMensajeId(idMensaje: string): Observable<ComunicacionModel> {
+  /**
+   * Recupera un único registro de comunicación por su identificador único.
+   */
+  getMensajeId(idMessage: string): Observable<ComunicationModel> {
     return from(
-      this.supabase.from('Comunicacion').select('*').eq('id_comunicacion', idMensaje).single(),
+      this.supabase.from('Comunication').select('*').eq('id_comunication', idMessage).single(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return data as ComunicacionModel;
+        return data as ComunicationModel;
       }),
       catchError((err) => throwError(() => err)),
     );
   }
 
-  private sendNotification(
-    idReceptor: string,
-    asunto: string,
-    contenido: string,
-  ): Observable<void> {
-
-    const notificacion = {
-      tipo_comunicacion: 'notificacion' as const,
-      id_emisor: null,
-      id_receptor: idReceptor,
-      asunto: asunto,
-      contenido: contenido,
-      leido: false,
-      eliminado_por_emisor: false,
-      eliminado_por_receptor: false,
+  /**
+   * Crea e inserta un registro de notificación.
+   */
+  private sendNotification(idReceiver: string, topic: string, content: string): Observable<void> {
+    const notification = {
+      type_comunication: 'notification' as const,
+      id_sender: null,
+      id_receiver: idReceiver,
+      topic: topic,
+      content: content,
+      read: false,
+      deleted_by_sender: false,
+      deleted_by_receiver: false,
     };
 
-    return this.insertComunicacion(notificacion);
+    return this.insertComunication(notification);
   }
 
-  notifyAdmins(asunto: string, contenido: string): Observable<void> {
+  /**
+   * Envía una notificación a todos los administradores activos.
+   */
+  notifyAdmins(topic: string, content: string): Observable<void> {
     return from(
       this.supabase
-        .from('Usuario')
-        .select('id_usuario')
-        .eq('rol', 'administrador')
-        .eq('estado', true),
+        .from('User_public')
+        .select('id_user')
+        .eq('rol', 'administrator')
+        .eq('state', true),
     ).pipe(
       switchMap(({ data }) => {
         if (!data || data.length === 0) return of(void 0);
-        const adminsData = data as AdminResponse[];
-        const notificaciones = adminsData.map((admin) =>
-          this.sendNotification(admin.id_usuario, asunto, contenido),
+
+        interface AdminResponse {
+          id_user: string;
+        }
+
+        const adminsData = data as unknown as AdminResponse[];
+        const notifications = adminsData.map((admin) =>
+          this.sendNotification(admin.id_user, topic, content),
         );
 
-        return forkJoin(notificaciones).pipe(map(() => void 0));
+        return forkJoin(notifications).pipe(map(() => void 0));
       }),
       catchError((err) => {
-        console.error('Error notificando admins', err);
+        console.error('Error al notificar administradores', err);
         return of(void 0);
       }),
     );
   }
 
-  notifyUsers(idUsuarioDestino: string, asunto: string, contenido: string): Observable<void> {
-    return this.sendNotification(idUsuarioDestino, asunto, contenido);
+  /**
+   * Envía una notificación a un usuario específico.
+   */
+  notifyUsers(idReceiverUser: string, topic: string, content: string): Observable<void> {
+    return this.sendNotification(idReceiverUser, topic, content);
   }
 
+  /**
+   * Actualiza forzadamente los datos de mensajes y notificaciones.
+   */
   refreshUsersData() {
-    this.refreshMensajes();
-    this.refreshNotificaciones();
+    this.refreshMessages();
+    this.refreshNotificacions();
   }
 }

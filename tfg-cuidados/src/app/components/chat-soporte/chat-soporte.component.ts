@@ -1,12 +1,15 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ComunicationService } from '../../services/comunication.service';
 import { AuthService } from '../../services/auth.service';
 import { SupabaseService } from '../../services/supabase.service';
-import { ComunicacionModel } from '../../models/Comunicacion';
 import { TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
+/**
+ * Componente para el widget de chat de soporte flotante.
+ * Permite a clientes y negocios enviar tickets de soporte directamente a administradores.
+ */
 @Component({
   selector: 'app-chat-soporte',
   standalone: true,
@@ -15,70 +18,77 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./chat-soporte.component.css'],
 })
 export class ChatSoporteComponent implements OnInit {
-  private comunicationService = inject(ComunicationService);
   private authService = inject(AuthService);
   private supabase = inject(SupabaseService).getClient();
+  private http = inject(HttpClient);
+  private cd = inject(ChangeDetectorRef);
 
-  isOpen = false;
-  newMessage = '';
-  adminId: string | null = null;
-  currentUser = this.authService.currentUser();
+  public isOpen = false;
+  public newMessage = '';
+  public adminId: string | null = null;
+  public currentUser = this.authService.currentUser();
 
-  isSending = false;
-  messageSent = false;
+  public isSending = false;
+  public messageSent = false;
 
-  async ngOnInit() {
-    if (this.currentUser?.rol === 'administrador') {
+  async ngOnInit(): Promise<void> {
+    if (this.currentUser?.rol === 'administrator') {
       return;
     }
 
     const { data } = await this.supabase
-      .from('Usuario')
-      .select('id_usuario')
-      .eq('rol', 'administrador')
-      .eq('estado', true)
+      .from('User_public')
+      .select('id_user')
+      .eq('rol', 'administrator')
+      .eq('state', true)
       .limit(1)
       .single();
 
     if (data) {
-      this.adminId = data.id_usuario;
+      this.adminId = data.id_user;
     }
   }
 
-  toggleChat() {
+  /**
+   * Alterna la visibilidad de la ventana de chat de soporte.
+   */
+  toggleChat(): void {
     this.isOpen = !this.isOpen;
     if (!this.isOpen) {
       this.messageSent = false;
     }
   }
 
-  sendMessage() {
-    if (!this.newMessage.trim() || !this.adminId || !this.currentUser) return;
+  /**
+   * Envía el mensaje del usuario a la API de soporte del servidor.
+   */
+  sendMessage(): void {
+    if (!this.newMessage.trim()) return;
 
     this.isSending = true;
-    this.messageSent = false;
 
-    const messageToSend = {
-      tipo_comunicacion: 'mensaje' as const,
-      id_emisor: this.currentUser.id_usuario,
-      id_receptor: this.adminId,
-      asunto: 'Soporte Directo',
-      contenido: this.newMessage.trim(),
-      leido: false,
-      eliminado_por_emisor: false,
-      eliminado_por_receptor: false,
+    const payload = {
+      message: this.newMessage,
+      userEmail: this.currentUser?.email || 'Usuario Anónimo',
     };
 
-    this.comunicationService.insertComunicacion(messageToSend).subscribe({
+    this.http.post('/api/support', payload).subscribe({
       next: () => {
         this.isSending = false;
         this.messageSent = true;
         this.newMessage = '';
-        this.comunicationService.refreshUsersData();
+        this.cd.detectChanges();
+
+        setTimeout(() => {
+          this.isOpen = false;
+          this.messageSent = false;
+          this.cd.detectChanges();
+        }, 3000);
       },
-      error: (err) => {
+      error: (err: Error) => {
+        console.error('Error enviando ticket de soporte:', err);
         this.isSending = false;
-        console.error('Error enviando ticket al admin:', err);
+        this.cd.detectChanges();
       },
     });
   }

@@ -1,0 +1,40 @@
+@reference "../../../styles.css";
+.message-modal-container {
+  @apply p-4 flex flex-col w-full justify-center items-center gap-6 bg-surface dark:bg-surface-dark rounded-12 z-30;
+}
+
+.message-modal-form-container {
+  @apply w-full flex flex-col;
+}
+
+.message-modal-text-container {
+  @apply flex flex-col border-2 border-accent rounded-2xl;
+}
+
+.message-modal-label {
+  @apply text-center text-primary font-bold uppercase text-label dark:text-surface;
+}
+
+.message-modal-textarea {
+  @apply w-full min-h-120 outline-none resize-none text-primary dark:text-surface dark:placeholder:text-surface text-label;
+}
+
+.messages-form-select-label {
+  @apply text-label text-primary font-medium dark:text-surface;
+}
+
+.messages-form-options {
+  @apply text-primary;
+}
+
+.messages-form-select-container {
+  @apply flex flex-col gap-2 w-full flex-1;
+}
+
+.messages-form-select {
+  @apply text-primary dark:text-surface appearance-none bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary dark:border-surface border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer;
+}
+
+.messages-form-select-arrow {
+  @apply absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary dark:text-white flex items-center;
+}

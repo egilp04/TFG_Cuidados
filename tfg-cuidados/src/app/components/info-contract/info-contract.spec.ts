@@ -17,7 +17,7 @@ describe('InfoContract', () => {
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            contrato: { id_contrato: 1, servicio: 'Limpieza', estado: 'activo' },
+            contrato: { id_contrato: 1, servicio: 'Limpieza', estado: 'active' },
             rol: 'cliente',
           },
         },

@@ -1,17 +1,17 @@
 [
   {
-    "titulo": "LANDING.CARDS.CONTRATACION.TITLE",
-    "descripcion": "LANDING.CARDS.CONTRATACION.DESC",
-    "imagen": "assets/img/landing/contratacion.webp"
+    "title": "LANDING.CARDS.CONTRATACION.TITLE",
+    "description": "LANDING.CARDS.CONTRATACION.DESC",
+    "image": "assets/img/landing/contratacion.webp"
   },
   {
-    "titulo": "LANDING.CARDS.GESTION.TITLE",
-    "descripcion": "LANDING.CARDS.GESTION.DESC",
-    "imagen": "assets/img/landing/gestion.webp"
+    "title": "LANDING.CARDS.GESTION.TITLE",
+    "description": "LANDING.CARDS.GESTION.DESC",
+    "image": "assets/img/landing/gestion.webp"
   },
   {
-    "titulo": "LANDING.CARDS.RESOLUCION.TITLE",
-    "descripcion": "LANDING.CARDS.RESOLUCION.DESC",
-    "imagen": "assets/img/landing/resolucion.webp"
+    "title": "LANDING.CARDS.RESOLUCION.TITLE",
+    "description": "LANDING.CARDS.RESOLUCION.DESC",
+    "image": "assets/img/landing/resolucion.webp"
   }
 ]

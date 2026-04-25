@@ -11,9 +11,12 @@ import { TableCrudAdmin } from '../../components/table-crud-admin/table-crud-adm
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { ButtonComponent } from '../../components/button/button';
 import { UserService } from '../../services/user.service';
-import { UserModel } from '../../models/User-Service';
+import { UserModel } from '../../models/User_Service';
 import { ResponsiveSize } from '../../services/responsive-size';
 
+/**
+ * Página de gestión de administrador para listar, editar y eliminar usuarios (clientes o negocios).
+ */
 @Component({
   selector: 'app-management-admin',
   standalone: true,
@@ -28,40 +31,51 @@ export default class ManagementAdmin implements OnInit {
   private dialog = inject(MatDialog);
   private destroyRef = inject(DestroyRef);
   private translate = inject(TranslateService);
-  public isUser: boolean = true;
   private responsive = inject(ResponsiveSize);
+
+  public isClient: boolean = true;
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
-      const tipo = params['tipo'];
-      this.chargeData(tipo === 'empresa' ? 'empresa' : 'cliente');
+      const type = params['type'];
+      this.loadData(type === 'business' ? 'business' : 'client');
     });
   }
 
-  private chargeData(tipo: 'cliente' | 'empresa'): void {
-    this.isUser = tipo === 'cliente';
-    this.userService.loadUsers(tipo);
+  /**
+   * Actualiza el estado de la vista e inicia la carga de la lista de usuarios desde el servicio.
+   * @param type El tipo de usuario a gestionar: 'client' o 'business'.
+   */
+  private loadData(type: 'client' | 'business'): void {
+    this.isClient = type === 'client';
+    this.userService.loadUsers(type);
   }
 
-  async toDeleteUser(item: UserModel) {
+  /**
+   * Abre una modal de confirmación y elimina el usuario seleccionado.
+   * @param user El registro de usuario a eliminar.
+   */
+  async deleteUser(user: UserModel): Promise<void> {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
+
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       maxHeight: '90vh',
-      data: { modo: 'eliminar' },
+      data: { mode: 'delete' },
     });
+
     dialogRef
       .afterClosed()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter((result) => result === true),
         switchMap(() =>
-          this.userService.deleteUser(item.id_usuario).pipe(
+          this.userService.deleteUser(user.id_user!).pipe(
             switchMap(() =>
               this.translate
                 .get('MESSAGES.SUCCESS.DELETE_USER')
-                .pipe(map((msg) => ({ text: msg, type: 'exito' as const }))),
+                .pipe(map((msg) => ({ text: msg, type: 'success' as const }))),
             ),
             catchError(() =>
               this.translate
@@ -74,23 +88,34 @@ export default class ManagementAdmin implements OnInit {
       .subscribe({
         next: (res) => {
           this.messageService.showMessage(res.text, res.type);
-          if (res.type === 'exito') {
-            this.chargeData(this.isUser ? 'cliente' : 'empresa');
+          if (res.type === 'success') {
+            this.loadData(this.isClient ? 'client' : 'business');
           }
         },
       });
   }
 
-  toEditFunction(item: UserModel) {
-    const usuarioConRol = {
-      ...item,
-      rol: this.isUser ? 'cliente' : 'empresa',
+  /**
+   * Navega a la página de modificación de perfil con los datos del usuario seleccionado.
+   * @param user El registro de usuario a editar.
+   */
+  editUser(user: UserModel): void {
+    const userWithRole = {
+      ...user,
+      rol: this.isClient ? 'client' : 'business',
     };
-    this.router.navigate(['/modify-profile'], { state: { usuario: usuarioConRol } });
+    this.router.navigate(['/modify-profile'], {
+      state: { user: userWithRole },
+    });
   }
 
-  createNewUser() {
-    const tipo = this.isUser ? 'cliente' : 'empresa';
-    this.router.navigate(['/register'], { state: { tipo } });
+  /**
+   * Redirige a la página de registro para crear un nuevo usuario del tipo actual.
+   */
+  createUser(): void {
+    const type = this.isClient ? 'client' : 'business';
+    this.router.navigate(['/register'], {
+      state: { type },
+    });
   }
 }

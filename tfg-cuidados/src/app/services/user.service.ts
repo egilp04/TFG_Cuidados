@@ -1,18 +1,19 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { from, Observable, throwError, BehaviorSubject, of } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { from, Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import {
   RpcSuccessResponse,
   UpdateProfilePayload,
   UserEmailResponse,
   UserModel,
   UserNameResponse,
-} from '../models/User-Service';
+} from '../models/User_Service';
+import { TranslateService } from '@ngx-translate/core';
+
 /**
- * @description Servicio de administración de usuarios y perfiles.
- * Implementa una lógica de consulta dinámica para unificar la identidad (Usuario)
- * con su especialización/rol (Cliente o Empresa) en un único objeto de dominio.
+ * Servicio de administración de usuarios y perfiles.
+ * Gestiona la unificación de identidad (User_public) con especialización de rol (Cliente o Negocio).
  */
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -20,14 +21,20 @@ export class UserService {
 
   private _usersList = signal<UserModel[]>([]);
   public usersList = this._usersList.asReadonly();
-  
-  private currentType: 'cliente' | 'empresa' = 'cliente';
+
+  private translate = inject(TranslateService);
+
+  private currentType: 'client' | 'business' = 'client';
 
   constructor() {
     this.initRealtime();
   }
 
-  loadUsers(tipo: 'cliente' | 'empresa'): void {
+  /**
+   * Establece el tipo de usuario y desencadena una actualización de la lista.
+   * @param tipo El tipo de usuario a cargar ('cliente' o 'empresa').
+   */
+  loadUsers(tipo: 'client' | 'business'): void {
     this.currentType = tipo;
     this._usersList.set([]);
     this.refreshUsers();
@@ -35,54 +42,55 @@ export class UserService {
 
   /**
    * Suscripción multi-canal para actualizaciones en tiempo real.
-   * Monitorea tres tablas simultáneamente (Usuario, Cliente, Empresa) para
-   * sincronizar la vista del administrador ante cualquier cambio de estado.
+   * Monitorea las tablas User_public, Client y Business.
    */
   private initRealtime() {
     this.supabase
       .channel('admin-users-channel')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'Usuario' }, () =>
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'User_public' }, () =>
         this.refreshUsers(),
       )
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'Cliente' }, () =>
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'Client' }, () =>
         this.refreshUsers(),
       )
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'Empresa' }, () =>
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'Business' }, () =>
         this.refreshUsers(),
       )
       .subscribe();
   }
 
   /**
-   * Ejecuta una consulta relacional con filtrado dinámico.
-   * Utiliza el operador '!inner' para forzar un JOIN que solo recupere usuarios
-   * con perfiles de especialización válidos y activos.
+   * Ejecuta una consulta relacional con filtrado dinámico para obtener perfiles de usuario completos.
    */
   private async refreshUsers() {
-    const tableRel = this.currentType === 'cliente' ? 'Cliente' : 'Empresa';
+    const tableRel = this.currentType === 'client' ? 'Client' : 'Business';
     const { data, error } = await this.supabase
-      .from('Usuario')
-      .select(`*, "${tableRel}"!inner(*)`)
-      .eq('estado', true);
+      .from('User_public')
+      .select(`*, ${tableRel}!inner(*)`)
+      .eq('state', true);
 
     if (error) {
-      console.error(`ERROR cargando ${tableRel}:`, error);
+      console.error(`ERROR al cargar ${tableRel}:`, error);
       return;
     }
+
     if (data) {
       const flattened: UserModel[] = data.map((u: Record<string, unknown>) => {
-        const detalle = (u[tableRel] || u[tableRel.toLowerCase()] || u[`"${tableRel}"`]) as
-          | Record<string, unknown>
-          | undefined;
+        const detail = u[tableRel] as Record<string, unknown> | undefined;
         return {
           ...u,
-          ...(detalle || {}),
+          ...(detail || {}),
         } as unknown as UserModel;
       });
 
-      this._usersList.set(flattened);    }
+      this._usersList.set(flattened);
+    }
   }
 
+  /**
+   * Invoca un RPC de base de datos para realizar una eliminación completa del usuario.
+   * @param userId Identificador único del usuario a eliminar.
+   */
   deleteUser(userId: string): Observable<void> {
     return from(this.supabase.rpc('eliminar_usuario_total', { id_a_borrar: userId })).pipe(
       map(({ error }) => {
@@ -93,52 +101,54 @@ export class UserService {
   }
 
   /**
-   * Validación de unicidad de credenciales.
-   * Realiza una comprobación de existencia cruzada, excluyendo al usuario actual
-   * para permitir ediciones de perfil sin conflictos de identidad.
+   * Verifica si un correo es único en el sistema, excluyendo un ID de usuario específico.
+   * @param email Correo a verificar.
+   * @param userId Identificador del usuario a excluir de la verificación.
    */
   verifyUniqEmail(email: string, userId: string): Observable<boolean> {
     return from(
       this.supabase
-        .from('Usuario')
-        .select('id_usuario')
+        .from('User_public')
+        .select('id_user')
         .eq('email', email)
-        .neq('id_usuario', userId)
+        .neq('id_user', userId)
         .maybeSingle(),
     ).pipe(
       map(({ data }) => !data),
-      catchError(() => throwError(() => new Error('Error al validar email'))),
+      catchError(() =>
+        throwError(() => new Error(this.translate.instant('ERRORS.AUTH.ERRORS.EMAIL_VALIDATION'))),
+      ),
     );
   }
 
   /**
-   * Invocación de lógica de servidor (Database RPC).
-   * Delega la actualización de perfiles a una función almacenada 'update_profile_complete'.
-   * Esto garantiza la atomicidad: o se actualizan ambas tablas (Usuario + Perfil) o ninguna.
-   * @param bodyRPC Encapsula los parámetros necesarios para la transacción en la base de datos.
+   * Actualiza un perfil usando un procedimiento almacenado de base de datos para transacciones atómicas.
+   * @param userId Identificador único del usuario.
+   * @param dataToSend Carga útil que contiene actualizaciones de perfil.
+   * @param rol Rol del usuario que se actualiza.
    */
   updateProfileDirect(
     userId: string,
-    datosLimpios: UpdateProfilePayload,
+    dataToSend: UpdateProfilePayload,
     rol: string,
   ): Observable<RpcSuccessResponse> {
     const bodyRPC = {
       p_user_id: userId,
-      p_rol: rol,
-      p_nombre: datosLimpios.nombre,
-      p_email: datosLimpios.email,
-      p_telef: datosLimpios.telef,
-      p_ape1: datosLimpios.ape1 || null,
-      p_ape2: datosLimpios.ape2 || null,
-      p_direccion: datosLimpios.direccion || null,
-      p_localidad: datosLimpios.localidad || null,
-      p_codpostal: datosLimpios.codpostal || null,
-      p_comunidad: datosLimpios.comunidad || null,
-      p_descripcion: datosLimpios.descripcion || null,
+      p_role: rol,
+      p_name: dataToSend.name,
+      p_email: dataToSend.email,
+      p_phone: dataToSend.phone,
+      p_surname1: dataToSend.surname1 || null,
+      p_surname2: dataToSend.surname2 || null,
+      p_address: dataToSend.address || null,
+      p_city: dataToSend.city || null,
+      p_postcode: dataToSend.postcode || null,
+      p_community: dataToSend.comunity || null,
+      p_description: dataToSend.description || null,
     };
 
-    return from(this.supabase.rpc('update_profile_complete', bodyRPC)).pipe(
-      map(({ data, error }) => {
+    return from(this.supabase.rpc('update_user_profile', bodyRPC)).pipe(
+      map(({ error }) => {
         if (error) throw new Error(error.message);
         return { success: true };
       }),
@@ -146,32 +156,62 @@ export class UserService {
     );
   }
 
+  /**
+   * Recupera detalles de un usuario específico basado en una dirección de correo electrónico.
+   * @param email Correo a buscar.
+   */
   getUserByEmail(email: string): Observable<UserEmailResponse> {
     return from(
       this.supabase
-        .from('Usuario')
-        .select('id_usuario, nombre, email')
+        .from('User_public')
+        .select('id_user, name, email')
         .eq('email', email)
         .maybeSingle(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        // Se catea la respuesta para garantizar que coincide con la interfaz
-        return data as UserEmailResponse;
+        return data as unknown as UserEmailResponse;
       }),
       catchError((err) => throwError(() => err)),
     );
   }
 
+  /**
+   * Recupera el nombre de un usuario por su identificador único.
+   * @param id Identificador del usuario.
+   */
   getUserById(id: string): Observable<UserNameResponse> {
     return from(
-      this.supabase.from('Usuario').select('nombre').eq('id_usuario', id).maybeSingle(),
+      this.supabase.from('User_public').select('name').eq('id_user', id).maybeSingle(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return data as UserNameResponse;
+        return data as unknown as UserNameResponse;
       }),
       catchError((err) => throwError(() => err)),
+    );
+  }
+
+  /**
+   * Obtiene la lista de correos electrónicos de todos los usuarios activos,
+   * excluyendo el correo del usuario proporcionado.
+   * @param currentEmail El email del usuario logueado para excluirlo de la lista.
+   */
+  getActiveUsersEmails(currentEmail: string): Observable<string[]> {
+    return from(
+      this.supabase
+        .from('User_public')
+        .select('email')
+        .eq('state', true)
+        .neq('email', currentEmail),
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) {
+          console.error('Error al obtener correos:', error);
+          return [];
+        }
+        return (data || []).map((user) => user.email);
+      }),
     );
   }
 }

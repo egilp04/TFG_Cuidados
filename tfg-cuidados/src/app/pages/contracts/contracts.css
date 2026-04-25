@@ -1,0 +1,20 @@
+@reference "../../../styles.css";
+.contracts-title {
+  @apply text-h1 text-primary text-center mb-10 dark:text-surface;
+}
+
+.contracts-container-section {
+  @apply flex flex-col items-center;
+}
+
+.contracts-table-container {
+  @apply flex flex-col p-10 w-full;
+}
+
+.contracts-table {
+  @apply flex flex-col p-10 w-full overflow-auto;
+}
+
+.contracts-text {
+  @apply text-primary dark:text-surface;
+}
