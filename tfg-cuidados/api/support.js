@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });
   }
-  const { mensaje, emailUsuario } = req.body;
+  const { message, userEmail } = req.body;
   const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
   const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
   if (!TELEGRAM_TOKEN || !CHAT_ID) {
@@ -22,14 +22,14 @@ export default async function handler(req, res) {
         })[m],
     );
 
-  const usuarioLimpio = escapeHTML(emailUsuario || 'Usuario Anónimo');
-  const mensajeLimpio = escapeHTML(mensaje || '');
+  const userToSendMessage = escapeHTML(userEmail || 'Usuario Anónimo');
+  const messageSent = escapeHTML(message || '');
 
   const textoHTML =
     `<b>NUEVO TICKET DE SOPORTE</b>\n\n` +
-    `<b>Usuario:</b> ${usuarioLimpio}\n` +
-    `<b>Email:</b> <code>${usuarioLimpio}</code>\n` +
-    `<b>💬 Mensaje:</b>\n${mensajeLimpio}`;
+    `<b>Usuario:</b> ${userToSendMessage}\n` +
+    `<b>Email:</b> <code>${userToSendMessage}</code>\n` +
+    `<b>💬 Mensaje:</b>\n${messageSent}`;
 
   const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
 
