@@ -14,6 +14,7 @@ import { AnalyticsService } from '../../services/analytics.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SpinnerComponent } from '../../components/spinner/spinner.component';
+import { delay } from 'rxjs';
 
 Chart.register(...registerables);
 
@@ -40,6 +41,8 @@ export default class Dashboard implements OnInit {
   public activeContractsCount = 0;
   public canceledContractsCount = 0;
   private timelineDates: Date[] = [];
+
+  isLoading = true;
 
   // --- Configuraciones de datos de gráficos ---
 
@@ -124,8 +127,11 @@ export default class Dashboard implements OnInit {
   };
 
   ngOnInit(): void {
-    this.translateCharts();
-    this.subscribeToAnalytics();
+    setTimeout(() => {
+      this.translateCharts();
+      this.subscribeToAnalytics();
+      this.isLoading = false;
+    }, 1000);
   }
 
   /**
