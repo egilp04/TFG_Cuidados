@@ -13,6 +13,8 @@ import { CommonModule } from '@angular/common';
 import { AnalyticsService } from '../../services/analytics.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SpinnerComponent } from '../../components/spinner/spinner.component';
+import { delay } from 'rxjs';
 
 Chart.register(...registerables);
 
@@ -23,7 +25,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [BaseChartDirective, CommonModule, TranslateModule],
+  imports: [BaseChartDirective, CommonModule, TranslateModule, SpinnerComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -39,6 +41,8 @@ export default class Dashboard implements OnInit {
   public activeContractsCount = 0;
   public canceledContractsCount = 0;
   private timelineDates: Date[] = [];
+
+  isLoading = true;
 
   // --- Configuraciones de datos de gráficos ---
 
@@ -72,21 +76,19 @@ export default class Dashboard implements OnInit {
     labels: [],
     datasets: [
       {
-        label: '', // Poblado vía traducción
+        label: '',
         data: [],
         backgroundColor: '#17c448',
         borderRadius: 4,
       },
       {
-        label: '', // Poblado vía traducción
+        label: '',
         data: [],
         backgroundColor: '#60A5FA',
         borderRadius: 4,
       },
     ],
   };
-
-  // --- Opciones de gráficos ---
 
   public doughnutOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: true,
@@ -125,8 +127,11 @@ export default class Dashboard implements OnInit {
   };
 
   ngOnInit(): void {
-    this.translateCharts();
-    this.subscribeToAnalytics();
+    setTimeout(() => {
+      this.translateCharts();
+      this.subscribeToAnalytics();
+      this.isLoading = false;
+    }, 1000);
   }
 
   /**

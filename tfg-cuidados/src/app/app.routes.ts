@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
 import { publicGuard } from './core/guards/public-guard';
+import Landing from './pages/landing/landing';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./pages/landing/landing'),
+    component: Landing,
     pathMatch: 'full',
-    canActivate: [publicGuard],
   },
   {
     path: 'about-us',

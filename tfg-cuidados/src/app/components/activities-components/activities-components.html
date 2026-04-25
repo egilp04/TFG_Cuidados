@@ -151,14 +151,23 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell p-10 text-center! activity-text text-label" [attr.colspan]="displayedColumns.length">
+          {{ 'ACTIVITIES.NO_DATA' | translate }}
+        </td>
+      </tr>
+
     </table>
   </section>
 
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-    class="mt-20"
-    [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.SELECT_PAGE' | translate"
-  >
-  </mat-paginator>
+  @if (tableDataSource.data.length > 0) {
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      class="mt-20"
+      [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.SELECT_PAGE' | translate"
+    >
+    </mat-paginator>
+  }
 </div>

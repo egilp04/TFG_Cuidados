@@ -13,12 +13,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TranslateModule } from '@ngx-translate/core';
 import { ComunicationService } from '../../services/comunication.service';
 import { DarkModeBtnComponent } from '../dark-mode-btn/dark-mode-btn.component';
 import { filter } from 'rxjs';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { getHomeRouteByRole } from '../../core/utils/routerUtils';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -31,6 +32,7 @@ import { getHomeRouteByRole } from '../../core/utils/routerUtils';
     RouterLink,
     RouterLinkActive,
     RouterModule,
+    TranslateModule
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
@@ -42,6 +44,8 @@ export class Navbar implements OnInit {
   private comunicationService = inject(ComunicationService);
   private responsive = inject(ResponsiveSize);
   public isMenuOpen = false;
+  private translate = inject(TranslateService);
+
 
   constructor() {
     effect(() => {
@@ -140,4 +144,9 @@ export class Navbar implements OnInit {
 
   countMensajes$ = this.comunicationService.getUnreadMessagesCount();
   countNotificaciones$ = this.comunicationService.getUnreadNotificationsCount();
+
+  changeLanguage(lang: string) {
+    this.translate.use(lang);
+    localStorage.setItem('idioma_seleccionado', lang);
+  }
 }

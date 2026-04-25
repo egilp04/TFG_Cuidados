@@ -15,9 +15,13 @@
   </h1>
 
   <main class="mb-20">
-    <app-activities-components
-      [dataSource]="dataSource.data"
-      (onCancelContract)="cancelContract($event)"
-    ></app-activities-components>
+    @if (isLoading) {
+      <app-table-skeleton></app-table-skeleton>
+    } @else {
+      <app-activities-components
+        [dataSource]="dataSource.data"
+        (onCancelContract)="cancelContract($event)"
+      ></app-activities-components>
+    }
   </main>
 </section>

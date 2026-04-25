@@ -1,6 +1,6 @@
 @reference "../../../styles.css";
 .soporte-container {
-  @apply fixed bottom-10 left-4 md:bottom-24 md:left-12 z-50;
+  @apply fixed bottom-[60px] left-4 md:bottom-24 md:left-12 z-50;
 }
 
 .soporte-container-open {

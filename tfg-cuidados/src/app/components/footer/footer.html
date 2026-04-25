@@ -1,42 +1,17 @@
 <footer
-  class="footer-container"
+  class="footer-container "
   role="contentinfo"
   [attr.aria-label]="'FOOTER.ACCESSIBILITY.FOOTER_SECTION' | translate"
 >
   <nav [attr.aria-label]="'FOOTER.ACCESSIBILITY.NAV_LABEL' | translate" class="footer-nav">
-    <a routerLink="/terms" class="footer-text">
+    <a routerLink="/terms" class="footer-text animate-text-up">
       {{ 'FOOTER.LEGAL_ASPECTS' | translate }}
     </a>
-    <a routerLink="/terms" class="footer-text">
+    <a routerLink="/terms" class="footer-text animate-text-up delay-150">
       {{ 'FOOTER.PRIVACY_POLICTICS' | translate }}
     </a>
-    <a routerLink="/cookies_politics" class="footer-text">
+    <a routerLink="/cookies_politics" class="footer-text animate-text-up delay-300">
       {{ 'FOOTER.COOKIES_POLICIES' | translate }}
     </a>
   </nav>
-
-  <div
-    class="flex flex-row gap-4 items-center"
-    [attr.aria-label]="'FOOTER.ACCESSIBILITY.LANG_SELECTOR' | translate"
-  >
-    <button
-      (click)="changeLanguage('es')"
-      class="footer-text"
-      [attr.aria-label]="'FOOTER.ACCESSIBILITY.CHANGE_ES' | translate"
-      type="button"
-    >
-      ES
-    </button>
-
-    <span class="footer-text" aria-hidden="true">|</span>
-
-    <button
-      (click)="changeLanguage('en')"
-      class="footer-text"
-      [attr.aria-label]="'FOOTER.ACCESSIBILITY.CHANGE_EN' | translate"
-      type="button"
-    >
-      EN
-    </button>
-  </div>
 </footer>

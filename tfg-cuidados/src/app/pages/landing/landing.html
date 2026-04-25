@@ -1,50 +1,50 @@
 <section class="landing-container" role="main">
-  <section class="hero-section" aria-labelledby="hero-main-title">
-    <picture>
-      <source srcset="assets/img/hero/hero-2xl-laptop.webp" media="(min-width: 2561px)" />
-      <source srcset="assets/img/hero/hero-xl-laptop.webp" media="(min-width: 1921px)" />
-      <source srcset="assets/img/hero/hero-laptop.webp" media="(min-width: 1025px)" />
-      <source srcset="assets/img/hero/hero-tablet.webp" media="(min-width: 641px)" />
-      <img
-        src="assets/img/hero/hero-mobile.webp"
-        [alt]="'LANDING.HERO.ALT' | translate"
-        class="hero-image"
-      />
-    </picture>
-    <div class="hero-text-container animate-text">
-      <h1 id="hero-main-title" class="hero-title">
-        {{ 'LANDING.HERO.TITLE' | translate }}<br />
-        <span class="hero-subtitle">{{ 'LANDING.HERO.SUBTITLE' | translate }}</span>
-      </h1>
-    </div>
-  </section>
-
-  <section class="services-section" aria-labelledby="services-main-title">
-    <h2 id="services-main-title" class="services-title">
-      {{ 'LANDING.SERVICES' | translate }}
-    </h2>
-
-    <main class="services-grid" role="list" [attr.aria-label]="'LANDING.SERVICES' | translate">
-      @for (item of cardsdata; track item.title; let i = $index) {
-        <app-cards-landing
-          role="listitem"
-          [title]="item.title"
-          [description]="item.description"
-          [image]="item.image"
-          [class]="i === 2 ? 'services-card-special' : ''"
-        >
-        </app-cards-landing>
-      }
-    </main>
-
-    <footer class="register-btn">
-      <app-button
-        [label]="'LANDING.REGISTER' | translate"
-        variant="primary"
-        (onClick)="openModal()"
-        class="register-btn"
-        [attr.aria-label]="'LANDING.ACCESSIBILITY.REGISTER_BTN' | translate"
-      ></app-button>
-    </footer>
-  </section>
+    <section class="hero-section" aria-labelledby="hero-main-title">
+      <picture>
+        <source srcset="assets/img/hero/hero-2xl-laptop.webp" media="(min-width: 2561px)" />
+        <source srcset="assets/img/hero/hero-xl-laptop.webp" media="(min-width: 1921px)" />
+        <source srcset="assets/img/hero/hero-laptop.webp" media="(min-width: 1025px)" />
+        <source srcset="assets/img/hero/hero-tablet.webp" media="(min-width: 641px)" />
+        <img
+          src="assets/img/hero/hero-mobile.webp"
+          [alt]="'LANDING.HERO.ALT' | translate"
+          class="hero-image"
+        />
+      </picture>
+      <div class="hero-text-container animate-text">
+        <h1 id="hero-main-title" class="hero-title">
+          {{ 'LANDING.HERO.TITLE' | translate }}<br />
+          <span class="hero-subtitle">{{ 'LANDING.HERO.SUBTITLE' | translate }}</span>
+        </h1>
+      </div>
+    </section>
+  
+    <section class="services-section" aria-labelledby="services-main-title">
+      <h2 id="services-main-title" class="services-title">
+        {{ 'LANDING.SERVICES' | translate }}
+      </h2>
+  
+      <main class="services-grid" role="list" [attr.aria-label]="'LANDING.SERVICES' | translate">
+        @for (item of cardsdata; track item.title; let i = $index) {
+          <app-cards-landing
+            role="listitem"
+            [title]="item.title"
+            [description]="item.description"
+            [image]="item.image"
+            [class]="i === 2 ? 'services-card-special' : ''"
+          >
+          </app-cards-landing>
+        }
+      </main>
+  
+      <footer class="register-btn">
+        <app-button
+          [label]="'LANDING.REGISTER' | translate"
+          variant="primary"
+          (onClick)="openModal()"
+          class="register-btn animate-pulse"
+          [attr.aria-label]="'LANDING.ACCESSIBILITY.REGISTER_BTN' | translate"
+        ></app-button>
+      </footer>
+    </section>
 </section>

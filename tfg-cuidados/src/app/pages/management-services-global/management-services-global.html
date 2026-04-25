@@ -121,7 +121,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns" class="hover:bg-gray-50"></tr>
 
       <tr class="mat-row" *matNoDataRow role="status" aria-live="polite">
-        <td class="mat-cell text-label management-global-text" colspan="4">
+        <td class="mat-cell text-label management-global-text text-center!" [attr.colspan]="displayedColumns.length"
+        >
           {{ 'MANAGEMENT_SERVICES.LIST.EMPTY' | translate }}
         </td>
       </tr>

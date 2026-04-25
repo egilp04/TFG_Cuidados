@@ -7,4 +7,5 @@ export interface MessagesModalData {
     Sender?: { email?: string; name?: string };
     Receiver?: {email?:string, name: string };
   };
+  direct?:string
 }

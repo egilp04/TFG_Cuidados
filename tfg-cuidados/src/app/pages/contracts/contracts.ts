@@ -13,6 +13,7 @@ import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { ContractDetail } from '../../models/ContractModel';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
 
 /**
  * Componente para listar y gestionar contratos de usuario.
@@ -29,6 +30,7 @@ import { ResponsiveSize } from '../../services/responsive-size';
     ButtonComponent,
     Buttonback,
     TranslateModule,
+    TableSkeletonComponent,
   ],
   templateUrl: './contracts.html',
   styleUrl: './contracts.css',
@@ -47,6 +49,8 @@ export default class Contracts implements OnInit {
   public displayedColumns: string[] = ['id', 'date', 'actions'];
   public dataSource = new MatTableDataSource<ContractDetail>([]);
 
+  isLoading = true;
+
   ngOnInit(): void {
     this.subscribeToContracts();
   }
@@ -55,19 +59,26 @@ export default class Contracts implements OnInit {
    * Se suscribe al flujo en tiempo real de contratos e inicializa los datos de la tabla.
    */
   private subscribeToContracts(): void {
+    this.isLoading = true;
+
     this.contractService
       .getContractsObservable()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data: ContractDetail[]) => {
           this.dataSource.data = data;
+          this.isLoading = false;
+
           if (this.paginator) {
             this.dataSource.paginator = this.paginator;
           }
           this.cd.markForCheck();
         },
-        error: (error: Error) =>
-          console.error('Error en flujo en tiempo real de contratos:', error),
+        error: (error: Error) => {
+          console.error('Error en flujo en tiempo real de contratos:', error);
+          this.isLoading = false;
+          this.cd.markForCheck();
+        },
       });
   }
 

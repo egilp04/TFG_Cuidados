@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { switchMap, catchError, map, tap, take } from 'rxjs/operators';
+import { switchMap, catchError, map, tap, take, delay, filter } from 'rxjs/operators';
 import { Searchbar } from '../../components/searchbar/searchbar';
 import { ButtonComponent } from '../../components/button/button';
 import { AuthService } from '../../services/auth.service';
@@ -24,7 +24,8 @@ import { ServiceTimeResponse } from '../../models/Bussiness-Service';
 import { BusinessModel } from '../../models/BusinessModel';
 import { BusinessService } from '../../services/business.service';
 import { Router } from '@angular/router';
-
+import { of } from 'rxjs';
+import { CardSkeletonComponent } from '../../components/card-skeleton/card-skeleton.component';
 /**
  * Componente para buscar y contratar servicios de negocios.
  * Utiliza estado independiente para selecciones de interfaz de usuario para mantener los modelos puros.
@@ -40,6 +41,7 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     Buttonback,
     TranslateModule,
+    CardSkeletonComponent,
   ],
   templateUrl: './search-business.html',
   styleUrl: './search-business.css',
@@ -55,15 +57,11 @@ export default class SearchBusiness implements OnInit {
   private translate = inject(TranslateService);
   private router = inject(Router);
 
-  public allBusinesses = signal<BusinessModel[]>([]);
+  public allBusinesses = signal<BusinessModel[] | undefined>(undefined);
+
   public searchFilter = signal<string>('');
   public filterControl = new FormControl('');
   public initialServiceId = signal<string | null>(null);
-
-  /**
-   * NUEVO: Estado independiente para selecciones.
-   * Clave: ID del negocio, Valor: el objeto ServiceTime seleccionado.
-   */
   public selections = signal<Record<string, ServiceTimeResponse>>({});
 
   constructor() {
@@ -78,10 +76,12 @@ export default class SearchBusiness implements OnInit {
   }
 
   public filteredBusinesses = computed(() => {
+    const businesses = this.allBusinesses();
+    if (!businesses) return [];
     const filterText = this.searchFilter().toLowerCase().trim();
-    if (!filterText) return this.allBusinesses();
+    if (!filterText) return businesses;
 
-    return this.allBusinesses().filter((business) => {
+    return businesses.filter((business) => {
       const matchName = business.name.toLowerCase().includes(filterText);
       const matchService = business.Service_Time?.some(
         (sh: ServiceTimeResponse) =>
@@ -102,17 +102,18 @@ export default class SearchBusiness implements OnInit {
       .getBusinessesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
+        delay(1000),
+        filter((data): data is BusinessModel[] => data !== null && data !== undefined),
         catchError((err) => {
           console.error('Error en tiempo real de Negocios:', err);
-          return this.translate.get('SEARCH_BUSINESS.MESSAGES.CONNECTION_ERROR').pipe(
-            tap((msg) => this.messageService.showMessage(msg, 'error')),
-            map(() => []),
-          );
+          this.translate.get('SEARCH_BUSINESS.MESSAGES.CONNECTION_ERROR').subscribe((msg) => {
+            this.messageService.showMessage(msg, 'error');
+          });
+          return of([]);
         }),
       )
       .subscribe((data: BusinessModel[]) => {
         const targetId = this.initialServiceId()?.trim();
-
         const processedData: BusinessModel[] = data
           .map((business) => {
             const filteredTimes = targetId
@@ -126,7 +127,6 @@ export default class SearchBusiness implements OnInit {
             };
           })
           .filter((business) => business.Service_Time && business.Service_Time.length > 0);
-
         this.allBusinesses.set(processedData);
         this.cd.markForCheck();
       });
@@ -249,6 +249,7 @@ export default class SearchBusiness implements OnInit {
         receiverEmail: business.email,
         receiverId: business.id_business,
         receiverName: business.name,
+        direct: true,
       },
       width: '500px',
     });

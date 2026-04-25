@@ -179,7 +179,7 @@
   }
 
   .main-container {
-    @apply flex flex-col h-full w-full overflow-x-hidden overflow-y-auto;
+    @apply flex flex-col min-h-screen w-full overflow-x-hidden;
   }
 }
 
@@ -232,18 +232,6 @@
     @apply text-button text-primary dark:text-surface;
   }
 
-  .animate-tooltip {
-    animation: tooltip-entry 0.25s ease-out forwards;
-  }
-
-  .animate-text {
-    animation: text-entry 2.4s ease-out forwards;
-  }
-
-  .animate-cards {
-    animation: cards-entry 2s ease-out forwards;
-  }
-
   .header-container {
     @apply w-full mb-4;
   }
@@ -292,21 +280,90 @@
     @apply w-full flex justify-end;
   }
 
-  /* .login-error {
-    @apply border-red dark:border-red-dark;
+  .animate-tooltip {
+    animation: tooltip-entry 0.25s ease-out forwards;
   }
 
-  .login-no-error {
-    @apply border-primary dark:border-white;
-  } */
+  .animate-text {
+    animation: text-entry 2.4s ease-out forwards;
+  }
 
-  /* .service-modal-form-container {
-    @apply flex flex-col gap-2 w-full;
-  } */
+  .animate-cards {
+    animation: cards-entry 2s ease-out forwards;
+  }
 
-  /* .service-form-select {
-    @apply text-label w-full p-4 rounded-12 border-2 border-primary dark:border-surface bg-transparent dark:bg-surface-dark text-primary dark:text-surface focus:ring-2 focus:ring-primary focus:outline-none transition-all cursor-pointer;
-  } */
+  .animate-pulse {
+    animation: pulse-animation 2s ease-in-out infinite;
+  }
+
+  .animate-text-up {
+    opacity: 0;
+    animation: text-up-animation 1.2s ease-out forwards;
+  }
+
+  .animation-opacity {
+    opacity: 0;
+    animation: opacity-animation 0.6s ease-in-out forwards;
+  }
+
+  .animation-heart-spin-reverse {
+    animation: spin-reverse 3s linear infinite;
+  }
+
+  .animation-heartbeat {
+    animation: heartbeat 1s ease-in-out infinite;
+  }
+}
+
+@keyframes text-up-animation {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes opacity-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-animation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes tooltip-entry {

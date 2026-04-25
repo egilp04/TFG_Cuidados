@@ -109,6 +109,7 @@
   },
   "ACTIVITIES": {
     "TITLE": "Actividades",
+    "NO_DATA": "Sin datos",
     "DAYS": {
       "DO": "Do",
       "LU": "Lu",
@@ -147,6 +148,7 @@
   },
   "CONTRACTS": {
     "TITLE": "Contratos",
+    "NO_DATA": "Sin datos",
     "TABLE": {
       "ID": "ID del Contrato",
       "DATE": "Fecha",
@@ -172,7 +174,8 @@
     "SERVICES": {
       "TITLE": "Oferta y demanda de servicios"
     },
-    "NO_CONTRACTS": "Sin contratos",
+    "NO_CONTRACTS": "Sin contratos",    
+    "NO_DATA": "Sin datos",
     "CHARGING": "Cargando gráficas",
     "TITLE_CONTRACTS": "Contratos",
     "TOTAL_CONTRACTS": {
@@ -241,6 +244,7 @@
     }
   },
   "ADMIN_MANAGEMENT": {
+    "NO_DATA": "Sin datos",
     "ACCESSIBILITY": {
       "BACK_NAV": "Navegación para volver atrás",
       "CLIENT_SECTION": "Sección de gestión de clientes",
@@ -272,6 +276,7 @@
     }
   },
   "MANAGEMENT_SERVICES": {
+    "NO_DATA": "Sin datos",
     "ACCESSIBILITY": {
       "BACK_NAV": "Volver atrás",
       "SAVE_BTN": "Guardar los cambios del servicio",
@@ -312,6 +317,7 @@
     }
   },
   "MANAGEMENT_SCHEDULES": {
+    "NO_DATA": "Sin datos",
     "ACCESSIBILITY": {
       "BACK_NAV": "Volver atrás",
       "SAVE_BTN": "Guardar los cambios del horario",
@@ -345,7 +351,8 @@
       "DELETE": "Eliminar"
     },
     "LIST": {
-      "TITLE": "Lista de horarios"
+      "TITLE": "Lista de horarios",
+      "EMPTY": "Sin horarios encontrados"
     },
     "MESSAGES": {
       "FILL_FIELDS": "Rellene todos los campos correctamente.",
@@ -386,7 +393,8 @@
       "ACTIONS_COL": "Acciones del mensaje",
       "PAGINATOR": "Paginación de mensajes"
     },
-    "TITLE": "Mensajes",
+    "TITLE": "Mensajes",    
+    "NO_DATA": "Sin datos",
     "NEW_MSG": "Nuevo Mensaje",
     "SORT_LABEL": "Ordenar por...",
     "SORT_OPTIONS": {
@@ -418,7 +426,8 @@
       "PAGINATOR": "Paginación de notificaciones"
     },
     "ADMIN": "Abre un ticket con el administrador",
-    "TITLE": "Notificaciones",
+    "TITLE": "Notificaciones",    
+    "NO_DATA":"Sin datos",
     "TABLE": {
       "NAME": "Nombre",
       "CONTENT": "Notificación",
@@ -486,6 +495,7 @@
     }
   },
   "SERVICES_BUSINESS": {
+    "NO_DATA": "Sin datos",
     "ACCESSIBILITY": {
       "BACK_NAV": "Volver a la pantalla anterior",
       "MAIN_SECTION": "Gestión de servicios de la empresa",

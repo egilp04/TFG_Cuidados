@@ -164,6 +164,14 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns" class="hover:bg-gray-50"></tr>
+
+    <tr class="mat-row" *matNoDataRow role="status" aria-live="polite">
+      <td class="mat-cell text-label management-global-text text-center!" [attr.colspan]="displayedColumns.length"
+      >
+        {{ 'MANAGEMENT_SCHEDULES.LIST.EMPTY' | translate }}
+      </td>
+    </tr>
+
   </table>
   </main>
 </section>
