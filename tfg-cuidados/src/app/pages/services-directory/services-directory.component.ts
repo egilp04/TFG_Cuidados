@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../components/button/button';
 import { tap, catchError, of } from 'rxjs';
+import { CardSkeletonComponent } from '../../components/card-skeleton/card-skeleton.component';
 /**
  * Componente para mostrar el directorio de servicios disponibles.
  * Permite a los usuarios navegar a negocios que ofrecen un servicio específico.
@@ -13,7 +14,7 @@ import { tap, catchError, of } from 'rxjs';
 @Component({
   selector: 'app-services-directory',
   standalone: true,
-  imports: [TranslateModule, ButtonComponent],
+  imports: [TranslateModule, ButtonComponent, CardSkeletonComponent],
   templateUrl: './services-directory.component.html',
   styleUrl: './services-directory.component.css',
 })
@@ -25,10 +26,10 @@ export default class ServicesDirectoryComponent {
     this.serviceService.getServicesObservable().pipe(
       catchError((error) => {
         console.error('Error cargando el directorio:', error);
-        return of([]); 
-      })
+        return of([]);
+      }),
     ),
-    { initialValue: null }
+    { initialValue: null },
   );
 
   /**

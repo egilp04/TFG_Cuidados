@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { switchMap, catchError, map, tap, take, delay,  filter} from 'rxjs/operators';
+import { switchMap, catchError, map, tap, take, delay, filter } from 'rxjs/operators';
 import { Searchbar } from '../../components/searchbar/searchbar';
 import { ButtonComponent } from '../../components/button/button';
 import { AuthService } from '../../services/auth.service';
@@ -25,6 +25,7 @@ import { BusinessModel } from '../../models/BusinessModel';
 import { BusinessService } from '../../services/business.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { CardSkeletonComponent } from '../../components/card-skeleton/card-skeleton.component';
 /**
  * Componente para buscar y contratar servicios de negocios.
  * Utiliza estado independiente para selecciones de interfaz de usuario para mantener los modelos puros.
@@ -40,6 +41,7 @@ import { of } from 'rxjs';
     ReactiveFormsModule,
     Buttonback,
     TranslateModule,
+    CardSkeletonComponent,
   ],
   templateUrl: './search-business.html',
   styleUrl: './search-business.css',
@@ -56,7 +58,7 @@ export default class SearchBusiness implements OnInit {
   private router = inject(Router);
 
   public allBusinesses = signal<BusinessModel[] | undefined>(undefined);
-  
+
   public searchFilter = signal<string>('');
   public filterControl = new FormControl('');
   public initialServiceId = signal<string | null>(null);
@@ -75,10 +77,10 @@ export default class SearchBusiness implements OnInit {
 
   public filteredBusinesses = computed(() => {
     const businesses = this.allBusinesses();
-      if (!businesses) return [];
+    if (!businesses) return [];
     const filterText = this.searchFilter().toLowerCase().trim();
-        if (!filterText) return businesses;
-  
+    if (!filterText) return businesses;
+
     return businesses.filter((business) => {
       const matchName = business.name.toLowerCase().includes(filterText);
       const matchService = business.Service_Time?.some(
@@ -86,7 +88,7 @@ export default class SearchBusiness implements OnInit {
           sh.Service?.name.toLowerCase().includes(filterText) ||
           sh.Time?.week_day.toLowerCase().includes(filterText),
       );
-  
+
       return matchName || matchService;
     });
   });
@@ -104,7 +106,7 @@ export default class SearchBusiness implements OnInit {
         filter((data): data is BusinessModel[] => data !== null && data !== undefined),
         catchError((err) => {
           console.error('Error en tiempo real de Negocios:', err);
-          this.translate.get('SEARCH_BUSINESS.MESSAGES.CONNECTION_ERROR').subscribe(msg => {
+          this.translate.get('SEARCH_BUSINESS.MESSAGES.CONNECTION_ERROR').subscribe((msg) => {
             this.messageService.showMessage(msg, 'error');
           });
           return of([]);
@@ -247,7 +249,7 @@ export default class SearchBusiness implements OnInit {
         receiverEmail: business.email,
         receiverId: business.id_business,
         receiverName: business.name,
-        direct:true
+        direct: true,
       },
       width: '500px',
     });

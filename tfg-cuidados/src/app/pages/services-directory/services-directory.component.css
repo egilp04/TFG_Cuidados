@@ -24,7 +24,7 @@
 }
 
 .description-section {
-  @apply text-p text-gray-600 dark:text-gray-50 line-clamp-3 p-2 overflow-y-auto max-h-[400px] break-words items-center;
+  @apply text-p text-gray-600 dark:text-gray-50 line-clamp-3 p-2 overflow-y-auto max-h-[400px] wrap-break-word items-center;
 }
 
 .directory-card-select {
@@ -34,6 +34,7 @@
 .directory-card-btn-container {
   @apply flex justify-around items-center mt-8 gap-3;
 }
+
 .directory-main {
   @apply flex flex-col items-center mt-20 px-10 gap-10 lg:gap-20;
 }

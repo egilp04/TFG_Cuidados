@@ -39,6 +39,7 @@
       </div>
     } @placeholder {
       <div class="no-contracts-msg" aria-live="polite">
+        <app-spinner></app-spinner>
         {{ 'DASHBOARD.CHARGING' | translate }}
       </div>
     }
@@ -69,6 +70,7 @@
       }
     } @placeholder {
       <p class="dashboard-login-text" aria-live="polite">
+        <app-spinner></app-spinner>
         {{ 'DASHBOARD.CHARGING' | translate }}
       </p>
     }
@@ -106,11 +108,12 @@
         </main>
       } @else {
         <div class="no-contracts-msg" role="status">
-           {{ 'DASHBOARD.NO_DATA' | translate }}
+          {{ 'DASHBOARD.NO_DATA' | translate }}
         </div>
       }
     } @placeholder {
       <p class="dashboard-login-text" aria-live="polite">
+        <app-spinner></app-spinner>
         {{ 'DASHBOARD.CHARGING' | translate }}
       </p>
     }

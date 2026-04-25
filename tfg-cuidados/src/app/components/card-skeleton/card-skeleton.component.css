@@ -1,0 +1,13 @@
+@reference "../../../styles.css";
+
+.card-skeleton-section {
+  @apply text-p text-gray-600 dark:text-gray-50 line-clamp-3 p-2 overflow-y-auto max-h-[400px] wrap-break-word items-center;
+}
+
+.card-skeleton-container {
+  @apply items-center bg-surface dark:bg-secondary-dark p-20 rounded-2xl shadow-md border border-gray-200 dark:border-gray-500 flex flex-col justify-around hover:shadow-lg transition-shadow gap-12;
+}
+
+.card-skeleton-btn-container {
+  @apply flex justify-around items-center mt-8 gap-3;
+}

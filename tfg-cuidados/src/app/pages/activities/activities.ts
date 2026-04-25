@@ -11,6 +11,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, map, switchMap, filter } from 'rxjs';
 import { ContractDetail } from '../../models/ContractModel';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
 
 /**
  * Página principal de actividades que gestiona la lista de contratos del usuario.
@@ -19,7 +20,13 @@ import { ResponsiveSize } from '../../services/responsive-size';
 @Component({
   selector: 'app-activities',
   standalone: true,
-  imports: [CommonModule, Buttonback, ActivitiesComponents, TranslateModule],
+  imports: [
+    CommonModule,
+    Buttonback,
+    ActivitiesComponents,
+    TranslateModule,
+    TableSkeletonComponent,
+  ],
   templateUrl: './activities.html',
   styleUrl: './activities.css',
 })
@@ -59,8 +66,8 @@ export default class Activities implements OnInit {
           console.error('Error en flujo de contratos:', error);
           this.isLoading = false;
           this.cd.detectChanges();
-        },      
-    });
+        },
+      });
   }
 
   /**

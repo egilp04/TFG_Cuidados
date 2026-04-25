@@ -17,6 +17,7 @@ import { MessageService } from '../../services/message-service';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
 
 /**
  * Componente para gestionar la bandeja de entrada y salida de comunicaciones del usuario.
@@ -34,6 +35,7 @@ import { ResponsiveSize } from '../../services/responsive-size';
     CommonModule,
     Buttonback,
     TranslateModule,
+    TableSkeletonComponent,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: PaginacionEs }],
   templateUrl: './messages.html',
@@ -102,7 +104,7 @@ export default class Messages implements OnInit {
           console.error('Error en flujo de mensajes:', err);
           this.isLoading = false;
           this.cd.markForCheck();
-        },     
+        },
       });
   }
 

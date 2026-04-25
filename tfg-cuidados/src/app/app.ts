@@ -48,21 +48,20 @@ export class App {
     }
   }
 
-
   showScrollBtn = false;
- 
+
   onContainerScroll(event: Event) {
     const element = event.target as HTMLElement;
     const scrollPosition = element.scrollTop;
-        this.showScrollBtn = scrollPosition > 100;
-  }  
+    this.showScrollBtn = scrollPosition > 100;
+  }
 
   scrollToTop() {
     const container = document.querySelector('.main-container');
     if (container) {
       container.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   }

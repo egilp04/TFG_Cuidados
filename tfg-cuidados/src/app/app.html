@@ -1,5 +1,4 @@
 <div class="main-container" (scroll)="onContainerScroll($event)">
-  
   @if (!router.url.includes('recover-password')) {
     <app-navbar class="flex-none"></app-navbar>
     @if (this.authService.isAuthenticated()) {
@@ -20,28 +19,22 @@
 </div>
 
 @if (showScrollBtn) {
-  <button 
+  <button
     (click)="scrollToTop()"
-    class="fixed bottom-8 right-4 z-[2000] 
-           flex h-[40px] w-[40px] items-center justify-center rounded-full 
-           bg-accent text-white shadow-lg outline-none
-           transition-all duration-300 hover:bg-green-600 
-           hover:scale-110 active:scale-95
-           animate-in fade-in slide-in-from-bottom-4"
+    class="fixed bottom-8 right-4 z-2000 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-accent text-white shadow-lg outline-none transition-all duration-300 hover:bg-green-600 hover:scale-110 active:scale-95 animate-in fade-in slide-in-from-bottom-4"
     aria-label="Subir al inicio"
   >
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      class="h-[12px] w-[12px]" 
-      fill="none" 
-      viewBox="0 0 24 24" 
-      stroke="currentColor" 
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-[12px] w-[12px]"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
       stroke-width="2.5"
     >
       <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
     </svg>
   </button>
 }
-
 
 <app-global-notifications></app-global-notifications>

@@ -13,6 +13,7 @@ import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { ContractDetail } from '../../models/ContractModel';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
 
 /**
  * Componente para listar y gestionar contratos de usuario.
@@ -29,6 +30,7 @@ import { ResponsiveSize } from '../../services/responsive-size';
     ButtonComponent,
     Buttonback,
     TranslateModule,
+    TableSkeletonComponent,
   ],
   templateUrl: './contracts.html',
   styleUrl: './contracts.css',
@@ -47,7 +49,7 @@ export default class Contracts implements OnInit {
   public displayedColumns: string[] = ['id', 'date', 'actions'];
   public dataSource = new MatTableDataSource<ContractDetail>([]);
 
-  isLoading = true
+  isLoading = true;
 
   ngOnInit(): void {
     this.subscribeToContracts();
@@ -72,11 +74,11 @@ export default class Contracts implements OnInit {
           }
           this.cd.markForCheck();
         },
-       error: (error: Error) => {
+        error: (error: Error) => {
           console.error('Error en flujo en tiempo real de contratos:', error);
-          this.isLoading = false; 
+          this.isLoading = false;
           this.cd.markForCheck();
-        }
+        },
       });
   }
 

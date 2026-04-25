@@ -1,4 +1,7 @@
-<header class="button-back-container" [attr.aria-label]="'CONTRACTS.ACCESSIBILITY.BACK_NAV' | translate">
+<header
+  class="button-back-container"
+  [attr.aria-label]="'CONTRACTS.ACCESSIBILITY.BACK_NAV' | translate"
+>
   <app-buttonback></app-buttonback>
 </header>
 
@@ -9,68 +12,84 @@
 
   <div class="contracts-table-container">
     <main class="contracts-table">
-    @if(isLoading){
-      <p>Cargando datos</p>
-    }@else{
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full"
-      [attr.aria-label]="'CONTRACTS.TABLE_SUMMARY' | translate">
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef class="text-label contracts-text" scope="col">
-          {{ 'CONTRACTS.TABLE.ID' | translate }}
-        </th>
-        <td mat-cell *matCellDef="let contract" class="text-label contracts-text">
-          {{ contract.id_contract }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef class="text-label contracts-text" scope="col">
-          {{ 'CONTRACTS.TABLE.DATE' | translate }}
-        </th>
-        <td mat-cell *matCellDef="let contract" class="text-label contracts-text">
-          {{ contract.creation_date | date: 'dd/MM/yyyy' }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="text-center" scope="col">
-          <span class="sr-only">{{ 'CONTRACTS.TABLE.ACTIONS' | translate }}</span>
-        </th>
-        <td mat-cell *matCellDef="let contract" class="text-center">
-          <div class="flex justify-end gap-2 p-2">
-            <app-button [label]="'CONTRACTS.ACTIONS.CANCEL' | translate" variant="secondary"
-              (click)="cancelContract(contract.id_contract)" [attr.aria-label]="
-                ('CONTRACTS.ACTIONS.CANCEL' | translate) + ' ID: ' + contract.id_contract
-              "></app-button>
-
-            <app-button [label]="'CONTRACTS.ACTIONS.DETAILS' | translate" variant="primary"
-              (click)="showDetails(contract.id_contract)" [attr.aria-label]="
-                ('CONTRACTS.ACTIONS.DETAILS' | translate) + ' ID: ' + contract.id_contract
-              "></app-button>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-      <tr class="mat-row" *matNoDataRow>
-        <td 
-          class="mat-cell p-10 text-center! text-label contracts-text" 
-          [attr.colspan]="displayedColumns.length"
-          role="status"
-          aria-live="polite"
+      @if (isLoading) {
+        <app-table-skeleton></app-table-skeleton>
+      } @else {
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          class="mat-elevation-z8 w-full"
+          [attr.aria-label]="'CONTRACTS.TABLE_SUMMARY' | translate"
         >
-          {{ 'CONTRACTS.NO_DATA' | translate }}
-        </td>
-      </tr>
-      
-    </table>
-    }
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef class="text-label contracts-text" scope="col">
+              {{ 'CONTRACTS.TABLE.ID' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let contract" class="text-label contracts-text">
+              {{ contract.id_contract }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef class="text-label contracts-text" scope="col">
+              {{ 'CONTRACTS.TABLE.DATE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let contract" class="text-label contracts-text">
+              {{ contract.creation_date | date: 'dd/MM/yyyy' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="text-center" scope="col">
+              <span class="sr-only">{{ 'CONTRACTS.TABLE.ACTIONS' | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let contract" class="text-center">
+              <div class="flex justify-end gap-2 p-2">
+                <app-button
+                  [label]="'CONTRACTS.ACTIONS.CANCEL' | translate"
+                  variant="secondary"
+                  (click)="cancelContract(contract.id_contract)"
+                  [attr.aria-label]="
+                    ('CONTRACTS.ACTIONS.CANCEL' | translate) + ' ID: ' + contract.id_contract
+                  "
+                ></app-button>
+
+                <app-button
+                  [label]="'CONTRACTS.ACTIONS.DETAILS' | translate"
+                  variant="primary"
+                  (click)="showDetails(contract.id_contract)"
+                  [attr.aria-label]="
+                    ('CONTRACTS.ACTIONS.DETAILS' | translate) + ' ID: ' + contract.id_contract
+                  "
+                ></app-button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td
+              class="mat-cell p-10 text-center! text-label contracts-text"
+              [attr.colspan]="displayedColumns.length"
+              role="status"
+              aria-live="polite"
+            >
+              {{ 'CONTRACTS.NO_DATA' | translate }}
+            </td>
+          </tr>
+        </table>
+      }
     </main>
 
     @if (dataSource.data.length > 0) {
-    <mat-paginator class="mt-20" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-      [attr.aria-label]="'CONTRACTS.PAGINATOR' | translate"></mat-paginator> }
+      <mat-paginator
+        class="mt-20"
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        [attr.aria-label]="'CONTRACTS.PAGINATOR' | translate"
+      ></mat-paginator>
+    }
   </div>
 </section>

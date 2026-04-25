@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { AnalyticsService } from '../../services/analytics.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SpinnerComponent } from '../../components/spinner/spinner.component';
 
 Chart.register(...registerables);
 
@@ -23,7 +24,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [BaseChartDirective, CommonModule, TranslateModule],
+  imports: [BaseChartDirective, CommonModule, TranslateModule, SpinnerComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })

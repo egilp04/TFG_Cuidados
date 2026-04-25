@@ -11,6 +11,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, tap, map, switchMap } from 'rxjs/operators';
 import { ComunicationModel } from '../../models/ComunicationModel';
 import { ButtonComponent } from '../../components/button/button';
+import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
 
 /**
  * Componente responsable de mostrar y gestionar las notificaciones del usuario.
@@ -26,6 +27,7 @@ import { ButtonComponent } from '../../components/button/button';
     Buttonback,
     TranslateModule,
     ButtonComponent,
+    TableSkeletonComponent,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: PaginacionEs }],
   templateUrl: './notifications.html',
