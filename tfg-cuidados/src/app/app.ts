@@ -8,6 +8,7 @@ import { GlobalNotificationsComponent } from './components/global-notifications/
 import { AiAssistantComponent } from './components/ai-assistant/ai-assistant.component';
 import { AuthService } from './services/auth.service';
 import { NavHomeComponent } from './components/nav-home/nav-home.component';
+import { ChatSoporteComponent } from './components/chat-soporte/chat-soporte.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ import { NavHomeComponent } from './components/nav-home/nav-home.component';
     GlobalNotificationsComponent,
     AiAssistantComponent,
     NavHomeComponent,
+    ChatSoporteComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -28,6 +30,8 @@ export class App {
   private translate = inject(TranslateService);
   authService = inject(AuthService);
   private platformId = inject(PLATFORM_ID);
+
+  rol = this.authService.userRol();
 
   constructor() {
     this.translate.setDefaultLang('es');
