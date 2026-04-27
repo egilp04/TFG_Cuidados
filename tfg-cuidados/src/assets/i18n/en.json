@@ -315,7 +315,7 @@
       "ERROR_DELETE": "Error deleting"
     }
   },
-  "MANAGEMENT_SCHEDULES": {    
+  "MANAGEMENT_SCHEDULES": {
     "NO_DATA": "No data",
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back",
@@ -363,7 +363,7 @@
       "ERROR_DELETE": "Error con el borrado"
     },
     "LIST": {
-      "TITLE": "Time list", 
+      "TITLE": "Time list",
       "EMPTY": "Time list empty"
     }
   },
@@ -386,9 +386,9 @@
     },
     "USERVIDEO": "Watch video - User manual"
   },
-  "MESSAGES_PAGE": { 
-  "SENT": "Sent",
-  "RECEIVED": "Received",
+  "MESSAGES_PAGE": {
+    "SENT": "Sent",
+    "RECEIVED": "Received",
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back",
       "UNREAD": "Unread message",
@@ -479,7 +479,7 @@
     },
     "ADMIN": "Open a ticker to the administrator",
     "TITLE": "Notifications",
-    "NO_DATA":"No data",
+    "NO_DATA": "No data",
     "TABLE": {
       "NAME": "Name",
       "CONTENT": "Notification",
@@ -636,6 +636,7 @@
     "DATE_END": "End Date",
     "NOT_FINALIZED": "Not finalized",
     "STATUS": "Status",
+    "PRICE": "Price",
     "TIME": "Contracted Time",
     "DAY": "Contracted Day",
     "SERVICE": "Service Name",

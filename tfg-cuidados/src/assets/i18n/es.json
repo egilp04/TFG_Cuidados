@@ -174,7 +174,7 @@
     "SERVICES": {
       "TITLE": "Oferta y demanda de servicios"
     },
-    "NO_CONTRACTS": "Sin contratos",    
+    "NO_CONTRACTS": "Sin contratos",
     "NO_DATA": "Sin datos",
     "CHARGING": "Cargando gráficas",
     "TITLE_CONTRACTS": "Contratos",
@@ -393,7 +393,7 @@
       "ACTIONS_COL": "Acciones del mensaje",
       "PAGINATOR": "Paginación de mensajes"
     },
-    "TITLE": "Mensajes",    
+    "TITLE": "Mensajes",
     "NO_DATA": "Sin datos",
     "NEW_MSG": "Nuevo Mensaje",
     "SORT_LABEL": "Ordenar por...",
@@ -426,8 +426,8 @@
       "PAGINATOR": "Paginación de notificaciones"
     },
     "ADMIN": "Abre un ticket con el administrador",
-    "TITLE": "Notificaciones",    
-    "NO_DATA":"Sin datos",
+    "TITLE": "Notificaciones",
+    "NO_DATA": "Sin datos",
     "TABLE": {
       "NAME": "Nombre",
       "CONTENT": "Notificación",
@@ -584,6 +584,7 @@
     "DATE_END": "Fecha de fin",
     "NOT_FINALIZED": "Sin finalizar",
     "STATUS": "Estado",
+    "PRICE": "Precio",
     "TIME": "Hora contratada",
     "DAY": "Día de la semana contratado",
     "SERVICE": "Nombre del servicio",

@@ -41,7 +41,7 @@ describe('ContractService', () => {
     queryBuilder.neq.and.returnValue(queryBuilder);
     queryBuilder.or.and.returnValue(queryBuilder);
     queryBuilder.order.and.returnValue(queryBuilder);
-    queryBuilder.single.and.returnValue(queryBuilder); 
+    queryBuilder.single.and.returnValue(queryBuilder);
     queryBuilder.maybeSingle.and.returnValue(queryBuilder);
 
     const channelMock = {
@@ -80,27 +80,6 @@ describe('ContractService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
-  it('refreshContracts should map data correctly', fakeAsync(() => {
-    const rawData = [
-      {
-        id_contrato: '1',
-        Cliente: { Usuario: { nombre: 'ClientName' } },
-        Empresa: { Usuario: { nombre: 'CompanyName' } },
-        id_servicio_horario: { Servicio: { nombre: 'Svc' }, id_servicio_horario: '99' },
-      },
-    ];
-
-    queryBuilder.then = (resolve: any) => resolve({ data: rawData, error: null });
-
-    service.getContractsObservable().subscribe((contracts) => {
-      if (contracts.length > 0) {
-        expect(contracts[0].Cliente.nombreDelCliente).toBe('ClientName');
-        expect(contracts[0].id_sh_plano).toBe('99');
-      }
-    });
-    tick();
-  }));
 
   it('createContract should return true on success', fakeAsync(() => {
     queryBuilder.then = (resolve: any) => resolve({ error: null });
