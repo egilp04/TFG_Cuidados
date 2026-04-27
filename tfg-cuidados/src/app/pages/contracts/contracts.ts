@@ -14,6 +14,7 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { ContractDetail } from '../../models/ContractModel';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
+import { DocsPdf } from '../../services/docs-pdf';
 
 /**
  * Componente para listar y gestionar contratos de usuario.
@@ -180,5 +181,9 @@ export default class Contracts implements OnInit {
           );
         },
       });
+  }
+  private pdfService = inject(DocsPdf);
+  downloadContractPDF(contract: ContractDetail): void {
+    this.pdfService.downloadPDF(contract);
   }
 }

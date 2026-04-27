@@ -21,7 +21,7 @@ export class DocsPdf {
 
     autoTable(doc, {
       startY: 40,
-      head: [['Concept', 'Description']],
+      head: [['Concepto', 'Descripción']],
       body: [
         ['ID del contrato', contract.id_contract || 'N/A'],
         ['Nombre del cliente', contract.Client?.clientName || 'N/A'],

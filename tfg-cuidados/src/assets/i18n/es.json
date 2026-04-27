@@ -156,7 +156,8 @@
     },
     "ACTIONS": {
       "CANCEL": "Cancelar",
-      "DETAILS": "Ver detalles"
+      "DETAILS": "Ver detalles",
+      "DOWNLOAD": "Descargar"
     },
     "TABLE_SUMMARY": "Tabla de contratos realizados",
     "PAGINATOR": "Seleccionar página de contratos",
@@ -387,6 +388,8 @@
     }
   },
   "MESSAGES_PAGE": {
+    "SENT": "Enviados",
+    "RECEIVED": "Recibidos",
     "ACCESSIBILITY": {
       "BACK_NAV": "Volver atrás",
       "UNREAD": "Mensaje no leído",
@@ -976,5 +979,24 @@
   },
   "GENERAL": {
     "LOADING": "Cargando..."
+  },
+  "ADMIN_CONTRACTS": {
+    "TITLE": "Panel de contratos",
+    "STATE": {
+      "ALL": "Todos",
+      "ACTIVE": "Activos",
+      "NO_ACTIVE": "No activos"
+    },
+    "DOWNLOAD_CSV": "Descargar contratos en csv",
+    "TABLE": {
+      "ID": "ID",
+      "STATE": "Estado",
+      "CLIENT": "Nombre del cliente",
+      "BUSINESS": "Nombre de la empresa",
+      "SERVICE": "Servicio",
+      "START_DATE": "Fecha de inicio"
+    },
+    "ACTION": { "DOWNLOAD": "Descargar", "DOWNLOAD_CSV": "Descargar contratos en csv" },
+    "NO_DATA": "Sin datos"
   }
 }
