@@ -189,4 +189,42 @@ export class ContractService {
       catchError((err) => throwError(() => err)),
     );
   }
+
+  /**
+   * ADMIN ONLY: Fetch all contracts (Active and Inactive) from the database
+   */
+  getAllContractsForAdmin(): Observable<ContractDetail[]> {
+    const queryPromise = this.supabase
+      .from('Contract')
+      .select(this.CONTRACT_SELECT)
+      .order('creation_date', { ascending: false });
+
+    return from(queryPromise).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+        if (!data) return [];
+
+        return (data as unknown as ContractSupabaseJoined[]).map(contract => {
+          const stData = contract.id_service_time as any;
+          return {
+            ...contract,
+            id_st_flat: stData?.id_service_time || contract.id_service_time,
+            Client: {
+              ...contract.Client,
+              clientName: contract.Client?.name || contract.Client?.User_public?.name || 'Unknown',
+            },
+            Business: {
+              ...contract.Business,
+              businessName: contract.Business?.name || contract.Business?.User_public?.name || 'Unknown',
+            },
+            serviceName: stData?.Service?.name,
+          } as unknown as ContractDetail;
+        });
+      }),
+      catchError((err) => {
+        console.error('Error fetching admin contracts:', err);
+        return of([]);
+      })
+    );
+  }
 }
