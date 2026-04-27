@@ -81,6 +81,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'global-contracts',
+    loadComponent: () => import('./pages/admin-contracts/admin-contracts.component'),
+    canActivate: [authGuard],
+  },
+  {
     path: 'dashboard',
     loadComponent: () => import('./pages/dashboard/dashboard'),
     canActivate: [authGuard],

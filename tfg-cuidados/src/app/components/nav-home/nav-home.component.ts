@@ -46,4 +46,8 @@ export class NavHomeComponent {
   manageGlobalTimes() {
     this.router.navigate(['/global-times']);
   }
+
+  seeAllContracts() {
+    this.router.navigate(['/global-contracts']);
+  }
 }
