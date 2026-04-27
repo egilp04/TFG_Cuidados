@@ -1,4 +1,13 @@
-import { Component, DestroyRef, inject, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  ViewChild,
+  OnInit,
+  ChangeDetectorRef,
+  viewChild,
+  effect,
+} from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -28,9 +37,6 @@ import { ButtonComponent } from '../../components/button/button';
   styleUrl: './admin-contracts.component.css',
 })
 export default class AdminContractsComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
   private contractService = inject(ContractService);
   private pdfService = inject(DocsPdf);
   private destroyRef = inject(DestroyRef);
@@ -49,6 +55,24 @@ export default class AdminContractsComponent implements OnInit {
   public dataSource = new MatTableDataSource<ContractDetail>([]);
   public isLoading = true;
 
+  public paginator = viewChild(MatPaginator);
+  public sort = viewChild(MatSort);
+
+  constructor() {
+    effect(() => {
+      const currentPaginator = this.paginator();
+      const currentSort = this.sort();
+
+      if (currentPaginator) {
+        this.dataSource.paginator = currentPaginator;
+      }
+
+      if (currentSort) {
+        this.dataSource.sort = currentSort;
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.loadAdminContracts();
   }
@@ -62,13 +86,17 @@ export default class AdminContractsComponent implements OnInit {
         next: (data: ContractDetail[]) => {
           this.dataSource.data = data;
           this.isLoading = false;
-          if (this.paginator) this.dataSource.paginator = this.paginator;
-          if (this.sort) this.dataSource.sort = this.sort;
           this.dataSource.filterPredicate = (data: ContractDetail, filter: string) => {
             if (filter === 'all') return true;
             return data.state === filter;
           };
-
+          const paginatorInner = this.dataSource.paginator;
+          if (paginatorInner) {
+            const totalPaginas = Math.ceil(data.length / paginatorInner.pageSize);
+            if (paginatorInner.pageIndex >= totalPaginas && data.length > 0) {
+              paginatorInner.firstPage();
+            }
+          }
           this.cd.markForCheck();
         },
         error: (error: Error) => {

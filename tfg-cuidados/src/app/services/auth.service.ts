@@ -195,7 +195,7 @@ export class AuthService {
             password: cleanEmailPassword,
             options: {
               data: { ...metaData, created_by_admin: true },
-              emailRedirectTo: `${window.location.origin}/login`,
+              emailRedirectTo: `${window.location.origin}/admin-management?type=${isClient ? 'client' : 'business'}`,
             },
           }),
         );

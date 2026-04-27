@@ -116,4 +116,15 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </main>
+
+  @if (dataSource.data.length > 0) {
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="10"
+      showFirstLastButtons
+      [attr.aria-label]="'ADMIN_TABLE.PAGINATOR_LABEL' | translate"
+      class="table-paginator-end mt-4"
+    >
+    </mat-paginator>
+  }
 </section>

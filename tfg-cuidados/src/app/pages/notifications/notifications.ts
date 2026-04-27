@@ -1,4 +1,13 @@
-import { Component, inject, ViewChild, OnInit, DestroyRef, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  inject,
+  ViewChild,
+  OnInit,
+  DestroyRef,
+  ChangeDetectorRef,
+  viewChild,
+  effect,
+} from '@angular/core';
 import { ComunicationService } from '../../services/comunication.service';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -34,8 +43,6 @@ import { TableSkeletonComponent } from '../../components/table-skeleton/table-sk
   styleUrl: './notifications.css',
 })
 export default class Notifications implements OnInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   private comunicationService = inject(ComunicationService);
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);
@@ -46,6 +53,17 @@ export default class Notifications implements OnInit {
 
   dataSource = new MatTableDataSource<ComunicationModel>([]);
   displayedColumns: string[] = ['name', 'message', 'date', 'actions'];
+
+  public paginator = viewChild(MatPaginator);
+
+  constructor() {
+    effect(() => {
+      const currentPaginator = this.paginator();
+      if (currentPaginator) {
+        this.dataSource.paginator = currentPaginator;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.subscribeToNotifications();
@@ -73,11 +91,13 @@ export default class Notifications implements OnInit {
       .subscribe((data: ComunicationModel[]) => {
         this.isLoading = false;
         this.dataSource.data = data;
-
-        if (this.paginator) {
-          this.dataSource.paginator = this.paginator;
+        const paginatorInner = this.dataSource.paginator;
+        if (paginatorInner) {
+          const totalPaginas = Math.ceil(data.length / paginatorInner.pageSize);
+          if (paginatorInner.pageIndex >= totalPaginas && data.length > 0) {
+            paginatorInner.firstPage();
+          }
         }
-
         const unreadNotifications = data.filter((n) => !n.read);
         if (unreadNotifications.length > 0) {
           this.markAsRead(unreadNotifications);
