@@ -1,8 +1,16 @@
-import { Component, DestroyRef, inject, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  ViewChild,
+  OnInit,
+  ChangeDetectorRef,
+  viewChild,
+  effect,
+} from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -14,6 +22,7 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { ContractDetail } from '../../models/ContractModel';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
+import { DocsPdf } from '../../services/docs-pdf';
 
 /**
  * Componente para listar y gestionar contratos de usuario.
@@ -25,7 +34,6 @@ import { TableSkeletonComponent } from '../../components/table-skeleton/table-sk
   imports: [
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
     CommonModule,
     ButtonComponent,
     Buttonback,
@@ -36,8 +44,6 @@ import { TableSkeletonComponent } from '../../components/table-skeleton/table-sk
   styleUrl: './contracts.css',
 })
 export default class Contracts implements OnInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   private contractService = inject(ContractService);
   private dialog = inject(MatDialog);
   private destroyRef = inject(DestroyRef);
@@ -48,6 +54,17 @@ export default class Contracts implements OnInit {
 
   public displayedColumns: string[] = ['id', 'date', 'actions'];
   public dataSource = new MatTableDataSource<ContractDetail>([]);
+
+  public paginator = viewChild(MatPaginator);
+
+  constructor() {
+    effect(() => {
+      const currentPaginator = this.paginator();
+      if (currentPaginator) {
+        this.dataSource.paginator = currentPaginator;
+      }
+    });
+  }
 
   isLoading = true;
 
@@ -68,9 +85,12 @@ export default class Contracts implements OnInit {
         next: (data: ContractDetail[]) => {
           this.dataSource.data = data;
           this.isLoading = false;
-
-          if (this.paginator) {
-            this.dataSource.paginator = this.paginator;
+          const paginatorInner = this.dataSource.paginator;
+          if (paginatorInner) {
+            const totalPaginas = Math.ceil(data.length / paginatorInner.pageSize);
+            if (paginatorInner.pageIndex >= totalPaginas && data.length > 0) {
+              paginatorInner.firstPage();
+            }
           }
           this.cd.markForCheck();
         },
@@ -180,5 +200,9 @@ export default class Contracts implements OnInit {
           );
         },
       });
+  }
+  private pdfService = inject(DocsPdf);
+  downloadContractPDF(contract: ContractDetail): void {
+    this.pdfService.downloadPDF(contract);
   }
 }

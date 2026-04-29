@@ -4,8 +4,10 @@ import {
   Component,
   DestroyRef,
   OnInit,
+  effect,
   inject,
   signal,
+  viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -20,6 +22,7 @@ import { MessageService } from '../../services/message-service';
 import { ServiceTimeService } from '../../services/service-time.service';
 import { ServiceTimeJoined } from '../../models/Service_Time_Service_Model';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 /**
  * Componente para gestionar las ofertas de servicios y horarios de un negocio.
@@ -34,6 +37,7 @@ import { ResponsiveSize } from '../../services/responsive-size';
     ButtonComponent,
     Buttonback,
     TranslateModule,
+    MatPaginatorModule,
   ],
   templateUrl: './servicesbusiness.html',
   styleUrl: './servicesbusiness.css',
@@ -54,6 +58,17 @@ export default class Servicesbusiness implements OnInit {
   dataSource = new MatTableDataSource<ServiceTimeJoined>([]);
   displayedColumns: string[] = ['name', 'price', 'type', 'time', 'day', 'description', 'actions'];
 
+  public paginator = viewChild(MatPaginator);
+
+  constructor() {
+    effect(() => {
+      const currentPaginator = this.paginator();
+      if (currentPaginator) {
+        this.dataSource.paginator = currentPaginator;
+      }
+    });
+  }
+
   ngOnInit() {
     this.loadServices();
   }
@@ -66,6 +81,13 @@ export default class Servicesbusiness implements OnInit {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((data: ServiceTimeJoined[]) => {
           this.dataSource.data = data;
+          const paginatorInner = this.dataSource.paginator;
+          if (paginatorInner) {
+            const totalPaginas = Math.ceil(data.length / paginatorInner.pageSize);
+            if (paginatorInner.pageIndex >= totalPaginas && data.length > 0) {
+              paginatorInner.firstPage();
+            }
+          }
           this.cd.markForCheck();
         });
     }

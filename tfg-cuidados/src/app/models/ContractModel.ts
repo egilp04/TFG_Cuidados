@@ -6,6 +6,7 @@ export interface ContractModel {
   week_day_hired: string;
   time_hired: string;
   id_service_time: string;
+  price?: string;
   creation_date: string;
   id_client: string;
   id_business: string;

@@ -149,6 +149,19 @@
     @apply max-w-1/2 2xl:max-w-4/5;
   }
 
+  .cdk-overlay-pane .mat-mdc-select-panel {
+    background-color: #ffffff !important;
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+    border-radius: 0.5rem !important;
+    border: 1px solid #f3f4f6 !important;
+  }
+
+  .cdk-overlay-container {
+    z-index: 9999 !important;
+  }
+
   .mat-mdc-paginator-outer-container {
     @apply !bg-surface dark:!bg-surface-dark;
   }

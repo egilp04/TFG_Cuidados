@@ -100,15 +100,15 @@ export class ServiceService {
    * Recupera un servicio individual por su identificador.
    */
   getServiceById(id: string): Observable<ServiceModel> {
-    return from(this.clientSupaBase.from('Service').select('*').eq('id_service', id).single()).pipe(
+    return from(
+      this.clientSupaBase.from('Service').select('*').eq('id_service', id).single()
+    ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data as ServiceModel;
-      }),
-      catchError((err) => throwError(() => err)),
+      })
     );
   }
-
   /**
    * Verifica si un servicio con un nombre específico ya existe, excluyendo un ID dado.
    */
@@ -121,6 +121,27 @@ export class ServiceService {
     return from(query).pipe(
       map(({ data }) => (data && data.length > 0 ? true : false)),
       catchError(() => of(false)),
+    );
+  }
+
+  getServicesWithOffers(): Observable<ServiceModel[]> {
+    return from(
+      this.clientSupaBase
+        .from('Service')
+        .select('*, Service_Time!inner(id_service)') 
+        .order('name', { ascending: true })
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+        return (data as any[]).map(item => {
+          const { Service_Time, ...serviceData } = item;
+          return serviceData as ServiceModel;
+        });
+      }),
+      catchError((err) => {
+        console.error('Error cargando servicios con ofertas:', err);
+        return of([]);
+      })
     );
   }
 }

@@ -1,0 +1,134 @@
+<header
+  class="button-back-container"
+  [attr.aria-label]="'CONTRACTS.ACCESSIBILITY.BACK_NAV' | translate"
+>
+  <app-buttonback></app-buttonback>
+</header>
+
+<section class="contracts-container-section" role="main" aria-labelledby="contracts-page-title">
+  <div class="flex flex-col justify-between items-center gap-2">
+    <h1 class="contracts-title">{{ 'ADMIN_CONTRACTS.TITLE' | translate }}</h1>
+    <div class="flex flex-col md:flex-row items-center gap-3 w-full">
+      <select
+        (change)="applyFilter($event)"
+        class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-label focus:ring-2 focus:ring-primary focus:outline-none w-full sm:w-auto"
+      >
+        <option value="all">{{ 'ADMIN_CONTRACTS.STATE.ALL' | translate }}</option>
+        <option value="active">🟢 {{ 'ADMIN_CONTRACTS.STATE.ACTIVE' | translate }}</option>
+        <option value="no active">🔴 {{ 'ADMIN_CONTRACTS.STATE.NO_ACTIVE' | translate }}</option>
+      </select>
+
+      <app-button
+        [label]="'ADMIN_CONTRACTS.ACTION.DOWNLOAD_CSV' | translate"
+        title="Descargar CSV"
+        variant="primary"
+        (click)="exportToCSV()"
+        [attr.aria-label]="'ADMIN_CONTRACTS.ACTION.DOWNLOAD_CSV' | translate"
+      ></app-button>
+    </div>
+  </div>
+
+  <div class="contracts-table-container">
+    <div class="contracts-table">
+      <table mat-table [dataSource]="dataSource" matSort class="w-full">
+        <ng-container matColumnDef="id_contract">
+          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
+            {{ 'ADMIN_CONTRACTS.TABLE.ID' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="text-label contracts-text">
+            {{ row.id_contract | slice: 0 : 8 }}...
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="state">
+          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
+            {{ 'ADMIN_CONTRACTS.TABLE.STATE' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span
+              class="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider rounded-full whitespace-nowrap"
+              [ngClass]="{
+                'bg-green-100 text-green-800 border border-green-200': row.state === 'active',
+                'bg-red-100 text-red-800 border border-red-200': row.state === 'no active',
+              }"
+            >
+              {{ row.state === 'active' ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="client">
+          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
+            {{ 'ADMIN_CONTRACTS.TABLE.CLIENT' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="text-label contracts-text">
+            {{ row.Client?.clientName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="business">
+          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
+            {{ 'ADMIN_CONTRACTS.TABLE.BUSINESS' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="text-label contracts-text">
+            {{ row.Business?.businessName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="service">
+          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
+            {{ 'ADMIN_CONTRACTS.TABLE.SERVICE' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="text-label contracts-text">
+            {{ row.serviceName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="start_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-label contracts-text">
+            {{ 'ADMIN_CONTRACTS.TABLE.START_DATE' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="text-label contracts-text">
+            {{ row.start_date | date: 'dd/MM/yyyy' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text"></th>
+          <td mat-cell *matCellDef="let row">
+            <div class="flex justify-end gap-2 p-2">
+              <app-button
+                [label]="'ADMIN_CONTRACTS.ACTION.DOWNLOAD' | translate"
+                title="Descargar PDF"
+                variant="primary"
+                (click)="downloadContractPDF(row)"
+                [attr.aria-label]="'ADMIN_CONTRACTS.ACTION.DOWNLOAD' | translate"
+              ></app-button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td
+            class="mat-cell p-10 text-center! text-label contracts-text"
+            [attr.colspan]="displayedColumns.length"
+            role="status"
+            aria-live="polite"
+          >
+            {{ 'ADMIN_CONTRACTS.NO_DATA' | translate }}
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 50]"
+      showFirstLastButtons
+      class="border-t border-gray-200"
+    >
+    </mat-paginator>
+  </div>
+</section>

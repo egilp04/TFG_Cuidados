@@ -12,26 +12,12 @@
         (click)="searchForBussiness()"
       >
       </app-button>
-      <app-button
-        [label]="'MAIN_MENU.CLIENT.MY_SERVICES' | translate"
-        variant="primary"
-        class="nav-btn animation-opacity"
-        (click)="checkContracts()"
-      >
-      </app-button>
     } @else if (rol === 'business') {
       <app-button
         [label]="'MAIN_MENU.BUSINESS.MANAGE_SERVICES' | translate"
         variant="primary"
         class="nav-btn animation-opacity"
         (click)="manageServices()"
-      >
-      </app-button>
-      <app-button
-        [label]="'MAIN_MENU.BUSINESS.ALL_CONTRACTS' | translate"
-        variant="primary"
-        class="nav-btn animation-opacity"
-        (click)="checkContracts()"
       >
       </app-button>
     } @else if (rol === 'administrator') {
@@ -70,9 +56,23 @@
         (click)="manageGlobalTimes()"
       >
       </app-button>
+      <app-button
+        [label]="'MAIN_MENU.CLIENT.MY_SERVICES' | translate"
+        variant="primary"
+        class="nav-btn animation-opacity"
+        (click)="seeAllContracts()"
+      >
+      </app-button>
     }
 
     @if (rol != 'administrator') {
+      <app-button
+        [label]="'MAIN_MENU.CLIENT.MY_SERVICES' | translate"
+        variant="primary"
+        class="nav-btn animation-opacity"
+        (click)="checkContracts()"
+      >
+      </app-button>
       <app-button
         [label]="'MAIN_MENU.COMMON.ACTIVITIES' | translate"
         variant="primary"
