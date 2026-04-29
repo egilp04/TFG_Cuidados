@@ -62,6 +62,12 @@
                     ('CONTRACTS.ACTIONS.DETAILS' | translate) + ' ID: ' + contract.id_contract
                   "
                 ></app-button>
+                <app-button
+                  [label]="'CONTRACTS.ACTIONS.DOWNLOAD' | translate"
+                  variant="primary"
+                  (click)="downloadContractPDF(contract)"
+                  [attr.aria-label]="'CONTRACTS.ACTIONS.DOWNLOAD' | translate"
+                ></app-button>
               </div>
             </td>
           </ng-container>

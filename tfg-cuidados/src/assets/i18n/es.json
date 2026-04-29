@@ -156,7 +156,8 @@
     },
     "ACTIONS": {
       "CANCEL": "Cancelar",
-      "DETAILS": "Ver detalles"
+      "DETAILS": "Ver detalles",
+      "DOWNLOAD": "Descargar"
     },
     "TABLE_SUMMARY": "Tabla de contratos realizados",
     "PAGINATOR": "Seleccionar página de contratos",
@@ -174,7 +175,7 @@
     "SERVICES": {
       "TITLE": "Oferta y demanda de servicios"
     },
-    "NO_CONTRACTS": "Sin contratos",    
+    "NO_CONTRACTS": "Sin contratos",
     "NO_DATA": "Sin datos",
     "CHARGING": "Cargando gráficas",
     "TITLE_CONTRACTS": "Contratos",
@@ -200,7 +201,7 @@
     "TITLE": "Menú Principal",
     "CLIENT": {
       "SEARCH_COMPANIES": "Buscar Empresas",
-      "MY_SERVICES": "Servicios Contratados"
+      "MY_SERVICES": "Contratos"
     },
     "BUSINESS": {
       "MANAGE_SERVICES": "Gestionar servicios",
@@ -387,13 +388,15 @@
     }
   },
   "MESSAGES_PAGE": {
+    "SENT": "Enviados",
+    "RECEIVED": "Recibidos",
     "ACCESSIBILITY": {
       "BACK_NAV": "Volver atrás",
       "UNREAD": "Mensaje no leído",
       "ACTIONS_COL": "Acciones del mensaje",
       "PAGINATOR": "Paginación de mensajes"
     },
-    "TITLE": "Mensajes",    
+    "TITLE": "Mensajes",
     "NO_DATA": "Sin datos",
     "NEW_MSG": "Nuevo Mensaje",
     "SORT_LABEL": "Ordenar por...",
@@ -426,8 +429,8 @@
       "PAGINATOR": "Paginación de notificaciones"
     },
     "ADMIN": "Abre un ticket con el administrador",
-    "TITLE": "Notificaciones",    
-    "NO_DATA":"Sin datos",
+    "TITLE": "Notificaciones",
+    "NO_DATA": "Sin datos",
     "TABLE": {
       "NAME": "Nombre",
       "CONTENT": "Notificación",
@@ -584,6 +587,7 @@
     "DATE_END": "Fecha de fin",
     "NOT_FINALIZED": "Sin finalizar",
     "STATUS": "Estado",
+    "PRICE": "Precio",
     "TIME": "Hora contratada",
     "DAY": "Día de la semana contratado",
     "SERVICE": "Nombre del servicio",
@@ -975,5 +979,24 @@
   },
   "GENERAL": {
     "LOADING": "Cargando..."
+  },
+  "ADMIN_CONTRACTS": {
+    "TITLE": "Panel de contratos",
+    "STATE": {
+      "ALL": "Todos",
+      "ACTIVE": "Activos",
+      "NO_ACTIVE": "No activos"
+    },
+    "DOWNLOAD_CSV": "Descargar contratos en csv",
+    "TABLE": {
+      "ID": "ID",
+      "STATE": "Estado",
+      "CLIENT": "Nombre del cliente",
+      "BUSINESS": "Nombre de la empresa",
+      "SERVICE": "Servicio",
+      "START_DATE": "Fecha de inicio"
+    },
+    "ACTION": { "DOWNLOAD": "Descargar", "DOWNLOAD_CSV": "Descargar contratos en csv" },
+    "NO_DATA": "Sin datos"
   }
 }

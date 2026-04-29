@@ -4,8 +4,11 @@ import {
   Component,
   DestroyRef,
   OnInit,
+  ViewChild,
+  effect,
   inject,
   signal,
+  viewChild,
 } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -23,6 +26,7 @@ import { TimeModel } from '../../models/TimeModel';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 /**
  * Componente para la gestión global de horarios por administradores.
@@ -37,6 +41,7 @@ import { ResponsiveSize } from '../../services/responsive-size';
     MatTableModule,
     Inputs,
     ButtonComponent,
+    MatPaginatorModule,
     Buttonback,
     TranslateModule,
   ],
@@ -70,6 +75,17 @@ export default class ManagementTimeGlobal implements OnInit {
   public dataSource = new MatTableDataSource<TimeModel>([]);
   public displayedColumns: string[] = ['time', 'day', 'actions'];
 
+  public paginator = viewChild(MatPaginator);
+
+  constructor() {
+    effect(() => {
+      const currentPaginator = this.paginator();
+      if (currentPaginator) {
+        this.dataSource.paginator = currentPaginator;
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.loadTimes();
   }
@@ -83,6 +99,13 @@ export default class ManagementTimeGlobal implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: TimeModel[]) => {
         this.dataSource.data = data;
+        const paginatorInner = this.dataSource.paginator;
+        if (paginatorInner) {
+          const totalPaginas = Math.ceil(data.length / paginatorInner.pageSize);
+          if (paginatorInner.pageIndex >= totalPaginas && data.length > 0) {
+            paginatorInner.firstPage();
+          }
+        }
         this.cd.markForCheck();
       });
   }

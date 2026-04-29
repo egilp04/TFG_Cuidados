@@ -1,9 +1,4 @@
-<section 
-  class="info-container" 
-  role="dialog" 
-  aria-modal="true" 
-  aria-labelledby="info-modal-title"
->
+<section class="info-container" role="dialog" aria-modal="true" aria-labelledby="info-modal-title">
   <header class="header-modal">
     <button
       mat-dialog-close
@@ -17,7 +12,7 @@
   <label id="info-modal-title" class="info-contract-activity-title">
     {{ 'INFO_CONTRACT.TITLE_DETAILS' | translate }}:
   </label>
-  
+
   <header class="info-contract-activity-container">
     <mat-dialog-content class="info-contract-content">
       <article role="group" [attr.aria-label]="'INFO_CONTRACT.TITLE_DETAILS' | translate">
@@ -45,9 +40,9 @@
         </p>
         <p class="info-contract-text">
           <strong class="info-contract-text-title">
-            {{ 'INFO_CONTRACT.STATUS' | translate }}:
+            {{ 'INFO_CONTRACT.PRICE' | translate }}:
           </strong>
-          {{ data.contract.state }}
+          {{ data.contract.price }}€
         </p>
       </article>
     </mat-dialog-content>
@@ -56,7 +51,7 @@
   <label class="info-contract-activity-title">
     {{ 'INFO_CONTRACT.TITLE_ACTIVITY' | translate }}:
   </label>
-  
+
   <main class="info-contract-activity-container">
     <mat-dialog-content class="info-contract-content">
       <article role="group" [attr.aria-label]="'INFO_CONTRACT.TITLE_ACTIVITY' | translate">

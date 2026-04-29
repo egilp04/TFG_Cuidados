@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { AuthService } from './auth.service';
 import { ContractDetail, ContractModel, ContractSupabaseJoined } from '../models/ContractModel';
-import { from, Observable, throwError, BehaviorSubject } from 'rxjs';
+import { from, Observable, throwError, BehaviorSubject, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ComunicationService } from './comunication.service';
 
@@ -23,6 +23,7 @@ export class ContractService {
     *,
     id_service_time (
      id_service_time,
+     price,
      Service ( name )
     ),
     Client:Client!id_client (
@@ -88,6 +89,7 @@ export class ContractService {
               clientName:
                 contract.Client?.name || contract.Client?.User_public?.name || 'Desconocido',
             },
+            price: stData?.price,
             Business: {
               ...contract.Business,
               businessName:
@@ -187,6 +189,46 @@ export class ContractService {
           .subscribe();
       }),
       catchError((err) => throwError(() => err)),
+    );
+  }
+
+  /**
+   * ADMIN ONLY: Fetch all contracts (Active and Inactive) from the database
+   */
+  getAllContractsForAdmin(): Observable<ContractDetail[]> {
+    const queryPromise = this.supabase
+      .from('Contract')
+      .select(this.CONTRACT_SELECT)
+      .order('creation_date', { ascending: false });
+
+    return from(queryPromise).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+        if (!data) return [];
+
+        return (data as unknown as ContractSupabaseJoined[]).map((contract) => {
+          const stData = contract.id_service_time as any;
+          return {
+            ...contract,
+            id_st_flat: stData?.id_service_time || contract.id_service_time,
+            Client: {
+              ...contract.Client,
+              clientName: contract.Client?.name || contract.Client?.User_public?.name || 'Unknown',
+            },
+            Business: {
+              ...contract.Business,
+              businessName:
+                contract.Business?.name || contract.Business?.User_public?.name || 'Unknown',
+            },
+            serviceName: stData?.Service?.name,
+            price: stData?.price,
+          } as unknown as ContractDetail;
+        });
+      }),
+      catchError((err) => {
+        console.error('Error fetching admin contracts:', err);
+        return of([]);
+      }),
     );
   }
 }

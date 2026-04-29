@@ -4,8 +4,10 @@ import {
   Component,
   DestroyRef,
   OnInit,
+  effect,
   inject,
   signal,
+  viewChild,
 } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -23,6 +25,7 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 /**
  * Componente para la gestión global de servicios por administradores.
@@ -40,6 +43,7 @@ import { ResponsiveSize } from '../../services/responsive-size';
     Searchbar,
     Buttonback,
     TranslateModule,
+    MatPaginatorModule,
   ],
   templateUrl: './management-services-global.html',
   styleUrl: './management-services-global.css',
@@ -69,7 +73,18 @@ export default class ManagementServicesGlobal implements OnInit {
   });
 
   public dataSource = new MatTableDataSource<ServiceModel>([]);
+  public paginator = viewChild(MatPaginator);
+
   public displayedColumns: string[] = ['name', 'type_service', 'description', 'actions'];
+
+  constructor() {
+    effect(() => {
+      const currentPaginator = this.paginator();
+      if (currentPaginator) {
+        this.dataSource.paginator = currentPaginator;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.loadServices();
@@ -81,10 +96,19 @@ export default class ManagementServicesGlobal implements OnInit {
   private loadServices(): void {
     this.serviceService
       .getServicesObservable()
-      .pipe(takeUntilDestroyed(this.destroyRef),
-      filter(data => data !== null))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        filter((data) => data !== null),
+      )
       .subscribe((data: ServiceModel[]) => {
         this.dataSource.data = data;
+        const paginatorInner = this.dataSource.paginator;
+        if (paginatorInner) {
+          const totalPaginas = Math.ceil(data.length / paginatorInner.pageSize);
+          if (paginatorInner.pageIndex >= totalPaginas && data.length > 0) {
+            paginatorInner.firstPage();
+          }
+        }
         this.cd.markForCheck();
       });
   }
@@ -241,6 +265,9 @@ export default class ManagementServicesGlobal implements OnInit {
    */
   applyFilter(value: string): void {
     this.dataSource.filter = value.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   /**

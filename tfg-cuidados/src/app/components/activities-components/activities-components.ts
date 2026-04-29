@@ -8,31 +8,24 @@ import {
   computed,
   EventEmitter,
   Output,
+  viewChild,
+  effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { ButtonComponent } from '../button/button';
 import { AuthService } from '../../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContractRowDataTable } from '../../models/Acitvities-component';
 import { ContractDetail } from '../../models/ContractModel';
-
 /**
  * Componente hijo que renderiza un calendario mensual y una tabla de datos de servicios contratados.
  */
 @Component({
   selector: 'app-activities-components',
   standalone: true,
-  imports: [
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    CommonModule,
-    ButtonComponent,
-    TranslateModule,
-  ],
+  imports: [MatTableModule, MatPaginatorModule, CommonModule, ButtonComponent, TranslateModule],
   templateUrl: './activities-components.html',
   styleUrl: './activities-components.css',
 })
@@ -58,6 +51,17 @@ export class ActivitiesComponents implements OnInit, OnChanges {
   public eventsMap: Record<string, ContractRowDataTable[]> = {};
 
   private weekDayNames = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+
+  public paginator = viewChild(MatPaginator);
+
+  constructor() {
+    effect(() => {
+      const currentPaginator = this.paginator();
+      if (currentPaginator) {
+        this.tableDataSource.paginator = currentPaginator;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.refreshActivityData();
@@ -98,7 +102,13 @@ export class ActivitiesComponents implements OnInit, OnChanges {
         place: place,
       } as ContractRowDataTable;
     });
-
+    const paginatorInner = this.tableDataSource.paginator;
+    if (paginatorInner) {
+      const totalPaginas = Math.ceil(mappedData.length / paginatorInner.pageSize);
+      if (paginatorInner.pageIndex >= totalPaginas && mappedData.length > 0) {
+        paginatorInner.firstPage();
+      }
+    }
     this.tableDataSource.data = mappedData;
   }
 

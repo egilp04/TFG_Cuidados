@@ -1,4 +1,13 @@
-import { Component, DestroyRef, inject, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  ViewChild,
+  ChangeDetectorRef,
+  viewChild,
+  effect,
+} from '@angular/core';
 import { ButtonComponent } from '../../components/button/button';
 import { Dropdown } from '../../components/dropdown/dropdown';
 import { AuthService } from '../../services/auth.service';
@@ -6,7 +15,6 @@ import { ComunicationService } from '../../services/comunication.service';
 import { ComunicationModel } from '../../models/ComunicationModel';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { PaginacionEs } from '../../services/paginacion-es';
 import { MatDialog } from '@angular/material/dialog';
@@ -31,7 +39,6 @@ import { TableSkeletonComponent } from '../../components/table-skeleton/table-sk
     Dropdown,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
     CommonModule,
     Buttonback,
     TranslateModule,
@@ -57,7 +64,16 @@ export default class Messages implements OnInit {
 
   isLoading = true;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  public paginator = viewChild(MatPaginator);
+
+  constructor() {
+    effect(() => {
+      const currentPaginator = this.paginator();
+      if (currentPaginator) {
+        this.dataSource.paginator = currentPaginator;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.subscribeToMessages();
@@ -69,6 +85,9 @@ export default class Messages implements OnInit {
    */
   applyFilter(type: 'received' | 'sent'): void {
     this.currentFilter = type;
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
     this.comunicationService.refreshUsersData();
   }
 
@@ -78,7 +97,6 @@ export default class Messages implements OnInit {
   private subscribeToMessages(): void {
     const user = this.authService.currentUser();
     if (!user) return;
-
     this.comunicationService
       .getMessagesObservable()
       .pipe(
@@ -95,8 +113,12 @@ export default class Messages implements OnInit {
         next: (data: ComunicationModel[]) => {
           this.dataSource.data = data;
           this.isLoading = false;
-          if (this.paginator) {
-            this.dataSource.paginator = this.paginator;
+          const paginatorInner = this.dataSource.paginator;
+          if (paginatorInner) {
+            const totalPaginas = Math.ceil(data.length / paginatorInner.pageSize);
+            if (paginatorInner.pageIndex >= totalPaginas && data.length > 0) {
+              paginatorInner.firstPage();
+            }
           }
           this.cd.markForCheck();
         },
@@ -126,7 +148,9 @@ export default class Messages implements OnInit {
         data.sort((a, b) => (b.topic || '').localeCompare(a.topic || ''));
         break;
     }
-
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
     this.dataSource.data = data;
   }
 

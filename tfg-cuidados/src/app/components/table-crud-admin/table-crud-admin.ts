@@ -3,13 +3,13 @@ import {
   Input,
   Output,
   EventEmitter,
-  ViewChild,
   OnChanges,
   SimpleChanges,
-  AfterViewInit,
   inject,
   DestroyRef,
   OnInit,
+  effect,
+  viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../button/button';
@@ -44,7 +44,7 @@ import { UserModel } from '../../models/User_Service';
   templateUrl: './table-crud-admin.html',
   styleUrl: './table-crud-admin.css',
 })
-export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
+export class TableCrudAdmin implements OnInit, OnChanges {
   private destroyRef = inject(DestroyRef);
 
   @Input() mode: 'client' | 'business' = 'client';
@@ -52,10 +52,18 @@ export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
   @Output() deleteItem = new EventEmitter<UserModel>();
   @Output() modifyItem = new EventEmitter<UserModel>();
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   public dataSource = new MatTableDataSource<UserModel>([]);
   public searchControl = new FormControl('');
+
+  public paginator = viewChild(MatPaginator);
+  constructor() {
+    effect(() => {
+      const p = this.paginator();
+      if (p) {
+        this.dataSource.paginator = p;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.setupFilter();
@@ -66,10 +74,6 @@ export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
       this.dataSource.data = changes['data'].currentValue;
       this.refreshTableState();
     }
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
   }
 
   /**
@@ -92,8 +96,12 @@ export class TableCrudAdmin implements OnInit, OnChanges, AfterViewInit {
     if (this.searchControl.value) {
       this.dataSource.filter = this.searchControl.value.trim().toLowerCase();
     }
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    const paginatorInner = this.dataSource.paginator;
+    if (paginatorInner) {
+      const totalPaginas = Math.ceil(this.dataSource.filteredData.length / paginatorInner.pageSize);
+      if (paginatorInner.pageIndex >= totalPaginas && this.dataSource.data.length > 0) {
+        paginatorInner.firstPage();
+      }
     }
   }
 
