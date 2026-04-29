@@ -70,60 +70,61 @@ export default class ModifyProfilePage implements OnInit {
    * Actualiza las credenciales de autenticación si el correo fue cambiado por el usuario actualmente activo.
    * @param event El evento de envío del formulario que contiene los nuevos datos de perfil.
    */
-doUpdateProfile(event: FormSubmitEvent): void {
-  const user = this.userToEdit();
-  const loggedUser = this.authService.currentUser();
+  doUpdateProfile(event: FormSubmitEvent): void {
+    const user = this.userToEdit();
+    const loggedUser = this.authService.currentUser();
 
-  if (!user) return;
+    if (!user) return;
 
-  const newData = event.data as UpdateProfilePayload;
-  const role = event.rol;
-  const file = event.avatarFile;
+    const newData = event.data as UpdateProfilePayload;
+    const role = event.rol;
+    const file = event.avatarFile;
 
-  const uploadImage$ = file 
-    ? this.userService.uploadAvatar(user.id_user, file) 
-    : of(user.avatar_url || null);
+    const uploadImage$ = file
+      ? this.userService.uploadAvatar(user.id_user, file)
+      : of(user.avatar_url || null);
 
-  uploadImage$.pipe(
-    takeUntilDestroyed(this.destroyRef),
-    switchMap((newAvatarUrl) => {
-      newData.avatar_url = newAvatarUrl ?? undefined;
-            return this.userService.updateProfileDirect(user.id_user, newData, role);
-    }),
-    switchMap(() => {
-      const isSelfUpdate = user.id_user === loggedUser?.id_user;
-      const emailChanged = newData.email !== user.email;
-      if (isSelfUpdate && emailChanged) {
-        return this.authService.updateAuthCredentiales(newData.email);
-      }
-      return of(null);
-    }),
-    switchMap(() => this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_SUCCESS')),
-    tap((msg: string) => {
-      this.messageService.showMessage(msg, 'success');
-      const isSelfUpdate = user.id_user === loggedUser?.id_user;
+    uploadImage$
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        switchMap((newAvatarUrl) => {
+          newData.avatar_url = newAvatarUrl ?? undefined;
+          return this.userService.updateProfileDirect(user.id_user, newData, role);
+        }),
+        switchMap(() => {
+          const isSelfUpdate = user.id_user === loggedUser?.id_user;
+          const emailChanged = newData.email !== user.email;
+          if (isSelfUpdate && emailChanged) {
+            return this.authService.updateAuthCredentiales(newData.email);
+          }
+          return of(null);
+        }),
+        switchMap(() => this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_SUCCESS')),
+        tap((msg: string) => {
+          this.messageService.showMessage(msg, 'success');
+          const isSelfUpdate = user.id_user === loggedUser?.id_user;
 
-      if (isSelfUpdate) {
-        const updatedUser = { ...loggedUser, ...newData } as AuthUserModel;
-        this.authService.updateUserSignal(updatedUser);
-      }
-      this.cd.detectChanges();
-    }),
-    switchMap(() => timer(1500)),
-    tap(() => {
-      this.location.back();
-    }),
+          if (isSelfUpdate) {
+            const updatedUser = { ...loggedUser, ...newData } as AuthUserModel;
+            this.authService.updateUserSignal(updatedUser);
+          }
+          this.cd.detectChanges();
+        }),
+        switchMap(() => timer(1500)),
+        tap(() => {
+          this.location.back();
+        }),
 
-    catchError((err: Error) => {
-      console.error('Error en el proceso de actualización:', err);
-      return this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_ERROR').pipe(
-        tap((msg: string) => this.messageService.showMessage(msg, 'error')),
-        switchMap(() => EMPTY),
-      );
-    }),
-  )
-  .subscribe();
-}
+        catchError((err: Error) => {
+          console.error('Error en el proceso de actualización:', err);
+          return this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_ERROR').pipe(
+            tap((msg: string) => this.messageService.showMessage(msg, 'error')),
+            switchMap(() => EMPTY),
+          );
+        }),
+      )
+      .subscribe();
+  }
 
   /**
    * Solicita confirmación del usuario y elimina la cuenta.
