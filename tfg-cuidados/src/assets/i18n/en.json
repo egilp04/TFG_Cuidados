@@ -183,7 +183,7 @@
       "ACTIVE": "Total contracts active: ",
       "NO_ACTIVE": "Total contracts no active: "
     },
-    "TOTAL_USERS": "Current Total Users:",
+    "TOTAL_USERS": "Current Users:",
     "LOGIN": {
       "TITLE": "LOGIN",
       "SUBTITLE": "Users who have been registered this year"

@@ -184,7 +184,7 @@
       "ACTIVE": "Contratos totales activos: ",
       "NO_ACTIVE": "Contratos totales no activos: "
     },
-    "TOTAL_USERS": "Usuarios totales actuales:",
+    "TOTAL_USERS": "Usuarios actuales:",
     "LOGIN": {
       "TITLE": "LOGIN",
       "SUBTITLE": "Usuarios registrados en la aplicación este año"
