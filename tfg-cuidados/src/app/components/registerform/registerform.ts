@@ -57,6 +57,7 @@ export class Registerform implements OnInit, OnChanges {
   @Output() formSubmitted = new EventEmitter<FormSubmittedEvent>();
 
   public comunities: string[] = comunities;
+  namePattern = /^[A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\s]*$/;
 
   registerForm = this.fb.group(
     {
@@ -204,6 +205,9 @@ export class Registerform implements OnInit, OnChanges {
       phone: 'REGISTER.ERRORS.PATTERN.PHONE',
       postcode: 'REGISTER.ERRORS.PATTERN.ZIP',
       password: 'REGISTER.ERRORS.PATTERN.PASSWORD',
+      name: 'REGISTER.ERRORS.PATTERN.INVALID_NAME_FORMAT',
+      surname1: 'REGISTER.ERRORS.PATTERN.INVALID_NAME_FORMAT',
+      surname2: 'REGISTER.ERRORS.PATTERN.INVALID_NAME_FORMAT',
     };
     const key = patterns[controlName];
     return key ? this.translate.instant(key) : this.translate.instant('REGISTER.ERRORS.INVALID');
@@ -236,7 +240,16 @@ export class Registerform implements OnInit, OnChanges {
       } else if (f === 'dni') {
         c?.setValidators([Validators.required, this.dniValidator]);
       } else if (f === 'name') {
-        c?.setValidators([Validators.required, Validators.minLength(3)]);
+        c?.setValidators([
+          Validators.required, 
+          Validators.minLength(3), 
+          Validators.pattern(this.namePattern)
+        ]);
+      } else if (f === 'surname1' || f === 'surname2') {
+              c?.setValidators([
+                Validators.required, 
+                Validators.pattern(this.namePattern)
+              ]);
       } else if (f === 'cif') {
         c?.setValidators([Validators.required, this.cifValidator]);
       } else {

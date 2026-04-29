@@ -532,7 +532,7 @@
       "LOGIN_MSG_REQUIRED": "Log in to send messages.",
       "SELECT_SERVICE": "Please select a service and schedule.",
       "CONFIRM_CONTRACT": "Do you wish to contract {{servicio}} for {{precio}}€?",
-      "CONTRACT_SUCCESS": "Contract successfully created!",
+      "CONTRACT_SUCCESS": "Contract successfully created!Click in contracts to check it",
       "CONTRACT_ERROR": "Error processing the contract.",
       "ALREADY_CONTRACTED": "Already contracted"
     },
@@ -710,7 +710,8 @@
       "PATTERN": {
         "PHONE": "Must have 9 digits",
         "ZIP": "Invalid Zip Code (5 digits)",
-        "PASSWORD": "Must contain letters, numbers and special chars (min. 6)"
+        "PASSWORD": "Must contain letters, numbers and special chars (min. 6)",
+        "INVALID_NAME_FORMAT": "It must start with capital letter and have only letters."
       },
       "EMAIL_TAKEN": "This email is already in use",
       "NOT_ADULT": "You must be at least 18 years old",
