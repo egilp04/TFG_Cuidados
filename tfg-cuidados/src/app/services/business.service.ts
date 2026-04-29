@@ -52,7 +52,7 @@ export class BusinessService {
       .select(
         `
       *,
-      User_public!inner (name, email, state),
+      User_public!inner (name, email, state, avatar_url),
       Service_Time!inner (
         id_service_time,
         price,

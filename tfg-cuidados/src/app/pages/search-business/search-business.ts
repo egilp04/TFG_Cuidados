@@ -26,6 +26,7 @@ import { BusinessService } from '../../services/business.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { CardSkeletonComponent } from '../../components/card-skeleton/card-skeleton.component';
+import { AvatarComponent } from '../../components/avatar/avatar.component';
 /**
  * Componente para buscar y contratar servicios de negocios.
  * Utiliza estado independiente para selecciones de interfaz de usuario para mantener los modelos puros.
@@ -42,6 +43,7 @@ import { CardSkeletonComponent } from '../../components/card-skeleton/card-skele
     Buttonback,
     TranslateModule,
     CardSkeletonComponent,
+    AvatarComponent,
   ],
   templateUrl: './search-business.html',
   styleUrl: './search-business.css',
@@ -77,6 +79,7 @@ export default class SearchBusiness implements OnInit {
 
   public filteredBusinesses = computed(() => {
     const businesses = this.allBusinesses();
+    console.log(businesses);
     if (!businesses) return [];
     const filterText = this.searchFilter().toLowerCase().trim();
     if (!filterText) return businesses;
