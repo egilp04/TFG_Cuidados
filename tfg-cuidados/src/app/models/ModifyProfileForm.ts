@@ -9,9 +9,10 @@ export interface UserProfileModel {
   surname1?: string;
   surname2?: string;
   description?: string;
+  avatar_url?: string;
 }
 
 export interface FormSubmitEvent {
   data: UserProfileModel;
   rol: string;
-}
+  avatarFile?: File | null;}

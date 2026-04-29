@@ -454,6 +454,8 @@
       "UNSUBSCRIBE": "Unsubscribe"
     },
     "ERRORS": {
+      "INVALID_IMAGE_TYPE": "Invalid format. Use JPG, PNG, or WEBP",
+      "IMAGE_TOO_LARGE": "The image is too large. The limit is 2MB",
       "REQUIRED": "This field is compulsory",
       "EMAIL": "Email fomat not valid",
       "MIN_LENGTH": "Min {{value}} characters",

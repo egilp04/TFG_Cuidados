@@ -732,6 +732,8 @@
       "UNSUBSCRIBE": "Darse de baja"
     },
     "ERRORS": {
+      "INVALID_IMAGE_TYPE": "Formato no válido. Usa JPG, PNG o WEBP",
+      "IMAGE_TOO_LARGE": "La imagen es demasiado grande. El límite es de 2MB",
       "REQUIRED": "Este campo es obligatorio",
       "EMAIL": "Formato de correo inválido",
       "MIN_LENGTH": "Mínimo {{value}} caracteres",

@@ -9,6 +9,7 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
+  OnDestroy
 } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ButtonComponent } from '../button/button';
@@ -18,6 +19,9 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { comunities } from '../../core/constants/locations';
 import { LucideAngularModule } from 'lucide-angular';
 import { UserProfileModel, FormSubmitEvent } from '../../models/ModifyProfileForm';
+import { AvatarComponent } from '../../components/avatar/avatar.component';
+import { MessageService } from '../../services/message-service';
+
 
 /**
  * Componente que proporciona un formulario dinámico para editar perfiles de usuario.
@@ -33,17 +37,25 @@ import { UserProfileModel, FormSubmitEvent } from '../../models/ModifyProfileFor
     ReactiveFormsModule,
     TranslateModule,
     LucideAngularModule,
+    AvatarComponent
   ],
   templateUrl: './modifyprofileform.html',
   styleUrl: './modifyprofileform.css',
 })
-export class Modifyprofileform implements OnInit, OnChanges {
+export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
   private fb = inject(FormBuilder);
   private cd = inject(ChangeDetectorRef);
   private authService = inject(AuthService);
   private translate = inject(TranslateService);
 
   public comunities: string[] = comunities;
+
+  public previewUrl: string | null = null;
+  public selectedImageFile: File | null = null;
+
+  public messageService = inject(MessageService);
+
+  
 
   @Input() userData: UserProfileModel | null = null;
   @Input() userRole: 'client' | 'business' | 'administrator' = 'client';
@@ -84,6 +96,12 @@ export class Modifyprofileform implements OnInit, OnChanges {
 
     if (!this.userData) {
       this.loadProfileFormData();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.previewUrl) {
+      URL.revokeObjectURL(this.previewUrl);
     }
   }
 
@@ -254,7 +272,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
         }
       }
 
-      this.formSubmitted.emit({ data: databasePayload, rol: this.userRole });
+      this.formSubmitted.emit({ data: databasePayload, rol: this.userRole, avatarFile: this.selectedImageFile });
     } else {
       this.profileForm.markAllAsTouched();
     }
@@ -272,5 +290,37 @@ export class Modifyprofileform implements OnInit, OnChanges {
    */
   onDeleteAccount(): void {
     this.deleteRequested.emit();
+  }
+
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  
+      if (!validTypes.includes(file.type)) {
+        this.translate.get('MODIFY_PROFILE.ERRORS.INVALID_IMAGE_TYPE').subscribe((msg: string) => {
+          this.messageService.showMessage(msg, 'error');
+        });
+        input.value = '';
+        return;
+      }
+        const maxSize = 2 * 1024 * 1024;
+      if (file.size > maxSize) {
+        this.translate.get('MODIFY_PROFILE.ERRORS.IMAGE_TOO_LARGE').subscribe((msg: string) => {
+          this.messageService.showMessage(msg, 'error');
+        });
+        input.value = '';
+        return;
+      }
+
+      this.selectedImageFile = file;
+      
+      if (this.previewUrl) {
+        URL.revokeObjectURL(this.previewUrl);
+      }
+      this.previewUrl = URL.createObjectURL(file);
+    }
   }
 }

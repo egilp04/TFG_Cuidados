@@ -214,4 +214,25 @@ export class UserService {
       }),
     );
   }
+
+  uploadAvatar(userId: string, file: File): Observable<string | null> {
+    const filePath = `${userId}/avatar_${Date.now()}.${file.name.split('.').pop()}`;
+      return from(this.supabase.storage
+      .from('avatars')
+      .upload(filePath, file, { upsert: true })
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+                const { data: publicUrl } = this.supabase.storage
+          .from('avatars')
+          .getPublicUrl(filePath);
+        return publicUrl.publicUrl;
+      }),
+      catchError((err) => {
+        console.error('Error subiendo imagen:', err);
+        return of(null);
+      })
+    );
+  }
+
 }
