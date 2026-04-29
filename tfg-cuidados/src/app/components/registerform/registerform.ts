@@ -61,10 +61,10 @@ export class Registerform implements OnInit, OnChanges {
 
   registerForm = this.fb.group(
     {
-      name: this.fb.control<string>('', [Validators.minLength(3), Validators.pattern(this.namePattern)]),
+      name: this.fb.control<string>('', [Validators.minLength(3)]),
       termsCondition: this.fb.control<boolean>(false, Validators.requiredTrue),
-      surname1: this.fb.control<string>('', [Validators.pattern(this.namePattern)]),
-      surname2: this.fb.control<string>('', [Validators.pattern(this.namePattern)]),
+      surname1: this.fb.control<string>(''),
+      surname2: this.fb.control<string>(''),
       birthDate: this.fb.control<string>(''),
       dni: this.fb.control<string>(''),
       companyName: this.fb.control<string>(''),
@@ -240,7 +240,16 @@ export class Registerform implements OnInit, OnChanges {
       } else if (f === 'dni') {
         c?.setValidators([Validators.required, this.dniValidator]);
       } else if (f === 'name') {
-        c?.setValidators([Validators.required, Validators.minLength(3)]);
+        c?.setValidators([
+          Validators.required, 
+          Validators.minLength(3), 
+          Validators.pattern(this.namePattern)
+        ]);
+      } else if (f === 'surname1' || f === 'surname2') {
+              c?.setValidators([
+                Validators.required, 
+                Validators.pattern(this.namePattern)
+              ]);
       } else if (f === 'cif') {
         c?.setValidators([Validators.required, this.cifValidator]);
       } else {
