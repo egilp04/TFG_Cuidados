@@ -32,6 +32,7 @@ export interface AuthUserModel {
   comunity?: string;
   cif?: string;
   description?: string;
+  avatar_url?:string;
 }
 
 export interface PreparacionRegistro {

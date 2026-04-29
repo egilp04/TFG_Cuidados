@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { from, Observable, throwError } from 'rxjs';
+import { from, Observable, throwError, of} from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import {
   RpcSuccessResponse,
