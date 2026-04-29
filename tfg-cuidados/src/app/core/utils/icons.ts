@@ -13,44 +13,46 @@ import {
   Dumbbell,
   Briefcase,
   Dog,
+  CircleCheck,
 } from 'lucide-angular';
 
 export interface IconOption {
   name: string;
   icon: any;
-  label: string;
 }
 
 export const SERVICE_ICON_MAP: Record<string, any> = {
   sparkles: Sparkles,
   utensils: Utensils,
   wrench: Wrench,
-  'paint-roller': PaintRoller,
+  paintRoller: PaintRoller,
   hammer: Hammer,
   scissors: Scissors,
   heart: Heart,
-  'graduation-cap': GraduationCap,
+  graduationCap: GraduationCap,
   laptop: Laptop,
   truck: Truck,
   camera: Camera,
   dumbbell: Dumbbell,
   dog: Dog,
   briefcase: Briefcase,
+  circleCheck: CircleCheck,
 };
 
 export const AVAILABLE_ICONS: IconOption[] = [
-  { name: 'sparkles', icon: Sparkles, label: 'Limpieza general' },
-  { name: 'utensils', icon: Utensils, label: 'Comida y Restauración' },
-  { name: 'wrench', icon: Wrench, label: 'Reparaciones y Fontanería' },
-  { name: 'paint-roller', icon: PaintRoller, label: 'Pintura y Reformas' },
-  { name: 'hammer', icon: Hammer, label: 'Carpintería y Bricolaje' },
-  { name: 'scissors', icon: Scissors, label: 'Peluquería y Estética' },
-  { name: 'heart', icon: Heart, label: 'Cuidados y Salud' },
-  { name: 'graduation-cap', icon: GraduationCap, label: 'Educación y Clases' },
-  { name: 'laptop', icon: Laptop, label: 'Informática y Tecnología' },
-  { name: 'truck', icon: Truck, label: 'Transporte y Mudanzas' },
-  { name: 'camera', icon: Camera, label: 'Fotografía y Eventos' },
-  { name: 'dumbbell', icon: Dumbbell, label: 'Deporte y Entrenamiento' },
-  { name: 'dog', icon: Dog, label: 'Cuidado de Mascotas' },
-  { name: 'briefcase', icon: Briefcase, label: 'Negocios y Asesoría' },
+  { name: 'sparkles', icon: Sparkles },
+  { name: 'utensils', icon: Utensils },
+  { name: 'wrench', icon: Wrench },
+  { name: 'paintRoller', icon: PaintRoller },
+  { name: 'hammer', icon: Hammer },
+  { name: 'scissors', icon: Scissors },
+  { name: 'heart', icon: Heart },
+  { name: 'graduationCap', icon: GraduationCap },
+  { name: 'laptop', icon: Laptop },
+  { name: 'truck', icon: Truck },
+  { name: 'camera', icon: Camera },
+  { name: 'dumbbell', icon: Dumbbell },
+  { name: 'dog', icon: Dog },
+  { name: 'briefcase', icon: Briefcase },
+  { name: 'CircleCheck', icon: CircleCheck },
 ];
