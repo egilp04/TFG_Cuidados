@@ -532,7 +532,7 @@
       "LOGIN_MSG_REQUIRED": "Log in to send messages.",
       "SELECT_SERVICE": "Please select a service and schedule.",
       "CONFIRM_CONTRACT": "Do you wish to contract {{servicio}} for {{precio}}€?",
-      "CONTRACT_SUCCESS": "Contract successfully created!",
+      "CONTRACT_SUCCESS": "Contract successfully created!Click in contracts to check it",
       "CONTRACT_ERROR": "Error processing the contract.",
       "ALREADY_CONTRACTED": "Already contracted"
     },
