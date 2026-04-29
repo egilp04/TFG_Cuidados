@@ -56,12 +56,12 @@ export class Modifyprofileform implements OnInit, OnChanges {
   public isAdminViewer: boolean = false;
 
   public profileForm = this.fb.group({
-    userName: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
+    userName: this.fb.control<string>(''),
     surname1: this.fb.control<string>(''),
     surname2: this.fb.control<string>(''),
     companyName: this.fb.control<string>(''),
-    phone: this.fb.control<string>('', [Validators.required, Validators.pattern('^[0-9]{9}$')]),
-    email: this.fb.control<string>('', [Validators.required, Validators.email]),
+    phone: this.fb.control<string>(''),
+    email: this.fb.control<string>('', [Validators.email]),
     address: this.fb.control<string>(''),
     city: this.fb.control<string>(''),
     postcode: this.fb.control<string>(''),
@@ -142,7 +142,7 @@ export class Modifyprofileform implements OnInit, OnChanges {
     this.setValidators(['email', 'phone']);
 
     if (this.userRole === 'business') {
-      this.setValidators(['companyName']);
+      this.setValidators(['companyName', 'description']);
     } else {
       this.setValidators(['userName']);
     }
@@ -161,14 +161,20 @@ export class Modifyprofileform implements OnInit, OnChanges {
    * @param fields Array de nombres de controles de formulario a validar.
    */
   private setValidators(fields: string[]): void {
+
+    const namePattern = '^[A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\\s]*$';
+
     fields.forEach((f) => {
       const control = this.profileForm.get(f);
       const validators = [Validators.required];
 
-      if (f === 'phone') validators.push(Validators.pattern('^[0-9]{9}$'));
+      if (f === 'phone') validators.push(Validators.pattern(/^(?:(?:\+|00)34\s?)?[6789](?:\s?\d){8}$/));
       if (f === 'postcode') validators.push(Validators.pattern('^[0-9]{5}$'));
       if (f === 'email') validators.push(Validators.email);
-      if (f === 'userName') validators.push(Validators.minLength(3));
+      if (f === 'userName' || f === 'surname1' || f === 'surname2') {
+        validators.push(Validators.minLength(3));
+        validators.push(Validators.pattern(namePattern));
+      }
 
       control?.setValidators(validators);
       control?.updateValueAndValidity();
@@ -192,17 +198,32 @@ export class Modifyprofileform implements OnInit, OnChanges {
     const errors = control.errors;
     if (!errors) return '';
 
+    const firstError = Object.keys(errors)[0];
+    
+    if (firstError === 'pattern') {
+      return this.getPatternMessage(controlName);
+    }
+
     const errorMessages: Record<string, string> = {
       required: this.translate.instant('MODIFY_PROFILE.ERRORS.REQUIRED'),
       email: this.translate.instant('MODIFY_PROFILE.ERRORS.EMAIL'),
       minlength: this.translate.instant('MODIFY_PROFILE.ERRORS.MIN_LENGTH', {
         value: errors['minlength']?.requiredLength,
       }),
-      pattern: this.translate.instant('MODIFY_PROFILE.ERRORS.PATTERN'),
     };
-
-    const firstError = Object.keys(errors)[0];
     return errorMessages[firstError] || this.translate.instant('MODIFY_PROFILE.ERRORS.INVALID');
+  }
+
+  private getPatternMessage(controlName: string): string {
+    const patterns: Record<string, string> = {
+      phone: 'MODIFY_PROFILE.ERRORS.PATTERN.PHONE',
+      postcode: 'MODIFY_PROFILE.ERRORS.PATTERN.ZIP',
+      userName: 'MODIFY_PROFILE.ERRORS.PATTERN.USERNAME',
+      surname1: 'MODIFY_PROFILE.ERRORS.PATTERN.SURNAME',
+      surname2: 'MODIFY_PROFILE.ERRORS.PATTERN.SURNAME',
+    };
+    const key = patterns[controlName];
+    return key ? this.translate.instant(key) : this.translate.instant('MODIFY_PROFILE.ERRORS.INVALID');
   }
 
   /**
