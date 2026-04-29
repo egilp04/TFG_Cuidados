@@ -9,5 +9,6 @@
 }
 
 .avatar-text{
-    @apply text-white font-semibold text-[clamp(14px,40%,48px)] select-none;
+    @apply text-white font-semibold select-none;
+    font-size: clamp(14px, 4vw, 48px);
 }

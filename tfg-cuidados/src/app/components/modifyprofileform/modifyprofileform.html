@@ -1,5 +1,5 @@
 <section
-  class="modify-form-container"
+  class="modify-profile-form-container"
   [attr.aria-label]="'MODIFY_PROFILE.ACCESSIBILITY.SECTION_TITLE' | translate"
 >
 
@@ -23,13 +23,7 @@
     accept="image/jpeg, image/png, image/webp" 
     (change)="onFileSelected($event)"
   >
-  <button 
-    type="button" 
-    class="text-xs text-blue-600 hover:underline font-medium"
-    (click)="fileInput.click()"
-  >
-    {{ 'MODIFY_PROFILE.BTN.CHANGE_AVATAR' | translate }}
-  </button>
+
 </div>
 
 
