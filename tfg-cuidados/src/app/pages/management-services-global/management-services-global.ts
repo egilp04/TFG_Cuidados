@@ -27,10 +27,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
-/**
- * Componente para la gestión global de servicios por administradores.
- * Permite crear, editar y eliminar el catálogo de servicios disponibles en la plataforma.
- */
 @Component({
   selector: 'app-management-services-global',
   standalone: true,
