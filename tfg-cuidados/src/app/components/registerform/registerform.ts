@@ -57,13 +57,14 @@ export class Registerform implements OnInit, OnChanges {
   @Output() formSubmitted = new EventEmitter<FormSubmittedEvent>();
 
   public comunities: string[] = comunities;
+const namePattern = /^[A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\s]*$/;
 
   registerForm = this.fb.group(
     {
-      name: this.fb.control<string>('', [Validators.minLength(3)]),
+      name: this.fb.control<string>('', [Validators.minLength(3), Validators.pattern(namePattern)]),
       termsCondition: this.fb.control<boolean>(false, Validators.requiredTrue),
-      surname1: this.fb.control<string>(''),
-      surname2: this.fb.control<string>(''),
+      surname1: this.fb.control<string>('', [Validators.pattern(namePattern)]),
+      surname2: this.fb.control<string>('', [Validators.pattern(namePattern)]),
       birthDate: this.fb.control<string>(''),
       dni: this.fb.control<string>(''),
       companyName: this.fb.control<string>(''),
@@ -204,6 +205,9 @@ export class Registerform implements OnInit, OnChanges {
       phone: 'REGISTER.ERRORS.PATTERN.PHONE',
       postcode: 'REGISTER.ERRORS.PATTERN.ZIP',
       password: 'REGISTER.ERRORS.PATTERN.PASSWORD',
+      name: 'REGISTER.ERRORS.PATTERN.INVALID_NAME_FORMAT',
+      surname1: 'REGISTER.ERRORS.PATTERN.INVALID_NAME_FORMAT',
+      surname2: 'REGISTER.ERRORS.PATTERN.INVALID_NAME_FORMAT',
     };
     const key = patterns[controlName];
     return key ? this.translate.instant(key) : this.translate.instant('REGISTER.ERRORS.INVALID');

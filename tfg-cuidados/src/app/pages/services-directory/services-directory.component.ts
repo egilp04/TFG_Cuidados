@@ -23,12 +23,7 @@ export default class ServicesDirectoryComponent {
   private router = inject(Router);
 
   public allServices = toSignal(
-    this.serviceService.getServicesObservable().pipe(
-      catchError((error) => {
-        console.error('Error cargando el directorio:', error);
-        return of([]);
-      }),
-    ),
+    this.serviceService.getServicesWithOffers(),
     { initialValue: null },
   );
 

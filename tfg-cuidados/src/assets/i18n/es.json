@@ -656,7 +656,8 @@
       "PATTERN": {
         "PHONE": "Debe tener 9 dígitos (ej: 600123456)",
         "ZIP": "CP no válido (5 dígitos)",
-        "PASSWORD": "Debe contener letras, números y caracteres especiales (mín. 6)"
+        "PASSWORD": "Debe contener letras, números y caracteres especiales (mín. 6)",
+        "INVALID_NAME_FORMAT": "Debe empezar por mayúscula y contener solo letras."
       },
       "NOT_ADULT": "Debes ser mayor de 18 años",
       "DNI_FORMAT": "El DNI debe tener 8 números y 1 letra",
