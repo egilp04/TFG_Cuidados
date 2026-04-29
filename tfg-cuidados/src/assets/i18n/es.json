@@ -654,7 +654,7 @@
       "TERMS_REQUIRED": "Debes aceptar los términos y condiciones",
       "INVALID": "Campo inválido",
       "PATTERN": {
-        "PHONE": "Debe tener 9 dígitos (ej: 600123456)",
+        "PHONE": "El teléfono debe empezar por 6, 7, 8 o 9 y tener 9 dígitos (ej: 615678788)",
         "ZIP": "CP no válido (5 dígitos)",
         "PASSWORD": "Debe contener letras, números y caracteres especiales (mín. 6)",
         "INVALID_NAME_FORMAT": "Debe empezar por mayúscula y contener solo letras."
@@ -735,8 +735,13 @@
       "REQUIRED": "Este campo es obligatorio",
       "EMAIL": "Formato de correo inválido",
       "MIN_LENGTH": "Mínimo {{value}} caracteres",
-      "PATTERN": "El formato no es válido",
-      "INVALID": "Campo inválido"
+      "INVALID": "Campo inválido",
+      "PATTERN": {
+        "PHONE": "El teléfono debe empezar por 6, 7, 8 o 9 y tener 9 dígitos (ej: 615678788)",
+        "ZIP": "CP no válido (5 dígitos)",
+        "USERNAME": "El nombre debe empezar por mayúscula y contener solo letras",
+        "SURNAME": "El apellido debe empezar por mayúscula y contener solo letras"     
+      }
     }
   },
   "MESSAGES_MODAL": {

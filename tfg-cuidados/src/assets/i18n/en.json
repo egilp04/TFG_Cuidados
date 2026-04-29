@@ -461,13 +461,10 @@
       "TERMS_REQUIRED": "Acept terms and conditions, please",
       "INVALID": "Invalid field",
       "PATTERN": {
-        "PHONE": "It do must hace 9 characters (ej: 600123456)",
-        "ZIP": "CP not valid (5 dígitos)",
-        "PASSWORD": "It do must hace letters, numbers and special characters (min. 6)",
-        "NOT_ADULT": "You must hace more than 18 years old, sorry",
-        "DNI_FORMAT": "DNI must have 8 digits and 1 letter",
-        "DNI_LETTER": "Invalid DNI letter",
-        "FECHNACINVALID": "Invalid birthdate"
+        "PHONE": "The phone number must start with 6, 7, 8, or 9 and have 9 digits (ej.: 615548730)",
+        "ZIP": "CP not valid (5 digits)",
+        "USERNAME": "The name must start with a capital letter and contain only letters",
+        "SURNAME": "The surname must start with a capital letter and contain only letters"   
       }
     }
   },
@@ -708,7 +705,7 @@
       "TERMS_REQUIRED": "You must accept the terms and conditions",
       "INVALID": "Invalid field",
       "PATTERN": {
-        "PHONE": "Must have 9 digits",
+        "PHONE": "The phone number must start with 6, 7, 8, or 9 and have 9 digits (ej.: 615548730)",
         "ZIP": "Invalid Zip Code (5 digits)",
         "PASSWORD": "Must contain letters, numbers and special chars (min. 6)",
         "INVALID_NAME_FORMAT": "It must start with capital letter and have only letters."

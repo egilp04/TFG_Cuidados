@@ -57,11 +57,10 @@ export class Registerform implements OnInit, OnChanges {
   @Output() formSubmitted = new EventEmitter<FormSubmittedEvent>();
 
   public comunities: string[] = comunities;
-  namePattern = /^[A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\s]*$/;
 
   registerForm = this.fb.group(
     {
-      name: this.fb.control<string>('', [Validators.minLength(3)]),
+      name: this.fb.control<string>(''),
       termsCondition: this.fb.control<boolean>(false, Validators.requiredTrue),
       surname1: this.fb.control<string>(''),
       surname2: this.fb.control<string>(''),
@@ -70,7 +69,7 @@ export class Registerform implements OnInit, OnChanges {
       companyName: this.fb.control<string>(''),
       cif: this.fb.control<string>(''),
       description: this.fb.control<string>(''),
-      phone: this.fb.control<string>('', [Validators.required, Validators.pattern('^[0-9]{9}$')]),
+      phone: this.fb.control<string>('', [Validators.required, Validators.pattern(/^(?:(?:\+|00)34\s?)?[6789](?:\s?\d){8}$/)]),
       email: this.fb.control<string>(
         '',
         [Validators.required, Validators.email],
@@ -175,6 +174,15 @@ export class Registerform implements OnInit, OnChanges {
     if (!errors) return '';
 
     const firstError = Object.keys(errors)[0];
+    if (firstError === 'minlength') {
+      return this.translate.instant('REGISTER.ERRORS.MIN_LENGTH', {
+        value: errors['minlength']?.requiredLength,
+      });
+    }
+    
+    if (firstError === 'pattern') {
+      return this.getPatternMessage(controlName);
+    }
     const keyMap: Record<string, string> = {
       required: 'REGISTER.ERRORS.REQUIRED',
       email: 'REGISTER.ERRORS.EMAIL',
@@ -188,14 +196,7 @@ export class Registerform implements OnInit, OnChanges {
       invalidCifChecksum: 'REGISTER.ERRORS.CIF_INVALID',
       emailTaken: 'REGISTER.ERRORS.EMAIL_TAKEN',
     };
-    if (firstError === 'minlength') {
-      return this.translate.instant('REGISTER.ERRORS.MIN_LENGTH', {
-        value: errors['minlength']?.requiredLength,
-      });
-    }
-    if (firstError === 'pattern') {
-      return this.getPatternMessage(controlName);
-    }
+
     const translationKey = keyMap[firstError] || 'REGISTER.ERRORS.INVALID';
     return this.translate.instant(translationKey);
   }
@@ -229,35 +230,31 @@ export class Registerform implements OnInit, OnChanges {
     }
   }
 
-  /**
+ /**
    * Aplica validadores específicos a una lista de campos de formulario.
    */
-  private setValidators(fields: string[]): void {
-    fields.forEach((f) => {
-      const c = this.registerForm.get(f);
-      if (f === 'birthDate') {
-        c?.setValidators([Validators.required, this.isAdult.bind(this)]);
-      } else if (f === 'dni') {
-        c?.setValidators([Validators.required, this.dniValidator]);
-      } else if (f === 'name') {
-        c?.setValidators([
-          Validators.required, 
-          Validators.minLength(3), 
-          Validators.pattern(this.namePattern)
-        ]);
-      } else if (f === 'surname1' || f === 'surname2') {
-              c?.setValidators([
-                Validators.required, 
-                Validators.pattern(this.namePattern)
-              ]);
-      } else if (f === 'cif') {
-        c?.setValidators([Validators.required, this.cifValidator]);
-      } else {
-        c?.setValidators([Validators.required]);
-      }
-      c?.updateValueAndValidity();
-    });
-  }
+ private setValidators(fields: string[]): void {
+  const namePattern = /^[A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\s]*$/;
+
+  fields.forEach((f) => {
+    const control = this.registerForm.get(f);
+    const validators = [Validators.required];
+
+    if (f === 'name' || f === 'surname1' || f === 'surname2') {
+      validators.push(Validators.minLength(3));
+      validators.push(Validators.pattern(namePattern));
+    }
+
+    if (f === 'birthDate') validators.push(this.isAdult.bind(this));
+    if (f === 'dni') validators.push(this.dniValidator);
+    if (f === 'cif') validators.push(this.cifValidator);
+    
+    if (f === 'companyName') validators.push(Validators.minLength(3));
+
+    control?.setValidators(validators);
+    control?.updateValueAndValidity();
+  });
+}
 
   /**
    * Borra validadores de una lista de campos de formulario.
