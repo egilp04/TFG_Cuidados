@@ -8,7 +8,7 @@
     @apply w-full h-full object-cover;
 }
 
-.avatar-text{
-    @apply text-white font-semibold select-none;
-    font-size: clamp(14px, 4vw, 48px);
-}
+.avatar-text {
+    @apply text-white font-bold select-none leading-none;
+    font-size: 3rem;
+    }

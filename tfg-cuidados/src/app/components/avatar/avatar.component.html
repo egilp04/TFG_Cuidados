@@ -1,20 +1,11 @@
-<div 
-  class="avatar-container"
-  [style.background-color]="imageUrl() ? 'transparent' : backgroundHsl()"
->
+<div [style.background-color]="backgroundColor" 
+     class="w-full h-full rounded-full flex items-center justify-center overflow-hidden border-2 border-white shadow-sm">
   
-  @if (imageUrl()) {
-    <img 
-      [src]="imageUrl()" 
-      [alt]="'Avatar of ' + name()" 
-      class="avatar-img" 
-      loading="lazy" 
-    />
-  } 
-  
-  @else {
+  @if (imageUrl) {
+    <img [src]="imageUrl" class="w-full h-full object-cover" alt="Avatar">
+  } @else {
     <span class="avatar-text">
-      {{ initials() }}
+      {{ initials }}
     </span>
   }
 </div>
