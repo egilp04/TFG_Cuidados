@@ -78,15 +78,22 @@ export default class ModifyProfilePage implements OnInit {
 
     const newData = event.data as UpdateProfilePayload;
     const role = event.rol;
+    const file = event.avatarFile;
 
-    this.userService
-      .updateProfileDirect(user.id_user, newData, role)
+    const uploadImage$ = file
+      ? this.userService.uploadAvatar(user.id_user, file)
+      : of(user.avatar_url || null);
+
+    uploadImage$
       .pipe(
         takeUntilDestroyed(this.destroyRef),
+        switchMap((newAvatarUrl) => {
+          newData.avatar_url = newAvatarUrl ?? undefined;
+          return this.userService.updateProfileDirect(user.id_user, newData, role);
+        }),
         switchMap(() => {
           const isSelfUpdate = user.id_user === loggedUser?.id_user;
           const emailChanged = newData.email !== user.email;
-
           if (isSelfUpdate && emailChanged) {
             return this.authService.updateAuthCredentiales(newData.email);
           }
@@ -107,8 +114,9 @@ export default class ModifyProfilePage implements OnInit {
         tap(() => {
           this.location.back();
         }),
+
         catchError((err: Error) => {
-          console.error('Error actualizando perfil:', err);
+          console.error('Error en el proceso de actualización:', err);
           return this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_ERROR').pipe(
             tap((msg: string) => this.messageService.showMessage(msg, 'error')),
             switchMap(() => EMPTY),

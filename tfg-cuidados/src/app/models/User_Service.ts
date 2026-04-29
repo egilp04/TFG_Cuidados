@@ -9,6 +9,7 @@ export interface UpdateProfilePayload {
   postcode?: string;
   comunity?: string;
   description?: string;
+  avatar_url?: string;
 }
 
 export interface UserModel extends UpdateProfilePayload {

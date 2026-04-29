@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { from, Observable, throwError } from 'rxjs';
+import { from, Observable, throwError, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import {
   RpcSuccessResponse,
@@ -145,6 +145,7 @@ export class UserService {
       p_postcode: dataToSend.postcode || null,
       p_community: dataToSend.comunity || null,
       p_description: dataToSend.description || null,
+      p_avatar_url: dataToSend.avatar_url || null,
     };
 
     return from(this.supabase.rpc('update_user_profile', bodyRPC)).pipe(
@@ -211,6 +212,23 @@ export class UserService {
           return [];
         }
         return (data || []).map((user) => user.email);
+      }),
+    );
+  }
+
+  uploadAvatar(userId: string, file: File): Observable<string | null> {
+    const filePath = `${userId}/avatar_${Date.now()}.${file.name.split('.').pop()}`;
+    return from(
+      this.supabase.storage.from('avatars').upload(filePath, file, { upsert: true }),
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+        const { data: publicUrl } = this.supabase.storage.from('avatars').getPublicUrl(filePath);
+        return publicUrl.publicUrl;
+      }),
+      catchError((err) => {
+        console.error('Error subiendo imagen:', err);
+        return of(null);
       }),
     );
   }
