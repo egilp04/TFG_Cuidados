@@ -5,7 +5,7 @@
   @if (imageUrl()) {
     <img [src]="imageUrl()" class="w-full h-full object-cover" alt="Avatar" />
   } @else {
-    <span class="avatar-text">
+    <span class="avatar-text text-label">
       {{ initials() }}
     </span>
   }

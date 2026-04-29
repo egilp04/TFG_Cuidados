@@ -19,4 +19,5 @@ export interface Contractmodel {
 export interface ContractRowDataTable extends Contractmodel {
   nameToShow: string;
   place: string;
+  avatar_url?: string;
 }

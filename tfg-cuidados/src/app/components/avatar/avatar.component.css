@@ -1,14 +1,14 @@
 @reference "../../../styles.css";
 
-.avatar-container{
-    @apply inline-block w-full aspect-square border border-gray-300 rounded-full overflow-hidden flex items-center justify-center box-border;
+.avatar-container {
+  @apply inline-block w-full aspect-square border border-gray-300 rounded-full overflow-hidden flex items-center justify-center box-border;
+  aspect-ratio: 1 / 1;
 }
 
-.avatar-img{
-    @apply w-full h-full object-cover;
+.avatar-img {
+  @apply w-full h-full object-cover;
 }
 
 .avatar-text {
-    @apply text-white font-bold select-none leading-none;
-    font-size: 3rem;
-    }
+  @apply text-white font-bold select-none leading-none;
+}

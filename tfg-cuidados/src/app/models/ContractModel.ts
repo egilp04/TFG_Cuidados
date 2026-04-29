@@ -50,8 +50,18 @@ export interface ContractDetail extends ContractModel {
     city?: string;
     postcode?: string;
     clientName: string;
+    User_public?: {
+      name: string;
+      email: string;
+      avatar_url: string | null;
+    };
   };
   Business?: {
     businessName: string;
+    User_public?: {
+      name: string;
+      email: string;
+      avatar_url: string | null;
+    };
   };
 }
