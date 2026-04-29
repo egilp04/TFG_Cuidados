@@ -742,7 +742,7 @@
         "PHONE": "El teléfono debe empezar por 6, 7, 8 o 9 y tener 9 dígitos (ej: 615678788)",
         "ZIP": "CP no válido (5 dígitos)",
         "USERNAME": "El nombre debe empezar por mayúscula y contener solo letras",
-        "SURNAME": "El apellido debe empezar por mayúscula y contener solo letras"     
+        "SURNAME": "El apellido debe empezar por mayúscula y contener solo letras"
       }
     }
   },
@@ -812,7 +812,8 @@
   "FOOTER": {
     "LEGAL_ASPECTS": "Aspectos legales",
     "PRIVACY_POLICTICS": "Política de privacidad",
-    "COOKIES_POLICIES": "Política de cookies"
+    "COOKIES_POLICIES": "Política de cookies",
+    "FOLLOW": "Síguenos"
   },
   "TERMS_PAGE": {
     "ACCESSIBILITY": {
