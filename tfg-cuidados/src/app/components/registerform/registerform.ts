@@ -57,14 +57,14 @@ export class Registerform implements OnInit, OnChanges {
   @Output() formSubmitted = new EventEmitter<FormSubmittedEvent>();
 
   public comunities: string[] = comunities;
-const namePattern = /^[A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\s]*$/;
+  namePattern = /^[A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\s]*$/;
 
   registerForm = this.fb.group(
     {
-      name: this.fb.control<string>('', [Validators.minLength(3), Validators.pattern(namePattern)]),
+      name: this.fb.control<string>('', [Validators.minLength(3), Validators.pattern(this.namePattern)]),
       termsCondition: this.fb.control<boolean>(false, Validators.requiredTrue),
-      surname1: this.fb.control<string>('', [Validators.pattern(namePattern)]),
-      surname2: this.fb.control<string>('', [Validators.pattern(namePattern)]),
+      surname1: this.fb.control<string>('', [Validators.pattern(this.namePattern)]),
+      surname2: this.fb.control<string>('', [Validators.pattern(this.namePattern)]),
       birthDate: this.fb.control<string>(''),
       dni: this.fb.control<string>(''),
       companyName: this.fb.control<string>(''),
