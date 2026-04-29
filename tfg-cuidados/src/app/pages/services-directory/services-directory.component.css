@@ -40,7 +40,7 @@
 }
 
 .directory-container {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-28 w-full p-10;
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 w-full px-10 py-16 xl:py-20;
 }
 
 .directory-no-bssns {
