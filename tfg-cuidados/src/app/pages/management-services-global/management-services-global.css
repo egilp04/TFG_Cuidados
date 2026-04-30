@@ -29,31 +29,48 @@
   @apply text-secondary text-h2 text-center dark:text-surface;
 }
 
-   ::ng-deep .mi-select-personalizado {
-    --mdc-outlined-text-field-container-shape: 0.75rem;
-        --mdc-outlined-text-field-outline-width: 2px;
-    --mdc-outlined-text-field-hover-outline-width: 2px;
-    --mdc-outlined-text-field-focus-outline-width: 2px;
-      --mdc-outlined-text-field-outline-color: #344f51;
-    --mdc-outlined-text-field-hover-outline-color: #344f51;
-    --mdc-outlined-text-field-focus-outline-color: #344f51;
-  }
-  
-  ::ng-deep .mi-select-personalizado .mat-mdc-select-arrow {
-    color: #344f51 !important;
-  }
-  
-  :host-context(.dark) ::ng-deep .mi-select-personalizado {
-    --mdc-outlined-text-field-outline-color: #ffffff;
-    --mdc-outlined-text-field-hover-outline-color: #ffffff;
-    --mdc-outlined-text-field-focus-outline-color: #ffffff;
-  }
-  
-  :host-context(.dark) ::ng-deep .mi-select-personalizado .mat-mdc-select-arrow {
-    color: #ffffff !important; 
-  }
- 
-  ::ng-deep .mi-select-personalizado .mat-mdc-form-field-infix {
-    padding-top: 0.75rem !important;
-    padding-bottom: 0.75rem !important;
-  }
+
+
+::ng-deep .mi-select-personalizado .mdc-notched-outline__leading {
+  border-top-left-radius: 0.75rem !important; 
+  border-bottom-left-radius: 0.75rem !important; 
+  border-color: #344f51 !important; 
+  border-width: 2px 0 2px 2px !important; 
+  border-style: solid !important;
+  width: 1rem !important;
+}
+
+::ng-deep .mi-select-personalizado .mdc-notched-outline__notch {
+  border-color: #344f51 !important;
+  border-width: 2px 0 2px 0 !important; 
+  border-style: solid !important;
+}
+
+::ng-deep .mi-select-personalizado .mdc-notched-outline__trailing {
+  border-top-right-radius: 0.75rem !important; 
+  border-bottom-right-radius: 0.75rem !important;
+  border-color: #344f51 !important;
+  border-width: 2px 2px 2px 0 !important; 
+  border-style: solid !important;
+}
+
+::ng-deep .mi-select-personalizado .mat-mdc-select-arrow {
+  color: #344f51 !important;
+}
+
+:host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__leading,
+:host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__notch,
+:host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__trailing {
+  border-color: #ffffff !important; 
+}
+
+:host-context(.dark) ::ng-deep .mi-select-personalizado .mat-mdc-select-arrow {
+  color: #ffffff !important; 
+}
+
+
+::ng-deep .mi-select-personalizado .mat-mdc-form-field-infix {
+  padding-top: 0.85rem !important;
+  padding-bottom: 0.85rem !important;
+  min-height: auto !important;
+}

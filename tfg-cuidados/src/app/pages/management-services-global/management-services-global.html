@@ -35,16 +35,9 @@
           
           <mat-select-trigger>
             <div class="flex items-center gap-2 mt-1">
-              @if (iconSelect.value) {
-                <lucide-icon 
-                  [img]="iconMap[iconSelect.value]" 
-                  class="w-5 h-5 text-label">
-                </lucide-icon>
-              } @else {
                 <span class="text-label dark:text-surface opacity-70">
                   {{ 'ADMIN_SERVICE_TIME.SELECT_ICON_PLACEHOLDER' | translate }}                
               </span>
-              }
             </div>
           </mat-select-trigger>
 

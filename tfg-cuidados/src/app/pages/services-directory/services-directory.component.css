@@ -8,7 +8,7 @@
 }
 
 .directory-card-header {
-  @apply flex flex-col justify-center w-full items-center gap-2;
+  @apply flex justify-center w-full items-center gap-2;
 }
 
 .directory-description-title-section {
