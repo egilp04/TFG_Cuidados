@@ -36,14 +36,13 @@
 }
 
 .management-time-global-select {
-  @apply text-label w-full rounded-12 border-2 border-primary bg-transparent text-primary
-    dark:text-surface dark:border-surface outline-none focus:border-accent cursor-pointer transition-colors
+  @apply text-label text-primary font-medium dark:text-surface;
 
-    appearance-none bg-no-repeat
-    p-3 pr-10 bg-position-[right_1rem_center] bg-size-[1.2rem]
-    md:p-4 md:pr-12 md:bg-[postion:right_1.2rem_center] md:bg-[length:1.5rem];
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%23000000"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>');
 }
-.dark .management-time-global-select {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%23FFFFFF"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>');
+.service-form-options {
+  @apply text-primary;
+}
+
+.service-form-select-arrow {
+  @apply absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary dark:text-white flex items-center;
 }
