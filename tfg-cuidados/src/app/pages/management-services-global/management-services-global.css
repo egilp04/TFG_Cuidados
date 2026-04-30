@@ -30,8 +30,7 @@
 }
 
 ::ng-deep .mi-select-personalizado .mdc-notched-outline__leading {
-  border-top-left-radius: 0.75rem !important; 
-  border-bottom-left-radius: 0.75rem !important;
+  border-radius: 0.75rem !important; 
   border-color: #344f51 !important; 
   border-width: 2px 0 2px 2px !important; 
   border-style: solid !important;
@@ -44,8 +43,7 @@
 }
 
 ::ng-deep .mi-select-personalizado .mdc-notched-outline__trailing {
-  border-top-right-radius: 0.75rem !important;
-  border-bottom-right-radius: 0.75rem !important;
+  border-radius: 0.75rem !important;
   border-color: #344f51 !important;
   border-width: 2px 2px 2px 0 !important; 
   border-style: solid !important;
