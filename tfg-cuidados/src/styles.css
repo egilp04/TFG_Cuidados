@@ -197,6 +197,27 @@
 }
 
 @layer components {
+
+  .custom-select-panel {
+    @apply bg-surface;
+  }
+  .custom-select-panel .icon-option {
+    @apply text-primary;
+  }
+  
+  .dark .custom-select-panel {
+    @apply bg-primary!;
+  }
+  
+  .dark .custom-select-panel .mat-mdc-option {  
+    @apply bg-surface!;
+  }
+  
+  .dark .custom-select-panel .icon-option {
+    @apply text-surface!;
+  }
+
+  
   .cdk-overlay-pane .mat-mdc-select-panel {
     @apply bg-surface rounded-12 shadow-lg dark:bg-surface-dark;
   }

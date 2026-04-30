@@ -28,3 +28,33 @@
 .management-service-global-subtitle {
   @apply text-secondary text-h2 text-center dark:text-surface;
 }
+
+::ng-deep .mi-select-personalizado .mdc-notched-outline__leading {
+  border-top-left-radius: 0.75rem !important;
+  border-bottom-left-radius: 0.75rem !important;
+  border-color: #51786e !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+
+::ng-deep .mi-select-personalizado .mdc-notched-outline__notch {
+  border-color: #51786e !important;
+  border-width: 1px 0 !important;
+  border-style: solid !important;
+}
+
+::ng-deep .mi-select-personalizado .mdc-notched-outline__trailing {
+  border-top-right-radius: 0.75rem !important;
+  border-bottom-right-radius: 0.75rem !important;
+  border-color: #51786e !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+
+::ng-deep .mi-select-personalizado:hover .mdc-notched-outline * {
+  border-color: #344f51 !important;
+}
+
+::ng-deep .mi-select-personalizado .mat-mdc-text-field-wrapper {
+  padding: 0 !important;
+}

@@ -29,21 +29,21 @@
     >
     </app-inputs>
 
-    <div class="flex flex-col w-full mb-4">
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-select formControlName="icon_name">
+    <div class="flex flex-col w-full mb-4">      
+      <mat-form-field appearance="outline" class="w-full mi-select-personalizado">
+        <mat-select formControlName="icon_name" panelClass="custom-select-panel">
           <mat-select-trigger>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 mt-1">
               @if (getCtrl('icon_name').value) {
-                <lucide-icon [img]="iconMap[getCtrl('icon_name').value]" class="w-6 h-6 text-primary dark:text-surface"></lucide-icon>
+                <lucide-icon [img]="iconMap[getCtrl('icon_name').value]" class="w-5 h-5 text-secondary dark:text-white"></lucide-icon>
               }
             </div>
           </mat-select-trigger>
-
+    
           @for (icon of availableIcons; track icon.name) {
             <mat-option [value]="icon.name">
               <div class="flex items-center gap-3 py-1">
-                <lucide-icon [img]="icon.icon" class="w-5 h-5 text-primary dark:text-surface"></lucide-icon>
+                <lucide-icon [img]="icon.icon" class="w-5 h-5 icon-option"></lucide-icon>
               </div>
             </mat-option>
           }
