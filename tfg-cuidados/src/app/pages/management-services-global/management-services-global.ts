@@ -82,7 +82,7 @@ export default class ManagementServicesGlobal implements OnInit {
   public dataSource = new MatTableDataSource<ServiceModel>([]);
   public paginator = viewChild(MatPaginator);
 
-  public displayedColumns: string[] = ['name', 'type_service', 'description', 'actions'];
+  public displayedColumns: string[] = ['icon', 'name', 'type_service', 'description', 'actions'];
 
   constructor() {
     effect(() => {
