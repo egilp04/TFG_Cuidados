@@ -891,8 +891,8 @@
     "ERROR_MESSAGE": "Oops, I had a small short circuit. Can you repeat that?"
   },
   "ADMIN_SERVICE_TIME": {
-    "ERROR": "Error, check the field, please"
-  },
+    "ERROR": "Error, check the field, please",
+    "SELECT_ICON_PLACEHOLDER": "Select icon..."  },
   "COMMON": {
     "ERROR": "Error",
     "SUCCESS": "Success"

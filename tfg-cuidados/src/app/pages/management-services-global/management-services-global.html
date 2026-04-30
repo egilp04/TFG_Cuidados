@@ -35,20 +35,23 @@
           
           <mat-select-trigger>
             <div class="flex items-center gap-2 mt-1">
-              <lucide-icon 
-                [img]="iconMap[iconSelect.value || 'circleCheck']" 
-                class="w-5 h-5 text-primary dark:text-surface">
-              </lucide-icon>
-              <span class="capitalize text-primary dark:text-surface">
-                {{ iconSelect.value || 'circleCheck' }}
+              @if (iconSelect.value) {
+                <lucide-icon 
+                  [img]="iconMap[iconSelect.value]" 
+                  class="w-5 h-5 text-label">
+                </lucide-icon>
+              } @else {
+                <span class="text-label dark:text-surface opacity-70">
+                  {{ 'ADMIN_SERVICE_TIME.SELECT_ICON_PLACEHOLDER' | translate }}                
               </span>
+              }
             </div>
           </mat-select-trigger>
-                    @for (icon of availableIcons; track icon.name) {
+
+          @for (icon of availableIcons; track icon.name) {
             <mat-option [value]="icon.name">
               <div class="flex items-center gap-3 py-1">
-                <lucide-icon [img]="icon.icon" class="w-5 h-5 icon-option"></lucide-icon>
-                <span class="capitalize">{{ icon.name }}</span>
+                <lucide-icon [img]="icon.icon" class="w-5 h-5 text-label"></lucide-icon>
               </div>
             </mat-option>
           }

@@ -890,7 +890,8 @@
     "ERROR_MESSAGE": "Ups, he tenido un pequeño cruce de cables. ¿Puedes repetirlo?"
   },
   "ADMIN_SERVICE_TIME": {
-    "ERROR": "Error, revise que todo está relleno"
+    "ERROR": "Error, revise que todo está relleno",
+    "SELECT_ICON_PLACEHOLDER": "Seleccionar icono..."
   },
 
   "COMMON": {
