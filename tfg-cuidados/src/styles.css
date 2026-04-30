@@ -312,6 +312,7 @@
   .animate-shadow-pulse {
     animation: shadow-pulse 2s infinite;
     border-radius: 0.75rem;
+    display: inline-block;
   }
 
   .animate-text-up {
