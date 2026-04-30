@@ -29,8 +29,10 @@
   @apply text-secondary text-h2 text-center dark:text-surface;
 }
 
+
 ::ng-deep .mi-select-personalizado .mdc-notched-outline__leading {
-  border-radius: 0.75rem !important; 
+  border-top-left-radius: 0.75rem !important; 
+  border-bottom-left-radius: 0.75rem !important; 
   border-color: #344f51 !important; 
   border-width: 2px 0 2px 2px !important; 
   border-style: solid !important;
@@ -43,7 +45,8 @@
 }
 
 ::ng-deep .mi-select-personalizado .mdc-notched-outline__trailing {
-  border-radius: 0.75rem !important;
+  border-top-right-radius: 0.75rem !important; 
+  border-bottom-right-radius: 0.75rem !important;
   border-color: #344f51 !important;
   border-width: 2px 2px 2px 0 !important; 
   border-style: solid !important;
@@ -52,7 +55,6 @@
 ::ng-deep .mi-select-personalizado .mat-mdc-select-arrow {
   color: #344f51 !important;
 }
-
 
 :host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__leading,
 :host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__notch,
@@ -63,6 +65,7 @@
 :host-context(.dark) ::ng-deep .mi-select-personalizado .mat-mdc-select-arrow {
   color: #ffffff !important; 
 }
+
 
 ::ng-deep .mi-select-personalizado .mat-mdc-text-field-wrapper {
   padding: 0 !important;

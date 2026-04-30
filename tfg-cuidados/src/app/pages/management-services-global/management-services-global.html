@@ -32,20 +32,27 @@
     <div class="flex flex-col gap-2 w-full">
       <mat-form-field appearance="outline" class="w-full mi-select-personalizado">
         <mat-select #iconSelect formControlName="icon_name" panelClass="custom-select-panel">
-                    <mat-select-trigger>
-            <div class="flex items-center mt-1">
-              @if (iconSelect.value) {
-                <lucide-icon [img]="iconMap[getCtrl('icon_name').value || 'circleCheck']" class="w-5 h-5 text-primary dark:text-surface"></lucide-icon>
-              }
+          
+          <mat-select-trigger>
+            <div class="flex items-center gap-2 mt-1">
+              <lucide-icon 
+                [img]="iconMap[iconSelect.value || 'circleCheck']" 
+                class="w-5 h-5 text-primary dark:text-surface">
+              </lucide-icon>
+              <span class="capitalize text-primary dark:text-surface">
+                {{ iconSelect.value || 'circleCheck' }}
+              </span>
             </div>
           </mat-select-trigger>
-              @for (icon of availableIcons; track icon.name) {
+                    @for (icon of availableIcons; track icon.name) {
             <mat-option [value]="icon.name">
-              <div class="flex items-center py-1">
+              <div class="flex items-center gap-3 py-1">
                 <lucide-icon [img]="icon.icon" class="w-5 h-5 icon-option"></lucide-icon>
+                <span class="capitalize">{{ icon.name }}</span>
               </div>
             </mat-option>
           }
+    
         </mat-select>
       </mat-form-field>
     </div>
