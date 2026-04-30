@@ -36,9 +36,9 @@
 }
 
 .management-time-global-select {
-  @apply text-label text-primary font-medium dark:text-surface;
-
+  @apply text-primary dark:text-surface font-medium appearance-none bg-transparent w-full px-4 py-3 md:px-5 md:py-4 border-primary dark:border-surface border-2 rounded-12 text-label outline-none transition-all cursor-pointer;
 }
+
 .service-form-options {
   @apply text-primary;
 }

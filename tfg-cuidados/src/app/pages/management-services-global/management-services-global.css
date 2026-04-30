@@ -30,16 +30,16 @@
 }
 
 ::ng-deep .mi-select-personalizado .mdc-notched-outline__leading {
-  border-top-left-radius: 0.75rem !important; /* rounded-12 */
+  border-top-left-radius: 0.75rem !important; 
   border-bottom-left-radius: 0.75rem !important;
-  border-color: #344f51 !important; /* border-primary */
-  border-width: 2px !important;
+  border-color: #344f51 !important; 
+  border-width: 2px 0 2px 2px !important; 
   border-style: solid !important;
 }
 
 ::ng-deep .mi-select-personalizado .mdc-notched-outline__notch {
   border-color: #344f51 !important;
-  border-width: 2px 0 !important;
+  border-width: 2px 0 2px 0 !important; 
   border-style: solid !important;
 }
 
@@ -47,7 +47,7 @@
   border-top-right-radius: 0.75rem !important;
   border-bottom-right-radius: 0.75rem !important;
   border-color: #344f51 !important;
-  border-width: 2px !important;
+  border-width: 2px 2px 2px 0 !important; 
   border-style: solid !important;
 }
 
@@ -59,7 +59,7 @@
 :host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__leading,
 :host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__notch,
 :host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__trailing {
-  border-color: #ffffff !important;
+  border-color: #ffffff !important; 
 }
 
 :host-context(.dark) ::ng-deep .mi-select-personalizado .mat-mdc-select-arrow {
@@ -71,6 +71,6 @@
 }
 
 ::ng-deep .mi-select-personalizado .mat-mdc-form-field-flex {
-  padding-left: 1rem !important;
+  padding-left: 1rem !important; 
   padding-right: 1rem !important;
 }
