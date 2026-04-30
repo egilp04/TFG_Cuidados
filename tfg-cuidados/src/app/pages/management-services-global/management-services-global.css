@@ -25,3 +25,46 @@
 .management-service-global-subtitle {
   @apply text-secondary text-h2 text-center dark:text-surface;
 }
+
+::ng-deep .mi-select-personalizado .mat-mdc-text-field-wrapper {
+  min-height: 56px !important;
+}
+
+::ng-deep .mi-select-personalizado .mdc-notched-outline__leading {
+  border-top-left-radius: 0.75rem !important; 
+  border-bottom-left-radius: 0.75rem !important; 
+  border-color: #344f51 !important; 
+  border-width: 2px 0 2px 2px !important; 
+  min-width: 12px !important;
+}
+
+::ng-deep .mi-select-personalizado .mdc-notched-outline__notch {
+  border-color: #344f51 !important;
+  border-width: 2px 0 2px 0 !important; 
+}
+
+::ng-deep .mi-select-personalizado .mdc-notched-outline__trailing {
+  border-top-right-radius: 0.75rem !important; 
+  border-bottom-right-radius: 0.75rem !important;
+  border-color: #344f51 !important;
+  border-width: 2px 2px 2px 0 !important; 
+}
+
+::ng-deep .mi-select-personalizado .mat-mdc-select-arrow {
+  color: #344f51 !important;
+}
+::ng-deep .mi-select-personalizado .mdc-floating-label {
+  @apply text-label text-primary opacity-70;
+}
+
+:host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__leading,
+:host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__notch,
+:host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__trailing {
+  border-color: #ffffff !important; 
+}
+:host-context(.dark) ::ng-deep .mi-select-personalizado .mat-mdc-select-arrow {
+  color: #ffffff !important; 
+}
+:host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-floating-label {
+  @apply text-surface opacity-70;
+}
