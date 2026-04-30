@@ -26,7 +26,7 @@ import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { AVAILABLE_ICONS, SERVICE_ICON_MAP } from '../../utils/icon-registry';
+import { AVAILABLE_ICONS, SERVICE_ICON_MAP } from '../../utils/icons';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { LucideAngularModule } from 'lucide-angular';
