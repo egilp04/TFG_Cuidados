@@ -892,7 +892,8 @@
   },
   "ADMIN_SERVICE_TIME": {
     "ERROR": "Error, check the field, please",
-    "SELECT_ICON_PLACEHOLDER": "Select icon..."  },
+    "SELECT_ICON": "Choose an icon"
+  },
   "COMMON": {
     "ERROR": "Error",
     "SUCCESS": "Success"

@@ -891,7 +891,7 @@
   },
   "ADMIN_SERVICE_TIME": {
     "ERROR": "Error, revise que todo está relleno",
-    "SELECT_ICON_PLACEHOLDER": "Seleccionar icono..."
+    "SELECT_ICON": "Selecciona un icono"
   },
 
   "COMMON": {

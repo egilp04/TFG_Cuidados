@@ -26,13 +26,20 @@
           [attr.aria-labelledby]="'service-id-' + service.id_service"
         >
           <header class="directory-card-header">
-            <h2 [id]="'service-name-' + service.name" class="directory-bssn-name text-h2">
-              {{ service.name }}
+            <div
+              class="w-14 h-14 flex items-center justify-center rounded-full bg-primary/10 dark:bg-surface/10"
+            >
+              <lucide-icon
+                [img]="iconMap[service.icon_name || 'circleCheck']"
+                size="32"
+                class="text-primary dark:text-surface pointer-events-none"
+              >
+              </lucide-icon>
+            </div>
+
+            <h2 [id]="'service-name-' + service.name" class="directory-bssn-name text-h2 mb-0">
+              {{ service.name | titlecase }}
             </h2>
-            <lucide-icon 
-            [img]="iconMap[service.icon_name || 'circleCheck']" 
-            class="inline-block w-[20px] xl:w-[30px] [&>svg]:w-full [&>svg]:h-full text-label dark:text-surface pointer-events-none">
-           </lucide-icon>
           </header>
 
           <section>

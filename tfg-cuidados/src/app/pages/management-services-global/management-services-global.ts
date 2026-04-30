@@ -46,7 +46,7 @@ import { LucideAngularModule } from 'lucide-angular';
     MatPaginatorModule,
     MatFormFieldModule,
     MatSelectModule,
-    LucideAngularModule
+    LucideAngularModule,
   ],
   templateUrl: './management-services-global.html',
   styleUrl: './management-services-global.css',
@@ -72,12 +72,11 @@ export default class ManagementServicesGlobal implements OnInit {
   public availableIcons = AVAILABLE_ICONS;
   public iconMap = SERVICE_ICON_MAP;
 
-
   public serviceForm = this.fb.group({
     name: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
     type_service: this.fb.control<string>('', [Validators.required]),
     description: this.fb.control<string>('', [Validators.required]),
-    icon_name: this.fb.control<string>('', [Validators.required]),
+    icon_name: this.fb.control<string>(''),
   });
 
   public dataSource = new MatTableDataSource<ServiceModel>([]);
@@ -135,11 +134,10 @@ export default class ManagementServicesGlobal implements OnInit {
     this.isLoading.set(true);
 
     const rawValue = this.serviceForm.getRawValue();
-    const rawName = (rawValue.name ?? '').trim();
-    const name = rawName ? rawName.charAt(0).toUpperCase() + rawName.slice(1) : '';
+    const name = (rawValue.name ?? '').trim();
     const serviceType = (rawValue.type_service ?? '').trim();
     const description = (rawValue.description ?? '').trim();
-    const icon_name =(rawValue.icon_name ?? 'circleCheck').trim();
+    const icon_name = (rawValue.icon_name ?? 'circleCheck').trim();
 
     const user = this.authService.currentUser();
     if (!user?.id_user) {
@@ -159,7 +157,7 @@ export default class ManagementServicesGlobal implements OnInit {
             type_service: serviceType,
             description,
             id_admin: user.id_user,
-            icon_name
+            icon_name,
           };
 
           return this.isEditing && this.currentServiceId

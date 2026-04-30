@@ -9,6 +9,7 @@ import { tap, catchError, of } from 'rxjs';
 import { CardSkeletonComponent } from '../../components/card-skeleton/card-skeleton.component';
 import { AVAILABLE_ICONS, SERVICE_ICON_MAP } from '../../core/utils/icons';
 import { LucideAngularModule } from 'lucide-angular';
+import { TitleCasePipe } from '@angular/common';
 
 /**
  * Componente para mostrar el directorio de servicios disponibles.
@@ -17,7 +18,13 @@ import { LucideAngularModule } from 'lucide-angular';
 @Component({
   selector: 'app-services-directory',
   standalone: true,
-  imports: [TranslateModule, ButtonComponent, CardSkeletonComponent, LucideAngularModule],
+  imports: [
+    TranslateModule,
+    ButtonComponent,
+    CardSkeletonComponent,
+    LucideAngularModule,
+    TitleCasePipe,
+  ],
   templateUrl: './services-directory.component.html',
   styleUrl: './services-directory.component.css',
 })
@@ -27,10 +34,9 @@ export default class ServicesDirectoryComponent {
 
   public iconMap = SERVICE_ICON_MAP;
 
-  public allServices = toSignal(
-    this.serviceService.getServicesWithOffers(),
-    { initialValue: null },
-  );
+  public allServices = toSignal(this.serviceService.getServicesWithOffers(), {
+    initialValue: null,
+  });
 
   /**
    * Navega a la vista de búsqueda de negocios filtrada por el servicio seleccionado.
