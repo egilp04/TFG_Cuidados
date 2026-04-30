@@ -206,6 +206,7 @@ export default class ManagementServicesGlobal implements OnInit {
       name: service.name,
       type_service: service.type_service,
       description: service.description,
+      icon_name: service.icon_name,
     });
     this.cd.markForCheck();
   }
