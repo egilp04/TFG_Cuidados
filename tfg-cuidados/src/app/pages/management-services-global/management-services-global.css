@@ -52,10 +52,10 @@
 }
 
 ::ng-deep .mi-select-personalizado .mat-mdc-select-placeholder {
-  @apply text-label text-primary opacity-70 !important;
+  @apply text-label! text-primary! opacity-70!;
 }
 :host-context(.dark) ::ng-deep .mi-select-personalizado .mat-mdc-select-placeholder {
-  @apply text-surface opacity-70 !important;
+  @apply text-surface! opacity-70!;
 }
 
 ::ng-deep .mi-select-personalizado .mat-mdc-form-field-infix {
