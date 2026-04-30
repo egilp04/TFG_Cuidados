@@ -68,3 +68,16 @@
 :host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-floating-label {
   @apply text-surface opacity-70;
 }
+
+::ng-deep .mi-select-personalizado .mdc-floating-label {
+  @apply opacity-70 text-label text-primary;
+}
+
+::ng-deep .mi-select-personalizado.mat-form-field-can-float.mat-form-field-should-float .mdc-floating-label {
+  @apply opacity-100 text-primary text-sm;
+}
+
+:host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-floating-label,
+:host-context(.dark) ::ng-deep .mi-select-personalizado.mat-form-field-can-float.mat-form-field-should-float .mdc-floating-label {
+  color: #ffffff !important;
+}

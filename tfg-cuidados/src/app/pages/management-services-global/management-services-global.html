@@ -39,12 +39,11 @@
           
           <mat-select-trigger>
             @if (iconSelect.value) {
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-2 p-2">
                 <lucide-icon 
                   [img]="iconMap[iconSelect.value]" 
                   class="w-5 h-5 text-label dark:text-surface">
                 </lucide-icon>
-                <span class="capitalize text-label dark:text-surface">{{ iconSelect.value }}</span>
               </div>
             }
           </mat-select-trigger>
@@ -53,7 +52,6 @@
             <mat-option [value]="icon.name">
               <div class="flex items-center gap-3 py-1">
                 <lucide-icon [img]="icon.icon" class="w-5 h-5 text-label dark:text-surface"></lucide-icon>
-                <span class="capitalize">{{ icon.name }}</span>
               </div>
             </mat-option>
           }
