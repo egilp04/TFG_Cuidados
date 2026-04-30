@@ -22,9 +22,9 @@ export default async function handler(req, res) {
         })[m],
     );
 
-  const userNameToSend = escapeHTML(userEmail || 'Usuario Anónimo');
-  const messageSent = escapeHTML(username || '');
-  const userToSendMessage = escapeHTML(message || '');
+  const userToSendMessage = escapeHTML(userEmail || 'Usuario Anónimo');
+  const userNameToSend = escapeHTML(username || '');
+  const messageSent = escapeHTML(message || '');
 
   const textoHTML =
     `<b>NUEVO TICKET DE SOPORTE</b>\n\n` +
