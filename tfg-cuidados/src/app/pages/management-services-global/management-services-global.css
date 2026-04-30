@@ -1,24 +1,21 @@
 @reference "../../../styles.css";
 
+
 .managements-services-global-container {
   @apply flex flex-col p-20 gap-20 mt-20 max-h-screen;
 }
 .management-title-services-global {
   @apply text-h1 text-primary text-center dark:text-surface;
 }
-
 .management-services-global-table-container {
   @apply flex flex-col p-6 gap-4;
 }
-
 .management-services-global-form {
   @apply w-full h-full md:px-40 gap-20 flex flex-col;
 }
-
 .management-services-global-form-btn {
   @apply flex gap-10 justify-center items-center;
 }
-
 .management-services-global-search {
   @apply text-label text-primary dark:text-surface;
 }
@@ -31,46 +28,37 @@
 
 
 
-::ng-deep .mi-select-personalizado .mdc-notched-outline__leading {
-  border-top-left-radius: 0.75rem !important; 
-  border-bottom-left-radius: 0.75rem !important; 
-  border-color: #344f51 !important; 
-  border-width: 2px 0 2px 2px !important; 
-  border-style: solid !important;
-  width: 1rem !important;
+::ng-deep .mi-select-personalizado {
+  --mdc-outlined-text-field-container-shape: 0.75rem;
+  --mdc-outlined-text-field-outline-width: 2px;
+  --mdc-outlined-text-field-hover-outline-width: 2px;
+  --mdc-outlined-text-field-focus-outline-width: 2px;
+  --mdc-outlined-text-field-outline-color: #344f51;
+  --mdc-outlined-text-field-hover-outline-color: #344f51;
+  --mdc-outlined-text-field-focus-outline-color: #344f51;
 }
 
-::ng-deep .mi-select-personalizado .mdc-notched-outline__notch {
-  border-color: #344f51 !important;
-  border-width: 2px 0 2px 0 !important; 
-  border-style: solid !important;
-}
-
-::ng-deep .mi-select-personalizado .mdc-notched-outline__trailing {
-  border-top-right-radius: 0.75rem !important; 
-  border-bottom-right-radius: 0.75rem !important;
-  border-color: #344f51 !important;
-  border-width: 2px 2px 2px 0 !important; 
-  border-style: solid !important;
+:host-context(.dark) ::ng-deep .mi-select-personalizado {
+  --mdc-outlined-text-field-outline-color: #ffffff;
+  --mdc-outlined-text-field-hover-outline-color: #ffffff;
+  --mdc-outlined-text-field-focus-outline-color: #ffffff;
 }
 
 ::ng-deep .mi-select-personalizado .mat-mdc-select-arrow {
   color: #344f51 !important;
 }
-
-:host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__leading,
-:host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__notch,
-:host-context(.dark) ::ng-deep .mi-select-personalizado .mdc-notched-outline__trailing {
-  border-color: #ffffff !important; 
-}
-
 :host-context(.dark) ::ng-deep .mi-select-personalizado .mat-mdc-select-arrow {
   color: #ffffff !important; 
 }
 
+::ng-deep .mi-select-personalizado .mat-mdc-select-placeholder {
+  @apply text-label text-primary opacity-70 !important;
+}
+:host-context(.dark) ::ng-deep .mi-select-personalizado .mat-mdc-select-placeholder {
+  @apply text-surface opacity-70 !important;
+}
 
 ::ng-deep .mi-select-personalizado .mat-mdc-form-field-infix {
   padding-top: 0.85rem !important;
   padding-bottom: 0.85rem !important;
-  min-height: auto !important;
 }
