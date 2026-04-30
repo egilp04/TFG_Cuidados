@@ -35,7 +35,7 @@
                     <mat-select-trigger>
             <div class="flex items-center mt-1">
               @if (iconSelect.value) {
-                <lucide-icon [img]="iconMap[circleCheck]" class="w-5 h-5 text-primary dark:text-surface"></lucide-icon>
+                <lucide-icon [img]="iconMap[getCtrl('icon_name').value || 'circleCheck']" class="w-5 h-5 text-primary dark:text-surface"></lucide-icon>
               }
             </div>
           </mat-select-trigger>
