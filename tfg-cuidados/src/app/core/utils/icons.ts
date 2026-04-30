@@ -54,5 +54,5 @@ export const AVAILABLE_ICONS: IconOption[] = [
   { name: 'dumbbell', icon: Dumbbell },
   { name: 'dog', icon: Dog },
   { name: 'briefcase', icon: Briefcase },
-  { name: 'CircleCheck', icon: CircleCheck },
+  { name: 'circleCheck', icon: CircleCheck },
 ];
