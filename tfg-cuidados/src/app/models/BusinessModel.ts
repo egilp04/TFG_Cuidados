@@ -12,4 +12,8 @@ export interface BusinessModel {
   phone?: string;
   description?: string;
   Service_Time: ServiceTimeResponse[];
+
+  User_public?: {
+    avatar_url?: string;
+  };
 }

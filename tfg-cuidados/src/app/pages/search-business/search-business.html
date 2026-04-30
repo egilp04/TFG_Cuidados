@@ -34,6 +34,18 @@
           [attr.aria-labelledby]="'business-name-' + business.id_business"
         >
           <header class="search-card-header">
+            @if (business.User_public?.avatar_url) {
+              <div
+                class="w-32 h-32 md:w-48 md:h-48 lg:w-50 lg:h-50 mb-2 relative group cursor-pointer"
+              >
+                <app-avatar
+                  [name]="business.name"
+                  [imageUrl]="business.User_public?.avatar_url ?? null"
+                >
+                </app-avatar>
+              </div>
+            }
+
             <h2 [id]="'business-name-' + business.id_business" class="search-bssn-name text-h2">
               {{ business.name }}
             </h2>

@@ -19,13 +19,21 @@ import { AuthService } from '../../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContractRowDataTable } from '../../models/Acitvities-component';
 import { ContractDetail } from '../../models/ContractModel';
+import { AvatarComponent } from '../avatar/avatar.component';
 /**
  * Componente hijo que renderiza un calendario mensual y una tabla de datos de servicios contratados.
  */
 @Component({
   selector: 'app-activities-components',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, CommonModule, ButtonComponent, TranslateModule],
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    CommonModule,
+    ButtonComponent,
+    TranslateModule,
+    AvatarComponent,
+  ],
   templateUrl: './activities-components.html',
   styleUrl: './activities-components.css',
 })
@@ -35,7 +43,15 @@ export class ActivitiesComponents implements OnInit, OnChanges {
   @Input() dataSource: ContractDetail[] = [];
   @Output() onCancelContract = new EventEmitter<string>();
 
-  public displayedColumns: string[] = ['user', 'service', 'day', 'time', 'location', 'actions'];
+  public displayedColumns: string[] = [
+    'avatar',
+    'user',
+    'service',
+    'day',
+    'time',
+    'location',
+    'actions',
+  ];
   public tableDataSource = new MatTableDataSource<ContractRowDataTable>([]);
   public userRole = this.authService.userRol();
 
@@ -90,8 +106,17 @@ export class ActivitiesComponents implements OnInit, OnChanges {
 
     const mappedData = this.dataSource.map((contract) => {
       let nameToShow: string | undefined;
-      if (this.userRole === 'client') nameToShow = contract.Business?.businessName;
-      if (this.userRole === 'business') nameToShow = contract.Client?.clientName;
+      let avatarUrl: string | null = null;
+      if (this.userRole === 'client') {
+        nameToShow = contract.Business?.businessName;
+        avatarUrl = contract.Business?.User_public?.avatar_url || null;
+        console.log(avatarUrl);
+      }
+      if (this.userRole === 'business') {
+        nameToShow = contract.Client?.clientName;
+        avatarUrl = contract.Client?.User_public?.avatar_url || null;
+        console.log(avatarUrl);
+      }
 
       const place = contract.Client
         ? `${contract.Client.address}, ${contract.Client.city}, ${contract.Client.postcode}`
@@ -99,6 +124,7 @@ export class ActivitiesComponents implements OnInit, OnChanges {
       return {
         ...contract,
         nameToShow: nameToShow || 'N/A',
+        avatarUrl: avatarUrl,
         place: place,
       } as ContractRowDataTable;
     });

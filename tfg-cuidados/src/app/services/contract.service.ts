@@ -28,10 +28,10 @@ export class ContractService {
     ),
     Client:Client!id_client (
       address, city, postcode,
-      User_public:User_public!id_client ( name, email )
+      User_public:User_public!id_client ( name, email, avatar_url)
     ),
     Business:Business!id_business (
-      User_public:User_public!id_business ( name, email )
+      User_public:User_public!id_business ( name, email, avatar_url)
     )
   `;
 
