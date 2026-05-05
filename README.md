@@ -270,6 +270,13 @@ A continuación, se detallan los hitos alcanzados durante el proceso:
 **Notas del seguimiento**. 
 Cada sesión siguió la estructura: resumen de avances, demo funcional, bloqueo/riesgos y tareas para la siguiente semana.
 
+Base de Datos
+![Base de datos de cuidados](./carpeta_imgs/supabase_db.png)
+
+
+En esta imagen se observa la base de datos creada con supabase. 
+Se pueden identificar las tablas que componen la base de datos, así como su estructura (herencia de tablas, primary keys, foreign keys...)
+
 
 👩‍💻 Autoría
 
