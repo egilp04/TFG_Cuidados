@@ -100,10 +100,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/terms/terms'),
   },
   {
-    path: 'terms',
-    loadComponent: () => import('./pages/terms/terms'),
-  },
-  {
     path: 'recover-password',
     loadComponent: () => import('./pages/recover-password/recover-password'),
   },

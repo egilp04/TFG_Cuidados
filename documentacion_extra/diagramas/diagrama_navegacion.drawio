@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
   <diagram name="Navegacion_CuidaDos_Final_V3" id="0">
-    <mxGraphModel dx="2704" dy="1790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3088" dy="2005" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -31,9 +31,6 @@
               <mxPoint x="610" y="110" />
             </Array>
           </mxGeometry>
-        </mxCell>
-        <mxCell id="c_inicio_click" value="Clic" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;" parent="1" source="btn_inicio" target="dec_session" edge="1">
-          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="modal_login" value="MODAL Login" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="650" y="240" width="140" height="60" as="geometry" />
@@ -275,6 +272,13 @@
         </mxCell>
         <mxCell id="em3" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="home_emp" target="cal_emp" edge="1">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="dash_admin" target="-tJ5PZFTbkwqdEAl7GRQ-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1505" y="460" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="dash_admin" value="HOME ADMIN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="1080" y="430" width="140" height="60" as="geometry" />
@@ -546,7 +550,22 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="uUpS7a7kfj4Fa_sogjMD-1" value="ZONA PÚBLICA (publicGuard)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;opacity=30;dashed=1;startSize=30;" parent="1" vertex="1">
-          <mxGeometry x="190" y="-35" width="1050" height="355" as="geometry" />
+          <mxGeometry x="190" y="-35" width="1050" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-39" value="NAVBAR" style="swimlane;startSize=20;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="uUpS7a7kfj4Fa_sogjMD-1">
+          <mxGeometry x="20" y="195" width="200" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-40" value="Contacto" style="text;html=1;align=left;verticalAlign=middle;" vertex="1" parent="-tJ5PZFTbkwqdEAl7GRQ-39">
+          <mxGeometry y="30" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-41" value="Sobre nosotros" style="text;html=1;align=left;verticalAlign=middle;" vertex="1" parent="-tJ5PZFTbkwqdEAl7GRQ-39">
+          <mxGeometry y="60" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-43" value="Manuales" style="text;html=1;align=left;verticalAlign=middle;" vertex="1" parent="-tJ5PZFTbkwqdEAl7GRQ-39">
+          <mxGeometry y="90" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-44" value="Registro/Inicio de sesión" style="text;html=1;align=left;verticalAlign=middle;" vertex="1" parent="-tJ5PZFTbkwqdEAl7GRQ-39">
+          <mxGeometry y="120" width="180" height="30" as="geometry" />
         </mxCell>
         <mxCell id="uUpS7a7kfj4Fa_sogjMD-2" value="ÁREA CLIENTE (authGuard + rol=&#39;cliente&#39;)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;opacity=30;dashed=1;startSize=30;" parent="1" vertex="1">
           <mxGeometry x="-520" y="400" width="660" height="590" as="geometry" />
@@ -554,14 +573,39 @@
         <mxCell id="home_cli" value="HOME CLIENTE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1" parent="uUpS7a7kfj4Fa_sogjMD-2" vertex="1">
           <mxGeometry x="420" y="75" width="140" height="60" as="geometry" />
         </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-1" value="Categorías de empresas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="uUpS7a7kfj4Fa_sogjMD-2">
+          <mxGeometry x="270" y="80" width="120" height="50" as="geometry" />
+        </mxCell>
         <mxCell id="uUpS7a7kfj4Fa_sogjMD-3" value="ÁREA EMPRESA (authGuard + rol=&#39;empresa&#39;)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;opacity=30;dashed=1;startSize=30;" parent="1" vertex="1">
           <mxGeometry x="160" y="400" width="690" height="480" as="geometry" />
         </mxCell>
         <mxCell id="uUpS7a7kfj4Fa_sogjMD-4" value="ÁREA ADMINISTRADOR (authGuard + rol=&#39;admin&#39;)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;opacity=30;dashed=1;startSize=30;" parent="1" vertex="1">
           <mxGeometry x="860" y="400" width="730" height="530" as="geometry" />
         </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-4" value="Ver contratos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="uUpS7a7kfj4Fa_sogjMD-4">
+          <mxGeometry x="590" y="70" width="110" height="50" as="geometry" />
+        </mxCell>
         <mxCell id="uUpS7a7kfj4Fa_sogjMD-5" value="ZONA PRIVADA COMÚN (authGuard)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;opacity=30;dashed=1;startSize=30;" parent="1" vertex="1">
           <mxGeometry x="1600" y="60" width="850" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-6" value="Manuales (Común)" style="swimlane;startSize=20;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="uUpS7a7kfj4Fa_sogjMD-5">
+          <mxGeometry x="360" y="50" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-8" value="• Usar el chat asistente (telegram)" style="text;html=1;align=left;verticalAlign=middle;" vertex="1" parent="-tJ5PZFTbkwqdEAl7GRQ-6">
+          <mxGeometry y="20" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-2" value="Btn: Ver empresas)" style="edgeStyle=orthogonalEdgeStyle;html=1;curved=1;entryX=0;entryY=0.75;exitX=0;exitY=0.25;" edge="1" parent="1">
+          <mxGeometry x="-1" y="87" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-360" y="573" />
+              <mxPoint x="-460" y="573" />
+              <mxPoint x="-460" y="597" />
+              <mxPoint x="-360" y="597" />
+            </Array>
+            <mxPoint x="-360" y="563" as="sourcePoint" />
+            <mxPoint x="-360" y="588" as="targetPoint" />
+            <mxPoint x="-27" y="-63" as="offset" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
