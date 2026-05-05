@@ -30,6 +30,7 @@ La aplicación se encuentra desplegada en **Vercel**.
 
 ## Video promocional del aplicativo 
 [![Ver presentación de CuidaDos](https://img.youtube.com/vi/vepcTSAasaY/hqdefault.jpg)](https://youtu.be/vepcTSAasaY)
+
 *(Haz clic en la imagen para ver el vídeo promocional de la plataforma).*
 
 
@@ -271,7 +272,7 @@ A continuación, se detallan los hitos alcanzados durante el proceso:
 Cada sesión siguió la estructura: resumen de avances, demo funcional, bloqueo/riesgos y tareas para la siguiente semana.
 
 Base de Datos
-![Base de datos de cuidados](./carpeta_imgs/supabase_db.png)
+![Base de datos de cuidados](./carpeta_imgs/supabase-db.png)
 
 
 En esta imagen se observa la base de datos creada con supabase. 
