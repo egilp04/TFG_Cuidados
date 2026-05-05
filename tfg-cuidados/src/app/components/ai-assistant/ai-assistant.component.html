@@ -1,6 +1,6 @@
 <section class="ia-container" [attr.aria-label]="'AI_ASSISTANT.HEADER_TITLE' | translate">
   @if (isOpen) {
-    <div 
+    <div
       id="ia-chat-window"
       class="ia-container-open animate-fade-in-up"
       role="dialog"
@@ -30,9 +30,9 @@
             {{ 'AI_ASSISTANT.HEADER_TITLE' | translate }}
           </h3>
         </div>
-        
-        <button 
-          (click)="toggleChat()" 
+
+        <button
+          (click)="toggleChat()"
           class="ia-btn-toggle"
           [attr.aria-label]="'AI_ASSISTANT.CLOSE_CHAT' | translate"
         >
@@ -54,11 +54,7 @@
         </button>
       </header>
 
-      <main 
-        class="ia-messages-container" 
-        role="log" 
-        aria-live="polite"
-      >
+      <main class="ia-messages-container" role="log" aria-live="polite">
         @for (msg of messages; track $index) {
           <div class="flex w-full" [ngClass]="msg.isUser ? 'justify-end' : 'justify-start'">
             <div
@@ -72,9 +68,10 @@
               <span class="sr-only">
                 {{ (msg.isUser ? 'AI_ASSISTANT.YOU' : 'AI_ASSISTANT.ASSISTANT') | translate }}:
               </span>
-              <p class="whitespace-pre-wrap leading-relaxed text-sm md:text-base">
-                {{ msg.text }}
-              </p>
+              <p
+                class="whitespace-pre-wrap leading-relaxed text-sm md:text-base"
+                [innerHTML]="msg.text"
+              ></p>
             </div>
           </div>
         }
@@ -85,7 +82,10 @@
               class="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm flex items-center gap-1.5"
             >
               <span class="sr-only">{{ 'AI_ASSISTANT.THINKING' | translate }}</span>
-              <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" aria-hidden="true"></div>
+              <div
+                class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"
+                aria-hidden="true"
+              ></div>
               <div
                 class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"
                 style="animation-delay: 0.15s"
@@ -111,9 +111,9 @@
           [attr.aria-label]="'AI_ASSISTANT.INPUT_LABEL' | translate"
           class="ia-input"
         />
-        <button 
-          (click)="sendMessage()" 
-          [disabled]="!newMessage.trim() || isLoading" 
+        <button
+          (click)="sendMessage()"
+          [disabled]="!newMessage.trim() || isLoading"
           class="ia-btn"
           [attr.aria-label]="'AI_ASSISTANT.SEND_MESSAGE' | translate"
         >
