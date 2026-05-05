@@ -278,6 +278,12 @@ Base de Datos
 En esta imagen se observa la base de datos creada con supabase. 
 Se pueden identificar las tablas que componen la base de datos, así como su estructura (herencia de tablas, primary keys, foreign keys...)
 
+## 🤖 Asistente Virtual y Manuales
+
+¿Tienes alguna duda sobre cómo funciona CuidaDos o cómo desplegar el proyecto? No hace falta que leas toda la documentación.
+
+[Pregúntale al Asistente Inteligente aquí]([https://tu-enlace-del-bot-aqui](https://poe.com/invite/3d3d9e2109494c6da6daba294349943a)
+
 
 👩‍💻 Autoría
 
