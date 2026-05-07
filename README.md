@@ -32,7 +32,7 @@ La aplicación se encuentra desplegada en **Vercel**.
 
 <div align="center">
   <a href="https://youtu.be/vepcTSAasaY">
-    <img src="https://img.youtube.com/vi/vepcTSAasaY/maxresdefault.jpg" alt="Ver presentación de CuidaDos" width="800">
+    <img src="https://img.youtube.com/vi/vepcTSAasaY/hqdefault.jpg" alt="Ver presentación de CuidaDos" style="width:100%; max-width:800px;">
   </a>
   <p><em>(Haz clic en la imagen para ver el vídeo promocional de la plataforma)</em></p>
 </div>
