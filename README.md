@@ -29,11 +29,13 @@ La aplicación se encuentra desplegada en **Vercel**.
 ![Landing page de cuidaDos](./carpeta_imgs/landing.png)
 
 ## Video promocional del aplicativo 
-[![Ver presentación de CuidaDos](https://img.youtube.com/vi/vepcTSAasaY/hqdefault.jpg)](https://youtu.be/vepcTSAasaY)
 
-*(Haz clic en la imagen para ver el vídeo promocional de la plataforma).*
-
-
+<div align="center">
+  <a href="https://youtu.be/vepcTSAasaY">
+    <img src="https://img.youtube.com/vi/vepcTSAasaY/maxresdefault.jpg" alt="Ver presentación de CuidaDos" width="800">
+  </a>
+  <p><em>(Haz clic en la imagen para ver el vídeo promocional de la plataforma)</em></p>
+</div>
 
 
 ## 🧱 Estructura del proyecto
