@@ -4,7 +4,7 @@
 }
 
 .message-modal-form-container {
-  @apply w-full flex flex-col;
+  @apply w-full flex flex-col gap-2;
 }
 
 .message-modal-text-container {
