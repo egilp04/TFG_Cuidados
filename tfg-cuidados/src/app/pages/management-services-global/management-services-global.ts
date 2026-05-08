@@ -26,11 +26,11 @@ import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { AVAILABLE_ICONS, SERVICE_ICON_MAP } from '../../core/utils/icons';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { LucideAngularModule } from 'lucide-angular';
 
-/**
- * Componente para la gestión global de servicios por administradores.
- * Permite crear, editar y eliminar el catálogo de servicios disponibles en la plataforma.
- */
 @Component({
   selector: 'app-management-services-global',
   standalone: true,
@@ -44,6 +44,9 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
     Buttonback,
     TranslateModule,
     MatPaginatorModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    LucideAngularModule,
   ],
   templateUrl: './management-services-global.html',
   styleUrl: './management-services-global.css',
@@ -66,16 +69,20 @@ export default class ManagementServicesGlobal implements OnInit {
 
   public controlFilterItem = new FormControl<string>('');
 
+  public availableIcons = AVAILABLE_ICONS;
+  public iconMap = SERVICE_ICON_MAP;
+
   public serviceForm = this.fb.group({
     name: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
     type_service: this.fb.control<string>('', [Validators.required]),
     description: this.fb.control<string>('', [Validators.required]),
+    icon_name: this.fb.control<string>(''),
   });
 
   public dataSource = new MatTableDataSource<ServiceModel>([]);
   public paginator = viewChild(MatPaginator);
 
-  public displayedColumns: string[] = ['name', 'type_service', 'description', 'actions'];
+  public displayedColumns: string[] = ['icon', 'name', 'type_service', 'description', 'actions'];
 
   constructor() {
     effect(() => {
@@ -130,6 +137,7 @@ export default class ManagementServicesGlobal implements OnInit {
     const name = (rawValue.name ?? '').trim();
     const serviceType = (rawValue.type_service ?? '').trim();
     const description = (rawValue.description ?? '').trim();
+    const icon_name = (rawValue.icon_name ?? 'circleCheck').trim();
 
     const user = this.authService.currentUser();
     if (!user?.id_user) {
@@ -149,6 +157,7 @@ export default class ManagementServicesGlobal implements OnInit {
             type_service: serviceType,
             description,
             id_admin: user.id_user,
+            icon_name,
           };
 
           return this.isEditing && this.currentServiceId
@@ -197,6 +206,7 @@ export default class ManagementServicesGlobal implements OnInit {
       name: service.name,
       type_service: service.type_service,
       description: service.description,
+      icon_name: service.icon_name,
     });
     this.cd.markForCheck();
   }

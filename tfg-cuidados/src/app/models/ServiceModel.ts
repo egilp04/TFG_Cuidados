@@ -4,4 +4,5 @@ export interface ServiceModel {
   type_service: string;
   id_admin: string;
   description: string;
+  icon_name?: string;
 }

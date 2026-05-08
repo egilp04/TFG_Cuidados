@@ -29,7 +29,7 @@
 }
 
 .dashboard-contracts-texts-container {
-  @apply flex flex-row gap-10 text-center;
+  @apply flex flex-col gap-10 text-center;
 }
 
 .dashboard-contracts-text-total {

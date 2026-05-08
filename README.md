@@ -29,10 +29,13 @@ La aplicación se encuentra desplegada en **Vercel**.
 ![Landing page de cuidaDos](./carpeta_imgs/landing.png)
 
 ## Video promocional del aplicativo 
-[![Ver presentación de CuidaDos](https://img.youtube.com/vi/vepcTSAasaY/hqdefault.jpg)](https://youtu.be/vepcTSAasaY)
-*(Haz clic en la imagen para ver el vídeo promocional de la plataforma).*
 
-
+<div align="center">
+  <a href="https://youtu.be/vepcTSAasaY">
+    <img src="https://img.youtube.com/vi/vepcTSAasaY/hqdefault.jpg" alt="Ver presentación de CuidaDos" style="width:100%; max-width:800px;">
+  </a>
+  <p><em>(Haz clic en la imagen para ver el vídeo promocional de la plataforma)</em></p>
+</div>
 
 
 ## 🧱 Estructura del proyecto
@@ -270,6 +273,20 @@ A continuación, se detallan los hitos alcanzados durante el proceso:
 **Notas del seguimiento**. 
 Cada sesión siguió la estructura: resumen de avances, demo funcional, bloqueo/riesgos y tareas para la siguiente semana.
 
+Base de Datos
+![Base de datos de cuidados](./carpeta_imgs/supabase-db.png)
+
+
+En esta imagen se observa la base de datos creada con supabase. 
+Se pueden identificar las tablas que componen la base de datos, así como su estructura (herencia de tablas, primary keys, foreign keys...)
+
+## 🤖 Asistente Virtual
+
+¿Tienes alguna duda sobre cómo funciona CuidaDos o cómo desplegar el proyecto? No hace falta que leas toda la documentación.
+
+[Pregúntale al Asistente Inteligente aquí]([https://tu-enlace-del-bot-aqui](https://notebooklm.google.com/notebook/fd73ae21-83ef-42fe-a7ba-5fac48d0d061)
+
+En este enlace podrás acceder a toda la información relacionada con el proyecto, ¡Muchas gracias!
 
 👩‍💻 Autoría
 

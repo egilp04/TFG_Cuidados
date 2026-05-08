@@ -60,8 +60,9 @@ export class AiService {
     return firstValueFrom(
       this.http.post(this.API_URL, body, { headers }).pipe(
         map((response: any) => {
-          if (response?.candidates?.[0]?.content?.parts?.[0]?.text) {
-            return response.candidates[0].content.parts[0].text;
+          const texto = response?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (texto) {
+            return texto;
           }
           throw new Error('Respuesta inválida');
         }),

@@ -4,123 +4,127 @@
       <app-spinner></app-spinner>
     </div>
   } @else {
-    <section class="dashboard-contracts-container" aria-labelledby="contracts-title">
-      <h2 id="contracts-title" class="dashboard-contracts-title">
-        {{ 'DASHBOARD.TITLE_CONTRACTS' | translate }}
-      </h2>
-
-      @defer (on viewport) {
-        @if (activeContractsCount > 0 || canceledContractsCount > 0) {
-          <div class="chart-wrapper">
-            <canvas
-              baseChart
-              [data]="doughnutChartData"
-              [options]="doughnutOptions"
-              [type]="'doughnut'"
-              role="img"
-              [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.CONTRACTS_CHART_DESC' | translate"
-            >
-            </canvas>
-          </div>
-        } @else {
-          <div class="no-contracts-msg" role="status">
-            {{ 'DASHBOARD.NO_CONTRACTS' | translate }}
-          </div>
-        }
-
-        <div class="dashboard-contracts-texts-container">
-          <span class="dashboard-contracts-text-total">
-            {{ 'DASHBOARD.TOTAL_CONTRACTS.TOTAL' | translate }}
-            {{ activeContractsCount + canceledContractsCount }}
-          </span>
-          <span class="dashboard-contracts-text-active">
-            {{ 'DASHBOARD.TOTAL_CONTRACTS.ACTIVE' | translate }}
-            {{ activeContractsCount }}
-          </span>
-          <span class="dashboard-contracts-text-no-active">
-            {{ 'DASHBOARD.TOTAL_CONTRACTS.NO_ACTIVE' | translate }}
-            {{ canceledContractsCount }}
-          </span>
-        </div>
-      } @placeholder {
-        <div class="no-contracts-msg" aria-live="polite">
-          <app-spinner></app-spinner>
-          {{ 'DASHBOARD.CHARGING' | translate }}
-        </div>
-      }
-    </section>
-
-    <section class="dashboard-services-container" aria-labelledby="services-chart-title">
-      <h2 id="services-chart-title" class="dashboard-login-title">
-        {{ 'DASHBOARD.SERVICES.TITLE' | translate }}
-      </h2>
-
-      @defer (on viewport) {
-        @if (barChartData.labels && barChartData.labels.length > 0) {
-          <div class="chart-wrapper-services">
-            <canvas
-              baseChart
-              [data]="barChartData"
-              [options]="barOptions"
-              [type]="'bar'"
-              role="img"
-              [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.SERVICES_CHART_DESC' | translate"
-            >
-            </canvas>
-          </div>
-        } @else {
-          <div class="no-contracts-msg" role="status">
-            {{ 'DASHBOARD.NO_DATA' | translate }}
-          </div>
-        }
-      } @placeholder {
-        <p class="dashboard-login-text" aria-live="polite">
-          <app-spinner></app-spinner>
-          {{ 'DASHBOARD.CHARGING' | translate }}
-        </p>
-      }
-    </section>
-
-    <section class="dashboard-total-users-container" aria-labelledby="users-title">
-      <div class="dashboard-total-users">
-        <h2 id="users-title" class="dashboard-total-users-title">
-          {{ 'DASHBOARD.TOTAL_USERS' | translate }}
-          <span class="dashboard-total-users-text">{{ totalUsersCount }}</span>
+    <div class="flex flex-col md:grid md:grid-cols-2 justify-between items-center w-full">
+      <section class="dashboard-contracts-container flex-1" aria-labelledby="contracts-title">
+        <h2 id="contracts-title" class="dashboard-contracts-title">
+          {{ 'DASHBOARD.TITLE_CONTRACTS' | translate }}
         </h2>
-      </div>
-    </section>
 
-    <section class="dashboard-login-container" aria-labelledby="login-chart-title">
-      <h2 id="login-chart-title" class="dashboard-login-title">
-        {{ 'DASHBOARD.LOGIN.TITLE' | translate }}
-      </h2>
-      <p class="dashboard-login-text">
-        {{ 'DASHBOARD.LOGIN.SUBTITLE' | translate }}
-      </p>
-      @defer (on viewport) {
-        @if (lineChartData.datasets[0].data && lineChartData.datasets[0].data.length > 0) {
-          <main class="chart-wrapper line-chart-wrapper">
-            <canvas
-              baseChart
-              [data]="lineChartData"
-              [options]="lineOptions"
-              [type]="'line'"
-              role="img"
-              [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.LOGIN_CHART_DESC' | translate"
-            >
-            </canvas>
-          </main>
-        } @else {
-          <div class="no-contracts-msg" role="status">
-            {{ 'DASHBOARD.NO_DATA' | translate }}
+        @defer (on viewport) {
+          @if (activeContractsCount > 0 || canceledContractsCount > 0) {
+            <div class="chart-wrapper">
+              <canvas
+                baseChart
+                [data]="doughnutChartData"
+                [options]="doughnutOptions"
+                [type]="'doughnut'"
+                role="img"
+                [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.CONTRACTS_CHART_DESC' | translate"
+              >
+              </canvas>
+            </div>
+          } @else {
+            <div class="no-contracts-msg" role="status">
+              {{ 'DASHBOARD.NO_CONTRACTS' | translate }}
+            </div>
+          }
+
+          <div class="dashboard-contracts-texts-container">
+            <span class="dashboard-contracts-text-total">
+              {{ 'DASHBOARD.TOTAL_CONTRACTS.TOTAL' | translate }}
+              {{ activeContractsCount + canceledContractsCount }}
+            </span>
+            <span class="dashboard-contracts-text-active">
+              {{ 'DASHBOARD.TOTAL_CONTRACTS.ACTIVE' | translate }}
+              {{ activeContractsCount }}
+            </span>
+            <span class="dashboard-contracts-text-no-active">
+              {{ 'DASHBOARD.TOTAL_CONTRACTS.NO_ACTIVE' | translate }}
+              {{ canceledContractsCount }}
+            </span>
+          </div>
+        } @placeholder {
+          <div class="no-contracts-msg" aria-live="polite">
+            <app-spinner></app-spinner>
+            {{ 'DASHBOARD.CHARGING' | translate }}
           </div>
         }
-      } @placeholder {
-        <p class="dashboard-login-text" aria-live="polite">
-          <app-spinner></app-spinner>
-          {{ 'DASHBOARD.CHARGING' | translate }}
+      </section>
+
+      <section class="dashboard-services-container flex-1" aria-labelledby="services-chart-title">
+        <h2 id="services-chart-title" class="dashboard-login-title">
+          {{ 'DASHBOARD.SERVICES.TITLE' | translate }}
+        </h2>
+
+        @defer (on viewport) {
+          @if (barChartData.labels && barChartData.labels.length > 0) {
+            <div class="chart-wrapper-services">
+              <canvas
+                baseChart
+                [data]="barChartData"
+                [options]="barOptions"
+                [type]="'bar'"
+                role="img"
+                [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.SERVICES_CHART_DESC' | translate"
+              >
+              </canvas>
+            </div>
+          } @else {
+            <div class="no-contracts-msg" role="status">
+              {{ 'DASHBOARD.NO_DATA' | translate }}
+            </div>
+          }
+        } @placeholder {
+          <p class="dashboard-login-text" aria-live="polite">
+            <app-spinner></app-spinner>
+            {{ 'DASHBOARD.CHARGING' | translate }}
+          </p>
+        }
+      </section>
+      <section class="dashboard-total-users-container" aria-labelledby="users-title">
+        <div class="dashboard-total-users">
+          <h2 id="users-title" class="dashboard-total-users-title">
+            {{ 'DASHBOARD.TOTAL_USERS' | translate }}
+            <span class="dashboard-total-users-text">{{ totalUsersCount }}</span>
+          </h2>
+        </div>
+      </section>
+
+      <section class="dashboard-login-container" aria-labelledby="login-chart-title">
+        <h2 id="login-chart-title" class="dashboard-login-title">
+          {{ 'DASHBOARD.LOGIN.TITLE' | translate }}
+        </h2>
+
+        <p class="dashboard-login-text">
+          {{ 'DASHBOARD.LOGIN.SUBTITLE' | translate }}
         </p>
-      }
-    </section>
+
+        @defer (on viewport) {
+          @if (lineChartData.datasets[0].data && lineChartData.datasets[0].data.length > 0) {
+            <main class="chart-wrapper line-chart-wrapper">
+              <canvas
+                baseChart
+                [data]="lineChartData"
+                [options]="lineOptions"
+                [type]="'line'"
+                role="img"
+                [attr.aria-label]="'DASHBOARD.ACCESSIBILITY.LOGIN_CHART_DESC' | translate"
+              >
+              </canvas>
+            </main>
+          } @else {
+            <div class="no-contracts-msg" role="status">
+              {{ 'DASHBOARD.NO_DATA' | translate }}
+            </div>
+          }
+        } @placeholder {
+          <p class="dashboard-login-text" aria-live="polite">
+            <app-spinner></app-spinner>
+
+            {{ 'DASHBOARD.CHARGING' | translate }}
+          </p>
+        }
+      </section>
+    </div>
   }
 </main>

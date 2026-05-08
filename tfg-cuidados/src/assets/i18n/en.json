@@ -183,7 +183,7 @@
       "ACTIVE": "Total contracts active: ",
       "NO_ACTIVE": "Total contracts no active: "
     },
-    "TOTAL_USERS": "Current Total Users:",
+    "TOTAL_USERS": "Current Users:",
     "LOGIN": {
       "TITLE": "LOGIN",
       "SUBTITLE": "Users who have been registered this year"
@@ -466,7 +466,7 @@
         "PHONE": "The phone number must start with 6, 7, 8, or 9 and have 9 digits (ej.: 615548730)",
         "ZIP": "CP not valid (5 digits)",
         "USERNAME": "The name must start with a capital letter and contain only letters",
-        "SURNAME": "The surname must start with a capital letter and contain only letters"   
+        "SURNAME": "The surname must start with a capital letter and contain only letters"
       }
     }
   },
@@ -813,7 +813,8 @@
   "FOOTER": {
     "LEGAL_ASPECTS": "Legal data",
     "PRIVACY_POLICTICS": "Privacy polity",
-    "COOKIES_POLICIES": "Cookie policy"
+    "COOKIES_POLICIES": "Cookie policy",
+    "FOLLOW": "Follow us"
   },
   "TERMS_PAGE": {
     "ACCESSIBILITY": {
@@ -890,7 +891,8 @@
     "ERROR_MESSAGE": "Oops, I had a small short circuit. Can you repeat that?"
   },
   "ADMIN_SERVICE_TIME": {
-    "ERROR": "Error, check the field, please"
+    "ERROR": "Error, check the field, please",
+    "SELECT_ICON": "Choose an icon"
   },
   "COMMON": {
     "ERROR": "Error",

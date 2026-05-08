@@ -28,11 +28,12 @@ export class AiAssistantComponent {
     this.isEn = this.isEnglish();
     this.messages.push({
       text: this.isEn
-        ? 'Hello! I am the CuidaDos smart assistant. Do you have any questions about the manuals or how the platform works?'
-        : '¡Hola! Soy el asistente inteligente de CuidaDos. ¿Tienes alguna duda sobre los manuales o cómo funciona la plataforma?',
+        ? 'Hello! I am the CuidaDos smart assistant. Do you have any questions about the manuals or how the platform works? To start helping you, here you have a video about this app:<br><br> <a class="underline text-gray-500 hover:text-primary" href="https://youtu.be/okBBfYk9x3I?si=TXp7t2F1XyDVUOtA" target="_blank">Watch video tutorial</a>'
+        : '¡Hola! Soy el asistente inteligente de CuidaDos. ¿Tienes alguna duda sobre los manuales o cómo funciona la plataforma? Para ayudarte, te dejo el enlace a un videotutorial:<br><br> <a class="underline text-gray-500 hover:text-primary" href="https://youtu.be/okBBfYk9x3I?si=TXp7t2F1XyDVUOtA" target="_blank">Ver videotutorial</a>',
       isUser: false,
     });
   }
+
   private isEnglish(): boolean {
     const lang = this.translate.currentLang || this.translate.getDefaultLang() || 'es';
     return lang === 'en';

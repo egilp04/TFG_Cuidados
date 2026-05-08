@@ -1,0 +1,613 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
+  <diagram name="Navegacion_CuidaDos_Final_V3" id="0">
+    <mxGraphModel dx="3088" dy="2005" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="landing" value="Landing Page" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=14;" parent="1" vertex="1">
+          <mxGeometry x="640" y="80" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="footer_box" value="FOOTER" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;collapsible=1;" parent="1" vertex="1">
+          <mxGeometry x="210" y="10" width="180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_manuals" value="Descargar Manuales" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;" parent="footer_box" vertex="1">
+          <mxGeometry y="26" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_contact" value="Contacto (Formulario)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;" parent="footer_box" vertex="1">
+          <mxGeometry y="52" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_about" value="Sobre Nosotros" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;" parent="footer_box" vertex="1">
+          <mxGeometry y="78" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_inicio" value="Botón Inicio" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;fontStyle=1" parent="footer_box" vertex="1">
+          <mxGeometry y="104" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="dec_session" value="¿Sesión&#xa;Iniciada?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="560" y="160" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c_inicio_no" value="No" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0;entryY=0.5;" parent="1" source="dec_session" target="landing" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="110" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="modal_login" value="MODAL Login" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="650" y="240" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="modal_reg_sel" value="MODAL Registro&#xa;(Selección Rol)" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="865" y="180" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="form_cli" value="Formulario&#xa;Cliente" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="960" y="260" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="form_emp" value="Formulario&#xa;Empresa" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="830" y="260" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c_reg_ok_cli" value="Registro OK" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;" parent="1" source="form_cli" target="landing" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1080" y="285" />
+              <mxPoint x="1080" y="100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c_reg_ok_emp" value="Registro OK" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;" parent="1" source="form_emp" target="landing" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="880" y="320" />
+              <mxPoint x="1150" y="320" />
+              <mxPoint x="1150" y="110" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="email_sent" value="Envío Correo" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="460" y="250" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="dec_rol" value="¿Rol?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="670" y="340" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="Iniciar Sesión" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="landing" target="modal_login" edge="1">
+          <mxGeometry y="20" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="190" />
+              <mxPoint x="740" y="190" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2" value="Registrarse" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="landing" target="modal_reg_sel" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" value="Tengo cuenta" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=1;entryY=0.5;" parent="1" source="modal_reg_sel" target="modal_login" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="modal_reg_sel" target="form_cli" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c8" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="modal_reg_sel" target="form_emp" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c10" value="OK" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="modal_login" target="dec_rol" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="Recuperar" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="modal_login" target="email_sent" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c_inicio_si" value="Sí" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;" parent="1" source="dec_session" target="dec_rol" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nav_common" value="NAVBAR (Común)" style="swimlane;startSize=20;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="1710" y="100" width="180" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_msgs" value="• Mensajes" style="text;html=1;align=left;verticalAlign=middle;" parent="nav_common" vertex="1">
+          <mxGeometry y="30" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_notif" value="• Notificaciones" style="text;html=1;align=left;verticalAlign=middle;" parent="nav_common" vertex="1">
+          <mxGeometry y="60" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_profile" value="• Perfil (Modificar)" style="text;html=1;align=left;verticalAlign=middle;" parent="nav_common" vertex="1">
+          <mxGeometry y="90" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="page_msg" value="Página Mensajes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="1840" y="590" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="page_notif" value="Página Notif." style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1740" y="410" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="page_profile" value="Página Perfil&#xa;(Modificar/Baja)" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1610" y="550" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n1" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="nav_common" target="page_msg" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1800" y="340" />
+              <mxPoint x="1900" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n2" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="nav_common" target="page_notif" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1790" y="270" />
+              <mxPoint x="1790" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n3" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="nav_common" target="page_profile" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1770" y="385" />
+              <mxPoint x="1660" y="385" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r1" value="Cliente" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="dec_rol" target="home_cli" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-30" y="370" />
+            </Array>
+            <mxPoint x="-40" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="search_comp" value="Buscar Empresas&#xa;(Lista)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="-370" y="540" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="link_msg" value="Btn: Mensaje" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;entryX=0.5;entryY=1;" parent="1" source="search_comp" target="page_msg" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-340" y="940" />
+              <mxPoint x="1900" y="940" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link_hire_loop" value="Btn: Contratar&#xa;(Crea Contrato)" style="edgeStyle=orthogonalEdgeStyle;html=1;curved=1;entryX=0;entryY=0.75;exitX=0;exitY=0.25;" parent="1" source="search_comp" target="search_comp" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-370" y="563" />
+              <mxPoint x="-470" y="563" />
+              <mxPoint x="-470" y="587" />
+              <mxPoint x="-370" y="587" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="my_contracts" value="Servicios Contratados&#xa;(Lista)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="-161.27" y="560" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="modal_detail" value="Modal Detalle/Cancelar" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#f8cecc;" parent="1" vertex="1">
+          <mxGeometry x="-151.27" y="660" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="f_cli_det" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="my_contracts" target="modal_detail" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cal_cli" value="Actividades Programadas&#xa;(Calendario)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="-20.000000000000004" y="560" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="modal_cli_cancel_cont" value="Modal&lt;br&gt;Cancelar CONTRATO" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffcccc;" parent="1" vertex="1">
+          <mxGeometry x="-10.000000000000004" y="650" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="f_cli_cal" value="Btn: Cancelar" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="cal_cli" target="modal_cli_cancel_cont" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cl1" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="home_cli" target="search_comp" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cl2" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="home_cli" target="my_contracts" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cl3" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="home_cli" target="cal_cli" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="home_emp" value="HOME EMPRESA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="400" y="440" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="r2" value="Empresa" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;" parent="1" source="dec_rol" target="home_emp" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gest_serv" value="Gestionar Servicios&#xa;(Lista)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="250" y="550" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="modal_new_serv" value="Modal Nuevo Servicio" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="180" y="670" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="modal_del_serv_emp" value="Modal Borrar Servicio" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffcccc;" parent="1" vertex="1">
+          <mxGeometry x="400" y="645" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="em_ns" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="gest_serv" target="modal_new_serv" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="270" y="620" />
+              <mxPoint x="215" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-24" value="Btn: nuevo servicio" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="em_ns" vertex="1" connectable="0">
+          <mxGeometry x="-0.2765" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="em_del" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="gest_serv" target="modal_del_serv_emp" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-26" value="Btn: Eliminar" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="em_del" vertex="1" connectable="0">
+          <mxGeometry x="-0.3297" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cal_emp" value="Actividades Programadas&#xa;(Calendario)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="500" y="550" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="modal_emp_cancel_cont" value="Modal&amp;nbsp;&lt;br&gt;Cancelar CONTRATO" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffcccc;" parent="1" vertex="1">
+          <mxGeometry x="510" y="650" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="f_emp_cal" value="Btn: Cancelar" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="cal_emp" target="modal_emp_cancel_cont" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="view_contracts_emp" value="Ver Contratos&#xa;(Lista)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="690" y="535" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="modal_emp_cont_cancel" value="Modal Cancelar&#xa;Contrato" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffcccc;" parent="1" vertex="1">
+          <mxGeometry x="640" y="720" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="f_emp_cont1" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="view_contracts_emp" target="FOX8ou24AJhc5ZovwB3h-30" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690.0588235294117" y="645" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f_emp_cont2" value="Cancelar" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="FOX8ou24AJhc5ZovwB3h-30" target="modal_emp_cont_cancel" edge="1">
+          <mxGeometry x="-0.0062" relative="1" as="geometry">
+            <mxPoint x="690" y="685" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="em1" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="home_emp" target="gest_serv" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="em2" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="home_emp" target="view_contracts_emp" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="em3" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="home_emp" target="cal_emp" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="dash_admin" target="-tJ5PZFTbkwqdEAl7GRQ-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1505" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dash_admin" value="HOME ADMIN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="1080" y="430" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="r3" value="Administrador" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;" parent="1" source="dec_rol" target="dash_admin" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1070" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gest_serv_adm" value="CRUD Servicios&#xa;(Form + Tabla)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="1110" y="550" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="loop_serv_adm" value="Crear / Modificar" style="edgeStyle=orthogonalEdgeStyle;html=1;curved=1;entryX=1;entryY=0.25;exitX=1;exitY=0.75;" parent="1" source="gest_serv_adm" target="gest_serv_adm" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1280" y="587" />
+              <mxPoint x="1280" y="562" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="modal_del_serv_adm" value="Modal Borrar" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffcccc;" parent="1" vertex="1">
+          <mxGeometry x="1150" y="670" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="f_del_serv_ad" value="Del" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" target="modal_del_serv_adm" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1190" y="600" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="1190" y="622" />
+              <mxPoint x="1185" y="622" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gest_cli_adm" value="Gestión Clientes&#xa;(Tabla)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" parent="1" vertex="1">
+          <mxGeometry x="865" y="550" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="gest_emp_adm" value="Gestión Empresas&#xa;(Tabla)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" parent="1" vertex="1">
+          <mxGeometry x="990" y="550" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="gest_hor_adm" value="CRUD Horarios&#xa;(Form + Tabla)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="1350" y="550" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ad1" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="dash_admin" target="gest_cli_adm" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ad2" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="dash_admin" target="gest_emp_adm" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ad3" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="dash_admin" target="gest_serv_adm" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ad4" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="dash_admin" target="gest_hor_adm" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-1" value="Modal Modificar Servicio" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="290" y="670" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-2" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="gest_serv" target="FOX8ou24AJhc5ZovwB3h-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="320" y="610" as="sourcePoint" />
+            <mxPoint x="245" y="650" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="330" y="620" />
+              <mxPoint x="350" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-25" value="Btn: modificar" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="FOX8ou24AJhc5ZovwB3h-2" vertex="1" connectable="0">
+          <mxGeometry x="-0.5138" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-5" value="Crear / Modificar" style="edgeStyle=orthogonalEdgeStyle;html=1;curved=1;" parent="1" source="gest_hor_adm" target="gest_hor_adm" edge="1">
+          <mxGeometry x="0.1429" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1540" y="595" />
+              <mxPoint x="1540" y="570" />
+            </Array>
+            <mxPoint x="1450" y="595" as="sourcePoint" />
+            <mxPoint x="1450" y="570" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-6" value="Del" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="gest_hor_adm" target="FOX8ou24AJhc5ZovwB3h-7" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1200" y="610" as="sourcePoint" />
+            <mxPoint x="1400" y="690" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1410" y="632" />
+              <mxPoint x="1420" y="632" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-7" value="Modal Borrar" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffcccc;" parent="1" vertex="1">
+          <mxGeometry x="1380" y="660" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-8" value="Modal Borrar" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffcccc;" parent="1" vertex="1">
+          <mxGeometry x="865" y="670" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-9" value="Modal Borrar" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffcccc;" parent="1" vertex="1">
+          <mxGeometry x="990" y="670" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-10" value="Del" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="gest_emp_adm" target="FOX8ou24AJhc5ZovwB3h-9" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1200" y="610" as="sourcePoint" />
+            <mxPoint x="1195" y="660" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1030" y="650" />
+              <mxPoint x="1030" y="650" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-11" value="Del" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="gest_cli_adm" target="FOX8ou24AJhc5ZovwB3h-8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1040" y="610" as="sourcePoint" />
+            <mxPoint x="1020" y="680" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="910" y="630" />
+              <mxPoint x="910" y="630" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-13" value="Btn: Cancelar" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="modal_detail" target="FOX8ou24AJhc5ZovwB3h-14" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="78.72999999999999" y="620" as="sourcePoint" />
+            <mxPoint x="-101.27000000000001" y="750" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-14" value="Modal&lt;br&gt;Cancelar CONTRATO" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffcccc;" parent="1" vertex="1">
+          <mxGeometry x="-151.27" y="760" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-15" value="Btn: Eliminar" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="modal_del_serv_emp" target="FOX8ou24AJhc5ZovwB3h-16" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-45" y="690" as="sourcePoint" />
+            <mxPoint x="430" y="750" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="435" y="691" />
+              <mxPoint x="440" y="691" />
+              <mxPoint x="440" y="726" />
+              <mxPoint x="435" y="726" />
+              <mxPoint x="435" y="780" />
+              <mxPoint x="430" y="780" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-16" value="Modal&lt;br&gt;Elminar Servicio" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffcccc;" parent="1" vertex="1">
+          <mxGeometry x="380" y="780" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-18" value="Modal&lt;br&gt;Cancelar CONTRATO" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffcccc;" parent="1" vertex="1">
+          <mxGeometry x="-300" y="660" width="138.73" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-19" value="Btn: Cancelar" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="my_contracts" target="FOX8ou24AJhc5ZovwB3h-18" edge="1">
+          <mxGeometry x="0.0058" relative="1" as="geometry">
+            <mxPoint x="-61.27" y="700" as="sourcePoint" />
+            <mxPoint x="-198.7366666666667" y="650" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-20" value="&lt;span style=&quot;font-size: 11px; background-color: rgb(255, 255, 255);&quot;&gt;Btn: ver detalles&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="-91.27000000000001" y="610" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-27" value="Modal&lt;br&gt;Cancelar CONTRATO" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffcccc;" parent="1" vertex="1">
+          <mxGeometry x="750" y="720" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-29" value="Cancelar" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" edge="1">
+          <mxGeometry x="-0.0062" relative="1" as="geometry">
+            <mxPoint x="789.9988235294118" y="585" as="sourcePoint" />
+            <mxPoint x="809.9988235294118" y="720" as="targetPoint" />
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="789.94" y="653" />
+              <mxPoint x="809.94" y="653" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-30" value="Modal Detalle/Cancelar" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;fillColor=#f8cecc;" parent="1" vertex="1">
+          <mxGeometry x="640" y="645" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-31" value="Btn: Modificar" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;" parent="1" source="gest_cli_adm" target="page_profile" edge="1">
+          <mxGeometry x="0.001" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="930" y="780" />
+              <mxPoint x="1700" y="780" />
+            </Array>
+            <mxPoint x="-330" y="600" as="sourcePoint" />
+            <mxPoint x="1910" y="650" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FOX8ou24AJhc5ZovwB3h-32" value="Btn: Modificar" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;" parent="1" source="gest_emp_adm" target="page_profile" edge="1">
+          <mxGeometry x="0.001" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="980" y="760" />
+              <mxPoint x="1660" y="760" />
+            </Array>
+            <mxPoint x="995" y="572.5" as="sourcePoint" />
+            <mxPoint x="1690" y="607.5" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UDnMKijTqhDZt-_Bfp94-1" value="Ver notificacion" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="1755" y="500" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="UDnMKijTqhDZt-_Bfp94-2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="page_notif" target="UDnMKijTqhDZt-_Bfp94-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1420" y="610" as="sourcePoint" />
+            <mxPoint x="1430" y="670" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1800" y="460" />
+              <mxPoint x="1780" y="460" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UDnMKijTqhDZt-_Bfp94-3" value="Modal nuevo mensaje" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="2080" y="510" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="UDnMKijTqhDZt-_Bfp94-4" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="page_msg" target="UDnMKijTqhDZt-_Bfp94-3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1810" y="430" as="sourcePoint" />
+            <mxPoint x="1790" y="500" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1990" y="615" />
+              <mxPoint x="1990" y="540" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UDnMKijTqhDZt-_Bfp94-5" value="Btn: nuevo" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="UDnMKijTqhDZt-_Bfp94-4" vertex="1" connectable="0">
+          <mxGeometry x="-0.0248" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UDnMKijTqhDZt-_Bfp94-7" value="Modal ver mensaje" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="2090" y="590" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="UDnMKijTqhDZt-_Bfp94-8" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="page_msg" target="UDnMKijTqhDZt-_Bfp94-7" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1970" y="625" as="sourcePoint" />
+            <mxPoint x="2090" y="550" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="2000" y="625" />
+              <mxPoint x="2000" y="620" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UDnMKijTqhDZt-_Bfp94-9" value="Btn: ver" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="UDnMKijTqhDZt-_Bfp94-8" vertex="1" connectable="0">
+          <mxGeometry x="-0.0248" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UDnMKijTqhDZt-_Bfp94-12" value="Btn: borrar mensaje" style="edgeStyle=orthogonalEdgeStyle;html=1;curved=1;" parent="1" source="page_msg" target="page_msg" edge="1">
+          <mxGeometry x="0.1429" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1850" y="720" />
+              <mxPoint x="1790" y="720" />
+              <mxPoint x="1790" y="615" />
+            </Array>
+            <mxPoint x="1870" y="620" as="sourcePoint" />
+            <mxPoint x="2020" y="695" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uUpS7a7kfj4Fa_sogjMD-1" value="ZONA PÚBLICA (publicGuard)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;opacity=30;dashed=1;startSize=30;" parent="1" vertex="1">
+          <mxGeometry x="190" y="-35" width="1050" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-39" value="NAVBAR" style="swimlane;startSize=20;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="uUpS7a7kfj4Fa_sogjMD-1">
+          <mxGeometry x="20" y="195" width="200" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-40" value="Contacto" style="text;html=1;align=left;verticalAlign=middle;" vertex="1" parent="-tJ5PZFTbkwqdEAl7GRQ-39">
+          <mxGeometry y="30" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-41" value="Sobre nosotros" style="text;html=1;align=left;verticalAlign=middle;" vertex="1" parent="-tJ5PZFTbkwqdEAl7GRQ-39">
+          <mxGeometry y="60" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-43" value="Manuales" style="text;html=1;align=left;verticalAlign=middle;" vertex="1" parent="-tJ5PZFTbkwqdEAl7GRQ-39">
+          <mxGeometry y="90" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-44" value="Registro/Inicio de sesión" style="text;html=1;align=left;verticalAlign=middle;" vertex="1" parent="-tJ5PZFTbkwqdEAl7GRQ-39">
+          <mxGeometry y="120" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uUpS7a7kfj4Fa_sogjMD-2" value="ÁREA CLIENTE (authGuard + rol=&#39;cliente&#39;)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;opacity=30;dashed=1;startSize=30;" parent="1" vertex="1">
+          <mxGeometry x="-520" y="400" width="660" height="590" as="geometry" />
+        </mxCell>
+        <mxCell id="home_cli" value="HOME CLIENTE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1" parent="uUpS7a7kfj4Fa_sogjMD-2" vertex="1">
+          <mxGeometry x="420" y="75" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-1" value="Categorías de empresas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="uUpS7a7kfj4Fa_sogjMD-2">
+          <mxGeometry x="270" y="80" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uUpS7a7kfj4Fa_sogjMD-3" value="ÁREA EMPRESA (authGuard + rol=&#39;empresa&#39;)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;opacity=30;dashed=1;startSize=30;" parent="1" vertex="1">
+          <mxGeometry x="160" y="400" width="690" height="480" as="geometry" />
+        </mxCell>
+        <mxCell id="uUpS7a7kfj4Fa_sogjMD-4" value="ÁREA ADMINISTRADOR (authGuard + rol=&#39;admin&#39;)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;opacity=30;dashed=1;startSize=30;" parent="1" vertex="1">
+          <mxGeometry x="860" y="400" width="730" height="530" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-4" value="Ver contratos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="uUpS7a7kfj4Fa_sogjMD-4">
+          <mxGeometry x="590" y="70" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uUpS7a7kfj4Fa_sogjMD-5" value="ZONA PRIVADA COMÚN (authGuard)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;opacity=30;dashed=1;startSize=30;" parent="1" vertex="1">
+          <mxGeometry x="1600" y="60" width="850" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-6" value="Manuales (Común)" style="swimlane;startSize=20;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="uUpS7a7kfj4Fa_sogjMD-5">
+          <mxGeometry x="360" y="50" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-8" value="• Usar el chat asistente (telegram)" style="text;html=1;align=left;verticalAlign=middle;" vertex="1" parent="-tJ5PZFTbkwqdEAl7GRQ-6">
+          <mxGeometry y="20" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-tJ5PZFTbkwqdEAl7GRQ-2" value="Btn: Ver empresas)" style="edgeStyle=orthogonalEdgeStyle;html=1;curved=1;entryX=0;entryY=0.75;exitX=0;exitY=0.25;" edge="1" parent="1">
+          <mxGeometry x="-1" y="87" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-360" y="573" />
+              <mxPoint x="-460" y="573" />
+              <mxPoint x="-460" y="597" />
+              <mxPoint x="-360" y="597" />
+            </Array>
+            <mxPoint x="-360" y="563" as="sourcePoint" />
+            <mxPoint x="-360" y="588" as="targetPoint" />
+            <mxPoint x="-27" y="-63" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
