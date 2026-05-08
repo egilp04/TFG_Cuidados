@@ -288,6 +288,9 @@ Se pueden identificar las tablas que componen la base de datos, así como su est
 
 En este enlace podrás acceder a toda la información relacionada con el proyecto, ¡Muchas gracias!
 
+Otros enlaces de interés:
+Figma - https://www.figma.com/design/Aa6R3bdFqDKKzZ6dK3bkHP/TFG-Evelia?node-id=0-1&t=s1gxsIHk3JNCFouu-1
+
 👩‍💻 Autoría
 
 **Evelia Gil Paredes**
