@@ -77,6 +77,9 @@ export default class AdminContractsComponent implements OnInit {
     this.loadAdminContracts();
   }
 
+  /**
+   * Carga los contratos de los administradores
+   */
   private loadAdminContracts(): void {
     this.isLoading = true;
     this.contractService

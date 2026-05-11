@@ -81,6 +81,11 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
     description: this.fb.control<string>(''),
   });
 
+  /**
+   * Función para la modificación de los datos de modificar perfil
+   * @param changes parámetros que provoncan el cambio de los datos del usuario
+   */
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userData'] && this.userData) {
       this.loadProfileFormData();
@@ -292,6 +297,12 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
     this.deleteRequested.emit();
   }
 
+
+  /**
+   * Función para la modificación de la foto de perfil del usuario
+   * @param event 
+   * @returns void
+   */
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
