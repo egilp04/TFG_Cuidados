@@ -8,19 +8,19 @@
 }
 
 .message-modal-text-container {
-  @apply flex flex-col border-2 border-accent rounded-2xl;
+  @apply flex flex-col border-2 border-primary dark:border-surface rounded-12;
 }
 
 .message-modal-label {
-  @apply text-center text-primary font-bold uppercase text-label dark:text-surface;
+  @apply text-center mt-1 text-primary font-medium uppercase text-label dark:text-surface;
 }
 
 .message-modal-textarea {
-  @apply w-full min-h-120 outline-none resize-none text-primary dark:text-surface dark:placeholder:text-surface text-label;
+  @apply w-full pl-4 py-3 pr-14 min-h-120 md:pl-5 md:py-4 border-0 font-poppins text-label outline-none transition-all bg-transparent resize-none text-primary dark:text-surface dark:placeholder:text-surface;
 }
 
 .messages-form-select-label {
-  @apply text-label text-primary font-medium dark:text-surface;
+  @apply text-label text-primary dark:text-surface;
 }
 
 .messages-form-options {

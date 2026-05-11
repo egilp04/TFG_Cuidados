@@ -25,7 +25,7 @@
 }
 
 .table-admin-search-container {
-  @apply w-full flex gap-4 items-center justify-end px-20;
+  @apply w-full flex flex-col md:flex-row gap-4 items-center justify-end px-20;
 }
 
 .table-admin-search-title {
