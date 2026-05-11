@@ -73,6 +73,7 @@
       name="description"
       [label]="'MANAGEMENT_SERVICES.FORM.DESCRIPTION' | translate"
       [control]="getCtrl('description')"
+      [type]="'textarea'"
       [errorMessage]="
         getCtrl('description').invalid && getCtrl('description').touched
           ? ('ADMIN_SERVICE_TIME.ERROR' | translate)

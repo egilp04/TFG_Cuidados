@@ -94,7 +94,6 @@ export class Loginmodal implements OnInit {
   /**
    * Procesa el intento de autenticación y navega al usuario según su rol.
    */
-  // Añade esta variable al principio de tu clase, donde tienes tus otras variables
   isLoading = false;
 
   toEnterApp(): void {

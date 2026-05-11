@@ -12,9 +12,4 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 })
 export class Footer {
   private translate = inject(TranslateService);
-
-  // changeLanguage(lang: string) {
-  //   this.translate.use(lang);
-  //   localStorage.setItem('idioma_seleccionado', lang);
-  // }
 }

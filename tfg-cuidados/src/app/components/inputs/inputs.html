@@ -22,6 +22,7 @@
         [ngClass]="errorMessage() ? 'input-error ' : 'input-no-error'"
         [attr.aria-invalid]="errorMessage() ? 'true' : 'false'"
         [attr.aria-describedby]="errorMessage() ? name() + '-error' : null"
+        [autocomplete]="autocomplete()"
       />
     }
 

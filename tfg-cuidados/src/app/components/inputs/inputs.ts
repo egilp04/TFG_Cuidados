@@ -22,6 +22,7 @@ export class Inputs {
   name = input.required<string>();
   control = input.required<FormControl>();
   errorMessage = input<string>('');
+  autocomplete = input<string>('off');
 
   isPasswordVisible = signal(false);
 
