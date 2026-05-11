@@ -72,5 +72,5 @@
 }
 
 .dashboard-services-container {
-  @apply flex flex-col justify-center items-center;
+  @apply flex flex-col gap-22 w-full items-center py-20 justify-start;
 }
