@@ -29,7 +29,7 @@ import {
 } from '@angular/common/http';
 import { CustomTranslateLoader } from './core/i18n/customTranslaterLoader';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import { PaginacionEs } from './ruta-hacia-tu-archivo/paginacion-es';
+import { PaginacionEs } from './services/paginacion-es';
 
 registerLocaleData(localeEs);
 
