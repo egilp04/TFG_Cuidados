@@ -44,7 +44,6 @@ import { TableSkeletonComponent } from '../../components/table-skeleton/table-sk
     TranslateModule,
     TableSkeletonComponent,
   ],
-  providers: [{ provide: MatPaginatorIntl, useClass: PaginacionEs }],
   templateUrl: './messages.html',
   styleUrl: './messages.css',
 })

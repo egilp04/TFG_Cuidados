@@ -186,7 +186,7 @@
     },
     "TOTAL_USERS": "Usuarios actuales:",
     "LOGIN": {
-      "TITLE": "LOGIN",
+      "TITLE": "Registro de usuarios",
       "SUBTITLE": "Usuarios registrados en la aplicación este año"
     },
     "CHART": {
@@ -208,7 +208,7 @@
       "ALL_CONTRACTS": "Ver todos los contratos"
     },
     "ADMIN": {
-      "DASHBOARD": "Ver dashboard",
+      "DASHBOARD": "Ver métricas",
       "MANAGE_USERS": "Gestionar usuarios",
       "MANAGE_COMPANIES": "Gestionar Empresas",
       "MANAGE_SERVICES": "Gestionar servicios",

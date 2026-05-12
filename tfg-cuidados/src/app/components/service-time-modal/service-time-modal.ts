@@ -19,6 +19,8 @@ import { LucideAngularModule } from 'lucide-angular';
 import { Service_Time_Model } from '../../models/Service_Time_Model';
 import { ServiceTimeModalData } from '../../models/Service_Time_Data_Model';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
+import { catchError, map } from 'rxjs';
+import { MessageService } from '../../services/message-service';
 
 /**
  * Componente modal para crear o editar la relación entre un servicio, una franja horaria y un negocio.
@@ -51,6 +53,7 @@ export class ServiceTimeModal implements OnInit {
 
   public services$ = inject(ServiceService).getServicesObservable();
   public times$ = inject(TimeService).getTimesObservable();
+  public messageService = inject(MessageService);
 
   public form: FormGroup;
   public isEditing: boolean = false;
@@ -86,17 +89,40 @@ export class ServiceTimeModal implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-
     const formPayload = this.form.getRawValue() as Service_Time_Model;
+
     const request$ =
       this.isEditing && this.data
         ? this.serviceTimeService.updateServiceTime(this.data.id_service_time, formPayload)
         : this.serviceTimeService.insertServiceTime(formPayload);
-
-    request$.subscribe({
-      next: () => this.dialogRef.close(true),
-      error: (err: Error) => console.error('Error guardando relación de servicio-tiempo:', err),
-    });
+    request$
+      .pipe(
+        catchError((err: any) => {
+          let msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_GENERIC';
+          if (err.message === 'DUPLICATE_ENTRY' || err.code === '23505') {
+            msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_DUPLICATE';
+          }
+          return this.translate
+            .get(msgKey)
+            .pipe(map((text: string) => ({ success: false, text, type: 'error' as const })));
+        }),
+      )
+      .subscribe({
+        next: (result: any) => {
+          if (result && result.success === false) {
+            this.messageService.showMessage(result.text, result.type);
+            return;
+          }
+          const successMsgKey = this.isEditing
+            ? 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_UPDATE'
+            : 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_CREATE';
+          this.translate.get(successMsgKey).subscribe((text) => {
+            this.messageService.showMessage(text, 'success');
+          });
+          this.dialogRef.close(true);
+        },
+        error: (err) => console.error('Error fatal no capturado:', err),
+      });
   }
 
   getCtrl(name: string): FormControl {
