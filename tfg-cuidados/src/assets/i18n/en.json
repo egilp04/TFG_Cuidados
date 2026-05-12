@@ -1011,5 +1011,13 @@
     "ACTION": { "DOWNLOAD": "Download", "DOWNLOAD_CSV": "Download contracts (CSV)" },
 
     "NO_DATA": "No data available"
+  },
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE": "Items per page:",
+    "NEXT_PAGE": "Next page",
+    "PREV_PAGE": "Previous page",
+    "FIRST_PAGE": "First page",
+    "LAST_PAGE": "Last page",
+    "OF": "of"
   }
 }
