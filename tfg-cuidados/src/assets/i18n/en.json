@@ -541,7 +541,8 @@
       "CHOOSE_OPTION": "-- Choose a service --"
     },
     "BTN_MESSAGE": "Message",
-    "BTN_CONTRACT": "Show companies",
+    "BTN_CONTRACT": "Hire",
+    "BTN_SHOW_COMPANY": "Show companies",
     "LIST": {
       "EMPTY": "No companies found matching your search criteria."
     }

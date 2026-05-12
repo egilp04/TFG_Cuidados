@@ -486,7 +486,8 @@
       "CHOOSE_OPTION": "-- Elige un servicio --"
     },
     "BTN_MESSAGE": "Mensaje",
-    "BTN_CONTRACT": "Ver empresas",
+    "BTN_CONTRACT": "Contratar",
+    "BTN_SHOW_COMPANY": "Ver empresas",
     "LIST": {
       "EMPTY": "No se encontraron empresas con los criterios de búsqueda."
     },
