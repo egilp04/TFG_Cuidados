@@ -28,6 +28,8 @@ import {
   withFetch,
 } from '@angular/common/http';
 import { CustomTranslateLoader } from './core/i18n/customTranslaterLoader';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { PaginacionEs } from './services/paginacion-es';
 
 registerLocaleData(localeEs);
 
@@ -38,6 +40,7 @@ export function createTranslateLoader(http: HttpClient) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
+    { provide: MatPaginatorIntl, useClass: PaginacionEs },
     { provide: LOCALE_ID, useValue: 'es-ES' },
     provideZonelessChangeDetection(),
     provideHttpClient(withInterceptorsFromDi(), withFetch()),

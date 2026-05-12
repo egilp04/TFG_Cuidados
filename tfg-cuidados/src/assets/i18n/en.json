@@ -185,7 +185,7 @@
     },
     "TOTAL_USERS": "Current Users:",
     "LOGIN": {
-      "TITLE": "LOGIN",
+      "TITLE": "Register user",
       "SUBTITLE": "Users who have been registered this year"
     },
     "CHART": {
@@ -311,7 +311,7 @@
       "SUCCESS_CREATE": "Service created successfully",
       "SUCCESS_UPDATE": "Service updated successfully",
       "SUCCESS_DELETE": "Service deleted",
-      "ERROR_DUPLICATE": "That service name already exists",
+      "ERROR_DUPLICATE": "That service already exists",
       "ERROR_GENERIC": "Error processing request, try it again!",
       "ERROR_DELETE": "Error deleting"
     }

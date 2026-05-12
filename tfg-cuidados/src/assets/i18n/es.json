@@ -186,7 +186,7 @@
     },
     "TOTAL_USERS": "Usuarios actuales:",
     "LOGIN": {
-      "TITLE": "LOGIN",
+      "TITLE": "Registro de usuarios",
       "SUBTITLE": "Usuarios registrados en la aplicación este año"
     },
     "CHART": {
@@ -208,7 +208,7 @@
       "ALL_CONTRACTS": "Ver todos los contratos"
     },
     "ADMIN": {
-      "DASHBOARD": "Ver dashboard",
+      "DASHBOARD": "Ver métricas",
       "MANAGE_USERS": "Gestionar usuarios",
       "MANAGE_COMPANIES": "Gestionar Empresas",
       "MANAGE_SERVICES": "Gestionar servicios",
@@ -312,7 +312,7 @@
       "SUCCESS_CREATE": "Servicio creado con éxito",
       "SUCCESS_UPDATE": "Servicio actualizado con éxito",
       "SUCCESS_DELETE": "Servicio eliminado",
-      "ERROR_DUPLICATE": "Ese nombre de servicio ya existe",
+      "ERROR_DUPLICATE": "Ese servicio ya existe",
       "ERROR_GENERIC": "Error al procesar la solicitud",
       "ERROR_DELETE": "Error al eliminar"
     }

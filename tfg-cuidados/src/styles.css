@@ -282,7 +282,7 @@
   }
 
   .service-btn-container {
-    @apply flex justify-center gap-4 mt-6 mb-10;
+    @apply flex justify-end gap-4 mt-6 mb-10;
   }
 
   .select-option-disabled {
