@@ -173,7 +173,6 @@ export default class ManagementServicesGlobal implements OnInit {
             .pipe(map((text: string) => ({ type: 'success' as const, text })));
         }),
         catchError((err: any) => {
-          console.error('Error detallado guardando servicio:', err);
           let msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_GENERIC';
           if (err.message === 'DUPLICATE_SERVICE' || err.code === '23505') {
             msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_DUPLICATE';

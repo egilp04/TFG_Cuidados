@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { map, catchError, tap, switchMap } from 'rxjs/operators';
 import { Service_Time_Model } from '../models/Service_Time_Model';
 import { ServiceTimeJoined } from '../models/Service_Time_Service_Model';
 
@@ -77,9 +77,24 @@ export class ServiceTimeService {
    * Inserta un nuevo registro de disponibilidad servicio-horario.
    */
   insertServiceTime(newEntry: Service_Time_Model): Observable<void> {
-    return from(this.supabase.from('Service_Time').insert(newEntry)).pipe(
-      map(({ error }) => {
+    const checkQuery = this.supabase
+      .from('Service_Time')
+      .select('id_service_time')
+      .eq('id_service', newEntry.id_service)
+      .eq('id_time', newEntry.id_time)
+      .eq('id_business', newEntry.id_business)
+      .eq('price', newEntry.price);
+    return from(checkQuery).pipe(
+      switchMap(({ data, error }) => {
         if (error) throw error;
+        if (data && data.length > 0) {
+          return throwError(() => new Error('DUPLICATE_ENTRY'));
+        }
+        return from(this.supabase.from('Service_Time').insert(newEntry)).pipe(
+          map(({ error: insertError }) => {
+            if (insertError) throw insertError;
+          }),
+        );
       }),
       tap(() => {
         if (this.currentIdBusiness) this.refreshList(this.currentIdBusiness);
