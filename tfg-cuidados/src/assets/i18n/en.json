@@ -751,9 +751,9 @@
   "MESSAGES_MODAL": {
     "LABELS": {
       "TO": "To:",
-      "TOPIC": "topic:",
-      "SENDER": "Sender:",
-      "RECEIVER": "Receiver:",
+      "TOPIC": "Topic",
+      "SENDER": "Sender",
+      "RECEIVER": "Receiver",
       "MESSAGE_CONTENT": "MESSAGE"
     },
     "PLACEHOLDERS": {

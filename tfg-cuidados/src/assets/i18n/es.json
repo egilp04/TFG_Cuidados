@@ -750,9 +750,9 @@
   "MESSAGES_MODAL": {
     "LABELS": {
       "TO": "Para:",
-      "TOPIC": "Asunto:",
-      "SENDER": "Emisor:",
-      "RECEIVER": "Receptor:",
+      "TOPIC": "Asunto",
+      "SENDER": "Emisor",
+      "RECEIVER": "Receptor",
       "MESSAGE_CONTENT": "MENSAJE"
     },
     "PLACEHOLDERS": {
