@@ -67,7 +67,10 @@
                 @for (ev of events; track ev.id_contract) {
                   <div class="activity-tooltip-text-container" role="article">
                     <span class="activity-tooltip-event-text text-sm lg:text-lg font-bold">
-                      {{ ev.serviceName }}
+                      {{ 'ACTIVITIES.ACTIVITIES.ACTIVITINAME' | translate }}: {{ ev.serviceName }}
+                      <br />
+                      {{ 'ACTIVITIES.ACTIVITIES.ACTIVITIUSER' | translate }}:
+                      {{ ev.nameToShow }}
                     </span>
                     <span class="activity-tooltip-event-text text-xs lg:text-sm">
                       {{ ev.time_hired }} - {{ ev.week_day_hired }}
@@ -177,7 +180,7 @@
       showFirstLastButtons
       class="mt-20"
       [attr.aria-label]="'MESSAGES_PAGE.ACCESSIBILITY.PAGINATOR' | translate"
-      >
+    >
     </mat-paginator>
   }
 </div>

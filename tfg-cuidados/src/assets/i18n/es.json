@@ -108,6 +108,10 @@
     }
   },
   "ACTIVITIES": {
+    "ACTIVITIES": {
+      "ACTIVITINAME": "Servicio de",
+      "ACTIVITIUSER": "Con"
+    },
     "TITLE": "Actividades",
     "NO_DATA": "Sin datos",
     "DAYS": {
