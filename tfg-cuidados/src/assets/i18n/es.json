@@ -1009,5 +1009,13 @@
     },
     "ACTION": { "DOWNLOAD": "Descargar", "DOWNLOAD_CSV": "Descargar contratos en csv" },
     "NO_DATA": "Sin datos"
+  },
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE": "Elementos por página:",
+    "NEXT_PAGE": "Siguiente página",
+    "PREV_PAGE": "Página anterior",
+    "FIRST_PAGE": "Primera página",
+    "LAST_PAGE": "Última página",
+    "OF": "de"
   }
 }
