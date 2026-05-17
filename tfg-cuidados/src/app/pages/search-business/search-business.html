@@ -109,7 +109,6 @@
             <app-button
               [label]="'SEARCH_BUSINESS.BTN_MESSAGE' | translate"
               variant="secondary"
-              class="flex-1"
               (click)="sendMessage(business)"
               [attr.aria-label]="('SEARCH_BUSINESS.BTN_MESSAGE' | translate) + ': ' + business.name"
             >
@@ -118,7 +117,6 @@
             <app-button
               [label]="'SEARCH_BUSINESS.BTN_CONTRACT' | translate"
               variant="primary"
-              class="flex-1"
               (click)="toHire(business)"
               [disabled]="!selections()[business.id_business]"
               [attr.aria-label]="
