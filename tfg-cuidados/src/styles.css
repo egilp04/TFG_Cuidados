@@ -262,8 +262,7 @@
   }
 
   .btn-toggle-dark-mode {
-    @apply ml-4 mr-6 w-14 h-[32px] p-1;
-    @apply rounded-full flex items-center shrink-0 cursor-pointer transition-colors duration-300 outline-none focus:outline-none border-none active:bg-btn-dark;
+    @apply w-14 h-[32px] p-1 rounded-full flex items-center shrink-0 cursor-pointer transition-colors duration-300 outline-none focus:outline-none border-none active:bg-btn-dark;
   }
 
   .span-toggle-dark-mode {
