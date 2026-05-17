@@ -12,7 +12,7 @@
 }
 
 .ia-btn-toggle {
-  @apply p-1 hover:bg-white/20 rounded-full transition-colors;
+  @apply p-1 hover:bg-white/20 rounded-full transition-colors cursor-pointer;
 }
 
 .ia-messages-container {
@@ -32,5 +32,9 @@
 }
 
 .ia-btn {
-  @apply bg-accent text-white rounded-full w-[3rem] h-full flex items-center justify-center hover:opacity-90 active:scale-90 transition-all disabled:opacity-50 shadow-sm;
+  @apply bg-accent text-white rounded-full w-[3rem] h-full flex items-center justify-center hover:opacity-90 active:scale-90 transition-all disabled:opacity-50 shadow-sm cursor-pointer;
+}
+
+.ia-open-btn {
+  @apply w-14 h-14 bg-accent rounded-full shadow-lg flex items-center justify-center text-white hover:bg-secondary hover:scale-110 active:scale-90 transition-all duration-300 z-50 cursor-pointer;
 }
