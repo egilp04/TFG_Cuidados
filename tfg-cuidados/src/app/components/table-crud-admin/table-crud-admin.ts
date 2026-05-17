@@ -66,19 +66,22 @@ export class TableCrudAdmin implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.setupCustomFilter();
     this.setupFilter();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data'] && changes['data'].currentValue) {
-      this.dataSource.data = changes['data'].currentValue;
-      this.refreshTableState();
-    }
   }
 
   /**
    * Configura el filtro de búsqueda en tiempo real para la tabla.
    */
+  private setupCustomFilter(): void {
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      const name = data.name || '';
+      const email = data.email || '';
+      const dataStr = `${name} ${email}`.toLowerCase();
+      return dataStr.includes(filter);
+    };
+  }
+
   private setupFilter(): void {
     this.searchControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
       const filterValue = value || '';
@@ -87,6 +90,13 @@ export class TableCrudAdmin implements OnInit, OnChanges {
         this.dataSource.paginator.firstPage();
       }
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'] && changes['data'].currentValue) {
+      this.dataSource.data = changes['data'].currentValue;
+      this.refreshTableState();
+    }
   }
 
   /**
