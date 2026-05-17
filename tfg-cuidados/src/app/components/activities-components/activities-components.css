@@ -60,7 +60,7 @@
 }
 
 .activity-text {
-  @apply text-primary dark:text-surface;
+  @apply text-primary! dark:text-surface!;
 }
 
 .activity-text-secondary {

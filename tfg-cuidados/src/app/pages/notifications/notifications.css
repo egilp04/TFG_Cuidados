@@ -20,7 +20,7 @@
 }
 
 .notifications-text {
-  @apply text-primary dark:text-surface;
+  @apply text-primary! dark:text-surface!;
 }
 .notifications-title {
   @apply text-h1 text-primary text-center dark:text-surface mb-20;
