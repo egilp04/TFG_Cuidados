@@ -108,6 +108,10 @@
     }
   },
   "ACTIVITIES": {
+    "ACTIVITIES": {
+      "ACTIVITINAME": "Service of",
+      "ACTIVITIUSER": "With"
+    },
     "TITLE": "Activities",
     "NO_DATA": "No data",
     "DAYS": {
@@ -751,9 +755,9 @@
   "MESSAGES_MODAL": {
     "LABELS": {
       "TO": "To:",
-      "TOPIC": "topic:",
-      "SENDER": "Sender:",
-      "RECEIVER": "Receiver:",
+      "TOPIC": "Topic",
+      "SENDER": "Sender",
+      "RECEIVER": "Receiver",
       "MESSAGE_CONTENT": "MESSAGE"
     },
     "PLACEHOLDERS": {

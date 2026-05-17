@@ -32,5 +32,5 @@
 }
 
 .ia-btn {
-  @apply bg-accent text-white rounded-full w-12 h-12 flex items-center justify-center hover:opacity-90 active:scale-90 transition-all disabled:opacity-50 shadow-sm;
+  @apply bg-accent text-white rounded-full w-[3rem] h-full flex items-center justify-center hover:opacity-90 active:scale-90 transition-all disabled:opacity-50 shadow-sm;
 }
