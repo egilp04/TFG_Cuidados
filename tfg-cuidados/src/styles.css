@@ -167,7 +167,7 @@
   }
 
   .mat-mdc-paginator {
-    @apply !bg-surface dark:!bg-surface-dark !text-primary dark:!text-surface py-20;
+    @apply !bg-surface dark:!bg-surface-dark !text-primary  py-20 dark:!text-surface;
   }
 
   .mat-mdc-paginator .mat-mdc-icon-button {
@@ -178,9 +178,17 @@
     @apply flex justify-center text-center w-full;
   }
 
+  .mat-mdc-select-panel .mat-mdc-option {
+    @apply !text-primary;
+  }
+
+  .mat-mdc-select-panel .mat-mdc-option .mdc-list-item__primary-text {
+    @apply !text-primary;
+  }
+
   .mat-mdc-select-value,
   .mat-mdc-select-arrow {
-    @apply text-primary dark:text-surface;
+    @apply text-primary dark:text-surface!;
   }
 
   .mat-mdc-dialog-surface {
