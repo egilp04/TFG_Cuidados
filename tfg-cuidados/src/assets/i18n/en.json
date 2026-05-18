@@ -405,7 +405,8 @@
     "NEW_MSG": "New Message",
     "SORT_LABEL": "Sort by...",
     "SORT_OPTIONS": {
-      "DATE": "Date",
+      "DATE_ASCENDANT": "Date ascendent",
+      "DATE_DESCENDANT": "Date descendant",
       "Topic_AZ": "Topic (A-Z)",
       "Topic_ZA": "Topic (Z-A)"
     },

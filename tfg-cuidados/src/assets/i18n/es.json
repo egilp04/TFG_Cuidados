@@ -405,7 +405,8 @@
     "NEW_MSG": "Nuevo Mensaje",
     "SORT_LABEL": "Ordenar por...",
     "SORT_OPTIONS": {
-      "DATE": "Fecha",
+      "DATE_ASCENDANT": "Date ascendente",
+      "DATE_DESCENDANT": "Date descendante",      
       "Topic_AZ": "Asunto (A-Z)",
       "Topic_ZA": "Asunto (Z-A)"
     },

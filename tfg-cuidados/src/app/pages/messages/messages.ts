@@ -137,8 +137,11 @@ export default class Messages implements OnInit {
     const data = [...this.dataSource.data];
 
     switch (criteria) {
-      case 'MESSAGES_PAGE.SORT_OPTIONS.DATE':
+      case 'MESSAGES_PAGE.SORT_OPTIONS.DATE_DESCENDANT':
         data.sort((a, b) => new Date(b.send_date).getTime() - new Date(a.send_date).getTime());
+        break;
+        case 'MESSAGES_PAGE.SORT_OPTIONS.DATE_ASCENDANT':
+          data.sort((a, b) => new Date(a.send_date).getTime() - new Date(b.send_date).getTime());
         break;
       case 'MESSAGES_PAGE.SORT_OPTIONS.topic_AZ':
         data.sort((a, b) => (a.topic || '').localeCompare(b.topic || ''));
