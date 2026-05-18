@@ -10,3 +10,7 @@
 .footer-text {
   @apply text-label text-surface hover:text-accent transition-colors cursor-pointer;
 }
+
+.foot-active {
+  @apply scale-120;
+}

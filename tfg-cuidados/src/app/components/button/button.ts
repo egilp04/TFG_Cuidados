@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input, output } from '@angular/core';
+import { RouterLinkActive } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-button',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, RouterLinkActive],
   templateUrl: './button.html',
   styleUrl: './button.css',
 })

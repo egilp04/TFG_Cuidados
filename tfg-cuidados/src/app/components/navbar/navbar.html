@@ -76,7 +76,7 @@
       <div class="nav-authenticated-wrapper">
         <button
           [routerLink]="['/messages']"
-          routerLinkActive="text-accent dark:text-white scale-120"
+          routerLinkActive="scale-120 [&_lucide-icon]:!text-accent text-accent dark:text-white"
           class="nav-icon-container transition-all"
           (click)="closeMenu()"
           [attr.aria-label]="
@@ -97,7 +97,7 @@
 
         <button
           [routerLink]="['/notifications']"
-          routerLinkActive="text-accent dark:text-white scale-120"
+          routerLinkActive="scale-120 [&_lucide-icon]:!text-accent text-accent dark:text-white"
           class="nav-icon-container transition-all"
           (click)="closeMenu()"
           [attr.aria-label]="
@@ -119,6 +119,7 @@
         <button
           [routerLink]="['/modify-profile']"
           routerLinkActive="text-accent dark:text-white scale-120"
+          routerLinkActive="scale-120 [&_lucide-icon]:!text-accent text-accent dark:text-white"
           class="nav-icon-container transition-all"
           (click)="closeMenu()"
           [attr.aria-label]="'NAVBAR.PROFILE' | translate"
