@@ -111,6 +111,20 @@ export class Loginmodal implements OnInit {
         .subscribe({
           next: () => {
             const user = this.authService.currentUser();
+            if (user && user.state === false) {
+              this.authService.signOut().subscribe({
+                next: () => {
+                  this.isLoading = false;
+                  this.messageService.showMessage(
+                    this.translate.instant('LOGIN_MODAL.FEEDBACK.USER_INACTIVE'),
+                    'error'
+                  );
+                  this.cd.markForCheck();
+                }
+              });
+             return; 
+            }
+
             const role = user?.rol;
             const route = getHomeRouteByRole(role);
             this.dialogRef.close({ loginSuccess: true });

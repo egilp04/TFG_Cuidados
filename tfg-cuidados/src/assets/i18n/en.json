@@ -812,7 +812,8 @@
       "EMAIL_NOT_CONFIRMED": "Please, check your email and confirm before sign in",
       "NO_ERROR": "Check your email again",
       "WITH_ERROR": "An error has been ocurred, contact with administrator",
-      "EMAIL_NOT_FOUND": "Email not found"
+      "EMAIL_NOT_FOUND": "Email not found",
+      "USER_INACTIVE": "Deactivated account. If you think this is a mistake, please contact support."    
     }
   },
   "FOOTER": {
