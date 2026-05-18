@@ -13,7 +13,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { switchMap, tap, throwError, map, catchError, filter, finalize } from 'rxjs';
+import { switchMap, tap, throwError, map, catchError, filter, finalize, delay } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Inputs } from '../../components/inputs/inputs';
 import { ButtonComponent } from '../../components/button/button';
@@ -105,6 +105,7 @@ export default class ManagementServicesGlobal implements OnInit {
       .getServicesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
+        delay(100),
         filter((data) => data !== null),
       )
       .subscribe((data: ServiceModel[]) => {

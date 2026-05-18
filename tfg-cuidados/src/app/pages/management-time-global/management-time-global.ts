@@ -14,7 +14,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { switchMap, throwError, map, catchError, filter, tap, finalize } from 'rxjs';
+import { switchMap, throwError, map, catchError, filter, tap, finalize, delay } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { week_days, tranlsate_days, validDays } from '../../core/constants/week_days';
 import { Inputs } from '../../components/inputs/inputs';
@@ -96,7 +96,7 @@ export default class ManagementTimeGlobal implements OnInit {
   private loadTimes(): void {
     this.timeService
       .getTimesObservable()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed(this.destroyRef), delay(100))
       .subscribe((data: TimeModel[]) => {
         this.dataSource.data = data;
         const paginatorInner = this.dataSource.paginator;

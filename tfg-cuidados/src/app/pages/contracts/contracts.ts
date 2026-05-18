@@ -14,7 +14,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { switchMap, filter, catchError, map } from 'rxjs/operators';
+import { switchMap, filter, catchError, map, delay } from 'rxjs/operators';
 import { ButtonComponent } from '../../components/button/button';
 import { ContractService } from '../../services/contract.service';
 import { MessageService } from '../../services/message-service';
@@ -80,7 +80,7 @@ export default class Contracts implements OnInit {
 
     this.contractService
       .getContractsObservable()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed(this.destroyRef), delay(100))
       .subscribe({
         next: (data: ContractDetail[]) => {
           this.dataSource.data = data;
