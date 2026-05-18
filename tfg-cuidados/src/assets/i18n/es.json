@@ -406,7 +406,7 @@
     "SORT_LABEL": "Ordenar por...",
     "SORT_OPTIONS": {
       "DATE_ASCENDANT": "Fecha ascendente",
-      "DATE_DESCENDANT": "Fecha descendante",
+      "DATE_DESCENDANT": "Fecha descendente",
       "Topic_AZ": "Asunto (A-Z)",
       "Topic_ZA": "Asunto (Z-A)"
     },
