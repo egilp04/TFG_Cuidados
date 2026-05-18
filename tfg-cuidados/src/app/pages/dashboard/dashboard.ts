@@ -100,11 +100,36 @@ export default class Dashboard implements OnInit {
   public lineOptions: ChartConfiguration<'line'>['options'] = {
     responsive: true,
     maintainAspectRatio: false,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    elements: {
+      point: {
+        radius: 4,
+        hitRadius: 20,
+        hoverRadius: 6,
+      },
+    },
     scales: {
       y: { display: true },
       x: { grid: { display: false }, border: { display: false } },
     },
-    plugins: { legend: { display: false } },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        enabled: true,
+        backgroundColor: '#1f2937',
+        titleFont: { size: 13, family: 'system-ui' },
+        bodyFont: { size: 15, weight: 'bold', family: 'system-ui' },
+        padding: 12,
+        cornerRadius: 8,
+        displayColors: false,
+        callbacks: {
+          label: (context) => ` Registros: ${context.parsed.y}`,
+        },
+      },
+    },
   };
 
   public barOptions: ChartConfiguration<'bar'>['options'] = {
