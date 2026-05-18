@@ -1,11 +1,13 @@
 <button
-  routerLinkActive="bg-accent"
+  routerLinkActive="!bg-accent !text-black"
   [class]="buttonClass()"
   [disabled]="disabled()"
   (click)="onClick.emit($event)"
   [type]="type()"
   [attr.aria-label]="ariaLabel() || (label() | translate)"
   [attr.aria-disabled]="disabled()"
+  [routerLink]="link()"
+  [queryParams]="queryParams()"
 >
   {{ label() || '' | translate }}
 </button>
