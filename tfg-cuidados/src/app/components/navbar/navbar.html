@@ -130,7 +130,7 @@
           [label]="'NAVBAR.LOGOUT' | translate"
           variant="primary"
           size="lg"
-          class="w-full md:w-auto mt-4 md:mt-0"
+          class="md:w-auto mt-4 md:mt-0"
           (onClick)="logout()"
         ></app-button>
       </div>
@@ -142,33 +142,33 @@
         <app-button
           [label]="'NAVBAR.LOGIN' | translate"
           variant="primary"
-          class="w-full md:w-auto mt-2 md:mt-0"
+          class="md:w-auto mt-2 md:mt-0"
           (onClick)="startSession()"
         ></app-button>
       </div>
     }
     <app-dark-mode-btn class="mt-4 md:mt-0"></app-dark-mode-btn>
     <div
-    class="flex flex-row gap-4 items-center"
-    [attr.aria-label]="'FOOTER.ACCESSIBILITY.LANG_SELECTOR' | translate"
-  >
-    <button
-      (click)="changeLanguage('es')"
-      class="nav-lang-text"
-      [attr.aria-label]="'FOOTER.ACCESSIBILITY.CHANGE_ES' | translate"
-      type="button"
+      class="flex flex-row gap-4 items-center"
+      [attr.aria-label]="'FOOTER.ACCESSIBILITY.LANG_SELECTOR' | translate"
     >
-      ES
-    </button>
-    <span class="nav-lang-text" aria-hidden="true">|</span>
-    <button
-      (click)="changeLanguage('en')"
-      class="nav-lang-text"
-      [attr.aria-label]="'FOOTER.ACCESSIBILITY.CHANGE_EN' | translate"
-      type="button"
-    >
-      EN
-    </button>
-  </div>
+      <button
+        (click)="changeLanguage('es')"
+        class="nav-lang-text"
+        [attr.aria-label]="'FOOTER.ACCESSIBILITY.CHANGE_ES' | translate"
+        type="button"
+      >
+        ES
+      </button>
+      <span class="nav-lang-text" aria-hidden="true">|</span>
+      <button
+        (click)="changeLanguage('en')"
+        class="nav-lang-text"
+        [attr.aria-label]="'FOOTER.ACCESSIBILITY.CHANGE_EN' | translate"
+        type="button"
+      >
+        EN
+      </button>
+    </div>
   </div>
 </nav>

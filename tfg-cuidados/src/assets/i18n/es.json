@@ -845,32 +845,36 @@
         "TITLE": "1.4. Normas de Conducta y Mensajería",
         "TEXT": "El sistema de mensajería interno debe usarse exclusivamente para la coordinación de los servicios contratados. Queda prohibido el envío de spam, contenido ofensivo, discriminatorio o ilegal. El incumplimiento de esta norma conllevará la expulsión inmediata de la plataforma."
       }
-    },
+    }
+  },
+  "PRIVACY_PAGE": {
+    "TITLE": "Privacy Policy",
+    "LAST_UPDATE": "Last updated",
     "SECTION_2": {
-      "TITLE": "2. Política de Privacidad y Marco Legal",
+      "TITLE": "1. Política de Privacidad y Marco Legal",
       "INTRO_BOX": "Esta Política de Privacidad se rige por el cumplimiento de la legislación vigente en España y Europa, concretamente: el RGPD (Reglamento UE 2016/679), la LOPD-GDD (Ley Orgánica 3/2018) y la LSSI-CE (Ley 34/2002).",
       "SUB_1": {
-        "TITLE": "2.1. Responsable del Tratamiento",
+        "TITLE": "1.1. Responsable del Tratamiento",
         "TEXT": "Los datos serán tratados por el titular de la aplicación [TU RAZÓN SOCIAL O NOMBRE], con domicilio en España. Para cualquier gestión relacionada con la privacidad y protección de datos, puede contactar en: <strong>{{email}}</strong>."
       },
       "SUB_2": {
-        "TITLE": "2.2. Datos que recopilamos y su necesidad",
+        "TITLE": "1.2. Datos que recopilamos y su necesidad",
         "LIST_1": "<strong>Datos Identificativos (DNI, Nombre, Fecha Nacimiento):</strong> Estrictamente necesarios para verificar la mayoría de edad y la capacidad legal para formalizar contratos.",
         "LIST_2": "<strong>Datos de Contacto y Ubicación:</strong> Necesarios para la ejecución material del servicio en el domicilio del cliente.",
         "LIST_3": "<strong>Datos de Actividad:</strong> Logs de seguridad y contratos para cumplir con la LSSI y trazabilidad del servicio."
       },
       "SUB_3": {
-        "TITLE": "2.3. Finalidad y Legitimación",
+        "TITLE": "1.3. Finalidad y Legitimación",
         "TEXT": "La base legal para el tratamiento es la <strong>ejecución del contrato</strong> (art. 6.1.b RGPD) y el cumplimiento de obligaciones legales. Sus datos no se usarán para fines distintos a la gestión de la plataforma sin su consentimiento explícito."
       },
       "SUB_4": {
-        "TITLE": "2.4. Cesión de Datos",
+        "TITLE": "1.4. Cesión de Datos",
         "TEXT": "Sus datos no se cederán a terceros salvo obligación legal o necesidad contractual:",
         "LIST_1": "A la contraparte del servicio (Empresa/Cliente) exclusivamente para la prestación del servicio contratado.",
         "LIST_2": "A proveedores tecnológicos (Encargados del Tratamiento) como Supabase, que garantizan la seguridad según estándares europeos."
       },
       "SUB_5": {
-        "TITLE": "2.5. Derechos ARCO",
+        "TITLE": "1.5. Derechos ARCO",
         "TEXT": "Conforme a la normativa, puede ejercer sus derechos de Acceso, Rectificación, Supresión, Oposición, Limitación y Portabilidad enviando un correo a la dirección indicada."
       }
     }

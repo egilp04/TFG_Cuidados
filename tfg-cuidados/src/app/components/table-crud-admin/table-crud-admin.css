@@ -9,7 +9,7 @@
 }
 
 .table-column-name {
-  @apply text-primary dark:text-surface p-5 pl-8;
+  @apply text-primary! dark:text-surface! p-5 pl-8;
 }
 
 .table-admin-btn-container {

@@ -826,7 +826,7 @@
       "BACK_NAV": "Navigation to go back",
       "IMPORTANT_NOTE": "Important note"
     },
-    "TITLE": "Terms and Conditions and Privacy Policy",
+    "TITLE": "Terms and Conditions",
     "LAST_UPDATE": "Last updated",
     "SECTION_1": {
       "TITLE": "1. Terms and Conditions of Use",
@@ -846,32 +846,36 @@
         "TITLE": "1.4. Conduct Rules and Messaging",
         "TEXT": "The internal messaging system must be used exclusively for the coordination of contracted services. Sending spam, offensive, discriminatory, or illegal content is prohibited. Failure to comply with this rule will result in immediate expulsion from the platform."
       }
-    },
+    }
+  },
+  "PRIVACY_PAGE": {
+    "TITLE": "Privacy Policy",
+    "LAST_UPDATE": "Last updated",
     "SECTION_2": {
-      "TITLE": "2. Privacy Policy and Legal Framework",
+      "TITLE": "1. Privacy Policy",
       "INTRO_BOX": "This Privacy Policy is governed by current regulations in Spain and Europe, specifically: the GDPR (Regulation EU 2016/679), the LOPD-GDD (Organic Law 3/2018), and the LSSI-CE (Law 34/2002).",
       "SUB_1": {
-        "TITLE": "2.1. Data Controller",
+        "TITLE": "1.1. Data Controller",
         "TEXT": "The data will be processed by the application owner, based in Spain. For any management related to privacy and data protection, you can contact: <strong>{{email}}</strong>."
       },
       "SUB_2": {
-        "TITLE": "2.2. Data We Collect and Necessity",
+        "TITLE": "1.2. Data We Collect and Necessity",
         "LIST_1": "<strong>Identification Data (ID, Name, Date of Birth):</strong> Strictly necessary to verify legal age and legal capacity to formalize contracts.",
         "LIST_2": "<strong>Contact and Location Data:</strong> Necessary for the physical execution of the service at the client's location.",
         "LIST_3": "<strong>Activity Data:</strong> Security logs and contracts to comply with LSSI and service traceability."
       },
       "SUB_3": {
-        "TITLE": "2.3. Purpose and Legitimacy",
+        "TITLE": "1.3. Purpose and Legitimacy",
         "TEXT": "The legal basis for processing is the <strong>execution of the contract</strong> (Art. 6.1.b GDPR) and compliance with legal obligations. Your data will not be used for purposes other than platform management without your explicit consent."
       },
       "SUB_4": {
-        "TITLE": "2.4. Data Transfer",
+        "TITLE": "1.4. Data Transfer",
         "TEXT": "Your data will not be transferred to third parties unless there is a legal obligation or contractual necessity:",
         "LIST_1": "To the service counterparty (Company/Client) exclusively for the provision of the contracted service.",
         "LIST_2": "To technology providers (Data Processors) such as Supabase, which guarantee security according to European standards."
       },
       "SUB_5": {
-        "TITLE": "2.5. User Rights",
+        "TITLE": "1.5. User Rights",
         "TEXT": "In accordance with regulations, you may exercise your rights of Access, Rectification, Deletion, Opposition, Limitation, and Portability by sending an email to the indicated address."
       }
     }

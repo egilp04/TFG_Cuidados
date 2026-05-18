@@ -24,7 +24,7 @@
 }
 
 .messages-page-content {
-  @apply p-4;
+  @apply p-4 text-primary! dark:text-surface!;
 }
 
 .messages-page-subtitle {

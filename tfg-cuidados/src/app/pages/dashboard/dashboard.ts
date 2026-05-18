@@ -101,7 +101,7 @@ export default class Dashboard implements OnInit {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
-      y: { display: false },
+      y: { display: true },
       x: { grid: { display: false }, border: { display: false } },
     },
     plugins: { legend: { display: false } },

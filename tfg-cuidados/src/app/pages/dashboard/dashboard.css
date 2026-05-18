@@ -13,7 +13,7 @@
 }
 
 .no-contracts-msg {
-  @apply text-p text-gray-400 dark:text-surface italic flex items-center justify-center;
+  @apply text-p text-gray-400! dark:text-surface! italic flex items-center justify-center;
 }
 
 .dashboard-contracts-container {

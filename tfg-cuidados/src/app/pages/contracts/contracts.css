@@ -16,5 +16,5 @@
 }
 
 .contracts-text {
-  @apply text-primary dark:text-surface;
+  @apply text-primary! dark:text-surface!;
 }
