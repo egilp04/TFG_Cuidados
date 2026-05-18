@@ -139,14 +139,14 @@
     "FORM": {
       "NAME": "Name",
       "EMAIL": "Email",
-      "TOPIC": "topic",
+      "TOPIC": "Topic",
       "MESSAGE": "Message",
       "SEND": "Contact Us"
     },
     "ERRORS": {
       "NAME": "Name must be at least 3 characters long.",
       "EMAIL": "Please enter a valid email address.",
-      "TOPIC": "topic is required (min. 6 characters).",
+      "TOPIC": "Topic is required (min. 6 characters).",
       "MESSAGE": "Message needs to be longer."
     }
   },
@@ -405,14 +405,15 @@
     "NEW_MSG": "New Message",
     "SORT_LABEL": "Sort by...",
     "SORT_OPTIONS": {
-      "DATE": "Date",
-      "topic_AZ": "topic (A-Z)",
-      "topic_ZA": "topic (Z-A)"
+      "DATE_ASCENDANT": "Date ascendent",
+      "DATE_DESCENDANT": "Date descendant",
+      "Topic_AZ": "Topic (A-Z)",
+      "Topic_ZA": "Topic (Z-A)"
     },
     "TABLE": {
       "SENDER": "Sender",
       "RECEIVER": "Receiver",
-      "topic": "topic",
+      "TOPIC": "Topic",
       "DATE": "Received Date",
       "ACTIONS": "Actions",
       "BTN_DELETE": "Delete",
