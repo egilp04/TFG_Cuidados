@@ -61,6 +61,24 @@ export class AuthService {
   /**
    * Inicia sesión en un usuario con correo electrónico y contraseña.
    */
+
+  // signIn(email: string, password: string): Observable<AuthUserModel> {
+  //   return from(this.supabase.auth.signInWithPassword({ email, password })).pipe(
+  //     switchMap((res: AuthResponse) => {
+  //       if (res.error) {
+  //         const errorKey = res.error.message.toUpperCase().replace(/\s+/g, '_');
+  //         throw new Error(this.translate.instant(`ERRORS.AUTH.ERRORS.${errorKey}`));
+  //       }
+
+  //       if (!res.data.user) {
+  //         throw new Error(this.translate.instant('ERRORS.AUTH.ERRORS.USER_NOT_FOUND'));
+  //       }
+  //       return this.getProfile(res.data.user.id);
+  //     }),
+  //     tap((user: AuthUserModel) => this.currentUser.set(user)),
+  //   );
+  // }
+
   signIn(email: string, password: string): Observable<AuthUserModel> {
     return from(this.supabase.auth.signInWithPassword({ email, password })).pipe(
       switchMap((res: AuthResponse) => {
@@ -74,7 +92,17 @@ export class AuthService {
         }
         return this.getProfile(res.data.user.id);
       }),
-      tap((user: AuthUserModel) => this.currentUser.set(user)),
+      switchMap((user: AuthUserModel) => {
+        if (user.state === false) {
+          return from(this.supabase.auth.signOut()).pipe(
+            switchMap(() => {
+              throw new Error('USER_INACTIVE');
+            })
+          );
+        }
+      this.currentUser.set(user);
+        return of(user);
+      })
     );
   }
 
