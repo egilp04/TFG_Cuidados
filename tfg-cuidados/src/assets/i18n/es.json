@@ -811,7 +811,8 @@
       "EMAIL_NOT_CONFIRMED": "Por favor, revisa tu bandeja de entrada y confirma tu email antes de entrar.",
       "NO_ERROR": "Revise su bandeja de correos",
       "WITH_ERROR": "Ha ocurrido un error, contacte con el administrador",
-      "EMAIL_NOT_FOUND": "Email no encontrado"
+      "EMAIL_NOT_FOUND": "Email no encontrado",
+      "USER_INACTIVE": "Cuenta desactivada. Si crees que es un error, contacta con soporte."
     }
   },
   "FOOTER": {
