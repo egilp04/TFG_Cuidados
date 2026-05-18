@@ -406,13 +406,13 @@
     "SORT_LABEL": "Ordenar por...",
     "SORT_OPTIONS": {
       "DATE": "Fecha",
-      "topic_AZ": "Asunto (A-Z)",
-      "topic_ZA": "Asunto (Z-A)"
+      "Topic_AZ": "Asunto (A-Z)",
+      "Topic_ZA": "Asunto (Z-A)"
     },
     "TABLE": {
       "SENDER": "Emisor",
       "RECEIVER": "Receptor",
-      "topic": "Asunto",
+      "TOPIC": "Asunto",
       "DATE": "Fecha Recepción",
       "ACTIONS": "Acciones",
       "BTN_DELETE": "Borrar",
