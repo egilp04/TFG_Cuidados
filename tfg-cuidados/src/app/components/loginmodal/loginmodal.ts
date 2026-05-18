@@ -123,8 +123,13 @@ export class Loginmodal implements OnInit {
             this.isLoading = false;
 
             console.error('Error al iniciar sesión:', err);
-
-            if (err.message && err.message.includes('Email not confirmed')) {
+            if (err.message && err.message.includes('USER_INACTIVE')) {
+              this.messageService.showMessage(
+                this.translate.instant('LOGIN_MODAL.FEEDBACK.USER_INACTIVE'),
+                'error'
+              );
+            }
+            else if (err.message && err.message.includes('Email not confirmed')) {
               this.messageService.showMessage(
                 this.translate.instant('LOGIN_MODAL.FEEDBACK.EMAIL_NOT_CONFIRMED'),
                 'error',

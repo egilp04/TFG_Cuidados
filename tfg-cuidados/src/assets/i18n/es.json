@@ -405,14 +405,15 @@
     "NEW_MSG": "Nuevo Mensaje",
     "SORT_LABEL": "Ordenar por...",
     "SORT_OPTIONS": {
-      "DATE": "Fecha",
-      "topic_AZ": "Asunto (A-Z)",
-      "topic_ZA": "Asunto (Z-A)"
+      "DATE_ASCENDANT": "Date ascendente",
+      "DATE_DESCENDANT": "Date descendante",      
+      "Topic_AZ": "Asunto (A-Z)",
+      "Topic_ZA": "Asunto (Z-A)"
     },
     "TABLE": {
       "SENDER": "Emisor",
       "RECEIVER": "Receptor",
-      "topic": "Asunto",
+      "TOPIC": "Asunto",
       "DATE": "Fecha Recepción",
       "ACTIONS": "Acciones",
       "BTN_DELETE": "Borrar",
@@ -811,7 +812,8 @@
       "EMAIL_NOT_CONFIRMED": "Por favor, revisa tu bandeja de entrada y confirma tu email antes de entrar.",
       "NO_ERROR": "Revise su bandeja de correos",
       "WITH_ERROR": "Ha ocurrido un error, contacte con el administrador",
-      "EMAIL_NOT_FOUND": "Email no encontrado"
+      "EMAIL_NOT_FOUND": "Email no encontrado",
+      "USER_INACTIVE": "Cuenta desactivada. Si crees que es un error, contacta con soporte."
     }
   },
   "FOOTER": {
