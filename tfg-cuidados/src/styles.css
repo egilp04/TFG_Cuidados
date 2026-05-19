@@ -452,18 +452,3 @@
     transform: scale(1);
   }
 }
-
-
-::view-transition-new(root) {
-  animation: fade-in 0.6s ease-out forwards;
-}
-
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
