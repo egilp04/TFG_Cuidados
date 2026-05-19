@@ -454,22 +454,10 @@
 }
 
 
-::view-transition-old(root) {
-  animation: fade-out 0.2s ease-in forwards;
-}
-
 ::view-transition-new(root) {
-  animation: fade-in 1s ease-out forwards;
+  animation: fade-in 0.6s ease-out forwards;
 }
 
-@keyframes fade-out{
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
 
 @keyframes fade-in {
   from {
