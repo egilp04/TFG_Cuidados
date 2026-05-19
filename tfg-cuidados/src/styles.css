@@ -136,10 +136,6 @@
     overflow: hidden;
   }
 
-  html::-webkit-scrollbar {
-    background: #93d14b;
-  }
-
   .main-container {
     height: 100dvh; 
     overflow-y: scroll;

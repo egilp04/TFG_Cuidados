@@ -1,7 +1,7 @@
 @reference "../../../styles.css";
 
 .landing-container {
-  @apply flex flex-col justify-center items-center w-full;
+  @apply flex flex-col justify-center items-center w-full min-h-full;
 }
 
 .hero-section {
