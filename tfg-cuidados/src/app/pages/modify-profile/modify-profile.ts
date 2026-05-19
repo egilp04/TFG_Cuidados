@@ -13,6 +13,7 @@ import { FormSubmitEvent } from '../../models/ModifyProfileForm';
 import { UpdateProfilePayload } from '../../models/User_Service';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { getHomeRouteByRole } from '../../core/utils/routerUtils';
 
 /**
  * Componente para manejar las modificaciones del perfil de usuario.
@@ -112,7 +113,8 @@ export default class ModifyProfilePage implements OnInit {
         }),
         switchMap(() => timer(1500)),
         tap(() => {
-          this.location.back();
+          const route = getHomeRouteByRole(role);
+          this.router.navigate([route]);
         }),
 
         catchError((err: Error) => {

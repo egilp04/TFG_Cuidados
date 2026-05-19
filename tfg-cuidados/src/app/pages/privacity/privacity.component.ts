@@ -13,6 +13,6 @@ export default class PrivacityComponent {
   currentDate = new Date();
   params = {
     appName: 'CuidaDos',
-    email: 'admin@gmail.com',
+    email: 'cuidados1312@gmail.com',
   };
 }
