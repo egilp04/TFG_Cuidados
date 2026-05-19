@@ -129,10 +129,15 @@
     box-sizing: border-box;
   }
 
+
   html {
     overflow-y: scroll;
     height: 100%;
     overflow-x: hidden;
+    scrollbar-color: transparent transparent;
+  }
+    html::-webkit-scrollbar {
+    background: transparent;
   }
 
   body {
