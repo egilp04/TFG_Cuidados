@@ -9,6 +9,7 @@ import { AiAssistantComponent } from './components/ai-assistant/ai-assistant.com
 import { AuthService } from './services/auth.service';
 import { NavHomeComponent } from './components/nav-home/nav-home.component';
 import { ChatSoporteComponent } from './components/chat-soporte/chat-soporte.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -49,11 +50,11 @@ export class App {
       }
 
       this.router.events.pipe(
-        filter(event => event instanceof NavigationEnd)
+        filter((event: any) => event instanceof NavigationEnd)
       ).subscribe(() => {
         const container = document.querySelector('.main-container');
         if (container) {
-          container.scrollTo(0, 0);
+          container.scrollTo(0, 0); 
         }
       });
 
