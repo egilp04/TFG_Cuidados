@@ -130,7 +130,7 @@
   }
 
 
-  html {
+  /* html {
     overflow-y: scroll;
     height: 100%;
     overflow-x: hidden;
@@ -142,6 +142,28 @@
 
   body {
     @apply overflow-y-auto overflow-x-hidden h-full  bg-surface dark:bg-surface-dark;
+  } */
+
+  html {
+    overflow-y: scroll;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
   }
 
   h1,
