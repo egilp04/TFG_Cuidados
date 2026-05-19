@@ -1,11 +1,11 @@
 @reference "../../../styles.css";
 
 .landing-container {
-  @apply flex flex-col justify-center items-center w-full;
+  @apply flex flex-col justify-center items-center w-full min-h-full;
 }
 
 .hero-section {
-  @apply relative w-full h-300 md:h-[50svh] 2xl:h-[600px] overflow-hidden flex items-end justify-center pb-12 md:pb-20;
+  @apply relative w-full h-300 md:h-[50svh] 2xl:h-[600px] overflow-hidden flex items-end justify-center pb-12 md:pb-20 z-100;
 }
 
 .hero-image {

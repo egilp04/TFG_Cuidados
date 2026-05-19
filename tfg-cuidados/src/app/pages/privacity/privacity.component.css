@@ -4,7 +4,7 @@
 }
 
 .terms-header-container {
-  @apply max-w-4xl w-full text-center mb-14 2xl:mb-22;
+  @apply max-w-4xl w-full text-center mb-12;
 }
 
 .terms-main {

@@ -104,7 +104,7 @@ export default class Register implements OnInit {
         tap(() => {
           if (isAdmin) {
             const tabType = payloadIsClient ? 'client' : 'business';
-            this.router.navigate(['/admin-gestion'], { queryParams: { type: tabType } });
+            this.router.navigate(['/admin-management'], { queryParams: { type: tabType } });
           } else {
             this.router.navigate(['/login']);
           }

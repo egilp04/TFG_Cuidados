@@ -13,41 +13,4 @@ import { Router } from '@angular/router';
 export class NavHomeComponent {
   private authService = inject(AuthService);
   rol = this.authService.userRol();
-
-  // private router = inject(Router);
-
-  // searchForBussiness() {
-  //   this.router.navigate(['/services-directory']);
-  // }
-  // manageServices() {
-  //   this.router.navigate(['/admin-services']);
-  // }
-  // checkContracts() {
-  //   this.router.navigate(['/contract']);
-  // }
-
-  // manageBussinesses() {
-  //   this.router.navigate(['/admin-management'], { queryParams: { type: 'business' } });
-  // }
-
-  // manageUsers() {
-  //   this.router.navigate(['/admin-management'], { queryParams: { type: 'client' } });
-  // }
-
-  // checkDashboard() {
-  //   this.router.navigate(['/dashboard']);
-  // }
-  // programedActivities() {
-  //   this.router.navigate(['/activities']);
-  // }
-  // manageGlobalServices() {
-  //   this.router.navigate(['/global-services']);
-  // }
-  // manageGlobalTimes() {
-  //   this.router.navigate(['/global-times']);
-  // }
-
-  // seeAllContracts() {
-  //   this.router.navigate(['/global-contracts']);
-  // }
 }

@@ -14,7 +14,6 @@ import { AnalyticsService } from '../../services/analytics.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SpinnerComponent } from '../../components/spinner/spinner.component';
-import { delay } from 'rxjs';
 
 Chart.register(...registerables);
 

@@ -80,7 +80,7 @@ export default class Notifications implements OnInit {
       .getNotificationsObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        delay(200),
+        delay(500),
         catchError((err: Error) => {
           console.error('Error cargando notificaciones en tiempo real:', err);
           return this.translate.get('NOTIFICATIONS.MESSAGES.CONNECTION_ERROR').pipe(

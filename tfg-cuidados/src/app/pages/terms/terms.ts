@@ -13,6 +13,6 @@ export default class Terms {
   currentDate = new Date();
   params = {
     appName: 'CuidaDos',
-    email: 'admin@gmail.com',
+    email: 'cuidados1312@gmail.com',
   };
 }

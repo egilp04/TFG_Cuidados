@@ -20,7 +20,7 @@
 }
 
 .service-btn-container {
-  @apply flex justify-center items-center gap-6 p-10;
+  @apply flex justify-end items-center gap-6 p-10;
 }
 
 .service-form-container {
