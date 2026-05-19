@@ -24,11 +24,11 @@
 }
 
 .input-error-text {
-  @apply text-red font-bold ml-2 dark:text-red-dark w-full;
+  @apply text-red font-bold ml-2 dark:text-red-dark w-full flex justify-center;
 }
 
 .input-error-text-container {
-  @apply w-full mx-auto flex justify-center;
+  @apply w-full flex justify-center;
 }
 
 .input-error-text-container span{
