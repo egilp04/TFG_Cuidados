@@ -131,19 +131,12 @@
 
   html {
     overflow-y: scroll;
+    height: 100%;
+    overflow-x: hidden;
   }
 
   body {
-    @apply overflow-y-auto overflow-x-hidden;
-  }
-
-  html,
-  body {
-    @apply m-0 p-0 h-full;
-  }
-
-  body {
-    @apply bg-surface dark:bg-surface-dark;
+    @apply overflow-y-auto overflow-x-hidden h-full  bg-surface dark:bg-surface-dark;
   }
 
   h1,
