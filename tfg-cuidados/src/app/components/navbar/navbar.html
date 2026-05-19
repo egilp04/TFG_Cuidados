@@ -158,6 +158,7 @@
         class="nav-lang-text"
         [attr.aria-label]="'FOOTER.ACCESSIBILITY.CHANGE_ES' | translate"
         type="button"
+        [class.nav-active]="currentLang() === 'es'"
       >
         ES
       </button>
@@ -167,6 +168,7 @@
         class="nav-lang-text"
         [attr.aria-label]="'FOOTER.ACCESSIBILITY.CHANGE_EN' | translate"
         type="button"
+        [class.nav-active]="currentLang() === 'en'"
       >
         EN
       </button>

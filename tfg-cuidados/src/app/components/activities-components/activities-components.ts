@@ -110,12 +110,10 @@ export class ActivitiesComponents implements OnInit, OnChanges {
       if (this.userRole === 'client') {
         nameToShow = contract.Business?.businessName;
         avatarUrl = contract.Business?.User_public?.avatar_url || null;
-        console.log(avatarUrl);
       }
       if (this.userRole === 'business') {
         nameToShow = contract.Client?.clientName;
         avatarUrl = contract.Client?.User_public?.avatar_url || null;
-        console.log(avatarUrl);
       }
 
       const place = contract.Client

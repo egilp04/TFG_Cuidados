@@ -79,7 +79,6 @@ export default class SearchBusiness implements OnInit {
 
   public filteredBusinesses = computed(() => {
     const businesses = this.allBusinesses();
-    console.log(businesses);
     if (!businesses) return [];
     const filterText = this.searchFilter().toLowerCase().trim();
     if (!filterText) return businesses;
@@ -178,9 +177,6 @@ export default class SearchBusiness implements OnInit {
             idRealContrato = c.id_st_flat;
           }
           const sameId = String(idRealContrato) === String(selectedTimeId);
-          console.log(sameId);
-          console.log(idRealContrato);
-          console.log(selectedTimeId);
 
           const sameClient = c.id_client === user.id_user;
           const isActive = c.state === 'active';
