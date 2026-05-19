@@ -4,7 +4,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter, withInMemoryScrolling, withRouterConfig, withViewTransitions } from '@angular/router';
+import { provideRouter, withInMemoryScrolling, withRouterConfig, withViewTransitions} from '@angular/router';
 import {
   LucideAngularModule,
   Mail,
