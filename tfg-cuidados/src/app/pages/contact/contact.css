@@ -16,7 +16,7 @@
 }
 
 .contact-form-error {
-  @apply text-label text-red-500 ml-2 dark:text-red-dark;
+  @apply text-label text-red-500 flex w-full justify-center dark:text-red-dark;
 }
 
 .contact-form-btn {
