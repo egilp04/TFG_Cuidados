@@ -101,7 +101,7 @@ export default class Messages implements OnInit {
       .getMessagesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        delay(200),
+        delay(350),
         map((messages: ComunicationModel[]) => {
           if (this.currentFilter === 'received') {
             return messages.filter((m) => m.id_receiver === user.id_user);
