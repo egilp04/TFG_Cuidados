@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, effect, inject, OnInit, signal } from '@angular/core';
 import { ButtonComponent } from '../button/button';
 import { LucideAngularModule } from 'lucide-angular';
 import { MatDialog } from '@angular/material/dialog';
@@ -136,9 +136,12 @@ export class Navbar implements OnInit {
 
   countMensajes$ = this.comunicationService.getUnreadMessagesCount();
   countNotificaciones$ = this.comunicationService.getUnreadNotificationsCount();
+  
+  public currentLang = signal<string>(this.translate.currentLang || 'es');
 
   changeLanguage(lang: string) {
     this.translate.use(lang);
     localStorage.setItem('idioma_seleccionado', lang);
+    this.currentLang.set(lang);
   }
 }
