@@ -187,6 +187,11 @@ El aplicativo utiliza un **sistema de enrutamiento dinámico protegido por Guard
 | **About Us** | Información sobre la misión, visión y el equipo del proyecto. |
 | **Legal & Ayuda** | Términos y Condiciones de uso y manuales (Política de Empresa y Guía de Usuario interactiva). |
 | **Contacto** | Formulario de soporte directo integrado con EmailJS. |
+| **Aspectos legales** | Información legal sobre los datos en el aplicativo. |
+| **Política de privacidad** | Información sobre los datos sensibles y privados usados en el aplicativo. |
+| **Política de cookies** | Información sobre el uso de cookies. |
+| **Síguenos** | Acceso directo a las redes sociales del aplicativo. |
+
 
 ---
 
@@ -209,6 +214,7 @@ El aplicativo utiliza un **sistema de enrutamiento dinámico protegido por Guard
 | Cliente / Empresa / Admin | **Modificar Perfil** | Gestión completa de datos personales, credenciales y proceso de baja. |
 | Cliente / Empresa / Admin | **Notificaciones** | Panel independiente para avisos automáticos del sistema. |
 | Cliente | **Buscador de Empresas** | Galería con Tarjetas Detalladas, filtros avanzados y botones de contratación directa. |
+| Cliente | **Catálogo de servicios** | Tarjetas con las categorías de los servicios disponibles ofrecidos por las empresas. |
 | Cliente / Empresa | **Activities (Contratos Activos)** | Vista de contratos en curso con desglose de día, hora y detalles. |
 | Cliente / Empresa | **Contracts** | Panel de gestión de contratos actuales: visualización de detalles y opción de eliminación/cancelación. |
 | Empresa | **Servicio-Horario (Empresa)** | Gestión de la disponibilidad y fijación de precios y horarios por servicio. |
