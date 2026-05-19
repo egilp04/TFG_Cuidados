@@ -55,7 +55,7 @@ export default class Activities implements OnInit {
 
     this.contractService
       .getContractsObservable()
-      .pipe(takeUntilDestroyed(this.destroyRef), delay(100))
+      .pipe(takeUntilDestroyed(this.destroyRef), delay(500))
       .subscribe({
         next: (data: ContractDetail[]) => {
           this.dataSource.data = data;

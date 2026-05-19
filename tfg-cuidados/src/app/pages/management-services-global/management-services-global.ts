@@ -105,7 +105,7 @@ export default class ManagementServicesGlobal implements OnInit {
       .getServicesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        delay(100),
+        delay(500),
         filter((data) => data !== null),
       )
       .subscribe((data: ServiceModel[]) => {
