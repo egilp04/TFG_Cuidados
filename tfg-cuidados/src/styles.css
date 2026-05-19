@@ -455,11 +455,11 @@
 
 
 ::view-transition-old(root) {
-  animation: fade-out 0.3s ease-in forwards;
+  animation: fade-out 0.4s ease-in forwards;
 }
 
 ::view-transition-new(root) {
-  animation: fade-in 0.4s ease-out forwards;
+  animation: fade-in 0.8s ease-out forwards;
 }
 
 @keyframes fade-out{
