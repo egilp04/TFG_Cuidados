@@ -20,6 +20,7 @@ import { ContractDetail } from '../../models/ContractModel';
 import { exportContractsToCSV } from '../../core/utils/csvDoc';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { ButtonComponent } from '../../components/button/button';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-admin-contracts',
@@ -84,7 +85,7 @@ export default class AdminContractsComponent implements OnInit {
     this.isLoading = true;
     this.contractService
       .getAllContractsForAdmin()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed(this.destroyRef), delay(500))
       .subscribe({
         next: (data: ContractDetail[]) => {
           this.dataSource.data = data;

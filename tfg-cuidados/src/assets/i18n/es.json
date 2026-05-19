@@ -405,8 +405,8 @@
     "NEW_MSG": "Nuevo Mensaje",
     "SORT_LABEL": "Ordenar por...",
     "SORT_OPTIONS": {
-      "DATE_ASCENDANT": "Date ascendente",
-      "DATE_DESCENDANT": "Date descendante",      
+      "DATE_ASCENDANT": "Fecha ascendente",
+      "DATE_DESCENDANT": "Fecha descendente",
       "Topic_AZ": "Asunto (A-Z)",
       "Topic_ZA": "Asunto (Z-A)"
     },
@@ -857,7 +857,7 @@
       "INTRO_BOX": "Esta Política de Privacidad se rige por el cumplimiento de la legislación vigente en España y Europa, concretamente: el RGPD (Reglamento UE 2016/679), la LOPD-GDD (Ley Orgánica 3/2018) y la LSSI-CE (Ley 34/2002).",
       "SUB_1": {
         "TITLE": "1.1. Responsable del Tratamiento",
-        "TEXT": "Los datos serán tratados por el titular de la aplicación [TU RAZÓN SOCIAL O NOMBRE], con domicilio en España. Para cualquier gestión relacionada con la privacidad y protección de datos, puede contactar en: <strong>{{email}}</strong>."
+        "TEXT": "Los datos serán tratados por el titular de la aplicación: <strong>{{appName}}</strong>, con domicilio en España. Para cualquier gestión relacionada con la privacidad y protección de datos, puede contactar en: <strong>{{email}}</strong>."
       },
       "SUB_2": {
         "TITLE": "1.2. Datos que recopilamos y su necesidad",

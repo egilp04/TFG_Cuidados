@@ -1,6 +1,6 @@
 @reference "../../../styles.css";
 .dropdown-container {
-  @apply relative z-20 w-full sm:w-fit;
+  @apply relative z-20 w-full;
 }
 
 .dropdown-icon {

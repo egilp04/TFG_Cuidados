@@ -1,12 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  effect,
-  inject,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
 import { ButtonComponent } from '../button/button';
 import { LucideAngularModule } from 'lucide-angular';
 import { MatDialog } from '@angular/material/dialog';
@@ -32,7 +25,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     RouterLink,
     RouterLinkActive,
     RouterModule,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
@@ -45,7 +38,6 @@ export class Navbar implements OnInit {
   private responsive = inject(ResponsiveSize);
   public isMenuOpen = false;
   private translate = inject(TranslateService);
-
 
   constructor() {
     effect(() => {

@@ -9,60 +9,59 @@
         [label]="'MAIN_MENU.CLIENT.SEARCH_COMPANIES' | translate"
         variant="primary"
         class="nav-btn animation-opacity"
-        (click)="searchForBussiness()"
-      >
-      </app-button>
+        [link]="['/services-directory']"
+      ></app-button>
     } @else if (rol === 'business') {
       <app-button
         [label]="'MAIN_MENU.BUSINESS.MANAGE_SERVICES' | translate"
         variant="primary"
         class="nav-btn animation-opacity"
-        (click)="manageServices()"
-      >
-      </app-button>
+        [link]="['/admin-services']"
+      ></app-button>
     } @else if (rol === 'administrator') {
       <app-button
         [label]="'MAIN_MENU.ADMIN.DASHBOARD' | translate"
         variant="primary"
         class="nav-btn animation-opacity"
-        (click)="checkDashboard()"
-      >
-      </app-button>
+        [link]="['/dashboard']"
+      ></app-button>
+
       <app-button
         [label]="'MAIN_MENU.ADMIN.MANAGE_USERS' | translate"
         variant="primary"
         class="nav-btn animation-opacity"
-        (click)="manageUsers()"
-      >
-      </app-button>
+        [link]="['/admin-management']"
+        [queryParams]="{ type: 'client' }"
+      ></app-button>
+
       <app-button
         [label]="'MAIN_MENU.ADMIN.MANAGE_COMPANIES' | translate"
         variant="primary"
         class="nav-btn animation-opacity"
-        (click)="manageBussinesses()"
-      >
-      </app-button>
+        [link]="['/admin-management']"
+        [queryParams]="{ type: 'business' }"
+      ></app-button>
+
       <app-button
         [label]="'MAIN_MENU.ADMIN.MANAGE_SERVICES' | translate"
         variant="primary"
         class="nav-btn animation-opacity"
-        (click)="manageGlobalServices()"
-      >
-      </app-button>
+        [link]="['/global-services']"
+      ></app-button>
+
       <app-button
         [label]="'MAIN_MENU.ADMIN.MANAGE_SCHEDULES' | translate"
         variant="primary"
         class="nav-btn animation-opacity"
-        (click)="manageGlobalTimes()"
-      >
-      </app-button>
+        [link]="['/global-times']"
+      ></app-button>
+
       <app-button
         [label]="'MAIN_MENU.CLIENT.MY_SERVICES' | translate"
         variant="primary"
         class="nav-btn animation-opacity"
-        (click)="seeAllContracts()"
-      >
-      </app-button>
+        [link]="['/global-contracts']"
+      ></app-button>
     }
 
     @if (rol != 'administrator') {
@@ -70,16 +69,15 @@
         [label]="'MAIN_MENU.CLIENT.MY_SERVICES' | translate"
         variant="primary"
         class="nav-btn animation-opacity"
-        (click)="checkContracts()"
-      >
-      </app-button>
+        [link]="['/contract']"
+      ></app-button>
+
       <app-button
         [label]="'MAIN_MENU.COMMON.ACTIVITIES' | translate"
         variant="primary"
         class="nav-btn animation-opacity"
-        (click)="programedActivities()"
-      >
-      </app-button>
+        [link]="['/activities']"
+      ></app-button>
     }
   </div>
 </nav>

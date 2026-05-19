@@ -14,40 +14,40 @@ export class NavHomeComponent {
   private authService = inject(AuthService);
   rol = this.authService.userRol();
 
-  private router = inject(Router);
+  // private router = inject(Router);
 
-  searchForBussiness() {
-    this.router.navigate(['/services-directory']);
-  }
-  manageServices() {
-    this.router.navigate(['/admin-services']);
-  }
-  checkContracts() {
-    this.router.navigate(['/contract']);
-  }
+  // searchForBussiness() {
+  //   this.router.navigate(['/services-directory']);
+  // }
+  // manageServices() {
+  //   this.router.navigate(['/admin-services']);
+  // }
+  // checkContracts() {
+  //   this.router.navigate(['/contract']);
+  // }
 
-  manageBussinesses() {
-    this.router.navigate(['/admin-management'], { queryParams: { type: 'business' } });
-  }
+  // manageBussinesses() {
+  //   this.router.navigate(['/admin-management'], { queryParams: { type: 'business' } });
+  // }
 
-  manageUsers() {
-    this.router.navigate(['/admin-management'], { queryParams: { type: 'client' } });
-  }
+  // manageUsers() {
+  //   this.router.navigate(['/admin-management'], { queryParams: { type: 'client' } });
+  // }
 
-  checkDashboard() {
-    this.router.navigate(['/dashboard']);
-  }
-  programedActivities() {
-    this.router.navigate(['/activities']);
-  }
-  manageGlobalServices() {
-    this.router.navigate(['/global-services']);
-  }
-  manageGlobalTimes() {
-    this.router.navigate(['/global-times']);
-  }
+  // checkDashboard() {
+  //   this.router.navigate(['/dashboard']);
+  // }
+  // programedActivities() {
+  //   this.router.navigate(['/activities']);
+  // }
+  // manageGlobalServices() {
+  //   this.router.navigate(['/global-services']);
+  // }
+  // manageGlobalTimes() {
+  //   this.router.navigate(['/global-times']);
+  // }
 
-  seeAllContracts() {
-    this.router.navigate(['/global-contracts']);
-  }
+  // seeAllContracts() {
+  //   this.router.navigate(['/global-contracts']);
+  // }
 }

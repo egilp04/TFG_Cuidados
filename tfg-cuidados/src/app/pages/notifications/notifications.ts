@@ -17,7 +17,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MessageService } from '../../services/message-service';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { catchError, tap, map, switchMap } from 'rxjs/operators';
+import { catchError, tap, map, switchMap, delay } from 'rxjs/operators';
 import { ComunicationModel } from '../../models/ComunicationModel';
 import { ButtonComponent } from '../../components/button/button';
 import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
@@ -80,6 +80,7 @@ export default class Notifications implements OnInit {
       .getNotificationsObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
+        delay(500),
         catchError((err: Error) => {
           console.error('Error cargando notificaciones en tiempo real:', err);
           return this.translate.get('NOTIFICATIONS.MESSAGES.CONNECTION_ERROR').pipe(

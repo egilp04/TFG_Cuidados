@@ -15,14 +15,13 @@ import { ComunicationService } from '../../services/comunication.service';
 import { ComunicationModel } from '../../models/ComunicationModel';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
-import { PaginacionEs } from '../../services/paginacion-es';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, delay } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
@@ -83,6 +82,8 @@ export default class Messages implements OnInit {
    * @param type El tipo de vista deseado: 'received' (recibidos) o 'sent' (enviados).
    */
   applyFilter(type: 'received' | 'sent'): void {
+    this.isLoading = true;
+    this.cd.markForCheck();
     this.currentFilter = type;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
@@ -100,6 +101,7 @@ export default class Messages implements OnInit {
       .getMessagesObservable()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
+        delay(350),
         map((messages: ComunicationModel[]) => {
           if (this.currentFilter === 'received') {
             return messages.filter((m) => m.id_receiver === user.id_user);
@@ -140,8 +142,8 @@ export default class Messages implements OnInit {
       case 'MESSAGES_PAGE.SORT_OPTIONS.DATE_DESCENDANT':
         data.sort((a, b) => new Date(b.send_date).getTime() - new Date(a.send_date).getTime());
         break;
-        case 'MESSAGES_PAGE.SORT_OPTIONS.DATE_ASCENDANT':
-          data.sort((a, b) => new Date(a.send_date).getTime() - new Date(b.send_date).getTime());
+      case 'MESSAGES_PAGE.SORT_OPTIONS.DATE_ASCENDANT':
+        data.sort((a, b) => new Date(a.send_date).getTime() - new Date(b.send_date).getTime());
         break;
       case 'MESSAGES_PAGE.SORT_OPTIONS.Topic_AZ':
         data.sort((a, b) => (a.topic || '').localeCompare(b.topic || ''));

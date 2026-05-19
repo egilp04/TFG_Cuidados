@@ -8,7 +8,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivitiesComponents } from '../../components/activities-components/activities-components';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { catchError, map, switchMap, filter } from 'rxjs';
+import { catchError, map, switchMap, filter, delay } from 'rxjs';
 import { ContractDetail } from '../../models/ContractModel';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
@@ -55,7 +55,7 @@ export default class Activities implements OnInit {
 
     this.contractService
       .getContractsObservable()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed(this.destroyRef), delay(500))
       .subscribe({
         next: (data: ContractDetail[]) => {
           this.dataSource.data = data;

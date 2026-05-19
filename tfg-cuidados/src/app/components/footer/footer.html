@@ -4,13 +4,25 @@
   [attr.aria-label]="'FOOTER.ACCESSIBILITY.FOOTER_SECTION' | translate"
 >
   <nav [attr.aria-label]="'FOOTER.ACCESSIBILITY.NAV_LABEL' | translate" class="footer-nav">
-    <a routerLink="/terms" class="footer-text animate-text-up delay-150">
+    <a
+      routerLink="/terms"
+      class="footer-text animate-text-up delay-150"
+      routerLinkActive="foot-active"
+    >
       {{ 'FOOTER.LEGAL_ASPECTS' | translate }}
     </a>
-    <a routerLink="privacity" class="footer-text animate-text-up delay-150">
+    <a
+      routerLink="privacity"
+      class="footer-text animate-text-up delay-150"
+      routerLinkActive="foot-active"
+    >
       {{ 'FOOTER.PRIVACY_POLICTICS' | translate }}
     </a>
-    <a routerLink="/cookies_politics" class="footer-text animate-text-up delay-150">
+    <a
+      routerLink="/cookies_politics"
+      class="footer-text animate-text-up delay-150"
+      routerLinkActive="foot-active"
+    >
       {{ 'FOOTER.COOKIES_POLICIES' | translate }}
     </a>
     <div class="flex flex-col gap-1 items-center">

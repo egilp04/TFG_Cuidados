@@ -28,7 +28,7 @@
 }
 
 .nav-active {
-  @apply text-accent;
+  @apply text-accent!;
 }
 
 .nav-icon-container {

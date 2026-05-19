@@ -1,5 +1,5 @@
 import { Component, inject, signal, PLATFORM_ID, HostListener } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { Footer } from './components/footer/footer';
 import { Navbar } from './components/navbar/navbar';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,6 +9,7 @@ import { AiAssistantComponent } from './components/ai-assistant/ai-assistant.com
 import { AuthService } from './services/auth.service';
 import { NavHomeComponent } from './components/nav-home/nav-home.component';
 import { ChatSoporteComponent } from './components/chat-soporte/chat-soporte.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -38,15 +39,25 @@ export class App {
     this.translate.addLangs(['es', 'en']);
 
     if (isPlatformBrowser(this.platformId)) {
-      const lenguajeGuardado = localStorage.getItem('idioma_seleccionado');
+      const storesLanguage = localStorage.getItem('idioma_seleccionado');
 
-      if (lenguajeGuardado) {
-        this.translate.use(lenguajeGuardado);
+      if (storesLanguage) {
+        this.translate.use(storesLanguage);
       } else {
         const browserLang = this.translate.getBrowserLang();
-        const idiomaInicial = browserLang?.match(/en|es/) ? browserLang : 'es';
-        this.translate.use(idiomaInicial);
+        const startLaguage = browserLang?.match(/en|es/) ? browserLang : 'es';
+        this.translate.use(startLaguage);
       }
+
+      this.router.events.pipe(
+        filter((event: any) => event instanceof NavigationEnd)
+      ).subscribe(() => {
+        const container = document.querySelector('.main-container');
+        if (container) {
+          container.scrollTo(0, 0); 
+        }
+      });
+
     } else {
       this.translate.use('es');
     }

@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input, output } from '@angular/core';
+import { RouterLinkActive, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-
 @Component({
   selector: 'app-button',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, RouterLinkActive, RouterLink],
   templateUrl: './button.html',
   styleUrl: './button.css',
 })
@@ -16,6 +16,8 @@ export class ButtonComponent {
   type = input<'button' | 'submit' | 'reset'>('button');
   disabled = input<boolean>(false);
   onClick = output<MouseEvent>();
+  link = input<string | any[] | null>(null);
+  queryParams = input<Record<string, any> | null>(null);
 
   buttonClass = computed(() => {
     const variants = {

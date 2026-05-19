@@ -858,7 +858,7 @@
       "INTRO_BOX": "This Privacy Policy is governed by current regulations in Spain and Europe, specifically: the GDPR (Regulation EU 2016/679), the LOPD-GDD (Organic Law 3/2018), and the LSSI-CE (Law 34/2002).",
       "SUB_1": {
         "TITLE": "1.1. Data Controller",
-        "TEXT": "The data will be processed by the application owner, based in Spain. For any management related to privacy and data protection, you can contact: <strong>{{email}}</strong>."
+        "TEXT": "The data will be processed by the application owner: <strong>{{appName}}</strong>, based in Spain. For any management related to privacy and data protection, you can contact: <strong>{{email}}</strong>."
       },
       "SUB_2": {
         "TITLE": "1.2. Data We Collect and Necessity",
