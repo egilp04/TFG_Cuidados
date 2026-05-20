@@ -50,7 +50,7 @@ export class TimeService {
   private async refreshTimes() {
     const { data, error } = await this.clientSupaBase
       .from('Time')
-      .select('*')
+      .select('*').eq('status', 'active')
       .order('week_day', { ascending: true })
       .order('time', { ascending: true });
 
@@ -75,11 +75,11 @@ export class TimeService {
    * Elimina un registro de horario específico por su identificador único.
    */
   deleteTime(id: string): Observable<void> {
-    return from(this.clientSupaBase.from('Time').delete().eq('id_time', id)).pipe(
+    return from(this.clientSupaBase.from('Time').update({ status: 'inactive' }).eq('id_time', id)).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
-      catchError((err) => throwError(() => new Error(err.message || 'Error al eliminar horario'))),
+      catchError((err) => throwError(() => new Error(err.message || 'Error al desactivar horario'))),
     );
   }
 
@@ -104,6 +104,7 @@ export class TimeService {
     let query = this.clientSupaBase
       .from('Time')
       .select('id_time')
+      .eq('status', 'active')
       .eq('week_day', day)
       .eq('time', time);
 
@@ -117,6 +118,26 @@ export class TimeService {
         return data && data.length > 0;
       }),
       catchError(() => of(false)),
+    );
+  }
+
+    /**
+   * Comprueba si un horario tiene ofertas (Service_Time) que aún están activas.
+   * Útil para bloquear la edición o desactivación en el frontend.
+   */
+  hasActiveServiceTimes(id_time: string): Observable<boolean> {
+    return from(
+      this.clientSupaBase
+        .from('Service_Time')
+        .select('id_service_time')
+        .eq('id_time', id_time)
+        .eq('status', 'active')
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+        return data && data.length > 0;
+      }),
+      catchError(() => of(false))
     );
   }
 }

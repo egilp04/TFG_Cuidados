@@ -4,5 +4,6 @@ export interface Service_Time_Model {
   id_time: string;
   id_business: string;
   price: number;
+  status?: 'active' | 'inactive';
   description: string;
 }

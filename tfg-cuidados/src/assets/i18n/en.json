@@ -62,7 +62,7 @@
     "BACK": "Back",
     "SAVE": "Save",
     "Edit": "Edit",
-    "DELETE": "Delete",
+    "DELETE": "Cancel",
     "ACCEPT": "Accept",
     "CANCEL": "Cancel"
   },
@@ -307,7 +307,7 @@
       "TYPE": "Type",
       "ACTIONS": "Actions",
       "EDIT": "Edit",
-      "DELETE": "Delete",
+      "DELETE": "Cancel",
       "DESCRIPTION": "Description"
     },
     "MESSAGES": {
@@ -317,7 +317,8 @@
       "SUCCESS_DELETE": "Service deleted",
       "ERROR_DUPLICATE": "That service already exists",
       "ERROR_GENERIC": "Error processing request, try it again!",
-      "ERROR_DELETE": "Error deleting"
+      "ERROR_DELETE": "Error deleting", 
+      "ERROR_HAS_OFFERS": "Offers associated must be deleted first"
     }
   },
   "MANAGEMENT_SCHEDULES": {
@@ -352,7 +353,7 @@
       "DAY": "Day of the week",
       "ACTIONS": "Actions",
       "EDIT": "Edit",
-      "DELETE": "Delete"
+      "DELETE": "Cancel"
     },
     "MESSAGES": {
       "FILL_FIELDS": "Please fill in all fields correctly.",
@@ -365,7 +366,8 @@
       "SUCCESS_DELETE": "Schedule deleted",
       "ERROR_DUPLICATE": "A schedule already exists for {{day}} at {{time}}",
       "ERROR_GENERIC": "Error processing the request",
-      "ERROR_DELETE": "Error con el borrado"
+      "ERROR_DELETE": "Error con el borrado", 
+      "ERROR_HAS_OFFERS": "Offers associated must be deleted first"
     },
     "LIST": {
       "TITLE": "Time list",
@@ -416,7 +418,7 @@
       "TOPIC": "Topic",
       "DATE": "Received Date",
       "ACTIONS": "Actions",
-      "BTN_DELETE": "Delete",
+      "BTN_DELETE": "Cancel",
       "BTN_VIEW": "Show"
     },
     "ALERTS": {
@@ -562,7 +564,7 @@
       "ACTIONS_COL": "Available actions"
     },
     "BTN_NEW": "New service",
-    "BTN_DELETE": "Delete",
+    "BTN_DELETE": "Cancel",
     "BTN_MODIFY": "Modify",
     "TABLE": {
       "NAME": "Name",
@@ -585,7 +587,7 @@
       "KEEP_CONTRACT": "Keep contract",
       "CANCEL_CONTRACT": "Cancel contract",
       "CANCEL_ACTION": "Cancel action",
-      "DELETE": "Delete"
+      "DELETE": "Cancel"
     },
     "BAJA": {
       "TITLE": "Are you sure you want to unsubscribe?",
@@ -609,21 +611,19 @@
       "DESC_1": "You are about to remove a service from your catalog. If confirmed, the service will be permanently deleted.",
       "SUBTITLE": "Consequences of Deletion:",
       "LIST": {
-        "CESSATION": "<strong>Offer Cessation:</strong> Users will no longer be able to search for or hire this service.",
         "VISIBILITY": "<strong>Loss of Visibility:</strong> The service and its details will be removed from search results."
       },
       "IMPORTANT_TITLE": "Important regarding Active Contracts:",
-      "IMPORTANT_DESC": "If this service has already been hired, we strongly recommend managing those active contracts to avoid issues.",
+      "IMPORTANT_DESC": "If this serviceis associated with an offer, you have to cancel the offer firstly.",
       "CONFIRM": "Do you want to continue?"
     },
     "GENERIC": {
       "TITLE": "Deletion Confirmation",
       "SUBTITLE": "Deleting data entails:",
       "LIST": {
-        "PROFILE": "The client or company profile and associated data will be deleted.",
-        "CONTRACTS": "All active or future service contracts are immediately voided."
+        "PROFILE": "The client or company profile and associated data will be deleted."
       },
-      "NOTE": "The platform will notify the other party regarding the forced service cancellation.",
+      "NOTE": "It is importat to make sure that any offer is associated/using this shchedule, firstly. If not, it can´t be cancelled.",
       "CONFIRM": "Do you want to continue?"
     }
   },
@@ -659,7 +659,7 @@
       "EMAIL": "Email"
     },
     "BTN": {
-      "DELETE": "Delete",
+      "DELETE": "Cancel",
       "MODIFY": "Modify"
     },
     "NO_DATA": "No records found.",
@@ -750,7 +750,8 @@
       "MIN_VALUE": "The minimum value is {{value}}",
       "INVALID_PRICE": "Invalid price format (ex: 10 or 10.50)",
       "INVALID_FORMAT": "Invalid format",
-      "INVALID_FIELD": "Invalid field"
+      "INVALID_FIELD": "Invalid field", 
+      "HAS_CONTRACTS": "Cannot change an offer with contracts associated, cancel them first"
     }
   },
   "MESSAGES_MODAL": {

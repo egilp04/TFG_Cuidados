@@ -51,7 +51,6 @@
           <p class="text-p">{{ 'CANCEL_MODAL.SERVICE.DESC_1' | translate }}</p>
           <p class="text-p">{{ 'CANCEL_MODAL.SERVICE.SUBTITLE' | translate }}</p>
           <ol class="list-decimal list-inside text-left text-p">
-            <li [innerHTML]="'CANCEL_MODAL.SERVICE.LIST.CESSATION' | translate" class="text-p"></li>
             <li
               [innerHTML]="'CANCEL_MODAL.SERVICE.LIST.VISIBILITY' | translate"
               class="text-p"
@@ -71,10 +70,7 @@
       } @else {
         <div>
           <p class="font-bold text-p">{{ 'CANCEL_MODAL.GENERIC.SUBTITLE' | translate }}</p>
-          <ol class="list-decimal list-inside pl-5 text-label">
-            <li>{{ 'CANCEL_MODAL.GENERIC.LIST.PROFILE' | translate }}</li>
-            <li>{{ 'CANCEL_MODAL.GENERIC.LIST.CONTRACTS' | translate }}</li>
-          </ol>
+          <p class="text-p">{{ 'CANCEL_MODAL.GENERIC.LIST.PROFILE' | translate }}</p>
           <p class="text-p">{{ 'CANCEL_MODAL.GENERIC.NOTE' | translate }}</p>
         </div>
       }
