@@ -21,7 +21,8 @@ import { ServiceTimeModalData } from '../../models/Service_Time_Data_Model';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
 import { catchError, map } from 'rxjs';
 import { MessageService } from '../../services/message-service';
-
+import { Observable, throwError } from 'rxjs';
+import { switchMap, catchError, map } from 'rxjs/operators';
 /**
  * Componente modal para crear o editar la relación entre un servicio, una franja horaria y un negocio.
  */
@@ -98,7 +99,7 @@ export class ServiceTimeModal implements OnInit {
   let request$: Observable<any>;
   if (this.isEditing && this.data) {
     request$ = this.serviceTimeService.hasActiveContracts(this.data.id_service_time).pipe(
-      switchMap((hasContracts) => {
+      switchMap((hasContracts: any) => {
         if (hasContracts) {
           return throwError(() => new Error('HAS_CONTRACTS'));
         }
@@ -139,8 +140,8 @@ export class ServiceTimeModal implements OnInit {
         });
         this.dialogRef.close(true);
       },
-      error: (err) => console.error('Error fatal no capturado:', err),
-    });
+      error: (err: any) => console.error('Error fatal no capturado:', err)
+      });
 }
 
 
