@@ -172,6 +172,7 @@ export class ContractService {
           message = `El cliente ${canceledContract.Client?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;
         } else {
           idDestination = canceledContract.id_client;
+          message = `La empresa ${canceledContract.Business?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;
         }
 
         this.comunicationService
