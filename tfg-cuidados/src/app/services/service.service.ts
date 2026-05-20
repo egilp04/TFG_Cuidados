@@ -48,8 +48,9 @@ export class ServiceService {
     const { data, error } = await this.clientSupaBase
       .from('Service')
       .select('*')
+      .eq('status', 'active')
       .order('name', { ascending: true });
-  
+
     if (!error) {
       this.servicesList$.next((data ?? []) as ServiceModel[]);
     } else {
@@ -87,7 +88,9 @@ export class ServiceService {
    * Elimina un servicio del catálogo.
    */
   deleteService(id: string): Observable<void> {
-    return from(this.clientSupaBase.from('Service').delete().eq('id_service', id)).pipe(
+    return from(
+      this.clientSupaBase.from('Service').update({ status: 'inactive' }).eq('id_service', id),
+    ).pipe(
       tap(() => this.refreshServices()),
       map(({ error }) => {
         if (error) throw error;
@@ -101,19 +104,28 @@ export class ServiceService {
    */
   getServiceById(id: string): Observable<ServiceModel> {
     return from(
-      this.clientSupaBase.from('Service').select('*').eq('id_service', id).single()
+      this.clientSupaBase
+        .from('Service')
+        .select('*')
+        .eq('id_service', id)
+        .eq('status', 'active')
+        .single(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data as ServiceModel;
-      })
+      }),
     );
   }
   /**
    * Verifica si un servicio con un nombre específico ya existe, excluyendo un ID dado.
    */
   existsService(name: string, idExclude?: string): Observable<boolean> {
-    let query = this.clientSupaBase.from('Service').select('id_service').ilike('name', name);
+    let query = this.clientSupaBase
+      .from('Service')
+      .select('id_service')
+      .eq('status', 'active')
+      .ilike('name', name);
     if (idExclude) {
       query = query.neq('id_service', idExclude);
     }
@@ -128,12 +140,13 @@ export class ServiceService {
     return from(
       this.clientSupaBase
         .from('Service')
-        .select('*, Service_Time!inner(id_service)') 
-        .order('name', { ascending: true })
+        .select('*, Service_Time!inner(id_service)')
+        .eq('Service_Time.status', 'active')
+        .order('name', { ascending: true }),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return (data as any[]).map(item => {
+        return (data as any[]).map((item) => {
           const { Service_Time, ...serviceData } = item;
           return serviceData as ServiceModel;
         });
@@ -141,7 +154,27 @@ export class ServiceService {
       catchError((err) => {
         console.error('Error cargando servicios con ofertas:', err);
         return of([]);
-      })
+      }),
+    );
+  }
+
+  /**
+   * Comprueba si un servicio tiene ofertas (Service_Time) que aún están activas.
+   * Útil para bloquear la edición o desactivación en el frontend.
+   */
+  hasActiveServiceTimes(id_service: string): Observable<boolean> {
+    return from(
+      this.clientSupaBase
+        .from('Service_Time')
+        .select('id_service_time')
+        .eq('id_service', id_service)
+        .eq('status', 'active'),
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+        return data && data.length > 0;
+      }),
+      catchError(() => of(false)),
     );
   }
 }

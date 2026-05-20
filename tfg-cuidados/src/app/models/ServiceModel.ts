@@ -5,4 +5,5 @@ export interface ServiceModel {
   id_admin: string;
   description: string;
   icon_name?: string;
+  status?: 'active' | 'inactive';
 }

@@ -113,7 +113,7 @@ export default class ModifyProfilePage implements OnInit {
         }),
         switchMap(() => timer(1500)),
         tap(() => {
-          const route = getHomeRouteByRole(role);
+          const route = getHomeRouteByRole(loggedUser?.rol);
           this.router.navigate([route]);
         }),
 
