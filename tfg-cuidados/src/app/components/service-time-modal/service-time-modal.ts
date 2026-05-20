@@ -19,7 +19,7 @@ import { LucideAngularModule } from 'lucide-angular';
 import { Service_Time_Model } from '../../models/Service_Time_Model';
 import { ServiceTimeModalData } from '../../models/Service_Time_Data_Model';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
-import { catchError, map, switchMap, of} from 'rxjs';
+import { catchError, map, switchMap} from 'rxjs';
 import { MessageService } from '../../services/message-service';
 import { Observable, throwError } from 'rxjs';
 /**
