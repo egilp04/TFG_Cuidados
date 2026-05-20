@@ -130,18 +130,7 @@ export default class Servicesbusiness implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter((result) => result === true),
-        tap(() => {
-          this.isLoading.set(true);
-          this.cd.markForCheck();
-        }),
-        switchMap(() =>
-          this.serviceTimeService.deleteServiceTime(id).pipe(
-            finalize(() => {
-              this.isLoading.set(false);
-              this.cd.markForCheck();
-            }),
-          ),
-        ),
+        switchMap(() => this.serviceTimeService.deleteServiceTime(id).pipe()),
         switchMap(() =>
           this.translate
             .get('SERVICES_BUSINESS.MESSAGES.DELETE_SUCCESS')

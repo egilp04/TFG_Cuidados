@@ -300,7 +300,7 @@
     },
     "LIST": {
       "TITLE": "Listado de Servicios",
-      "SEARCH": "Buscar por nombre",
+      "SEARCH": "Buscar por nombre, titulo o servicio",
       "EMPTY": "No se han encontrado servicios."
     },
     "TABLE": {

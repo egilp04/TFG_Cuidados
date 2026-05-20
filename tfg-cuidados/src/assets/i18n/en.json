@@ -299,7 +299,7 @@
     },
     "LIST": {
       "TITLE": "Services List",
-      "SEARCH": "Search by name",
+      "SEARCH": "Search by name, type or description",
       "EMPTY": "No services found."
     },
     "TABLE": {

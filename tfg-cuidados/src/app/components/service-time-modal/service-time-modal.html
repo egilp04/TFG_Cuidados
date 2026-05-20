@@ -35,14 +35,6 @@
     </section>
   }
   <form [formGroup]="form" class="service-form-container">
-    <app-inputs
-      name="description"
-      [label]="'SERVICE_TIME_MODAL.LABELS.DESCRIPTION' | translate"
-      [control]="getCtrl('description')"
-      [errorMessage]="getErrorMessage('description')"
-      class="w-full"
-    ></app-inputs>
-
     <div class="service-select-container">
       <label class="service-global-services" for="id_service">
         {{ 'SERVICE_TIME_MODAL.LABELS.GLOBAL_SERVICE' | translate }}
@@ -87,7 +79,13 @@
         </div>
       </div>
     </div>
-
+    <app-inputs
+      name="description"
+      [label]="'SERVICE_TIME_MODAL.LABELS.DESCRIPTION' | translate"
+      [control]="getCtrl('description')"
+      [errorMessage]="getErrorMessage('description')"
+      class="w-full"
+    ></app-inputs>
     <app-inputs
       name="price"
       [label]="'SERVICE_TIME_MODAL.LABELS.PRICE' | translate"
