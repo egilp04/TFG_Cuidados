@@ -63,7 +63,8 @@ export class BusinessService {
       )
     `,
       )
-      .eq('User_public.state', true);
+      .eq('User_public.state', true)
+      .eq('Service_Time.status', 'active');
 
     if (error) {
       console.error('Error al cargar negocios:', error.message);

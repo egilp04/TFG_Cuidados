@@ -130,7 +130,8 @@
       "NAME": "Service Name",
       "DAY": "Day",
       "TIME": "Time",
-      "LOCATION": "Location"
+      "LOCATION": "Location",
+      "PRICE": "Price"
     },
     "BTN_CANCEL": "Cancel"
   },
