@@ -269,7 +269,7 @@
         <mxCell id="qfXRfUBhy3hutM3HcvnS-52" value="3. MODIFICAR PERFIL" style="fillColor=#ffff88;strokeColor=#9E916F;" parent="1" vertex="1">
           <mxGeometry x="329" y="986" width="1020" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="qfXRfUBhy3hutM3HcvnS-53" value="4. BORRADO LÓGICO (Desactivar)" style="fillColor=#ffff88;strokeColor=#9E916F;" parent="1" vertex="1">
+        <mxCell id="qfXRfUBhy3hutM3HcvnS-53" value="4. BORRADO LÓGICO (Cancelar)" style="fillColor=#ffff88;strokeColor=#9E916F;" parent="1" vertex="1">
           <mxGeometry x="329" y="1442" width="1020" height="48" as="geometry" />
         </mxCell>
         <mxCell id="qfXRfUBhy3hutM3HcvnS-54" value="La app interpreta &quot;Borrar&quot; como&#xa;cambiar estado a Inactivo." style="fillColor=#ffff88;strokeColor=#9E916F;" parent="1" vertex="1">

@@ -125,6 +125,10 @@ export default class ManagementServicesGlobal implements OnInit {
    * Guarda un nuevo servicio o actualiza uno existente.
    * Incluye validación de nombres duplicados.
    */
+  /**
+   * Guarda un nuevo servicio o actualiza uno existente.
+   * Incluye validación de nombres duplicados y comprobación de dependencias activas.
+   */
   saveService(): void {
     if (this.serviceForm.invalid) {
       this.serviceForm.markAllAsTouched();
@@ -133,37 +137,48 @@ export default class ManagementServicesGlobal implements OnInit {
     if (this.isLoading()) return;
 
     this.isLoading.set(true);
-
     const rawValue = this.serviceForm.getRawValue();
     const name = (rawValue.name ?? '').trim();
     const serviceType = (rawValue.type_service ?? '').trim();
     const description = (rawValue.description ?? '').trim();
     const icon_name = (rawValue.icon_name ?? 'circleCheck').trim();
-
     const user = this.authService.currentUser();
     if (!user?.id_user) {
       this.isLoading.set(false);
       return;
     }
-
     this.serviceService
       .existsService(name, this.currentServiceId || undefined)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         switchMap((exists: boolean) => {
           if (exists) return throwError(() => new Error('DUPLICATE_SERVICE'));
-
-          const payload: ServiceModel = {
-            name,
-            type_service: serviceType,
-            description,
-            id_admin: user.id_user,
-            icon_name,
-          };
-
-          return this.isEditing && this.currentServiceId
-            ? this.serviceService.updateService(this.currentServiceId, payload)
-            : this.serviceService.insertService(payload);
+          if (this.isEditing && this.currentServiceId) {
+            return this.serviceService.hasActiveServiceTimes(this.currentServiceId).pipe(
+              switchMap((hasDependencies) => {
+                if (hasDependencies) {
+                  return throwError(() => new Error('HAS_DEPENDENCIES'));
+                }
+                const payload: Partial<ServiceModel> = {
+                  name,
+                  type_service: serviceType,
+                  description,
+                  icon_name,
+                };
+                return this.serviceService.updateService(this.currentServiceId!, payload);
+              }),
+            );
+          } else {
+            const payload: ServiceModel = {
+              name,
+              type_service: serviceType,
+              description,
+              id_admin: user.id_user,
+              icon_name,
+              status: 'active',
+            };
+            return this.serviceService.insertService(payload);
+          }
         }),
         switchMap(() => {
           const msgKey = this.isEditing
@@ -175,9 +190,13 @@ export default class ManagementServicesGlobal implements OnInit {
         }),
         catchError((err: any) => {
           let msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_GENERIC';
+
           if (err.message === 'DUPLICATE_SERVICE' || err.code === '23505') {
             msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_DUPLICATE';
+          } else if (err.message === 'HAS_DEPENDENCIES') {
+            msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_OFFERS';
           }
+
           return this.translate
             .get(msgKey)
             .pipe(map((text: string) => ({ type: 'error' as const, text })));
@@ -194,7 +213,6 @@ export default class ManagementServicesGlobal implements OnInit {
         }
       });
   }
-
   /**
    * Prepara el formulario con los datos del servicio seleccionado para edición.
    * @param service El modelo de servicio a editar.
@@ -212,50 +230,55 @@ export default class ManagementServicesGlobal implements OnInit {
   }
 
   /**
-   * Abre una modal de confirmación y elimina un servicio.
+   * Abre una modal de confirmación y desactiva un servicio (Borrado Lógico).
+   * Bloquea la acción si el servicio tiene ofertas activas asociadas.
    * @param id El identificador único del servicio.
    */
   async deleteService(id: string): Promise<void> {
     if (this.isLoading()) return;
 
-    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
-    const dialogRef = this.dialog.open(Cancelmodal, {
-      data: { mode: 'deleteGlobalAdmin' },
-      width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-      maxHeight: '90vh',
-    });
-
-    dialogRef
-      .afterClosed()
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        filter((result: boolean) => result === true),
-        tap(() => {
-          this.isLoading.set(true);
+    this.serviceService
+      .hasActiveServiceTimes(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(async (hasDependencies) => {
+        if (hasDependencies) {
+          this.translate.get('MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_OFFERS').subscribe((msg) => {
+            this.messageService.showMessage(msg, 'error');
+          });
           this.cd.markForCheck();
-        }),
-        switchMap(() =>
-          this.serviceService.deleteService(id).pipe(
-            finalize(() => {
-              this.isLoading.set(false);
-              this.cd.markForCheck();
-            }),
+          return;
+        }
+
+        const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
+        const dialogRef = this.dialog.open(Cancelmodal, {
+          data: { mode: 'deleteGlobalAdmin' },
+          width: '100%',
+          maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+          maxHeight: '90vh',
+        });
+        dialogRef
+          .afterClosed()
+          .pipe(
+            takeUntilDestroyed(this.destroyRef),
+            filter((result: boolean) => result === true),
             switchMap(() =>
-              this.translate
-                .get('MANAGEMENT_SERVICES.MESSAGES.SUCCESS_DELETE')
-                .pipe(map((text: string) => ({ type: 'success' as const, text }))),
+              this.serviceService.deleteService(id).pipe(
+                switchMap(() =>
+                  this.translate
+                    .get('MANAGEMENT_SERVICES.MESSAGES.SUCCESS_DELETE')
+                    .pipe(map((text: string) => ({ type: 'success' as const, text }))),
+                ),
+                catchError(() =>
+                  this.translate
+                    .get('MANAGEMENT_SERVICES.MESSAGES.ERROR_DELETE')
+                    .pipe(map((text: string) => ({ type: 'error' as const, text }))),
+                ),
+              ),
             ),
-            catchError(() =>
-              this.translate
-                .get('MANAGEMENT_SERVICES.MESSAGES.ERROR_DELETE')
-                .pipe(map((text: string) => ({ type: 'error' as const, text }))),
-            ),
-          ),
-        ),
-      )
-      .subscribe((result) => {
-        this.messageService.showMessage(result.text, result.type);
+          )
+          .subscribe((result) => {
+            this.messageService.showMessage(result.text, result.type);
+          });
       });
   }
 

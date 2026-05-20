@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, from, Observable, throwError, of } from 'rxjs';
 import { map, catchError, tap, switchMap } from 'rxjs/operators';
 import { Service_Time_Model } from '../models/Service_Time_Model';
 import { ServiceTimeJoined } from '../models/Service_Time_Service_Model';
@@ -63,9 +63,9 @@ export class ServiceTimeService {
         Time:id_time ( week_day, time )
       `,
       )
+      .eq('status', 'active')
       .eq('id_business', businessId)
       .order('id_service_time', { ascending: false });
-
     if (!error) {
       this.serviceTimeList$.next((data as unknown as ServiceTimeJoined[]) || []);
     } else {
@@ -122,17 +122,34 @@ export class ServiceTimeService {
    * Elimina un registro de disponibilidad servicio-horario de la base de datos.
    */
   deleteServiceTime(id: string): Observable<void> {
-    return from(this.supabase.from('Service_Time').delete().eq('id_service_time', id)).pipe(
+    return from(this.supabase.from('Service_Time').update({ status: 'inactive' }).eq('id_service_time', id)).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
       tap(() => {
-        const currentList = this.serviceTimeList$.getValue();
-        const filtered = currentList.filter((item) => item.id_service_time !== id);
-        this.serviceTimeList$.next(filtered);
         if (this.currentIdBusiness) this.refreshList(this.currentIdBusiness);
       }),
       catchError((err) => throwError(() => err)),
+    );
+  }
+
+  /**
+   * Comprueba si una oferta (Service_Time) tiene contratos que aún están activas.
+   * Útil para bloquear la edición o desactivación en el frontend.
+   */
+  hasActiveContracts(id_service_time: string): Observable<boolean> {
+    return from(
+      this.supabase
+        .from('Contract')
+        .select('id_contract')
+        .eq('id_service_time', id_service_time)
+        .eq('state', 'active')
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+        return data && data.length > 0;
+      }),
+      catchError(() => of(false))
     );
   }
 }
