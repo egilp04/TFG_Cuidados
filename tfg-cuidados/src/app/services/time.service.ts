@@ -50,7 +50,8 @@ export class TimeService {
   private async refreshTimes() {
     const { data, error } = await this.clientSupaBase
       .from('Time')
-      .select('*').eq('status', 'active')
+      .select('*')
+      .eq('status', 'active')
       .order('week_day', { ascending: true })
       .order('time', { ascending: true });
 
@@ -75,11 +76,15 @@ export class TimeService {
    * Elimina un registro de horario específico por su identificador único.
    */
   deleteTime(id: string): Observable<void> {
-    return from(this.clientSupaBase.from('Time').update({ status: 'inactive' }).eq('id_time', id)).pipe(
+    return from(
+      this.clientSupaBase.from('Time').update({ status: 'inactive' }).eq('id_time', id),
+    ).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
-      catchError((err) => throwError(() => new Error(err.message || 'Error al desactivar horario'))),
+      catchError((err) =>
+        throwError(() => new Error(err.message || 'Error al desactivar horario')),
+      ),
     );
   }
 
@@ -121,7 +126,7 @@ export class TimeService {
     );
   }
 
-    /**
+  /**
    * Comprueba si un horario tiene ofertas (Service_Time) que aún están activas.
    * Útil para bloquear la edición o desactivación en el frontend.
    */
@@ -131,14 +136,13 @@ export class TimeService {
         .from('Service_Time')
         .select('id_service_time')
         .eq('id_time', id_time)
-        .eq('status', 'active')
+        .eq('status', 'active'),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        console.log('Datos encontrados en Service_Time:', data);
         return data && data.length > 0;
       }),
-      catchError(() => of(false))
+      catchError(() => of(false)),
     );
   }
 }
