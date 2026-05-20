@@ -130,8 +130,6 @@ export default class Notifications implements OnInit {
           },
         });
     });
-
-    this.comunicationService.refreshUsersData();
     this.cd.markForCheck();
   }
 
@@ -159,5 +157,9 @@ export default class Notifications implements OnInit {
       .subscribe((result) => {
         this.messageService.showMessage(result.text, result.type);
       });
+  }
+
+  trackById(index: number, item: ComunicationModel): string | undefined {
+    return item.id_comunication;
   }
 }

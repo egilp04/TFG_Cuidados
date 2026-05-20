@@ -7,7 +7,7 @@ import { ToastData } from '../models/Message-Service';
 export class MessageService {
   private messageSignal = signal<ToastData | null>(null);
   public readonly messageData = this.messageSignal.asReadonly();
-
+  private timeoutId: any;
   /**
    * Muestra un mensaje temporal en pantalla
    * @param text Contenido del mensaje
@@ -15,12 +15,19 @@ export class MessageService {
    * @param duration Tiempo en milisegundos (default 3s)
    */
   showMessage(text: string, type: 'success' | 'error' = 'success', duration: number = 3000) {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
     this.messageSignal.set({ message: text, type });
-    setTimeout(() => {
+    this.timeoutId = setTimeout(() => {
       this.clear();
     }, duration);
   }
+
   clear() {
     this.messageSignal.set(null);
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
   }
 }

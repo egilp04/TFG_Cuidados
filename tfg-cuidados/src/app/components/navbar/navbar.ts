@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, DestroyRef, effect, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { ButtonComponent } from '../button/button';
 import { LucideAngularModule } from 'lucide-angular';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,6 +20,7 @@ import { filter } from 'rxjs';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { getHomeRouteByRole } from '../../core/utils/routerUtils';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { MessageService } from '../../services/message-service';
 
 @Component({
   selector: 'app-navbar',
@@ -38,6 +47,7 @@ export class Navbar implements OnInit {
   private responsive = inject(ResponsiveSize);
   public isMenuOpen = false;
   private translate = inject(TranslateService);
+  private messageService = inject(MessageService);
 
   constructor() {
     effect(() => {
@@ -81,6 +91,7 @@ export class Navbar implements OnInit {
   private cd = inject(ChangeDetectorRef);
 
   logout() {
+    this.messageService.clear();
     this.authService
       .signOut()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -136,7 +147,7 @@ export class Navbar implements OnInit {
 
   countMensajes$ = this.comunicationService.getUnreadMessagesCount();
   countNotificaciones$ = this.comunicationService.getUnreadNotificationsCount();
-  
+
   public currentLang = signal<string>(this.translate.currentLang || 'es');
 
   changeLanguage(lang: string) {

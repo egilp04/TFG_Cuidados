@@ -46,6 +46,7 @@ export class ActivitiesComponents implements OnInit, OnChanges {
   public displayedColumns: string[] = [
     'avatar',
     'user',
+    'price',
     'service',
     'day',
     'time',

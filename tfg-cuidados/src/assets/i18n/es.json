@@ -130,7 +130,8 @@
       "NAME": "Nombre Servicio",
       "DAY": "Día",
       "TIME": "Hora",
-      "LOCATION": "Lugar"
+      "LOCATION": "Lugar",
+      "PRICE": "Precio"
     },
     "BTN_CANCEL": "Cancelar"
   },

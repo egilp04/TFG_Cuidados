@@ -20,6 +20,7 @@
           [dataSource]="dataSource"
           class="notifications-table"
           aria-labelledby="notifications-title"
+          [trackBy]="trackById"
         >
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef class="text-label notifications-text" scope="col">
