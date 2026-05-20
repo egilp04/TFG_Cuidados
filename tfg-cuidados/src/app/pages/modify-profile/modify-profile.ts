@@ -81,6 +81,28 @@ export default class ModifyProfilePage implements OnInit {
     const role = event.rol;
     const file = event.avatarFile;
 
+    const hasTextChanges = Object.keys(newData).some((key) => {
+      const formValue = (newData as any)[key];
+      const originalValue = (user as any)[key];
+
+      return formValue !== originalValue;
+    });
+    const hasNewPhoto = !!file;
+    if (!hasTextChanges && !hasNewPhoto) {
+      this.translate.get('MODIFY_PROFILE.MESSAGES.NO_CHANGES').subscribe((msg) => {
+        this.messageService.showMessage(msg, 'success');
+      });
+
+      if (loggedUser?.rol == 'administrator') {
+        const tabType = event.rol === 'client' ? 'cliente' : 'business';
+        this.router.navigate(['/admin-management'], { queryParams: { type: tabType } });
+      } else {
+        const route = getHomeRouteByRole(loggedUser?.rol);
+        this.router.navigate([route]);
+      }
+      return;
+    }
+
     const uploadImage$ = file
       ? this.userService.uploadAvatar(user.id_user, file)
       : of(user.avatar_url || null);
@@ -111,10 +133,15 @@ export default class ModifyProfilePage implements OnInit {
           }
           this.cd.detectChanges();
         }),
-        switchMap(() => timer(1500)),
+        switchMap(() => timer(600)),
         tap(() => {
-          const route = getHomeRouteByRole(loggedUser?.rol);
-          this.router.navigate([route]);
+          if (loggedUser?.rol == 'administrator') {
+            const tabType = event.rol === 'client' ? 'cliente' : 'business';
+            this.router.navigate(['/admin-management'], { queryParams: { type: tabType } });
+          } else {
+            const route = getHomeRouteByRole(loggedUser?.rol);
+            this.router.navigate([route]);
+          }
         }),
 
         catchError((err: Error) => {

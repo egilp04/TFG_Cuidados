@@ -441,7 +441,8 @@
       "EMAIL_USED": "Email already in use",
       "UPDATE_SUCCESS": "Profile updated successfully!",
       "UPDATE_ERROR": "Error updating data.",
-      "DELETE_SUCCESS": "User deleted successfully."
+      "DELETE_SUCCESS": "User deleted successfully.",
+      "NO_CHANGES": "No data modified."
     },
     "LABELS": {
       "USERNAME": "Username",

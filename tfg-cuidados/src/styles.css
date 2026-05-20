@@ -283,7 +283,7 @@
   }
 
   .message-noti {
-    @apply absolute top-20 left-1/2 -translate-x-1/2 flex flex-col items-center;
+    @apply absolute top-20 left-1/2 -translate-x-1/2 flex flex-col items-center z-100;
     pointer-events: none;
   }
 
