@@ -66,6 +66,10 @@ export class ServiceTimeService {
       .eq('status', 'active')
       .eq('id_business', businessId)
       .order('id_service_time', { ascending: false });
+    console.log('1. ID de negocio que busca Angular:', businessId);
+    console.log('2. Filas REALES que devuelve Supabase:', data);
+    if (error) console.error('3. Error de consulta:', error);
+
     if (!error) {
       this.serviceTimeList$.next((data as unknown as ServiceTimeJoined[]) || []);
     } else {

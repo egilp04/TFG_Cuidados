@@ -44,34 +44,17 @@ export class ServiceService {
   /**
    * Sincroniza la lista de servicios desde la base de datos, ordenados por nombre.
    */
-  // private async refreshServices() {
-  //   const { data, error } = await this.clientSupaBase
-  //     .from('Service')
-  //     .select('*').eq('status', 'active')
-  //     .order('name', { ascending: true });
-  
-  //   if (!error) {
-  //     this.servicesList$.next((data ?? []) as ServiceModel[]);
-  //   } else {
-  //     this.servicesList$.next([]);
-  //   }
-  // }
   private async refreshServices() {
     const { data, error } = await this.clientSupaBase
       .from('Service')
-      .select('*')
+      .select('*').eq('status', 'active')
       .order('name', { ascending: true });
-
-    if (error) {
-      console.error('Error refrescando servicios:', error);
+  
+    if (!error) {
+      this.servicesList$.next((data ?? []) as ServiceModel[]);
+    } else {
       this.servicesList$.next([]);
-      return;
     }
-    const filteredData = (data ?? []).filter(s => s.status === 'active');
-    console.log('Datos recibidos de Supabase:', data);
-    console.log('Datos filtrados como activos:', filteredData);
-    
-    this.servicesList$.next(filteredData as ServiceModel[]);
   }
 
   /**
