@@ -96,10 +96,12 @@ export class ServiceTimeModal implements OnInit {
   }
   const formPayload = this.form.getRawValue() as Service_Time_Model;
   formPayload.status = 'active'; 
-  let request$: Observable<any>;
+  type ErrorResponse = { success: false; text: string; type: 'error' };
+    let request$: Observable<void | ErrorResponse>;
+  
   if (this.isEditing && this.data) {
     request$ = this.serviceTimeService.hasActiveContracts(this.data.id_service_time).pipe(
-      switchMap((hasContracts: any) => {
+      switchMap((hasContracts: boolean) => {
         if (hasContracts) {
           return throwError(() => new Error('HAS_CONTRACTS'));
         }
@@ -112,40 +114,43 @@ export class ServiceTimeModal implements OnInit {
 
   request$
     .pipe(
-      catchError((err: any) => {
+      catchError((err: unknown) => {
         let msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_GENERIC';
+                const errorObj = err as { message?: string; code?: string };
         
-        if (err.message === 'DUPLICATE_ENTRY' || err.code === '23505') {
+        if (errorObj.message === 'DUPLICATE_ENTRY' || errorObj.code === '23505') {
           msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_DUPLICATE';
-        } else if (err.message === 'HAS_CONTRACTS') {
+        } else if (errorObj.message === 'HAS_CONTRACTS') {
           msgKey = 'SERVICE_TIME_MODAL.ERRORS.HAS_CONTRACTS'; 
         }
         
         return this.translate
           .get(msgKey)
-          .pipe(map((text: string) => ({ success: false, text, type: 'error' as const })));
+          .pipe(map((text: string): ErrorResponse => ({ success: false, text, type: 'error' })));
       }),
     )
     .subscribe({
-      next: (result: any) => {
-        if (result && result.success === false) {
+      next: (result: void | ErrorResponse) => {
+        
+        if (result && typeof result === 'object' && 'success' in result && !result.success) {
           this.messageService.showMessage(result.text, result.type);
           return;
         }
+        
         const successMsgKey = this.isEditing
           ? 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_UPDATE'
           : 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_CREATE';
+          
         this.translate.get(successMsgKey).subscribe((text) => {
           this.messageService.showMessage(text, 'success');
         });
         this.dialogRef.close(true);
       },
-      error: (err: any) => console.error('Error fatal no capturado:', err)
-      });
+      error: (err: Error) => console.error('Error fatal no capturado:', err.message)
+    });
 }
 
-
-  getCtrl(name: string): FormControl {
+getCtrl(name: string): FormControl {
     return this.form.get(name) as FormControl;
   }
 
