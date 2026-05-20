@@ -719,7 +719,8 @@
       "EMAIL_USED": "Email ya en uso",
       "UPDATE_SUCCESS": "¡Perfil actualizado con éxito!",
       "UPDATE_ERROR": "Error al actualizar los datos.",
-      "DELETE_SUCCESS": "Usuario eliminado correctamente."
+      "DELETE_SUCCESS": "Usuario eliminado correctamente.",
+      "NO_CHANGES": "Sin datos modificados."
     },
     "LABELS": {
       "USERNAME": "Nombre de usuario",
