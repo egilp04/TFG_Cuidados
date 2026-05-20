@@ -5,4 +5,5 @@ export interface ServiceTimeModalData {
     id_business: string;
     price: number | string;
     description: string;
+    status?: 'active' | 'inactive';
   }

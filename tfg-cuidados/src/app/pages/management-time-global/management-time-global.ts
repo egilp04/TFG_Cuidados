@@ -114,6 +114,10 @@ export default class ManagementTimeGlobal implements OnInit {
    * Procesa el envío del formulario para crear una nueva franja horaria o actualizar una existente.
    * Realiza validación de entradas duplicadas y rangos de horarios.
    */
+  /**
+   * Procesa el envío del formulario para crear una nueva franja horaria o actualizar una existente.
+   * Realiza validación de entradas duplicadas, rangos de horarios y dependencias activas.
+   */
   saveTime(): void {
     if (this.timeForm.invalid) {
       this.timeForm.markAllAsTouched();
@@ -159,15 +163,30 @@ export default class ManagementTimeGlobal implements OnInit {
         switchMap((exists: boolean) => {
           if (exists) return throwError(() => new Error('DUPLICATE_TIME'));
 
-          const payload: TimeModel = {
-            week_day: dayValue as any,
-            time: timeValue,
-            id_admin: user.id_user,
-          };
+          if (this.isEditing && this.currentTimeId) {
+            return this.timeService.hasActiveServiceTimes(this.currentTimeId).pipe(
+              switchMap((hasDependencies) => {
+                if (hasDependencies) {
+                  return throwError(() => new Error('HAS_DEPENDENCIES'));
+                }
 
-          return this.isEditing && this.currentTimeId
-            ? this.timeService.updateTime(this.currentTimeId, payload)
-            : this.timeService.insertTime(payload);
+                const payload: Partial<TimeModel> = {
+                  week_day: dayValue as any,
+                  time: timeValue,
+                };
+
+                return this.timeService.updateTime(this.currentTimeId!, payload);
+              }),
+            );
+          } else {
+            const payload: TimeModel = {
+              week_day: dayValue as any,
+              time: timeValue,
+              id_admin: user.id_user,
+              status: 'active',
+            };
+            return this.timeService.insertTime(payload);
+          }
         }),
         switchMap(() => {
           const msgKey = this.isEditing
@@ -184,8 +203,9 @@ export default class ManagementTimeGlobal implements OnInit {
           if (err.message === 'DUPLICATE_TIME') {
             msgKey = 'MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DUPLICATE';
             params = { day: dayValue, time: timeValue };
+          } else if (err.message === 'HAS_DEPENDENCIES') {
+            msgKey = 'MANAGEMENT_SCHEDULES.MESSAGES.ERROR_HAS_OFFERS';
           }
-
           return this.translate
             .get(msgKey, params)
             .pipe(map((text: string) => ({ type: 'error' as const, text })));
@@ -202,7 +222,6 @@ export default class ManagementTimeGlobal implements OnInit {
         }
       });
   }
-
   /**
    * Prepara el formulario para editar una franja horaria existente.
    * @param timeSlot El registro de tiempo a editar.
@@ -223,45 +242,48 @@ export default class ManagementTimeGlobal implements OnInit {
    */
   async deleteTime(id: string): Promise<void> {
     if (this.isLoading()) return;
-
-    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
-    const dialogRef = this.dialog.open(Cancelmodal, {
-      data: { mode: 'deleteGlobalAdmin' },
-      width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-      maxHeight: '90vh',
-    });
-
-    dialogRef
-      .afterClosed()
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        filter((result: boolean) => result === true),
-        tap(() => {
-          this.isLoading.set(true);
+    this.timeService
+      .hasActiveServiceTimes(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(async (hasDependencies) => {
+        if (hasDependencies) {
+          this.translate.get('MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_OFFERS').subscribe((msg) => {
+            this.messageService.showMessage(msg, 'error');
+          });
           this.cd.markForCheck();
-        }),
-        switchMap(() =>
-          this.timeService.deleteTime(id).pipe(
-            finalize(() => {
-              this.isLoading.set(false);
-              this.cd.markForCheck();
-            }),
+          return;
+        }
+        const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
+        const dialogRef = this.dialog.open(Cancelmodal, {
+          data: { mode: 'deleteGlobalAdmin' },
+          width: '100%',
+          maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+          maxHeight: '90vh',
+        });
+
+        dialogRef
+          .afterClosed()
+          .pipe(
+            takeUntilDestroyed(this.destroyRef),
+            filter((result: boolean) => result === true),
             switchMap(() =>
-              this.translate
-                .get('MANAGEMENT_GLOBAL.DELETE')
-                .pipe(map((text: string) => ({ type: 'success' as const, text }))),
+              this.timeService.deleteTime(id).pipe(
+                switchMap(() =>
+                  this.translate
+                    .get('MANAGEMENT_GLOBAL.DELETE')
+                    .pipe(map((text: string) => ({ type: 'success' as const, text }))),
+                ),
+                catchError(() =>
+                  this.translate
+                    .get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DELETE')
+                    .pipe(map((text: string) => ({ type: 'error' as const, text }))),
+                ),
+              ),
             ),
-            catchError(() =>
-              this.translate
-                .get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DELETE')
-                .pipe(map((text: string) => ({ type: 'error' as const, text }))),
-            ),
-          ),
-        ),
-      )
-      .subscribe((res) => {
-        this.messageService.showMessage(res.text, res.type);
+          )
+          .subscribe((res) => {
+            this.messageService.showMessage(res.text, res.type);
+          });
       });
   }
 
