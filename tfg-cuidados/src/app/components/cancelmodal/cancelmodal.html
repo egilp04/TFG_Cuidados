@@ -50,7 +50,7 @@
         <div class="space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.SERVICE.DESC_1' | translate }}</p>
           <p class="text-p">{{ 'CANCEL_MODAL.SERVICE.SUBTITLE' | translate }}</p>
-          <p class="text-p">{{ 'CANCEL_MODAL.SERVICE.LIST.VISIBILITY'| translate }}</p>
+          <p class="text-p" [innerHTML]="'CANCEL_MODAL.SERVICE.LIST.VISIBILITY' | translate"></p>
           <p class="text-p font-bold">
             {{ 'CANCEL_MODAL.SERVICE.IMPORTANT_TITLE' | translate }}
           </p>
@@ -66,7 +66,8 @@
         <div>
           <p class="font-bold text-p">{{ 'CANCEL_MODAL.GENERIC.SUBTITLE' | translate }}</p>
           <p class="text-p">{{ 'CANCEL_MODAL.GENERIC.LIST.PROFILE' | translate }}</p>
-          <p class="text-p">{{ 'CANCEL_MODAL.GENERIC.NOTE' | translate }}</p>
+          <br />
+          <p class="text-p font-bold">{{ 'CANCEL_MODAL.GENERIC.NOTE' | translate }}</p>
         </div>
       }
     </main>

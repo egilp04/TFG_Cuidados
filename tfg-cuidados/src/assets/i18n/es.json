@@ -308,7 +308,7 @@
       "TYPE": "Tipo",
       "ACTIONS": "Acciones",
       "EDIT": "Editar",
-      "DELETE": "Eliminar",
+      "DELETE": "Cancelar",
       "DESCRIPTION": "Descripción"
     },
     "MESSAGES": {
@@ -318,7 +318,7 @@
       "SUCCESS_DELETE": "Servicio eliminado",
       "ERROR_DUPLICATE": "Ese servicio ya existe",
       "ERROR_GENERIC": "Error al procesar la solicitud",
-      "ERROR_DELETE": "Error al eliminar",      
+      "ERROR_DELETE": "Error al eliminar",
       "ERROR_HAS_OFFERS": "Las ofertas asociadas deben ser eliminadas antes"
     }
   },
@@ -565,7 +565,7 @@
         "VISIBILITY": "<strong>Pérdida de Visibilidad:</strong> El servicio y sus detalles serán retirados de los resultados de búsqueda."
       },
       "IMPORTANT_TITLE": "Importante sobre Contratos Activos:",
-      "IMPORTANT_DESC": "Si este servicio ya tiene una oferta asociada, habrá que eliminar la oferta previamente.",
+      "IMPORTANT_DESC": "Si esta oferta ya tiene un contrato asociado, el contrato quedará anulado.",
       "CONFIRM": "¿Desea continuar?"
     },
     "GENERIC": {
@@ -573,9 +573,9 @@
       "SUBTITLE": "Eliminar los datos conlleva:",
       "LIST": {
         "PROFILE": "Los datos ya no serán visibles en la aplicación."
-    },      
-    "NOTE": "Es importante asegurarse primero de que ninguna oferta utiliza y/o está asociada a este servicio, si no, no será posibe su eliminación.",
-    "CONFIRM": "¿Deseas continuar?"
+      },
+      "NOTE": "Es importante asegurarse primero de que ninguna oferta utiliza y/o está asociada, si no, no será posibe su eliminación.",
+      "CONFIRM": "¿Deseas continuar?"
     }
   },
   "BUTTONBACK": {

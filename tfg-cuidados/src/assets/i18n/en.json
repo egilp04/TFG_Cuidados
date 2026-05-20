@@ -317,7 +317,7 @@
       "SUCCESS_DELETE": "Service deleted",
       "ERROR_DUPLICATE": "That service already exists",
       "ERROR_GENERIC": "Error processing request, try it again!",
-      "ERROR_DELETE": "Error deleting", 
+      "ERROR_DELETE": "Error deleting",
       "ERROR_HAS_OFFERS": "Offers associated must be deleted first"
     }
   },
@@ -366,7 +366,7 @@
       "SUCCESS_DELETE": "Schedule deleted",
       "ERROR_DUPLICATE": "A schedule already exists for {{day}} at {{time}}",
       "ERROR_GENERIC": "Error processing the request",
-      "ERROR_DELETE": "Error con el borrado", 
+      "ERROR_DELETE": "Error con el borrado",
       "ERROR_HAS_OFFERS": "Offers associated must be deleted first"
     },
     "LIST": {
@@ -614,7 +614,7 @@
         "VISIBILITY": "<strong>Loss of Visibility:</strong> The service and its details will be removed from search results."
       },
       "IMPORTANT_TITLE": "Important regarding Active Contracts:",
-      "IMPORTANT_DESC": "If this serviceis associated with an offer, you have to cancel the offer firstly.",
+      "IMPORTANT_DESC": "If this offered service associated with a contract, the contract is automatically canceled.",
       "CONFIRM": "Do you want to continue?"
     },
     "GENERIC": {
@@ -750,7 +750,7 @@
       "MIN_VALUE": "The minimum value is {{value}}",
       "INVALID_PRICE": "Invalid price format (ex: 10 or 10.50)",
       "INVALID_FORMAT": "Invalid format",
-      "INVALID_FIELD": "Invalid field", 
+      "INVALID_FIELD": "Invalid field",
       "HAS_CONTRACTS": "Cannot change an offer with contracts associated, cancel them first"
     }
   },
@@ -815,7 +815,7 @@
       "NO_ERROR": "Check your email again",
       "WITH_ERROR": "An error has been ocurred, contact with administrator",
       "EMAIL_NOT_FOUND": "Email not found",
-      "USER_INACTIVE": "Deactivated account. If you think this is a mistake, please contact support."    
+      "USER_INACTIVE": "Deactivated account. If you think this is a mistake, please contact support."
     }
   },
   "FOOTER": {
