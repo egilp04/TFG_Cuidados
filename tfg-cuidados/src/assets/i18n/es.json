@@ -574,7 +574,7 @@
       "LIST": {
         "PROFILE": "Los datos ya no serán visibles en la aplicación."
     },      
-    "NOTE": "Es importante asegurarse primero de que ninguna oferta utiliza y/o está asociada a este servicio, si no no será posibe su eliminación.",
+    "NOTE": "Es importante asegurarse primero de que ninguna oferta utiliza y/o está asociada a este servicio, si no, no será posibe su eliminación.",
     "CONFIRM": "¿Deseas continuar?"
     }
   },

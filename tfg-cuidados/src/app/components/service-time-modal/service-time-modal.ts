@@ -81,9 +81,7 @@ export class ServiceTimeModal implements OnInit {
     }
   }
 
-  /**
-   * Envía los datos del formulario para insertar o actualizar un registro de ServiceTime.
-   */
+
  /**
    * Envía los datos del formulario para insertar o actualizar un registro de ServiceTime.
    * Incluye validación para evitar editar ofertas que tienen contratos activos.
