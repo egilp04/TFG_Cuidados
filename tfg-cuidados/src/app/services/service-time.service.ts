@@ -66,7 +66,6 @@ export class ServiceTimeService {
       .eq('status', 'active')
       .eq('id_business', businessId)
       .order('id_service_time', { ascending: false });
-
     if (!error) {
       this.serviceTimeList$.next((data as unknown as ServiceTimeJoined[]) || []);
     } else {
