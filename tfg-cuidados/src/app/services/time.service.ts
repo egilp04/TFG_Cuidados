@@ -135,6 +135,7 @@ export class TimeService {
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
+        console.log('Datos encontrados en Service_Time:', data);
         return data && data.length > 0;
       }),
       catchError(() => of(false))

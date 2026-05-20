@@ -244,58 +244,62 @@ export default class ManagementTimeGlobal implements OnInit {
     if (this.isLoading()) return;
 
     this.isLoading.set(true);
-  this.cd.markForCheck();
+    this.cd.markForCheck();
 
-  this.timeService.hasActiveServiceTimes(id)
-  .pipe(takeUntilDestroyed(this.destroyRef))
-  .subscribe(async (hasDependencies) => {
-    if (hasDependencies) {
-      this.isLoading.set(false);
-      this.translate.get('MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_OFFERS').subscribe(msg => {
-        this.messageService.showMessage(msg, 'error');
-      });
-      this.cd.markForCheck();
-      return;
-    }
-    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
-    const dialogRef = this.dialog.open(Cancelmodal, {
-      data: { mode: 'deleteGlobalAdmin' },
-      width: '100%',
-      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
-      maxHeight: '90vh',
-    });
-    dialogRef
-      .afterClosed()
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        filter((result: boolean) => result === true),
-        tap(() => {
-          this.isLoading.set(true);
+    this.timeService.hasActiveServiceTimes(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(async (hasDependencies) => {
+        if (hasDependencies) {
+          this.isLoading.set(false);
+          this.translate.get('MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_OFFERS').subscribe(msg => {
+            this.messageService.showMessage(msg, 'error');
+          });
           this.cd.markForCheck();
-        }),
-        switchMap(() =>
-          this.timeService.deleteTime(id).pipe(
-            finalize(() => {
-              this.isLoading.set(false);
+          return;
+        }
+        this.isLoading.set(false);
+        this.cd.markForCheck();
+
+        const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
+        const dialogRef = this.dialog.open(Cancelmodal, {
+          data: { mode: 'deleteGlobalAdmin' },
+          width: '100%',
+          maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+          maxHeight: '90vh',
+        });
+
+        dialogRef
+          .afterClosed()
+          .pipe(
+            takeUntilDestroyed(this.destroyRef),
+            filter((result: boolean) => result === true),
+            tap(() => {
+              this.isLoading.set(true);
               this.cd.markForCheck();
             }),
             switchMap(() =>
-              this.translate
-                .get('MANAGEMENT_GLOBAL.DELETE')
-                .pipe(map((text: string) => ({ type: 'success' as const, text }))),
+              this.timeService.deleteTime(id).pipe(
+                finalize(() => {
+                  this.isLoading.set(false);
+                  this.cd.markForCheck();
+                }),
+                switchMap(() =>
+                  this.translate
+                    .get('MANAGEMENT_GLOBAL.DELETE')
+                    .pipe(map((text: string) => ({ type: 'success' as const, text }))),
+                ),
+                catchError(() =>
+                  this.translate
+                    .get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DELETE')
+                    .pipe(map((text: string) => ({ type: 'error' as const, text }))),
+                ),
+              ),
             ),
-            catchError(() =>
-              this.translate
-                .get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_DELETE')
-                .pipe(map((text: string) => ({ type: 'error' as const, text }))),
-            ),
-          ),
-        ),
-      )
-      .subscribe((res) => {
-        this.messageService.showMessage(res.text, res.type);
+          )
+          .subscribe((res) => {
+            this.messageService.showMessage(res.text, res.type);
+          });
       });
-    });
   }
 
   /**
