@@ -319,7 +319,8 @@
       "ERROR_DUPLICATE": "That service already exists",
       "ERROR_GENERIC": "Error processing request, try it again!",
       "ERROR_DELETE": "Error deleting",
-      "ERROR_HAS_OFFERS": "Offers associated must be deleted first"
+      "ERROR_HAS_OFFERS": "Offers associated must be deleted first",
+      "NO_CHANGES": "No data modified."
     }
   },
   "MANAGEMENT_SCHEDULES": {
@@ -368,7 +369,8 @@
       "ERROR_DUPLICATE": "A schedule already exists for {{day}} at {{time}}",
       "ERROR_GENERIC": "Error processing the request",
       "ERROR_DELETE": "Error con el borrado",
-      "ERROR_HAS_OFFERS": "Offers associated must be deleted first"
+      "ERROR_HAS_OFFERS": "Offers associated must be deleted first",
+      "NO_CHANGES": "No data modified."
     },
     "LIST": {
       "TITLE": "Time list",
@@ -762,7 +764,7 @@
       "TOPIC": "Topic",
       "SENDER": "Sender",
       "RECEIVER": "Receiver",
-      "MESSAGE_CONTENT": "MESSAGE"
+      "MESSAGE_CONTENT": "Message"
     },
     "PLACEHOLDERS": {
       "WRITE_HERE": "Write your message here...",

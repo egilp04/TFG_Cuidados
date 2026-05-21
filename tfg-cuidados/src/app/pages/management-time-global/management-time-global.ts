@@ -4,7 +4,6 @@ import {
   Component,
   DestroyRef,
   OnInit,
-  ViewChild,
   effect,
   inject,
   signal,
@@ -66,6 +65,7 @@ export default class ManagementTimeGlobal implements OnInit {
 
   public isEditing = false;
   public currentTimeId: string | null = null;
+  public originalTimeSlot: TimeModel | null = null;
 
   public timeForm = this.fb.group({
     time: this.fb.control<string>('', [Validators.required]),
@@ -112,11 +112,8 @@ export default class ManagementTimeGlobal implements OnInit {
 
   /**
    * Procesa el envío del formulario para crear una nueva franja horaria o actualizar una existente.
-   * Realiza validación de entradas duplicadas y rangos de horarios.
-   */
-  /**
-   * Procesa el envío del formulario para crear una nueva franja horaria o actualizar una existente.
-   * Realiza validación de entradas duplicadas, rangos de horarios y dependencias activas.
+   * Realiza validación de entradas duplicadas, rangos de horarios, dependencias activas,
+   * y bloquea peticiones si no hay cambios reales.
    */
   saveTime(): void {
     if (this.timeForm.invalid) {
@@ -124,21 +121,26 @@ export default class ManagementTimeGlobal implements OnInit {
       this.showTranslatedMessage('MANAGEMENT_SCHEDULES.MESSAGES.FILL_FIELDS', 'error');
       return;
     }
-
     if (this.isLoading()) return;
-
     const rawValue = this.timeForm.getRawValue();
     const timeValue = rawValue.time ?? '';
     const dayValue = rawValue.day ?? '';
     const user = this.authService.currentUser();
-
     if (!user?.id_user) return;
+    if (this.isEditing && this.originalTimeSlot) {
+      const timeChanged = timeValue !== this.originalTimeSlot.time;
+      const dayChanged = dayValue !== this.originalTimeSlot.week_day;
+      if (!timeChanged && !dayChanged) {
+        this.showTranslatedMessage('MANAGEMENT_SCHEDULES.MESSAGES.NO_CHANGES', 'success');
+        this.resetForm();
+        return;
+      }
+    }
 
     if (!validDays.includes(dayValue.toLowerCase())) {
       this.showTranslatedMessage('MANAGEMENT_SCHEDULES.MESSAGES.INVALID_DAY', 'error');
       return;
     }
-
     const [hoursStr, minutesStr] = timeValue.split(':');
     const h = parseInt(hoursStr, 10);
     const m = parseInt(minutesStr, 10);
@@ -152,7 +154,6 @@ export default class ManagementTimeGlobal implements OnInit {
       this.showTranslatedMessage('MANAGEMENT_SCHEDULES.MESSAGES.INVALID_MINUTES', 'error');
       return;
     }
-
     this.isLoading.set(true);
     const excludeId = this.isEditing && this.currentTimeId ? this.currentTimeId : undefined;
 
@@ -222,6 +223,7 @@ export default class ManagementTimeGlobal implements OnInit {
         }
       });
   }
+
   /**
    * Prepara el formulario para editar una franja horaria existente.
    * @param timeSlot El registro de tiempo a editar.
@@ -229,6 +231,7 @@ export default class ManagementTimeGlobal implements OnInit {
   editTime(timeSlot: TimeModel): void {
     this.isEditing = true;
     this.currentTimeId = timeSlot.id_time!;
+    this.originalTimeSlot = timeSlot;
     this.timeForm.patchValue({
       time: timeSlot.time,
       day: timeSlot.week_day,
@@ -247,7 +250,7 @@ export default class ManagementTimeGlobal implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(async (hasDependencies) => {
         if (hasDependencies) {
-          this.translate.get('MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_OFFERS').subscribe((msg) => {
+          this.translate.get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_HAS_OFFERS').subscribe((msg) => {
             this.messageService.showMessage(msg, 'error');
           });
           this.cd.markForCheck();
@@ -293,6 +296,7 @@ export default class ManagementTimeGlobal implements OnInit {
   resetForm(): void {
     this.isEditing = false;
     this.currentTimeId = null;
+    this.originalTimeSlot = null;
     this.timeForm.reset({
       time: '',
       day: '',

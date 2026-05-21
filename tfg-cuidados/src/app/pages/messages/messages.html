@@ -11,7 +11,7 @@
   </h1>
 
   <header class="messages-page-btn-container">
-    <button class="messages-btn-new-message group" (click)="writeMessage()">
+    <button class="messages-btn-new-message group flex-1 w-full" (click)="writeMessage()">
       <svg
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -35,6 +35,7 @@
       (click)="applyFilter('received')"
       variant="primary"
       [label]="'MESSAGES_PAGE.RECEIVED' | translate"
+      class="flex-1 w-full"
     >
     </app-button>
 
@@ -42,10 +43,11 @@
       variant="primary"
       (click)="applyFilter('sent')"
       [label]="'MESSAGES_PAGE.SENT' | translate"
+      class="flex-1 w-full"
     >
     </app-button>
     <app-dropdown
-      class="w-38 2xl:w-[300px] shrink-0"
+      class="w-full shrink-0 flex-1"
       [label]="'MESSAGES_PAGE.SORT_LABEL' | translate"
       [options]="[
         'MESSAGES_PAGE.SORT_OPTIONS.DATE_DESCENDANT',
