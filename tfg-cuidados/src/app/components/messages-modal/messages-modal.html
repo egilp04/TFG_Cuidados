@@ -1,56 +1,95 @@
-<section class="message-modal-container" role="dialog" aria-modal="true" [attr.aria-label]="
+<section
+  class="message-modal-container"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-label]="
     (data.mode === 'writeMessage' ? 'MESSAGES_MODAL.TITLE_WRITE' : 'MESSAGES_MODAL.TITLE_VIEW')
       | translate
-  ">
+  "
+>
   <header class="header-modal">
-    <button mat-dialog-close [attr.aria-label]="'MESSAGES_MODAL.ACCESSIBILITY.CLOSE' | translate"
-      class="modal-close-btn">
+    <button
+      mat-dialog-close
+      [attr.aria-label]="'MESSAGES_MODAL.ACCESSIBILITY.CLOSE' | translate"
+      class="modal-close-btn"
+    >
       <app-close-btn></app-close-btn>
     </button>
   </header>
 
   <main class="message-modal-form-container" [formGroup]="messageForm">
     @if (data.mode === 'writeMessage') {
-    <div class="messages-form-select-container">
-      <label for="receiver" class="messages-form-select-label">
-        {{ 'MESSAGES_MODAL.LABELS.RECEIVER' | translate }}
-      </label>
-      <div class="relative w-full">
-        <select id="receiver" formControlName="receiver" class="messages-form-select"
-          [attr.aria-invalid]="getCtrl('receiver').invalid && getCtrl('receiver').touched">
-          <option value="" disabled selected class="select-option-disabled">
-            {{ 'MESSAGES_MODAL.PLACEHOLDERS.SELECT_RECEIVER' | translate }}
-          </option>
-          @for (receiver of receivers; track $index) {
-          <option [value]="receiver" class="messages-form-options">{{ receiver }}</option>
+      <div class="messages-form-select-container">
+        <label for="receiver" class="messages-form-select-label">
+          {{ 'MESSAGES_MODAL.LABELS.RECEIVER' | translate }}
+        </label>
+        <div class="relative w-full">
+          <select
+            id="receiver"
+            formControlName="receiver"
+            class="messages-form-select"
+            [class.text-gray-400]="!messageForm.get('receiver')?.value"
+            [class.text-black]="!!messageForm.get('receiver')?.value"
+            [attr.aria-invalid]="getCtrl('receiver').invalid && getCtrl('receiver').touched"
+          >
+            <option value="" disabled selected class="select-option-disabled">
+              {{ 'MESSAGES_MODAL.PLACEHOLDERS.SELECT_RECEIVER' | translate }}
+            </option>
+            @for (receiver of receivers; track $index) {
+              <option [value]="receiver" class="messages-form-options">{{ receiver }}</option>
+            }
+          </select>
+
+          @if (!data.direct) {
+            <div class="messages-form-select-arrow">
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
           }
-        </select>
-
-        @if(!data.direct){
-        <div class="messages-form-select-arrow">
-          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
         </div>
-        }
-
       </div>
-    </div>
 
-    <app-inputs name="topic" [label]="'MESSAGES_MODAL.LABELS.TOPIC' | translate" [control]="getCtrl('topic')"
-      type="text">
-    </app-inputs>
+      <app-inputs
+        name="topic"
+        [label]="'MESSAGES_MODAL.LABELS.TOPIC' | translate"
+        [control]="getCtrl('topic')"
+        type="text"
+      >
+      </app-inputs>
     } @else {
-    <app-inputs name="sender" [label]="'MESSAGES_MODAL.LABELS.SENDER' | translate" [control]="getCtrl('sender')"
-      type="text">
-    </app-inputs>
-    <app-inputs name="receiver" [label]="'MESSAGES_MODAL.LABELS.RECEIVER' | translate" [control]="getCtrl('receiver')"
-      type="text">
-    </app-inputs>
-    <app-inputs name="topic" [label]="'MESSAGES_MODAL.LABELS.TOPIC' | translate" [control]="getCtrl('topic')"
-      type="text">
-    </app-inputs>
+      <app-inputs
+        name="sender"
+        [label]="'MESSAGES_MODAL.LABELS.SENDER' | translate"
+        [control]="getCtrl('sender')"
+        type="text"
+      >
+      </app-inputs>
+      <app-inputs
+        name="receiver"
+        [label]="'MESSAGES_MODAL.LABELS.RECEIVER' | translate"
+        [control]="getCtrl('receiver')"
+        type="text"
+      >
+      </app-inputs>
+      <app-inputs
+        name="topic"
+        [label]="'MESSAGES_MODAL.LABELS.TOPIC' | translate"
+        [control]="getCtrl('topic')"
+        type="text"
+      >
+      </app-inputs>
     }
 
     <div class="message-modal-text-container">
@@ -58,18 +97,28 @@
         {{ 'MESSAGES_MODAL.LABELS.MESSAGE_CONTENT' | translate }}
       </label>
 
-      <textarea id="message-content" [formControl]="getCtrl('content')" class="message-modal-textarea transition-colors"
-        [placeholder]="'MESSAGES_MODAL.PLACEHOLDERS.WRITE_HERE' | translate" [attr.aria-required]="true"
+      <textarea
+        id="message-content"
+        [formControl]="getCtrl('content')"
+        class="message-modal-textarea transition-colors"
+        [placeholder]="'MESSAGES_MODAL.PLACEHOLDERS.WRITE_HERE' | translate"
+        [attr.aria-required]="true"
         [attr.aria-invalid]="getCtrl('content').invalid && getCtrl('content').touched"
-        [class.border-red-500]="getCtrl('content').invalid && getCtrl('content').touched"></textarea>
+        [class.border-red-500]="getCtrl('content').invalid && getCtrl('content').touched"
+      ></textarea>
     </div>
     @if (data.mode === 'writeMessage') {
-    <div class="flex justify-center mt-4">
-      <app-button [label]="'MESSAGES_MODAL.BTN.SEND' | translate" variant="primary" size="lg"
-        [disabled]="messageForm.invalid" (click)="sendMessage()"
-        [attr.aria-label]="'MESSAGES_MODAL.ACCESSIBILITY.SEND_DESC' | translate">
-      </app-button>
-    </div>
+      <div class="flex justify-center mt-4">
+        <app-button
+          [label]="'MESSAGES_MODAL.BTN.SEND' | translate"
+          variant="primary"
+          size="lg"
+          [disabled]="messageForm.invalid"
+          (click)="sendMessage()"
+          [attr.aria-label]="'MESSAGES_MODAL.ACCESSIBILITY.SEND_DESC' | translate"
+        >
+        </app-button>
+      </div>
     }
   </main>
 </section>
