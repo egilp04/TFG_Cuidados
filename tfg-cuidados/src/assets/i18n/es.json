@@ -761,7 +761,7 @@
       "TOPIC": "Asunto",
       "SENDER": "Emisor",
       "RECEIVER": "Receptor",
-      "MESSAGE_CONTENT": "MENSAJE"
+      "MESSAGE_CONTENT": "Mensaje"
     },
     "PLACEHOLDERS": {
       "WRITE_HERE": "Escribe aquí el mensaje...",

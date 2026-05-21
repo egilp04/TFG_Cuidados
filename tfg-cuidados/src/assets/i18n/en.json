@@ -762,7 +762,7 @@
       "TOPIC": "Topic",
       "SENDER": "Sender",
       "RECEIVER": "Receiver",
-      "MESSAGE_CONTENT": "MESSAGE"
+      "MESSAGE_CONTENT": "Message"
     },
     "PLACEHOLDERS": {
       "WRITE_HERE": "Write your message here...",
