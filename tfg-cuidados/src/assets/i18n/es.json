@@ -320,7 +320,8 @@
       "ERROR_DUPLICATE": "Ese servicio ya existe",
       "ERROR_GENERIC": "Error al procesar la solicitud",
       "ERROR_DELETE": "Error al eliminar",
-      "ERROR_HAS_OFFERS": "Las ofertas asociadas deben ser eliminadas antes"
+      "ERROR_HAS_OFFERS": "Las ofertas asociadas deben ser eliminadas antes",
+      "NO_CHANGES": "No se han detectado modificaciones en el servicio."
     }
   },
   "MANAGEMENT_SCHEDULES": {
@@ -372,7 +373,8 @@
       "SUCCESS_DELETE": "Horario eliminado",
       "ERROR_DUPLICATE": "Ya existe un horario para {{day}} a las {{time}}",
       "ERROR_GENERIC": "Error al procesar la solicitud",
-      "ERROR_HAS_OFFERS": "Las ofertas asociadas deben ser eliminadas antes"
+      "ERROR_HAS_OFFERS": "Las ofertas asociadas deben ser eliminadas antes",
+      "NO_CHANGES": "No se han detectado modificaciones en el horario."
     }
   },
   "MANUALS": {
