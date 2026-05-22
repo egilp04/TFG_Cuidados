@@ -77,7 +77,7 @@
           [label]="'LOGIN_MODAL.BTN.FORGOT' | translate"
           variant="secondary"
           type="button"
-          (click)="currentMode = 'recover'"
+          (click)="currentMode = 'recover'; clearModalFeedback()"
         ></app-button>
         <app-button
           [label]="'LOGIN_MODAL.BTN.REGISTER' | translate"
