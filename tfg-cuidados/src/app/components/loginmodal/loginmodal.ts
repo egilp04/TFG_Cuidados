@@ -216,7 +216,7 @@ export class Loginmodal implements OnInit {
   /**
    * Muestra un mensaje local en el modal y lo oculta automáticamente
    */
-  showModalFeedback(text: string, type: 'success' | 'error' = 'success', duration: number = 3000): void {
+  showModalFeedback(text: string, type: 'success' | 'error' = 'success', duration: number = 1500): void {
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
     }
