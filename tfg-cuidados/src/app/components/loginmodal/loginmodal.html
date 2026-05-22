@@ -159,20 +159,21 @@
     </main>
   }
 
-  @if (messageService.messageData(); as data) {
+  @if (modalFeedback) {
     <section class="message-noti" role="status" aria-live="polite">
-      <div
+      <div 
+        class="message-noti-text border"
         [ngClass]="{
-          'text-red-500': data.type === 'error',
-          'text-primary': data.type === 'success',
+          'text-red-500 border-red-200': modalFeedback.type === 'error',
+          'text-primary border-green-200': modalFeedback.type === 'success'
         }"
-        class="message-noti-text"
       >
         <span class="sr-only">
-          {{ (data.type === 'error' ? 'COMMON.ERROR' : 'COMMON.SUCCESS') | translate }}:
+          {{ (modalFeedback.type === 'error' ? 'COMMON.ERROR' : 'COMMON.SUCCESS') | translate }}:
         </span>
-        {{ data.message }}
+        {{ modalFeedback.text }}
       </div>
     </section>
   }
+  
 </section>

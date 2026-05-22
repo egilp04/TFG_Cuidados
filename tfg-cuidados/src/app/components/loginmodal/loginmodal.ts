@@ -51,7 +51,6 @@ export class Loginmodal implements OnInit {
   private cd = inject(ChangeDetectorRef);
   private authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
-  public messageService = inject(MessageService);
   private router = inject(Router);
   private translate = inject(TranslateService);
 
@@ -95,49 +94,43 @@ export class Loginmodal implements OnInit {
    * Procesa el intento de autenticación y navega al usuario según su rol.
    */
   isLoading = false;
+  public modalFeedback: { text: string; type: 'error' | 'success' } | null = null;
+  private timeoutId: any;
 
-  toEnterApp(): void {
+ toEnterApp(): void {
     if (this.loginForm.valid) {
       this.isLoading = true;
       this.cd.markForCheck();
-
       const rawForm = this.loginForm.getRawValue();
-      const email = rawForm.email ?? '';
-      const password = rawForm.password ?? '';
-
       this.authService
-        .signIn(email, password)
+        .signIn(rawForm.email ?? '', rawForm.password ?? '')
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: () => {
             const user = this.authService.currentUser();
-            const role = user?.rol;
-            const route = getHomeRouteByRole(role);
+            const route = getHomeRouteByRole(user?.rol);
             this.dialogRef.close({ loginSuccess: true });
             this.dialog.closeAll();
-            setTimeout(() => {
-              this.router.navigate([route]);
-            }, 100);
+            setTimeout(() => this.router.navigate([route]), 100);
           },
           error: (err: Error) => {
             this.isLoading = false;
-
-            console.error('Error al iniciar sesión:', err);
             if (err.message && err.message.includes('USER_INACTIVE')) {
-              this.messageService.showMessage(
-                this.translate.instant('LOGIN_MODAL.FEEDBACK.USER_INACTIVE'),
+              this.showModalFeedback(
+                this.translate.instant('LOGIN_MODAL.FEEDBACK.USER_INACTIVE'), 
                 'error'
               );
             }
             else if (err.message && err.message.includes('Email not confirmed')) {
-              this.messageService.showMessage(
-                this.translate.instant('LOGIN_MODAL.FEEDBACK.EMAIL_NOT_CONFIRMED'),
-                'error',
+              this.showModalFeedback(
+                this.translate.instant('LOGIN_MODAL.FEEDBACK.EMAIL_NOT_CONFIRMED'), 
+                'error'
               );
+
             } else {
-              this.messageService.showMessage(
-                this.translate.instant('LOGIN_MODAL.FEEDBACK.LOGIN_ERROR'),
-                'error',
+              this.showModalFeedback(
+                this.translate.instant('LOGIN_MODAL.FEEDBACK.LOGIN_ERROR'), 
+                'error'
               );
             }
             this.cd.markForCheck();
@@ -145,9 +138,9 @@ export class Loginmodal implements OnInit {
         });
     } else {
       this.loginForm.markAllAsTouched();
-      this.messageService.showMessage(
-        this.translate.instant('LOGIN_MODAL.FEEDBACK.FILL_FIELDS'),
-        'error',
+      this.showModalFeedback(
+        this.translate.instant('LOGIN_MODAL.FEEDBACK.FILL_FIELDS'), 
+        'error'
       );
       this.cd.markForCheck();
     }
@@ -158,9 +151,9 @@ export class Loginmodal implements OnInit {
    */
   toRecoverPasswd(): void {
     if (this.emailCtrl.invalid) {
-      this.messageService.showMessage(
-        this.translate.instant('LOGIN_MODAL.FEEDBACK.INVALID_EMAIL'),
-        'error',
+      this.showModalFeedback(
+        this.translate.instant('LOGIN_MODAL.FEEDBACK.INVALID_EMAIL'), 
+        'error'
       );
       this.emailCtrl.markAsTouched();
       this.cd.markForCheck();
@@ -173,19 +166,18 @@ export class Loginmodal implements OnInit {
     this.authService.check_user_email_active(email).subscribe({
       next: (exists: boolean) => {
         if (!exists) {
-          this.messageService.showMessage(
-            this.translate.instant('LOGIN_MODAL.FEEDBACK.EMAIL_NOT_FOUND'),
-            'error',
+            this.showModalFeedback(
+            this.translate.instant('LOGIN_MODAL.FEEDBACK.EMAIL_NOT_FOUND'), 
+            'error'
           );
           return;
         }
         this.processPasswordRecovery(email);
       },
       error: (err: Error) => {
-        console.error(err);
-        this.messageService.showMessage(
-          this.translate.instant('LOGIN_MODAL.FEEDBACK.CONN_ERROR'),
-          'error',
+        this.showModalFeedback(
+          this.translate.instant('LOGIN_MODAL.FEEDBACK.CONN_ERROR'), 
+          'error'
         );
       },
     });
@@ -201,12 +193,12 @@ export class Loginmodal implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
-          this.messageService.showMessage(
-            this.translate.instant('LOGIN_MODAL.FEEDBACK.LINK_SENT'),
-            'success',
+          this.showModalFeedback(
+            this.translate.instant('LOGIN_MODAL.FEEDBACK.LINK_SENT'), 
+            'success'
           );
           setTimeout(() => {
-            this.messageService.clear();
+            this.modalFeedback = null;
             this.currentMode = 'login';
             this.cd.detectChanges();
           }, 3000);
@@ -215,9 +207,35 @@ export class Loginmodal implements OnInit {
         error: (err: Error) => {
           console.error(err);
           const errorMsg = err.message || this.translate.instant('LOGIN_MODAL.FEEDBACK.CONN_ERROR');
-          this.messageService.showMessage(errorMsg, 'error');
+          this.showModalFeedback(errorMsg, 'error');
           this.cd.markForCheck();
         },
       });
+  }
+  
+  /**
+   * Muestra un mensaje local en el modal y lo oculta automáticamente
+   */
+  showModalFeedback(text: string, type: 'success' | 'error' = 'success', duration: number = 3000): void {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+    this.modalFeedback = { text, type };
+    this.cd.markForCheck();
+    this.timeoutId = setTimeout(() => {
+      this.clearModalFeedback();
+    }, duration);
+  }
+
+  /**
+   * Borra el mensaje local inmediatamente y limpia el temporizador
+   */
+  clearModalFeedback(): void {
+    this.modalFeedback = null;
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+    }
+    this.cd.markForCheck();
   }
 }
