@@ -53,7 +53,7 @@
   "MODALS": {
     "CANCEL_CONTRACT": {
       "TITLE": "Cancel Contract",
-      "MESSAGE": "Are you sure you want to cancel this service? This action cannot be undone.",
+      "MESSAGE": "Are you sure you want to cancel this service? This action cannot be undone",
       "CONFIRM": "Yes, cancel",
       "CLOSE": "No, close"
     }
@@ -145,10 +145,10 @@
       "SEND": "Contact Us"
     },
     "ERRORS": {
-      "NAME": "Name must be at least 3 characters long.",
-      "EMAIL": "Please enter a valid email address.",
-      "TOPIC": "Topic is required (min. 6 characters).",
-      "MESSAGE": "Message needs to be longer."
+      "NAME": "Name must be at least 3 characters long",
+      "EMAIL": "Please enter a valid email address",
+      "TOPIC": "Topic is required (min. 6 characters)",
+      "MESSAGE": "Message needs to be longer"
     }
   },
   "CONTRACTS": {
@@ -262,18 +262,18 @@
   },
   "MESSAGES": {
     "SUCCESS": {
-      "CANCELCONTRACT": "The contract has been successfully cancelled.",
-      "SAVE": "Data saved successfully.",
+      "CANCELCONTRACT": "The contract has been successfully cancelled",
+      "SAVE": "Data saved successfully",
       "CONTACT": "Email sent successfully!",
-      "DELETE_USER": "Record deleted successfully."
+      "DELETE_USER": "Record deleted successfully"
     },
     "SENT": "Sent",
     "RECEIVED": "Received",
     "ERROR": {
-      "GENERIC": "An error occurred. Please try again later.",
-      "CANCELCONTRACT": "Error cancelling the contract.",
-      "CONTACT": "Email could not be sent, try it later.",
-      "DELETE_USER": "Error deleting record."
+      "GENERIC": "An error occurred. Please try again later",
+      "CANCELCONTRACT": "Error cancelling the contract",
+      "CONTACT": "Email could not be sent, try it later",
+      "DELETE_USER": "Error deleting record"
     },
     "TITLE": {
       "RECEIVED": "Received",
@@ -358,11 +358,11 @@
       "DELETE": "Cancel"
     },
     "MESSAGES": {
-      "FILL_FIELDS": "Please fill in all fields correctly.",
-      "INVALID_DAY": "The selected day is invalid.",
-      "INVALID_TIME_RANGE": "The hour must be between 00 and 23.",
+      "FILL_FIELDS": "Please fill in all fields correctly",
+      "INVALID_DAY": "The selected day is invalid",
+      "INVALID_TIME_RANGE": "The hour must be between 00 and 23",
       "INVALID_MINUTES": "Minutes must be :00 or :30.",
-      "CONFIRM_DELETE": "Do you want to delete this schedule? Associated services might be affected.",
+      "CONFIRM_DELETE": "Do you want to delete this schedule? Associated services might be affected",
       "SUCCESS_CREATE": "Schedule created successfully",
       "SUCCESS_UPDATE": "Schedule updated successfully",
       "SUCCESS_DELETE": "Schedule deleted",
@@ -370,7 +370,7 @@
       "ERROR_GENERIC": "Error processing the request",
       "ERROR_DELETE": "Error con el borrado",
       "ERROR_HAS_OFFERS": "Offers associated must be deleted first",
-      "NO_CHANGES": "No data modified."
+      "NO_CHANGES": "No data modified"
     },
     "LIST": {
       "TITLE": "Time list",
@@ -443,7 +443,7 @@
       "EMAIL_USED": "Email already in use",
       "UPDATE_SUCCESS": "Profile updated successfully!",
       "UPDATE_ERROR": "Error updating data.",
-      "DELETE_SUCCESS": "User deleted successfully.",
+      "DELETE_SUCCESS": "User deleted successfully",
       "NO_CHANGES": "No data modified."
     },
     "LABELS": {
@@ -502,8 +502,8 @@
     },
     "ALERTS": {
       "CONFIRM_DELETE": "Are you sure you want to delete this notification?",
-      "DELETE_SUCCESS": "The notificacion has been deleted.",
-      "DELETE_ERROR": "Could not delete the notification.",
+      "DELETE_SUCCESS": "The notificacion has been deleted",
+      "DELETE_ERROR": "Could not delete the notification",
       "VIEW_ERROR": "Cannot view this notification at this time"
     }
   },
@@ -514,18 +514,18 @@
       "SUBMIT_BTN": "Save the new password"
     },
     "TITLE": "Reset Password",
-    "DESCRIPTION": "Enter your new password to recover access.",
+    "DESCRIPTION": "Enter your new password to recover access",
     "LABEL_NEW_PASS": "New Password",
     "BTN_SUBMIT": "Submit",
     "ERRORS": {
       "REQUIRED": "Password is required.",
       "MIN_LENGTH": "Minimum 6 characters required.",
-      "PATTERN": "Must contain letters, numbers, and special characters.",
+      "PATTERN": "Must contain letters, numbers, and special characters",
       "INVALID": "Invalid field"
     },
     "TOAST": {
-      "SUCCESS": "Password updated! Welcome back.",
-      "ERROR": "The link has expired or an error occurred, try later or use another password, remember new password must be different from the old one."
+      "SUCCESS": "Password updated! Welcome back",
+      "ERROR": "The link has expired or an error occurred, try later or use another password, remember new password must be different from the old one"
     },
     "HOME": "Start"
   },
@@ -537,13 +537,13 @@
       "LOCATION": "Address"
     },
     "MESSAGES": {
-      "CONNECTION_ERROR": "Connection error.",
-      "LOGIN_REQUIRED": "You must log in to contract services.",
-      "LOGIN_MSG_REQUIRED": "Log in to send messages.",
-      "SELECT_SERVICE": "Please select a service and schedule.",
+      "CONNECTION_ERROR": "Connection error",
+      "LOGIN_REQUIRED": "You must log in to contract services",
+      "LOGIN_MSG_REQUIRED": "Log in to send messages",
+      "SELECT_SERVICE": "Please select a service and schedule",
       "CONFIRM_CONTRACT": "Do you wish to contract {{servicio}} for {{precio}}€?",
       "CONTRACT_SUCCESS": "Contract successfully created!Click in contracts to check it",
-      "CONTRACT_ERROR": "Error processing the contract.",
+      "CONTRACT_ERROR": "Error processing the contract",
       "ALREADY_CONTRACTED": "Already contracted"
     },
     "CARD": {
@@ -555,7 +555,7 @@
     "BTN_CONTRACT": "Hire",
     "BTN_SHOW_COMPANY": "Show companies",
     "LIST": {
-      "EMPTY": "No companies found matching your search criteria."
+      "EMPTY": "No companies found matching your search criteria"
     }
   },
   "SERVICES_BUSINESS": {
@@ -579,8 +579,8 @@
       "DESCRIPTION": "Description"
     },
     "MESSAGES": {
-      "DELETE_SUCCESS": "Service successfully deleted.",
-      "DELETE_ERROR": "Error deleting. Please try again later."
+      "DELETE_SUCCESS": "Service successfully deleted",
+      "DELETE_ERROR": "Error deleting. Please try again later"
     }
   },
   "CANCEL_MODAL": {
@@ -679,9 +679,9 @@
       "SELECTREGION": "Choose a community"
     },
     "MESSAGES": {
-      "SUCCESS": "Registration successful! Please check your email.",
-      "ERROR_EMAIL": "This email is already registered.",
-      "ERROR_GENERIC": "Error connecting to the server.",
+      "SUCCESS": "Registration successful! Please check your email",
+      "ERROR_EMAIL": "This email is already registered",
+      "ERROR_GENERIC": "Error connecting to the server",
       "SUCCESS_ADMIN": "Registration successful! You can go back to the user panel"
     },
     "LABELS": {
@@ -794,8 +794,8 @@
       "RESEND": "Resend register email"
     },
     "HINTS": {
-      "PASS_PATTERN": "Password must be at least 6 chars, letters, numbers and special characters.",
-      "RECOVER_DESC": "Enter your email and we will send you a link to reset your password.",
+      "PASS_PATTERN": "Password must be at least 6 chars, letters, numbers and special characters",
+      "RECOVER_DESC": "Enter your email and we will send you a link to reset your password",
       "EMAIL_ERROR": "Check the email, please"
     },
     "BTN": {
@@ -819,7 +819,7 @@
       "NO_ERROR": "Check your email again",
       "WITH_ERROR": "An error has been ocurred, contact with administrator",
       "EMAIL_NOT_FOUND": "Email not found",
-      "USER_INACTIVE": "Deactivated account. If you think this is a mistake, please contact support."
+      "USER_INACTIVE": "Deactivated account. If you think this is a mistake, please contact support"
     }
   },
   "FOOTER": {
@@ -986,19 +986,19 @@
     },
     "AUTH": {
       "ERRORS": {
-        "EMAIL_ALREADY_REGISTERED": "This email is already registered on the platform.",
-        "INVALID_LOGIN_CREDENTIALS": "The login credentials are incorrect.",
-        "USER_NOT_FOUND": "User not found in the system.",
-        "EMAIL_TAKEN": "This email is already taken.",
-        "TECHNICAL_ERROR": "Technical error while verifying the email.",
-        "EMAIL_EXISTS": "This email is already registered.",
-        "EMAIL_VALIDATION": "There was an error while trying to validate the email."
+        "EMAIL_ALREADY_REGISTERED": "This email is already registered on the platform",
+        "INVALID_LOGIN_CREDENTIALS": "The login credentials are incorrect",
+        "USER_NOT_FOUND": "User not found in the system",
+        "EMAIL_TAKEN": "This email is already taken",
+        "TECHNICAL_ERROR": "Technical error while verifying the email",
+        "EMAIL_EXISTS": "This email is already registered",
+        "EMAIL_VALIDATION": "There was an error while trying to validate the email"
       }
     },
     "NOTIFICATIONS": {
       "ADMIN": {
         "NEW_REGISTER_TITLE": "New Registration in CuidaDos",
-        "NEW_REGISTER_BODY": "User {{email}} has registered as {{rol}}."
+        "NEW_REGISTER_BODY": "User {{email}} has registered as {{rol}}"
       }
     },
     "COMUNICATION": {

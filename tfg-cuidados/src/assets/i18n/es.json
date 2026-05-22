@@ -145,10 +145,10 @@
       "SEND": "Contactar"
     },
     "ERRORS": {
-      "NAME": "El nombre debe tener al menos 3 caracteres.",
-      "EMAIL": "Introduce un correo electrónico válido.",
-      "TOPIC": "El motivo es obligatorio (mín. 6 caracteres).",
-      "MESSAGE": "El mensaje debe ser más extenso."
+      "NAME": "El nombre debe tener al menos 3 caracteres",
+      "EMAIL": "Introduce un correo electrónico válido",
+      "TOPIC": "El motivo es obligatorio (mín. 6 caracteres)",
+      "MESSAGE": "El mensaje debe ser más extenso"
     }
   },
   "CONTRACTS": {
@@ -263,18 +263,18 @@
   },
   "MESSAGES": {
     "SUCCESS": {
-      "CANCELCONTRACT": "El contrato ha sido cancelado con éxito.",
-      "SAVE": "Datos guardados correctamente.",
-      "CONTACT": "El mensaje ha sido enviado con éxito.",
-      "DELETE_USER": "Registro eliminado correctamente."
+      "CANCELCONTRACT": "El contrato ha sido cancelado con éxito",
+      "SAVE": "Datos guardados correctamente",
+      "CONTACT": "El mensaje ha sido enviado con éxito",
+      "DELETE_USER": "Registro eliminado correctamente"
     },
     "SENT": "Enviados",
     "RECEIVED": "Recibidos",
     "ERROR": {
-      "GENERIC": "Ha ocurrido un error. Inténtelo más tarde.",
+      "GENERIC": "Ha ocurrido un error. Inténtelo más tarde",
       "CANCELCONTRACT": "Error al cancelar el contrato.",
-      "CONTACT": "El mensjae no ha sido enviado, inténtelo más tarde.",
-      "DELETE_USER": "Error al eliminar el registro."
+      "CONTACT": "El mensjae no ha sido enviado, inténtelo más tarde",
+      "DELETE_USER": "Error al eliminar el registro"
     },
     "TITLE": {
       "RECEIVED": "Recibidos",
@@ -302,7 +302,7 @@
     "LIST": {
       "TITLE": "Listado de Servicios",
       "SEARCH": "Buscar por nombre, titulo o servicio",
-      "EMPTY": "No se han encontrado servicios."
+      "EMPTY": "No se han encontrado servicios"
     },
     "TABLE": {
       "NAME": "Nombre",
@@ -321,7 +321,7 @@
       "ERROR_GENERIC": "Error al procesar la solicitud",
       "ERROR_DELETE": "Error al eliminar",
       "ERROR_HAS_OFFERS": "Las ofertas asociadas deben ser eliminadas antes",
-      "NO_CHANGES": "No se han detectado modificaciones en el servicio."
+      "NO_CHANGES": "No se han detectado modificaciones en el servicio"
     }
   },
   "MANAGEMENT_SCHEDULES": {
@@ -363,18 +363,18 @@
       "EMPTY": "Sin horarios encontrados"
     },
     "MESSAGES": {
-      "FILL_FIELDS": "Rellene todos los campos correctamente.",
-      "INVALID_DAY": "El día seleccionado no es válido.",
-      "INVALID_TIME_RANGE": "La hora debe estar entre las 00 y las 23.",
-      "INVALID_MINUTES": "Los minutos deben ser :00 o :30.",
-      "CONFIRM_DELETE": "¿Deseas eliminar este horario? Los servicios asociados podrían verse afectados.",
+      "FILL_FIELDS": "Rellene todos los campos correctamente",
+      "INVALID_DAY": "El día seleccionado no es válido",
+      "INVALID_TIME_RANGE": "La hora debe estar entre las 00 y las 23",
+      "INVALID_MINUTES": "Los minutos deben ser :00 o :30",
+      "CONFIRM_DELETE": "¿Deseas eliminar este horario? Los servicios asociados podrían verse afectados",
       "SUCCESS_CREATE": "Horario creado correctamente",
       "SUCCESS_UPDATE": "Horario actualizado correctamente",
       "SUCCESS_DELETE": "Horario eliminado",
       "ERROR_DUPLICATE": "Ya existe un horario para {{day}} a las {{time}}",
       "ERROR_GENERIC": "Error al procesar la solicitud",
       "ERROR_HAS_OFFERS": "Las ofertas asociadas deben ser eliminadas antes",
-      "NO_CHANGES": "No se han detectado modificaciones en el horario."
+      "NO_CHANGES": "No se han detectado modificaciones en el horario"
     }
   },
   "MANUALS": {
@@ -426,8 +426,8 @@
     },
     "ALERTS": {
       "CONFIRM_DELETE": "¿Seguro que quieres eliminar este mensaje?",
-      "DELETE_SUCCESS": "El mensaje ha sido eliminado.",
-      "DELETE_ERROR": "No se pudo eliminar el mensaje.",
+      "DELETE_SUCCESS": "El mensaje ha sido eliminado",
+      "DELETE_ERROR": "No se pudo eliminar el mensaje",
       "VIEW_ERROR": "No se puede ver este mensaje en este momento"
     }
   },
@@ -481,13 +481,13 @@
   },
   "SEARCH_BUSINESS": {
     "MESSAGES": {
-      "CONNECTION_ERROR": "Error de conexión.",
-      "LOGIN_REQUIRED": "Debes iniciar sesión para contratar.",
-      "LOGIN_MSG_REQUIRED": "Inicia sesión para enviar mensajes.",
-      "SELECT_SERVICE": "Por favor, selecciona un servicio y horario.",
+      "CONNECTION_ERROR": "Error de conexión",
+      "LOGIN_REQUIRED": "Debes iniciar sesión para contratar",
+      "LOGIN_MSG_REQUIRED": "Inicia sesión para enviar mensajes",
+      "SELECT_SERVICE": "Por favor, selecciona un servicio y horario",
       "CONFIRM_CONTRACT": "¿Deseas contratar {{servicio}} por {{precio}}€?",
       "CONTRACT_SUCCESS": "¡Contrato realizado con éxito! Consúltalo en el apartado de contratos",
-      "CONTRACT_ERROR": "Error al procesar la contratación.",
+      "CONTRACT_ERROR": "Error al procesar la contratación",
       "ALREADY_CONTRACTED": "Ya contratado"
     },
     "CARD": {
@@ -499,7 +499,7 @@
     "BTN_CONTRACT": "Contratar",
     "BTN_SHOW_COMPANY": "Ver empresas",
     "LIST": {
-      "EMPTY": "No se encontraron empresas con los criterios de búsqueda."
+      "EMPTY": "No se encontraron empresas con los criterios de búsqueda"
     },
     "ACCESSIBILITY": {
       "BACK_NAV": "Volver a la pantalla anterior",
@@ -529,8 +529,8 @@
       "DESCRIPTION": "Descripcion"
     },
     "MESSAGES": {
-      "DELETE_SUCCESS": "El servicio ha sido eliminado con éxito.",
-      "DELETE_ERROR": "Error al eliminar. Inténtelo más tarde."
+      "DELETE_SUCCESS": "El servicio ha sido eliminado con éxito",
+      "DELETE_ERROR": "Error al eliminar. Inténtelo más tard."
     }
   },
   "CANCEL_MODAL": {
@@ -622,9 +622,9 @@
   "SEARCH_PLACEHOLDER": "Buscar por nombre...",
   "REGISTER": {
     "MESSAGES": {
-      "SUCCESS": "¡Registro realizado con éxito! Revisa tu email.",
-      "ERROR_EMAIL": "El correo electrónico ya está registrado.",
-      "ERROR_GENERIC": "Error, inténtalo de nuevo.",
+      "SUCCESS": "¡Registro realizado con éxito! Revisa tu email",
+      "ERROR_EMAIL": "El correo electrónico ya está registrado",
+      "ERROR_GENERIC": "Error, inténtalo de nuevo",
       "SUCCESS_ADMIN": "Registro realizado con éxito, ya puedes regresar al panel"
     },
     "PLACEHOLDER": {
@@ -720,8 +720,8 @@
     "MESSAGES": {
       "EMAIL_USED": "Email ya en uso",
       "UPDATE_SUCCESS": "¡Perfil actualizado con éxito!",
-      "UPDATE_ERROR": "Error al actualizar los datos.",
-      "DELETE_SUCCESS": "Usuario eliminado correctamente.",
+      "UPDATE_ERROR": "Error al actualizar los datos",
+      "DELETE_SUCCESS": "Usuario eliminado correctamente",
       "NO_CHANGES": "Sin datos modificados."
     },
     "LABELS": {
@@ -812,13 +812,13 @@
       "LOGIN_ERROR": "Usuario o contraseña incorrectos",
       "FILL_FIELDS": "Por favor, rellene los campos correctamente",
       "INVALID_EMAIL": "Introduce un email válido para recuperar",
-      "LINK_SENT": "Enlace enviado. Revisa tu correo.",
+      "LINK_SENT": "Enlace enviado. Revisa tu correo",
       "CONN_ERROR": "Error de conexión",
-      "EMAIL_NOT_CONFIRMED": "Por favor, revisa tu bandeja de entrada y confirma tu email antes de entrar.",
+      "EMAIL_NOT_CONFIRMED": "Por favor, revisa tu bandeja de entrada y confirma tu email antes de entrar",
       "NO_ERROR": "Revise su bandeja de correos",
       "WITH_ERROR": "Ha ocurrido un error, contacte con el administrador",
       "EMAIL_NOT_FOUND": "Email no encontrado",
-      "USER_INACTIVE": "Cuenta desactivada. Si crees que es un error, contacta con soporte."
+      "USER_INACTIVE": "Cuenta desactivada. Si crees que es un error, contacta con soporte"
     }
   },
   "FOOTER": {
@@ -986,19 +986,19 @@
     },
     "AUTH": {
       "ERRORS": {
-        "EMAIL_ALREADY_REGISTERED": "Este correo electrónico ya está registrado en la plataforma.",
-        "INVALID_LOGIN_CREDENTIALS": "Las credenciales de acceso son incorrectas.",
-        "USER_NOT_FOUND": "Usuario no encontrado en el sistema.",
-        "EMAIL_TAKEN": "Este correo electrónico ya está registrado.",
-        "TECHNICAL_ERROR": "Error técnico al verificar el correo.",
-        "EMAIL_EXISTS": "Este correo electrónico ya está registrado.",
-        "EMAIL_VALIDATION": "Hay un error validando el email, inténtalo más tarde."
+        "EMAIL_ALREADY_REGISTERED": "Este correo electrónico ya está registrado en la plataforma",
+        "INVALID_LOGIN_CREDENTIALS": "Las credenciales de acceso son incorrectas",
+        "USER_NOT_FOUND": "Usuario no encontrado en el sistema",
+        "EMAIL_TAKEN": "Este correo electrónico ya está registrado",
+        "TECHNICAL_ERROR": "Error técnico al verificar el correo",
+        "EMAIL_EXISTS": "Este correo electrónico ya está registrado",
+        "EMAIL_VALIDATION": "Hay un error validando el email, inténtalo más tarde"
       }
     },
     "NOTIFICATIONS": {
       "ADMIN": {
         "NEW_REGISTER_TITLE": "Nuevo Registro en CuidaDos",
-        "NEW_REGISTER_BODY": "El usuario {{email}} se ha registrado como {{rol}}."
+        "NEW_REGISTER_BODY": "El usuario {{email}} se ha registrado como {{rol}}"
       }
     },
     "COMUNICATION": { "INVALID_TYPE": "Tipo de comunicacion inválida" }
