@@ -66,6 +66,7 @@ export default class ManagementServicesGlobal implements OnInit {
   public isLoading = signal(false);
   public isEditing = false;
   public currentServiceId: string | null = null;
+  public originalService: ServiceModel | null = null;
 
   public controlFilterItem = new FormControl<string>('');
 
@@ -123,11 +124,8 @@ export default class ManagementServicesGlobal implements OnInit {
 
   /**
    * Guarda un nuevo servicio o actualiza uno existente.
-   * Incluye validación de nombres duplicados.
-   */
-  /**
-   * Guarda un nuevo servicio o actualiza uno existente.
-   * Incluye validación de nombres duplicados y comprobación de dependencias activas.
+   * Incluye validación de nombres duplicados, comprobación de dependencias activas,
+   * y un escudo para evitar peticiones si no hay cambios reales.
    */
   saveService(): void {
     if (this.serviceForm.invalid) {
@@ -136,8 +134,24 @@ export default class ManagementServicesGlobal implements OnInit {
     }
     if (this.isLoading()) return;
 
-    this.isLoading.set(true);
     const rawValue = this.serviceForm.getRawValue();
+
+    if (this.isEditing && this.originalService) {
+      const hasChanges = Object.keys(rawValue).some((key) => {
+        const formValue = (rawValue as any)[key];
+        const originalValue = (this.originalService as any)[key];
+        return formValue !== originalValue;
+      });
+
+      if (!hasChanges) {
+        this.translate.get('MANAGEMENT_SERVICES.MESSAGES.NO_CHANGES').subscribe((msg) => {
+          this.messageService.showMessage(msg, 'success');
+        });
+        this.resetForm();
+        return;
+      }
+    }
+    this.isLoading.set(true);
     const name = (rawValue.name ?? '').trim();
     const serviceType = (rawValue.type_service ?? '').trim();
     const description = (rawValue.description ?? '').trim();
@@ -153,6 +167,7 @@ export default class ManagementServicesGlobal implements OnInit {
         takeUntilDestroyed(this.destroyRef),
         switchMap((exists: boolean) => {
           if (exists) return throwError(() => new Error('DUPLICATE_SERVICE'));
+
           if (this.isEditing && this.currentServiceId) {
             return this.serviceService.hasActiveServiceTimes(this.currentServiceId).pipe(
               switchMap((hasDependencies) => {
@@ -213,6 +228,7 @@ export default class ManagementServicesGlobal implements OnInit {
         }
       });
   }
+
   /**
    * Prepara el formulario con los datos del servicio seleccionado para edición.
    * @param service El modelo de servicio a editar.
@@ -220,6 +236,8 @@ export default class ManagementServicesGlobal implements OnInit {
   editService(service: ServiceModel): void {
     this.isEditing = true;
     this.currentServiceId = service.id_service!;
+    this.originalService = service;
+
     this.serviceForm.patchValue({
       name: service.name,
       type_service: service.type_service,
@@ -285,9 +303,11 @@ export default class ManagementServicesGlobal implements OnInit {
   /**
    * Limpia el formulario y el estado de edición.
    */
+
   resetForm(): void {
     this.isEditing = false;
     this.currentServiceId = null;
+    this.originalService = null;
     this.serviceForm.reset();
     this.cd.markForCheck();
   }

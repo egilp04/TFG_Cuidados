@@ -18,22 +18,6 @@
       <app-close-btn></app-close-btn>
     </button>
   </header>
-  @if (messageService.messageData(); as data) {
-    <section class="message-noti" role="status" aria-live="polite">
-      <div
-        [ngClass]="{
-          'text-red-500': data.type === 'error',
-          'text-primary': data.type === 'success',
-        }"
-        class="message-noti-text"
-      >
-        <span class="sr-only">
-          {{ (data.type === 'error' ? 'COMMON.ERROR' : 'COMMON.SUCCESS') | translate }}:
-        </span>
-        {{ data.message }}
-      </div>
-    </section>
-  }
   <form [formGroup]="form" class="service-form-container">
     <div class="service-select-container">
       <label class="service-global-services" for="id_service">
@@ -45,6 +29,8 @@
           id="id_service"
           formControlName="id_service"
           class="service-form-select"
+          [class.text-gray-400]="!form.get('id_service')?.value"
+          [class.text-black]="!!form.get('id_service')?.value"
           [attr.aria-invalid]="form.get('id_service')?.invalid && form.get('id_service')?.touched"
         >
           <option value="" disabled selected class="select-option-disabled">
@@ -56,7 +42,7 @@
               {{ s.name }} - {{ s.type_service }}
             </option>
           } @empty {
-            <option disabled>
+            <option disabled class="select-option-disabled">
               {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.LOADING_SERVICES' | translate }}
             </option>
           }
@@ -90,7 +76,6 @@
       name="price"
       [label]="'SERVICE_TIME_MODAL.LABELS.PRICE' | translate"
       [control]="getCtrl('price')"
-      placeholder="0.00"
       [errorMessage]="getErrorMessage('price')"
       class="w-full"
     ></app-inputs>
@@ -105,6 +90,8 @@
           id="id_time"
           formControlName="id_time"
           class="service-form-select"
+          [class.text-gray-400]="!form.get('id_time')?.value"
+          [class.text-black]="!!form.get('id_time')?.value"
           [attr.aria-invalid]="form.get('id_time')?.invalid && form.get('id_time')?.touched"
         >
           <option value="" disabled selected class="select-option-disabled">
@@ -115,7 +102,7 @@
               {{ h.week_day }} - {{ h.time }}
             </option>
           } @empty {
-            <option disabled>
+            <option disabled class="select-option-disabled">
               {{ 'SERVICE_TIME_MODAL.PLACEHOLDERS.LOADING_TIMES' | translate }}
             </option>
           }

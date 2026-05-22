@@ -123,6 +123,8 @@
             id="comunity"
             formControlName="comunity"
             class="register-form-select"
+            [class.text-gray-400]="!registerForm.get('comunity')?.value"
+            [class.text-black]="!!registerForm.get('comunity')?.value"
             [attr.aria-invalid]="getCtrl('comunity').invalid && getCtrl('comunity').touched"
           >
             <option [ngValue]="null" disabled selected class="select-option-disabled">
