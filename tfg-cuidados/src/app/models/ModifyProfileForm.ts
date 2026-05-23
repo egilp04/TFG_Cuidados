@@ -15,4 +15,5 @@ export interface UserProfileModel {
 export interface FormSubmitEvent {
   data: UserProfileModel;
   rol: string;
-  avatarFile?: File | null;}
+  avatarFile?: File | null;
+}

@@ -66,6 +66,7 @@ export default class ManagementTimeGlobal implements OnInit {
   public isEditing = false;
   public currentTimeId: string | null = null;
   public originalTimeSlot: TimeModel | null = null;
+  private deletingIds = new Set<string>();
 
   public timeForm = this.fb.group({
     time: this.fb.control<string>('', [Validators.required]),
@@ -229,6 +230,8 @@ export default class ManagementTimeGlobal implements OnInit {
    * @param timeSlot El registro de tiempo a editar.
    */
   editTime(timeSlot: TimeModel): void {
+    if (this.deletingIds.has(timeSlot.id_time!)) return;
+
     this.isEditing = true;
     this.currentTimeId = timeSlot.id_time!;
     this.originalTimeSlot = timeSlot;
@@ -244,7 +247,7 @@ export default class ManagementTimeGlobal implements OnInit {
    * @param id El identificador único del registro de tiempo.
    */
   async deleteTime(id: string): Promise<void> {
-    if (this.isLoading()) return;
+    if (this.isLoading() || this.deletingIds.has(id)) return;
     this.timeService
       .hasActiveServiceTimes(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -269,6 +272,10 @@ export default class ManagementTimeGlobal implements OnInit {
           .pipe(
             takeUntilDestroyed(this.destroyRef),
             filter((result: boolean) => result === true),
+            tap(() => {
+              this.deletingIds.add(id);
+              if (this.currentTimeId === id) this.resetForm();
+            }),
             switchMap(() =>
               this.timeService.deleteTime(id).pipe(
                 switchMap(() =>
@@ -318,5 +325,9 @@ export default class ManagementTimeGlobal implements OnInit {
    */
   getCtrl(name: string): FormControl {
     return this.timeForm.get(name) as FormControl;
+  }
+
+  isDeleting(id: string): boolean {
+    return this.deletingIds.has(id);
   }
 }

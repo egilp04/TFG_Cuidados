@@ -16,6 +16,8 @@
     (formSubmitted)="doUpdateProfile($event)"
     (deleteRequested)="unsubscribeUser()"
     (cancelRequested)="navigateBack()"
+    (removeAvatar)="onRemoveAvatar()"
+    [isProcessing]="isProcessing()"
   >
   </app-modifyprofileform>
 </section>

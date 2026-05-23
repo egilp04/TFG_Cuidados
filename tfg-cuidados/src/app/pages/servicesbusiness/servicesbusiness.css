@@ -12,7 +12,7 @@
 }
 
 .service-table-header {
-  @apply p-4 text-primary dark:text-surface font-smibold;
+  @apply p-4 text-primary dark:text-surface;
 }
 
 .service-table-text {
