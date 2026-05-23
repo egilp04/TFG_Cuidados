@@ -45,11 +45,11 @@
 }
 
 .dashboard-total-users {
-  @apply w-full lg:w-1/2 bg-surface border dark:bg-gray-300 border-gray-100 rounded-12 py-10 px-10 shadow-soft flex justify-center items-center;
+  @apply w-1/3 lg:w-1/2 bg-surface border dark:bg-gray-300 border-gray-100 rounded-12 py-10 px-10 shadow-soft flex justify-center items-center;
 }
 
 .dashboard-total-users-container {
-  @apply w-full min-h-25 my-20 flex justify-center items-center;
+  @apply w-full min-h-25 h-full my-20 flex justify-center items-center;
 }
 
 .dashboard-total-users-title {

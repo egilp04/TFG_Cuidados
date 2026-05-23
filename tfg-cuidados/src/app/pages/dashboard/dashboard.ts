@@ -125,7 +125,7 @@ export default class Dashboard implements OnInit {
         cornerRadius: 8,
         displayColors: false,
         callbacks: {
-          label: (context) => ` Registros: ${context.parsed.y}`,
+          label: (context) => `${context.parsed.y}`,
         },
       },
     },
@@ -180,9 +180,7 @@ export default class Dashboard implements OnInit {
    */
   private updateMonthLabels(): void {
     if (this.timelineDates.length === 0) return;
-
     const currentLang = this.translate.currentLang || 'es';
-
     this.lineChartData.labels = this.timelineDates.map((date) => {
       const month = date.toLocaleString(currentLang, { month: 'short' });
       return month.charAt(0).toUpperCase() + month.slice(1);
@@ -203,6 +201,7 @@ export default class Dashboard implements OnInit {
         this.barChartData.datasets[0].label = res.DEMAND || 'Demanda';
         this.barChartData.datasets[1].label = res.SUPPLY || 'Oferta';
         this.updateMonthLabels();
+        this.cd.markForCheck();
       });
   }
 

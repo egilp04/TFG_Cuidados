@@ -54,17 +54,17 @@
           <td mat-cell *matCellDef="let item">
             <div class="table-admin-btn-container">
               <app-button
-                [label]="'ADMIN_TABLE.BTN.DELETE' | translate"
-                variant="secondary"
-                (click)="onDelete(item)"
-                [attr.aria-label]="('ADMIN_TABLE.BTN.DELETE' | translate) + ': ' + item.name"
-                [disabled]="isDeleting(item.id_user)"
-              ></app-button>
-              <app-button
                 [label]="'ADMIN_TABLE.BTN.MODIFY' | translate"
                 variant="primary"
                 (click)="onModify(item)"
                 [attr.aria-label]="('ADMIN_TABLE.BTN.MODIFY' | translate) + ': ' + item.name"
+                [disabled]="isDeleting(item.id_user)"
+              ></app-button>
+              <app-button
+                [label]="'ADMIN_TABLE.BTN.DELETE' | translate"
+                variant="secondary"
+                (click)="onDelete(item)"
+                [attr.aria-label]="('ADMIN_TABLE.BTN.DELETE' | translate) + ': ' + item.name"
                 [disabled]="isDeleting(item.id_user)"
               ></app-button>
             </div>
