@@ -1,6 +1,6 @@
 @reference "../../../styles.css";
 .cookies-container {
-  @apply flex flex-col items-center justify-center w-full px-6 pb-20;
+  @apply flex flex-col items-center justify-center w-full px-6 md:px-20 pb-20;
 }
 
 .cookies-header-container {
