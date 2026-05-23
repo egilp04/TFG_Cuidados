@@ -16,10 +16,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { ButtonComponent } from '../button/button';
 import { AuthService } from '../../services/auth.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ContractRowDataTable } from '../../models/Acitvities-component';
 import { ContractDetail } from '../../models/ContractModel';
 import { AvatarComponent } from '../avatar/avatar.component';
+import { BehaviorSubject, combineLatest, map, Observable, startWith } from 'rxjs';
 /**
  * Componente hijo que renderiza un calendario mensual y una tabla de datos de servicios contratados.
  */
@@ -39,7 +40,7 @@ import { AvatarComponent } from '../avatar/avatar.component';
 })
 export class ActivitiesComponents implements OnInit, OnChanges {
   private authService = inject(AuthService);
-
+  private translate = inject(TranslateService);
   @Input() dataSource: ContractDetail[] = [];
   @Output() onCancelContract = new EventEmitter<string>();
 
@@ -55,6 +56,19 @@ export class ActivitiesComponents implements OnInit, OnChanges {
   ];
   public tableDataSource = new MatTableDataSource<ContractRowDataTable>([]);
   public userRole = this.authService.userRol();
+  private dateSubject = new BehaviorSubject<Date>(new Date());
+  
+  public currentMonthName$: Observable<string> = combineLatest([
+    this.translate.onLangChange.pipe(startWith(null)),
+    this.dateSubject.asObservable(),
+  ]).pipe(
+    map(([langEvent, date]) => {
+      const lang = this.translate.currentLang || this.translate.defaultLang || 'es';
+      const formatter = new Intl.DateTimeFormat(lang, { month: 'long', year: 'numeric' });
+      const formattedDate = formatter.format(date);
+      return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+    }),
+  );
 
   public contractHeader = computed(() => {
     if (this.userRole === 'client') return 'ACTIVITIES.TABLE.HEADER_BUSINESS';
@@ -195,9 +209,9 @@ export class ActivitiesComponents implements OnInit, OnChanges {
       this.displayDate.getMonth() + delta,
       1,
     );
+    this.dateSubject.next(this.displayDate);
     this.refreshActivityData();
   }
-
   /**
    * Obtiene los eventos programados para un día específico.
    * @param day El número del día del mes.
