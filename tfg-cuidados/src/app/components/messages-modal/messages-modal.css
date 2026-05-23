@@ -16,7 +16,7 @@
 }
 
 .message-modal-textarea {
-  @apply border-2 border-primary dark:border-surface rounded-12 w-full pl-4 py-3 pr-14 min-h-120 md:pl-5 md:py-4 font-poppins text-label outline-none transition-all bg-transparent resize-none text-primary dark:text-surface dark:placeholder:text-surface;
+  @apply border-2 border-primary dark:border-surface rounded-12 w-full pl-4 py-3 pr-14 min-h-120 md:pl-5 md:py-4 font-poppins text-label outline-none transition-all bg-transparent resize-none text-black dark:text-surface dark:placeholder:text-surface;
 }
 
 .messages-form-select-label {
