@@ -16,7 +16,7 @@
 }
 
 .message-modal-textarea {
-  @apply border-2 border-primary dark:border-surface rounded-12 w-full pl-4 py-3 pr-14 min-h-120 md:pl-5 md:py-4 font-poppins text-label outline-none transition-all bg-transparent resize-none text-black dark:text-surface dark:placeholder:text-surface;
+  @apply border-2 border-primary dark:border-surface rounded-12 w-full pl-4 py-3 pr-14 min-h-120 md:pl-5 md:py-4 font-poppins text-label outline-none transition-all bg-transparent resize-none text-black dark:text-surface text-primary dark:placeholder:text-surface;
 }
 
 .messages-form-select-label {
@@ -32,7 +32,7 @@
 }
 
 .messages-form-select {
-  @apply dark:text-surface appearance-none bg-transparent w-full pl-4 pr-[2.2rem] truncate py-3 md:py-4 border-primary dark:border-surface border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer;
+  @apply dark:text-surface text-primary appearance-none bg-transparent w-full pl-4 pr-[2.2rem] truncate py-3 md:py-4 border-primary dark:border-surface border-2 rounded-12 font-poppins text-label outline-none transition-all cursor-pointer;
   appearance: none;
   -webkit-appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");

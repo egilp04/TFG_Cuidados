@@ -4,7 +4,7 @@
 }
 
 .nav-container {
-  @apply relative flex justify-between items-center p-2 lg:p-10 border border-b-nav-border border-t-0 border-l-0 border-r-0 bg-surface min-h-20 z-50 dark:border-b-gray-800 dark:bg-surface-dark;
+  @apply relative flex justify-between items-center p-2 lg:p-10 border border-b-nav-border border-t-0 border-l-0 border-r-0 bg-surface min-h-20 z-[9999] dark:border-b-gray-800 dark:bg-surface-dark;
 }
 
 .nav-menu-icon {
@@ -12,7 +12,7 @@
 }
 
 .nav-menu-unified {
-  @apply flex-1 absolute top-full right-0 sm:w-auto bg-surface dark:bg-surface-dark border-b border-nav-border shadow-lg flex-col p-6 gap-6 z-40 md:static md:flex-row md:items-center md:p-0 md:border-none md:shadow-none md:gap-10 items-center;
+  @apply flex-1 absolute top-full right-0 sm:w-auto bg-surface dark:bg-surface-dark border-b border-nav-border shadow-lg flex-col p-6 gap-6 z-50 md:static md:flex-row md:items-center md:p-0 md:border-none md:shadow-none md:gap-10 items-center;
 }
 
 .nav-authenticated-wrapper {
