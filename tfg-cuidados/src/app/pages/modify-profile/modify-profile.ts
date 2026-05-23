@@ -2,7 +2,18 @@ import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit, signal } from
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule, Location } from '@angular/common';
-import { of, switchMap, filter, tap, timer, catchError, map, EMPTY, firstValueFrom, from } from 'rxjs';
+import {
+  of,
+  switchMap,
+  filter,
+  tap,
+  timer,
+  catchError,
+  map,
+  EMPTY,
+  firstValueFrom,
+  from,
+} from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
@@ -229,27 +240,27 @@ export default class ModifyProfilePage implements OnInit {
   async onRemoveAvatar(): Promise<void> {
     const user = this.userToEdit();
     const avatarName = user?.avatar_url?.split('/').pop();
-
     if (!user || !avatarName) return;
     try {
       await this.userService.deleteAvatar(user.id_user, avatarName);
-
       this.userToEdit.update((current) => {
         if (!current) return current;
         return { ...current, avatar_url: '' };
       });
-      const payload = { ...user, avatar_url: '' } as UpdateProfilePayload;
-      await firstValueFrom(
-        this.userService.updateProfileDirect(user.id_user, payload, this.userRole()),
-      );
-      this.userToEdit.update((current) => {
-        if (!current) return current;
-        return { ...current, avatar_url: '' };
-      });
-
+      const loggedUser = this.authService.currentUser();
+      if (user.id_user === loggedUser?.id_user) {
+        this.authService.updateUserSignal({ ...loggedUser, avatar_url: null } as any);
+      }
+      this.translate
+        .get('MODIFY_PROFILE.MESSAGES.DELETE_AVATAR_SUCCESS')
+        .subscribe((msg: string) => {
+          this.messageService.showMessage(msg, 'success');
+        });
       this.cd.detectChanges();
     } catch (err) {
-      console.error('Error al borrar el avatar:', err);
+      this.translate.get('MODIFY_PROFILE.MESSAGES.DELETE_AVATAR_ERROR').subscribe((msg: string) => {
+        this.messageService.showMessage(msg, 'error');
+      });
     }
   }
 }

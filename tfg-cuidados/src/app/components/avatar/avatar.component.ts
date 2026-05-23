@@ -16,6 +16,7 @@ export class AvatarComponent {
   public initials = computed(() => {
     const firstLetter = this.name().charAt(0).toUpperCase();
     const secondLetter = this.surname() ? this.surname()?.charAt(0).toUpperCase() : '';
+    console.log(secondLetter);
     return `${firstLetter}${secondLetter}`;
   });
 

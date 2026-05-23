@@ -426,8 +426,8 @@
     },
     "ALERTS": {
       "CONFIRM_DELETE": "Are you sure you want to delete this message?",
-      "DELETE_SUCCESS": "The message has been deleted.",
-      "DELETE_ERROR": "Could not delete the message.",
+      "DELETE_SUCCESS": "The message has been deleted",
+      "DELETE_ERROR": "Could not delete the message",
       "VIEW_ERROR": "Cannot view this message at this time"
     }
   },
@@ -444,7 +444,9 @@
       "UPDATE_SUCCESS": "Profile updated successfully!",
       "UPDATE_ERROR": "Error updating data.",
       "DELETE_SUCCESS": "User deleted successfully",
-      "NO_CHANGES": "No data modified."
+      "NO_CHANGES": "No data modified",
+      "DELETE_AVATAR_SUCCESS": "Profile picture deleted successfully",
+      "DELETE_AVATAR_ERROR": "Profile picture could not be deleted, try it later"
     },
     "LABELS": {
       "USERNAME": "Username",

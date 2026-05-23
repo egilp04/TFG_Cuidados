@@ -722,7 +722,9 @@
       "UPDATE_SUCCESS": "¡Perfil actualizado con éxito!",
       "UPDATE_ERROR": "Error al actualizar los datos",
       "DELETE_SUCCESS": "Usuario eliminado correctamente",
-      "NO_CHANGES": "Sin datos modificados."
+      "NO_CHANGES": "Sin datos modificados",
+      "DELETE_AVATAR_SUCCESS": "Imagen de perfil borrada con éxito",
+      "DELETE_AVATAR_ERROR": "La imagen de perfil no pudo ser borrada, inténtelo más tarde"
     },
     "LABELS": {
       "USERNAME": "Nombre de usuario",

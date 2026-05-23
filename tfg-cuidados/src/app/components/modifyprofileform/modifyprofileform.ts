@@ -339,7 +339,19 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  deleteAvatar(): void {
-    this.removeAvatar.emit();
+  deleteAvatar(event: Event): void {
+    event.stopPropagation();
+    event.preventDefault();
+    if (this.previewUrl) {
+      this.previewUrl = null;
+      this.selectedImageFile = null;
+      const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+      this.cd.markForCheck();
+      return;
+    }
+    if (this.userData?.avatar_url) {
+      this.removeAvatar.emit();
+    }
   }
 }

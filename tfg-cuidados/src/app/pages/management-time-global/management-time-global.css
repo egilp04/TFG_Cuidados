@@ -16,7 +16,7 @@
 }
 
 .managements-time-global-container {
-  @apply flex flex-col p-6 gap-4 mt-20 md:mt-120;
+  @apply flex flex-col p-6 gap-4;
 }
 
 .management-title-time {
