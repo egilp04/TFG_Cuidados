@@ -33,9 +33,11 @@
   </div>
 
   <app-table-crud-admin
-  [mode]="isClient ? 'client' : 'business'"
-  [data]="userService.usersList()"
-  (deleteItem)="deleteUser($event)"   
-  (modifyItem)="editUser($event)">
-</app-table-crud-admin>
+    [mode]="isClient ? 'client' : 'business'"
+    [data]="userService.usersList()"
+    (deleteItem)="deleteUser($event)"
+    (modifyItem)="editUser($event)"
+    [deletingIds]="deletingIds"
+  >
+  </app-table-crud-admin>
 </section>
