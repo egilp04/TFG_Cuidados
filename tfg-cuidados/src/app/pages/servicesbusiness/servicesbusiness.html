@@ -98,6 +98,7 @@
               [attr.aria-label]="
                 ('SERVICES_BUSINESS.BTN_DELETE' | translate) + ': ' + element.Service?.name
               "
+              [disabled]="isDeleting(element.id_service_time)"
             ></app-button>
             <app-button
               [label]="'SERVICES_BUSINESS.BTN_MODIFY' | translate"
@@ -107,6 +108,7 @@
               [attr.aria-label]="
                 ('SERVICES_BUSINESS.BTN_MODIFY' | translate) + ': ' + element.Service?.name
               "
+              [disabled]="isDeleting(element.id_service_time)"
             ></app-button>
           </div>
         </td>
@@ -123,7 +125,6 @@
           {{ 'SERVICES_BUSINESS.NO_DATA' | translate }}
         </td>
       </tr>
-
     </table>
   </main>
 

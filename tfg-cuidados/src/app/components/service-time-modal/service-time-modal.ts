@@ -91,6 +91,20 @@ export class ServiceTimeModal implements OnInit {
       return;
     }
     const formPayload = this.form.getRawValue() as Service_Time_Model;
+    if (this.isEditing && this.data) {
+      const noChanges =
+        formPayload.id_service === this.data.id_service &&
+        formPayload.id_time === this.data.id_time &&
+        Number(formPayload.price) === Number(this.data.price) &&
+        formPayload.description === this.data.description;
+      if (noChanges) {
+        this.translate.get('MANAGEMENT_SERVICES.MESSAGES.NO_CHANGES').subscribe((text) => {
+          this.messageService.showMessage(text, 'success');
+        });
+        this.dialogRef.close();
+        return;
+      }
+    }
     formPayload.status = 'active';
     type ErrorResponse = { success: false; text: string; type: 'error' };
     let request$: Observable<void | ErrorResponse>;
