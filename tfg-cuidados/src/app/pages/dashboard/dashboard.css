@@ -9,7 +9,7 @@
 }
 
 .chart-wrapper-services {
-  @apply relative w-full h-[250px] 2xl:h-[30rem] block mb-4 min-w-0 max-w-full;
+  @apply relative w-full h-[350px] 2xl:h-[30rem] block mb-4 min-w-0 max-w-full;
 }
 
 .no-contracts-msg {

@@ -145,7 +145,16 @@ export default class Dashboard implements OnInit {
       },
       x: {
         grid: { display: true, color: 'rgba(255, 255, 255, 0.1)' },
-        ticks: { color: '#9ca3af', maxRotation: 90, minRotation: 90, autoSkip: true },
+        ticks: {
+          color: '#9ca3af',
+          maxRotation: 90,
+          minRotation: 90,
+          autoSkip: true,
+          callback: function (value: any) {
+            const label = this.getLabelForValue(value);
+            return label.length > 20 ? label.substr(0, 20) + '...' : label;
+          },
+        },
       },
     },
   };
