@@ -198,16 +198,17 @@
               [attr.aria-label]="
                 ('MANAGEMENT_SERVICES.TABLE.EDIT' | translate) + ': ' + service.name
               "
+              [disabled]="isLoading() || isDeleting(service.id_service!)"
             >
             </app-button>
             <app-button
               [label]="'MANAGEMENT_SERVICES.TABLE.DELETE' | translate"
               variant="secondary"
               (click)="deleteService(service.id_service!)"
-              [disabled]="isLoading()"
               [attr.aria-label]="
                 ('MANAGEMENT_SERVICES.TABLE.DELETE' | translate) + ': ' + service.name
               "
+              [disabled]="isLoading() || isDeleting(service.id_service!)"
             >
             </app-button>
           </div>
