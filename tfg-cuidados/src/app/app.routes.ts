@@ -4,10 +4,15 @@ import { publicGuard } from './core/guards/public-guard';
 import Landing from './pages/landing/landing';
 
 export const routes: Routes = [
+  // RUTAS PÚBLICAS (Accesibles por cualquiera)
   {
     path: '',
     component: Landing,
     pathMatch: 'full',
+  },
+  {
+    path: 'landing',
+    loadComponent: () => import('./pages/landing/landing'),
   },
   {
     path: 'about-us',
@@ -22,80 +27,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/manuals/manuals'),
   },
   {
-    path: 'register',
-    loadComponent: () => import('./pages/register/register'),
-    runGuardsAndResolvers: 'always',
-  },
-  {
-    path: 'modify-profile',
-    loadComponent: () => import('./pages/modify-profile/modify-profile'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'landing',
-    loadComponent: () => import('./pages/landing/landing'),
-  },
-  {
-    path: 'contract',
-    loadComponent: () => import('./pages/contracts/contracts'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'activities',
-    loadComponent: () => import('./pages/activities/activities'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'services-directory',
-    loadComponent: () => import('./pages/services-directory/services-directory.component'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'messages',
-    loadComponent: () => import('./pages/messages/messages'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'notifications',
-    loadComponent: () => import('./pages/notifications/notifications'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'search-business',
-    loadComponent: () => import('./pages/search-business/search-business'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'admin-management',
-    loadComponent: () => import('./pages/management-admin/management-admin'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'global-services',
-    loadComponent: () => import('./pages/management-services-global/management-services-global'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'global-times',
-    loadComponent: () => import('./pages/management-time-global/management-time-global'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'global-contracts',
-    loadComponent: () => import('./pages/admin-contracts/admin-contracts.component'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'dashboard',
-    loadComponent: () => import('./pages/dashboard/dashboard'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'admin-services',
-    loadComponent: () => import('./pages/servicesbusiness/servicesbusiness'),
-    canActivate: [authGuard],
-  },
-  {
     path: 'terms',
     loadComponent: () => import('./pages/terms/terms'),
   },
@@ -104,12 +35,108 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/privacity/privacity.component'),
   },
   {
-    path: 'recover-password',
-    loadComponent: () => import('./pages/recover-password/recover-password'),
-  },
-  {
     path: 'cookies_politics',
     loadComponent: () => import('./pages/cookies/cookies.component'),
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  {
+    path: 'register',
+    loadComponent: () => import('./pages/register/register'),
+    canActivate: [publicGuard],
+    runGuardsAndResolvers: 'always',
+  },
+  {
+    path: 'recover-password',
+    loadComponent: () => import('./pages/recover-password/recover-password'),
+    canActivate: [publicGuard],
+  },
+
+  {
+    path: 'modify-profile',
+    loadComponent: () => import('./pages/modify-profile/modify-profile'),
+    canActivate: [authGuard],
+    data: { roles: ['client', 'business', 'administrator'] },
+  },
+  {
+    path: 'messages',
+    loadComponent: () => import('./pages/messages/messages'),
+    canActivate: [authGuard],
+    data: { roles: ['client', 'business', 'administrator'] },
+  },
+  {
+    path: 'notifications',
+    loadComponent: () => import('./pages/notifications/notifications'),
+    canActivate: [authGuard],
+    data: { roles: ['client', 'business', 'administrator'] },
+  },
+
+  {
+    path: 'contract',
+    loadComponent: () => import('./pages/contracts/contracts'),
+    canActivate: [authGuard],
+    data: { roles: ['client', 'business'] },
+  },
+  {
+    path: 'activities',
+    loadComponent: () => import('./pages/activities/activities'),
+    canActivate: [authGuard],
+    data: { roles: ['client', 'business'] },
+  },
+
+  // RUTAS ESPECÍFICAS DE CLIENTES
+  {
+    path: 'services-directory',
+    loadComponent: () => import('./pages/services-directory/services-directory.component'),
+    canActivate: [authGuard],
+    data: { roles: ['client'] },
+  },
+  {
+    path: 'search-business',
+    loadComponent: () => import('./pages/search-business/search-business'),
+    canActivate: [authGuard],
+    data: { roles: ['client'] },
+  },
+
+  // RUTAS ESPECÍFICAS DE LAS EMPRESAS
+  {
+    path: 'admin-services',
+    loadComponent: () => import('./pages/servicesbusiness/servicesbusiness'),
+    canActivate: [authGuard],
+    data: { roles: ['business'] },
+  },
+  // RUTAS EXCLUSIVAS DE ADMINISTRADORES
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./pages/dashboard/dashboard'),
+    canActivate: [authGuard],
+    data: { roles: ['administrator'] },
+  },
+  {
+    path: 'admin-management',
+    loadComponent: () => import('./pages/management-admin/management-admin'),
+    canActivate: [authGuard],
+    data: { roles: ['administrator'] },
+  },
+  {
+    path: 'global-services',
+    loadComponent: () => import('./pages/management-services-global/management-services-global'),
+    canActivate: [authGuard],
+    data: { roles: ['administrator'] },
+  },
+  {
+    path: 'global-times',
+    loadComponent: () => import('./pages/management-time-global/management-time-global'),
+    canActivate: [authGuard],
+    data: { roles: ['administrator'] },
+  },
+  {
+    path: 'global-contracts',
+    loadComponent: () => import('./pages/admin-contracts/admin-contracts.component'),
+    canActivate: [authGuard],
+    data: { roles: ['administrator'] },
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
 ];
