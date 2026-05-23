@@ -51,6 +51,7 @@ export class TableCrudAdmin implements OnInit, OnChanges {
   @Input() data: UserModel[] = [];
   @Output() deleteItem = new EventEmitter<UserModel>();
   @Output() modifyItem = new EventEmitter<UserModel>();
+  @Input() deletingIds = new Set<string>();
 
   public dataSource = new MatTableDataSource<UserModel>([]);
   public searchControl = new FormControl('');
@@ -124,11 +125,17 @@ export class TableCrudAdmin implements OnInit, OnChanges {
     return columns;
   }
 
+  isDeleting(id?: string): boolean {
+    if (!id) return false;
+    return this.deletingIds.has(id);
+  }
+
   /**
    * Emite un evento de eliminación para el elemento especificado.
    * @param item El modelo de usuario a eliminar.
    */
   onDelete(item: UserModel): void {
+    if (!item.id_user || this.deletingIds.has(item.id_user)) return;
     this.deleteItem.emit(item);
   }
 
@@ -137,6 +144,7 @@ export class TableCrudAdmin implements OnInit, OnChanges {
    * @param item El modelo de usuario a modificar.
    */
   onModify(item: UserModel): void {
+    if (!item.id_user || this.deletingIds.has(item.id_user)) return;
     this.modifyItem.emit(item);
   }
 }

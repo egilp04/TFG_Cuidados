@@ -211,6 +211,9 @@ export default class Contracts implements OnInit {
   }
   private pdfService = inject(DocsPdf);
   downloadContractPDF(contract: ContractDetail): void {
+    if (this.deletingIds.has(contract.id_contract)) {
+      return;
+    }
     this.pdfService.downloadPDF(contract);
   }
 }

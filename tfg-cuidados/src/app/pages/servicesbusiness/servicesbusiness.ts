@@ -54,6 +54,8 @@ export default class Servicesbusiness implements OnInit {
   private responsive = inject(ResponsiveSize);
 
   public isLoading = signal(false);
+  private deletingIds = new Set<string>();
+  private isOpeningModal = false;
 
   dataSource = new MatTableDataSource<ServiceTimeJoined>([]);
   displayedColumns: string[] = ['name', 'price', 'type', 'time', 'day', 'description', 'actions'];
@@ -94,8 +96,13 @@ export default class Servicesbusiness implements OnInit {
   }
 
   async openModal(element?: ServiceTimeJoined) {
+    if (this.isOpeningModal) return;
+    if (element && this.deletingIds.has(element.id_service_time)) return;
+    this.isOpeningModal = true;
+
     const { ServiceTimeModal } =
       await import('../../components/service-time-modal/service-time-modal');
+    this.isOpeningModal = false;
     const dialogRef = this.dialog.open(ServiceTimeModal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
@@ -115,7 +122,7 @@ export default class Servicesbusiness implements OnInit {
   }
 
   async onDelete(id: string) {
-    if (this.isLoading()) return;
+    if (this.isLoading() || this.deletingIds.has(id)) return;
 
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
@@ -130,25 +137,38 @@ export default class Servicesbusiness implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter((result) => result === true),
-        switchMap(() => this.serviceTimeService.deleteServiceTime(id).pipe()),
-        switchMap(() =>
-          this.translate
-            .get('SERVICES_BUSINESS.MESSAGES.DELETE_SUCCESS')
-            .pipe(map((text) => ({ type: 'success' as const, text }))),
-        ),
-        catchError((err) => {
-          console.error('Error eliminando tiempo de servicio:', err);
-          return this.translate
-            .get('SERVICES_BUSINESS.MESSAGES.DELETE_ERROR')
-            .pipe(map((text) => ({ type: 'error' as const, text })));
+        switchMap(() => {
+          this.deletingIds.add(id);
+          this.cd.markForCheck();
+
+          return this.serviceTimeService.deleteServiceTime(id).pipe(
+            switchMap(() =>
+              this.translate
+                .get('SERVICES_BUSINESS.MESSAGES.DELETE_SUCCESS')
+                .pipe(map((text) => ({ type: 'success' as const, text }))),
+            ),
+            catchError((err) => {
+              console.error('Error eliminando tiempo de servicio:', err);
+              return this.translate
+                .get('SERVICES_BUSINESS.MESSAGES.DELETE_ERROR')
+                .pipe(map((text) => ({ type: 'error' as const, text })));
+            }),
+          );
         }),
       )
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
         if (resultado.type === 'success') {
+          const currentData = this.dataSource.data;
+          this.dataSource.data = currentData.filter((item) => item.id_service_time !== id);
           this.loadServices();
         }
+        this.deletingIds.delete(id);
         this.cd.markForCheck();
       });
+  }
+
+  isDeleting(id: string): boolean {
+    return this.deletingIds.has(id);
   }
 }
