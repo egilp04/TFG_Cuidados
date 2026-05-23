@@ -155,7 +155,6 @@ export default class Servicesbusiness implements OnInit {
       .subscribe((resultado) => {
         this.messageService.showMessage(resultado.text, resultado.type);
         if (resultado.type === 'success') {
-          const currentData = this.dataSource.data;
           this.loadServices();
         }
         this.deletingIds.delete(id);
