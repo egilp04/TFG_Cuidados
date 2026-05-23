@@ -102,18 +102,18 @@ export default class ModifyProfilePage implements OnInit {
     if (!hasTextChanges && !hasNewPhoto) {
       this.translate.get('MODIFY_PROFILE.MESSAGES.NO_CHANGES').subscribe((msg) => {
         this.messageService.showMessage(msg, 'success');
+        setTimeout(() => {
+          if (loggedUser?.rol === 'administrator') {
+            const tabType = event.rol === 'client' ? 'cliente' : 'business';
+            this.router.navigate(['/admin-management'], { queryParams: { type: tabType } });
+          } else {
+            const route = getHomeRouteByRole(loggedUser?.rol);
+            this.router.navigate([route]);
+          }
+        }, 600);
       });
-
-      if (loggedUser?.rol == 'administrator') {
-        const tabType = event.rol === 'client' ? 'cliente' : 'business';
-        this.router.navigate(['/admin-management'], { queryParams: { type: tabType } });
-      } else {
-        const route = getHomeRouteByRole(loggedUser?.rol);
-        this.router.navigate([route]);
-      }
       return;
     }
-
     const uploadImage$ = file
       ? this.userService.uploadAvatar(user.id_user, file)
       : of(user.avatar_url || null);
@@ -154,7 +154,6 @@ export default class ModifyProfilePage implements OnInit {
             this.router.navigate([route]);
           }
         }),
-
         catchError((err: Error) => {
           console.error('Error en el proceso de actualización:', err);
           return this.translate.get('MODIFY_PROFILE.MESSAGES.UPDATE_ERROR').pipe(
@@ -258,7 +257,7 @@ export default class ModifyProfilePage implements OnInit {
         });
       this.cd.detectChanges();
     } catch (err) {
-      this.translate.get('MODIFY_PROFILE.MESSAGES.DELETE_AVATAR_ERROR').subscribe((msg: string) => {
+      this.translate.get('MODIFY_PROFILE.ERRORS.INVALID_IMAGE_TYPE').subscribe((msg: string) => {
         this.messageService.showMessage(msg, 'error');
       });
     }

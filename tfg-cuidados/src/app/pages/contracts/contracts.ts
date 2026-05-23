@@ -14,7 +14,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { switchMap, filter, catchError, map, delay } from 'rxjs/operators';
+import { switchMap, filter, catchError, map, delay, tap } from 'rxjs/operators';
 import { ButtonComponent } from '../../components/button/button';
 import { ContractService } from '../../services/contract.service';
 import { MessageService } from '../../services/message-service';
@@ -56,6 +56,8 @@ export default class Contracts implements OnInit {
   public dataSource = new MatTableDataSource<ContractDetail>([]);
 
   public paginator = viewChild(MatPaginator);
+
+  private deletingIds = new Set<string>();
 
   constructor() {
     effect(() => {
@@ -121,6 +123,7 @@ export default class Contracts implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter((result: boolean) => result === true),
+        tap(() => this.deletingIds.add(id)),
         switchMap(() =>
           this.contractService.deleteContract(id).pipe(
             switchMap(() =>
@@ -140,6 +143,9 @@ export default class Contracts implements OnInit {
       .subscribe({
         next: (result) => {
           this.messageService.showMessage(result.text, result.type);
+          if (result.type === 'success') {
+            this.dialog.closeAll();
+          }
         },
       });
   }
@@ -150,8 +156,10 @@ export default class Contracts implements OnInit {
    * @param id El identificador único del contrato.
    */
   async showDetails(id: string): Promise<void> {
+    if (this.deletingIds.has(id)) {
+      return;
+    }
     const { InfoContract } = await import('../../components/info-contract/info-contract');
-
     const dialogConfig = {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
