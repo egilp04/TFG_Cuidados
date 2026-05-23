@@ -104,7 +104,6 @@ export class ActivitiesComponents implements OnInit, OnChanges {
       this.tableDataSource.data = [];
       return;
     }
-
     const mappedData = this.dataSource.map((contract) => {
       let nameToShow: string | undefined;
       let avatarUrl: string | null = null;
@@ -116,7 +115,6 @@ export class ActivitiesComponents implements OnInit, OnChanges {
         nameToShow = contract.Client?.clientName;
         avatarUrl = contract.Client?.User_public?.avatar_url || null;
       }
-
       const place = contract.Client
         ? `${contract.Client.address}, ${contract.Client.city}, ${contract.Client.postcode}`
         : 'SL';

@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit, signal } from
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule, Location } from '@angular/common';
-import { of, switchMap, filter, tap, timer, catchError, map, EMPTY } from 'rxjs';
+import { of, switchMap, filter, tap, timer, catchError, map, EMPTY, firstValueFrom } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
@@ -216,5 +216,36 @@ export default class ModifyProfilePage implements OnInit {
    */
   navigateBack(): void {
     this.location.back();
+  }
+
+  /**
+   * Elimina el avatar del usuario tanto del almacenamiento en la nube (Supabase)
+   * como de su registro en la base de datos local (User_public).
+   */
+  async onRemoveAvatar(): Promise<void> {
+    const user = this.userToEdit();
+    const avatarName = user?.avatar_url?.split('/').pop();
+
+    if (!user || !avatarName) return;
+    try {
+      await this.userService.deleteAvatar(user.id_user, avatarName);
+
+      this.userToEdit.update((current) => {
+        if (!current) return current;
+        return { ...current, avatar_url: '' };
+      });
+      const payload = { ...user, avatar_url: '' } as UpdateProfilePayload;
+      await firstValueFrom(
+        this.userService.updateProfileDirect(user.id_user, payload, this.userRole()),
+      );
+      this.userToEdit.update((current) => {
+        if (!current) return current;
+        return { ...current, avatar_url: '' };
+      });
+
+      this.cd.detectChanges();
+    } catch (err) {
+      console.error('Error al borrar el avatar:', err);
+    }
   }
 }

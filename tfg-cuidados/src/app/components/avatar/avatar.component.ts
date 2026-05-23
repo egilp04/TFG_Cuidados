@@ -15,7 +15,7 @@ export class AvatarComponent {
 
   public initials = computed(() => {
     const firstLetter = this.name().charAt(0).toUpperCase();
-    const secondLetter = this.surname() ? this.surname()?.charAt(0).toUpperCase() : '-E';
+    const secondLetter = this.surname() ? this.surname()?.charAt(0).toUpperCase() : '';
     return `${firstLetter}${secondLetter}`;
   });
 
@@ -26,6 +26,6 @@ export class AvatarComponent {
       hash = stringToHash.charCodeAt(i) + ((hash << 5) - hash);
     }
     const h = Math.abs(hash % 360);
-    return `hsl(${h}, 60%, 50%)`; 
+    return `hsl(${h}, 60%, 50%)`;
   });
 }

@@ -740,7 +740,8 @@
     "BTN": {
       "CANCEL": "Cancelar modificación",
       "MODIFY": "Modificar",
-      "UNSUBSCRIBE": "Darse de baja"
+      "UNSUBSCRIBE": "Darse de baja",
+      "DELETE_AVATAR": "Borrar imagen de perfil"
     },
     "ERRORS": {
       "INVALID_IMAGE_TYPE": "Formato no válido. Usa JPG, PNG o WEBP",

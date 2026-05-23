@@ -232,4 +232,24 @@ export class UserService {
       }),
     );
   }
+
+  async deleteAvatar(userId: string, fileName: string) {
+    // 1. Borramos la foto del Storage (El Disco Duro)
+    const { error: storageError } = await this.supabase.storage
+      .from('avatars')
+      .remove([`${userId}/${fileName}`]);
+    console.log('borrando del storage');
+
+    if (storageError) throw storageError;
+
+    // 2. Limpiamos la URL en la Base de Datos directamente
+    // (Asegúrate de que 'User_public' es el nombre exacto de tu tabla)
+    const { error: dbError } = await this.supabase
+      .from('User_public')
+      .update({ avatar_url: null })
+      .eq('id_user', userId);
+    console.log('borrando de la base de datod');
+    if (dbError) throw dbError;
+    return true;
+  }
 }

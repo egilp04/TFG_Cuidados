@@ -462,7 +462,8 @@
     "BTN": {
       "CANCEL": "Cancel modification",
       "MODIFY": "Modify",
-      "UNSUBSCRIBE": "Unsubscribe"
+      "UNSUBSCRIBE": "Unsubscribe",
+      "DELETE_AVATAR": "Delelte avatar"
     },
     "ERRORS": {
       "INVALID_IMAGE_TYPE": "Invalid format. Use JPG, PNG, or WEBP",
