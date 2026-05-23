@@ -37,7 +37,11 @@
       >
         {{ 'ADMIN_SERVICE_TIME.SELECT_ICON' | translate }}
       </label>
-      <mat-form-field appearance="outline" class="w-full mi-select-personalizado">
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        class="w-full mi-select-personalizado"
+      >
         <mat-select #iconSelect formControlName="icon_name" panelClass="custom-select-panel">
           <mat-select-trigger>
             @if (iconSelect.value) {
