@@ -248,17 +248,16 @@ export default class ManagementTimeGlobal implements OnInit {
    */
   async deleteTime(id: string): Promise<void> {
     if (this.isLoading() || this.deletingIds.has(id)) return;
+
     this.timeService
       .hasActiveServiceTimes(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(async (hasDependencies) => {
         if (hasDependencies) {
-          this.translate.get('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_HAS_OFFERS').subscribe((msg) => {
-            this.messageService.showMessage(msg, 'error');
-          });
-          this.cd.markForCheck();
+          this.showTranslatedMessage('MANAGEMENT_SCHEDULES.MESSAGES.ERROR_HAS_OFFERS', 'error');
           return;
         }
+
         const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
         const dialogRef = this.dialog.open(Cancelmodal, {
           data: { mode: 'deleteGlobalAdmin' },
@@ -271,9 +270,11 @@ export default class ManagementTimeGlobal implements OnInit {
           .afterClosed()
           .pipe(
             takeUntilDestroyed(this.destroyRef),
-            filter((result: boolean) => result === true),
+            filter((result) => result === true),
             tap(() => {
               this.deletingIds.add(id);
+              this.cd.markForCheck();
+
               if (this.currentTimeId === id) this.resetForm();
             }),
             switchMap(() =>
@@ -291,12 +292,21 @@ export default class ManagementTimeGlobal implements OnInit {
               ),
             ),
           )
-          .subscribe((res) => {
-            this.messageService.showMessage(res.text, res.type);
+          .subscribe((res: any) => {
+            this.deletingIds.delete(id);
+
+            if (res.type === 'success') {
+              const currentData = this.dataSource.data;
+              this.dataSource.data = currentData.filter((item) => item.id_time !== id);
+
+              this.messageService.showMessage(res.text || 'Horario eliminado', 'success');
+            } else {
+              this.messageService.showMessage(res.text || 'Error', 'error');
+            }
+            this.cd.markForCheck();
           });
       });
   }
-
   /**
    * Reinicia el estado del formulario y limpia cualquier contexto de edición.
    */

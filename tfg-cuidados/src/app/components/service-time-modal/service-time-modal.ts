@@ -19,7 +19,7 @@ import { LucideAngularModule } from 'lucide-angular';
 import { Service_Time_Model } from '../../models/Service_Time_Model';
 import { ServiceTimeModalData } from '../../models/Service_Time_Data_Model';
 import { CloseBtnComponent } from '../close-btn/close-btn.component';
-import { catchError, map, switchMap} from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs';
 import { MessageService } from '../../services/message-service';
 import { Observable, throwError } from 'rxjs';
 /**
@@ -81,73 +81,72 @@ export class ServiceTimeModal implements OnInit {
     }
   }
 
-
- /**
+  /**
    * Envía los datos del formulario para insertar o actualizar un registro de ServiceTime.
    * Incluye validación para evitar editar ofertas que tienen contratos activos.
    */
- save(): void {
-  if (this.form.invalid) {
-    this.form.markAllAsTouched();
-    return;
-  }
-  const formPayload = this.form.getRawValue() as Service_Time_Model;
-  formPayload.status = 'active'; 
-  type ErrorResponse = { success: false; text: string; type: 'error' };
+  save(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    const formPayload = this.form.getRawValue() as Service_Time_Model;
+    formPayload.status = 'active';
+    type ErrorResponse = { success: false; text: string; type: 'error' };
     let request$: Observable<void | ErrorResponse>;
-  
-  if (this.isEditing && this.data) {
-    request$ = this.serviceTimeService.hasActiveContracts(this.data.id_service_time).pipe(
-      switchMap((hasContracts: boolean) => {
-        if (hasContracts) {
-          return throwError(() => new Error('HAS_CONTRACTS'));
-        }
-        return this.serviceTimeService.updateServiceTime(this.data!.id_service_time, formPayload);
-      })
-    );
-  } else {
-    request$ = this.serviceTimeService.insertServiceTime(formPayload);
+
+    if (this.isEditing && this.data) {
+      request$ = this.serviceTimeService.hasActiveContracts(this.data.id_service_time).pipe(
+        switchMap((hasContracts: boolean) => {
+          if (hasContracts) {
+            return throwError(() => new Error('HAS_CONTRACTS'));
+          }
+          return this.serviceTimeService.updateServiceTime(this.data!.id_service_time, formPayload);
+        }),
+      );
+    } else {
+      request$ = this.serviceTimeService.insertServiceTime(formPayload);
+    }
+
+    request$
+      .pipe(
+        catchError((err: unknown) => {
+          let msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_GENERIC';
+          const errorObj = err as { message?: string; code?: string };
+
+          if (errorObj.message === 'DUPLICATE_ENTRY' || errorObj.code === '23505') {
+            msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_DUPLICATE';
+          } else if (errorObj.message === 'HAS_CONTRACTS') {
+            msgKey = 'SERVICE_TIME_MODAL.ERRORS.HAS_CONTRACTS';
+          }
+
+          return this.translate
+            .get(msgKey)
+            .pipe(map((text: string): ErrorResponse => ({ success: false, text, type: 'error' })));
+        }),
+      )
+      .subscribe({
+        next: (result: void | ErrorResponse) => {
+          if (result && typeof result === 'object' && 'success' in result && !result.success) {
+            this.dialogRef.close(false);
+            setTimeout(() => {
+              this.messageService.showMessage(result.text, result.type);
+            }, 100);
+            return;
+          }
+          const successMsgKey = this.isEditing
+            ? 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_UPDATE'
+            : 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_CREATE';
+          this.dialogRef.close(true);
+          this.translate.get(successMsgKey).subscribe((text) => {
+            this.messageService.showMessage(text, 'success');
+          });
+        },
+        error: (err: Error) => console.error('Error fatal no capturado:', err.message),
+      });
   }
 
-  request$
-    .pipe(
-      catchError((err: unknown) => {
-        let msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_GENERIC';
-                const errorObj = err as { message?: string; code?: string };
-        
-        if (errorObj.message === 'DUPLICATE_ENTRY' || errorObj.code === '23505') {
-          msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_DUPLICATE';
-        } else if (errorObj.message === 'HAS_CONTRACTS') {
-          msgKey = 'SERVICE_TIME_MODAL.ERRORS.HAS_CONTRACTS'; 
-        }
-        
-        return this.translate
-          .get(msgKey)
-          .pipe(map((text: string): ErrorResponse => ({ success: false, text, type: 'error' })));
-      }),
-    )
-    .subscribe({
-      next: (result: void | ErrorResponse) => {
-        
-        if (result && typeof result === 'object' && 'success' in result && !result.success) {
-          this.messageService.showMessage(result.text, result.type);
-          return;
-        }
-        
-        const successMsgKey = this.isEditing
-          ? 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_UPDATE'
-          : 'MANAGEMENT_SERVICES.MESSAGES.SUCCESS_CREATE';
-          
-        this.translate.get(successMsgKey).subscribe((text) => {
-          this.messageService.showMessage(text, 'success');
-        });
-        this.dialogRef.close(true);
-      },
-      error: (err: Error) => console.error('Error fatal no capturado:', err.message)
-    });
-}
-
-getCtrl(name: string): FormControl {
+  getCtrl(name: string): FormControl {
     return this.form.get(name) as FormControl;
   }
 
