@@ -1,22 +1,19 @@
-import { Component, inject, OnInit, DestroyRef } from '@angular/core';
+import { Component, OnInit, inject, DestroyRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { filter, from } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { filter, switchMap, map, catchError, tap, finalize } from 'rxjs/operators';
+import { from } from 'rxjs';
+import { UserService } from '../../services/user.service';
 import { MessageService } from '../../services/message-service';
+import { ResponsiveSize } from '../../services/responsive-size';
 import { TableCrudAdmin } from '../../components/table-crud-admin/table-crud-admin';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { ButtonComponent } from '../../components/button/button';
-import { UserService } from '../../services/user.service';
 import { UserModel } from '../../models/User_Service';
-import { ResponsiveSize } from '../../services/responsive-size';
 
-/**
- * Página de gestión de administrador para listar, editar y eliminar usuarios (clientes o negocios).
- */
 @Component({
   selector: 'app-management-admin',
   standalone: true,
@@ -33,7 +30,10 @@ export default class ManagementAdmin implements OnInit {
   private translate = inject(TranslateService);
   private responsive = inject(ResponsiveSize);
 
+  private cd = inject(ChangeDetectorRef);
+
   public isClient: boolean = true;
+  public deletingIds = new Set<string>();
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
@@ -42,22 +42,18 @@ export default class ManagementAdmin implements OnInit {
     });
   }
 
-  /**
-   * Actualiza el estado de la vista e inicia la carga de la lista de usuarios desde el servicio.
-   * @param type El tipo de usuario a gestionar: 'client' o 'business'.
-   */
   private loadData(type: 'client' | 'business'): void {
     this.isClient = type === 'client';
     this.userService.loadUsers(type);
   }
 
-  /**
-   * Abre una modal de confirmación y elimina el usuario seleccionado.
-   * @param user El registro de usuario a eliminar.
-   */
   async deleteUser(user: UserModel): Promise<void> {
-    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
+    const id = user.id_user!;
+    if (this.deletingIds.has(id)) return;
 
+    this.deletingIds.add(id);
+    this.cd.markForCheck();
+    const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
     const dialogRef = this.dialog.open(Cancelmodal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
@@ -69,10 +65,16 @@ export default class ManagementAdmin implements OnInit {
       .afterClosed()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
+        tap((result) => {
+          if (result !== true) {
+            this.deletingIds.delete(id);
+            this.cd.markForCheck();
+          }
+        }),
         filter((result) => result === true),
         switchMap(() =>
-          from(this.userService.emptyUserStorageFolder(user.id_user!)).pipe(
-            switchMap(() => this.userService.deleteUser(user.id_user!)),
+          from(this.userService.emptyUserStorageFolder(id)).pipe(
+            switchMap(() => this.userService.deleteUser(id)),
           ),
         ),
         switchMap(() =>
@@ -86,6 +88,10 @@ export default class ManagementAdmin implements OnInit {
             .get('MESSAGES.ERROR.DELETE_USER')
             .pipe(map((msg) => ({ text: msg, type: 'error' as const })));
         }),
+        finalize(() => {
+          this.deletingIds.delete(id);
+          this.cd.markForCheck();
+        }),
       )
       .subscribe({
         next: (res) => {
@@ -96,11 +102,9 @@ export default class ManagementAdmin implements OnInit {
         },
       });
   }
-  /**
-   * Navega a la página de modificación de perfil con los datos del usuario seleccionado.
-   * @param user El registro de usuario a editar.
-   */
+
   editUser(user: UserModel): void {
+    if (this.deletingIds.has(user.id_user!)) return;
     const userWithRole = {
       ...user,
       rol: this.isClient ? 'client' : 'business',
@@ -110,13 +114,14 @@ export default class ManagementAdmin implements OnInit {
     });
   }
 
-  /**
-   * Redirige a la página de registro para crear un nuevo usuario del tipo actual.
-   */
   createUser(): void {
     const type = this.isClient ? 'client' : 'business';
     this.router.navigate(['/register'], {
       state: { type },
     });
+  }
+
+  isDeleting(id: string): boolean {
+    return this.deletingIds.has(id);
   }
 }

@@ -8,14 +8,16 @@
 
   <div class="table-admin">
     <main class="overflow-x-auto">
-      <table 
-        mat-table 
-        [dataSource]="dataSource" 
+      <table
+        mat-table
+        [dataSource]="dataSource"
         class="table-admin-content"
         [attr.aria-describedby]="'admin-table-summary'"
       >
         <caption id="admin-table-summary" class="sr-only">
-          {{ 'ADMIN_TABLE.SUMMARY' | translate }}
+          {{
+            'ADMIN_TABLE.SUMMARY' | translate
+          }}
         </caption>
 
         <ng-container matColumnDef="name">
@@ -56,12 +58,14 @@
                 variant="secondary"
                 (click)="onDelete(item)"
                 [attr.aria-label]="('ADMIN_TABLE.BTN.DELETE' | translate) + ': ' + item.name"
+                [disabled]="isDeleting(item.id_user)"
               ></app-button>
               <app-button
                 [label]="'ADMIN_TABLE.BTN.MODIFY' | translate"
                 variant="primary"
                 (click)="onModify(item)"
                 [attr.aria-label]="('ADMIN_TABLE.BTN.MODIFY' | translate) + ': ' + item.name"
+                [disabled]="isDeleting(item.id_user)"
               ></app-button>
             </div>
           </td>
@@ -71,8 +75,8 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
         <tr class="mat-row" *matNoDataRow>
-          <td 
-            class="p-8 text-center text-label" 
+          <td
+            class="p-8 text-center text-label"
             [attr.colspan]="displayedColumns.length"
             role="status"
             aria-live="polite"
@@ -84,7 +88,7 @@
         </tr>
       </table>
     </main>
-    
+
     @if (dataSource.data.length > 0) {
       <mat-paginator
         [pageSizeOptions]="[5, 10, 20]"
