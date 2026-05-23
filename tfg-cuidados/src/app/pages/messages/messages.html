@@ -158,7 +158,10 @@
                   [attr.aria-label]="
                     ('MESSAGES_PAGE.TABLE.BTN_DELETE' | translate) + ': ' + message.topic
                   "
-                ></app-button>
+                  [disabled]="isDeleting(message.id_comunication!)"
+                >
+                  ></app-button
+                >
                 <app-button
                   [label]="'MESSAGES_PAGE.TABLE.BTN_VIEW' | translate"
                   variant="primary"
@@ -166,6 +169,7 @@
                   [attr.aria-label]="
                     ('MESSAGES_PAGE.TABLE.BTN_VIEW' | translate) + ': ' + message.topic
                   "
+                  [disabled]="isDeleting(message.id_comunication!)"
                 ></app-button>
               </div>
             </td>

@@ -21,7 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Buttonback } from '../../components/buttonback/buttonback';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
-import { switchMap, map, catchError, delay } from 'rxjs/operators';
+import { switchMap, map, catchError, delay, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
@@ -62,6 +62,7 @@ export default class Messages implements OnInit {
 
   isLoading = true;
 
+  private deletingIds = new Set<string>();
   public paginator = viewChild(MatPaginator);
 
   constructor() {
@@ -165,6 +166,7 @@ export default class Messages implements OnInit {
    * @param message El registro de comunicación a mostrar.
    */
   async readMessage(message: ComunicationModel): Promise<void> {
+    if (this.deletingIds.has(message.id_comunication!)) return;
     const { MessagesModal } = await import('../../components/messages-modal/messages-modal');
 
     this.dialog.open(MessagesModal, {
@@ -198,6 +200,11 @@ export default class Messages implements OnInit {
    * @param message El registro de comunicación a eliminar.
    */
   deleteCommunication(message: ComunicationModel): void {
+    const id = message.id_comunication!;
+    if (this.deletingIds.has(id)) return;
+    this.deletingIds.add(id);
+    this.cd.markForCheck();
+
     this.comunicationService
       .deleteComunication(message)
       .pipe(
@@ -215,7 +222,13 @@ export default class Messages implements OnInit {
         }),
       )
       .subscribe((res) => {
+        if (res.type === 'success') {
+          const currentData = this.dataSource.data;
+          this.dataSource.data = currentData.filter((m) => m.id_comunication !== id);
+        }
         this.messageService.showMessage(res.text, res.type);
+        this.deletingIds.delete(id);
+        this.cd.markForCheck();
       });
   }
 
@@ -231,5 +244,9 @@ export default class Messages implements OnInit {
       maxWidth: this.responsive.isMobile() ? '95vw' : '500px',
       maxHeight: '90vh',
     });
+  }
+
+  isDeleting(id: string): boolean {
+    return this.deletingIds.has(id);
   }
 }

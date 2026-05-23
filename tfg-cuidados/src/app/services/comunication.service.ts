@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { from, Observable, throwError, BehaviorSubject, of, forkJoin } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { ComunicationModel } from '../models/ComunicationModel';
 import { AuthService } from './auth.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -144,6 +144,7 @@ export class ComunicationService {
         () => new Error(this.translate.instant('ERRORS.COMUNICATION.INVALID_TYPE')),
       );
     }
+
     return from(this.supabase.from('Comunication').insert(comunication)).pipe(
       map(({ error }) => {
         if (error) throw error;
@@ -156,6 +157,10 @@ export class ComunicationService {
         }
         return of(void 0);
       }),
+      tap(() => {
+        this.refreshUsersData();
+      }),
+
       catchError((err) => throwError(() => err)),
     );
   }
