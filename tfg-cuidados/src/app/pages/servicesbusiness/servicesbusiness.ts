@@ -55,6 +55,7 @@ export default class Servicesbusiness implements OnInit {
 
   public isLoading = signal(false);
   private deletingIds = new Set<string>();
+  private isOpeningModal = false;
 
   dataSource = new MatTableDataSource<ServiceTimeJoined>([]);
   displayedColumns: string[] = ['name', 'price', 'type', 'time', 'day', 'description', 'actions'];
@@ -95,10 +96,13 @@ export default class Servicesbusiness implements OnInit {
   }
 
   async openModal(element?: ServiceTimeJoined) {
+    if (this.isOpeningModal) return;
     if (element && this.deletingIds.has(element.id_service_time)) return;
+    this.isOpeningModal = true;
 
     const { ServiceTimeModal } =
       await import('../../components/service-time-modal/service-time-modal');
+    this.isOpeningModal = false;
     const dialogRef = this.dialog.open(ServiceTimeModal, {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
@@ -156,6 +160,7 @@ export default class Servicesbusiness implements OnInit {
         this.messageService.showMessage(resultado.text, resultado.type);
         if (resultado.type === 'success') {
           const currentData = this.dataSource.data;
+          this.dataSource.data = currentData.filter((item) => item.id_service_time !== id);
           this.loadServices();
         }
         this.deletingIds.delete(id);

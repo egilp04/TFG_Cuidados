@@ -94,7 +94,7 @@
               [label]="'SERVICES_BUSINESS.BTN_DELETE' | translate"
               (click)="onDelete(element.id_service_time)"
               variant="secondary"
-              [disabled]="isLoading()"
+              [disabled]="isLoading() || isDeleting(element.id_service_time)"
               [attr.aria-label]="
                 ('SERVICES_BUSINESS.BTN_DELETE' | translate) + ': ' + element.Service?.name
               "
@@ -104,7 +104,7 @@
               [label]="'SERVICES_BUSINESS.BTN_MODIFY' | translate"
               variant="primary"
               (click)="openModal(element)"
-              [disabled]="isLoading()"
+              [disabled]="isLoading() || isDeleting(element.id_service_time)"
               [attr.aria-label]="
                 ('SERVICES_BUSINESS.BTN_MODIFY' | translate) + ': ' + element.Service?.name
               "

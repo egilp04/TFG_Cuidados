@@ -320,7 +320,7 @@
       "ERROR_GENERIC": "Error processing request, try it again!",
       "ERROR_DELETE": "Error deleting",
       "ERROR_HAS_OFFERS": "Offers associated must be deleted first",
-      "NO_CHANGES": "No data modified."
+      "NO_CHANGES": "No data modified"
     }
   },
   "MANAGEMENT_SCHEDULES": {
