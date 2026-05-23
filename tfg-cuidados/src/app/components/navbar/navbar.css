@@ -40,7 +40,7 @@
 }
 
 .nav-icon-style {
-  @apply text-primary dark:text-surface w-12 h-12 md:w-auto md:h-auto md:text-h2 transition-colors duration-200 hover:text-accent;
+  @apply text-primary dark:text-surface w-12 h-12 md:w-auto md:h-auto md:text-h2 ml-[-12px] transition-colors duration-200 hover:text-accent;
 }
 
 .nav-badge {
