@@ -199,7 +199,8 @@
       "CANCELED": "Cancelados",
       "DAYS": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
       "DEMAND": "Demanda",
-      "SUPPLY": "Oferta"
+      "SUPPLY": "Oferta",
+      "REGISTER": "Registros"
     }
   },
   "MAIN_MENU": {
@@ -614,7 +615,7 @@
     },
     "BTN": {
       "DELETE": "Cancelar",
-      "MODIFY": "Modificar"
+      "MODIFY": "Editar"
     },
     "NO_DATA": "No se han encontrado registros.",
     "PAGINATOR_LABEL": "Seleccionar página de usuarios"
@@ -796,7 +797,7 @@
       "RESEND": "Reenviar el email de registro"
     },
     "HINTS": {
-      "PASS_PATTERN": "La contraseña debe tener al menos 6 caracteres, letras, números y caracteres especiales.",
+      "PASS_PATTERN": "La contraseña debe tener al menos 6 caracteres incluyendo letras, números y caracteres especiales.",
       "RECOVER_DESC": "Introduce tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.",
       "EMAIL_ERROR": "Revise el email, por favor"
     },

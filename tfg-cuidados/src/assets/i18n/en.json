@@ -184,7 +184,7 @@
     "CHARGING": "Charging Data",
     "TITLE_CONTRACTS": "Contracts",
     "TOTAL_CONTRACTS": {
-      "TOTAL": "Total contract: ",
+      "TOTAL": "Total contracts: ",
       "ACTIVE": "Total contracts active: ",
       "NO_ACTIVE": "Total contracts no active: "
     },
@@ -198,7 +198,8 @@
       "CANCELED": "Canceled",
       "DAYS": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       "DEMAND": "Demand",
-      "SUPPLY": "Supply"
+      "SUPPLY": "Supply",
+      "REGISTER": "Registers"
     }
   },
   "MAIN_MENU": {
@@ -212,7 +213,7 @@
       "ALL_CONTRACTS": "View All Contracts"
     },
     "ADMIN": {
-      "DASHBOARD": "View Dashboard",
+      "DASHBOARD": "Dashboard",
       "MANAGE_USERS": "Manage Users",
       "MANAGE_COMPANIES": "Manage Companies",
       "MANAGE_SERVICES": "Manage Services",
@@ -465,7 +466,7 @@
       "CANCEL": "Cancel modification",
       "MODIFY": "Modify",
       "UNSUBSCRIBE": "Unsubscribe",
-      "DELETE_AVATAR": "Delelte avatar"
+      "DELETE_AVATAR": "Delete avatar"
     },
     "ERRORS": {
       "INVALID_IMAGE_TYPE": "Invalid format. Use JPG, PNG, or WEBP",
@@ -667,7 +668,7 @@
     },
     "BTN": {
       "DELETE": "Cancel",
-      "MODIFY": "Modify"
+      "MODIFY": "Edit"
     },
     "NO_DATA": "No records found.",
     "PAGINATOR_LABEL": "Select user page"
@@ -691,7 +692,7 @@
       "USERNAME": "Username",
       "SURNAME1": "First Surname",
       "SURNAME2": "Second Surname",
-      "BIRTHDATE": "Birthdate",
+      "BIRTHDATE": "Birth date",
       "DNI": "ID Card / DNI",
       "BUSINESS_NAME": "Company Name",
       "CIF": "Tax ID / CIF",
@@ -797,7 +798,7 @@
       "RESEND": "Resend register email"
     },
     "HINTS": {
-      "PASS_PATTERN": "Password must be at least 6 chars, letters, numbers and special characters",
+      "PASS_PATTERN": "Password must be at least 6 chars including letters, numbers and special characters",
       "RECOVER_DESC": "Enter your email and we will send you a link to reset your password",
       "EMAIL_ERROR": "Check the email, please"
     },
