@@ -69,7 +69,10 @@ export class Registerform implements OnInit, OnChanges {
       companyName: this.fb.control<string>(''),
       cif: this.fb.control<string>(''),
       description: this.fb.control<string>(''),
-      phone: this.fb.control<string>('', [Validators.required, Validators.pattern(/^(?:(?:\+|00)34\s?)?[6789](?:\s?\d){8}$/)]),
+      phone: this.fb.control<string>('', [
+        Validators.required,
+        Validators.pattern(/^(?:(?:\+|00)34\s?)?[6789](?:\s?\d){8}$/),
+      ]),
       email: this.fb.control<string>(
         '',
         [Validators.required, Validators.email],
@@ -179,7 +182,7 @@ export class Registerform implements OnInit, OnChanges {
         value: errors['minlength']?.requiredLength,
       });
     }
-    
+
     if (firstError === 'pattern') {
       return this.getPatternMessage(controlName);
     }
@@ -230,31 +233,31 @@ export class Registerform implements OnInit, OnChanges {
     }
   }
 
- /**
+  /**
    * Aplica validadores específicos a una lista de campos de formulario.
    */
- private setValidators(fields: string[]): void {
-  const namePattern = /^[A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\s]*$/;
+  private setValidators(fields: string[]): void {
+    const namePattern = /^[A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\s]*$/;
 
-  fields.forEach((f) => {
-    const control = this.registerForm.get(f);
-    const validators = [Validators.required];
+    fields.forEach((f) => {
+      const control = this.registerForm.get(f);
+      const validators = [Validators.required];
 
-    if (f === 'name' || f === 'surname1' || f === 'surname2') {
-      validators.push(Validators.minLength(3));
-      validators.push(Validators.pattern(namePattern));
-    }
+      if (f === 'name' || f === 'surname1' || f === 'surname2') {
+        validators.push(Validators.minLength(3));
+        validators.push(Validators.pattern(namePattern));
+      }
 
-    if (f === 'birthDate') validators.push(this.isAdult.bind(this));
-    if (f === 'dni') validators.push(this.dniValidator);
-    if (f === 'cif') validators.push(this.cifValidator);
-    
-    if (f === 'companyName') validators.push(Validators.minLength(3));
+      if (f === 'birthDate') validators.push(this.isAdult.bind(this));
+      if (f === 'dni') validators.push(this.dniValidator);
+      if (f === 'cif') validators.push(this.cifValidator);
 
-    control?.setValidators(validators);
-    control?.updateValueAndValidity();
-  });
-}
+      if (f === 'companyName') validators.push(Validators.minLength(3));
+
+      control?.setValidators(validators);
+      control?.updateValueAndValidity();
+    });
+  }
 
   /**
    * Borra validadores de una lista de campos de formulario.
@@ -383,7 +386,7 @@ export class Registerform implements OnInit, OnChanges {
   validatorEmailRegistered(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       if (!control.value) return of(null);
-      return timer(500).pipe(
+      return timer(100).pipe(
         switchMap(() => this.authService.checkEmailExists(control.value)),
         map((exists: boolean) => (exists ? { emailTaken: true } : null)),
         catchError(() => of(null)),

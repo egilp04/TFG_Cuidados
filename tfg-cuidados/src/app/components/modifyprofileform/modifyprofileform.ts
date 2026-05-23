@@ -9,7 +9,7 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
-  OnDestroy
+  OnDestroy,
 } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ButtonComponent } from '../button/button';
@@ -21,7 +21,7 @@ import { LucideAngularModule } from 'lucide-angular';
 import { UserProfileModel, FormSubmitEvent } from '../../models/ModifyProfileForm';
 import { AvatarComponent } from '../../components/avatar/avatar.component';
 import { MessageService } from '../../services/message-service';
-
+import { UserService } from '../../services/user.service';
 
 /**
  * Componente que proporciona un formulario dinámico para editar perfiles de usuario.
@@ -37,25 +37,24 @@ import { MessageService } from '../../services/message-service';
     ReactiveFormsModule,
     TranslateModule,
     LucideAngularModule,
-    AvatarComponent
+    AvatarComponent,
   ],
   templateUrl: './modifyprofileform.html',
   styleUrl: './modifyprofileform.css',
 })
-export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
+export class Modifyprofileform implements OnInit, OnChanges, OnDestroy {
   private fb = inject(FormBuilder);
   private cd = inject(ChangeDetectorRef);
   private authService = inject(AuthService);
   private translate = inject(TranslateService);
 
   public comunities: string[] = comunities;
+  @Input() isProcessing: boolean = false;
 
   public previewUrl: string | null = null;
   public selectedImageFile: File | null = null;
 
   public messageService = inject(MessageService);
-
-  
 
   @Input() userData: UserProfileModel | null = null;
   @Input() userRole: 'client' | 'business' | 'administrator' = 'client';
@@ -63,6 +62,7 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
   @Output() formSubmitted = new EventEmitter<FormSubmitEvent>();
   @Output() deleteRequested = new EventEmitter<void>();
   @Output() cancelRequested = new EventEmitter<void>();
+  @Output() removeAvatar = new EventEmitter<void>();
 
   private targetUser: UserProfileModel | null = null;
   public isAdminViewer: boolean = false;
@@ -184,14 +184,14 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
    * @param fields Array de nombres de controles de formulario a validar.
    */
   private setValidators(fields: string[]): void {
-
     const namePattern = '^[A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\\s]*$';
 
     fields.forEach((f) => {
       const control = this.profileForm.get(f);
       const validators = [Validators.required];
 
-      if (f === 'phone') validators.push(Validators.pattern(/^(?:(?:\+|00)34\s?)?[6789](?:\s?\d){8}$/));
+      if (f === 'phone')
+        validators.push(Validators.pattern(/^(?:(?:\+|00)34\s?)?[6789](?:\s?\d){8}$/));
       if (f === 'postcode') validators.push(Validators.pattern('^[0-9]{5}$'));
       if (f === 'email') validators.push(Validators.email);
       if (f === 'userName' || f === 'surname1' || f === 'surname2') {
@@ -222,7 +222,7 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
     if (!errors) return '';
 
     const firstError = Object.keys(errors)[0];
-    
+
     if (firstError === 'pattern') {
       return this.getPatternMessage(controlName);
     }
@@ -246,13 +246,16 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
       surname2: 'MODIFY_PROFILE.ERRORS.PATTERN.SURNAME',
     };
     const key = patterns[controlName];
-    return key ? this.translate.instant(key) : this.translate.instant('MODIFY_PROFILE.ERRORS.INVALID');
+    return key
+      ? this.translate.instant(key)
+      : this.translate.instant('MODIFY_PROFILE.ERRORS.INVALID');
   }
 
   /**
    * Valida el formulario y emite los datos estructurados al componente padre.
    */
   onSubmit(): void {
+    if (this.isProcessing) return;
     if (this.profileForm.valid) {
       const formValue = this.profileForm.getRawValue();
 
@@ -277,7 +280,11 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
         }
       }
 
-      this.formSubmitted.emit({ data: databasePayload, rol: this.userRole, avatarFile: this.selectedImageFile });
+      this.formSubmitted.emit({
+        data: databasePayload,
+        rol: this.userRole,
+        avatarFile: this.selectedImageFile,
+      });
     } else {
       this.profileForm.markAllAsTouched();
     }
@@ -287,6 +294,7 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
    * Emite un evento para señalar la cancelación de la actualización de perfil.
    */
   onCancel(): void {
+    if (this.isProcessing) return;
     this.cancelRequested.emit();
   }
 
@@ -294,22 +302,23 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
    * Emite un evento para señalar una solicitud de eliminar la cuenta.
    */
   onDeleteAccount(): void {
+    if (this.isProcessing) return;
     this.deleteRequested.emit();
   }
 
-
   /**
    * Función para la modificación de la foto de perfil del usuario
-   * @param event 
+   * @param event
    * @returns void
    */
 
   onFileSelected(event: Event): void {
+    if (this.isProcessing) return;
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
-  
+
       if (!validTypes.includes(file.type)) {
         this.translate.get('MODIFY_PROFILE.ERRORS.INVALID_IMAGE_TYPE').subscribe((msg: string) => {
           this.messageService.showMessage(msg, 'error');
@@ -317,7 +326,7 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
         input.value = '';
         return;
       }
-        const maxSize = 2 * 1024 * 1024;
+      const maxSize = 2 * 1024 * 1024;
       if (file.size > maxSize) {
         this.translate.get('MODIFY_PROFILE.ERRORS.IMAGE_TOO_LARGE').subscribe((msg: string) => {
           this.messageService.showMessage(msg, 'error');
@@ -327,11 +336,28 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy{
       }
 
       this.selectedImageFile = file;
-      
+
       if (this.previewUrl) {
         URL.revokeObjectURL(this.previewUrl);
       }
       this.previewUrl = URL.createObjectURL(file);
+    }
+  }
+
+  deleteAvatar(event: Event): void {
+    if (this.isProcessing) return;
+    event.stopPropagation();
+    event.preventDefault();
+    if (this.previewUrl) {
+      this.previewUrl = null;
+      this.selectedImageFile = null;
+      const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+      this.cd.markForCheck();
+      return;
+    }
+    if (this.userData?.avatar_url) {
+      this.removeAvatar.emit();
     }
   }
 }

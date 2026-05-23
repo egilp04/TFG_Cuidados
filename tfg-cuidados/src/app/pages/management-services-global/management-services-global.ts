@@ -69,6 +69,7 @@ export default class ManagementServicesGlobal implements OnInit {
   public originalService: ServiceModel | null = null;
 
   public controlFilterItem = new FormControl<string>('');
+  private deletingIds = new Set<string>();
 
   public availableIcons = AVAILABLE_ICONS;
   public iconMap = SERVICE_ICON_MAP;
@@ -234,6 +235,8 @@ export default class ManagementServicesGlobal implements OnInit {
    * @param service El modelo de servicio a editar.
    */
   editService(service: ServiceModel): void {
+    if (this.deletingIds.has(service.id_service!)) return;
+
     this.isEditing = true;
     this.currentServiceId = service.id_service!;
     this.originalService = service;
@@ -253,7 +256,7 @@ export default class ManagementServicesGlobal implements OnInit {
    * @param id El identificador único del servicio.
    */
   async deleteService(id: string): Promise<void> {
-    if (this.isLoading()) return;
+    if (this.isLoading() || this.deletingIds.has(id)) return;
 
     this.serviceService
       .hasActiveServiceTimes(id)
@@ -279,6 +282,10 @@ export default class ManagementServicesGlobal implements OnInit {
           .pipe(
             takeUntilDestroyed(this.destroyRef),
             filter((result: boolean) => result === true),
+            tap(() => {
+              this.deletingIds.add(id);
+              if (this.currentServiceId === id) this.resetForm();
+            }),
             switchMap(() =>
               this.serviceService.deleteService(id).pipe(
                 switchMap(() =>
@@ -298,6 +305,10 @@ export default class ManagementServicesGlobal implements OnInit {
             this.messageService.showMessage(result.text, result.type);
           });
       });
+  }
+
+  isDeleting(id: string): boolean {
+    return this.deletingIds.has(id);
   }
 
   /**

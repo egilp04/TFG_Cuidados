@@ -33,7 +33,7 @@
       <label for="day-select" class="management-time-global-day-label">
         {{ 'MANAGEMENT_SCHEDULES.FORM.DAY_LABEL' | translate }}
       </label>
-      
+
       <div class="relative w-full">
         <select
           id="day-select"
@@ -42,8 +42,8 @@
           class="management-time-global-select"
           [attr.aria-invalid]="getCtrl('day').invalid && getCtrl('day').touched"
         >
-        <option value="" disabled selected class="select-option-disabled">
-          {{ 'MANAGEMENT_SCHEDULES.FORM.SELECT_DAY' | translate }}
+          <option value="" disabled selected class="select-option-disabled">
+            {{ 'MANAGEMENT_SCHEDULES.FORM.SELECT_DAY' | translate }}
           </option>
 
           @for (day of weekDaysList; track day.valor) {
@@ -53,12 +53,21 @@
           }
         </select>
         <div class="service-form-select-arrow">
-          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
         </div>
-
       </div>
     </div>
   </main>
@@ -150,13 +159,14 @@
                 ' ' +
                 timeSlot.time
               "
+              [disabled]="isLoading() || isDeleting(timeSlot.id_time)"
             >
             </app-button>
             <app-button
               [label]="'MANAGEMENT_SCHEDULES.TABLE.DELETE' | translate"
               variant="secondary"
               (click)="deleteTime(timeSlot.id_time!)"
-              [disabled]="isLoading()"
+              [disabled]="isLoading() || isDeleting(timeSlot.id_time)"
               [attr.aria-label]="
                 ('MANAGEMENT_SCHEDULES.TABLE.DELETE' | translate) +
                 ': ' +

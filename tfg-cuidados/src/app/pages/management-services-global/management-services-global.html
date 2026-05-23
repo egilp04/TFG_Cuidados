@@ -31,7 +31,10 @@
     </app-inputs>
 
     <div class="flex flex-col gap-2 w-full">
-      <label id="icon-select-label" class="text-label text-primary dark:text-surface">
+      <label
+        id="icon-select-label"
+        class="text-label text-primary dark:text-surface font-poppins ml-1"
+      >
         {{ 'ADMIN_SERVICE_TIME.SELECT_ICON' | translate }}
       </label>
       <mat-form-field appearance="outline" class="w-full mi-select-personalizado">
@@ -195,16 +198,17 @@
               [attr.aria-label]="
                 ('MANAGEMENT_SERVICES.TABLE.EDIT' | translate) + ': ' + service.name
               "
+              [disabled]="isLoading() || isDeleting(service.id_service!)"
             >
             </app-button>
             <app-button
               [label]="'MANAGEMENT_SERVICES.TABLE.DELETE' | translate"
               variant="secondary"
               (click)="deleteService(service.id_service!)"
-              [disabled]="isLoading()"
               [attr.aria-label]="
                 ('MANAGEMENT_SERVICES.TABLE.DELETE' | translate) + ': ' + service.name
               "
+              [disabled]="isLoading() || isDeleting(service.id_service!)"
             >
             </app-button>
           </div>

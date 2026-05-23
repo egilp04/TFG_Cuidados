@@ -232,4 +232,43 @@ export class UserService {
       }),
     );
   }
+
+  async deleteAvatar(userId: string, fileName: string) {
+    const { error: storageError } = await this.supabase.storage
+      .from('avatars')
+      .remove([`${userId}/${fileName}`]);
+    console.log('borrando del storage');
+    if (storageError) throw storageError;
+    const { error: dbError } = await this.supabase
+      .from('User_public')
+      .update({ avatar_url: null })
+      .eq('id_user', userId);
+    console.log('borrando de la base de datod');
+    if (dbError) throw dbError;
+    return true;
+  }
+
+  /**
+   * Busca todos los archivos dentro de la carpeta del usuario y los borra
+   */
+  async emptyUserStorageFolder(userId: string) {
+    try {
+      const { data: files, error: listError } = await this.supabase.storage
+        .from('avatars')
+        .list(userId);
+
+      if (listError) throw listError;
+      if (!files || files.length === 0) return true;
+
+      const filesToRemove = files.map((file) => `${userId}/${file.name}`);
+      const { error: deleteError } = await this.supabase.storage
+        .from('avatars')
+        .remove(filesToRemove);
+      if (deleteError) throw deleteError;
+      return true;
+    } catch (error) {
+      console.error('Error vaciando el storage:', error);
+      return false;
+    }
+  }
 }
