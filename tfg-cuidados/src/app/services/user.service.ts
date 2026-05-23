@@ -234,16 +234,11 @@ export class UserService {
   }
 
   async deleteAvatar(userId: string, fileName: string) {
-    // 1. Borramos la foto del Storage (El Disco Duro)
     const { error: storageError } = await this.supabase.storage
       .from('avatars')
       .remove([`${userId}/${fileName}`]);
     console.log('borrando del storage');
-
     if (storageError) throw storageError;
-
-    // 2. Limpiamos la URL en la Base de Datos directamente
-    // (Asegúrate de que 'User_public' es el nombre exacto de tu tabla)
     const { error: dbError } = await this.supabase
       .from('User_public')
       .update({ avatar_url: null })
@@ -251,5 +246,29 @@ export class UserService {
     console.log('borrando de la base de datod');
     if (dbError) throw dbError;
     return true;
+  }
+
+  /**
+   * Busca todos los archivos dentro de la carpeta del usuario y los borra
+   */
+  async emptyUserStorageFolder(userId: string) {
+    try {
+      const { data: files, error: listError } = await this.supabase.storage
+        .from('avatars')
+        .list(userId);
+
+      if (listError) throw listError;
+      if (!files || files.length === 0) return true;
+
+      const filesToRemove = files.map((file) => `${userId}/${file.name}`);
+      const { error: deleteError } = await this.supabase.storage
+        .from('avatars')
+        .remove(filesToRemove);
+      if (deleteError) throw deleteError;
+      return true;
+    } catch (error) {
+      console.error('Error vaciando el storage:', error);
+      return false;
+    }
   }
 }

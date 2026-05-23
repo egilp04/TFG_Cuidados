@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, from } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -71,19 +71,21 @@ export default class ManagementAdmin implements OnInit {
         takeUntilDestroyed(this.destroyRef),
         filter((result) => result === true),
         switchMap(() =>
-          this.userService.deleteUser(user.id_user!).pipe(
-            switchMap(() =>
-              this.translate
-                .get('MESSAGES.SUCCESS.DELETE_USER')
-                .pipe(map((msg) => ({ text: msg, type: 'success' as const }))),
-            ),
-            catchError(() =>
-              this.translate
-                .get('MESSAGES.ERROR.DELETE_USER')
-                .pipe(map((msg) => ({ text: msg, type: 'error' as const }))),
-            ),
+          from(this.userService.emptyUserStorageFolder(user.id_user!)).pipe(
+            switchMap(() => this.userService.deleteUser(user.id_user!)),
           ),
         ),
+        switchMap(() =>
+          this.translate
+            .get('MESSAGES.SUCCESS.DELETE_USER')
+            .pipe(map((msg) => ({ text: msg, type: 'success' as const }))),
+        ),
+        catchError((err) => {
+          console.error('Error al borrar usuario desde Admin:', err);
+          return this.translate
+            .get('MESSAGES.ERROR.DELETE_USER')
+            .pipe(map((msg) => ({ text: msg, type: 'error' as const })));
+        }),
       )
       .subscribe({
         next: (res) => {
@@ -94,7 +96,6 @@ export default class ManagementAdmin implements OnInit {
         },
       });
   }
-
   /**
    * Navega a la página de modificación de perfil con los datos del usuario seleccionado.
    * @param user El registro de usuario a editar.

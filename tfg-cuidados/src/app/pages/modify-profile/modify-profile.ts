@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit, signal } from
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule, Location } from '@angular/common';
-import { of, switchMap, filter, tap, timer, catchError, map, EMPTY, firstValueFrom } from 'rxjs';
+import { of, switchMap, filter, tap, timer, catchError, map, EMPTY, firstValueFrom, from } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../../services/message-service';
@@ -177,7 +177,11 @@ export default class ModifyProfilePage implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter((result) => result === true),
-        switchMap(() => this.userService.deleteUser(user.id_user)),
+        switchMap(() =>
+          from(this.userService.emptyUserStorageFolder(user.id_user)).pipe(
+            switchMap(() => this.userService.deleteUser(user.id_user)),
+          ),
+        ),
         switchMap(() => {
           const isSelfUpdate = user.id_user === currentUser?.id_user;
           if (isSelfUpdate) {

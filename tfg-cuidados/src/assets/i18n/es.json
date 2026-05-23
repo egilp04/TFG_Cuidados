@@ -301,7 +301,7 @@
     },
     "LIST": {
       "TITLE": "Listado de Servicios",
-      "SEARCH": "Buscar por nombre, titulo o servicio",
+      "SEARCH": "Buscar por nombre o tipo de servicio",
       "EMPTY": "No se han encontrado servicios"
     },
     "TABLE": {
@@ -856,8 +856,8 @@
     }
   },
   "PRIVACY_PAGE": {
-    "TITLE": "Privacy Policy",
-    "LAST_UPDATE": "Last updated",
+    "TITLE": "Política de privacidad",
+    "LAST_UPDATE": "Última actualización",
     "SECTION_2": {
       "TITLE": "1. Política de Privacidad y Marco Legal",
       "INTRO_BOX": "Esta Política de Privacidad se rige por el cumplimiento de la legislación vigente en España y Europa, concretamente: el RGPD (Reglamento UE 2016/679), la LOPD-GDD (Ley Orgánica 3/2018) y la LSSI-CE (Ley 34/2002).",
