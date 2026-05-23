@@ -145,7 +145,7 @@ export default class Dashboard implements OnInit {
       },
       x: {
         grid: { display: true, color: 'rgba(255, 255, 255, 0.1)' },
-        ticks: { color: '#9ca3af' },
+        ticks: { color: '#9ca3af', maxRotation: 90, minRotation: 90, autoSkip: true },
       },
     },
   };
