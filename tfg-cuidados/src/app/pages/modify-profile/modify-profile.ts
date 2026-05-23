@@ -169,12 +169,16 @@ export default class ModifyProfilePage implements OnInit {
    * Solicita confirmación del usuario y elimina la cuenta.
    * Cierra la sesión del usuario si está eliminando su propia cuenta.
    */
+  public isProcessing = signal<boolean>(false);
   async unsubscribeUser(): Promise<void> {
+    if (this.isProcessing()) return;
+    this.isProcessing.set(true);
     const user = this.userToEdit();
     const currentUser = this.authService.currentUser();
-
-    if (!user) return;
-
+    if (!user) {
+      this.isProcessing.set(false);
+      return;
+    }
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
 
     this.dialog
@@ -186,6 +190,11 @@ export default class ModifyProfilePage implements OnInit {
       .afterClosed()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
+        tap((result) => {
+          if (!result) {
+            this.isProcessing.set(false);
+          }
+        }),
         filter((result) => result === true),
         switchMap(() =>
           from(this.userService.emptyUserStorageFolder(user.id_user)).pipe(
@@ -195,21 +204,15 @@ export default class ModifyProfilePage implements OnInit {
         switchMap(() => {
           const isSelfUpdate = user.id_user === currentUser?.id_user;
           if (isSelfUpdate) {
-            return this.authService.signOut().pipe(
-              tap(() => this.router.navigate(['/'])),
-              map(() => true),
-            );
-          } else {
-            this.location.back();
-            return of(true);
+            return this.authService.signOut().pipe(map(() => true));
           }
+          return of(true);
         }),
-        switchMap((success) =>
-          success
-            ? this.translate
-                .get('MODIFY_PROFILE.MESSAGES.DELETE_SUCCESS')
-                .pipe(map((msg) => ({ msg, type: 'success' as const })))
-            : EMPTY,
+
+        switchMap(() =>
+          this.translate
+            .get('MODIFY_PROFILE.MESSAGES.DELETE_SUCCESS')
+            .pipe(map((msg) => ({ msg, type: 'success' as const }))),
         ),
         catchError((err: Error) => {
           console.error('Error desuscribiendo usuario:', err);
@@ -219,12 +222,22 @@ export default class ModifyProfilePage implements OnInit {
         }),
       )
       .subscribe((result) => {
-        if (result && result.msg) {
+        if (!result || !result.msg) return;
+        if (result.type === 'error') {
+          this.messageService.showMessage(result.msg, result.type);
+          this.isProcessing.set(false);
+          return;
+        }
+        const isSelfUpdate = user.id_user === currentUser?.id_user;
+        if (isSelfUpdate) {
+          this.router.navigate(['/']).then(() => {
+            this.messageService.showMessage(result.msg, result.type);
+          });
+        } else {
           this.messageService.showMessage(result.msg, result.type);
         }
       });
   }
-
   /**
    * Navega hacia atrás en el historial de navegación.
    */

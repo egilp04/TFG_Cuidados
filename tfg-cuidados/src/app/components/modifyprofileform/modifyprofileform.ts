@@ -49,6 +49,7 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy {
   private translate = inject(TranslateService);
 
   public comunities: string[] = comunities;
+  @Input() isProcessing: boolean = false;
 
   public previewUrl: string | null = null;
   public selectedImageFile: File | null = null;
@@ -254,6 +255,7 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy {
    * Valida el formulario y emite los datos estructurados al componente padre.
    */
   onSubmit(): void {
+    if (this.isProcessing) return;
     if (this.profileForm.valid) {
       const formValue = this.profileForm.getRawValue();
 
@@ -292,6 +294,7 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy {
    * Emite un evento para señalar la cancelación de la actualización de perfil.
    */
   onCancel(): void {
+    if (this.isProcessing) return;
     this.cancelRequested.emit();
   }
 
@@ -299,6 +302,7 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy {
    * Emite un evento para señalar una solicitud de eliminar la cuenta.
    */
   onDeleteAccount(): void {
+    if (this.isProcessing) return;
     this.deleteRequested.emit();
   }
 
@@ -309,6 +313,7 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy {
    */
 
   onFileSelected(event: Event): void {
+    if (this.isProcessing) return;
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
@@ -340,6 +345,7 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy {
   }
 
   deleteAvatar(event: Event): void {
+    if (this.isProcessing) return;
     event.stopPropagation();
     event.preventDefault();
     if (this.previewUrl) {
