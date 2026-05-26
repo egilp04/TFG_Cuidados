@@ -76,12 +76,12 @@ export class AuthService {
           return from(this.supabase.auth.signOut()).pipe(
             switchMap(() => {
               throw new Error('USER_INACTIVE');
-            })
+            }),
           );
         }
-      this.currentUser.set(user);
+        this.currentUser.set(user);
         return of(user);
-      })
+      }),
     );
   }
 
@@ -94,8 +94,16 @@ export class AuthService {
         if (userErr) throw userErr;
 
         const [cli, bus, adm] = await Promise.all([
-          this.supabase.from('Client').select('surname1, surname2, address, birthdate, id_client, postcode, city, comunity').eq('id_client', userId).maybeSingle(),
-          this.supabase.from('Business').select('address, description, city, postcode, comunity, id_business').eq('id_business', userId).maybeSingle(),
+          this.supabase
+            .from('Client')
+            .select('surname1, surname2, address, birthdate, id_client, postcode, city, comunity')
+            .eq('id_client', userId)
+            .maybeSingle(),
+          this.supabase
+            .from('Business')
+            .select('address, description, city, postcode, comunity, id_business')
+            .eq('id_business', userId)
+            .maybeSingle(),
           this.supabase
             .from('Administrator')
             .select('*')
@@ -340,5 +348,63 @@ export class AuthService {
       }),
       catchError(() => of(false)),
     );
+  }
+
+  async start2FAEnrollment() {
+    const { data, error } = await this.supabase.auth.mfa.enroll({
+      factorType: 'totp',
+    });
+    if (error) throw error;
+    return data;
+  }
+
+  /** 2. Crea un reto para verificar un código */
+  async createChallenge(factorId: string) {
+    const { data, error } = await this.supabase.auth.mfa.challenge({ factorId });
+    if (error) throw error;
+    return data;
+  }
+
+  /** 3. Verifica el código que mete el usuario */
+  async verifyChallenge(factorId: string, challengeId: string, code: string) {
+    const { data, error } = await this.supabase.auth.mfa.verify({
+      factorId,
+      challengeId,
+      code,
+    });
+    if (error) throw error;
+    return data;
+  }
+
+  // ==========================================
+  // FLUJO DE LOGIN DIARIO (COMPROBACIONES)
+  // ==========================================
+
+  /** Comprueba si el usuario actual tiene el 2FA activado y pendiente de verificar */
+  async check2FAStatus() {
+    const { data, error } = await this.supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (error) throw error;
+
+    return {
+      // Si el nivel actual es aal1 pero requiere aal2, necesita meter el código
+      needs2FA: data.currentLevel === 'aal1' && data.nextLevel === 'aal2',
+      isVerified: data.currentLevel === 'aal2',
+    };
+  }
+
+  /** Obtiene la lista de factores 2FA que el usuario ya ha configurado */
+  async getVerifiedFactors() {
+    const { data, error } = await this.supabase.auth.mfa.listFactors();
+    if (error) throw error;
+
+    // Devolvemos solo los factores TOTP que están en estado 'verified'
+    return data.totp.filter((factor) => factor.status === 'verified');
+  }
+
+  /** Función para desactivar el 2FA (por si el usuario quiere quitarlo) */
+  async unenroll2FA(factorId: string) {
+    const { data, error } = await this.supabase.auth.mfa.unenroll({ factorId });
+    if (error) throw error;
+    return data;
   }
 }

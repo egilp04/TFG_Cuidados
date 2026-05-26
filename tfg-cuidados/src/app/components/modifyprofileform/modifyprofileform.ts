@@ -22,6 +22,7 @@ import { UserProfileModel, FormSubmitEvent } from '../../models/ModifyProfileFor
 import { AvatarComponent } from '../../components/avatar/avatar.component';
 import { MessageService } from '../../services/message-service';
 import { UserService } from '../../services/user.service';
+import { AuthentificatorComponent } from '../authentificator/authentificator.component';
 
 /**
  * Componente que proporciona un formulario dinámico para editar perfiles de usuario.
@@ -38,6 +39,7 @@ import { UserService } from '../../services/user.service';
     TranslateModule,
     LucideAngularModule,
     AvatarComponent,
+    AuthentificatorComponent,
   ],
   templateUrl: './modifyprofileform.html',
   styleUrl: './modifyprofileform.css',

@@ -1038,5 +1038,27 @@
     "FIRST_PAGE": "First page",
     "LAST_PAGE": "Last page",
     "OF": "of"
+  },
+  "TWO_FACTOR_AUTH": {
+    "LOGIN_TITLE": "Two-step verification",
+    "LOGIN_DESC": "Open your authenticator app (e.g., Google Authenticator) and enter the 6-digit code.",
+    "PROFILE_TITLE": "Account security",
+    "STEP_1_DESC": "Increase your account security by enabling two-factor authentication (2FA). We will ask for a code from your mobile device every time you log in.",
+    "BTN_GENERATING": "Generating QR code...",
+    "BTN_SETUP": "Set up 2FA",
+    "STEP_2_INSTRUCT_1": "1. Scan this code with Google Authenticator or Authy:",
+    "QR_ALT_TEXT": "2FA QR Code",
+    "STEP_2_INSTRUCT_2": "2. Enter the 6-digit code from the app:",
+    "BTN_CANCEL": "Cancel",
+    "BTN_VERIFYING": "Verifying...",
+    "BTN_VERIFY_ACTIVATE": "Verify and Activate",
+    "SUCCESS_TITLE": "Two-step authentication enabled",
+    "SUCCESS_DESC": "Your account is protected. You can disable this feature if needed.",
+    "BTN_DISABLE": "Disable 2FA",
+    "ERROR_GENERATE_QR": "Error generating QR code.",
+    "ERROR_WRONG_CODE": "Incorrect code. Please try again.",
+    "ERROR_DISABLE": "Error disabling two-factor authentication. Please try again.",
+    "SUCCESS_DISABLE": "2FA protection successfully disabled.",
+    "CONFIRM_DISABLE": "Are you sure you want to disable 2FA protection?"
   }
 }

@@ -1036,5 +1036,27 @@
     "FIRST_PAGE": "Primera página",
     "LAST_PAGE": "Última página",
     "OF": "de"
+  },
+  "TWO_FACTOR_AUTH": {
+    "LOGIN_TITLE": "Verificación en dos pasos",
+    "LOGIN_DESC": "Abre tu aplicación de autenticación (ej: Google Authenticator) e introduce el código de 6 dígitos.",
+    "PROFILE_TITLE": "Seguridad de la cuenta",
+    "STEP_1_DESC": "Aumenta la seguridad de tu cuenta activando la verificación en dos pasos (2FA). Te pediremos un código desde tu móvil cada vez que inicies sesión.",
+    "BTN_GENERATING": "Generando código QR...",
+    "BTN_SETUP": "Configurar 2FA",
+    "STEP_2_INSTRUCT_1": "1. Escanea este código con Google Authenticator o Authy:",
+    "QR_ALT_TEXT": "Código QR 2FA",
+    "STEP_2_INSTRUCT_2": "2. Introduce el código de 6 dígitos de la app:",
+    "BTN_CANCEL": "Cancelar",
+    "BTN_VERIFYING": "Verificando...",
+    "BTN_VERIFY_ACTIVATE": "Verificar y Activar",
+    "SUCCESS_TITLE": "Autenticación en dos pasos activada",
+    "SUCCESS_DESC": "Tu cuenta está protegida. Puedes desactivar esta función si lo necesitas.",
+    "BTN_DISABLE": "Desactivar 2FA",
+    "ERROR_GENERATE_QR": "Error al generar el código QR.",
+    "ERROR_WRONG_CODE": "Código incorrecto. Inténtalo de nuevo.",
+    "CONFIRM_DISABLE": "¿Estás seguro de que quieres desactivar la protección 2FA?",
+    "ERROR_DISABLE": "Error al desactivar la autenticación en dos pasos. Inténtalo de nuevo.",
+    "SUCCESS_DISABLE": "Protección 2FA desactivada correctamente."
   }
 }

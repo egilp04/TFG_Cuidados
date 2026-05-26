@@ -159,13 +159,52 @@
     </main>
   }
 
+  @if (currentMode === 'verify2fa') {
+    <main class="login-recuperar-container" role="region" aria-label="Verificación de dos pasos">
+      <div class="login-login-form-div mb-6 text-center">
+        <h2 class="text-xl font-semibold mb-2">{{ 'TWO_FACTOR_AUTH.LOGIN_TITLE' | translate }}</h2>
+        <p class="login-subtitle mb-4">
+          {{ 'TWO_FACTOR_AUTH.LOGIN_DESC' | translate }}
+        </p>
+
+        <mat-dialog-content class="login-form-reset">
+          <app-inputs
+            name="mfaCode"
+            label="Código de seguridad"
+            [control]="mfaCodeCtrl"
+            type="text"
+            placeholder="000000"
+          >
+          </app-inputs>
+        </mat-dialog-content>
+      </div>
+
+      <mat-dialog-actions class="login-other-actions">
+        <app-button
+          label="Verificar"
+          variant="primary"
+          type="button"
+          [disabled]="mfaCodeCtrl.invalid || isLoading"
+          (click)="verify2FACode()"
+        ></app-button>
+
+        <app-button
+          label="Cancelar"
+          variant="secondary"
+          type="button"
+          (click)="currentMode = 'login'; authService.signOut()"
+        ></app-button>
+      </mat-dialog-actions>
+    </main>
+  }
+
   @if (modalFeedback) {
     <section class="message-noti" role="status" aria-live="polite">
-      <div 
+      <div
         class="message-noti-text border"
         [ngClass]="{
           'text-red-500 border-red-200': modalFeedback.type === 'error',
-          'text-primary border-green-200': modalFeedback.type === 'success'
+          'text-primary border-green-200': modalFeedback.type === 'success',
         }"
       >
         <span class="sr-only">
@@ -175,5 +214,4 @@
       </div>
     </section>
   }
-  
 </section>
