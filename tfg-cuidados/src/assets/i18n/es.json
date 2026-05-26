@@ -210,14 +210,14 @@
       "MY_SERVICES": "Contratos"
     },
     "BUSINESS": {
-      "MANAGE_SERVICES": "Gestionar servicios",
+      "MANAGE_SERVICES": "Gestionar ofertas",
       "ALL_CONTRACTS": "Ver todos los contratos"
     },
     "ADMIN": {
       "DASHBOARD": "Ver métricas",
       "MANAGE_USERS": "Gestionar usuarios",
       "MANAGE_COMPANIES": "Gestionar Empresas",
-      "MANAGE_SERVICES": "Gestionar servicios",
+      "MANAGE_SERVICES": "Gestionar categorías",
       "MANAGE_SCHEDULES": "Gestionar horarios"
     },
     "COMMON": {
@@ -286,24 +286,24 @@
     "NO_DATA": "Sin datos",
     "ACCESSIBILITY": {
       "BACK_NAV": "Volver atrás",
-      "SAVE_BTN": "Guardar los cambios del servicio",
-      "ADD_BTN": "Añadir este nuevo servicio al sistema",
+      "SAVE_BTN": "Guardar los cambios de la categoría",
+      "ADD_BTN": "Añadir nueva categoría",
       "CANCEL_BTN": "Cancelar la edición y limpiar el formulario",
       "ACTIONS_COL": "Acciones disponibles"
     },
-    "TITLE": "SERVICIO",
+    "TITLE": "Categorías de las ofertas",
     "FORM": {
       "NAME": "Nombre",
       "TYPE": "Tipo",
-      "ADD": "Añadir servicio",
+      "ADD": "Añadir categoría",
       "SAVE": "Guardar Cambios",
       "CANCEL": "Cancelar",
       "DESCRIPTION": "Descripción"
     },
     "LIST": {
-      "TITLE": "Listado de Servicios",
-      "SEARCH": "Buscar por nombre o tipo de servicio",
-      "EMPTY": "No se han encontrado servicios"
+      "TITLE": "Listado de categorías",
+      "SEARCH": "Buscar por nombre o tipo de categoría",
+      "EMPTY": "No se han encontrado categorías"
     },
     "TABLE": {
       "NAME": "Nombre",
@@ -314,15 +314,15 @@
       "DESCRIPTION": "Descripción"
     },
     "MESSAGES": {
-      "CONFIRM_DELETE": "¿Deseas eliminar este servicio?",
-      "SUCCESS_CREATE": "Servicio creado con éxito",
-      "SUCCESS_UPDATE": "Servicio actualizado con éxito",
-      "SUCCESS_DELETE": "Servicio eliminado",
-      "ERROR_DUPLICATE": "Ese servicio ya existe",
+      "CONFIRM_DELETE": "¿Deseas eliminar esta categoría?",
+      "SUCCESS_CREATE": "Categoría creado con éxito",
+      "SUCCESS_UPDATE": "Categoría actualizado con éxito",
+      "SUCCESS_DELETE": "Categoría eliminada",
+      "ERROR_DUPLICATE": "Esa categoría ya existe",
       "ERROR_GENERIC": "Error al procesar la solicitud",
       "ERROR_DELETE": "Error al eliminar",
       "ERROR_HAS_OFFERS": "Las ofertas asociadas deben ser eliminadas antes",
-      "NO_CHANGES": "No se han detectado modificaciones en el servicio"
+      "NO_CHANGES": "No se han detectado modificaciones en la categoría"
     }
   },
   "MANAGEMENT_SCHEDULES": {
@@ -485,7 +485,7 @@
       "CONNECTION_ERROR": "Error de conexión",
       "LOGIN_REQUIRED": "Debes iniciar sesión para contratar",
       "LOGIN_MSG_REQUIRED": "Inicia sesión para enviar mensajes",
-      "SELECT_SERVICE": "Por favor, selecciona un servicio y horario",
+      "SELECT_SERVICE": "Por favor, selecciona una oferta y horario",
       "CONFIRM_CONTRACT": "¿Deseas contratar {{servicio}} por {{precio}}€?",
       "CONTRACT_SUCCESS": "¡Contrato realizado con éxito! Consúltalo en el apartado de contratos",
       "CONTRACT_ERROR": "Error al procesar la contratación",
@@ -493,8 +493,8 @@
     },
     "CARD": {
       "DESCRIPTION": "Descripción:",
-      "SELECT_SERVICE": "Selecciona un servicio:",
-      "CHOOSE_OPTION": "-- Elige un servicio --"
+      "SELECT_SERVICE": "Selecciona una oferta:",
+      "CHOOSE_OPTION": "-- Elige una oferta --"
     },
     "BTN_MESSAGE": "Mensaje",
     "BTN_CONTRACT": "Contratar",
@@ -513,12 +513,12 @@
     "NO_DATA": "Sin datos",
     "ACCESSIBILITY": {
       "BACK_NAV": "Volver a la pantalla anterior",
-      "MAIN_SECTION": "Gestión de servicios de la empresa",
-      "NEW_BTN": "Añadir un nuevo servicio",
-      "TABLE_LABEL": "Tabla de servicios registrados",
+      "MAIN_SECTION": "Gestión de ofertas de la empresa",
+      "NEW_BTN": "Añadir una nueva ofertas",
+      "TABLE_LABEL": "Tabla de ofertas registradas",
       "ACTIONS_COL": "Acciones disponibles"
     },
-    "BTN_NEW": "Nuevo servicio",
+    "BTN_NEW": "Nueva oferta",
     "BTN_DELETE": "Cancelar",
     "BTN_MODIFY": "Modificar",
     "TABLE": {
@@ -530,7 +530,7 @@
       "DESCRIPTION": "Descripcion"
     },
     "MESSAGES": {
-      "DELETE_SUCCESS": "El servicio ha sido eliminado con éxito",
+      "DELETE_SUCCESS": "La ofertas ha sido eliminado con éxito",
       "DELETE_ERROR": "Error al eliminar. Inténtelo más tard."
     }
   },
@@ -685,7 +685,7 @@
   "SERVICE_TIME_MODAL": {
     "LABELS": {
       "DESCRIPTION": "Descripción de la oferta",
-      "GLOBAL_SERVICE": "Servicio Global",
+      "GLOBAL_SERVICE": "Categoría Global",
       "PRICE": "Precio/h(€)",
       "AVAILABLE_SCHEDULE": "Horario Disponible"
     },
