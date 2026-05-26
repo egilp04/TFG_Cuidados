@@ -218,7 +218,8 @@
       "MANAGE_USERS": "Gestionar usuarios",
       "MANAGE_COMPANIES": "Gestionar Empresas",
       "MANAGE_SERVICES": "Gestionar categorías",
-      "MANAGE_SCHEDULES": "Gestionar horarios"
+      "MANAGE_SCHEDULES": "Gestionar horarios",
+      "GLOBAL_OFFERS": "Ver ofertas"
     },
     "COMMON": {
       "ACTIVITIES": "Actividades programadas"
@@ -310,7 +311,7 @@
       "TYPE": "Tipo",
       "ACTIONS": "Acciones",
       "EDIT": "Editar",
-      "DELETE": "Cancelar",
+      "DELETE": "Eliminar",
       "DESCRIPTION": "Descripción"
     },
     "MESSAGES": {
@@ -357,7 +358,7 @@
       "DAY": "Día de la semana",
       "ACTIONS": "Acciones",
       "EDIT": "Editar",
-      "DELETE": "Cancelar"
+      "DELETE": "Eliminar"
     },
     "LIST": {
       "TITLE": "Lista de horarios",
@@ -542,8 +543,11 @@
       "KEEP_CONTRACT": "Continuar con el contrato",
       "CANCEL_CONTRACT": "Cancelar contrato",
       "CANCEL_ACTION": "Cancelar acción",
-      "DELETE": "Cancelar"
+      "DELETE": "Sí, eliminar",
+      "KEEP_USER": "No dar de baja al usuario",
+      "CANCEL_USER": "Sí, dar de baja"
     },
+    "CANCEL_USER": "Al eliminar este usuario, se borrarán de forma permanente todos sus datos y mensajes asociados en la aplicación, si es una empresa, se eliminarán las ofertas asociadas y los contratos quedarán anulados. Además, perderá definitivamente el acceso a la plataforma. Esta acción no se puede deshacer.",
     "BAJA": {
       "TITLE": "¿Seguro que quieres darte de baja?",
       "DESC_1": "Perderás el acceso a todas las funcionalidades de la app. Esta acción no se puede deshacer.",
@@ -562,11 +566,11 @@
       "CONFIRM": "¿Desea continuar con la cancelación?"
     },
     "SERVICE": {
-      "TITLE": "Advertencia: Eliminación de Servicio Ofertado",
-      "DESC_1": "Está a punto de eliminar un servicio de su catálogo. Si confirma esta acción, el servicio será eliminado permanentemente.",
-      "SUBTITLE": "Consecuencias de la Eliminación:",
+      "TITLE": "Advertencia: dar de baja oferta ofertada",
+      "DESC_1": "Está a punto de dar de baja una oferta de su catálogo. Si confirma esta acción, la oferta será dada de baja.",
+      "SUBTITLE": "Consecuencias:",
       "LIST": {
-        "VISIBILITY": "<strong>Pérdida de Visibilidad:</strong> El servicio y sus detalles serán retirados de los resultados de búsqueda."
+        "VISIBILITY": "<strong>Pérdida de Visibilidad:</strong> La oferta y sus detalles serán retirados de los resultados de búsqueda."
       },
       "IMPORTANT_TITLE": "Importante sobre Contratos Activos:",
       "IMPORTANT_DESC": "Si esta oferta ya tiene un contrato asociado, el contrato quedará anulado.",
@@ -780,7 +784,9 @@
       "ERROR_SENDER": "Error: No se ha detectado el emisor.",
       "USER_NOT_FOUND": "El correo no pertenece a ningún usuario registrado",
       "SEND_ERROR": "Error al enviar el mensaje",
-      "SEND_SUCCESS": "Mensaje enviado con éxito"
+      "SEND_SUCCESS": "Mensaje enviado con éxito",
+      "SUCCESS_DELETE": "Eliminado con éxito",
+      "ERROR_DELETE": "Error al eliminarlo, inténtelo de nuevo más tarde"
     }
   },
   "LOGIN_MODAL": {
@@ -1029,7 +1035,11 @@
       "SERVICE": "Servicio",
       "START_DATE": "Fecha de inicio"
     },
-    "ACTION": { "DOWNLOAD": "Descargar", "DOWNLOAD_CSV": "Descargar contratos en csv" },
+    "ACTION": {
+      "DOWNLOAD": "Descargar",
+      "DOWNLOAD_CSV": "Descargar contratos en csv",
+      "DELETE": "Eliminar"
+    },
     "NO_DATA": "Sin datos"
   },
   "PAGINATOR": {

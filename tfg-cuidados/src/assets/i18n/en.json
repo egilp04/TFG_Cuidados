@@ -217,7 +217,8 @@
       "MANAGE_USERS": "Manage Users",
       "MANAGE_COMPANIES": "Manage Companies",
       "MANAGE_SERVICES": "Manage Categories",
-      "MANAGE_SCHEDULES": "Manage Schedules"
+      "MANAGE_SCHEDULES": "Manage Schedules",
+      "GLOBAL_OFFERS": "Manage Offers"
     },
     "COMMON": {
       "ACTIVITIES": "Scheduled Activities"
@@ -309,7 +310,7 @@
       "TYPE": "Type",
       "ACTIONS": "Actions",
       "EDIT": "Edit",
-      "DELETE": "Cancel",
+      "DELETE": "Delete",
       "DESCRIPTION": "Description"
     },
     "MESSAGES": {
@@ -356,7 +357,7 @@
       "DAY": "Day of the week",
       "ACTIONS": "Actions",
       "EDIT": "Edit",
-      "DELETE": "Cancel"
+      "DELETE": "Delete"
     },
     "MESSAGES": {
       "FILL_FIELDS": "Please fill in all fields correctly",
@@ -595,8 +596,11 @@
       "KEEP_CONTRACT": "Keep contract",
       "CANCEL_CONTRACT": "Cancel contract",
       "CANCEL_ACTION": "Cancel action",
-      "DELETE": "Cancel"
+      "DELETE": "Yes, delete it",
+      "KEEP_USER": "Keep user",
+      "CANCEL_USER": "Unsuscribe user"
     },
+    "CANCEL_USER": "By deleting this user, all their associated contracts and messages will be permanently erased from the application. Furthermore, they will permanently lose access to the platform. This action cannot be undone",
     "BAJA": {
       "TITLE": "Are you sure you want to unsubscribe?",
       "DESC_1": "You will lose access to all app features. This action cannot be undone.",
@@ -615,11 +619,11 @@
       "CONFIRM": "Do you want to proceed with the cancellation?"
     },
     "SERVICE": {
-      "TITLE": "Warning: Deletion of Offered Service",
-      "DESC_1": "You are about to remove a service from your catalog. If confirmed, the service will be permanently deleted.",
-      "SUBTITLE": "Consequences of Deletion:",
+      "TITLE": "Warning: Cancel of Offered Service",
+      "DESC_1": "You are about to cancel a service from your catalog. If confirmed, the service will be canceled.",
+      "SUBTITLE": "Consequences:",
       "LIST": {
-        "VISIBILITY": "<strong>Loss of Visibility:</strong> The service and its details will be removed from search results."
+        "VISIBILITY": "<strong>Loss of Visibility:</strong> The service and its details will be canceled from search results."
       },
       "IMPORTANT_TITLE": "Important regarding Active Contracts:",
       "IMPORTANT_DESC": "If this offered service associated with a contract, the contract is automatically canceled.",
@@ -781,7 +785,9 @@
       "ERROR_SENDER": "Error: Sender not detected.",
       "USER_NOT_FOUND": "The email does not belong to any registered user",
       "SEND_ERROR": "Error sending message",
-      "SEND_SUCCESS": "Message sent successfully"
+      "SEND_SUCCESS": "Message sent successfully",
+      "SUCCESS_DELETE": "Success deleted",
+      "ERROR_DELETE": "Error deleted"
     }
   },
   "LOGIN_MODAL": {
@@ -1030,7 +1036,11 @@
       "SERVICE": "Service",
       "START_DATE": "Start Date"
     },
-    "ACTION": { "DOWNLOAD": "Download", "DOWNLOAD_CSV": "Download contracts (CSV)" },
+    "ACTION": {
+      "DOWNLOAD": "Download",
+      "DOWNLOAD_CSV": "Download contracts (CSV)",
+      "DELETE": "Delete"
+    },
 
     "NO_DATA": "No data available"
   },

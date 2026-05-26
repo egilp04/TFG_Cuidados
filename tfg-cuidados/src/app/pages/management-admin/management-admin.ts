@@ -58,7 +58,7 @@ export default class ManagementAdmin implements OnInit {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       maxHeight: '90vh',
-      data: { mode: 'delete' },
+      data: { mode: 'cancelUser' },
     });
 
     dialogRef

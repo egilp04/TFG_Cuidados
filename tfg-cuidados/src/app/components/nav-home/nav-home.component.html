@@ -62,6 +62,13 @@
         class="nav-btn animation-opacity"
         [link]="['/global-contracts']"
       ></app-button>
+
+      <app-button
+        [label]="'MAIN_MENU.ADMIN.GLOBAL_OFFERS' | translate"
+        variant="primary"
+        class="nav-btn animation-opacity"
+        [link]="['/global-offers']"
+      ></app-button>
     }
 
     @if (rol != 'administrator') {

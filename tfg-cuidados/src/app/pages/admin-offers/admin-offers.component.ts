@@ -24,8 +24,7 @@ import { delay } from 'rxjs';
 import { MessageService } from '../../services/message-service';
 
 @Component({
-  selector: 'app-admin-contracts',
-  standalone: true,
+  selector: 'app-admin-offers',
   imports: [
     MatTableModule,
     MatPaginatorModule,
@@ -35,10 +34,10 @@ import { MessageService } from '../../services/message-service';
     Buttonback,
     ButtonComponent,
   ],
-  templateUrl: './admin-contracts.component.html',
-  styleUrl: './admin-contracts.component.css',
+  templateUrl: './admin-offers.component.html',
+  styleUrl: './admin-offers.component.css',
 })
-export default class AdminContractsComponent implements OnInit {
+export default class AdminOffersComponent {
   private contractService = inject(ContractService);
   private pdfService = inject(DocsPdf);
   private destroyRef = inject(DestroyRef);
@@ -145,7 +144,7 @@ export default class AdminContractsComponent implements OnInit {
           );
           this.loadAdminContracts();
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error(err);
           this.messageService.showMessage(
             this.translate.instant('MESSAGES_MODAL.FEEDBACK.ERROR_DELETE') ||

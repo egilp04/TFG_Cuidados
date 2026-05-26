@@ -185,7 +185,6 @@ export default class ManagementTimeGlobal implements OnInit {
               week_day: dayValue as any,
               time: timeValue,
               id_admin: user.id_user,
-              status: 'active',
             };
             return this.timeService.insertTime(payload);
           }

@@ -105,6 +105,7 @@ export class Loginmodal implements OnInit {
   public modalFeedback: { text: string; type: 'error' | 'success' } | null = null;
   private timeoutId: any;
 
+  private pendingUser: any = null;
   toEnterApp(): void {
     if (this.loginForm.valid) {
       this.isLoading = true;
@@ -115,12 +116,15 @@ export class Loginmodal implements OnInit {
         .signIn(rawForm.email ?? '', rawForm.password ?? '')
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
-          next: async () => {
+          next: async (user) => {
+            this.pendingUser = user;
             try {
               const status = await this.authService.check2FAStatus();
+
               if (status.needs2FA) {
                 const factors = await this.authService.getVerifiedFactors();
                 const totpFactor = factors.find((f) => f.factor_type === 'totp');
+
                 if (totpFactor) {
                   this.pendingFactorId = totpFactor.id;
                   const challenge = await this.authService.createChallenge(this.pendingFactorId);
@@ -184,12 +188,16 @@ export class Loginmodal implements OnInit {
     }
     this.isLoading = true;
     this.cd.markForCheck();
+
     try {
       await this.authService.verifyChallenge(
         this.pendingFactorId,
         this.pendingChallengeId,
         this.mfaCodeCtrl.value || '',
       );
+      if (this.pendingUser) {
+        this.authService.updateUserSignal(this.pendingUser);
+      }
       this.completeLoginProcess();
     } catch (error) {
       this.isLoading = false;

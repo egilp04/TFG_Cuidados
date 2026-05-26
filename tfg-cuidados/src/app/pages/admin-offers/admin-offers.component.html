@@ -62,13 +62,7 @@
             {{ 'ADMIN_CONTRACTS.TABLE.CLIENT' | translate }}
           </th>
           <td mat-cell *matCellDef="let row" class="text-label contracts-text">
-            @if (row.id_client) {
-              <span>{{ row.Client?.clientName }}</span>
-            } @else {
-              <span class="text-gray-500 dark:text-surface italic">{{
-                row.Client?.clientName
-              }}</span>
-            }
+            {{ row.Client?.clientName }}
           </td>
         </ng-container>
 
@@ -77,13 +71,7 @@
             {{ 'ADMIN_CONTRACTS.TABLE.BUSINESS' | translate }}
           </th>
           <td mat-cell *matCellDef="let row" class="text-label contracts-text">
-            @if (row.id_business) {
-              <span>{{ row.Business?.businessName }}</span>
-            } @else {
-              <span class="text-gray-500 dark:text-surface italic">{{
-                row.Business?.businessName
-              }}</span>
-            }
+            {{ row.Business?.businessName }}
           </td>
         </ng-container>
 
@@ -92,13 +80,10 @@
             {{ 'ADMIN_CONTRACTS.TABLE.SERVICE' | translate }}
           </th>
           <td mat-cell *matCellDef="let row" class="text-label contracts-text">
-            @if (row.id_service_time) {
-              <span>{{ row.serviceName }}</span>
-            } @else {
-              <span class="text-gray-500 dark:text-surface italic">{{ row.serviceName }}</span>
-            }
+            {{ row.serviceName }}
           </td>
         </ng-container>
+
         <ng-container matColumnDef="start_date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-label contracts-text">
             {{ 'ADMIN_CONTRACTS.TABLE.START_DATE' | translate }}

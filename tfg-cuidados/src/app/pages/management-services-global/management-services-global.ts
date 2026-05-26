@@ -191,7 +191,6 @@ export default class ManagementServicesGlobal implements OnInit {
               description,
               id_admin: user.id_user,
               icon_name,
-              status: 'active',
             };
             return this.serviceService.insertService(payload);
           }

@@ -206,28 +206,52 @@ export class ContractService {
         if (error) throw error;
         if (!data) return [];
 
-        return (data as unknown as ContractSupabaseJoined[]).map((contract) => {
-          const stData = contract.id_service_time as any;
+        return (data as any[]).map((contract) => {
+          const stData = contract.id_service_time;
+
+          const finalClientName = contract.id_client
+            ? contract.Client?.name || contract.Client?.User_public?.name || 'Desconocido'
+            : contract.historical_client_name || 'Usuario (Desuscrito)';
+
+          const finalBusinessName = contract.id_business
+            ? contract.Business?.name || contract.Business?.User_public?.name || 'Desconocido'
+            : contract.historical_business_name || 'Empresa (Desuscrita)';
+
+          const finalServiceName = contract.id_service_time
+            ? stData?.Service?.name || 'Desconocido'
+            : contract.historical_service_name || 'Servicio Eliminado';
+
           return {
             ...contract,
             id_st_flat: stData?.id_service_time || contract.id_service_time,
             Client: {
               ...contract.Client,
-              clientName: contract.Client?.name || contract.Client?.User_public?.name || 'Unknown',
+              clientName: finalClientName,
             },
             Business: {
               ...contract.Business,
-              businessName:
-                contract.Business?.name || contract.Business?.User_public?.name || 'Unknown',
+              businessName: finalBusinessName,
             },
-            serviceName: stData?.Service?.name,
-            price: stData?.price,
+            serviceName: finalServiceName,
+            price: stData?.price || contract.price,
           } as unknown as ContractDetail;
         });
       }),
       catchError((err) => {
         console.error('Error fetching admin contracts:', err);
         return of([]);
+      }),
+    );
+  }
+
+  deleteContractDB(idContract: string): Observable<void> {
+    return from(this.supabase.from('Contract').delete().eq('id_contract', idContract)).pipe(
+      map(({ error }) => {
+        if (error) throw error;
+      }),
+      catchError((err) => {
+        console.error('Error eliminando el contrato:', err);
+        return throwError(() => err);
       }),
     );
   }

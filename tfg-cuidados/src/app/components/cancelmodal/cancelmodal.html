@@ -62,6 +62,10 @@
         <div class="space-y-4">
           <p class="text-p">{{ 'CANCEL_MODAL.ADMIN_GLOBAL_DELETE' | translate }}</p>
         </div>
+      } @else if (data.mode === 'cancelUser') {
+        <div class="space-y-4">
+          <p class="text-p">{{ 'CANCEL_MODAL.CANCEL_USER' | translate }}</p>
+        </div>
       } @else {
         <div>
           <p class="font-bold text-p">{{ 'CANCEL_MODAL.GENERIC.SUBTITLE' | translate }}</p>

@@ -135,6 +135,12 @@ export const routes: Routes = [
     data: { roles: ['administrator'] },
   },
   {
+    path: 'global-offers',
+    loadComponent: () => import('./pages/admin-offers/admin-offers.component'),
+    canActivate: [authGuard],
+    data: { roles: ['administrator'] },
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full',

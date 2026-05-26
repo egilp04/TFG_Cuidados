@@ -57,7 +57,6 @@ export class AuthService {
       )
       .subscribe();
   }
-
   signIn(email: string, password: string): Observable<AuthUserModel> {
     return from(this.supabase.auth.signInWithPassword({ email, password })).pipe(
       switchMap((res: AuthResponse) => {
@@ -71,16 +70,17 @@ export class AuthService {
         }
         return this.getProfile(res.data.user.id);
       }),
-      switchMap((user: AuthUserModel) => {
+      switchMap(async (user: AuthUserModel) => {
         if (user.state === false) {
-          return from(this.supabase.auth.signOut()).pipe(
-            switchMap(() => {
-              throw new Error('USER_INACTIVE');
-            }),
-          );
+          await this.supabase.auth.signOut();
+          throw new Error('USER_INACTIVE');
         }
-        this.currentUser.set(user);
-        return of(user);
+        const { data } = await this.supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+        const needs2FA = data?.currentLevel === 'aal1' && data?.nextLevel === 'aal2';
+        if (!needs2FA) {
+          this.currentUser.set(user);
+        }
+        return user;
       }),
     );
   }

@@ -31,6 +31,8 @@ export class Cancelmodal {
         return 'CANCEL_MODAL.BTN.KEEP_ACCOUNT';
       case 'cancelContract':
         return 'CANCEL_MODAL.BTN.KEEP_CONTRACT';
+      case 'cancelUser':
+        return 'CANCEL_MODAL.BTN.KEEP_USER';
       default:
         return 'CANCEL_MODAL.BTN.CANCEL_ACTION';
     }
@@ -42,6 +44,8 @@ export class Cancelmodal {
         return 'CANCEL_MODAL.BTN.UNSUBSCRIBE';
       case 'cancelContract':
         return 'CANCEL_MODAL.BTN.CANCEL_CONTRACT';
+      case 'cancelUser':
+        return 'CANCEL_MODAL.BTN.CANCEL_USER';
       default:
         return 'CANCEL_MODAL.BTN.DELETE';
     }
