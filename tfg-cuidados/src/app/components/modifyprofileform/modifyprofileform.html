@@ -209,7 +209,6 @@
     }
 
     <footer class="modify-profile-btn-container">
-      <app-authentificator></app-authentificator>
       <div class="flex flex-row gap-4 w-full justify-center">
         <app-button
           [label]="'MODIFY_PROFILE.BTN.CANCEL' | translate"
@@ -228,7 +227,9 @@
         >
         </app-button>
       </div>
-
+      @if (!isAdminViewer) {
+        <div class="w-full"><app-authentificator></app-authentificator></div>
+      }
       @if (!isAdminViewer) {
         <div class="mt-8 pt-8 border-t border-gray-200 w-full flex justify-center">
           <app-button

@@ -116,22 +116,15 @@ export class Loginmodal implements OnInit {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: async () => {
-            // 🌟 COMPROBACIÓN DEL 2FA DESPUÉS DE UN LOGIN EXITOSO
             try {
               const status = await this.authService.check2FAStatus();
-
               if (status.needs2FA) {
-                // El usuario necesita verificación de 2 pasos
                 const factors = await this.authService.getVerifiedFactors();
                 const totpFactor = factors.find((f) => f.factor_type === 'totp');
-
                 if (totpFactor) {
                   this.pendingFactorId = totpFactor.id;
-                  // Creamos el reto para validar el código
                   const challenge = await this.authService.createChallenge(this.pendingFactorId);
                   this.pendingChallengeId = challenge.id;
-
-                  // Cambiamos la vista a verify2fa
                   this.isLoading = false;
                   this.currentMode = 'verify2fa';
                   this.showModalFeedback(
@@ -140,15 +133,12 @@ export class Loginmodal implements OnInit {
                     'success',
                   );
                   this.cd.markForCheck();
-                  return; // 🛑 IMPORTANTE: Detenemos la ejecución aquí para no navegar todavía
+                  return;
                 }
               }
-
-              // Si no necesita 2FA, completamos el login normal
               this.completeLoginProcess();
             } catch (error) {
               console.error('Error al comprobar estado 2FA:', error);
-              // Si falla la comprobación por un error de red, asumimos login normal
               this.completeLoginProcess();
             }
           },
@@ -181,7 +171,7 @@ export class Loginmodal implements OnInit {
   }
 
   /**
-   * 🌟 Verifica el código introducido por el usuario para completar el inicio de sesión
+   *  Verifica el código introducido por el usuario para completar el inicio de sesión
    */
   async verify2FACode(): Promise<void> {
     if (this.mfaCodeCtrl.invalid || !this.pendingFactorId || !this.pendingChallengeId) {
@@ -192,18 +182,14 @@ export class Loginmodal implements OnInit {
       );
       return;
     }
-
     this.isLoading = true;
     this.cd.markForCheck();
-
     try {
       await this.authService.verifyChallenge(
         this.pendingFactorId,
         this.pendingChallengeId,
         this.mfaCodeCtrl.value || '',
       );
-
-      // ✅ Código correcto, completamos el login
       this.completeLoginProcess();
     } catch (error) {
       this.isLoading = false;
@@ -217,7 +203,7 @@ export class Loginmodal implements OnInit {
   }
 
   /**
-   * 🌟 Centraliza el cierre de modales y la redirección al home correspondiente
+   * Centraliza el cierre de modales y la redirección al home correspondiente
    */
   private completeLoginProcess(): void {
     const user = this.authService.currentUser();

@@ -162,7 +162,9 @@
   @if (currentMode === 'verify2fa') {
     <main class="login-recuperar-container" role="region" aria-label="Verificación de dos pasos">
       <div class="login-login-form-div mb-6 text-center">
-        <h2 class="text-xl font-semibold mb-2">{{ 'TWO_FACTOR_AUTH.LOGIN_TITLE' | translate }}</h2>
+        <h2 class="text-h2 mb-2 text-primary dark:text-surface">
+          {{ 'TWO_FACTOR_AUTH.LOGIN_TITLE' | translate }}
+        </h2>
         <p class="login-subtitle mb-4">
           {{ 'TWO_FACTOR_AUTH.LOGIN_DESC' | translate }}
         </p>

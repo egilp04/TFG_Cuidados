@@ -822,7 +822,10 @@
       "NO_ERROR": "Revise su bandeja de correos",
       "WITH_ERROR": "Ha ocurrido un error, contacte con el administrador",
       "EMAIL_NOT_FOUND": "Email no encontrado",
-      "USER_INACTIVE": "Cuenta desactivada. Si crees que es un error, contacta con soporte"
+      "USER_INACTIVE": "Cuenta desactivada. Si crees que es un error, contacta con soporte",
+      "WRONG_CODE": "Código erróneo",
+      "INVALID_CODE": "Código inválido",
+      "ENTER_2FA_CODE": "inserte el código 2FA"
     }
   },
   "FOOTER": {

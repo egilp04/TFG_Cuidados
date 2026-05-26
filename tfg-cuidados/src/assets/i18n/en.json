@@ -823,7 +823,10 @@
       "NO_ERROR": "Check your email again",
       "WITH_ERROR": "An error has been ocurred, contact with administrator",
       "EMAIL_NOT_FOUND": "Email not found",
-      "USER_INACTIVE": "Deactivated account. If you think this is a mistake, please contact support"
+      "USER_INACTIVE": "Deactivated account. If you think this is a mistake, please contact support",
+      "WRONG_CODE": "Wrong code",
+      "INVALID_CODE": "Invalid code",
+      "ENTER_2FA_CODE": "Enter 2FA code"
     }
   },
   "FOOTER": {

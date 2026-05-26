@@ -351,21 +351,29 @@ export class AuthService {
   }
 
   async start2FAEnrollment() {
+    const { data: factorsData, error: listError } = await this.supabase.auth.mfa.listFactors();
+    if (listError) throw listError;
+    const unverifiedFactors = factorsData.all.filter(
+      (factor) => factor.status === 'unverified' && factor.factor_type === 'totp',
+    );
+    for (const factor of unverifiedFactors) {
+      await this.supabase.auth.mfa.unenroll({ factorId: factor.id });
+    }
     const { data, error } = await this.supabase.auth.mfa.enroll({
       factorType: 'totp',
     });
+
     if (error) throw error;
     return data;
   }
 
-  /** 2. Crea un reto para verificar un código */
   async createChallenge(factorId: string) {
     const { data, error } = await this.supabase.auth.mfa.challenge({ factorId });
     if (error) throw error;
     return data;
   }
 
-  /** 3. Verifica el código que mete el usuario */
+  /**Verifica el código que mete el usuario */
   async verifyChallenge(factorId: string, challengeId: string, code: string) {
     const { data, error } = await this.supabase.auth.mfa.verify({
       factorId,
@@ -375,10 +383,6 @@ export class AuthService {
     if (error) throw error;
     return data;
   }
-
-  // ==========================================
-  // FLUJO DE LOGIN DIARIO (COMPROBACIONES)
-  // ==========================================
 
   /** Comprueba si el usuario actual tiene el 2FA activado y pendiente de verificar */
   async check2FAStatus() {
@@ -396,8 +400,6 @@ export class AuthService {
   async getVerifiedFactors() {
     const { data, error } = await this.supabase.auth.mfa.listFactors();
     if (error) throw error;
-
-    // Devolvemos solo los factores TOTP que están en estado 'verified'
     return data.totp.filter((factor) => factor.status === 'verified');
   }
 
