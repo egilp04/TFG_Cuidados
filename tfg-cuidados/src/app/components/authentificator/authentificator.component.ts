@@ -50,7 +50,7 @@ export class AuthentificatorComponent {
       this.step.set(2);
     } catch (error) {
       this.messageService.showMessage(
-        this.translate.instant('MESSAGES_MODAL.FEEDBACK.ERROR_GENERATE_QR'),
+        this.translate.instant('TWO_FACTOR_AUTH.ERROR_GENERATE_QR'),
         'error',
       );
     } finally {
