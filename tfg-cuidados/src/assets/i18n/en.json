@@ -205,20 +205,20 @@
   "MAIN_MENU": {
     "TITLE": "Main Menu",
     "CLIENT": {
-      "SEARCH_COMPANIES": "Search Companies",
+      "SEARCH_COMPANIES": "Search companies",
       "MY_SERVICES": "Contracts"
     },
     "BUSINESS": {
-      "MANAGE_SERVICES": "Manage Offers",
-      "ALL_CONTRACTS": "View All Contracts"
+      "MANAGE_SERVICES": "Manage offers",
+      "ALL_CONTRACTS": "View contracts"
     },
     "ADMIN": {
       "DASHBOARD": "Dashboard",
-      "MANAGE_USERS": "Manage Users",
-      "MANAGE_COMPANIES": "Manage Companies",
-      "MANAGE_SERVICES": "Manage Categories",
-      "MANAGE_SCHEDULES": "Manage Schedules",
-      "GLOBAL_OFFERS": "Manage Offers"
+      "MANAGE_USERS": "Manage clients",
+      "MANAGE_COMPANIES": "Manage companies",
+      "MANAGE_SERVICES": "Manage categories",
+      "MANAGE_SCHEDULES": "Manage schedules",
+      "GLOBAL_OFFERS": "Manage offers"
     },
     "COMMON": {
       "ACTIVITIES": "Scheduled Activities"
@@ -800,7 +800,7 @@
       "REGISTER": "Register",
       "RECOVER": "Recover Password",
       "RESEND": "Resend register email",
-      "NOTITLE": "Not available"
+      "NOTITLE": "2FA"
     },
     "LABELS": {
       "EMAIL": "Email",

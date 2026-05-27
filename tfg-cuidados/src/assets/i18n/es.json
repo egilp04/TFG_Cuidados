@@ -206,7 +206,7 @@
   "MAIN_MENU": {
     "TITLE": "Menú Principal",
     "CLIENT": {
-      "SEARCH_COMPANIES": "Buscar Empresas",
+      "SEARCH_COMPANIES": "Buscar empresas",
       "MY_SERVICES": "Contratos"
     },
     "BUSINESS": {
@@ -215,8 +215,8 @@
     },
     "ADMIN": {
       "DASHBOARD": "Ver métricas",
-      "MANAGE_USERS": "Gestionar usuarios",
-      "MANAGE_COMPANIES": "Gestionar Empresas",
+      "MANAGE_USERS": "Gestionar clientes",
+      "MANAGE_COMPANIES": "Gestionar empresas",
       "MANAGE_SERVICES": "Gestionar categorías",
       "MANAGE_SCHEDULES": "Gestionar horarios",
       "GLOBAL_OFFERS": "Ver ofertas"
@@ -799,7 +799,7 @@
       "REGISTER": "Registrar",
       "RECOVER": "Recuperar Contraseña",
       "RESEND": "Reenviar email de registro",
-      "NOTITLE": "No disponible"
+      "NOTITLE": "Doble autenticación"
     },
     "LABELS": {
       "EMAIL": "Email",
