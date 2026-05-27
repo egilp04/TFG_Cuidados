@@ -197,7 +197,6 @@ export class ComunicationService {
   deleteComunication(message: ComunicationModel): Observable<void> {
     const user = this.authService.currentUser();
     if (!user || !message.id_comunication) return of(undefined);
-
     if (message.type_comunication === 'message') {
       const currentMessages = this.messagesList$.getValue();
       const newMessages = currentMessages.filter(
@@ -213,23 +212,39 @@ export class ComunicationService {
         this.notificationsList$.next(newNotis);
       }
     }
+    let dbOperation: Promise<any>;
 
-    let updates: Partial<ComunicationModel> = {};
-
-    if (message.id_sender === user.id_user) {
-      updates = { deleted_by_sender: true };
-    } else if (message.id_receiver === user.id_user) {
-      updates = { deleted_by_receiver: true };
-    } else {
-      return of(undefined);
-    }
-
-    return from(
-      this.supabase
+    if (message.type_comunication !== 'message') {
+      dbOperation = this.supabase
         .from('Comunication')
-        .update(updates)
-        .eq('id_comunication', message.id_comunication),
-    ).pipe(
+        .delete()
+        .eq('id_comunication', message.id_comunication);
+    } else {
+      const isSender = message.id_sender === user.id_user;
+      const isReceiver = message.id_receiver === user.id_user;
+
+      if (!isSender && !isReceiver) return of(undefined);
+      const willBothBeDeleted =
+        (isSender && message.deleted_by_receiver) ||
+        (isReceiver && message.deleted_by_sender);
+
+      if (willBothBeDeleted) {
+        dbOperation = this.supabase
+          .from('Comunication')
+          .delete()
+          .eq('id_comunication', message.id_comunication);
+      } else {
+        const updates = isSender
+          ? { deleted_by_sender: true }
+          : { deleted_by_receiver: true };
+
+        dbOperation = this.supabase
+          .from('Comunication')
+          .update(updates)
+          .eq('id_comunication', message.id_comunication);
+      }
+    }
+    return from(dbOperation).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
