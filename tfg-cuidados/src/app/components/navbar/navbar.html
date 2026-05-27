@@ -122,7 +122,7 @@
         [routerLinkActive]="isEditingOther() ? '' : 'text-accent dark:text-white scale-120 [&_lucide-icon]:!text-accent'"
         [class.text-gray-400]="isEditingOther()"
         [class.grayscale]="isEditingOther()"        
-        [class.cursor-not-allowed]="isEditingOther()"
+        [class.!cursor-not-allowed]="isEditingOther()"
         [class.text-accent]="!isEditingOther()"
         class="nav-icon-container transition-all"
         (click)="closeMenu()"
@@ -135,7 +135,7 @@
           aria-hidden="true"
         ></lucide-icon>
       </button>
-      
+
         <app-button
           [label]="'NAVBAR.LOGOUT' | translate"
           variant="primary"
