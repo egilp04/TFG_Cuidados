@@ -172,9 +172,11 @@ export class ContractService {
 
         if (currentUser.id_user === canceledContract.id_client) {
           idDestination = canceledContract.id_business;
-          message = `El cliente ${canceledContract.Client?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Descripción: ${serviceDescription}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;        } else {
+          message = `El cliente ${canceledContract.Client?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Descripción: ${serviceDescription}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;
+        } else {
           idDestination = canceledContract.id_client;
-          message = `La empresa ${canceledContract.Business?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Descripción: ${serviceDescription}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;        }
+          message = `La empresa ${canceledContract.Business?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Descripción: ${serviceDescription}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;
+        }
 
         this.comunicationService
           .insertComunication({
@@ -226,6 +228,9 @@ export class ContractService {
             ? stData?.description || 'Sin descripción'
             : contract.historical_service_description || 'Sin descripción';
 
+          const finalPrice = contract.id_service_time
+            ? stData?.price || 'N/A'
+            : contract.historical_price || 'N/A';
           return {
             ...contract,
             id_st_flat: stData?.id_service_time || contract.id_service_time,
@@ -239,7 +244,7 @@ export class ContractService {
             },
             serviceDescription: finalServiceDescription,
             serviceName: finalServiceName,
-            price: stData?.price || contract.price,
+            price: finalPrice,
           } as unknown as ContractDetail;
         });
       }),

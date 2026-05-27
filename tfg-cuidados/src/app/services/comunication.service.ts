@@ -92,7 +92,7 @@ export class ComunicationService {
       .select(
         `
       *,
-      Sender:User_public!id_sender (email),
+      Sender:User_public!id_sender (name, email),
       Receiver:User_public!id_receiver (name, email)
     `,
       )
@@ -197,6 +197,7 @@ export class ComunicationService {
   deleteComunication(message: ComunicationModel): Observable<void> {
     const user = this.authService.currentUser();
     if (!user || !message.id_comunication) return of(undefined);
+
     if (message.type_comunication === 'message') {
       const currentMessages = this.messagesList$.getValue();
       const newMessages = currentMessages.filter(
@@ -225,9 +226,9 @@ export class ComunicationService {
       const isReceiver = message.id_receiver === user.id_user;
 
       if (!isSender && !isReceiver) return of(undefined);
+
       const willBothBeDeleted =
-        (isSender && message.deleted_by_receiver) ||
-        (isReceiver && message.deleted_by_sender);
+        (isSender && message.deleted_by_receiver) || (isReceiver && message.deleted_by_sender);
 
       if (willBothBeDeleted) {
         dbOperation = this.supabase
@@ -235,9 +236,7 @@ export class ComunicationService {
           .delete()
           .eq('id_comunication', message.id_comunication);
       } else {
-        const updates = isSender
-          ? { deleted_by_sender: true }
-          : { deleted_by_receiver: true };
+        const updates = isSender ? { deleted_by_sender: true } : { deleted_by_receiver: true };
 
         dbOperation = this.supabase
           .from('Comunication')

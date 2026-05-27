@@ -87,7 +87,7 @@ export default class AdminOffersComponent implements OnInit {
   private loadAdminOffers(): void {
     this.isLoading = true;
     this.serviceTimeService
-      .getAllContractsForAdmin()
+      .getAllOffersForAdmin()
       .pipe(takeUntilDestroyed(this.destroyRef), delay(500))
       .subscribe({
         next: (data: Service_Time_Model[]) => {
@@ -141,6 +141,11 @@ export default class AdminOffersComponent implements OnInit {
       error: (err: any) => {
         console.error(err);
         if (err.message === 'MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_OFFERS') {
+          this.translate.get(err.message).subscribe((text: string) => {
+            this.messageService.showMessage(text, 'error');
+            this.cd.markForCheck();
+          });
+        } else if (err.message === 'MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_ACTIVE_CONTRACT') {
           this.translate.get(err.message).subscribe((text: string) => {
             this.messageService.showMessage(text, 'error');
             this.cd.markForCheck();

@@ -322,7 +322,8 @@
       "ERROR_GENERIC": "Error processing request, try it again!",
       "ERROR_DELETE": "Error deleting",
       "ERROR_HAS_OFFERS": "Offers associated must be deleted first",
-      "NO_CHANGES": "No data modified"
+      "NO_CHANGES": "No data modified",
+      "ERROR_HAS_ACTIVE_CONTRACT": "Has active contracts, cancel them firtly"
     }
   },
   "MANAGEMENT_SCHEDULES": {
@@ -376,7 +377,8 @@
     },
     "LIST": {
       "TITLE": "Time list",
-      "EMPTY": "Time list empty"
+      "EMPTY": "Time list empty",
+      "SEARCH": "Search by day of the week or time"
     }
   },
   "MANUALS": {

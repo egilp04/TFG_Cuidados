@@ -155,10 +155,8 @@ export class ServiceTimeService {
     );
   }
 
-  getAllContractsForAdmin(): Observable<Service_Time_Model[]> {
-    const queryPromise = this.supabase
-      .from('Service_Time')
-      .select(`*,
+  getAllOffersForAdmin(): Observable<Service_Time_Model[]> {
+    const queryPromise = this.supabase.from('Service_Time').select(`*,
       Service (
         type_service
       ),
@@ -167,7 +165,7 @@ export class ServiceTimeService {
           name
         )
       )
-    `)
+    `);
     return from(queryPromise).pipe(
       map(({ data, error }) => {
         if (error) throw error;
@@ -186,15 +184,15 @@ export class ServiceTimeService {
         .from('Contract')
         .select('id_contract', { count: 'exact', head: true })
         .eq('id_service_time', idServiceTime)
-        .eq('state', 'active')
+        .eq('state', 'active'),
     ).pipe(
       switchMap(({ count, error }) => {
         if (error) throw error;
-                if (count !== null && count > 0) {
+        if (count !== null && count > 0) {
           throw new Error('MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_ACTIVE_CONTRACTS');
         }
         return from(
-          this.supabase.rpc('delete_service_time_with_history', { st_id: idServiceTime })
+          this.supabase.rpc('delete_service_time_with_history', { st_id: idServiceTime }),
         );
       }),
       map(({ error }) => {

@@ -323,7 +323,8 @@
       "ERROR_GENERIC": "Error al procesar la solicitud",
       "ERROR_DELETE": "Error al eliminar",
       "ERROR_HAS_OFFERS": "Las ofertas asociadas deben ser eliminadas antes",
-      "NO_CHANGES": "No se han detectado modificaciones en la categoría"
+      "NO_CHANGES": "No se han detectado modificaciones en la categoría",
+      "ERROR_HAS_ACTIVE_CONTRACT": "Tiene contractos activos, cancélelos antes, por favor"
     }
   },
   "MANAGEMENT_SCHEDULES": {
@@ -362,7 +363,8 @@
     },
     "LIST": {
       "TITLE": "Lista de horarios",
-      "EMPTY": "Sin horarios encontrados"
+      "EMPTY": "Sin horarios encontrados",
+      "SEARCH": "Busca por día de la semana u hora"
     },
     "MESSAGES": {
       "FILL_FIELDS": "Rellene todos los campos correctamente",
@@ -536,7 +538,7 @@
     }
   },
   "CANCEL_MODAL": {
-    "ADMIN_GLOBAL_DELETE":  "¿Desea borrarlo? Su eliminación conlleva la pérdida de las ofertas asociadas y, por consecuencia, la anulación de los contratos vinculados a dichas ofertas. Esta acción es irreversible.",
+    "ADMIN_GLOBAL_DELETE": "¿Desea borrarlo? Su eliminación conlleva la pérdida de las ofertas asociadas y, por consecuencia, la anulación de los contratos vinculados a dichas ofertas. Esta acción es irreversible.",
     "BTN": {
       "KEEP_ACCOUNT": "Continuar registrado",
       "UNSUBSCRIBE": "Cancelar registro",
@@ -544,7 +546,7 @@
       "CANCEL_CONTRACT": "Cancelar contrato",
       "CANCEL_ACTION": "Cancelar acción",
       "DELETE": "Sí, dar de baja",
-      "DELETE_ADMIN_GLOBAL": "Sí, eliminar", 
+      "DELETE_ADMIN_GLOBAL": "Sí, eliminar",
       "KEEP_USER": "No dar de baja al usuario",
       "CANCEL_USER": "Sí, dar de baja"
     },

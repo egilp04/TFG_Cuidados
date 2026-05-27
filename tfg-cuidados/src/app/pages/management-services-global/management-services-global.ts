@@ -211,7 +211,7 @@ export default class ManagementServicesGlobal implements OnInit {
           } else if (err.message === 'HAS_DEPENDENCIES') {
             msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_OFFERS';
           }
-
+          this.resetForm();
           return this.translate
             .get(msgKey)
             .pipe(map((text: string) => ({ type: 'error' as const, text })));
@@ -319,9 +319,9 @@ export default class ManagementServicesGlobal implements OnInit {
     this.currentServiceId = null;
     this.originalService = null;
     this.serviceForm.reset({
-      icon_name: 'circleCheck'
-    });    this.cd.markForCheck();
-
+      icon_name: 'circleCheck',
+    });
+    this.cd.markForCheck();
   }
 
   /**
