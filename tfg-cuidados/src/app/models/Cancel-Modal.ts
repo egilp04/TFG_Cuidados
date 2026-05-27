@@ -4,6 +4,6 @@ export interface CancelModalData {
     | 'cancelContract'
     | 'delete'
     | 'deleteService'
-    | 'deleteAdminGlobal'
+    | 'deleteGlobalAdmin'
     | 'cancelUser';
 }

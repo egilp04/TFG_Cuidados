@@ -46,7 +46,7 @@ export class Cancelmodal {
         return 'CANCEL_MODAL.BTN.CANCEL_CONTRACT';
       case 'cancelUser':
         return 'CANCEL_MODAL.BTN.CANCEL_USER';
-        case 'deleteAdminGlobal':
+        case 'deleteGlobalAdmin':
           return "CANCEL_MODAL.BTN.DELETE_ADMIN_GLOBAL";
       default:
         return 'CANCEL_MODAL.BTN.DELETE';
