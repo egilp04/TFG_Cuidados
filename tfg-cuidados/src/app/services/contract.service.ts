@@ -222,6 +222,10 @@ export class ContractService {
             ? stData?.Service?.name || 'Desconocido'
             : contract.historical_service_name || 'Servicio Eliminado';
 
+          const finalServiceDescription = contract.id_service_time
+            ? stData?.description || 'Sin descripción'
+            : contract.historical_service_description || 'Sin descripción';
+
           return {
             ...contract,
             id_st_flat: stData?.id_service_time || contract.id_service_time,
@@ -233,6 +237,7 @@ export class ContractService {
               ...contract.Business,
               businessName: finalBusinessName,
             },
+            serviceDescription: finalServiceDescription,
             serviceName: finalServiceName,
             price: stData?.price || contract.price,
           } as unknown as ContractDetail;
