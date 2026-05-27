@@ -543,7 +543,8 @@
       "KEEP_CONTRACT": "Continuar con el contrato",
       "CANCEL_CONTRACT": "Cancelar contrato",
       "CANCEL_ACTION": "Cancelar acción",
-      "DELETE": "Sí, eliminar",
+      "DELETE": "Sí, dar de baja",
+      "DELETE_ADMIN_GLOBAL": "Sí, eliminar", 
       "KEEP_USER": "No dar de baja al usuario",
       "CANCEL_USER": "Sí, dar de baja"
     },
@@ -566,7 +567,7 @@
       "CONFIRM": "¿Desea continuar con la cancelación?"
     },
     "SERVICE": {
-      "TITLE": "Advertencia: dar de baja oferta ofertada",
+      "TITLE": "Advertencia: dar de baja oferta",
       "DESC_1": "Está a punto de dar de baja una oferta de su catálogo. Si confirma esta acción, la oferta será dada de baja.",
       "SUBTITLE": "Consecuencias:",
       "LIST": {

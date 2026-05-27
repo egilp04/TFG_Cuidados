@@ -598,7 +598,8 @@
       "CANCEL_ACTION": "Cancel action",
       "DELETE": "Yes, delete it",
       "KEEP_USER": "Keep user",
-      "CANCEL_USER": "Unsuscribe user"
+      "CANCEL_USER": "Unsuscribe user",
+      "DELETE_ADMIN_GLOBAL": "Yes, delete it"
     },
     "CANCEL_USER": "By deleting this user, all their associated contracts and messages will be permanently erased from the application. Furthermore, they will permanently lose access to the platform. This action cannot be undone",
     "BAJA": {
