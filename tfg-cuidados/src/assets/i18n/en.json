@@ -671,7 +671,7 @@
       "EMAIL": "Email"
     },
     "BTN": {
-      "DELETE": "Cancel",
+      "DELETE": "Unsuscribe",
       "MODIFY": "Edit"
     },
     "NO_DATA": "No records found.",
@@ -1086,7 +1086,8 @@
       "BUSINESS": "Business / Professional",
       "SERVICE": "Service",
       "PRICE": "Price",
-      "STATUS": "Status"
+      "STATUS": "Status",
+      "BUSINESS_DESCRIPTiON": "Service information"
     },
     "ACTION": {
       "DELETE": "Delete"

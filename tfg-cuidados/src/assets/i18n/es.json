@@ -618,7 +618,7 @@
       "EMAIL": "Email"
     },
     "BTN": {
-      "DELETE": "Cancelar",
+      "DELETE": "Dar de baja",
       "MODIFY": "Editar"
     },
     "NO_DATA": "No se han encontrado registros.",
@@ -1084,7 +1084,8 @@
       "BUSINESS": "Empresa / Profesional",
       "SERVICE": "Servicio",
       "PRICE": "Precio",
-      "STATUS": "Estado"
+      "STATUS": "Estado",
+      "BUSINESS_DESCRIPTiON": "Información del servicio"
     },
     "ACTION": {
       "DELETE": "Eliminar"

@@ -158,7 +158,16 @@ export class ServiceTimeService {
   getAllContractsForAdmin(): Observable<Service_Time_Model[]> {
     const queryPromise = this.supabase
       .from('Service_Time')
-      .select('*')
+      .select(`*,
+      Service (
+        type
+      ),
+      Business (
+        User_public (
+          name
+        )
+      )
+    `)
     return from(queryPromise).pipe(
       map(({ data, error }) => {
         if (error) throw error;

@@ -49,6 +49,7 @@ export default class AdminOffersComponent implements OnInit {
   public displayedColumns: string[] = [
     'id_service_time',
     'id_business',
+    'description',
     'id_service',
     'price',
     'status',
