@@ -159,7 +159,6 @@ export class ServiceTimeService {
     const queryPromise = this.supabase
       .from('Service_Time')
       .select('*')
-      .order('creation_date', { ascending: false });
     return from(queryPromise).pipe(
       map(({ data, error }) => {
         if (error) throw error;

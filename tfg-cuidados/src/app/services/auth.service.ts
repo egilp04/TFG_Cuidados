@@ -390,7 +390,6 @@ export class AuthService {
     if (error) throw error;
 
     return {
-      // Si el nivel actual es aal1 pero requiere aal2, necesita meter el código
       needs2FA: data.currentLevel === 'aal1' && data.nextLevel === 'aal2',
       isVerified: data.currentLevel === 'aal2',
     };
