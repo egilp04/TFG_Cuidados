@@ -160,7 +160,7 @@ export class ServiceTimeService {
       .from('Service_Time')
       .select(`*,
       Service (
-        type
+        type_service
       ),
       Business (
         User_public (
