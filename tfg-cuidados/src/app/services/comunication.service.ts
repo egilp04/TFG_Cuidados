@@ -212,8 +212,9 @@ export class ComunicationService {
         this.notificationsList$.next(newNotis);
       }
     }
-    let dbOperation: Promise<any>;
 
+    let dbOperation: any;
+    
     if (message.type_comunication !== 'message') {
       dbOperation = this.supabase
         .from('Comunication')
