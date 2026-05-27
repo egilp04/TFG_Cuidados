@@ -59,7 +59,15 @@ export class Navbar implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.checkEditStatus();
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.checkEditStatus();
+    });
+  }
+
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
@@ -157,7 +165,10 @@ export class Navbar implements OnInit {
     this.currentLang.set(lang);
   }
 
-  public isEditingOther = computed(() => {
-    return !!sessionStorage.getItem('editing_other_user');
-  });
+  public isEditingOther = signal<boolean>(false);
+  private checkEditStatus(): void {
+    const isEditing = !!sessionStorage.getItem('editing_other_user');
+    this.isEditingOther.set(isEditing);
+  }
+
 }
