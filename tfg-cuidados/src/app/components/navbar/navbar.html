@@ -119,10 +119,11 @@
         <button
         [routerLink]="isEditingOther() ? null : ['/modify-profile']"
         [disabled]="isEditingOther()"
-        [class.opacity-50]="isEditingOther()"
+        [routerLinkActive]="isEditingOther() ? '' : 'text-accent dark:text-white scale-120 [&_lucide-icon]:!text-accent'"
+        [class.text-gray-400]="isEditingOther()"
+        [class.grayscale]="isEditingOther()"        
         [class.cursor-not-allowed]="isEditingOther()"
         [class.text-accent]="!isEditingOther()"
-        routerLinkActive="text-accent dark:text-white scale-120 [&_lucide-icon]:!text-accent"
         class="nav-icon-container transition-all"
         (click)="closeMenu()"
         [attr.aria-label]="'NAVBAR.PROFILE' | translate"
@@ -134,7 +135,6 @@
           aria-hidden="true"
         ></lucide-icon>
       </button>
-
         <app-button
           [label]="'NAVBAR.LOGOUT' | translate"
           variant="primary"
