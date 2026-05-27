@@ -782,7 +782,8 @@
       "SELECT_RECEIVER": "Select a receiver"
     },
     "BTN": {
-      "SEND": "Send"
+      "SEND": "Send message",
+      "REPLY": "Reply message"
     },
     "FEEDBACK": {
       "ERROR_SENDER": "Error: Sender not detected.",
