@@ -49,6 +49,7 @@ export class ActivitiesComponents implements OnInit, OnChanges {
     'user',
     'price',
     'service',
+    'description',
     'day',
     'time',
     'location',

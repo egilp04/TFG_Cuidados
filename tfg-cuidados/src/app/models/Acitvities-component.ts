@@ -5,6 +5,7 @@ export interface Contractmodel {
   week_day_hired?: string;
   time_hired?: string;
   serviceName?: string;
+  serviceDescription?: string;
   Business?: {
     businessName?: string;
   };

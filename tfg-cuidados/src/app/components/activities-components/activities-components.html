@@ -67,7 +67,7 @@
                 @for (ev of events; track ev.id_contract) {
                   <div class="activity-tooltip-text-container" role="article">
                     <span class="activity-tooltip-event-text text-sm lg:text-lg font-bold">
-                      {{ 'ACTIVITIES.ACTIVITIES.ACTIVITINAME' | translate }}: {{ ev.serviceName }}
+                      {{ 'ACTIVITIES.ACTIVITIES.ACTIVITINAME' | translate }}: {{ ev.serviceName }} - {{ev.serviceDescription}}
                       <br />
                       {{ 'ACTIVITIES.ACTIVITIES.ACTIVITIUSER' | translate }}:
                       {{ ev.nameToShow }}
@@ -118,6 +118,15 @@
         </th>
         <td mat-cell *matCellDef="let contract" class="activity-text-secondary text-label">
           {{ contract.serviceName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef class="activity-text text-label">
+          {{ 'ACTIVITIES.TABLE.NAME' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let contract" class="activity-text-secondary text-label">
+          {{ contract.serviceDescription }}
         </td>
       </ng-container>
 

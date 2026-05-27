@@ -24,6 +24,7 @@ export class ContractService {
     id_service_time (
      id_service_time,
      price,
+     description,
      Service ( name )
     ),
     Client:Client!id_client (
@@ -96,6 +97,7 @@ export class ContractService {
                 contract.Business?.name || contract.Business?.User_public?.name || 'Desconocido',
             },
             serviceName: stData?.Service?.name,
+            serviceDescription: stData?.description || 'Sin descripción',
           } as unknown as ContractDetail;
         },
       );
@@ -164,16 +166,15 @@ export class ContractService {
         if (!currentUser || !canceledContract) return;
         const stData = canceledContract.id_service_time as any;
         const serviceName = stData?.Service?.name || 'Desconocido';
+        const serviceDescription = stData?.description || 'Sin descripción';
         let idDestination = '';
         let message = '';
 
         if (currentUser.id_user === canceledContract.id_client) {
           idDestination = canceledContract.id_business;
-          message = `El cliente ${canceledContract.Client?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;
-        } else {
+          message = `El cliente ${canceledContract.Client?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Descripción: ${serviceDescription}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;        } else {
           idDestination = canceledContract.id_client;
-          message = `La empresa ${canceledContract.Business?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;
-        }
+          message = `La empresa ${canceledContract.Business?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Descripción: ${serviceDescription}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;        }
 
         this.comunicationService
           .insertComunication({

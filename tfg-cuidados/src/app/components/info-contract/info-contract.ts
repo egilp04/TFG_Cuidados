@@ -18,6 +18,5 @@ import { ContractDetail } from '../../models/ContractModel';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InfoContract {
-  // Tipifica fuertemente los datos inyectados de la modal
   public data = inject<{ contract: ContractDetail }>(MAT_DIALOG_DATA);
 }

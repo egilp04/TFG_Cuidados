@@ -1087,7 +1087,7 @@
       "SERVICE": "Service",
       "PRICE": "Price",
       "STATUS": "Status",
-      "BUSINESS_DESCRIPTiON": "Service information"
+      "BUSINESS_DESCRIPTION": "Service information"
     },
     "ACTION": {
       "DELETE": "Delete"

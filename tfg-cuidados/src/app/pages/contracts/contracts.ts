@@ -179,6 +179,7 @@ export default class Contracts implements OnInit {
             ...raw,
             id_contract: raw.id_contract,
             serviceName: raw.Service_Time?.Service?.name || 'Sin servicio',
+            serviceDescription: raw.Service_Time?.description || 'Sin descripción',
             Client: {
               address: raw.Client?.address,
               city: raw.Client?.city,
