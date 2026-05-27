@@ -214,7 +214,7 @@ export class ComunicationService {
     }
 
     let dbOperation: any;
-    
+
     if (message.type_comunication !== 'message') {
       dbOperation = this.supabase
         .from('Comunication')
@@ -246,7 +246,7 @@ export class ComunicationService {
       }
     }
     return from(dbOperation).pipe(
-      map(({ error }) => {
+      map(({ error }: any) => {
         if (error) throw error;
       }),
       catchError((err) => throwError(() => err)),
