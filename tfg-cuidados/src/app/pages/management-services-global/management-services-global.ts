@@ -318,8 +318,10 @@ export default class ManagementServicesGlobal implements OnInit {
     this.isEditing = false;
     this.currentServiceId = null;
     this.originalService = null;
-    this.serviceForm.reset();
-    this.cd.markForCheck();
+    this.serviceForm.reset({
+      icon_name: 'circleCheck'
+    });    this.cd.markForCheck();
+
   }
 
   /**
