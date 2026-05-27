@@ -181,26 +181,27 @@ export class ServiceTimeService {
   }
 
   deleteServiceTimeDB(idServiceTime: string): Observable<void> {
-    const checkContractsPromise = this.supabase
-      .from('Contract')
-      .select('id_contract', { count: 'exact', head: true })
-      .eq('id_service_time', idServiceTime);
-
-    return from(checkContractsPromise).pipe(
+    return from(
+      this.supabase
+        .from('Contract')
+        .select('id_contract', { count: 'exact', head: true })
+        .eq('id_service_time', idServiceTime)
+        .eq('state', 'active')
+    ).pipe(
       switchMap(({ count, error }) => {
         if (error) throw error;
-        if (count !== null && count > 0) {
-          throw new Error('MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_OFFERS');
+                if (count !== null && count > 0) {
+          throw new Error('MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_ACTIVE_CONTRACTS');
         }
         return from(
-          this.supabase.from('Service_Time').delete().eq('id_service_time', idServiceTime),
+          this.supabase.rpc('delete_service_time_with_history', { st_id: idServiceTime })
         );
       }),
-      map((res: any) => {
-        if (res?.error) throw res.error;
+      map(({ error }) => {
+        if (error) throw error;
       }),
       catchError((err) => {
-        console.error('Error eliminando Service_Time:', err);
+        console.error('Error eliminando Service_Time de forma segura:', err);
         return throwError(() => err);
       }),
     );
