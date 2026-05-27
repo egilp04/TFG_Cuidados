@@ -122,7 +122,7 @@ export default class ManagementTimeGlobal implements OnInit {
             paginatorInner.firstPage();
           }
         }
-        this.cd.markForCheck();
+        this.cd.detectChanges();
       });
   }
 
@@ -235,6 +235,7 @@ export default class ManagementTimeGlobal implements OnInit {
         this.messageService.showMessage(result.text, result.type);
         if (result.type === 'success') {
           this.resetForm();
+          this.timeService.refreshTimes();
         }
       });
   }
@@ -353,5 +354,12 @@ export default class ManagementTimeGlobal implements OnInit {
 
   isDeleting(id: string): boolean {
     return this.deletingIds.has(id);
+  }
+
+  /**
+   * Evita que la tabla parpadee al recargar los datos
+   */
+  trackById(index: number, item: TimeModel): string {
+    return item.id_time!;
   }
 }
