@@ -7,6 +7,7 @@ import {
   inject,
   OnInit,
   signal,
+  computed
 } from '@angular/core';
 import { ButtonComponent } from '../button/button';
 import { LucideAngularModule } from 'lucide-angular';
