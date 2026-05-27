@@ -43,6 +43,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/register/register'),
     canActivate: [publicGuard],
     runGuardsAndResolvers: 'always',
+    data: { roles: ['administrator'] },
   },
   {
     path: 'recover-password',

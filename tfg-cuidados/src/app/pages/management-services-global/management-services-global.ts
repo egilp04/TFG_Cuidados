@@ -78,7 +78,7 @@ export default class ManagementServicesGlobal implements OnInit {
     name: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
     type_service: this.fb.control<string>('', [Validators.required]),
     description: this.fb.control<string>('', [Validators.required]),
-    icon_name: this.fb.control<string>(''),
+    icon_name: this.fb.control<string>('circleCheck', [Validators.required]),
   });
 
   public dataSource = new MatTableDataSource<ServiceModel>([]);
