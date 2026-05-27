@@ -48,7 +48,6 @@ export class ServiceService {
     const { data, error } = await this.clientSupaBase
       .from('Service')
       .select('*')
-      .eq('status', 'active')
       .order('name', { ascending: true });
 
     if (!error) {
@@ -88,9 +87,7 @@ export class ServiceService {
    * Elimina un servicio del catálogo.
    */
   deleteService(id: string): Observable<void> {
-    return from(
-      this.clientSupaBase.from('Service').update({ status: 'inactive' }).eq('id_service', id),
-    ).pipe(
+    return from(this.clientSupaBase.from('Service').delete().eq('id_service', id)).pipe(
       tap(() => this.refreshServices()),
       map(({ error }) => {
         if (error) throw error;
@@ -108,7 +105,6 @@ export class ServiceService {
         .from('Service')
         .select('*')
         .eq('id_service', id)
-        .eq('status', 'active')
         .single(),
     ).pipe(
       map(({ data, error }) => {
@@ -124,7 +120,6 @@ export class ServiceService {
     let query = this.clientSupaBase
       .from('Service')
       .select('id_service')
-      .eq('status', 'active')
       .ilike('name', name);
     if (idExclude) {
       query = query.neq('id_service', idExclude);

@@ -58,7 +58,7 @@ export default class ManagementAdmin implements OnInit {
       width: '100%',
       maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
       maxHeight: '90vh',
-      data: { mode: 'delete' },
+      data: { mode: 'cancelUser' },
     });
 
     dialogRef
@@ -109,6 +109,7 @@ export default class ManagementAdmin implements OnInit {
       ...user,
       rol: this.isClient ? 'client' : 'business',
     };
+    sessionStorage.setItem('editing_other_user', 'true');
     this.router.navigate(['/modify-profile'], {
       state: { user: userWithRole },
     });

@@ -26,6 +26,7 @@ import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { Searchbar } from '../../components/searchbar/searchbar';
 
 /**
  * Componente para la gestión global de horarios por administradores.
@@ -40,6 +41,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     Inputs,
     ButtonComponent,
+    Searchbar,
+    ReactiveFormsModule,
     MatPaginatorModule,
     Buttonback,
     TranslateModule,
@@ -58,6 +61,7 @@ export default class ManagementTimeGlobal implements OnInit {
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
   private responsive = inject(ResponsiveSize);
+  public controlFilterItem = new FormControl<string>('');
 
   public weekDaysList: { valor: string; label: string }[] = week_days;
   public daysTranslationMap: Record<string, string> = tranlsate_days;
@@ -89,6 +93,17 @@ export default class ManagementTimeGlobal implements OnInit {
 
   ngOnInit(): void {
     this.loadTimes();
+  }
+
+  /**
+   * Aplica un filtro a la tabla de datos.
+   * @param value Cadena de búsqueda.
+   */
+  applyFilter(value: string): void {
+    this.dataSource.filter = value.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   /**
@@ -185,7 +200,6 @@ export default class ManagementTimeGlobal implements OnInit {
               week_day: dayValue as any,
               time: timeValue,
               id_admin: user.id_user,
-              status: 'active',
             };
             return this.timeService.insertTime(payload);
           }

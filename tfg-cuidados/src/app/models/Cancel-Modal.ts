@@ -1,3 +1,9 @@
 export interface CancelModalData {
-  mode: 'unsubscribe' | 'cancelContract' | 'delete' | 'deleteService' | 'deleteAdminGlobal';
+  mode:
+    | 'unsubscribe'
+    | 'cancelContract'
+    | 'delete'
+    | 'deleteService'
+    | 'deleteGlobalAdmin'
+    | 'cancelUser';
 }

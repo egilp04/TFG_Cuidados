@@ -117,15 +117,24 @@
         </button>
 
         <button
-          [routerLink]="['/modify-profile']"
-          routerLinkActive="text-accent dark:text-white scale-120"
-          routerLinkActive="scale-120 [&_lucide-icon]:!text-accent text-accent dark:text-white"
-          class="nav-icon-container transition-all"
-          (click)="closeMenu()"
-          [attr.aria-label]="'NAVBAR.PROFILE' | translate"
-        >
-          <lucide-icon name="user" class="nav-icon-style" aria-hidden="true"></lucide-icon>
-        </button>
+        [routerLink]="isEditingOther() ? null : ['/modify-profile']"
+        [disabled]="isEditingOther()"
+        [routerLinkActive]="isEditingOther() ? '' : 'text-accent dark:text-white scale-120 [&_lucide-icon]:!text-accent'"
+        [class.text-gray-400]="isEditingOther()"
+        [class.grayscale]="isEditingOther()"        
+        [class.!cursor-not-allowed]="isEditingOther()"
+        [class.text-accent]="!isEditingOther()"
+        class="nav-icon-container transition-all"
+        (click)="closeMenu()"
+        [attr.aria-label]="'NAVBAR.PROFILE' | translate"
+      >
+        <lucide-icon 
+          name="user" 
+          class="nav-icon-style" 
+          [class.text-accent]="!isEditingOther()"
+          aria-hidden="true"
+        ></lucide-icon>
+      </button>
 
         <app-button
           [label]="'NAVBAR.LOGOUT' | translate"

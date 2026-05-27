@@ -45,6 +45,8 @@ export interface ContractDetail extends ContractModel {
   id_contract: string;
   id_st_flat?: string;
   serviceName?: string;
+  serviceDescription?: string;
+  details?:string;
   Client?: {
     address?: string;
     city?: string;

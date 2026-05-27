@@ -1,0 +1,20 @@
+@reference "../../../styles.css";
+.offers-title {
+  @apply text-h1 text-primary text-center mb-10 dark:text-surface;
+}
+
+.offers-container-section {
+  @apply flex flex-col items-center;
+}
+
+.offers-table-container {
+  @apply flex flex-col p-10 w-full;
+}
+
+.offers-table {
+  @apply flex flex-col p-10 w-full overflow-auto;
+}
+
+.offers-text {
+  @apply text-primary! dark:text-surface!;
+}

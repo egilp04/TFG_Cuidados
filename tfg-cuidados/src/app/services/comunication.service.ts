@@ -92,7 +92,7 @@ export class ComunicationService {
       .select(
         `
       *,
-      Sender:User_public!id_sender (email),
+      Sender:User_public!id_sender (name, email),
       Receiver:User_public!id_receiver (name, email)
     `,
       )
@@ -214,23 +214,38 @@ export class ComunicationService {
       }
     }
 
-    let updates: Partial<ComunicationModel> = {};
+    let dbOperation: any;
 
-    if (message.id_sender === user.id_user) {
-      updates = { deleted_by_sender: true };
-    } else if (message.id_receiver === user.id_user) {
-      updates = { deleted_by_receiver: true };
-    } else {
-      return of(undefined);
-    }
-
-    return from(
-      this.supabase
+    if (message.type_comunication !== 'message') {
+      dbOperation = this.supabase
         .from('Comunication')
-        .update(updates)
-        .eq('id_comunication', message.id_comunication),
-    ).pipe(
-      map(({ error }) => {
+        .delete()
+        .eq('id_comunication', message.id_comunication);
+    } else {
+      const isSender = message.id_sender === user.id_user;
+      const isReceiver = message.id_receiver === user.id_user;
+
+      if (!isSender && !isReceiver) return of(undefined);
+
+      const willBothBeDeleted =
+        (isSender && message.deleted_by_receiver) || (isReceiver && message.deleted_by_sender);
+
+      if (willBothBeDeleted) {
+        dbOperation = this.supabase
+          .from('Comunication')
+          .delete()
+          .eq('id_comunication', message.id_comunication);
+      } else {
+        const updates = isSender ? { deleted_by_sender: true } : { deleted_by_receiver: true };
+
+        dbOperation = this.supabase
+          .from('Comunication')
+          .update(updates)
+          .eq('id_comunication', message.id_comunication);
+      }
+    }
+    return from(dbOperation).pipe(
+      map(({ error }: any) => {
         if (error) throw error;
       }),
       catchError((err) => throwError(() => err)),

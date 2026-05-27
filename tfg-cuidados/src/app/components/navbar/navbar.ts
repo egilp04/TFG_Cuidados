@@ -7,11 +7,12 @@ import {
   inject,
   OnInit,
   signal,
+  computed
 } from '@angular/core';
 import { ButtonComponent } from '../button/button';
 import { LucideAngularModule } from 'lucide-angular';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterModule, NavigationEnd } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ComunicationService } from '../../services/comunication.service';
@@ -58,7 +59,15 @@ export class Navbar implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.checkEditStatus();
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.checkEditStatus();
+    });
+  }
+
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
@@ -155,4 +164,11 @@ export class Navbar implements OnInit {
     localStorage.setItem('idioma_seleccionado', lang);
     this.currentLang.set(lang);
   }
+
+  public isEditingOther = signal<boolean>(false);
+  private checkEditStatus(): void {
+    const isEditing = !!sessionStorage.getItem('editing_other_user');
+    this.isEditingOther.set(isEditing);
+  }
+
 }

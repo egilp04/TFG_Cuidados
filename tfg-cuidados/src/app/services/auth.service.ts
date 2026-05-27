@@ -57,7 +57,6 @@ export class AuthService {
       )
       .subscribe();
   }
-
   signIn(email: string, password: string): Observable<AuthUserModel> {
     return from(this.supabase.auth.signInWithPassword({ email, password })).pipe(
       switchMap((res: AuthResponse) => {
@@ -71,17 +70,18 @@ export class AuthService {
         }
         return this.getProfile(res.data.user.id);
       }),
-      switchMap((user: AuthUserModel) => {
+      switchMap(async (user: AuthUserModel) => {
         if (user.state === false) {
-          return from(this.supabase.auth.signOut()).pipe(
-            switchMap(() => {
-              throw new Error('USER_INACTIVE');
-            })
-          );
+          await this.supabase.auth.signOut();
+          throw new Error('USER_INACTIVE');
         }
-      this.currentUser.set(user);
-        return of(user);
-      })
+        const { data } = await this.supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+        const needs2FA = data?.currentLevel === 'aal1' && data?.nextLevel === 'aal2';
+        if (!needs2FA) {
+          this.currentUser.set(user);
+        }
+        return user;
+      }),
     );
   }
 
@@ -94,8 +94,16 @@ export class AuthService {
         if (userErr) throw userErr;
 
         const [cli, bus, adm] = await Promise.all([
-          this.supabase.from('Client').select('surname1, surname2, address, birthdate, id_client, postcode, city, comunity').eq('id_client', userId).maybeSingle(),
-          this.supabase.from('Business').select('address, description, city, postcode, comunity, id_business').eq('id_business', userId).maybeSingle(),
+          this.supabase
+            .from('Client')
+            .select('surname1, surname2, address, birthdate, id_client, postcode, city, comunity')
+            .eq('id_client', userId)
+            .maybeSingle(),
+          this.supabase
+            .from('Business')
+            .select('address, description, city, postcode, comunity, id_business')
+            .eq('id_business', userId)
+            .maybeSingle(),
           this.supabase
             .from('Administrator')
             .select('*')
@@ -340,5 +348,64 @@ export class AuthService {
       }),
       catchError(() => of(false)),
     );
+  }
+
+  async start2FAEnrollment() {
+    const { data: factorsData, error: listError } = await this.supabase.auth.mfa.listFactors();
+    if (listError) throw listError;
+    const unverifiedFactors = factorsData.all.filter(
+      (factor) => factor.status === 'unverified' && factor.factor_type === 'totp',
+    );
+    for (const factor of unverifiedFactors) {
+      await this.supabase.auth.mfa.unenroll({ factorId: factor.id });
+    }
+    const { data, error } = await this.supabase.auth.mfa.enroll({
+      factorType: 'totp',
+    });
+
+    if (error) throw error;
+    return data;
+  }
+
+  async createChallenge(factorId: string) {
+    const { data, error } = await this.supabase.auth.mfa.challenge({ factorId });
+    if (error) throw error;
+    return data;
+  }
+
+  /**Verifica el código que mete el usuario */
+  async verifyChallenge(factorId: string, challengeId: string, code: string) {
+    const { data, error } = await this.supabase.auth.mfa.verify({
+      factorId,
+      challengeId,
+      code,
+    });
+    if (error) throw error;
+    return data;
+  }
+
+  /** Comprueba si el usuario actual tiene el 2FA activado y pendiente de verificar */
+  async check2FAStatus() {
+    const { data, error } = await this.supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (error) throw error;
+
+    return {
+      needs2FA: data.currentLevel === 'aal1' && data.nextLevel === 'aal2',
+      isVerified: data.currentLevel === 'aal2',
+    };
+  }
+
+  /** Obtiene la lista de factores 2FA que el usuario ya ha configurado */
+  async getVerifiedFactors() {
+    const { data, error } = await this.supabase.auth.mfa.listFactors();
+    if (error) throw error;
+    return data.totp.filter((factor) => factor.status === 'verified');
+  }
+
+  /** Función para desactivar el 2FA (por si el usuario quiere quitarlo) */
+  async unenroll2FA(factorId: string) {
+    const { data, error } = await this.supabase.auth.mfa.unenroll({ factorId });
+    if (error) throw error;
+    return data;
   }
 }

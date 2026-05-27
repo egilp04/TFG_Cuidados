@@ -109,6 +109,14 @@
     {{ 'MANAGEMENT_SCHEDULES.LIST.TITLE' | translate }}
   </h2>
 
+  <div class="w-full flex flex-col md:flex-row gap-10 p-20 items-center justify-end">
+    <label class="management-schedule-global-search" id="search-services-label">
+      {{ 'MANAGEMENT_SCHEDULES.LIST.SEARCH' | translate }}
+    </label>
+    <app-searchbar [control]="controlFilterItem" (searchEvent)="applyFilter($event)">
+    </app-searchbar>
+  </div>
+
   <main class="overflow-x-auto">
     <table
       mat-table

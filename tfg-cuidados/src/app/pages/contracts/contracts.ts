@@ -110,7 +110,6 @@ export default class Contracts implements OnInit {
    */
   async cancelContract(id: string): Promise<void> {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
-
     const dialogRef = this.dialog.open(Cancelmodal, {
       data: { mode: 'cancelContract' },
       width: '100%',
@@ -133,6 +132,7 @@ export default class Contracts implements OnInit {
             ),
             catchError((err: Error) => {
               console.error('Error en cancelación:', err);
+              this.deletingIds.delete(id);
               return this.translate
                 .get('MESSAGES.ERROR.CANCELCONTRACT')
                 .pipe(map((msg: string) => ({ text: msg, type: 'error' as const })));
@@ -145,11 +145,18 @@ export default class Contracts implements OnInit {
           this.messageService.showMessage(result.text, result.type);
           if (result.type === 'success') {
             this.dialog.closeAll();
+            
+            // Más limpio y seguro para TypeScript
+            this.dataSource.data = this.dataSource.data.filter(
+              (contract) => contract.id_contract !== id
+            );
+            
+            this.deletingIds.delete(id);
+            this.cd.detectChanges();
           }
         },
       });
   }
-
   /**
    * Abre una modal de información mostrando los detalles completos de un contrato.
    * Utiliza datos en caché si están disponibles, de lo contrario obtiene del servidor.
@@ -179,6 +186,7 @@ export default class Contracts implements OnInit {
             ...raw,
             id_contract: raw.id_contract,
             serviceName: raw.Service_Time?.Service?.name || 'Sin servicio',
+            serviceDescription: raw.Service_Time?.description || 'Sin descripción',
             Client: {
               address: raw.Client?.address,
               city: raw.Client?.city,

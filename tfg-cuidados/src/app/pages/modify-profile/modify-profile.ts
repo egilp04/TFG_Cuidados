@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit, signal, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule, Location } from '@angular/common';
@@ -37,7 +37,7 @@ import { getHomeRouteByRole } from '../../core/utils/routerUtils';
   templateUrl: './modify-profile.html',
   styleUrl: './modify-profile.css',
 })
-export default class ModifyProfilePage implements OnInit {
+export default class ModifyProfilePage implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private userService = inject(UserService);
   private router = inject(Router);
@@ -54,7 +54,6 @@ export default class ModifyProfilePage implements OnInit {
   ngOnInit(): void {
     const state = history.state as { user?: AuthUserModel; usuario?: AuthUserModel };
     const targetUser = state.user || state.usuario;
-
     if (targetUser) {
       this.userToEdit.set(targetUser);
       this.userRole.set(this.normalizeRole(targetUser.rol));
@@ -66,6 +65,10 @@ export default class ModifyProfilePage implements OnInit {
       }
     }
     setTimeout(() => this.cd.detectChanges(), 0);
+  }
+
+  ngOnDestroy(): void {
+    sessionStorage.removeItem('editing_other_user');
   }
 
   /**

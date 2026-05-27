@@ -78,7 +78,7 @@ export default class ManagementServicesGlobal implements OnInit {
     name: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
     type_service: this.fb.control<string>('', [Validators.required]),
     description: this.fb.control<string>('', [Validators.required]),
-    icon_name: this.fb.control<string>(''),
+    icon_name: this.fb.control<string>('circleCheck', [Validators.required]),
   });
 
   public dataSource = new MatTableDataSource<ServiceModel>([]);
@@ -191,7 +191,6 @@ export default class ManagementServicesGlobal implements OnInit {
               description,
               id_admin: user.id_user,
               icon_name,
-              status: 'active',
             };
             return this.serviceService.insertService(payload);
           }
@@ -212,7 +211,7 @@ export default class ManagementServicesGlobal implements OnInit {
           } else if (err.message === 'HAS_DEPENDENCIES') {
             msgKey = 'MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_OFFERS';
           }
-
+          this.resetForm();
           return this.translate
             .get(msgKey)
             .pipe(map((text: string) => ({ type: 'error' as const, text })));
@@ -319,7 +318,9 @@ export default class ManagementServicesGlobal implements OnInit {
     this.isEditing = false;
     this.currentServiceId = null;
     this.originalService = null;
-    this.serviceForm.reset();
+    this.serviceForm.reset({
+      icon_name: 'circleCheck',
+    });
     this.cd.markForCheck();
   }
 

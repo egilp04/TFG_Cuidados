@@ -51,7 +51,6 @@ export class TimeService {
     const { data, error } = await this.clientSupaBase
       .from('Time')
       .select('*')
-      .eq('status', 'active')
       .order('week_day', { ascending: true })
       .order('time', { ascending: true });
 
@@ -76,9 +75,7 @@ export class TimeService {
    * Elimina un registro de horario específico por su identificador único.
    */
   deleteTime(id: string): Observable<void> {
-    return from(
-      this.clientSupaBase.from('Time').update({ status: 'inactive' }).eq('id_time', id),
-    ).pipe(
+    return from(this.clientSupaBase.from('Time').delete().eq('id_time', id)).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
@@ -109,7 +106,6 @@ export class TimeService {
     let query = this.clientSupaBase
       .from('Time')
       .select('id_time')
-      .eq('status', 'active')
       .eq('week_day', day)
       .eq('time', time);
 

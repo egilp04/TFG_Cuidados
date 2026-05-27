@@ -22,10 +22,11 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { ButtonComponent } from '../../components/button/button';
 import { delay } from 'rxjs';
 import { MessageService } from '../../services/message-service';
+import { Service_Time_Model } from '../../models/Service_Time_Model';
+import { ServiceTimeService } from '../../services/service-time.service';
 
 @Component({
-  selector: 'app-admin-contracts',
-  standalone: true,
+  selector: 'app-admin-offers',
   imports: [
     MatTableModule,
     MatPaginatorModule,
@@ -35,28 +36,27 @@ import { MessageService } from '../../services/message-service';
     Buttonback,
     ButtonComponent,
   ],
-  templateUrl: './admin-contracts.component.html',
-  styleUrl: './admin-contracts.component.css',
+  templateUrl: './admin-offers.component.html',
+  styleUrl: './admin-offers.component.css',
 })
-export default class AdminContractsComponent implements OnInit {
-  private contractService = inject(ContractService);
-  private pdfService = inject(DocsPdf);
+export default class AdminOffersComponent implements OnInit {
+  private serviceTimeService = inject(ServiceTimeService);
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);
   private messageService = inject(MessageService);
   private translate = inject(TranslateService);
 
   public displayedColumns: string[] = [
-    'id_contract',
-    'client',
-    'business',
-    'service',
-    'state',
-    'start_date',
+    'id_service_time',
+    'id_business',
+    'description',
+    'id_service',
+    'price',
+    'status',
     'actions',
   ];
 
-  public dataSource = new MatTableDataSource<ContractDetail>([]);
+  public dataSource = new MatTableDataSource<Service_Time_Model>([]);
   public isLoading = true;
 
   public paginator = viewChild(MatPaginator);
@@ -78,25 +78,27 @@ export default class AdminContractsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAdminContracts();
+    this.loadAdminOffers();
   }
 
   /**
-   * Carga los contratos de los administradores
+   * Carga todas las ofertas (Service_Time) de la plataforma
    */
-  private loadAdminContracts(): void {
+  private loadAdminOffers(): void {
     this.isLoading = true;
-    this.contractService
-      .getAllContractsForAdmin()
+    this.serviceTimeService
+      .getAllOffersForAdmin()
       .pipe(takeUntilDestroyed(this.destroyRef), delay(500))
       .subscribe({
-        next: (data: ContractDetail[]) => {
+        next: (data: Service_Time_Model[]) => {
           this.dataSource.data = data;
           this.isLoading = false;
-          this.dataSource.filterPredicate = (data: ContractDetail, filter: string) => {
+
+          this.dataSource.filterPredicate = (data: Service_Time_Model, filter: string) => {
             if (filter === 'all') return true;
-            return data.state === filter;
+            return data.status === filter;
           };
+
           const paginatorInner = this.dataSource.paginator;
           if (paginatorInner) {
             const totalPaginas = Math.ceil(data.length / paginatorInner.pageSize);
@@ -107,7 +109,7 @@ export default class AdminContractsComponent implements OnInit {
           this.cd.markForCheck();
         },
         error: (error: Error) => {
-          console.error('Error cargando contratos de admin:', error);
+          console.error('Error cargando ofertas de admin:', error);
           this.isLoading = false;
           this.cd.markForCheck();
         },
@@ -124,36 +126,38 @@ export default class AdminContractsComponent implements OnInit {
   }
 
   /**
-   * Exporta a CSV usando la utilidad global
+   * Elimina una oferta comprobando primero que no tenga contratos asociados
    */
-  exportToCSV(): void {
-    exportContractsToCSV(this.dataSource.filteredData, 'CuidaDos_Admin_Contratos');
-  }
-
-  downloadContractPDF(contract: ContractDetail): void {
-    this.pdfService.downloadPDF(contract);
-  }
-
-  deleteContract(element: ContractDetail) {
-    if (element.state === 'no active') {
-      this.contractService.deleteContractDB(element.id_contract).subscribe({
-        next: () => {
-          this.messageService.showMessage(
-            this.translate.instant('MESSAGES_MODAL.FEEDBACK.SUCCESS_DELETE') ||
-              'Contrato eliminado correctamente',
-            'success',
-          );
-          this.loadAdminContracts();
-        },
-        error: (err) => {
-          console.error(err);
+  deleteOffer(element: Service_Time_Model) {
+    this.serviceTimeService.deleteServiceTimeDB(element.id_service_time).subscribe({
+      next: () => {
+        this.messageService.showMessage(
+          this.translate.instant('MESSAGES_MODAL.FEEDBACK.SUCCESS_DELETE') ||
+            'Oferta eliminada correctamente',
+          'success',
+        );
+        this.loadAdminOffers();
+      },
+      error: (err: any) => {
+        console.error(err);
+        if (err.message === 'MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_OFFERS') {
+          this.translate.get(err.message).subscribe((text: string) => {
+            this.messageService.showMessage(text, 'error');
+            this.cd.markForCheck();
+          });
+        } else if (err.message === 'MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_ACTIVE_CONTRACT') {
+          this.translate.get(err.message).subscribe((text: string) => {
+            this.messageService.showMessage(text, 'error');
+            this.cd.markForCheck();
+          });
+        } else {
           this.messageService.showMessage(
             this.translate.instant('MESSAGES_MODAL.FEEDBACK.ERROR_DELETE') ||
-              'Error al eliminar el contrato',
+              'Error al eliminar la oferta',
             'error',
           );
-        },
-      });
-    }
+        }
+      },
+    });
   }
 }

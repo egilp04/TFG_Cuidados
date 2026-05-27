@@ -15,13 +15,19 @@ export const publicGuard: CanActivateFn = (route, state) => {
     map(() => {
       if (authService.isAuthenticated()) {
         const userRole = authService.userRol() ?? '';
+
         if (userRole === '') {
           return router.createUrlTree(['/']);
+        }
+        if (userRole === 'administrator') {
+          return true;
         }
 
         const targetRoute = getHomeRouteByRole(userRole);
         return router.createUrlTree([targetRoute]);
       }
+
+      // Si no está autenticado, pasa sin problema
       return true;
     }),
   );

@@ -2,7 +2,8 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { filter, map, take } from 'rxjs';
+import { filter, map, switchMap, take, catchError } from 'rxjs/operators';
+import { of, from } from 'rxjs';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
@@ -11,18 +12,28 @@ export const authGuard: CanActivateFn = (route, state) => {
   return toObservable(authService.isLoading).pipe(
     filter((loading) => !loading),
     take(1),
-    map(() => {
+    switchMap(() => {
       if (!authService.isAuthenticated()) {
-        return router.createUrlTree(['/']);
+        return of(router.createUrlTree(['/']));
       }
-      const allowedRoles = route.data['roles'] as Array<string>;
-      if (allowedRoles) {
-        const currentUserRole = authService.userRol() ?? '';
-        if (!allowedRoles.includes(currentUserRole)) {
-          return router.createUrlTree(['/landing']);
-        }
-      }
-      return true;
+      return from(authService.check2FAStatus()).pipe(
+        map((status) => {
+          if (status.needs2FA) {
+            return false;
+          }
+          const allowedRoles = route.data['roles'] as Array<string>;
+          if (allowedRoles) {
+            const currentUserRole = authService.userRol() ?? '';
+            if (!allowedRoles.includes(currentUserRole)) {
+              return router.createUrlTree(['/landing']);
+            }
+          }
+          return true;
+        }),
+        catchError(() => {
+          return of(false);
+        }),
+      );
     }),
   );
 };

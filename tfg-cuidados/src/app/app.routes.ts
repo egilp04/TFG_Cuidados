@@ -43,6 +43,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/register/register'),
     canActivate: [publicGuard],
     runGuardsAndResolvers: 'always',
+    data: { roles: ['administrator'] },
   },
   {
     path: 'recover-password',
@@ -131,6 +132,12 @@ export const routes: Routes = [
   {
     path: 'global-contracts',
     loadComponent: () => import('./pages/admin-contracts/admin-contracts.component'),
+    canActivate: [authGuard],
+    data: { roles: ['administrator'] },
+  },
+  {
+    path: 'global-offers',
+    loadComponent: () => import('./pages/admin-offers/admin-offers.component'),
     canActivate: [authGuard],
     data: { roles: ['administrator'] },
   },

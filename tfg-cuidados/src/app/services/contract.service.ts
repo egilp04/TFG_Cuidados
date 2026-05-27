@@ -24,6 +24,7 @@ export class ContractService {
     id_service_time (
      id_service_time,
      price,
+     description,
      Service ( name )
     ),
     Client:Client!id_client (
@@ -96,6 +97,7 @@ export class ContractService {
                 contract.Business?.name || contract.Business?.User_public?.name || 'Desconocido',
             },
             serviceName: stData?.Service?.name,
+            serviceDescription: stData?.description || 'Sin descripción',
           } as unknown as ContractDetail;
         },
       );
@@ -164,15 +166,16 @@ export class ContractService {
         if (!currentUser || !canceledContract) return;
         const stData = canceledContract.id_service_time as any;
         const serviceName = stData?.Service?.name || 'Desconocido';
+        const serviceDescription = stData?.description || 'Sin descripción';
         let idDestination = '';
         let message = '';
 
         if (currentUser.id_user === canceledContract.id_client) {
           idDestination = canceledContract.id_business;
-          message = `El cliente ${canceledContract.Client?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;
+          message = `El cliente ${canceledContract.Client?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Descripción: ${serviceDescription}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;
         } else {
           idDestination = canceledContract.id_client;
-          message = `La empresa ${canceledContract.Business?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;
+          message = `La empresa ${canceledContract.Business?.User_public?.name || 'Desconocido'} ha cancelado el contrato del servicio: ${serviceName}. Descripción: ${serviceDescription}. Información adicional: día - ${canceledContract.week_day_hired}, hora - ${canceledContract.time_hired}.`;
         }
 
         this.comunicationService
@@ -206,28 +209,60 @@ export class ContractService {
         if (error) throw error;
         if (!data) return [];
 
-        return (data as unknown as ContractSupabaseJoined[]).map((contract) => {
-          const stData = contract.id_service_time as any;
+        return (data as any[]).map((contract) => {
+          const stData = contract.id_service_time;
+
+          const finalClientName = contract.id_client
+            ? contract.Client?.name || contract.Client?.User_public?.name || 'Desconocido'
+            : contract.historical_client_name || 'Usuario (Desuscrito)';
+
+          const finalBusinessName = contract.id_business
+            ? contract.Business?.name || contract.Business?.User_public?.name || 'Desconocido'
+            : contract.historical_business_name || 'Empresa (Desuscrita)';
+
+          const finalServiceName = contract.id_service_time
+            ? stData?.Service?.name || 'Desconocido'
+            : contract.historical_service_name || 'Servicio Eliminado';
+
+          const finalServiceDescription = contract.id_service_time
+            ? stData?.description || 'Sin descripción'
+            : contract.historical_service_description || 'Sin descripción';
+
+          const finalPrice = contract.id_service_time
+            ? stData?.price || 'N/A'
+            : contract.historical_price || 'N/A';
           return {
             ...contract,
             id_st_flat: stData?.id_service_time || contract.id_service_time,
             Client: {
               ...contract.Client,
-              clientName: contract.Client?.name || contract.Client?.User_public?.name || 'Unknown',
+              clientName: finalClientName,
             },
             Business: {
               ...contract.Business,
-              businessName:
-                contract.Business?.name || contract.Business?.User_public?.name || 'Unknown',
+              businessName: finalBusinessName,
             },
-            serviceName: stData?.Service?.name,
-            price: stData?.price,
+            serviceDescription: finalServiceDescription,
+            serviceName: finalServiceName,
+            price: finalPrice,
           } as unknown as ContractDetail;
         });
       }),
       catchError((err) => {
         console.error('Error fetching admin contracts:', err);
         return of([]);
+      }),
+    );
+  }
+
+  deleteContractDB(idContract: string): Observable<void> {
+    return from(this.supabase.from('Contract').delete().eq('id_contract', idContract)).pipe(
+      map(({ error }) => {
+        if (error) throw error;
+      }),
+      catchError((err) => {
+        console.error('Error eliminando el contrato:', err);
+        return throwError(() => err);
       }),
     );
   }

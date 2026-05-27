@@ -58,7 +58,7 @@ export class MessagesModal implements OnInit {
   ngOnInit(): void {
     if (this.data.mode === 'readMessage' && this.data.content) {
       this.messageForm.patchValue({
-        sender: this.data.content.Sender?.email,
+        sender: this.data.content.Sender?.name || this.data.content.Sender?.email,
         receiver: this.data.content.Receiver?.name || this.data.content.Receiver?.email,
         topic: this.data.content.topic || undefined,
         content: this.data.content.content,

@@ -76,7 +76,6 @@ export default class Activities implements OnInit {
    */
   async cancelContract(id: string): Promise<void> {
     const { Cancelmodal } = await import('../../components/cancelmodal/cancelmodal');
-
     this.dialog
       .open(Cancelmodal, {
         data: { mode: 'cancelContract' },
@@ -103,6 +102,13 @@ export default class Activities implements OnInit {
       )
       .subscribe((res) => {
         this.messageService.showMessage(res.text, res.type);
+        if (res.type === 'success') {
+          this.dataSource.data = this.dataSource.data.filter(
+            (contract) => contract.id_contract !== id
+          );
+          
+          this.cd.detectChanges();
+        }
       });
   }
 }

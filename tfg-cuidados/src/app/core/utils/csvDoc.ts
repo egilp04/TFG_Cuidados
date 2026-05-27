@@ -30,6 +30,7 @@ export const exportContractsToCSV = (
     `"${c.Client?.clientName || 'N/A'}"`,
     `"${c.Business?.businessName || 'N/A'}"`,
     `"${c.serviceName || 'N/A'}"`,
+    `"${c.serviceDescription || 'N/A'}"`,
     c.start_date,
     c.week_day_hired || 'N/A',
     c.time_hired || 'N/A',
