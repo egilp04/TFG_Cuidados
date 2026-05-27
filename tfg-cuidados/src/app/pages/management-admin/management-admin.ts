@@ -109,6 +109,7 @@ export default class ManagementAdmin implements OnInit {
       ...user,
       rol: this.isClient ? 'client' : 'business',
     };
+    sessionStorage.setItem('editing_other_user', 'true');
     this.router.navigate(['/modify-profile'], {
       state: { user: userWithRole },
     });

@@ -155,4 +155,8 @@ export class Navbar implements OnInit {
     localStorage.setItem('idioma_seleccionado', lang);
     this.currentLang.set(lang);
   }
+
+  public isEditingOther = computed(() => {
+    return !!sessionStorage.getItem('editing_other_user');
+  });
 }
