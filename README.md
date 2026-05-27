@@ -297,6 +297,17 @@ En este enlace podrás acceder a toda la información relacionada con el proyect
 Otros enlaces de interés:
 Figma - https://www.figma.com/design/Aa6R3bdFqDKKzZ6dK3bkHP/TFG-Evelia?node-id=0-1&t=s1gxsIHk3JNCFouu-1
 
+
+## Demo del aplicativo 
+
+<div align="center">
+  <a href="[https://youtu.be/vepcTSAasaY](https://youtu.be/4QnWemwrjPU)">
+<img src="https://img.youtube.com/vi/4QnWemwrjPU/hqdefault.jpg" alt="Ver demo de CuidaDos" style="width:100%; max-width:800px;">
+  </a>
+  <p><em>(Haz clic en la imagen para ver la demo de la plataforma)</em></p>
+</div>
+
+
 👩‍💻 Autoría
 
 **Evelia Gil Paredes**
