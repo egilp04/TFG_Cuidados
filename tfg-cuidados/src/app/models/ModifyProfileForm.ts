@@ -10,6 +10,7 @@ export interface UserProfileModel {
   surname2?: string;
   description?: string;
   avatar_url?: string;
+  id_user?: string;
 }
 
 export interface FormSubmitEvent {

@@ -54,7 +54,6 @@ export default class ModifyProfilePage implements OnInit {
   ngOnInit(): void {
     const state = history.state as { user?: AuthUserModel; usuario?: AuthUserModel };
     const targetUser = state.user || state.usuario;
-
     if (targetUser) {
       this.userToEdit.set(targetUser);
       this.userRole.set(this.normalizeRole(targetUser.rol));

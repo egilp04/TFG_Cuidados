@@ -1073,5 +1073,28 @@
     "ERROR_DISABLE": "Error disabling two-factor authentication. Please try again.",
     "SUCCESS_DISABLE": "2FA protection successfully disabled.",
     "CONFIRM_DISABLE": "Are you sure you want to disable 2FA protection?"
+  },
+  "ADMIN_OFFERS": {
+    "TITLE": "Offers Management",
+    "STATE": {
+      "ALL": "All",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "TABLE": {
+      "ID": "Offer ID",
+      "BUSINESS": "Business / Professional",
+      "SERVICE": "Service",
+      "PRICE": "Price",
+      "STATUS": "Status"
+    },
+    "ACTION": {
+      "DELETE": "Delete"
+    },
+    "NO_DATA": "No offers found.",
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Go back to previous view",
+      "PAGINATOR": "Offers table pagination controls"
+    }
   }
 }

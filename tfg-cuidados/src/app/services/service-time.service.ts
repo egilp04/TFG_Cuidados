@@ -122,7 +122,9 @@ export class ServiceTimeService {
    * Elimina un registro de disponibilidad servicio-horario de la base de datos.
    */
   deleteServiceTime(id: string): Observable<void> {
-    return from(this.supabase.from('Service_Time').update({ status: 'inactive' }).eq('id_service_time', id)).pipe(
+    return from(
+      this.supabase.from('Service_Time').update({ status: 'inactive' }).eq('id_service_time', id),
+    ).pipe(
       map(({ error }) => {
         if (error) throw error;
       }),
@@ -143,13 +145,56 @@ export class ServiceTimeService {
         .from('Contract')
         .select('id_contract')
         .eq('id_service_time', id_service_time)
-        .eq('state', 'active')
+        .eq('state', 'active'),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data && data.length > 0;
       }),
-      catchError(() => of(false))
+      catchError(() => of(false)),
+    );
+  }
+
+  getAllContractsForAdmin(): Observable<Service_Time_Model[]> {
+    const queryPromise = this.supabase
+      .from('Service_Time')
+      .select('*')
+      .order('creation_date', { ascending: false });
+    return from(queryPromise).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+        return (data as Service_Time_Model[]) || [];
+      }),
+      catchError((err) => {
+        console.error('Error fetching admin service times:', err);
+        return of([]);
+      }),
+    );
+  }
+
+  deleteServiceTimeDB(idServiceTime: string): Observable<void> {
+    const checkContractsPromise = this.supabase
+      .from('Contract')
+      .select('id_contract', { count: 'exact', head: true })
+      .eq('id_service_time', idServiceTime);
+
+    return from(checkContractsPromise).pipe(
+      switchMap(({ count, error }) => {
+        if (error) throw error;
+        if (count !== null && count > 0) {
+          throw new Error('MANAGEMENT_SERVICES.MESSAGES.ERROR_HAS_OFFERS');
+        }
+        return from(
+          this.supabase.from('Service_Time').delete().eq('id_service_time', idServiceTime),
+        );
+      }),
+      map((res: any) => {
+        if (res?.error) throw res.error;
+      }),
+      catchError((err) => {
+        console.error('Error eliminando Service_Time:', err);
+        return throwError(() => err);
+      }),
     );
   }
 }

@@ -1071,5 +1071,28 @@
     "CONFIRM_DISABLE": "¿Estás seguro de que quieres desactivar la protección 2FA?",
     "ERROR_DISABLE": "Error al desactivar la autenticación en dos pasos. Inténtalo de nuevo.",
     "SUCCESS_DISABLE": "Protección 2FA desactivada correctamente."
+  },
+  "ADMIN_OFFERS": {
+    "TITLE": "Gestión de Ofertas",
+    "STATE": {
+      "ALL": "Todas las ofertas",
+      "ACTIVE": "Activas",
+      "INACTIVE": "Inactivas"
+    },
+    "TABLE": {
+      "ID": "ID Oferta",
+      "BUSINESS": "Empresa / Profesional",
+      "SERVICE": "Servicio",
+      "PRICE": "Precio",
+      "STATUS": "Estado"
+    },
+    "ACTION": {
+      "DELETE": "Eliminar"
+    },
+    "NO_DATA": "No se encontraron ofertas registradas.",
+    "ACCESSIBILITY": {
+      "BACK_NAV": "Volver a la vista anterior",
+      "PAGINATOR": "Controles de paginación de la tabla de ofertas"
+    }
   }
 }

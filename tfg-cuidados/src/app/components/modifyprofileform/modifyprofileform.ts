@@ -21,7 +21,6 @@ import { LucideAngularModule } from 'lucide-angular';
 import { UserProfileModel, FormSubmitEvent } from '../../models/ModifyProfileForm';
 import { AvatarComponent } from '../../components/avatar/avatar.component';
 import { MessageService } from '../../services/message-service';
-import { UserService } from '../../services/user.service';
 import { AuthentificatorComponent } from '../authentificator/authentificator.component';
 
 /**
@@ -68,6 +67,7 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy {
 
   private targetUser: UserProfileModel | null = null;
   public isAdminViewer: boolean = false;
+  public ownProfile: boolean = true;
 
   public profileForm = this.fb.group({
     userName: this.fb.control<string>(''),
@@ -90,6 +90,7 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userData'] && this.userData) {
+      this.updateOwnProfileStatus();
       this.loadProfileFormData();
     }
     if (changes['userRole']) {
@@ -100,9 +101,18 @@ export class Modifyprofileform implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     const activeRole = this.authService.userRol();
     this.isAdminViewer = activeRole === 'administrator';
-
+    this.updateOwnProfileStatus();
     if (!this.userData) {
       this.loadProfileFormData();
+    }
+  }
+
+  private updateOwnProfileStatus(): void {
+    const currentUser = this.authService.currentUser() as UserProfileModel | null;
+    if (this.userData && currentUser) {
+      this.ownProfile = this.userData.id_user === currentUser.id_user;
+    } else {
+      this.ownProfile = true;
     }
   }
 
