@@ -536,7 +536,7 @@
     }
   },
   "CANCEL_MODAL": {
-    "ADMIN_GLOBAL_DELETE": "¿Desea borrar?",
+    "ADMIN_GLOBAL_DELETE":  "¿Desea borrarlo? Su eliminación conlleva la pérdida de las ofertas asociadas y, por consecuencia, la anulación de los contratos vinculados a dichas ofertas. Esta acción es irreversible.",
     "BTN": {
       "KEEP_ACCOUNT": "Continuar registrado",
       "UNSUBSCRIBE": "Cancelar registro",
