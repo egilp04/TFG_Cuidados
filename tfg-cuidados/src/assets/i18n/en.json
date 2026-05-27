@@ -302,7 +302,7 @@
     },
     "LIST": {
       "TITLE": "Categories List",
-      "SEARCH": "Search by name or type of category",
+      "SEARCH": "Search by name, type of category or description",
       "EMPTY": "No categories found."
     },
     "TABLE": {

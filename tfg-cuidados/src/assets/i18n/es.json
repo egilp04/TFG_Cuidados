@@ -303,7 +303,7 @@
     },
     "LIST": {
       "TITLE": "Listado de categorías",
-      "SEARCH": "Buscar por nombre o tipo de categoría",
+      "SEARCH": "Buscar por nombre, tipo de categoría o descripción",
       "EMPTY": "No se han encontrado categorías"
     },
     "TABLE": {
@@ -538,7 +538,7 @@
     }
   },
   "CANCEL_MODAL": {
-    "ADMIN_GLOBAL_DELETE": "¿Desea borrarlo? Su eliminación conlleva la pérdida de las ofertas asociadas y, por consecuencia, la anulación de los contratos vinculados a dichas ofertas. Esta acción es irreversible.",
+    "ADMIN_GLOBAL_DELETE": "¿Desea continuar? Su eliminación conlleva la pérdida de las ofertas asociadas y, por consecuencia, la anulación de los contratos vinculados a dichas ofertas. Esta acción es irreversible.",
     "BTN": {
       "KEEP_ACCOUNT": "Continuar registrado",
       "UNSUBSCRIBE": "Cancelar registro",
