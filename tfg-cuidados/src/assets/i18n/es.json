@@ -1046,7 +1046,8 @@
     "ACTION": {
       "DOWNLOAD": "Descargar",
       "DOWNLOAD_CSV": "Descargar contratos en csv",
-      "DELETE": "Eliminar"
+      "DELETE": "Eliminar",
+      "CLEAR_FILTERS": "Limpiar filtros"
     },
     "NO_DATA": "Sin datos"
   },
@@ -1081,6 +1082,7 @@
     "SUCCESS_DISABLE": "Protección 2FA desactivada correctamente."
   },
   "ADMIN_OFFERS": {
+    "SEARCH": "Busca por cualquier campo",
     "TITLE": "Gestión de Ofertas",
     "STATE": {
       "ALL": "Todas las ofertas",
@@ -1096,7 +1098,8 @@
       "BUSINESS_DESCRIPTION": "Información del servicio"
     },
     "ACTION": {
-      "DELETE": "Eliminar"
+      "DELETE": "Eliminar",
+      "CLEAR_FILTERS": "Limpiar filtros"
     },
     "NO_DATA": "No se encontraron ofertas registradas.",
     "ACCESSIBILITY": {

@@ -24,6 +24,8 @@ import { delay } from 'rxjs';
 import { MessageService } from '../../services/message-service';
 import { Service_Time_Model } from '../../models/Service_Time_Model';
 import { ServiceTimeService } from '../../services/service-time.service';
+import { Searchbar } from '../../components/searchbar/searchbar';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-offers',
@@ -35,6 +37,7 @@ import { ServiceTimeService } from '../../services/service-time.service';
     TranslateModule,
     Buttonback,
     ButtonComponent,
+    Searchbar,
   ],
   templateUrl: './admin-offers.component.html',
   styleUrl: './admin-offers.component.css',
@@ -55,6 +58,12 @@ export default class AdminOffersComponent implements OnInit {
     'status',
     'actions',
   ];
+
+  public searchControl = new FormControl('');
+  public filterValues = {
+    state: 'all',
+    search: '',
+  };
 
   public dataSource = new MatTableDataSource<Service_Time_Model>([]);
   public isLoading = true;
@@ -78,6 +87,8 @@ export default class AdminOffersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setupCustomFilter();
+    this.setupSearchListener();
     this.loadAdminOffers();
   }
 
@@ -93,12 +104,6 @@ export default class AdminOffersComponent implements OnInit {
         next: (data: Service_Time_Model[]) => {
           this.dataSource.data = data;
           this.isLoading = false;
-
-          this.dataSource.filterPredicate = (data: Service_Time_Model, filter: string) => {
-            if (filter === 'all') return true;
-            return data.status === filter;
-          };
-
           const paginatorInner = this.dataSource.paginator;
           if (paginatorInner) {
             const totalPaginas = Math.ceil(data.length / paginatorInner.pageSize);
@@ -114,15 +119,6 @@ export default class AdminOffersComponent implements OnInit {
           this.cd.markForCheck();
         },
       });
-  }
-
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLSelectElement).value;
-    this.dataSource.filter = filterValue;
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   /**
@@ -159,5 +155,56 @@ export default class AdminOffersComponent implements OnInit {
         }
       },
     });
+  }
+
+  private setupCustomFilter(): void {
+    this.dataSource.filterPredicate = (data: any, filterStr: string) => {
+      const currentFilters = JSON.parse(filterStr);
+      if (currentFilters.state !== 'all' && data.status !== currentFilters.state) {
+        return false;
+      }
+      if (!currentFilters.search) return true;
+      const dataStr = (
+        (data.id_service_time || '') +
+        ' ' +
+        (data.Business?.User_public?.name || '') +
+        ' ' +
+        (data.description || '') +
+        ' ' +
+        (data.Service?.type_service || '') +
+        ' ' +
+        (data.price ? data.price.toString() + '€ ' + data.price.toString() : '')
+      ).toLowerCase();
+      return dataStr.includes(currentFilters.search);
+    };
+  }
+
+  private setupSearchListener(): void {
+    this.searchControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+      this.filterValues.search = (value || '').trim().toLowerCase().replace(/\s+€/g, '€');
+      this.applyCombinedFilters();
+    });
+  }
+
+  onStateFilterChange(event: Event): void {
+    this.filterValues.state = (event.target as HTMLSelectElement).value;
+    this.applyCombinedFilters();
+  }
+
+  private applyCombinedFilters(): void {
+    this.dataSource.filter = JSON.stringify(this.filterValues);
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  clearFilters(): void {
+    this.searchControl.setValue('');
+    this.filterValues.state = 'all';
+    const selectElement = document.querySelector('select') as HTMLSelectElement;
+    if (selectElement) {
+      selectElement.value = 'all';
+    }
+    this.applyCombinedFilters();
   }
 }

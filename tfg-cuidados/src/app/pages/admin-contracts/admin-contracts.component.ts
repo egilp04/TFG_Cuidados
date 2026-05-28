@@ -22,6 +22,8 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { ButtonComponent } from '../../components/button/button';
 import { delay } from 'rxjs';
 import { MessageService } from '../../services/message-service';
+import { FormControl } from '@angular/forms';
+import { Searchbar } from '../../components/searchbar/searchbar';
 
 @Component({
   selector: 'app-admin-contracts',
@@ -33,6 +35,7 @@ import { MessageService } from '../../services/message-service';
     CommonModule,
     TranslateModule,
     Buttonback,
+    Searchbar,
     ButtonComponent,
   ],
   templateUrl: './admin-contracts.component.html',
@@ -45,6 +48,12 @@ export default class AdminContractsComponent implements OnInit {
   private cd = inject(ChangeDetectorRef);
   private messageService = inject(MessageService);
   private translate = inject(TranslateService);
+
+  public searchControl = new FormControl('');
+  public filterValues = {
+    state: 'all',
+    search: '',
+  };
 
   public displayedColumns: string[] = [
     'id_contract',
@@ -79,6 +88,8 @@ export default class AdminContractsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setupCustomFilter();
+    this.setupSearchListener();
     this.loadAdminContracts();
   }
 
@@ -94,10 +105,7 @@ export default class AdminContractsComponent implements OnInit {
         next: (data: ContractDetail[]) => {
           this.dataSource.data = data;
           this.isLoading = false;
-          this.dataSource.filterPredicate = (data: ContractDetail, filter: string) => {
-            if (filter === 'all') return true;
-            return data.state === filter;
-          };
+
           const paginatorInner = this.dataSource.paginator;
           if (paginatorInner) {
             const totalPaginas = Math.ceil(data.length / paginatorInner.pageSize);
@@ -156,5 +164,71 @@ export default class AdminContractsComponent implements OnInit {
         },
       });
     }
+  }
+
+  private setupCustomFilter(): void {
+    this.dataSource.filterPredicate = (data: ContractDetail, filterStr: string) => {
+      const currentFilters = JSON.parse(filterStr);
+      if (currentFilters.state !== 'all' && data.state !== currentFilters.state) {
+        return false;
+      }
+      if (!currentFilters.search) return true;
+      let formatStart = '',
+        formatEnd = '';
+      if (data.start_date) {
+        const p = data.start_date.split('T')[0].split('-');
+        if (p.length === 3) formatStart = `${p[2]}/${p[1]}/${p[0]}`;
+      }
+      if (data.end_date) {
+        const p = data.end_date.split('T')[0].split('-');
+        if (p.length === 3) formatEnd = `${p[2]}/${p[1]}/${p[0]}`;
+      }
+      const dataStr = (
+        (data.id_contract || '') +
+        ' ' +
+        (data.Client?.clientName || '') +
+        ' ' +
+        (data.Business?.businessName || '') +
+        ' ' +
+        (data.serviceName || '') +
+        ' ' +
+        formatStart +
+        ' ' +
+        formatEnd
+      ).toLowerCase();
+      return dataStr.includes(currentFilters.search);
+    };
+  }
+
+  private setupSearchListener(): void {
+    this.searchControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+      this.filterValues.search = (value || '')
+        .trim()
+        .toLowerCase()
+        .replace(/\s*\/\s*/g, '/');
+      this.applyCombinedFilters();
+    });
+  }
+
+  onStateFilterChange(event: Event): void {
+    this.filterValues.state = (event.target as HTMLSelectElement).value;
+    this.applyCombinedFilters();
+  }
+
+  private applyCombinedFilters(): void {
+    this.dataSource.filter = JSON.stringify(this.filterValues);
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  clearFilters(): void {
+    this.searchControl.setValue('');
+    this.filterValues.state = 'all';
+    const selectElement = document.querySelector('select') as HTMLSelectElement;
+    if (selectElement) {
+      selectElement.value = 'all';
+    }
+    this.applyCombinedFilters();
   }
 }

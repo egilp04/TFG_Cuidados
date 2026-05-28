@@ -1029,7 +1029,7 @@
   },
   "ADMIN_CONTRACTS": {
     "TITLE": "Contracts Panel",
-    "SEARCH": "Busca por cualquier campo",
+    "SEARCH": "Search by any field",
     "STATE": {
       "ALL": "All",
       "ACTIVE": "Active",
@@ -1047,7 +1047,8 @@
     "ACTION": {
       "DOWNLOAD": "Download",
       "DOWNLOAD_CSV": "Download contracts (CSV)",
-      "DELETE": "Delete"
+      "DELETE": "Delete",
+      "CLEAR_FILTERS": "Clear filters"
     },
 
     "NO_DATA": "No data available"
@@ -1084,6 +1085,7 @@
   },
   "ADMIN_OFFERS": {
     "TITLE": "Offers Management",
+    "SEARCH": "Search by any field",
     "STATE": {
       "ALL": "All",
       "ACTIVE": "Active",
@@ -1098,7 +1100,8 @@
       "BUSINESS_DESCRIPTION": "Service information"
     },
     "ACTION": {
-      "DELETE": "Delete"
+      "DELETE": "Delete",
+      "CLEAR_FILTERS": "Clear filters"
     },
     "NO_DATA": "No offers found.",
     "ACCESSIBILITY": {
