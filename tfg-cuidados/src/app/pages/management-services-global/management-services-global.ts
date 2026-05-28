@@ -30,6 +30,7 @@ import { AVAILABLE_ICONS, SERVICE_ICON_MAP } from '../../core/utils/icons';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { LucideAngularModule } from 'lucide-angular';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 @Component({
   selector: 'app-management-services-global',
@@ -47,6 +48,7 @@ import { LucideAngularModule } from 'lucide-angular';
     MatFormFieldModule,
     MatSelectModule,
     LucideAngularModule,
+    MatSortModule,
   ],
   templateUrl: './management-services-global.html',
   styleUrl: './management-services-global.css',
@@ -83,6 +85,7 @@ export default class ManagementServicesGlobal implements OnInit {
 
   public dataSource = new MatTableDataSource<ServiceModel>([]);
   public paginator = viewChild(MatPaginator);
+  public sort = viewChild(MatSort);
 
   public displayedColumns: string[] = ['icon', 'name', 'type_service', 'description', 'actions'];
 
@@ -91,6 +94,22 @@ export default class ManagementServicesGlobal implements OnInit {
       const currentPaginator = this.paginator();
       if (currentPaginator) {
         this.dataSource.paginator = currentPaginator;
+      }
+      const currentSort = this.sort();
+      if (currentSort) {
+        this.dataSource.sort = currentSort;
+        this.dataSource.sortingDataAccessor = (item: any, property: string) => {
+          switch (property) {
+            case 'name':
+              return item.name?.toLowerCase() || '';
+            case 'type_service':
+              return item.type_service?.toLowerCase() || '';
+            case 'description':
+              return item.description?.toLowerCase() || '';
+            default:
+              return item[property];
+          }
+        };
       }
     });
   }

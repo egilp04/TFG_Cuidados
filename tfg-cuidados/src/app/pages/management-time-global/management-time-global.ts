@@ -27,6 +27,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { Searchbar } from '../../components/searchbar/searchbar';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 /**
  * Componente para la gestión global de horarios por administradores.
@@ -46,6 +47,7 @@ import { Searchbar } from '../../components/searchbar/searchbar';
     MatPaginatorModule,
     Buttonback,
     TranslateModule,
+    MatSortModule,
   ],
   templateUrl: './management-time-global.html',
   styleUrl: './management-time-global.css',
@@ -78,15 +80,49 @@ export default class ManagementTimeGlobal implements OnInit {
   });
 
   public dataSource = new MatTableDataSource<TimeModel>([]);
-  public displayedColumns: string[] = ['time', 'day', 'actions'];
+  public displayedColumns: string[] = ['day', 'time', 'actions'];
 
   public paginator = viewChild(MatPaginator);
+  public sort = viewChild(MatSort);
 
   constructor() {
     effect(() => {
       const currentPaginator = this.paginator();
       if (currentPaginator) {
         this.dataSource.paginator = currentPaginator;
+      }
+      const currentSort = this.sort();
+      if (currentSort) {
+        this.dataSource.sort = currentSort;
+        this.dataSource.sortingDataAccessor = (item: any, property: string) => {
+          switch (property) {
+            case 'time':
+              return item.time || '';
+            case 'day':
+              const dayWeights: { [key: string]: number } = {
+                monday: 1,
+                lunes: 1,
+                tuesday: 2,
+                martes: 2,
+                wednesday: 3,
+                miércoles: 3,
+                miercoles: 3,
+                thursday: 4,
+                jueves: 4,
+                friday: 5,
+                viernes: 5,
+                saturday: 6,
+                sábado: 6,
+                sabado: 6,
+                sunday: 7,
+                domingo: 7,
+              };
+              const dayStr = item.week_day?.toLowerCase() || '';
+              return dayWeights[dayStr] || 99;
+            default:
+              return item[property];
+          }
+        };
       }
     });
   }
