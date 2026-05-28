@@ -68,8 +68,8 @@
   },
   "ABOUT": {
     "TITLE": "About Us",
-    "DESCRIPTION": "CuidaDos is a platform designed to be a secure and efficient intermediary for hiring care and assistance services for the elderly or anyone requiring help with daily living. We are a digital care platform created with the goal of improving the quality of life for those needing daily support. Our team consists of professionals from the technological and social sectors who share a single vision: to facilitate access to care and support services in a simple, safe, and transparent way. We firmly believe that personal care must be based on trust, professionalism, and a personal approach, which is why we work to connect users with specialized companies in the sector. The project was born in the context of the Final Project for the Higher Level Vocational Training in Web Application Development, during the 2025-2026 academic year. Based on sector analysis and close experience with this field, gaps were identified that could be resolved through a modern, accessible, and scalable technological solution. Our commitment is to create an inclusive, intuitive, and reliable digital environment that contributes to dignifying the care sector and making life easier for those who need it most.",
-    "TEAMDESCRIPTION": "Our team consists of professionals from the technological and social sectors who share a single vision: to facilitate access to care and support services in a simple, safe, and transparent way. We firmly believe that personal care must be based on trust, professionalism, and a personal approach, which is why we work to connect users with specialized companies in the sector. The project was born in the context of the Final Project for the Higher Level Vocational Training in Web Application Development, during the 2025-2026 academic year. Based on sector analysis and close experience with this field, gaps were identified that could be resolved through a modern, accessible, and scalable technological solution. Our commitment is to create an inclusive, intuitive, and reliable digital environment that contributes to dignifying the care sector and making life easier for those who need it most.",
+    "DESCRIPTION": "CuidaDos is a platform designed to be a secure and efficient intermediary for hiring care and assistance services for the elderly or anyone requiring help with daily living. We are a digital care platform created with the goal of improving the quality of life for those needing daily support.",
+    "TEAMDESCRIPTION": "Our team consists of professionals from the technological and social sectors who share a single vision: to facilitate access to care and support services in a simple, safe, and transparent way. We firmly believe that personal care must be based on trust, professionalism, and a personal approach, which is why we work to connect users with specialized companies in the sector.",
     "PROJECTDESCRIPTION": "The project was born in the context of the Final Project for the Higher Level Vocational Training in Web Application Development, during the 2025-2026 academic year. Based on sector analysis and close experience with this field, gaps were identified that could be resolved through a modern, accessible, and scalable technological solution. Our commitment is to create an inclusive, intuitive, and reliable digital environment that contributes to dignifying the care sector and making life easier for those who need it most.",
     "SCOPE": {
       "TITLE": "Social and Commercial Scope",
@@ -1048,6 +1048,7 @@
       "DOWNLOAD": "Download",
       "DOWNLOAD_CSV": "Download contracts (CSV)",
       "DELETE": "Delete",
+      "SHOW": "Show",
       "CLEAR_FILTERS": "Clear filters"
     },
 
