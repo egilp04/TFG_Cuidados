@@ -122,6 +122,13 @@
                 ></app-button>
               }
               <app-button
+                [label]="'ADMIN_CONTRACTS.ACTION.SHOW' | translate"
+                title="Ver contrato"
+                variant="primary"
+                (click)="showContract(row)"
+                [attr.aria-label]="'ADMIN_CONTRACTS.ACTION.DOWNLOAD' | translate"
+              ></app-button>
+              <app-button
                 [label]="'ADMIN_CONTRACTS.ACTION.DOWNLOAD' | translate"
                 title="Descargar PDF"
                 variant="primary"

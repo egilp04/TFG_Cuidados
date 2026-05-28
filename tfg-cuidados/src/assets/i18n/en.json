@@ -1043,7 +1043,8 @@
     "ACTION": {
       "DOWNLOAD": "Download",
       "DOWNLOAD_CSV": "Download contracts (CSV)",
-      "DELETE": "Delete"
+      "DELETE": "Delete",
+      "SHOW": "Show"
     },
 
     "NO_DATA": "No data available"
