@@ -22,6 +22,8 @@ import { Buttonback } from '../../components/buttonback/buttonback';
 import { ButtonComponent } from '../../components/button/button';
 import { delay } from 'rxjs';
 import { MessageService } from '../../services/message-service';
+import { ResponsiveSize } from '../../services/responsive-size';
+import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { Searchbar } from '../../components/searchbar/searchbar';
 
@@ -230,5 +232,21 @@ export default class AdminContractsComponent implements OnInit {
       selectElement.value = 'all';
     }
     this.applyCombinedFilters();
+  }
+
+  private responsive = inject(ResponsiveSize);
+  private dialog = inject(MatDialog);
+
+  async showContract(row: ContractDetail): Promise<void> {
+    const { InfoContract } = await import('../../components/info-contract/info-contract');
+    const dialogConfig = {
+      width: '100%',
+      maxWidth: this.responsive.isMobile() ? '95vw' : '600px',
+      maxHeight: '90vh',
+    };
+    this.dialog.open(InfoContract, {
+      ...dialogConfig,
+      data: { contract: row },
+    });
   }
 }
