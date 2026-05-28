@@ -751,8 +751,8 @@
     },
     "PLACEHOLDERS": {
       "DESCRIPTION": "Ex: Deep window cleaning",
-      "SELECT_SERVICE": "Choose a service...",
-      "LOADING_SERVICES": "Loading services...",
+      "SELECT_SERVICE": "Choose a category...",
+      "LOADING_SERVICES": "Loading categories...",
       "SELECT_TIME": "Choose a day and time...",
       "LOADING_TIMES": "Loading schedules..."
     },
