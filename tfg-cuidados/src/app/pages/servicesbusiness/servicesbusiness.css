@@ -26,3 +26,6 @@
 .service-form-container {
   @apply flex flex-col justify-center gap-20 p-10;
 }
+.service-schedule-global-search {
+  @apply text-label text-primary dark:text-surface;
+}

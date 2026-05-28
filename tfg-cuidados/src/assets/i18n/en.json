@@ -108,6 +108,7 @@
     }
   },
   "ACTIVITIES": {
+    "SEARCH": "Search by any field",
     "ACTIVITIES": {
       "ACTIVITINAME": "Service of",
       "ACTIVITIUSER": "With"
@@ -153,6 +154,7 @@
   },
   "CONTRACTS": {
     "TITLE": "Contracts",
+    "SEARCH": "Search by any field",
     "NO_DATA": "No data",
     "TABLE": {
       "ID": "Contract ID",
@@ -680,7 +682,7 @@
     "NO_DATA": "No records found.",
     "PAGINATOR_LABEL": "Select user page"
   },
-  "SEARCH_PLACEHOLDER": "Search by name...",
+  "SEARCH_PLACEHOLDER": "Search...",
   "REGISTER": {
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back to the previous screen",
@@ -1027,6 +1029,7 @@
   },
   "ADMIN_CONTRACTS": {
     "TITLE": "Contracts Panel",
+    "SEARCH": "Busca por cualquier campo",
     "STATE": {
       "ALL": "All",
       "ACTIVE": "Active",
@@ -1038,7 +1041,8 @@
       "CLIENT": "Client Name",
       "BUSINESS": "Business Name",
       "SERVICE": "Service",
-      "START_DATE": "Start Date"
+      "START_DATE": "Start Date",
+      "END_DATE": "End date"
     },
     "ACTION": {
       "DOWNLOAD": "Download",

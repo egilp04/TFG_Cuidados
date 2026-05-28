@@ -53,6 +53,7 @@ export default class AdminContractsComponent implements OnInit {
     'service',
     'state',
     'start_date',
+    'end_date',
     'actions',
   ];
 

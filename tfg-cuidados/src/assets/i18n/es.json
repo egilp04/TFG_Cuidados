@@ -108,6 +108,7 @@
     }
   },
   "ACTIVITIES": {
+    "SEARCH": "Busca por cualquier campo",
     "ACTIVITIES": {
       "ACTIVITINAME": "Servicio de",
       "ACTIVITIUSER": "Con"
@@ -153,6 +154,7 @@
   },
   "CONTRACTS": {
     "TITLE": "Contratos",
+    "SEARCH": "Busca por cualquier campo",
     "NO_DATA": "Sin datos",
     "TABLE": {
       "ID": "ID del Contrato",
@@ -627,7 +629,7 @@
     "NO_DATA": "No se han encontrado registros.",
     "PAGINATOR_LABEL": "Seleccionar página de usuarios"
   },
-  "SEARCH_PLACEHOLDER": "Buscar por nombre...",
+  "SEARCH_PLACEHOLDER": "Buscar...",
   "REGISTER": {
     "MESSAGES": {
       "SUCCESS": "¡Registro realizado con éxito! Revisa tu email",
@@ -1025,6 +1027,7 @@
   },
   "ADMIN_CONTRACTS": {
     "TITLE": "Panel de contratos",
+    "SEARCH": "Busca por cualquier campo",
     "STATE": {
       "ALL": "Todos",
       "ACTIVE": "Activos",
@@ -1037,7 +1040,8 @@
       "CLIENT": "Nombre del cliente",
       "BUSINESS": "Nombre de la empresa",
       "SERVICE": "Servicio",
-      "START_DATE": "Fecha de inicio"
+      "START_DATE": "Fecha inicio",
+      "END_DATE": "Fecha fin"
     },
     "ACTION": {
       "DOWNLOAD": "Descargar",

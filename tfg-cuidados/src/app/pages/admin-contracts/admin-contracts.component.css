@@ -18,3 +18,7 @@
 .contracts-text {
   @apply text-primary! dark:text-surface!;
 }
+
+.contracts-schedule-global-search {
+  @apply text-label text-primary dark:text-surface;
+}
