@@ -692,14 +692,14 @@
   "SERVICE_TIME_MODAL": {
     "LABELS": {
       "DESCRIPTION": "Descripción de la oferta",
-      "GLOBAL_SERVICE": "Categoría Global",
+      "GLOBAL_SERVICE": "Categoría global",
       "PRICE": "Precio/h(€)",
       "AVAILABLE_SCHEDULE": "Horario Disponible"
     },
     "PLACEHOLDERS": {
       "DESCRIPTION": "Ej: Limpieza profunda de cristales",
-      "SELECT_SERVICE": "Escoge un servicio...",
-      "LOADING_SERVICES": "Cargando servicios...",
+      "SELECT_SERVICE": "Escoge una  categoría...",
+      "LOADING_SERVICES": "Cargando categorías...",
       "SELECT_TIME": "Escoge un día y hora...",
       "LOADING_TIMES": "Cargando horarios..."
     },
