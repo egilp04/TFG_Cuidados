@@ -77,14 +77,39 @@ export default class AdminContractsComponent implements OnInit {
   constructor() {
     effect(() => {
       const currentPaginator = this.paginator();
-      const currentSort = this.sort();
 
       if (currentPaginator) {
         this.dataSource.paginator = currentPaginator;
       }
 
+      const currentSort = this.sort();
       if (currentSort) {
         this.dataSource.sort = currentSort;
+        this.dataSource.sortingDataAccessor = (item: any, property: string) => {
+          switch (property) {
+            case 'id_contract':
+              return item.id_contract?.toLowerCase() || '';
+            case 'client':
+              return item.Client?.clientName?.toLowerCase() || '';
+            case 'business':
+              return item.Business?.businessName?.toLowerCase() || '';
+            case 'service':
+              return item.serviceName?.toLowerCase() || '';
+            case 'start_date': {
+              if (!item.start_date) return 0;
+              const time = new Date(item.start_date).getTime();
+              return isNaN(time) ? 0 : time;
+            }
+            case 'end_date': {
+              if (!item.end_date) return 0;
+              const time = new Date(item.end_date).getTime();
+              return isNaN(time) ? 0 : time;
+            }
+
+            default:
+              return item[property];
+          }
+        };
       }
     });
   }

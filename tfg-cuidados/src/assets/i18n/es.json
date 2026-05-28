@@ -132,7 +132,8 @@
       "DAY": "Día",
       "TIME": "Hora",
       "LOCATION": "Lugar",
-      "PRICE": "Precio"
+      "PRICE": "Precio",
+      "DESCRIPTION": "información"
     },
     "BTN_CANCEL": "Cancelar"
   },
@@ -305,7 +306,7 @@
     },
     "LIST": {
       "TITLE": "Listado de categorías",
-      "SEARCH": "Buscar por nombre, tipo de categoría o descripción",
+      "SEARCH": "Busca por cualquier campo",
       "EMPTY": "No se han encontrado categorías"
     },
     "TABLE": {

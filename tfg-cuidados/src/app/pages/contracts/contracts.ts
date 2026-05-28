@@ -25,6 +25,7 @@ import { TableSkeletonComponent } from '../../components/table-skeleton/table-sk
 import { DocsPdf } from '../../services/docs-pdf';
 import { FormControl } from '@angular/forms';
 import { Searchbar } from '../../components/searchbar/searchbar';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 /**
  * Componente para listar y gestionar contratos de usuario.
@@ -42,6 +43,7 @@ import { Searchbar } from '../../components/searchbar/searchbar';
     TranslateModule,
     TableSkeletonComponent,
     Searchbar,
+    MatSortModule,
   ],
   templateUrl: './contracts.html',
   styleUrl: './contracts.css',
@@ -60,6 +62,7 @@ export default class Contracts implements OnInit {
   public dataSource = new MatTableDataSource<ContractDetail>([]);
 
   public paginator = viewChild(MatPaginator);
+  public sort = viewChild(MatSort);
 
   private deletingIds = new Set<string>();
 
@@ -68,6 +71,21 @@ export default class Contracts implements OnInit {
       const currentPaginator = this.paginator();
       if (currentPaginator) {
         this.dataSource.paginator = currentPaginator;
+      }
+
+      const currentSort = this.sort();
+      if (currentSort) {
+        this.dataSource.sort = currentSort;
+        this.dataSource.sortingDataAccessor = (item: any, property: string) => {
+          switch (property) {
+            case 'id':
+              return item.id_contract?.toLowerCase() || '';
+            case 'date':
+              return item.creation_date ? new Date(item.creation_date).getTime() : 0;
+            default:
+              return item[property];
+          }
+        };
       }
     });
   }

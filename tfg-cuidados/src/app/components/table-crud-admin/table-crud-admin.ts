@@ -22,6 +22,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserModel } from '../../models/User_Service';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 /**
  * Tabla CRUD genérica para gestión administrativa.
@@ -40,6 +41,7 @@ import { UserModel } from '../../models/User_Service';
     MatPaginatorModule,
     ReactiveFormsModule,
     TranslateModule,
+    MatSortModule,
   ],
   templateUrl: './table-crud-admin.html',
   styleUrl: './table-crud-admin.css',
@@ -57,11 +59,30 @@ export class TableCrudAdmin implements OnInit, OnChanges {
   public searchControl = new FormControl('');
 
   public paginator = viewChild(MatPaginator);
+  public sort = viewChild(MatSort);
+
   constructor() {
     effect(() => {
       const p = this.paginator();
       if (p) {
         this.dataSource.paginator = p;
+      }
+
+      const currentSort = this.sort();
+      if (currentSort) {
+        this.dataSource.sort = currentSort;
+        this.dataSource.sortingDataAccessor = (item: any, property: string) => {
+          switch (property) {
+            case 'name':
+              return item.name?.toLowerCase() || '';
+            case 'surnames':
+              return item.surnames?.toLowerCase() || '';
+            case 'email':
+              return item.email?.toLowerCase() || '';
+            default:
+              return item[property];
+          }
+        };
       }
     });
   }
@@ -114,6 +135,7 @@ export class TableCrudAdmin implements OnInit, OnChanges {
         paginatorInner.firstPage();
       }
     }
+    this.resetSort();
   }
 
   get displayedColumns(): string[] {
@@ -146,5 +168,14 @@ export class TableCrudAdmin implements OnInit, OnChanges {
   onModify(item: UserModel): void {
     if (!item.id_user || this.deletingIds.has(item.id_user)) return;
     this.modifyItem.emit(item);
+  }
+
+  private resetSort(): void {
+    const currentSort = this.sort();
+    if (currentSort) {
+      currentSort.active = 'name';
+      currentSort.direction = 'asc';
+      currentSort.sortChange.emit({ active: 'name', direction: 'asc' });
+    }
   }
 }

@@ -21,6 +21,7 @@ import { catchError, tap, map, switchMap, delay } from 'rxjs/operators';
 import { ComunicationModel } from '../../models/ComunicationModel';
 import { ButtonComponent } from '../../components/button/button';
 import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 /**
  * Componente responsable de mostrar y gestionar las notificaciones del usuario.
@@ -37,6 +38,7 @@ import { TableSkeletonComponent } from '../../components/table-skeleton/table-sk
     TranslateModule,
     ButtonComponent,
     TableSkeletonComponent,
+    MatSortModule,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: PaginacionEs }],
   templateUrl: './notifications.html',
@@ -55,12 +57,30 @@ export default class Notifications implements OnInit {
   displayedColumns: string[] = ['name', 'message', 'date', 'actions'];
 
   public paginator = viewChild(MatPaginator);
+  public sort = viewChild(MatSort);
 
   constructor() {
     effect(() => {
       const currentPaginator = this.paginator();
       if (currentPaginator) {
         this.dataSource.paginator = currentPaginator;
+      }
+
+      const currentSort = this.sort();
+      if (currentSort) {
+        this.dataSource.sort = currentSort;
+        this.dataSource.sortingDataAccessor = (item: any, property: string) => {
+          switch (property) {
+            case 'name':
+              return item.topic?.toLowerCase() || '';
+            case 'message':
+              return item.content?.toLowerCase() || '';
+            case 'date':
+              return item.send_date ? new Date(item.send_date).getTime() : 0;
+            default:
+              return item[property];
+          }
+        };
       }
     });
   }

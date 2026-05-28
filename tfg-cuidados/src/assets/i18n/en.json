@@ -132,7 +132,8 @@
       "DAY": "Day",
       "TIME": "Time",
       "LOCATION": "Location",
-      "PRICE": "Price"
+      "PRICE": "Price",
+      "DESCRIPTION": "Information"
     },
     "BTN_CANCEL": "Cancel"
   },
@@ -304,7 +305,7 @@
     },
     "LIST": {
       "TITLE": "Categories List",
-      "SEARCH": "Search by name, type of category or description",
+      "SEARCH": "Search by any field",
       "EMPTY": "No categories found."
     },
     "TABLE": {

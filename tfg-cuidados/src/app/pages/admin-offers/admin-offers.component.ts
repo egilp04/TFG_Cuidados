@@ -74,14 +74,31 @@ export default class AdminOffersComponent implements OnInit {
   constructor() {
     effect(() => {
       const currentPaginator = this.paginator();
-      const currentSort = this.sort();
 
       if (currentPaginator) {
         this.dataSource.paginator = currentPaginator;
       }
 
+      const currentSort = this.sort();
       if (currentSort) {
         this.dataSource.sort = currentSort;
+
+        this.dataSource.sortingDataAccessor = (item: any, property: string) => {
+          switch (property) {
+            case 'id_service_time':
+              return item.id_service_time.toLowerCase() || '';
+            case 'id_business':
+              return item.Business?.User_public?.name.toLowerCase() || '';
+            case 'description':
+              return item.description.toLowerCase() || '';
+            case 'id_service':
+              return item.Service?.type_service.toLowerCase() || '';
+            case 'price':
+              return item.price || 0;
+            default:
+              return item[property];
+          }
+        };
       }
     });
   }

@@ -40,9 +40,16 @@
 
   <div class="contracts-table-container">
     <div class="contracts-table">
-      <table mat-table [dataSource]="dataSource" matSort class="w-full">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        matSortActive="id_contract"
+        matSortDirection="asc"
+        class="w-full"
+      >
         <ng-container matColumnDef="id_contract">
-          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-label contracts-text">
             {{ 'ADMIN_CONTRACTS.TABLE.ID' | translate }}
           </th>
           <td mat-cell *matCellDef="let row" class="text-label contracts-text">
@@ -68,7 +75,7 @@
         </ng-container>
 
         <ng-container matColumnDef="client">
-          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-label contracts-text">
             {{ 'ADMIN_CONTRACTS.TABLE.CLIENT' | translate }}
           </th>
           <td mat-cell *matCellDef="let row" class="text-label contracts-text">
@@ -83,7 +90,7 @@
         </ng-container>
 
         <ng-container matColumnDef="business">
-          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-label contracts-text">
             {{ 'ADMIN_CONTRACTS.TABLE.BUSINESS' | translate }}
           </th>
           <td mat-cell *matCellDef="let row" class="text-label contracts-text">

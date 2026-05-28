@@ -10,6 +10,9 @@
     <main class="overflow-x-auto">
       <table
         mat-table
+        matSort
+        matSortActive="name"
+        matSortDirection="asc"
         [dataSource]="dataSource"
         class="table-admin-content"
         [attr.aria-describedby]="'admin-table-summary'"
@@ -21,7 +24,13 @@
         </caption>
 
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef class="table-column-name text-label" scope="col">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="table-column-name text-label"
+            scope="col"
+          >
             {{ 'ADMIN_TABLE.HEADER.NAME' | translate }}
           </th>
           <td mat-cell *matCellDef="let item" class="table-column-name text-label">
@@ -30,7 +39,13 @@
         </ng-container>
 
         <ng-container matColumnDef="surnames">
-          <th mat-header-cell *matHeaderCellDef class="table-column-name text-label" scope="col">
+          <th
+            mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef
+            class="table-column-name text-label"
+            scope="col"
+          >
             {{ 'ADMIN_TABLE.HEADER.SURNAME' | translate }}
           </th>
           <td mat-cell *matCellDef="let item" class="p-5 table-column-name text-label">
@@ -39,7 +54,13 @@
         </ng-container>
 
         <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef class="table-column-name text-label" scope="col">
+          <th
+            mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef
+            class="table-column-name text-label"
+            scope="col"
+          >
             {{ 'ADMIN_TABLE.HEADER.EMAIL' | translate }}
           </th>
           <td mat-cell *matCellDef="let item" class="table-column-name text-label">

@@ -25,6 +25,7 @@ import { ResponsiveSize } from '../../services/responsive-size';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { Searchbar } from '../../components/searchbar/searchbar';
 import { FormControl } from '@angular/forms';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 /**
  * Componente para gestionar las ofertas de servicios y horarios de un negocio.
@@ -41,6 +42,7 @@ import { FormControl } from '@angular/forms';
     TranslateModule,
     MatPaginatorModule,
     Searchbar,
+    MatSortModule,
   ],
   templateUrl: './servicesbusiness.html',
   styleUrl: './servicesbusiness.css',
@@ -64,12 +66,36 @@ export default class Servicesbusiness implements OnInit {
   displayedColumns: string[] = ['name', 'price', 'type', 'time', 'day', 'description', 'actions'];
 
   public paginator = viewChild(MatPaginator);
+  public sort = viewChild(MatSort);
 
   constructor() {
     effect(() => {
       const currentPaginator = this.paginator();
       if (currentPaginator) {
         this.dataSource.paginator = currentPaginator;
+      }
+
+      const currentSort = this.sort();
+      if (currentSort) {
+        this.dataSource.sort = currentSort;
+        this.dataSource.sortingDataAccessor = (item: any, property: string) => {
+          switch (property) {
+            case 'name':
+              return item.Service?.name?.toLowerCase() || '';
+            case 'type':
+              return item.Service?.type_service?.toLowerCase() || '';
+            case 'time':
+              return item.Time?.time || '';
+            case 'day':
+              return item.Time?.week_day || '';
+            case 'description':
+              return item.description?.toLowerCase() || '';
+            case 'price':
+              return item.price || 0;
+            default:
+              return item[property];
+          }
+        };
       }
     });
   }

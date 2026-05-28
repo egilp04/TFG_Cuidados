@@ -23,6 +23,7 @@ import { AvatarComponent } from '../avatar/avatar.component';
 import { BehaviorSubject, combineLatest, map, Observable, startWith } from 'rxjs';
 import { Searchbar } from '../../components/searchbar/searchbar';
 import { FormControl } from '@angular/forms';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 /**
  * Componente hijo que renderiza un calendario mensual y una tabla de datos de servicios contratados.
@@ -38,6 +39,7 @@ import { FormControl } from '@angular/forms';
     TranslateModule,
     AvatarComponent,
     Searchbar,
+    MatSortModule,
   ],
   templateUrl: './activities-components.html',
   styleUrl: './activities-components.css',
@@ -87,13 +89,40 @@ export class ActivitiesComponents implements OnInit, OnChanges {
   public eventsMap: Record<string, ContractRowDataTable[]> = {};
   private weekDayNames = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
   public controlFilterItem = new FormControl<string>('');
+
   public paginator = viewChild(MatPaginator);
+  public sort = viewChild(MatSort);
 
   constructor() {
     effect(() => {
       const currentPaginator = this.paginator();
       if (currentPaginator) {
         this.tableDataSource.paginator = currentPaginator;
+      }
+      const currentSort = this.sort();
+      if (currentSort) {
+        this.tableDataSource.sort = currentSort;
+
+        this.tableDataSource.sortingDataAccessor = (item: any, property: string) => {
+          switch (property) {
+            case 'user':
+              return item.nameToShow?.toLowerCase() || '';
+            case 'service':
+              return item.serviceName?.toLowerCase() || '';
+            case 'description':
+              return item.serviceDescription?.toLowerCase() || '';
+            case 'price':
+              return item.price || 0;
+            case 'day':
+              return item.week_day_hired || '';
+            case 'time':
+              return item.time_hired || '';
+            case 'location':
+              return item.place?.toLowerCase() || '';
+            default:
+              return item[property];
+          }
+        };
       }
     });
   }
