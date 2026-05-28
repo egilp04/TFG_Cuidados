@@ -663,7 +663,7 @@
     "PRICE": "Price",
     "TIME": "Contracted Time",
     "DAY": "Contracted Day",
-    "SERVICE": "Service",
+    "SERVICE": "Offer",
     "CLIENT": "Client Name",
     "BUSINESS": "Company Name",
     "BTN_CANCEL": "Cancel",
