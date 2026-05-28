@@ -4,19 +4,16 @@
 >
   <app-buttonback></app-buttonback>
 </header>
-
+<div class="w-full flex flex-col md:flex-row gap-10 p-20 items-center justify-end">
+  <label class="contracts-schedule-global-search" id="search-services-label">
+    {{ 'CONTRACTS.SEARCH' | translate }}
+  </label>
+  <app-searchbar [control]="controlFilterItem" (searchEvent)="applyFilter($event)"> </app-searchbar>
+</div>
 <section class="contracts-container-section" role="main" aria-labelledby="contracts-page-title">
   <h1 id="contracts-page-title" class="contracts-title">
     {{ 'CONTRACTS.TITLE' | translate }}
   </h1>
-
-  <div class="w-full flex flex-col md:flex-row gap-10 p-20 items-center justify-end">
-    <label class="contracts-schedule-global-search" id="search-services-label">
-      {{ 'CONTRACTS.SEARCH' | translate }}
-    </label>
-    <app-searchbar [control]="controlFilterItem" (searchEvent)="applyFilter($event)">
-    </app-searchbar>
-  </div>
 
   <div class="contracts-table-container">
     <main class="contracts-table">

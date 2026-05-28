@@ -20,16 +20,14 @@
       ></app-button>
     </div>
   </div>
-
+  <div class="w-full flex flex-col md:flex-row gap-10 p-20 items-center justify-end">
+    <label class="service-schedule-global-search" id="search-services-label">
+      {{ 'CONTRACTS.SEARCH' | translate }}
+    </label>
+    <app-searchbar [control]="controlFilterItem" (searchEvent)="applyFilter($event)">
+    </app-searchbar>
+  </div>
   <main class="service-table-containter">
-    <div class="w-full flex flex-col md:flex-row gap-10 p-20 items-center justify-end">
-      <label class="service-schedule-global-search" id="search-services-label">
-        {{ 'CONTRACTS.SEARCH' | translate }}
-      </label>
-      <app-searchbar [control]="controlFilterItem" (searchEvent)="applyFilter($event)">
-      </app-searchbar>
-    </div>
-
     <table
       mat-table
       matSort

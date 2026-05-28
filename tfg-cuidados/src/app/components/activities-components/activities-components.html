@@ -88,19 +88,17 @@
       }
     </div>
   </section>
-
+  <div class="w-full flex flex-col md:flex-row gap-10 p-20 items-center justify-end">
+    <label class="activity-schedule-global-search" id="search-services-label">
+      {{ 'ACTIVITIES.SEARCH' | translate }}
+    </label>
+    <app-searchbar [control]="controlFilterItem" (searchEvent)="applyFilter($event)">
+    </app-searchbar>
+  </div>
   <section
     class="activity-table-container"
     [attr.aria-label]="'ACTIVITIES.ACCESSIBILITY.TABLE_DESC' | translate"
   >
-    <div class="w-full flex flex-col md:flex-row gap-10 p-20 items-center justify-end">
-      <label class="activity-schedule-global-search" id="search-services-label">
-        {{ 'ACTIVITIES.SEARCH' | translate }}
-      </label>
-      <app-searchbar [control]="controlFilterItem" (searchEvent)="applyFilter($event)">
-      </app-searchbar>
-    </div>
-
     <table
       mat-table
       [dataSource]="tableDataSource"
