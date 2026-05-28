@@ -27,10 +27,13 @@
           <select
             id="receiver"
             formControlName="receiver"
-            class="messages-form-select"
+            class="messages-form-select appearance-none"
+            [class.!cursor-not-allowed]="getCtrl('receiver').disabled"
+            style="appearance: none; background-image: none"
             [class.text-gray-400]="!messageForm.get('receiver')?.value"
-            [class.text-black]="!!messageForm.get('receiver')?.value"
-            [attr.aria-invalid]="getCtrl('receiver').invalid && getCtrl('receiver').touched"
+            [attr.aria-invalid]="
+              getCtrl('receiver').invalid && getCtrl('receiver').touched ? 'true' : null
+            "
           >
             <option value="" disabled selected class="select-option-disabled">
               {{ 'MESSAGES_MODAL.PLACEHOLDERS.SELECT_RECEIVER' | translate }}
@@ -102,11 +105,14 @@
         [formControl]="getCtrl('content')"
         class="message-modal-textarea transition-colors"
         [placeholder]="'MESSAGES_MODAL.PLACEHOLDERS.WRITE_HERE' | translate"
-        [attr.aria-required]="true"
-        [attr.aria-invalid]="getCtrl('content').invalid && getCtrl('content').touched"
+        [attr.aria-required]="'true'"
+        [attr.aria-invalid]="
+          getCtrl('content').invalid && getCtrl('content').touched ? 'true' : null
+        "
         [class.border-red-500]="getCtrl('content').invalid && getCtrl('content').touched"
       ></textarea>
     </div>
+
     @if (data.mode === 'writeMessage') {
       <div class="flex justify-center mt-4">
         <app-button
@@ -119,6 +125,19 @@
         >
         </app-button>
       </div>
+    } @else {
+      @if (isReceiver) {
+        <div class="flex justify-center mt-4">
+          <app-button
+            [label]="'MESSAGES_MODAL.BTN.REPLY' | translate"
+            variant="primary"
+            size="lg"
+            (click)="replyMessage()"
+            [attr.aria-label]="'Responder a este mensaje'"
+          >
+          </app-button>
+        </div>
+      }
     }
   </main>
 </section>

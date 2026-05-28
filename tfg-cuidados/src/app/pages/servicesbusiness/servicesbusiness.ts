@@ -23,6 +23,8 @@ import { ServiceTimeService } from '../../services/service-time.service';
 import { ServiceTimeJoined } from '../../models/Service_Time_Service_Model';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { Searchbar } from '../../components/searchbar/searchbar';
+import { FormControl } from '@angular/forms';
 
 /**
  * Componente para gestionar las ofertas de servicios y horarios de un negocio.
@@ -38,6 +40,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
     Buttonback,
     TranslateModule,
     MatPaginatorModule,
+    Searchbar,
   ],
   templateUrl: './servicesbusiness.html',
   styleUrl: './servicesbusiness.css',
@@ -52,7 +55,7 @@ export default class Servicesbusiness implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
   private responsive = inject(ResponsiveSize);
-
+  public controlFilterItem = new FormControl<string>('');
   public isLoading = signal(false);
   private deletingIds = new Set<string>();
   private isOpeningModal = false;
@@ -73,6 +76,30 @@ export default class Servicesbusiness implements OnInit {
 
   ngOnInit() {
     this.loadServices();
+    this.setupCustomFilter();
+  }
+
+  private setupCustomFilter(): void {
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      const dataStr = (
+        (data.Service?.name || '') +
+        (data.description || '') +
+        (data.Service?.type_service || '') +
+        (data.Time?.time || '') +
+        (data.Time?.week_day || '') +
+        (data.price ? data.price.toString() + '€ ' + data.price.toString() : '')
+      ).toLowerCase();
+
+      return dataStr.includes(filter);
+    };
+  }
+
+  applyFilter(value: string): void {
+    const cleanFilter = value.trim().toLowerCase().replace(/\s+€/g, '€');
+    this.dataSource.filter = cleanFilter;
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   loadServices() {

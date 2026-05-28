@@ -23,6 +23,8 @@ import { ContractDetail } from '../../models/ContractModel';
 import { ResponsiveSize } from '../../services/responsive-size';
 import { TableSkeletonComponent } from '../../components/table-skeleton/table-skeleton.component';
 import { DocsPdf } from '../../services/docs-pdf';
+import { FormControl } from '@angular/forms';
+import { Searchbar } from '../../components/searchbar/searchbar';
 
 /**
  * Componente para listar y gestionar contratos de usuario.
@@ -39,6 +41,7 @@ import { DocsPdf } from '../../services/docs-pdf';
     Buttonback,
     TranslateModule,
     TableSkeletonComponent,
+    Searchbar,
   ],
   templateUrl: './contracts.html',
   styleUrl: './contracts.css',
@@ -51,6 +54,7 @@ export default class Contracts implements OnInit {
   public messageService = inject(MessageService);
   private translate = inject(TranslateService);
   private responsive = inject(ResponsiveSize);
+  public controlFilterItem = new FormControl<string>('');
 
   public displayedColumns: string[] = ['id', 'date', 'actions'];
   public dataSource = new MatTableDataSource<ContractDetail>([]);
@@ -72,6 +76,7 @@ export default class Contracts implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToContracts();
+    this.setupCustomFilter();
   }
 
   /**
@@ -145,12 +150,10 @@ export default class Contracts implements OnInit {
           this.messageService.showMessage(result.text, result.type);
           if (result.type === 'success') {
             this.dialog.closeAll();
-            
-            // Más limpio y seguro para TypeScript
             this.dataSource.data = this.dataSource.data.filter(
-              (contract) => contract.id_contract !== id
+              (contract) => contract.id_contract !== id,
             );
-            
+
             this.deletingIds.delete(id);
             this.cd.detectChanges();
           }
@@ -223,5 +226,31 @@ export default class Contracts implements OnInit {
       return;
     }
     this.pdfService.downloadPDF(contract);
+  }
+
+  private setupCustomFilter(): void {
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      let formattedDate = '';
+      if (data.creation_date) {
+        const d = new Date(data.creation_date);
+        const day = d.getDate().toString().padStart(2, '0');
+        const month = (d.getMonth() + 1).toString().padStart(2, '0');
+        const year = d.getFullYear();
+        formattedDate = `${day}/${month}/${year}`;
+      }
+      const dataStr = ((data.id_contract || '') + formattedDate).toLowerCase();
+      return dataStr.includes(filter);
+    };
+  }
+
+  applyFilter(value: string): void {
+    const cleanFilter = value
+      .trim()
+      .toLowerCase()
+      .replace(/\s*\/\s*/g, '/');
+    this.dataSource.filter = cleanFilter;
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

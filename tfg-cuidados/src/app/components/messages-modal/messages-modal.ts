@@ -37,6 +37,7 @@ import { CloseBtnComponent } from '../close-btn/close-btn.component';
 export class MessagesModal implements OnInit {
   public data = inject<MessagesModalData>(MAT_DIALOG_DATA);
   receivers: string[] = [];
+  public isReceiver: boolean = false;
 
   private dialogRef = inject(MatDialogRef<MessagesModal>);
   private fb = inject(FormBuilder);
@@ -57,11 +58,14 @@ export class MessagesModal implements OnInit {
 
   ngOnInit(): void {
     if (this.data.mode === 'readMessage' && this.data.content) {
+      const currentUserId = this.authService.currentUser()?.id_user;
+      this.isReceiver = this.data.content.id_receiver === currentUserId;
+
       this.messageForm.patchValue({
-        sender: this.data.content.Sender?.name || this.data.content.Sender?.email,
-        receiver: this.data.content.Receiver?.name || this.data.content.Receiver?.email,
-        topic: this.data.content.topic || undefined,
-        content: this.data.content.content,
+        sender: this.data.content.Sender?.name ?? this.data.content.Sender?.email ?? '',
+        receiver: this.data.content.Receiver?.name ?? this.data.content.Receiver?.email ?? '',
+        topic: this.data.content.topic ?? '',
+        content: this.data.content.content ?? '',
       });
       this.messageForm.disable();
     } else if (this.data.mode === 'writeMessage' && this.data.receiverEmail) {
@@ -96,6 +100,35 @@ export class MessagesModal implements OnInit {
    */
   getCtrl(name: string): FormControl {
     return this.messageForm.get(name) as FormControl;
+  }
+
+  /**
+   * Convierte la modal de lectura en una de escritura para responder.
+   */
+  replyMessage(): void {
+    const originalMsg = this.data.content;
+    if (!originalMsg) return;
+    let currentTopic: string = originalMsg.topic ?? '';
+    if (!currentTopic.toLowerCase().startsWith('re:')) {
+      currentTopic = currentTopic.toLowerCase().startsWith('re: ')
+        ? currentTopic
+        : `Re: ${currentTopic}`;
+    }
+    const senderEmail: string = originalMsg.Sender?.email ?? '';
+    this.data.mode = 'writeMessage';
+    this.data.direct = true;
+    this.messageForm.enable();
+    this.messageForm.patchValue({
+      receiver: senderEmail,
+      topic: currentTopic,
+      content: '',
+    });
+    this.getCtrl('receiver').disable();
+    if (senderEmail && !this.receivers.includes(senderEmail)) {
+      this.receivers.push(senderEmail);
+    }
+
+    this.cd.markForCheck();
   }
 
   /**

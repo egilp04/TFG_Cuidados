@@ -8,22 +8,32 @@
 <section class="contracts-container-section" role="main" aria-labelledby="contracts-page-title">
   <div class="flex flex-col justify-between items-center gap-2">
     <h1 class="contracts-title">{{ 'ADMIN_CONTRACTS.TITLE' | translate }}</h1>
-    <div class="flex flex-col md:flex-row items-center gap-3 w-full">
-      <select
-        (change)="applyFilter($event)"
-        class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-label focus:ring-2 focus:ring-primary focus:outline-none w-full sm:w-auto text-primary"
-      >
-        <option value="all">{{ 'ADMIN_CONTRACTS.STATE.ALL' | translate }}</option>
-        <option value="active">🟢 {{ 'ADMIN_CONTRACTS.STATE.ACTIVE' | translate }}</option>
-        <option value="no active">🔴 {{ 'ADMIN_CONTRACTS.STATE.NO_ACTIVE' | translate }}</option>
-      </select>
 
+    <div class="flex flex-col gap-[2rem] w-full justify-center">
+      <div class="flex flex-col md:flex-row items-center gap-3 w-full">
+        <label class="contracts-schedule-global-search" id="search-services-label">
+          {{ 'ADMIN_CONTRACTS.SEARCH' | translate }} </label
+        ><app-searchbar [control]="searchControl" id="admin-contracts-search"> </app-searchbar>
+        <select
+          (change)="onStateFilterChange($event)"
+          class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-label focus:ring-2 focus:ring-primary focus:outline-none w-full sm:w-auto text-primary"
+        >
+          <option value="all">{{ 'ADMIN_CONTRACTS.STATE.ALL' | translate }}</option>
+          <option value="active">🟢 {{ 'ADMIN_CONTRACTS.STATE.ACTIVE' | translate }}</option>
+          <option value="no active">🔴 {{ 'ADMIN_CONTRACTS.STATE.NO_ACTIVE' | translate }}</option>
+        </select>
+        @if (searchControl.value || filterValues.state !== 'all') {
+          <app-button
+            [label]="'ADMIN_CONTRACTS.ACTION.CLEAR_FILTERS' | translate"
+            variant="secondary"
+            (click)="clearFilters()"
+            title="Borrar todos los filtros"
+          ></app-button>
+        }
+      </div>
       <app-button
         [label]="'ADMIN_CONTRACTS.ACTION.DOWNLOAD_CSV' | translate"
-        title="Descargar CSV"
-        variant="primary"
-        (click)="exportToCSV()"
-        [attr.aria-label]="'ADMIN_CONTRACTS.ACTION.DOWNLOAD_CSV' | translate"
+        (onClick)="exportToCSV()"
       ></app-button>
     </div>
   </div>
@@ -88,7 +98,7 @@
         </ng-container>
 
         <ng-container matColumnDef="service">
-          <th mat-header-cell *matHeaderCellDef class="text-label contracts-text">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-label contracts-text">
             {{ 'ADMIN_CONTRACTS.TABLE.SERVICE' | translate }}
           </th>
           <td mat-cell *matCellDef="let row" class="text-label contracts-text">
@@ -105,6 +115,15 @@
           </th>
           <td mat-cell *matCellDef="let row" class="text-label contracts-text">
             {{ row.start_date | date: 'dd/MM/yyyy' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="end_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-label contracts-text">
+            {{ 'ADMIN_CONTRACTS.TABLE.END_DATE' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="text-label contracts-text">
+            {{ row.end_date | date: 'dd/MM/yyyy' }}
           </td>
         </ng-container>
 

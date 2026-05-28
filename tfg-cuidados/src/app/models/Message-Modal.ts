@@ -5,7 +5,7 @@ export interface MessagesModalData {
   receiverEmail?: string;
   content?: ComunicationModel & {
     Sender?: { email?: string; name?: string };
-    Receiver?: {email?:string, name: string };
+    Receiver?: { email?: string; name: string };
   };
-  direct?:string
+  direct?: boolean;
 }

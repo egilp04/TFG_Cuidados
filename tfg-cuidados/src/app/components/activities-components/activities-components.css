@@ -66,3 +66,6 @@
 .activity-text-secondary {
   @apply text-secondary dark:text-accent;
 }
+.activity-schedule-global-search {
+  @apply text-label text-primary dark:text-surface;
+}

@@ -9,14 +9,25 @@
   <div class="flex flex-col justify-between items-center gap-2">
     <h1 class="offers-title" id="offers-page-title">{{ 'ADMIN_OFFERS.TITLE' | translate }}</h1>
     <div class="flex flex-col md:flex-row items-center gap-3 w-full justify-center">
+      <label class="offers-schedule-global-search" id="search-services-label">
+        {{ 'ADMIN_OFFERS.SEARCH' | translate }} </label
+      ><app-searchbar [control]="searchControl" id="admin-offers-search"> </app-searchbar>
       <select
-        (change)="applyFilter($event)"
+        (change)="onStateFilterChange($event)"
         class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-label focus:ring-2 focus:ring-primary focus:outline-none w-full sm:w-auto text-primary"
       >
         <option value="all">{{ 'ADMIN_OFFERS.STATE.ALL' | translate }}</option>
         <option value="active">🟢 {{ 'ADMIN_OFFERS.STATE.ACTIVE' | translate }}</option>
         <option value="inactive">🔴 {{ 'ADMIN_OFFERS.STATE.INACTIVE' | translate }}</option>
       </select>
+      @if (searchControl.value || filterValues.state !== 'all') {
+        <app-button
+          [label]="'ADMIN_OFFERS.ACTION.CLEAR_FILTERS' | translate"
+          variant="secondary"
+          (click)="clearFilters()"
+          title="Borrar todos los filtros"
+        ></app-button>
+      }
     </div>
   </div>
 
@@ -32,7 +43,7 @@
           </td>
         </ng-container>
 
-         <ng-container matColumnDef="id_business">
+        <ng-container matColumnDef="id_business">
           <th mat-header-cell *matHeaderCellDef class="text-label offers-text">
             {{ 'ADMIN_OFFERS.TABLE.BUSINESS' | translate }}
           </th>
@@ -40,7 +51,7 @@
             {{ row.Business?.User_public?.name || 'Desconocido' }}
           </td>
         </ng-container>
-        
+
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef class="text-label offers-text">
             {{ 'ADMIN_OFFERS.TABLE.BUSINESS_DESCRIPTION' | translate }}
@@ -62,9 +73,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-label offers-text">
             {{ 'ADMIN_OFFERS.TABLE.PRICE' | translate }}
           </th>
-          <td mat-cell *matCellDef="let row" class="text-label offers-text">
-            {{ row.price }} €
-          </td>
+          <td mat-cell *matCellDef="let row" class="text-label offers-text">{{ row.price }} €</td>
         </ng-container>
 
         <ng-container matColumnDef="status">
@@ -89,14 +98,14 @@
           <th mat-header-cell *matHeaderCellDef class="text-label offers-text"></th>
           <td mat-cell *matCellDef="let row">
             <div class="flex justify-end gap-2 p-2">
-              @if(row.status ==='inactive'){
+              @if (row.status === 'inactive') {
                 <app-button
-                [label]="'ADMIN_OFFERS.ACTION.DELETE' | translate"
-                title="Eliminar Oferta"
-                variant="secondary"
-                (click)="deleteOffer(row)"
-                [attr.aria-label]="'ADMIN_OFFERS.ACTION.DELETE' | translate"
-              ></app-button>
+                  [label]="'ADMIN_OFFERS.ACTION.DELETE' | translate"
+                  title="Eliminar Oferta"
+                  variant="secondary"
+                  (click)="deleteOffer(row)"
+                  [attr.aria-label]="'ADMIN_OFFERS.ACTION.DELETE' | translate"
+                ></app-button>
               }
             </div>
           </td>

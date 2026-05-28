@@ -47,7 +47,7 @@ export class TimeService {
   /**
    * Recupera horarios organizados por día de la semana y hora desde el servidor.
    */
-  private async refreshTimes() {
+  public async refreshTimes() {
     const { data, error } = await this.clientSupaBase
       .from('Time')
       .select('*')

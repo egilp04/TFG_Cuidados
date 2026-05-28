@@ -21,6 +21,9 @@ import { ContractRowDataTable } from '../../models/Acitvities-component';
 import { ContractDetail } from '../../models/ContractModel';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { BehaviorSubject, combineLatest, map, Observable, startWith } from 'rxjs';
+import { Searchbar } from '../../components/searchbar/searchbar';
+import { FormControl } from '@angular/forms';
+
 /**
  * Componente hijo que renderiza un calendario mensual y una tabla de datos de servicios contratados.
  */
@@ -34,6 +37,7 @@ import { BehaviorSubject, combineLatest, map, Observable, startWith } from 'rxjs
     ButtonComponent,
     TranslateModule,
     AvatarComponent,
+    Searchbar,
   ],
   templateUrl: './activities-components.html',
   styleUrl: './activities-components.css',
@@ -58,7 +62,7 @@ export class ActivitiesComponents implements OnInit, OnChanges {
   public tableDataSource = new MatTableDataSource<ContractRowDataTable>([]);
   public userRole = this.authService.userRol();
   private dateSubject = new BehaviorSubject<Date>(new Date());
-  
+
   public currentMonthName$: Observable<string> = combineLatest([
     this.translate.onLangChange.pipe(startWith(null)),
     this.dateSubject.asObservable(),
@@ -81,9 +85,8 @@ export class ActivitiesComponents implements OnInit, OnChanges {
   public displayDate = new Date();
   public monthDays: (number | null)[] = [];
   public eventsMap: Record<string, ContractRowDataTable[]> = {};
-
   private weekDayNames = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
-
+  public controlFilterItem = new FormControl<string>('');
   public paginator = viewChild(MatPaginator);
 
   constructor() {
@@ -97,6 +100,30 @@ export class ActivitiesComponents implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.refreshActivityData();
+    this.setupCustomFilter();
+  }
+
+  private setupCustomFilter(): void {
+    this.tableDataSource.filterPredicate = (data: any, filter: string) => {
+      const dataStr = (
+        (data.nameToShow || '') +
+        (data.serviceName || '') +
+        (data.serviceDescription || '') +
+        (data.week_day_hired || '') +
+        (data.time_hired || '') +
+        (data.place || '') +
+        (data.price ? data.price.toString() + '€ ' + data.price.toString() : '')
+      ).toLowerCase();
+      return dataStr.includes(filter);
+    };
+  }
+
+  applyFilter(value: string): void {
+    const cleanFilter = value.trim().toLowerCase().replace(/\s+€/g, '€');
+    this.tableDataSource.filter = cleanFilter;
+    if (this.tableDataSource.paginator) {
+      this.tableDataSource.paginator.firstPage();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

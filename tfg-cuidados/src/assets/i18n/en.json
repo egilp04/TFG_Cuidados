@@ -108,6 +108,7 @@
     }
   },
   "ACTIVITIES": {
+    "SEARCH": "Search by any field",
     "ACTIVITIES": {
       "ACTIVITINAME": "Service of",
       "ACTIVITIUSER": "With"
@@ -153,6 +154,7 @@
   },
   "CONTRACTS": {
     "TITLE": "Contracts",
+    "SEARCH": "Search by any field",
     "NO_DATA": "No data",
     "TABLE": {
       "ID": "Contract ID",
@@ -205,20 +207,20 @@
   "MAIN_MENU": {
     "TITLE": "Main Menu",
     "CLIENT": {
-      "SEARCH_COMPANIES": "Search Companies",
+      "SEARCH_COMPANIES": "Search companies",
       "MY_SERVICES": "Contracts"
     },
     "BUSINESS": {
-      "MANAGE_SERVICES": "Manage Offers",
-      "ALL_CONTRACTS": "View All Contracts"
+      "MANAGE_SERVICES": "Manage offers",
+      "ALL_CONTRACTS": "View contracts"
     },
     "ADMIN": {
       "DASHBOARD": "Dashboard",
-      "MANAGE_USERS": "Manage Users",
-      "MANAGE_COMPANIES": "Manage Companies",
-      "MANAGE_SERVICES": "Manage Categories",
-      "MANAGE_SCHEDULES": "Manage Schedules",
-      "GLOBAL_OFFERS": "Manage Offers"
+      "MANAGE_USERS": "Manage clients",
+      "MANAGE_COMPANIES": "Manage companies",
+      "MANAGE_SERVICES": "Manage categories",
+      "MANAGE_SCHEDULES": "Manage schedules",
+      "GLOBAL_OFFERS": "Manage offers"
     },
     "COMMON": {
       "ACTIVITIES": "Scheduled Activities"
@@ -302,7 +304,7 @@
     },
     "LIST": {
       "TITLE": "Categories List",
-      "SEARCH": "Search by name or type of category",
+      "SEARCH": "Search by name, type of category or description",
       "EMPTY": "No categories found."
     },
     "TABLE": {
@@ -680,7 +682,7 @@
     "NO_DATA": "No records found.",
     "PAGINATOR_LABEL": "Select user page"
   },
-  "SEARCH_PLACEHOLDER": "Search by name...",
+  "SEARCH_PLACEHOLDER": "Search...",
   "REGISTER": {
     "ACCESSIBILITY": {
       "BACK_NAV": "Go back to the previous screen",
@@ -751,8 +753,8 @@
     },
     "PLACEHOLDERS": {
       "DESCRIPTION": "Ex: Deep window cleaning",
-      "SELECT_SERVICE": "Choose a service...",
-      "LOADING_SERVICES": "Loading services...",
+      "SELECT_SERVICE": "Choose a category...",
+      "LOADING_SERVICES": "Loading categories...",
       "SELECT_TIME": "Choose a day and time...",
       "LOADING_TIMES": "Loading schedules..."
     },
@@ -782,7 +784,8 @@
       "SELECT_RECEIVER": "Select a receiver"
     },
     "BTN": {
-      "SEND": "Send"
+      "SEND": "Send message",
+      "REPLY": "Reply message"
     },
     "FEEDBACK": {
       "ERROR_SENDER": "Error: Sender not detected.",
@@ -799,7 +802,7 @@
       "REGISTER": "Register",
       "RECOVER": "Recover Password",
       "RESEND": "Resend register email",
-      "NOTITLE": "Not available"
+      "NOTITLE": "2FA"
     },
     "LABELS": {
       "EMAIL": "Email",
@@ -1026,6 +1029,7 @@
   },
   "ADMIN_CONTRACTS": {
     "TITLE": "Contracts Panel",
+    "SEARCH": "Search by any field",
     "STATE": {
       "ALL": "All",
       "ACTIVE": "Active",
@@ -1037,12 +1041,14 @@
       "CLIENT": "Client Name",
       "BUSINESS": "Business Name",
       "SERVICE": "Service",
-      "START_DATE": "Start Date"
+      "START_DATE": "Start Date",
+      "END_DATE": "End date"
     },
     "ACTION": {
       "DOWNLOAD": "Download",
       "DOWNLOAD_CSV": "Download contracts (CSV)",
-      "DELETE": "Delete"
+      "DELETE": "Delete",
+      "CLEAR_FILTERS": "Clear filters"
     },
 
     "NO_DATA": "No data available"
@@ -1079,6 +1085,7 @@
   },
   "ADMIN_OFFERS": {
     "TITLE": "Offers Management",
+    "SEARCH": "Search by any field",
     "STATE": {
       "ALL": "All",
       "ACTIVE": "Active",
@@ -1093,7 +1100,8 @@
       "BUSINESS_DESCRIPTION": "Service information"
     },
     "ACTION": {
-      "DELETE": "Delete"
+      "DELETE": "Delete",
+      "CLEAR_FILTERS": "Clear filters"
     },
     "NO_DATA": "No offers found.",
     "ACCESSIBILITY": {

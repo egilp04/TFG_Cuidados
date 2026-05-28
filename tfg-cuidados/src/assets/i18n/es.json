@@ -108,6 +108,7 @@
     }
   },
   "ACTIVITIES": {
+    "SEARCH": "Busca por cualquier campo",
     "ACTIVITIES": {
       "ACTIVITINAME": "Servicio de",
       "ACTIVITIUSER": "Con"
@@ -153,6 +154,7 @@
   },
   "CONTRACTS": {
     "TITLE": "Contratos",
+    "SEARCH": "Busca por cualquier campo",
     "NO_DATA": "Sin datos",
     "TABLE": {
       "ID": "ID del Contrato",
@@ -206,7 +208,7 @@
   "MAIN_MENU": {
     "TITLE": "Menú Principal",
     "CLIENT": {
-      "SEARCH_COMPANIES": "Buscar Empresas",
+      "SEARCH_COMPANIES": "Buscar empresas",
       "MY_SERVICES": "Contratos"
     },
     "BUSINESS": {
@@ -215,8 +217,8 @@
     },
     "ADMIN": {
       "DASHBOARD": "Ver métricas",
-      "MANAGE_USERS": "Gestionar usuarios",
-      "MANAGE_COMPANIES": "Gestionar Empresas",
+      "MANAGE_USERS": "Gestionar clientes",
+      "MANAGE_COMPANIES": "Gestionar empresas",
       "MANAGE_SERVICES": "Gestionar categorías",
       "MANAGE_SCHEDULES": "Gestionar horarios",
       "GLOBAL_OFFERS": "Ver ofertas"
@@ -303,7 +305,7 @@
     },
     "LIST": {
       "TITLE": "Listado de categorías",
-      "SEARCH": "Buscar por nombre o tipo de categoría",
+      "SEARCH": "Buscar por nombre, tipo de categoría o descripción",
       "EMPTY": "No se han encontrado categorías"
     },
     "TABLE": {
@@ -538,7 +540,7 @@
     }
   },
   "CANCEL_MODAL": {
-    "ADMIN_GLOBAL_DELETE": "¿Desea borrarlo? Su eliminación conlleva la pérdida de las ofertas asociadas y, por consecuencia, la anulación de los contratos vinculados a dichas ofertas. Esta acción es irreversible.",
+    "ADMIN_GLOBAL_DELETE": "¿Desea continuar? Su eliminación conlleva la pérdida de las ofertas asociadas y, por consecuencia, la anulación de los contratos vinculados a dichas ofertas. Esta acción es irreversible.",
     "BTN": {
       "KEEP_ACCOUNT": "Continuar registrado",
       "UNSUBSCRIBE": "Cancelar registro",
@@ -627,7 +629,7 @@
     "NO_DATA": "No se han encontrado registros.",
     "PAGINATOR_LABEL": "Seleccionar página de usuarios"
   },
-  "SEARCH_PLACEHOLDER": "Buscar por nombre...",
+  "SEARCH_PLACEHOLDER": "Buscar...",
   "REGISTER": {
     "MESSAGES": {
       "SUCCESS": "¡Registro realizado con éxito! Revisa tu email",
@@ -692,14 +694,14 @@
   "SERVICE_TIME_MODAL": {
     "LABELS": {
       "DESCRIPTION": "Descripción de la oferta",
-      "GLOBAL_SERVICE": "Categoría Global",
+      "GLOBAL_SERVICE": "Categoría global",
       "PRICE": "Precio/h(€)",
       "AVAILABLE_SCHEDULE": "Horario Disponible"
     },
     "PLACEHOLDERS": {
       "DESCRIPTION": "Ej: Limpieza profunda de cristales",
-      "SELECT_SERVICE": "Escoge un servicio...",
-      "LOADING_SERVICES": "Cargando servicios...",
+      "SELECT_SERVICE": "Escoge una  categoría...",
+      "LOADING_SERVICES": "Cargando categorías...",
       "SELECT_TIME": "Escoge un día y hora...",
       "LOADING_TIMES": "Cargando horarios..."
     },
@@ -781,7 +783,8 @@
       "SELECT_RECEIVER": "Selecciona un receptor"
     },
     "BTN": {
-      "SEND": "Enviar"
+      "SEND": "Enviar mensaje",
+      "REPLY": "Responder mensaje"
     },
     "FEEDBACK": {
       "ERROR_SENDER": "Error: No se ha detectado el emisor.",
@@ -798,7 +801,7 @@
       "REGISTER": "Registrar",
       "RECOVER": "Recuperar Contraseña",
       "RESEND": "Reenviar email de registro",
-      "NOTITLE": "No disponible"
+      "NOTITLE": "Doble autenticación"
     },
     "LABELS": {
       "EMAIL": "Email",
@@ -1024,6 +1027,7 @@
   },
   "ADMIN_CONTRACTS": {
     "TITLE": "Panel de contratos",
+    "SEARCH": "Busca por cualquier campo",
     "STATE": {
       "ALL": "Todos",
       "ACTIVE": "Activos",
@@ -1036,12 +1040,14 @@
       "CLIENT": "Nombre del cliente",
       "BUSINESS": "Nombre de la empresa",
       "SERVICE": "Servicio",
-      "START_DATE": "Fecha de inicio"
+      "START_DATE": "Fecha inicio",
+      "END_DATE": "Fecha fin"
     },
     "ACTION": {
       "DOWNLOAD": "Descargar",
       "DOWNLOAD_CSV": "Descargar contratos en csv",
-      "DELETE": "Eliminar"
+      "DELETE": "Eliminar",
+      "CLEAR_FILTERS": "Limpiar filtros"
     },
     "NO_DATA": "Sin datos"
   },
@@ -1076,6 +1082,7 @@
     "SUCCESS_DISABLE": "Protección 2FA desactivada correctamente."
   },
   "ADMIN_OFFERS": {
+    "SEARCH": "Busca por cualquier campo",
     "TITLE": "Gestión de Ofertas",
     "STATE": {
       "ALL": "Todas las ofertas",
@@ -1091,7 +1098,8 @@
       "BUSINESS_DESCRIPTION": "Información del servicio"
     },
     "ACTION": {
-      "DELETE": "Eliminar"
+      "DELETE": "Eliminar",
+      "CLEAR_FILTERS": "Limpiar filtros"
     },
     "NO_DATA": "No se encontraron ofertas registradas.",
     "ACCESSIBILITY": {
